@@ -1,11 +1,11 @@
-<!-- platform.html -->
+<!-- use-cases.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NADIR — Technical Architecture (DWSH)</title>
-  <meta name="description" content="Technical architecture for NADIR: Differential Weight-State Hashing (DWSH), a deterministic compliance layer operably coupled to an AI inference engine." />
+  <title>NADIR — Operational Integration</title>
+  <meta name="description" content="NADIR integrates as an overlay at the inference boundary to produce audit artifacts without modifying core model logic." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,96 +35,71 @@
 
   <main class="wrap page">
     <section class="hero">
-      <div class="kicker">Deterministic Compliance Layer • DWSH • Verifiable Artifacts</div>
-      <h1>Technical architecture</h1>
+      <div class="kicker">Overlay Integration • Audit Workflow Fit • Minimal Exposure</div>
+      <h1>Operational integration</h1>
       <p class="lead">
-        NADIR’s core module, Differential Weight-State Hashing (DWSH), generates a deterministic abstracted representation of decision-state and signs it
-        to produce a verifiable audit artifact.
+        NADIR attaches at the inference-call boundary (gateway, middleware, or service wrapper) to generate audit artifacts without rewriting the model.
       </p>
 
       <div class="cta-row">
-        <a class="btn primary" href="use-cases.html">Integration posture</a>
+        <a class="btn primary" href="platform.html">Architecture</a>
         <a class="btn" href="docs.html">Documents</a>
       </div>
     </section>
 
     <section>
-      <h2>System flow (audit artifact pipeline)</h2>
-      <p class="sub">Capture → canonicalize → abstract (DWSH) → sign → record.</p>
+      <h2>Integration posture</h2>
+      <p class="sub">Designed to reduce adoption friction and preserve proprietary boundaries.</p>
 
-      <div class="grid-2">
+      <div class="grid-3">
         <div class="card">
-          <h3>Input & context capture</h3>
-          <p class="small">Structured inputs + required runtime context are captured at time T0 inside a defined boundary.</p>
-        </div>
-        <div class="card">
-          <h3>Canonicalization</h3>
-          <p class="small">Deterministic serialization and normalization prevent accidental entropy across runs.</p>
-        </div>
-        <div class="card">
-          <h3>DWSH abstraction</h3>
-          <p class="small">Internal state is transformed into a reduced abstracted representation via deterministic weighting.</p>
-        </div>
-        <div class="card">
-          <h3>Signature + record</h3>
-          <p class="small">A tamper-evident fingerprint is generated and stored with provenance metadata for verification.</p>
-        </div>
-      </div>
-    </section>
-
-    <section style="margin-top:18px;">
-      <h2>Functional constraints</h2>
-      <p class="sub">Non-negotiable constraints that keep the system defensible and adoption-ready.</p>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3>Reproducibility</h3>
-          <p class="small">Artifacts are reproducible under identical conditions inside the determinism boundary.</p>
+          <h3>Attach at the boundary</h3>
+          <p class="small">Deploy alongside inference services as an overlay module.</p>
         </div>
         <div class="card">
           <h3>Constrained disclosure</h3>
-          <p class="small">Verification does not require revealing weights, source code, or proprietary architecture.</p>
+          <p class="small">Verification without exposing weights or architecture internals.</p>
         </div>
         <div class="card">
-          <h3>Evidentiary posture</h3>
-          <p class="small">Record format supports preservation and review under chain-of-custody expectations.</p>
-        </div>
-        <div class="card">
-          <h3>Correctness boundary</h3>
-          <p class="small">Integrity is verifiable; correctness of the decision is not claimed by the signature.</p>
+          <h3>Audit workflow fit</h3>
+          <p class="small">Artifacts designed for retention, retrieval, and independent verification.</p>
         </div>
       </div>
 
       <div class="callout" style="margin-top:14px;">
         <p class="small">
-          <strong>Determinism boundary:</strong> determinism is engineered, not assumed. NADIR requires canonicalization of captured state and documented
-          inference conditions (software/hardware constraints, randomness control, instrumentation stability).
+          <strong>Governance note:</strong> NADIR supports integrity and audit readiness. It does not replace safety engineering, policy gating,
+          human authorization, or mission rules of engagement.
         </p>
       </div>
     </section>
 
     <section style="margin-top:18px;">
-      <h2>What NADIR does not do</h2>
-      <p class="sub">Boundaries that reduce legal risk and prevent over-claiming.</p>
+      <h2>Primary use cases</h2>
+      <p class="sub">Environments where accountability must exist without forcing IP disclosure.</p>
 
-      <div class="grid-3">
+      <div class="grid-2">
         <div class="card">
-          <h3>No weight exposure</h3>
-          <p class="small">No requirement to reveal weights or proprietary model internals.</p>
+          <h3>Autonomous navigation</h3>
+          <p class="small">Audit artifacts for route selection, obstacle response, escalation, and failover behavior.</p>
         </div>
         <div class="card">
-          <h3>No classified dependency</h3>
-          <p class="small">No requirement for classified datasets, restricted systems, or government facilities.</p>
+          <h3>ISR decision support</h3>
+          <p class="small">Integrity-anchored artifacts for prioritization and analyst-assist workflows.</p>
         </div>
         <div class="card">
-          <h3>No interpretability promise</h3>
-          <p class="small">Audit artifact infrastructure, not interpretability-by-disclosure.</p>
+          <h3>Validation gates</h3>
+          <p class="small">Deterministic signatures for review checkpoints and post-event accountability.</p>
+        </div>
+        <div class="card">
+          <h3>Incident reconstruction</h3>
+          <p class="small">Chain-of-custody records to support review boards under constrained disclosure.</p>
         </div>
       </div>
 
       <div class="cta-row" style="margin-top:14px;">
-        <a class="btn primary" href="roadmap.html">Build roadmap</a>
-        <a class="btn" href="contact.html">Controlled review</a>
+        <a class="btn primary" href="roadmap.html">Roadmap</a>
+        <a class="btn" href="contact.html">Request controlled review</a>
       </div>
     </section>
 
@@ -132,7 +107,7 @@
       <div class="wrap">
         <div class="footgrid">
           <div>
-            <div class="badge">Architecture • DWSH Engine</div>
+            <div class="badge">Integration • Use Cases</div>
             <div style="margin-top:10px;">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
           </div>
           <div class="right">
