@@ -10,6 +10,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css" />
+
+  <style>
+    .logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .brand-logo {
+      height: 28px;
+      width: auto;
+      display: block;
+      opacity: 0.95;
+    }
+  </style>
 </head>
 
 <body>
@@ -19,7 +34,7 @@
 
         <div class="brand">
           <a href="index.html" class="logo-link">
-            <img src="assets/logo.png" alt="NADIR" class="brand-logo">
+            <img src="assets/logo.png?v=2" alt="NADIR" class="brand-logo">
           </a>
           <div class="descriptor">
             Deterministic AI Decision-State Recorder
@@ -27,12 +42,12 @@
         </div>
 
         <nav>
-          <a data-page="index.html" href="index.html">Overview</a>
-          <a data-page="platform.html" href="platform.html">Architecture</a>
-          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
-          <a data-page="docs.html" href="docs.html">Documents</a>
-          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
-          <a data-page="contact.html" href="contact.html">Contact</a>
+          <a href="index.html">Overview</a>
+          <a href="platform.html">Architecture</a>
+          <a href="use-cases.html">Integration</a>
+          <a href="docs.html">Documents</a>
+          <a href="roadmap.html">Roadmap</a>
+          <a href="contact.html">Contact</a>
         </nav>
 
       </div>
@@ -62,7 +77,8 @@
             <p class="small">
               <strong>Reality-bound claim:</strong> NADIR is designed to produce deterministic, tamper-evident audit artifacts for review.
               It does not claim to explain model internals or guarantee decision correctness.
-              It claims integrity, reproducibility (under defined conditions), and constrained-disclosure verification.
+              It claims integrity, reproducibility (under defined conditions),
+              and constrained-disclosure verification.
             </p>
           </div>
         </div>
@@ -96,7 +112,9 @@
       <div class="footgrid">
         <div>
           <div class="badge">NADIR • Deterministic AI Decision-State Recorder</div>
-          <div style="margin-top:10px;">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
+          <div style="margin-top:10px;">
+            Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.
+          </div>
         </div>
         <div class="right">
           <div>NADIR V2026.02.19</div>
@@ -106,6 +124,5 @@
     </div>
   </footer>
 
-  <script src="assets/site.js"></script>
 </body>
 </html>
