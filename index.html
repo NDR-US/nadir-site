@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NADIR — Deterministic AI Decision-State Recorder</title>
-  <meta name="description" content="NADIR is a compliance layer for accountable autonomous systems—deterministic, tamper-evident audit artifacts without exposing proprietary model architecture or weights." />
+  <meta name="description" content="NADIR produces deterministic, tamper-evident audit artifacts without exposing proprietary model architecture or weights." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,37 +13,14 @@
 </head>
 
 <body>
-
-  <!-- Minimal opening header (no nav on the hero) -->
-  <header class="minimal-header">
-    <div class="wrap header-inner">
-      <div class="mark">NADIR</div>
-    </div>
-  </header>
-
-  <main class="wrap page">
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="kicker">A Compliance Layer for Accountable Autonomous Systems</div>
-
-      <h1>NADIR: Deterministic AI<br>Decision-State Recorder</h1>
-
-      <p class="lead">
-        Bridging the accountability gap between observable system inputs and opaque internal inference transformations
-        without exposing proprietary model architecture or weights.
-      </p>
-
-      <div class="cta-row">
-        <a class="btn primary" href="platform.html">How It Works</a>
-        <a class="btn" href="docs.html">Document Suite</a>
-      </div>
-    </section>
-
-    <!-- NAV (moved below hero so the page doesn’t “start” with navigation) -->
-    <section style="margin-top:22px;">
-      <div class="card" style="padding:16px 18px;">
-        <nav class="home-nav" aria-label="Primary">
+  <header>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">NADIR</div>
+          <div class="descriptor">Deterministic AI Decision-State Recorder</div>
+        </div>
+        <nav>
           <a data-page="index.html" href="index.html">Overview</a>
           <a data-page="platform.html" href="platform.html">Architecture</a>
           <a data-page="use-cases.html" href="use-cases.html">Integration</a>
@@ -52,78 +29,74 @@
           <a data-page="contact.html" href="contact.html">Contact</a>
         </nav>
       </div>
+    </div>
+  </header>
+
+  <main class="wrap page">
+
+    <!-- HERO (single message, no repeated sections) -->
+    <section class="hero">
+      <div class="kicker">A compliance layer for accountable autonomous systems</div>
+
+      <h1>NADIR: deterministic audit artifacts for AI decisions</h1>
+
+      <p class="lead">
+        NADIR creates a reproducible, tamper-evident record of decision-state evolution—without exposing model weights or proprietary architecture.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn primary" href="platform.html">How it works</a>
+        <a class="btn" href="docs.html">Document suite</a>
+      </div>
     </section>
 
-    <!-- REALITY-BOUND CLAIM -->
+    <!-- ONE “truth block” (short, reality-bound) -->
     <section style="margin-top:18px;">
       <div class="callout">
         <p class="small">
-          <strong>Reality-bound claim:</strong> NADIR is designed to produce deterministic, tamper-evident audit artifacts for review.
-          It does not claim to “explain” model internals or guarantee decision correctness. It claims integrity, reproducibility
-          (under defined conditions), and constrained-disclosure verification.
+          <strong>What it is:</strong> deterministic integrity evidence for review and oversight.
+          <br />
+          <strong>What it is not:</strong> weight disclosure, source disclosure, or an “explainability” promise.
         </p>
       </div>
     </section>
 
-    <!-- THE PROBLEM -->
+    <!-- THREE bullets only (problem compressed) -->
     <section style="margin-top:18px;">
-      <h2>The problem</h2>
-      <p class="sub">
-        Autonomous systems lack structured mechanisms for reconstructing internal decision-state evolution during critical events.
-        This opacity limits post-incident analysis and creates significant liability ambiguity across regulated environments.
-      </p>
-
+      <h2>Why it exists</h2>
       <div class="grid-3">
         <div class="card">
-          <h3>Post-incident reconstruction</h3>
-          <p class="small">Review is reduced to surface telemetry rather than decision-state evidence.</p>
+          <h3>Reconstruction</h3>
+          <p class="small">Move beyond surface telemetry to decision-state evidence.</p>
         </div>
         <div class="card">
-          <h3>Audit &amp; oversight</h3>
-          <p class="small">Independent validation is constrained by trade secret boundaries.</p>
+          <h3>Oversight</h3>
+          <p class="small">Enable independent review under constrained disclosure.</p>
         </div>
         <div class="card">
-          <h3>Liability ambiguity</h3>
-          <p class="small">Opaque decisions create uncertainty across regulated and mission-critical deployments.</p>
+          <h3>Liability clarity</h3>
+          <p class="small">Reduce ambiguity in regulated and mission-critical deployments.</p>
         </div>
       </div>
     </section>
 
-    <!-- DOCUMENT SUITE -->
+    <!-- ONE next-step block (no repeated document cards) -->
     <section style="margin-top:18px;">
-      <h2>Document suite</h2>
-      <p class="sub">
-        Four disclosure dialects aligned to leadership, IP, operational, and minimal disclosure contexts.
-      </p>
-
+      <h2>Next</h2>
       <div class="grid-2">
         <div class="card">
-          <h3>I. Executive Brief</h3>
-          <p class="small">Policy &amp; leadership ready.</p>
-          <div class="cta-row"><a class="btn" href="docs.html">View</a></div>
+          <h3>Technical architecture</h3>
+          <p class="small">DWSH system configuration, determinism boundary, constraints.</p>
+          <div class="cta-row"><a class="btn" href="platform.html">Open</a></div>
         </div>
-
         <div class="card">
-          <h3>II. Patent-Aligned Architecture</h3>
-          <p class="small">Technical framework.</p>
-          <div class="cta-row"><a class="btn" href="docs.html">View</a></div>
-        </div>
-
-        <div class="card">
-          <h3>III. Operational Security Integration</h3>
-          <p class="small">DoD/DHS framing.</p>
-          <div class="cta-row"><a class="btn" href="docs.html">View</a></div>
-        </div>
-
-        <div class="card">
-          <h3>IV. Clearance-Sensitive Briefing</h3>
-          <p class="small">Minimal disclosure overview.</p>
-          <div class="cta-row"><a class="btn" href="docs.html">View</a></div>
+          <h3>Briefs</h3>
+          <p class="small">Executive, patent-aligned, operational integration, minimal disclosure.</p>
+          <div class="cta-row"><a class="btn" href="docs.html">Open</a></div>
         </div>
       </div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
       <div class="wrap">
         <div class="footgrid">
