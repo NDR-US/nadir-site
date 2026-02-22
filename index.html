@@ -1,10 +1,11 @@
+<!-- index.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NADIR — Deterministic AI Decision-State Recorder</title>
-  <meta name="description" content="NADIR produces deterministic, tamper-evident audit artifacts without exposing proprietary model architecture or weights." />
+  <title>NADIR — Deterministic Audit Artifacts for AI Decisions</title>
+  <meta name="description" content="NADIR is a forensic compliance layer that produces deterministic, tamper-evident audit artifacts for AI decisions—without exposing model weights or proprietary internals." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,67 +34,93 @@
   </header>
 
   <main class="wrap page">
-
-    <!-- HERO (single message, no repeated sections) -->
     <section class="hero">
-      <div class="kicker">A compliance layer for accountable autonomous systems</div>
-
-      <h1>NADIR: deterministic audit artifacts for AI decisions</h1>
-
+      <div class="kicker">Forensic Compliance Layer • Deterministic Artifacts • Constrained Disclosure</div>
+      <h1>Deterministic audit artifacts for AI decisions</h1>
       <p class="lead">
-        NADIR creates a reproducible, tamper-evident record of decision-state evolution—without exposing model weights or proprietary architecture.
+        NADIR produces a reproducible, tamper-evident record of AI decision-state evolution for oversight and post-incident reconstruction—without exposing weights,
+        source code, or proprietary internals.
       </p>
 
       <div class="cta-row">
         <a class="btn primary" href="platform.html">How it works</a>
-        <a class="btn" href="docs.html">Document suite</a>
+        <a class="btn" href="use-cases.html">Operational integration</a>
       </div>
     </section>
 
-    <!-- ONE “truth block” (short, reality-bound) -->
     <section style="margin-top:18px;">
-      <div class="callout">
+      <h2>What it is</h2>
+      <p class="sub">A compliance-grade recording layer that attaches at the inference boundary and outputs verifiable artifacts.</p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Deterministic capture</h3>
+          <p class="small">Canonicalizes inputs, context, and key runtime signals under a defined determinism boundary.</p>
+        </div>
+        <div class="card">
+          <h3>Tamper-evident signature</h3>
+          <p class="small">Generates a cryptographic fingerprint over an abstracted representation of the decision-state.</p>
+        </div>
+        <div class="card">
+          <h3>Audit-ready record</h3>
+          <p class="small">Persists an artifact designed for chain-of-custody workflows and independent verification.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-top:18px;">
+      <h2>How it works (high level)</h2>
+      <p class="sub">Structured capture → deterministic abstraction (DWSH) → signature → retention record.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>1) Capture boundary</h3>
+          <p class="small">Define what is captured at inference time and what is explicitly excluded to preserve confidentiality.</p>
+        </div>
+        <div class="card">
+          <h3>2) Canonicalization</h3>
+          <p class="small">Normalize ordering, rounding, serialization, and metadata to eliminate accidental entropy.</p>
+        </div>
+        <div class="card">
+          <h3>3) DWSH abstraction</h3>
+          <p class="small">Transform internal state into a reduced abstracted representation via deterministic weighting.</p>
+        </div>
+        <div class="card">
+          <h3>4) Sign + record</h3>
+          <p class="small">Generate a tamper-evident fingerprint and store an artifact suitable for verification and oversight.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:14px;">
         <p class="small">
-          <strong>What it is:</strong> deterministic integrity evidence for review and oversight.
-          <br />
-          <strong>What it is not:</strong> weight disclosure, source disclosure, or an “explainability” promise.
+          <strong>Reality-bound claim:</strong> NADIR verifies integrity and reproducibility (under defined conditions). It does not claim decision correctness
+          and does not provide interpretability-by-disclosure.
         </p>
       </div>
     </section>
 
-    <!-- THREE bullets only (problem compressed) -->
     <section style="margin-top:18px;">
-      <h2>Why it exists</h2>
+      <h2>What it does not do</h2>
+      <p class="sub">Clear boundaries prevent over-claiming and match real oversight expectations.</p>
+
       <div class="grid-3">
         <div class="card">
-          <h3>Reconstruction</h3>
-          <p class="small">Move beyond surface telemetry to decision-state evidence.</p>
+          <h3>No weight exposure</h3>
+          <p class="small">Verification without disclosing model weights, architecture, or source code.</p>
         </div>
         <div class="card">
-          <h3>Oversight</h3>
-          <p class="small">Enable independent review under constrained disclosure.</p>
+          <h3>No classified dependency</h3>
+          <p class="small">Does not require classified datasets, restricted systems, or government facilities.</p>
         </div>
         <div class="card">
-          <h3>Liability clarity</h3>
-          <p class="small">Reduce ambiguity in regulated and mission-critical deployments.</p>
+          <h3>No safety replacement</h3>
+          <p class="small">Does not replace safety engineering, policy gating, or human authorization controls.</p>
         </div>
       </div>
-    </section>
 
-    <!-- ONE next-step block (no repeated document cards) -->
-    <section style="margin-top:18px;">
-      <h2>Next</h2>
-      <div class="grid-2">
-        <div class="card">
-          <h3>Technical architecture</h3>
-          <p class="small">DWSH system configuration, determinism boundary, constraints.</p>
-          <div class="cta-row"><a class="btn" href="platform.html">Open</a></div>
-        </div>
-        <div class="card">
-          <h3>Briefs</h3>
-          <p class="small">Executive, patent-aligned, operational integration, minimal disclosure.</p>
-          <div class="cta-row"><a class="btn" href="docs.html">Open</a></div>
-        </div>
+      <div class="cta-row" style="margin-top:14px;">
+        <a class="btn primary" href="docs.html">Briefs & documents</a>
+        <a class="btn" href="contact.html">Request controlled review</a>
       </div>
     </section>
 
@@ -101,7 +128,7 @@
       <div class="wrap">
         <div class="footgrid">
           <div>
-            <div class="badge">NADIR • Deterministic AI Decision-State Recorder</div>
+            <div class="badge">NADIR • Forensic Compliance Layer</div>
             <div style="margin-top:10px;">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
           </div>
           <div class="right">
@@ -111,7 +138,6 @@
         </div>
       </div>
     </footer>
-
   </main>
 
   <script src="assets/site.js"></script>
