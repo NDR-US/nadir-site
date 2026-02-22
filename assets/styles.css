@@ -230,3 +230,10 @@ footer{
   .right{text-align:left;}
   .footgrid{grid-template-columns:1fr;}
 }
+.brand { display:flex; align-items:center; gap:12px; }
+.brand-logo{
+  height: 28px;
+  width: auto;
+  display:block;
+  opacity: 0.95;
+}
