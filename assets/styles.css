@@ -298,3 +298,54 @@ footer{
   .footgrid{ flex-direction:column; }
   .right{ text-align:left; }
 }
+/* =====================================================
+   NADIR Animated Video Logo
+   ===================================================== */
+
+.brand-link{
+  display:inline-block;
+  text-decoration:none;
+}
+
+.brand{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.logo-container{
+  width: 300px;         /* Adjust if needed */
+  height: 60px;         /* Adjust if needed */
+  display:flex;
+  align-items:center;
+
+  /* Slide-in animation */
+  transform: translateX(-120%);
+  opacity: 0;
+  animation: nadirSlideIn 2.4s ease-out forwards;
+}
+
+.logo-video{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  mix-blend-mode: normal;   /* change to screen if needed */
+}
+
+/* Animation */
+@keyframes nadirSlideIn{
+  to{
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce){
+  .logo-container{
+    animation:none;
+    transform:none;
+    opacity:1;
+  }
+}
