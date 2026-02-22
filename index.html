@@ -1,501 +1,232 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NADIR — Deterministic AI Decision-State Recorder</title>
-  <meta name="description" content="NADIR is a deterministic compliance-layer abstraction for audit-grade traceability of AI decision pathways without exposing proprietary model architecture." />
+:root{
+  --bg:#070b16;
+  --bg2:#0b1226;
+  --panel:rgba(255,255,255,0.04);
+  --panel2:rgba(255,255,255,0.03);
+  --text:rgba(255,255,255,0.92);
+  --muted:rgba(255,255,255,0.70);
+  --faint:rgba(255,255,255,0.50);
+  --line:rgba(255,255,255,0.10);
+  --line2:rgba(255,255,255,0.16);
+  --max:1120px;
+  --radius:16px;
+  --shadow:0 24px 80px rgba(0,0,0,0.45);
+}
 
-  <!-- Fonts: Julius Sans for headings, Inter for body -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+*{box-sizing:border-box;}
+html,body{height:100%;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--text);
+  line-height:1.5;
+  background:
+    radial-gradient(1200px 700px at 50% -10%, rgba(255,255,255,0.08), transparent 60%),
+    radial-gradient(900px 550px at 85% 25%, rgba(255,255,255,0.05), transparent 55%),
+    radial-gradient(900px 550px at 15% 35%, rgba(255,255,255,0.04), transparent 58%),
+    linear-gradient(180deg, var(--bg), var(--bg2));
+}
 
-  <style>
-    :root{
-      --bg: #0b1020;
-      --panel: rgba(255,255,255,0.04);
-      --text: rgba(255,255,255,0.92);
-      --muted: rgba(255,255,255,0.70);
-      --faint: rgba(255,255,255,0.45);
-      --line: rgba(255,255,255,0.10);
-      --accent: rgba(255,255,255,0.92); /* keep neutral; avoid “cyber” colors */
-      --max: 1040px;
-      --radius: 14px;
-    }
+a{color:var(--text);text-decoration:none;}
+a:hover{text-decoration:underline;}
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 50% -10%, rgba(255,255,255,0.08), transparent 60%),
-                  radial-gradient(900px 500px at 80% 30%, rgba(255,255,255,0.05), transparent 55%),
-                  var(--bg);
-      color: var(--text);
-      line-height: 1.45;
-    }
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px;}
 
-    a{ color: var(--text); text-decoration: none; }
-    a:hover{ text-decoration: underline; }
+header{
+  position:sticky;top:0;z-index:10;
+  backdrop-filter:blur(10px);
+  background:rgba(7,11,22,0.74);
+  border-bottom:1px solid var(--line);
+}
 
-    .wrap{ max-width: var(--max); margin:0 auto; padding: 0 20px; }
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;padding:14px 0;
+}
 
-    /* Top bar */
-    header{
-      position: sticky;
-      top:0;
-      backdrop-filter: blur(10px);
-      background: rgba(11,16,32,0.78);
-      border-bottom: 1px solid var(--line);
-      z-index: 10;
-    }
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding: 14px 0;
-      gap: 16px;
-    }
-    .brand{
-      display:flex;
-      align-items:baseline;
-      gap: 12px;
-      white-space: nowrap;
-    }
-    .brand .name{
-      font-family: "Julius Sans One", sans-serif;
-      letter-spacing: 0.26em;
-      font-size: 16px;
-      text-transform: uppercase;
-    }
-    .brand .tag{
-      font-size: 12px;
-      color: var(--muted);
-      border-left: 1px solid var(--line);
-      padding-left: 12px;
-    }
-    nav{
-      display:flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      justify-content:flex-end;
-    }
-    nav a{
-      font-size: 12px;
-      color: var(--muted);
-      padding: 8px 10px;
-      border-radius: 10px;
-      border: 1px solid transparent;
-    }
-    nav a:hover{
-      color: var(--text);
-      border-color: var(--line);
-      text-decoration:none;
-    }
+.brand{
+  display:flex;align-items:baseline;gap:14px;white-space:nowrap;
+}
+.brand .mark{
+  font-family:"Julius Sans One",sans-serif;
+  letter-spacing:0.30em;text-transform:uppercase;
+  font-weight:400;font-size:16px;
+}
+.brand .descriptor{
+  font-size:12px;color:var(--muted);
+  border-left:1px solid var(--line);
+  padding-left:12px;
+}
 
-    /* Hero */
-    .hero{
-      padding: 64px 0 28px;
-    }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 22px;
-      align-items: start;
-    }
-    .kicker{
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    h1{
-      margin: 10px 0 10px;
-      font-family: "Julius Sans One", sans-serif;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 34px;
-      line-height: 1.15;
-    }
-    .lead{
-      margin: 0 0 18px;
-      color: var(--muted);
-      font-size: 15px;
-      max-width: 64ch;
-    }
-    .cta-row{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding: 10px 12px;
-      font-size: 12px;
-      border-radius: 12px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      cursor: pointer;
-    }
-    .btn.primary{
-      background: rgba(255,255,255,0.10);
-      border-color: rgba(255,255,255,0.18);
-    }
-    .btn:hover{ text-decoration:none; background: rgba(255,255,255,0.07); }
+nav{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
+nav a{
+  font-size:12px;color:var(--muted);
+  padding:8px 10px;border-radius:12px;
+  border:1px solid transparent;
+}
+nav a:hover{color:var(--text);border-color:var(--line);text-decoration:none;}
+nav a.active{
+  color:var(--text);
+  background:rgba(255,255,255,0.04);
+  border-color:rgba(255,255,255,0.18);
+}
 
-    .card{
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 16px;
-    }
-    .meta{
-      font-size: 12px;
-      color: var(--muted);
-      display:grid;
-      gap: 8px;
-    }
-    .meta div{
-      display:flex;
-      justify-content:space-between;
-      gap: 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      padding-bottom: 8px;
-    }
-    .meta div:last-child{ border-bottom:none; padding-bottom:0; }
-    .meta span:first-child{ color: var(--faint); }
+main{padding:38px 0 0;}
 
-    /* Sections */
-    section{
-      padding: 26px 0;
-    }
-    .section-title{
-      font-family: "Julius Sans One", sans-serif;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      font-size: 18px;
-      margin: 0 0 10px;
-    }
-    .section-sub{
-      color: var(--muted);
-      margin: 0 0 16px;
-      font-size: 13px;
-      max-width: 80ch;
-    }
-    .grid-3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    .grid-2{
-      display:grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-    .item h3{
-      margin: 0 0 8px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-    }
-    .item p{
-      margin:0;
-      font-size: 12.5px;
-      color: var(--muted);
-    }
-    .divider{
-      border-top: 1px solid var(--line);
-      margin: 14px 0 0;
-    }
+.kicker{
+  color:var(--muted);
+  font-size:12px;
+  letter-spacing:0.10em;
+  text-transform:uppercase;
+}
 
-    /* Architecture flow */
-    .flow{
-      display:grid;
-      gap: 12px;
-    }
-    .flow-row{
-      display:grid;
-      grid-template-columns: 1fr 64px 1fr;
-      gap: 10px;
-      align-items:center;
-    }
-    .pill{
-      padding: 12px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-    }
-    .pill .label{
-      font-size: 11px;
-      color: var(--faint);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .pill .title{
-      font-size: 13px;
-      font-weight: 600;
-      margin-top: 4px;
-    }
-    .pill .desc{
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 6px;
-    }
-    .arrow{
-      text-align:center;
-      color: var(--faint);
-      font-size: 22px;
-      user-select:none;
-    }
+h1{
+  font-family:"Julius Sans One",sans-serif;
+  letter-spacing:0.10em;
+  text-transform:uppercase;
+  font-weight:400;
+  font-size:34px;
+  line-height:1.14;
+  margin:12px 0 10px;
+}
 
-    /* Footer */
-    footer{
-      padding: 26px 0 40px;
-      border-top: 1px solid var(--line);
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .footgrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
+h2{
+  font-family:"Julius Sans One",sans-serif;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  font-weight:400;
+  font-size:18px;
+  margin:0 0 10px;
+}
 
-    /* Responsive */
-    @media (max-width: 900px){
-      .hero-grid{ grid-template-columns: 1fr; }
-      .grid-3{ grid-template-columns: 1fr; }
-      .grid-2{ grid-template-columns: 1fr; }
-      .flow-row{ grid-template-columns: 1fr; }
-      .arrow{ display:none; }
-      .brand .tag{ display:none; }
-    }
-  </style>
-</head>
+h3{
+  margin:0 0 6px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+}
 
-<body>
-  <header>
-    <div class="wrap">
-      <div class="topbar">
-        <div class="brand">
-          <div class="name">NADIR</div>
-          <div class="tag">Deterministic AI Decision-State Recorder</div>
-        </div>
-        <nav>
-          <a href="#problem">Problem</a>
-          <a href="#architecture">Architecture</a>
-          <a href="#benefits">Benefits</a>
-          <a href="#docs">Docs</a>
-          <a href="#contact">Contact</a>
-        </nav>
-      </div>
-    </div>
-  </header>
+p{margin:0 0 12px;color:var(--muted);}
 
-  <main class="wrap">
-    <section class="hero">
-      <div class="hero-grid">
-        <div>
-          <div class="kicker">Compliance Layer • Deterministic Anchoring • Audit Readiness</div>
-          <h1>AI decision-state traceability without IP exposure</h1>
-          <p class="lead">
-            NADIR is a deterministic compliance-layer abstraction intended to generate tamper-evident audit fingerprints
-            from inference-time decision-state representations, enabling forensic review without disclosing proprietary
-            model weights, source code, or confidential architecture.
-          </p>
+hr{border:none;border-top:1px solid var(--line);margin:18px 0;}
 
-          <div class="cta-row">
-            <a class="btn primary" href="#docs">View Document Suite</a>
-            <a class="btn" href="#contact">Request Controlled Review</a>
-          </div>
+.hero{padding:18px 0 24px;}
+.hero-grid{
+  display:grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap:18px;align-items:start;
+}
 
-          <div class="divider"></div>
+.lead{color:var(--muted);font-size:15px;max-width:76ch;}
 
-          <p class="section-sub" style="margin-top:14px;">
-            This page is designed to be “institutional-first”: restrained language, clear scope boundaries, and documentation-forward structure.
-          </p>
-        </div>
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
 
-        <aside class="card">
-          <div class="section-title" style="margin-bottom:8px;">Control Block</div>
-          <div class="meta">
-            <div><span>Status</span><span>Private draft</span></div>
-            <div><span>Owner</span><span>Brian Covarrubias</span></div>
-            <div><span>Version</span><span>v2026.02.19</span></div>
-            <div><span>Location</span><span>San Diego, CA</span></div>
-          </div>
-          <div class="divider"></div>
-          <p class="section-sub" style="margin:12px 0 0;">
-            Proprietary intellectual property. Unauthorized distribution prohibited.
-          </p>
-        </aside>
-      </div>
-    </section>
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:10px 12px;font-size:12px;border-radius:12px;
+  border:1px solid var(--line2);
+  background:rgba(255,255,255,0.03);
+  color:var(--text);
+  cursor:pointer;
+  transition:transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+.btn:hover{
+  text-decoration:none;
+  background:rgba(255,255,255,0.06);
+  transform:translateY(-1px);
+  border-color:rgba(255,255,255,0.22);
+}
+.btn.primary{
+  background:rgba(255,255,255,0.10);
+  border-color:rgba(255,255,255,0.24);
+}
+.btn.primary:hover{background:rgba(255,255,255,0.14);}
 
-    <section id="problem">
-      <div class="section-title">Problem</div>
-      <p class="section-sub">
-        Autonomous and AI-enabled systems often expose inputs and outputs but not the internal inference-state transformations that led to decisions.
-        This limits auditability, incident reconstruction, and oversight in regulated environments.
-      </p>
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px;
+  box-shadow:var(--shadow);
+}
 
-      <div class="grid-3">
-        <div class="card item">
-          <h3>Accountability gap</h3>
-          <p>Internal logic paths are typically opaque during review, creating audit and liability ambiguity.</p>
-        </div>
-        <div class="card item">
-          <h3>Forensic constraints</h3>
-          <p>Post-event reconstruction is reduced to surface telemetry rather than decision-state evidence.</p>
-        </div>
-        <div class="card item">
-          <h3>Oversight friction</h3>
-          <p>Trade secret boundaries complicate third-party validation and compliance verification.</p>
-        </div>
-      </div>
-    </section>
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
 
-    <section id="architecture">
-      <div class="section-title">Architecture</div>
-      <p class="section-sub">
-        The system is positioned as a deterministic overlay: capture → transform → sign, producing a compliance-safe fingerprint
-        suitable for audit and evidentiary preservation.
-      </p>
+.small{font-size:12px;color:var(--faint);}
+.sub{color:var(--muted);font-size:13px;max-width:96ch;margin:0 0 14px;}
 
-      <div class="card flow">
-        <div class="flow-row">
-          <div class="pill">
-            <div class="label">Layer 1</div>
-            <div class="title">Input Baseline Hash</div>
-            <div class="desc">Deterministic cryptographic anchoring of structured inference inputs at time t₀.</div>
-          </div>
-          <div class="arrow">↓</div>
-          <div class="pill">
-            <div class="label">Layer 2</div>
-            <div class="title">Decision-State Abstraction</div>
-            <div class="desc">Deterministic transformation of inference vectors into compliance-safe representations.</div>
-          </div>
-        </div>
+.badge{
+  display:inline-flex;gap:8px;align-items:center;
+  font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--faint);
+  border:1px solid rgba(255,255,255,0.14);
+  background:rgba(255,255,255,0.03);
+  border-radius:999px;padding:6px 10px;
+}
 
-        <div class="flow-row">
-          <div class="pill">
-            <div class="label">Layer 3</div>
-            <div class="title">NADIR Signature (DWSH)</div>
-            <div class="desc">Tamper-evident, collision-resistant state fingerprint for third-party verification without IP exposure.</div>
-          </div>
-          <div class="arrow">↓</div>
-          <div class="pill">
-            <div class="label">Output</div>
-            <div class="title">Independent Audit / Oversight</div>
-            <div class="desc">Verification of decision-state integrity and traceability with preserved proprietary boundaries.</div>
-          </div>
-        </div>
-      </div>
-    </section>
+.meta{display:grid;gap:8px;font-size:12px;color:var(--muted);}
+.meta .row{
+  display:flex;justify-content:space-between;gap:14px;
+  padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.meta .row:last-child{border-bottom:none;padding-bottom:0;}
+.meta .k{color:var(--faint);}
 
-    <section id="benefits">
-      <div class="section-title">Operational capabilities</div>
-      <p class="section-sub">
-        Benefits are framed conservatively: integrity, audit readiness, and interoperability—without overstating guarantees.
-      </p>
+.callout{
+  border:1px solid rgba(255,255,255,0.14);
+  background:rgba(255,255,255,0.03);
+  border-radius:var(--radius);
+  padding:14px;
+}
 
-      <div class="grid-2">
-        <div class="card item">
-          <h3>Compliance enablement</h3>
-          <p>Supports audit-grade trace documentation and evidentiary preservation workflows.</p>
-        </div>
-        <div class="card item">
-          <h3>Trade secret preservation</h3>
-          <p>Enables validation without disclosure of model weights, proprietary architecture, or confidential code.</p>
-        </div>
-        <div class="card item">
-          <h3>Forensic reconstruction support</h3>
-          <p>Provides deterministic anchoring artifacts for post-event review and integrity checks.</p>
-        </div>
-        <div class="card item">
-          <h3>Interoperability posture</h3>
-          <p>Designed for regulated enterprise and multi-stakeholder oversight environments.</p>
-        </div>
-      </div>
-    </section>
+.flow{display:grid;gap:12px;}
+.flow-row{
+  display:grid;
+  grid-template-columns:1fr 64px 1fr;
+  gap:10px;align-items:center;
+}
+.pill{
+  padding:12px;border-radius:14px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.03);
+}
+.pill .label{
+  font-size:11px;color:var(--faint);
+  letter-spacing:0.08em;text-transform:uppercase;
+}
+.pill .title{font-size:13px;font-weight:600;margin-top:4px;}
+.pill .desc{font-size:12px;color:var(--muted);margin-top:6px;}
+.arrow{text-align:center;color:var(--faint);font-size:22px;user-select:none;}
 
-    <section id="docs">
-      <div class="section-title">Document suite</div>
-      <p class="section-sub">
-        Internal documents are structured into four “dialects” to match leadership, legal, operational, and clearance contexts.
-        Replace the placeholders below with your real PDF links.
-      </p>
+.page{
+  opacity:0;transform:translateY(6px);
+  transition:opacity 260ms ease, transform 260ms ease;
+}
+.page.ready{opacity:1;transform:translateY(0);}
 
-      <div class="grid-2">
-        <div class="card item">
-          <h3>I. Executive Brief</h3>
-          <p>Policy & leadership framing. Problem, architecture, strategic value.</p>
-          <p style="margin-top:10px;"><a class="btn" href="#" onclick="alert('Link your PDF here'); return false;">Open PDF</a></p>
-        </div>
-        <div class="card item">
-          <h3>II. Patent-Aligned Framework</h3>
-          <p>System configuration, method steps, functional constraints, novelty posture.</p>
-          <p style="margin-top:10px;"><a class="btn" href="#" onclick="alert('Link your PDF here'); return false;">Open PDF</a></p>
-        </div>
-        <div class="card item">
-          <h3>III. Operational Integration</h3>
-          <p>DoD/DHS framing. Integration boundary, chain-of-custody posture, use cases.</p>
-          <p style="margin-top:10px;"><a class="btn" href="#" onclick="alert('Link your PDF here'); return false;">Open PDF</a></p>
-        </div>
-        <div class="card item">
-          <h3>IV. Clearance Overview</h3>
-          <p>Minimal disclosure. Scope boundaries and non-interference affirmations.</p>
-          <p style="margin-top:10px;"><a class="btn" href="#" onclick="alert('Link your PDF here'); return false;">Open PDF</a></p>
-        </div>
-      </div>
-    </section>
+.reveal{opacity:0;transform:translateY(10px);transition:opacity 320ms ease, transform 320ms ease;}
+.reveal.on{opacity:1;transform:translateY(0);}
 
-    <section id="contact">
-      <div class="section-title">Contact</div>
-      <p class="section-sub">
-        Use controlled language. Keep contact simple. Avoid over-collecting info.
-      </p>
+footer{
+  margin-top:26px;border-top:1px solid var(--line);
+  padding:20px 0 40px;color:var(--muted);font-size:12px;
+}
+.footgrid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:14px;align-items:start;
+}
+.right{text-align:right;}
 
-      <div class="card">
-        <div class="grid-2">
-          <div class="item">
-            <h3>Controlled review requests</h3>
-            <p>Email: <a href="mailto:nacenatur@gmail.com">nacenatur@gmail.com</a></p>
-            <p style="margin-top:6px; color: var(--faint); font-size:12px;">
-              Use a dedicated NADIR email if you want separation from NACÉ later.
-            </p>
-          </div>
-          <div class="item">
-            <h3>Disclosure</h3>
-            <p>
-              NADIR materials are proprietary. No license or rights are granted absent a separate written agreement.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap">
-      <div class="footgrid">
-        <div>
-          <div style="font-family:'Julius Sans One',sans-serif; letter-spacing:.14em; text-transform:uppercase; margin-bottom:8px;">NADIR</div>
-          <div>Deterministic AI Decision-State Recorder</div>
-        </div>
-        <div style="text-align:right;">
-          <div>Version v2026.02.19</div>
-          <div>Proprietary intellectual property</div>
-        </div>
-      </div>
-    </div>
-  </footer>
-</body>
-</html>
+@media (max-width: 980px){
+  h1{font-size:30px;}
+  .hero-grid{grid-template-columns:1fr;}
+  .grid-3{grid-template-columns:1fr;}
+  .grid-2{grid-template-columns:1fr;}
+  .flow-row{grid-template-columns:1fr;}
+  .arrow{display:none;}
+  .brand .descriptor{display:none;}
+  .right{text-align:left;}
+  .footgrid{grid-template-columns:1fr;}
+}
