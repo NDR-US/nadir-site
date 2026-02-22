@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NADIR — Legal & Contact</title>
+  <meta name="description" content="Contact and legal notice for NADIR. Proprietary intellectual property. Controlled review requests." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">NADIR</div>
+          <div class="descriptor">Deterministic AI Decision-State Recorder</div>
+        </div>
+        <nav>
+          <a data-page="index.html" href="index.html">Overview</a>
+          <a data-page="platform.html" href="platform.html">Architecture</a>
+          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
+          <a data-page="docs.html" href="docs.html">Documents</a>
+          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
+          <a data-page="contact.html" href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap page">
+    <section class="hero">
+      <div class="kicker">Controlled Review • Intellectual Property • Minimal Disclosure</div>
+      <h1>Legal & contact</h1>
+      <p class="lead">
+        NADIR materials are proprietary. Controlled review is available upon request under appropriate boundaries.
+      </p>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <div class="card">
+        <p style="margin:0 0 10px;">
+          Email:
+          <a href="mailto:contact@nadir-ai.com">contact@nadir-ai.com</a>
+        </p>
+        <p class="small">
+          Replace this address with your final NADIR domain email once created. Do not use unrelated brand emails or enlistment email on the public site.
+        </p>
+      </div>
+    </section>
+
+    <section style="margin-top:18px;">
+      <h2>Legal & intellectual property notice</h2>
+      <div class="card">
+        <p class="small" style="margin-bottom:8px;"><strong>Proprietary Intellectual Property of Brian Covarrubias.</strong></p>
+        <div class="meta">
+          <div class="row"><span class="k">Version</span><span>V2026.02.19</span></div>
+          <div class="row"><span class="k">Location</span><span>San Diego, California, United States</span></div>
+          <div class="row"><span class="k">Status</span><span>All Rights Reserved. Unauthorized distribution prohibited.</span></div>
+        </div>
+        <hr>
+        <p class="small">
+          <strong>Disclaimer:</strong> NADIR is a private-sector compliance abstraction designed to support evidentiary and oversight functions
+          while maintaining strict IP boundaries.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <div class="footgrid">
+          <div>
+            <div class="badge">Legal • Proprietary • Controlled Review</div>
+            <div style="margin-top:10px;">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
+          </div>
+          <div class="right">
+            <div>NADIR V2026.02.19</div>
+            <div>Unauthorized distribution prohibited.</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="assets/site.js"></script>
+</body>
+</html>
