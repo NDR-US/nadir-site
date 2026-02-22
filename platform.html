@@ -1,38 +1,144 @@
-(function () {
-  const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  document.querySelectorAll('nav a[data-page]').forEach(a => {
-    const p = (a.getAttribute('data-page') || '').toLowerCase();
-    if (p === path) a.classList.add('active');
-  });
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NADIR — Technical Architecture (DWSH)</title>
+  <meta name="description" content="Technical architecture for NADIR: Differential Weight-State Hashing (DWSH), a deterministic compliance layer operably coupled to an AI inference engine." />
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const page = document.querySelector('.page');
-    if (page) requestAnimationFrame(() => page.classList.add('ready'));
-  });
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
 
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest('a');
-    if (!a) return;
-    const href = a.getAttribute('href') || '';
-    const isInternalPage = href.endsWith('.html') && !href.startsWith('http') && !href.startsWith('mailto:');
-    if (!isInternalPage) return;
+<body>
+  <header>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">NADIR</div>
+          <div class="descriptor">Deterministic AI Decision-State Recorder</div>
+        </div>
+        <nav>
+          <a data-page="index.html" href="index.html">Overview</a>
+          <a data-page="platform.html" href="platform.html">Architecture</a>
+          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
+          <a data-page="docs.html" href="docs.html">Documents</a>
+          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
+          <a data-page="contact.html" href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
 
-    e.preventDefault();
-    const page = document.querySelector('.page');
-    if (!page) return (location.href = href);
-    page.classList.remove('ready');
-    setTimeout(() => (location.href = href), 180);
-  });
+  <main class="wrap page">
+    <section class="hero">
+      <div class="kicker">Deterministic Compliance Layer • Constrained Disclosure • Verifiable Artifacts</div>
+      <h1>Technical architecture (the DWSH engine)</h1>
+      <p class="lead">
+        The innovation resides in the Differential Weight-State Hashing (DWSH) module, a deterministic compliance-layer module
+        operably coupled to an AI inference engine.
+      </p>
+    </section>
 
-  const targets = Array.from(document.querySelectorAll('section, .card, .pill, .callout'))
-    .filter(el => !el.classList.contains('no-reveal'));
-  targets.forEach(el => el.classList.add('reveal'));
+    <section>
+      <h2>DWSH system configuration</h2>
+      <p class="sub">A structured capture → deterministic abstraction → cryptographic signature pipeline designed for audit workflows.</p>
 
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(ent => {
-      if (ent.isIntersecting) ent.target.classList.add('on');
-    });
-  }, { threshold: 0.08 });
+      <div class="grid-2">
+        <div class="card">
+          <h3>Input State Capture</h3>
+          <p class="small">Receives structured inputs to generate a cryptographic hash at time T0.</p>
+        </div>
+        <div class="card">
+          <h3>State Transformation</h3>
+          <p class="small">Transforms internal vectors into a reduced abstracted representation via deterministic weighting.</p>
+        </div>
+        <div class="card">
+          <h3>NADIR Signature (DWSH)</h3>
+          <p class="small">Generates a tamper-evident cryptographic fingerprint derived from the abstracted representation.</p>
+        </div>
+        <div class="card">
+          <h3>Audit Artifact Record</h3>
+          <p class="small">Persists a chain-of-custody-ready artifact for retrieval, verification, and oversight review.</p>
+        </div>
+      </div>
+    </section>
 
-  targets.forEach(el => io.observe(el));
-})();
+    <section style="margin-top:18px;">
+      <h2>Functional constraints</h2>
+      <p class="sub">These constraints are non-negotiable. They keep the system adoption-ready and legally defensible.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Reproducibility</h3>
+          <p class="small">The fingerprint is reproducible under identical conditions (defined determinism boundary).</p>
+        </div>
+        <div class="card">
+          <h3>Non-disclosure</h3>
+          <p class="small">It does not disclose model weights or source code.</p>
+        </div>
+        <div class="card">
+          <h3>Evidentiary posture</h3>
+          <p class="small">It is suitable for evidentiary preservation and regulatory oversight.</p>
+        </div>
+        <div class="card">
+          <h3>Correctness disclaimer</h3>
+          <p class="small">Integrity is verifiable; decision correctness is not claimed by the signature itself.</p>
+        </div>
+      </div>
+
+      <hr>
+      <div class="callout">
+        <p class="small">
+          <strong>Determinism boundary:</strong> determinism is engineered, not assumed. NADIR requires canonicalization of captured state and documented
+          inference conditions (software/hardware constraints, randomness control, instrumentation stability) to ensure reproducible artifacts.
+        </p>
+      </div>
+    </section>
+
+    <section style="margin-top:18px;">
+      <h2>What NADIR does not do</h2>
+      <p class="sub">This prevents over-claiming and aligns with real oversight expectations.</p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>No weight exposure</h3>
+          <p class="small">NADIR does not require revealing model weights or proprietary architecture.</p>
+        </div>
+        <div class="card">
+          <h3>No classified dependency</h3>
+          <p class="small">NADIR does not require classified datasets, restricted systems, or government facilities.</p>
+        </div>
+        <div class="card">
+          <h3>No “explainability” promise</h3>
+          <p class="small">NADIR is audit artifact infrastructure, not interpretability-by-disclosure.</p>
+        </div>
+      </div>
+
+      <div class="cta-row" style="margin-top:14px;">
+        <a class="btn primary" href="use-cases.html">Operational Integration</a>
+        <a class="btn" href="roadmap.html">Build Roadmap</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <div class="footgrid">
+          <div>
+            <div class="badge">Architecture • DWSH Engine</div>
+            <div style="margin-top:10px;">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
+          </div>
+          <div class="right">
+            <div>NADIR V2026.02.19</div>
+            <div>Unauthorized distribution prohibited.</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="assets/site.js"></script>
+</body>
+</html>
