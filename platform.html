@@ -1,3 +1,4 @@
+<!-- platform.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -34,101 +35,96 @@
 
   <main class="wrap page">
     <section class="hero">
-      <div class="kicker">Deterministic Compliance Layer • Constrained Disclosure • Verifiable Artifacts</div>
-      <h1>Technical architecture (the DWSH engine)</h1>
+      <div class="kicker">Deterministic Compliance Layer • DWSH • Verifiable Artifacts</div>
+      <h1>Technical architecture</h1>
       <p class="lead">
-        The innovation resides in the Differential Weight-State Hashing (DWSH) module, a deterministic compliance-layer module
-        operably coupled to an AI inference engine.
+        NADIR’s core module, Differential Weight-State Hashing (DWSH), generates a deterministic abstracted representation of decision-state and signs it
+        to produce a verifiable audit artifact.
       </p>
 
       <div class="cta-row">
-        <a class="btn" href="docs.html">Document Suite</a>
-        <a class="btn" href="use-cases.html">Operational Integration</a>
+        <a class="btn primary" href="use-cases.html">Integration posture</a>
+        <a class="btn" href="docs.html">Documents</a>
       </div>
     </section>
 
     <section>
-      <h2>DWSH system configuration</h2>
-      <p class="sub">A structured capture → deterministic abstraction → cryptographic signature pipeline designed for audit workflows.</p>
+      <h2>System flow (audit artifact pipeline)</h2>
+      <p class="sub">Capture → canonicalize → abstract (DWSH) → sign → record.</p>
 
       <div class="grid-2">
         <div class="card">
-          <h3>1) Input State Capture</h3>
-          <p class="small">Receives structured inputs to generate a cryptographic hash at time T0.</p>
+          <h3>Input & context capture</h3>
+          <p class="small">Structured inputs + required runtime context are captured at time T0 inside a defined boundary.</p>
         </div>
         <div class="card">
-          <h3>2) State Transformation</h3>
-          <p class="small">Transforms internal vectors into a reduced abstracted representation via deterministic weighting.</p>
+          <h3>Canonicalization</h3>
+          <p class="small">Deterministic serialization and normalization prevent accidental entropy across runs.</p>
         </div>
         <div class="card">
-          <h3>3) NADIR Signature (DWSH)</h3>
-          <p class="small">Generates a tamper-evident cryptographic fingerprint derived from the abstracted representation.</p>
+          <h3>DWSH abstraction</h3>
+          <p class="small">Internal state is transformed into a reduced abstracted representation via deterministic weighting.</p>
         </div>
         <div class="card">
-          <h3>4) Audit Artifact Record</h3>
-          <p class="small">Persists a chain-of-custody-ready artifact for retrieval, verification, and oversight review.</p>
+          <h3>Signature + record</h3>
+          <p class="small">A tamper-evident fingerprint is generated and stored with provenance metadata for verification.</p>
         </div>
       </div>
     </section>
 
     <section style="margin-top:18px;">
       <h2>Functional constraints</h2>
-      <p class="sub">These constraints are non-negotiable. They keep the system adoption-ready and legally defensible.</p>
+      <p class="sub">Non-negotiable constraints that keep the system defensible and adoption-ready.</p>
 
-      <div class="card">
-        <div class="grid-2">
-          <div>
-            <h3 style="margin-bottom:8px;">Reproducibility</h3>
-            <p class="small" style="margin-bottom:0;">The fingerprint is reproducible under identical conditions (defined determinism boundary).</p>
-          </div>
-
-          <div>
-            <h3 style="margin-bottom:8px;">Non-disclosure</h3>
-            <p class="small" style="margin-bottom:0;">It does not disclose model weights or source code.</p>
-          </div>
-
-          <div>
-            <h3 style="margin-bottom:8px;">Evidentiary posture</h3>
-            <p class="small" style="margin-bottom:0;">It is suitable for evidentiary preservation and regulatory oversight.</p>
-          </div>
-
-          <div>
-            <h3 style="margin-bottom:8px;">Correctness disclaimer</h3>
-            <p class="small" style="margin-bottom:0;">Integrity is verifiable; decision correctness is not claimed by the signature itself.</p>
-          </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Reproducibility</h3>
+          <p class="small">Artifacts are reproducible under identical conditions inside the determinism boundary.</p>
         </div>
+        <div class="card">
+          <h3>Constrained disclosure</h3>
+          <p class="small">Verification does not require revealing weights, source code, or proprietary architecture.</p>
+        </div>
+        <div class="card">
+          <h3>Evidentiary posture</h3>
+          <p class="small">Record format supports preservation and review under chain-of-custody expectations.</p>
+        </div>
+        <div class="card">
+          <h3>Correctness boundary</h3>
+          <p class="small">Integrity is verifiable; correctness of the decision is not claimed by the signature.</p>
+        </div>
+      </div>
 
-        <hr>
-
-        <p class="small" style="margin-bottom:0;">
+      <div class="callout" style="margin-top:14px;">
+        <p class="small">
           <strong>Determinism boundary:</strong> determinism is engineered, not assumed. NADIR requires canonicalization of captured state and documented
-          inference conditions (software/hardware constraints, randomness control, instrumentation stability) to ensure reproducible artifacts.
+          inference conditions (software/hardware constraints, randomness control, instrumentation stability).
         </p>
       </div>
     </section>
 
     <section style="margin-top:18px;">
       <h2>What NADIR does not do</h2>
-      <p class="sub">This prevents over-claiming and aligns with real oversight expectations.</p>
+      <p class="sub">Boundaries that reduce legal risk and prevent over-claiming.</p>
 
       <div class="grid-3">
         <div class="card">
           <h3>No weight exposure</h3>
-          <p class="small">NADIR does not require revealing model weights or proprietary architecture.</p>
+          <p class="small">No requirement to reveal weights or proprietary model internals.</p>
         </div>
         <div class="card">
           <h3>No classified dependency</h3>
-          <p class="small">NADIR does not require classified datasets, restricted systems, or government facilities.</p>
+          <p class="small">No requirement for classified datasets, restricted systems, or government facilities.</p>
         </div>
         <div class="card">
-          <h3>No explainability promise</h3>
-          <p class="small">NADIR is audit artifact infrastructure, not interpretability-by-disclosure.</p>
+          <h3>No interpretability promise</h3>
+          <p class="small">Audit artifact infrastructure, not interpretability-by-disclosure.</p>
         </div>
       </div>
 
       <div class="cta-row" style="margin-top:14px;">
-        <a class="btn primary" href="use-cases.html">Operational Integration</a>
-        <a class="btn" href="roadmap.html">Build Roadmap</a>
+        <a class="btn primary" href="roadmap.html">Build roadmap</a>
+        <a class="btn" href="contact.html">Controlled review</a>
       </div>
     </section>
 
