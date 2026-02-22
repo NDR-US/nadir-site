@@ -40,6 +40,11 @@
         The innovation resides in the Differential Weight-State Hashing (DWSH) module, a deterministic compliance-layer module
         operably coupled to an AI inference engine.
       </p>
+
+      <div class="cta-row">
+        <a class="btn" href="docs.html">Document Suite</a>
+        <a class="btn" href="use-cases.html">Operational Integration</a>
+      </div>
     </section>
 
     <section>
@@ -48,19 +53,19 @@
 
       <div class="grid-2">
         <div class="card">
-          <h3>Input State Capture</h3>
+          <h3>1) Input State Capture</h3>
           <p class="small">Receives structured inputs to generate a cryptographic hash at time T0.</p>
         </div>
         <div class="card">
-          <h3>State Transformation</h3>
+          <h3>2) State Transformation</h3>
           <p class="small">Transforms internal vectors into a reduced abstracted representation via deterministic weighting.</p>
         </div>
         <div class="card">
-          <h3>NADIR Signature (DWSH)</h3>
+          <h3>3) NADIR Signature (DWSH)</h3>
           <p class="small">Generates a tamper-evident cryptographic fingerprint derived from the abstracted representation.</p>
         </div>
         <div class="card">
-          <h3>Audit Artifact Record</h3>
+          <h3>4) Audit Artifact Record</h3>
           <p class="small">Persists a chain-of-custody-ready artifact for retrieval, verification, and oversight review.</p>
         </div>
       </div>
@@ -70,28 +75,32 @@
       <h2>Functional constraints</h2>
       <p class="sub">These constraints are non-negotiable. They keep the system adoption-ready and legally defensible.</p>
 
-      <div class="grid-2">
-        <div class="card">
-          <h3>Reproducibility</h3>
-          <p class="small">The fingerprint is reproducible under identical conditions (defined determinism boundary).</p>
-        </div>
-        <div class="card">
-          <h3>Non-disclosure</h3>
-          <p class="small">It does not disclose model weights or source code.</p>
-        </div>
-        <div class="card">
-          <h3>Evidentiary posture</h3>
-          <p class="small">It is suitable for evidentiary preservation and regulatory oversight.</p>
-        </div>
-        <div class="card">
-          <h3>Correctness disclaimer</h3>
-          <p class="small">Integrity is verifiable; decision correctness is not claimed by the signature itself.</p>
-        </div>
-      </div>
+      <div class="card">
+        <div class="grid-2">
+          <div>
+            <h3 style="margin-bottom:8px;">Reproducibility</h3>
+            <p class="small" style="margin-bottom:0;">The fingerprint is reproducible under identical conditions (defined determinism boundary).</p>
+          </div>
 
-      <hr>
-      <div class="callout">
-        <p class="small">
+          <div>
+            <h3 style="margin-bottom:8px;">Non-disclosure</h3>
+            <p class="small" style="margin-bottom:0;">It does not disclose model weights or source code.</p>
+          </div>
+
+          <div>
+            <h3 style="margin-bottom:8px;">Evidentiary posture</h3>
+            <p class="small" style="margin-bottom:0;">It is suitable for evidentiary preservation and regulatory oversight.</p>
+          </div>
+
+          <div>
+            <h3 style="margin-bottom:8px;">Correctness disclaimer</h3>
+            <p class="small" style="margin-bottom:0;">Integrity is verifiable; decision correctness is not claimed by the signature itself.</p>
+          </div>
+        </div>
+
+        <hr>
+
+        <p class="small" style="margin-bottom:0;">
           <strong>Determinism boundary:</strong> determinism is engineered, not assumed. NADIR requires canonicalization of captured state and documented
           inference conditions (software/hardware constraints, randomness control, instrumentation stability) to ensure reproducible artifacts.
         </p>
@@ -112,7 +121,7 @@
           <p class="small">NADIR does not require classified datasets, restricted systems, or government facilities.</p>
         </div>
         <div class="card">
-          <h3>No “explainability” promise</h3>
+          <h3>No explainability promise</h3>
           <p class="small">NADIR is audit artifact infrastructure, not interpretability-by-disclosure.</p>
         </div>
       </div>
