@@ -4,107 +4,69 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NADIR — Deterministic AI Decision-State Recorder</title>
-  <meta name="description" content="NADIR is a deterministic compliance-layer abstraction designed to bridge the accountability gap between observable system inputs and opaque internal inference transformations without exposing proprietary model architecture or weights." />
+  <meta name="description" content="NADIR is a compliance layer for accountable autonomous systems—deterministic, tamper-evident audit artifacts without exposing proprietary model architecture or weights." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css" />
-
-  <style>
-    .brand-name {
-      font-family: "Julius Sans One", sans-serif;
-      letter-spacing: 0.25em;
-      text-decoration: none;
-      color: inherit;
-      transition:
-        letter-spacing 0.35s ease,
-        opacity 0.35s ease,
-        transform 0.35s ease;
-    }
-
-    .brand-name:hover {
-      letter-spacing: 0.32em;
-      opacity: 1;
-    }
-
-    .brand-name:active {
-      transform: translateY(1px);
-    }
-  </style>
 </head>
 
 <body>
-  <header>
-    <div class="wrap">
-      <div class="topbar">
 
-        <div class="brand">
-          <a href="index.html" class="brand-name">NADIR</a>
-          <div class="descriptor">
-            Deterministic AI Decision-State Recorder
-          </div>
-        </div>
-
-        <nav>
-          <a href="index.html">Overview</a>
-          <a href="platform.html">Architecture</a>
-          <a href="use-cases.html">Integration</a>
-          <a href="docs.html">Documents</a>
-          <a href="roadmap.html">Roadmap</a>
-          <a href="contact.html">Contact</a>
-        </nav>
-
-      </div>
+  <!-- Minimal opening header (no nav on the hero) -->
+  <header class="minimal-header">
+    <div class="wrap header-inner">
+      <div class="mark">NADIR</div>
     </div>
   </header>
 
   <main class="wrap page">
 
-    <!-- Hero Section -->
+    <!-- HERO -->
     <section class="hero">
-      <div class="hero-grid">
-        <div>
-          <div class="kicker">A Compliance Layer for Accountable Autonomous Systems</div>
-          <h1>NADIR: Deterministic AI Decision-State Recorder</h1>
-          <p class="lead">
-            Bridging the accountability gap between observable system inputs and opaque internal inference transformations
-            without exposing proprietary model architecture or weights.
-          </p>
+      <div class="kicker">A Compliance Layer for Accountable Autonomous Systems</div>
 
-          <div class="cta-row">
-            <a class="btn primary" href="platform.html">How It Works</a>
-            <a class="btn" href="docs.html">Document Suite</a>
-          </div>
+      <h1>NADIR: Deterministic AI<br>Decision-State Recorder</h1>
 
-          <hr>
+      <p class="lead">
+        Bridging the accountability gap between observable system inputs and opaque internal inference transformations
+        without exposing proprietary model architecture or weights.
+      </p>
 
-          <div class="callout">
-            <p class="small">
-              <strong>Reality-bound claim:</strong> NADIR is designed to produce deterministic, tamper-evident audit artifacts for review.
-              It does not claim to explain model internals or guarantee decision correctness.
-              It claims integrity, reproducibility (under defined conditions),
-              and constrained-disclosure verification.
-            </p>
-          </div>
-        </div>
-
-        <aside class="card">
-          <h2 style="margin-bottom:8px;">Legal & Control</h2>
-          <div class="meta">
-            <div class="row"><span class="k">Owner</span><span>Brian Covarrubias</span></div>
-            <div class="row"><span class="k">Version</span><span>V2026.02.19</span></div>
-            <div class="row"><span class="k">Location</span><span>San Diego, California, United States</span></div>
-            <div class="row"><span class="k">Status</span><span>All Rights Reserved</span></div>
-          </div>
-          <hr>
-          <p class="small">Unauthorized distribution prohibited.</p>
-        </aside>
+      <div class="cta-row">
+        <a class="btn primary" href="platform.html">How It Works</a>
+        <a class="btn" href="docs.html">Document Suite</a>
       </div>
     </section>
 
-    <!-- Problem Section -->
-    <section>
+    <!-- NAV (moved below hero so the page doesn’t “start” with navigation) -->
+    <section style="margin-top:22px;">
+      <div class="card" style="padding:16px 18px;">
+        <nav class="home-nav" aria-label="Primary">
+          <a data-page="index.html" href="index.html">Overview</a>
+          <a data-page="platform.html" href="platform.html">Architecture</a>
+          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
+          <a data-page="docs.html" href="docs.html">Documents</a>
+          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
+          <a data-page="contact.html" href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- REALITY-BOUND CLAIM -->
+    <section style="margin-top:18px;">
+      <div class="callout">
+        <p class="small">
+          <strong>Reality-bound claim:</strong> NADIR is designed to produce deterministic, tamper-evident audit artifacts for review.
+          It does not claim to “explain” model internals or guarantee decision correctness. It claims integrity, reproducibility
+          (under defined conditions), and constrained-disclosure verification.
+        </p>
+      </div>
+    </section>
+
+    <!-- THE PROBLEM -->
+    <section style="margin-top:18px;">
       <h2>The problem</h2>
       <p class="sub">
         Autonomous systems lack structured mechanisms for reconstructing internal decision-state evolution during critical events.
@@ -117,7 +79,7 @@
           <p class="small">Review is reduced to surface telemetry rather than decision-state evidence.</p>
         </div>
         <div class="card">
-          <h3>Audit & oversight</h3>
+          <h3>Audit &amp; oversight</h3>
           <p class="small">Independent validation is constrained by trade secret boundaries.</p>
         </div>
         <div class="card">
@@ -127,15 +89,17 @@
       </div>
     </section>
 
-    <!-- Document Suite -->
+    <!-- DOCUMENT SUITE -->
     <section style="margin-top:18px;">
       <h2>Document suite</h2>
-      <p class="sub">Four disclosure dialects aligned to leadership, IP, operational, and minimal disclosure contexts.</p>
+      <p class="sub">
+        Four disclosure dialects aligned to leadership, IP, operational, and minimal disclosure contexts.
+      </p>
 
       <div class="grid-2">
         <div class="card">
           <h3>I. Executive Brief</h3>
-          <p class="small">Policy & leadership ready.</p>
+          <p class="small">Policy &amp; leadership ready.</p>
           <div class="cta-row"><a class="btn" href="docs.html">View</a></div>
         </div>
 
@@ -159,24 +123,23 @@
       </div>
     </section>
 
-  </main>
-
-  <footer>
-    <div class="wrap">
-      <div class="footgrid">
-        <div>
-          <div class="badge">NADIR • Deterministic AI Decision-State Recorder</div>
-          <div style="margin-top:10px;">
-            Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.
+    <!-- FOOTER -->
+    <footer>
+      <div class="wrap">
+        <div class="footgrid">
+          <div>
+            <div class="badge">NADIR • Deterministic AI Decision-State Recorder</div>
+            <div style="margin-top:10px;">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
+          </div>
+          <div class="right">
+            <div>NADIR V2026.02.19</div>
+            <div>Unauthorized distribution prohibited.</div>
           </div>
         </div>
-        <div class="right">
-          <div>NADIR V2026.02.19</div>
-          <div>Unauthorized distribution prohibited.</div>
-        </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+
+  </main>
 
   <script src="assets/site.js"></script>
 </body>
