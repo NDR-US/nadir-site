@@ -2,117 +2,217 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NADIR — Deterministic AI Decision-State Recorder</title>
-  <meta name="description" content="NADIR is a deterministic compliance-layer abstraction designed to bridge the accountability gap between observable system inputs and opaque internal inference transformations without exposing proprietary model architecture or weights." />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
 
+  <title>NADIR — Deterministic AI Decision-State Recorder</title>
+  <meta name="description" content="NADIR is a compliance layer that produces deterministic, tamper-evident decision artifacts for AI systems under constrained disclosure." />
+
+  <!-- Fonts (optional) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+
+  <!-- Your site stylesheet -->
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
 <body>
+  <!-- HEADER -->
+  <header>
+    <div class="wrap">
+      <div class="topbar">
 
-<header>
-  <div class="wrap">
-    <div class="topbar">
-
-      <div class="brand">
-        <a href="index.html" class="brand-link">
+        <div class="brand">
+          <!-- LOGO (MP4) — slide-in on load -->
           <div class="logo-container">
-            <div class="sliding-wrapper">
-              <video class="nadir-video" autoplay loop muted playsinline preload="auto">
-                <source src="assets/ndr-logo.mp4" type="video/mp4">
-              </video>
-            </div>
+            <video class="logo-video" autoplay loop muted playsinline preload="auto">
+              <!-- IMPORTANT: relative path for GitHub Pages -->
+              <source src="assets/ndr-logo.mp4" type="video/mp4">
+            </video>
           </div>
-        </a>
 
-        <div class="descriptor">
-          Deterministic AI Decision-State Recorder
+          <div class="descriptor">Deterministic AI Decision-State Recorder</div>
         </div>
+
+        <nav>
+          <a class="active" href="index.html">Overview</a>
+          <a href="platform.html">Architecture</a>
+          <a href="use-cases.html">Integration</a>
+          <a href="docs.html">Documents</a>
+          <a href="roadmap.html">Roadmap</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+
       </div>
-
-      <nav>
-        <a class="active" href="index.html">Overview</a>
-        <a href="platform.html">Architecture</a>
-        <a href="use-cases.html">Integration</a>
-        <a href="docs.html">Documents</a>
-        <a href="roadmap.html">Roadmap</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-
     </div>
-  </div>
-</header>
+  </header>
 
-<main class="wrap page">
+  <!-- PAGE -->
+  <main class="page">
+    <div class="wrap">
 
-  <section class="hero">
-    <div class="hero-grid">
-
-      <div>
-        <div class="kicker">A Compliance Layer for Accountable Autonomous Systems</div>
-
-        <h1>
-          NADIR: Deterministic AI Decision-State Recorder
-        </h1>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="kicker">A compliance layer for accountable autonomous systems</div>
+        <h1>DETERMINISTIC,<br/>TAMPER-EVIDENT<br/>DECISION<br/>ARTIFACTS FOR<br/>AI SYSTEMS</h1>
 
         <p class="lead">
-          Bridging the accountability gap between observable system inputs and opaque internal inference transformations
-          without exposing proprietary model architecture or weights.
+          NADIR produces reproducible forensic-grade integrity records at the inference boundary to support oversight,
+          incident reconstruction, and verification—without exposing model weights, architecture, or proprietary source code.
         </p>
 
-        <div class="cta-row">
-          <a class="btn primary" href="platform.html">How It Works</a>
-          <a class="btn" href="docs.html">Document Suite</a>
+        <div class="cta-row" style="margin-top:18px;">
+          <a class="btn primary" href="platform.html">How it works</a>
+          <a class="btn" href="docs.html">Briefs &amp; documents</a>
         </div>
+      </section>
 
-        <hr>
+      <hr/>
 
+      <!-- WHAT IT IS -->
+      <section>
+        <h2>What it is</h2>
         <div class="callout">
-          <p class="small">
-            <strong>Reality-bound claim:</strong> NADIR is designed to produce deterministic, tamper-evident audit artifacts for review.
-            It does not claim to “explain” model internals or guarantee decision correctness.
+          <p class="sub" style="margin:0;">
+            A compliance overlay that produces deterministic audit artifacts at inference time.
+            It is not a model, not a training method, and not a safety policy replacement.
           </p>
         </div>
-      </div>
 
-      <aside class="card">
-        <h2>Legal & Control</h2>
-        <div class="meta">
-          <div class="row"><span class="k">Owner</span><span>Brian Covarrubias</span></div>
-          <div class="row"><span class="k">Version</span><span>V2026.02.19</span></div>
-          <div class="row"><span class="k">Location</span><span>San Diego, California, United States</span></div>
-          <div class="row"><span class="k">Status</span><span>All Rights Reserved</span></div>
+        <div class="grid-2" style="margin-top:14px;">
+          <div class="card">
+            <h3>Deterministic capture</h3>
+            <p class="small">Canonicalized records designed for repeatability under defined conditions.</p>
+          </div>
+
+          <div class="card">
+            <h3>Tamper-evident integrity</h3>
+            <p class="small">Signatures and verification fields support chain-of-custody workflows.</p>
+          </div>
+
+          <div class="card">
+            <h3>Constrained disclosure</h3>
+            <p class="small">Verification without disclosing weights, architecture details, or proprietary code paths.</p>
+          </div>
+
+          <div class="card">
+            <h3>Audit workflow fit</h3>
+            <p class="small">Outputs structured for retention, review, and oversight reporting.</p>
+          </div>
         </div>
-      </aside>
+      </section>
+
+      <hr/>
+
+      <!-- WHERE IT FITS -->
+      <section>
+        <h2>Where it fits</h2>
+        <p class="sub">
+          NADIR is designed for mission, regulated, and high-liability deployments where accountability must exist without forcing IP disclosure.
+        </p>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Autonomy &amp; robotics</h3>
+            <p class="small">Route selection, obstacle response, escalation and failover review artifacts.</p>
+          </div>
+
+          <div class="card">
+            <h3>Decision support</h3>
+            <p class="small">Analyst-assist integrity records for prioritization and escalation pathways.</p>
+          </div>
+
+          <div class="card">
+            <h3>Post-incident reconstruction</h3>
+            <p class="small">Evidentiary posture for review boards under constrained disclosure requirements.</p>
+          </div>
+        </div>
+      </section>
+
+      <hr/>
+
+      <!-- BOUNDARY CLAIMS -->
+      <section>
+        <h2>Boundary claims</h2>
+        <p class="sub">
+          Keep the public site precise. Avoid over-claiming interpretability or correctness. State what you provide: integrity and reproducibility.
+        </p>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>No weight exposure</h3>
+            <p class="small">Verification without disclosing model weights, architecture, or source code.</p>
+          </div>
+
+          <div class="card">
+            <h3>No classified dependency</h3>
+            <p class="small">Does not require classified datasets, restricted systems, or government facilities.</p>
+          </div>
+
+          <div class="card">
+            <h3>No safety replacement</h3>
+            <p class="small">Does not replace safety engineering, policy gating, or human authorization controls.</p>
+          </div>
+        </div>
+
+        <div class="cta-row" style="margin-top:14px;">
+          <a class="btn" href="docs.html">Briefs &amp; documents</a>
+          <a class="btn" href="contact.html">Request controlled review</a>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer>
+        <div class="footgrid">
+          <div>
+            <span class="badge">NADIR • FORENSIC COMPLIANCE LAYER</span>
+            <p class="small" style="margin-top:12px;">
+              Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.
+            </p>
+          </div>
+
+          <div class="right">
+            <div>NADIR V2026.02.19</div>
+            <div>Unauthorized distribution prohibited.</div>
+          </div>
+        </div>
+      </footer>
 
     </div>
-  </section>
+  </main>
 
-</main>
+  <!-- Logo animation (MP4 slide-in) -->
+  <style>
+    .logo-container{
+      width: 320px;        /* adjust */
+      height: 70px;        /* adjust */
+      display:flex;
+      align-items:center;
 
-<footer>
-  <div class="wrap">
-    <div class="footgrid">
-      <div>
-        <div class="badge">
-          NADIR • Deterministic AI Decision-State Recorder
-        </div>
-        <div style="margin-top:10px;">
-          Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.
-        </div>
-      </div>
+      transform: translateX(-120%);
+      opacity: 0;
+      animation: nadirSlideIn 2.5s ease-out forwards;
+    }
 
-      <div class="right">
-        <div>NADIR V2026.02.19</div>
-        <div>Unauthorized distribution prohibited.</div>
-      </div>
-    </div>
-  </div>
-</footer>
+    .logo-video{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit: contain;
+      mix-blend-mode: normal;
+    }
 
+    @keyframes nadirSlideIn{
+      to{ transform: translateX(0); opacity:1; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .logo-container{ animation:none; transform:none; opacity:1; }
+    }
+  </style>
+
+  <!-- Optional site JS -->
+  <script src="assets/site.js" defer></script>
 </body>
 </html>
