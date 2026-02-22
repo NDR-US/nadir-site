@@ -224,3 +224,32 @@ footer{
   .topbar{ flex-direction:column; align-items:flex-start; }
   nav{ justify-content:flex-start; }
 }
+/* Minimal opening header */
+.minimal-header{
+  position:fixed;
+  top:0;
+  width:100%;
+  background:transparent;
+  border:none;
+  backdrop-filter:none;
+  padding:24px 0;
+  z-index:10;
+}
+
+.header-inner{
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+}
+
+.minimal-header .mark{
+  font-family:"Julius Sans One", sans-serif;
+  letter-spacing:.36em;
+  font-size:20px;
+  color:rgba(255,255,255,.85);
+}
+
+/* Push hero down slightly for breathing */
+.hero{
+  padding-top:110px;
+}
