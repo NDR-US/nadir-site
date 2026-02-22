@@ -8,17 +8,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
 <body>
+
 <header>
   <div class="wrap">
     <div class="topbar">
 
       <div class="brand">
-
-        <a href="index.html" class="brand-link" aria-label="NADIR Home">
+        <a href="index.html" class="brand-link">
           <div class="logo-container">
             <video class="logo-video" autoplay loop muted playsinline preload="auto">
               <source src="/assets/ndr-logo.mp4" type="video/mp4">
@@ -29,7 +30,6 @@
         <div class="descriptor">
           Deterministic AI Decision-State Recorder
         </div>
-
       </div>
 
       <nav>
@@ -44,52 +44,19 @@
     </div>
   </div>
 </header>
+
 <main class="wrap page">
 
-<section class="hero">
-  <div class="kicker">
-    A Compliance Layer for Accountable Autonomous Systems
-  </div>
+  <section class="hero">
+    <div class="kicker">Forensic Compliance Layer for AI</div>
+    <h1>Deterministic AI Decision-State Recorder</h1>
+    <p class="lead">
+      NADIR provides a tamper-evident inference recording layer that enables forensic-grade verification
+      without exposing model internals or proprietary weights.
+    </p>
+  </section>
 
-  <h1>
-    Deterministic, tamper-evident decision artifacts for AI systems
-  </h1>
-
-  <p class="lead">
-    NADIR produces reproducible forensic-grade integrity records at the inference boundary,
-    enabling third-party verification without exposing proprietary model internals.
-  </p>
-
-  <div class="cta-row">
-    <a class="btn primary" href="platform.html">Technical Architecture</a>
-    <a class="btn" href="docs.html">Document Suite</a>
-  </div>
-</section>
-
-<section>
-  <h2>The problem</h2>
-  <p class="sub">
-    Autonomous systems lack structured mechanisms for reconstructing decision-state evolution
-    during critical events. This creates post-incident ambiguity and weak audit defensibility.
-  </p>
-
-  <div class="grid-3">
-    <div class="card">
-      <h3>Opaque Inference</h3>
-      <p class="small">Internal transformations are not preserved in a verifiable format.</p>
-    </div>
-
-    <div class="card">
-      <h3>Audit Gaps</h3>
-      <p class="small">Telemetry alone does not constitute forensic integrity.</p>
-    </div>
-
-    <div class="card">
-      <h3>Liability Exposure</h3>
-      <p class="small">Lack of reproducible artifacts increases dispute risk.</p>
-    </div>
-  </div>
-</section>
+</main>
 
 <footer>
   <div class="wrap">
@@ -107,8 +74,6 @@
     </div>
   </div>
 </footer>
-
-</main>
 
 </body>
 </html>
