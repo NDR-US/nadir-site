@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NADIR — Document Suite</title>
+  <meta name="description" content="NADIR document suite: Executive, Patent-Aligned, Operational Security Integration, and Clearance-Sensitive briefs." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">NADIR</div>
+          <div class="descriptor">Deterministic AI Decision-State Recorder</div>
+        </div>
+        <nav>
+          <a data-page="index.html" href="index.html">Overview</a>
+          <a data-page="platform.html" href="platform.html">Architecture</a>
+          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
+          <a data-page="docs.html" href="docs.html">Documents</a>
+          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
+          <a data-page="contact.html" href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap page">
+    <section class="hero">
+      <div class="kicker">Disclosure Levels • Briefing Dialects • Controlled Access</div>
+      <h1>Document suite</h1>
+      <p class="lead">
+        NADIR materials are structured for distinct audiences while maintaining strict intellectual property boundaries.
+        Add your PDF links below as they are finalized.
+      </p>
+    </section>
+
+    <section>
+      <h2>Briefs (download links)</h2>
+      <p class="sub">Replace each placeholder with your uploaded PDF URL.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>I. Executive Brief: Policy & Leadership Ready</h3>
+          <p class="small">Leadership framing: problem, architecture, strategic value.</p>
+          <div class="cta-row"><a class="btn" href="#" onclick="alert('Upload PDF and replace this link.');return false;">Open PDF</a></div>
+        </div>
+        <div class="card">
+          <h3>II. Patent-Aligned Architecture: Technical Framework</h3>
+          <p class="small">System configuration, method language, constraints.</p>
+          <div class="cta-row"><a class="btn" href="#" onclick="alert('Upload PDF and replace this link.');return false;">Open PDF</a></div>
+        </div>
+        <div class="card">
+          <h3>III. Operational Security Integration: DoD/DHS Framing</h3>
+          <p class="small">Overlay integration, chain-of-custody posture, minimal exposure.</p>
+          <div class="cta-row"><a class="btn" href="#" onclick="alert('Upload PDF and replace this link.');return false;">Open PDF</a></div>
+        </div>
+        <div class="card">
+          <h3>IV. Clearance-Sensitive Briefing: Minimal Disclosure Overview</h3>
+          <p class="small">Scope boundaries and non-interference affirmations.</p>
+          <div class="cta-row"><a class="btn" href="#" onclick="alert('Upload PDF and replace this link.');return false;">Open PDF</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-top:18px;">
+      <h2>Handling note</h2>
+      <div class="callout">
+        <p class="small">
+          <strong>Recommendation:</strong> keep sensitive details off the public site. Host redacted versions publicly and provide controlled access
+          for detailed briefs under a separate agreement.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <div class="footgrid">
+          <div>
+            <div class="badge">Documents • Multi-Disclosure Levels</div>
+            <div style="margin-top:10px;">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
+          </div>
+          <div class="right">
+            <div>NADIR V2026.02.19</div>
+            <div>Unauthorized distribution prohibited.</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="assets/site.js"></script>
+</body>
+</html>
