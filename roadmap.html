@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NADIR — Legal & Contact</title>
-  <meta name="description" content="Contact and legal notice for NADIR. Proprietary intellectual property. Controlled review requests." />
+  <title>NADIR — Roadmap</title>
+  <meta name="description" content="NADIR build roadmap: deterministic artifact prototype, verification harness, chain-of-custody workflow, and controlled expansion." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,39 +34,53 @@
 
   <main class="wrap page">
     <section class="hero">
-      <div class="kicker">Controlled Review • Intellectual Property • Minimal Disclosure</div>
-      <h1>Legal & contact</h1>
+      <div class="kicker">Prototype • Verification • Audit Workflow • Expansion</div>
+      <h1>Roadmap</h1>
       <p class="lead">
-        NADIR materials are proprietary. Controlled review is available upon request under appropriate boundaries.
+        The goal is to move from concept to proof: a deterministic artifact pipeline, a verification harness,
+        and a chain-of-custody workflow—before expanding scope.
       </p>
     </section>
 
     <section>
-      <h2>Contact</h2>
-      <div class="card">
-        <p style="margin:0 0 10px;">
-          Email:
-          <a href="mailto:contact@nadir-ai.com">contact@nadir-ai.com</a>
-        </p>
-        <p class="small">
-          Replace this address with your final NADIR domain email once created. Do not use unrelated brand emails or enlistment email on the public site.
-        </p>
+      <h2>Phase 1 — Minimal viable artifact (MVA)</h2>
+      <p class="sub">Deliverable: deterministic artifact record + reproducibility tests under defined conditions.</p>
+
+      <div class="grid-2">
+        <div class="card"><h3>Define capture boundary</h3><p class="small">Specify what is captured at inference time and what is explicitly excluded to preserve confidentiality.</p></div>
+        <div class="card"><h3>Canonicalize</h3><p class="small">Normalize ordering, rounding, serialization formats, and metadata to eliminate accidental entropy.</p></div>
+        <div class="card"><h3>Implement DWSH signing</h3><p class="small">Generate tamper-evident signatures over the abstracted representation.</p></div>
+        <div class="card"><h3>Verification harness</h3><p class="small">Prove repeatability under identical conditions; detect tampering and mismatch states.</p></div>
       </div>
     </section>
 
     <section style="margin-top:18px;">
-      <h2>Legal & intellectual property notice</h2>
-      <div class="card">
-        <p class="small" style="margin-bottom:8px;"><strong>Proprietary Intellectual Property of Brian Covarrubias.</strong></p>
-        <div class="meta">
-          <div class="row"><span class="k">Version</span><span>V2026.02.19</span></div>
-          <div class="row"><span class="k">Location</span><span>San Diego, California, United States</span></div>
-          <div class="row"><span class="k">Status</span><span>All Rights Reserved. Unauthorized distribution prohibited.</span></div>
-        </div>
-        <hr>
+      <h2>Phase 2 — Audit workflow & chain-of-custody</h2>
+      <p class="sub">Deliverable: retention-ready record format + retrieval + verification procedure.</p>
+
+      <div class="grid-3">
+        <div class="card"><h3>Record schema</h3><p class="small">Timestamping, provenance metadata, input hash, abstraction ID, signature, verification fields.</p></div>
+        <div class="card"><h3>Retention posture</h3><p class="small">Storage and retention aligned to evidentiary preservation and audit review practices.</p></div>
+        <div class="card"><h3>Review output</h3><p class="small">Controlled reports designed for oversight review without disclosing proprietary internals.</p></div>
+      </div>
+    </section>
+
+    <section style="margin-top:18px;">
+      <h2>Phase 3 — Controlled expansion</h2>
+      <p class="sub">Deliverable: broader coverage while maintaining determinism and constrained disclosure.</p>
+
+      <div class="grid-2">
+        <div class="card"><h3>Model class extension</h3><p class="small">Define capture and canonicalization per model class and deployment mode.</p></div>
+        <div class="card"><h3>Environment hardening</h3><p class="small">Document determinism boundaries across hardware, batching, and distributed inference.</p></div>
+        <div class="card"><h3>Third-party validation protocol</h3><p class="small">Verification steps suitable for independent oversight without requiring trade secret disclosure.</p></div>
+        <div class="card"><h3>Compliance alignment</h3><p class="small">Map artifacts to oversight expectations without claiming correctness or interpretability-by-disclosure.</p></div>
+      </div>
+
+      <hr>
+      <div class="callout">
         <p class="small">
-          <strong>Disclaimer:</strong> NADIR is a private-sector compliance abstraction designed to support evidentiary and oversight functions
-          while maintaining strict IP boundaries.
+          <strong>Quality bar:</strong> NADIR expands only after determinism and verification are proven in constrained scope.
+          This is the difference between “idea” and “infrastructure.”
         </p>
       </div>
     </section>
@@ -75,7 +89,7 @@
       <div class="wrap">
         <div class="footgrid">
           <div>
-            <div class="badge">Legal • Proprietary • Controlled Review</div>
+            <div class="badge">Roadmap • Proof → Workflow → Expansion</div>
             <div style="margin-top:10px;">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
           </div>
           <div class="right">
