@@ -4,280 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NADIR — Deterministic AI Decision-State Recorder</title>
-  <meta name="description" content="NADIR is a deterministic compliance-layer abstraction for audit-grade traceability of AI decision pathways without exposing proprietary model architecture." />
+  <meta name="description" content="NADIR is a deterministic compliance-layer abstraction designed to bridge the accountability gap between observable system inputs and opaque internal inference transformations without exposing proprietary model architecture or weights." />
 
-  <!-- Fonts: Julius Sans for headings, Inter for body -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --bg: #0b1020;
-      --panel: rgba(255,255,255,0.04);
-      --text: rgba(255,255,255,0.92);
-      --muted: rgba(255,255,255,0.70);
-      --faint: rgba(255,255,255,0.45);
-      --line: rgba(255,255,255,0.10);
-      --accent: rgba(255,255,255,0.92); /* keep neutral; avoid “cyber” colors */
-      --max: 1040px;
-      --radius: 14px;
-    }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 50% -10%, rgba(255,255,255,0.08), transparent 60%),
-                  radial-gradient(900px 500px at 80% 30%, rgba(255,255,255,0.05), transparent 55%),
-                  var(--bg);
-      color: var(--text);
-      line-height: 1.45;
-    }
-
-    a{ color: var(--text); text-decoration: none; }
-    a:hover{ text-decoration: underline; }
-
-    .wrap{ max-width: var(--max); margin:0 auto; padding: 0 20px; }
-
-    /* Top bar */
-    header{
-      position: sticky;
-      top:0;
-      backdrop-filter: blur(10px);
-      background: rgba(11,16,32,0.78);
-      border-bottom: 1px solid var(--line);
-      z-index: 10;
-    }
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding: 14px 0;
-      gap: 16px;
-    }
-    .brand{
-      display:flex;
-      align-items:baseline;
-      gap: 12px;
-      white-space: nowrap;
-    }
-    .brand .name{
-      font-family: "Julius Sans One", sans-serif;
-      letter-spacing: 0.26em;
-      font-size: 16px;
-      text-transform: uppercase;
-    }
-    .brand .tag{
-      font-size: 12px;
-      color: var(--muted);
-      border-left: 1px solid var(--line);
-      padding-left: 12px;
-    }
-    nav{
-      display:flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      justify-content:flex-end;
-    }
-    nav a{
-      font-size: 12px;
-      color: var(--muted);
-      padding: 8px 10px;
-      border-radius: 10px;
-      border: 1px solid transparent;
-    }
-    nav a:hover{
-      color: var(--text);
-      border-color: var(--line);
-      text-decoration:none;
-    }
-
-    /* Hero */
-    .hero{
-      padding: 64px 0 28px;
-    }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 22px;
-      align-items: start;
-    }
-    .kicker{
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    h1{
-      margin: 10px 0 10px;
-      font-family: "Julius Sans One", sans-serif;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 34px;
-      line-height: 1.15;
-    }
-    .lead{
-      margin: 0 0 18px;
-      color: var(--muted);
-      font-size: 15px;
-      max-width: 64ch;
-    }
-    .cta-row{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding: 10px 12px;
-      font-size: 12px;
-      border-radius: 12px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      cursor: pointer;
-    }
-    .btn.primary{
-      background: rgba(255,255,255,0.10);
-      border-color: rgba(255,255,255,0.18);
-    }
-    .btn:hover{ text-decoration:none; background: rgba(255,255,255,0.07); }
-
-    .card{
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 16px;
-    }
-    .meta{
-      font-size: 12px;
-      color: var(--muted);
-      display:grid;
-      gap: 8px;
-    }
-    .meta div{
-      display:flex;
-      justify-content:space-between;
-      gap: 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      padding-bottom: 8px;
-    }
-    .meta div:last-child{ border-bottom:none; padding-bottom:0; }
-    .meta span:first-child{ color: var(--faint); }
-
-    /* Sections */
-    section{
-      padding: 26px 0;
-    }
-    .section-title{
-      font-family: "Julius Sans One", sans-serif;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      font-size: 18px;
-      margin: 0 0 10px;
-    }
-    .section-sub{
-      color: var(--muted);
-      margin: 0 0 16px;
-      font-size: 13px;
-      max-width: 80ch;
-    }
-    .grid-3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    .grid-2{
-      display:grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-    .item h3{
-      margin: 0 0 8px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-    }
-    .item p{
-      margin:0;
-      font-size: 12.5px;
-      color: var(--muted);
-    }
-    .divider{
-      border-top: 1px solid var(--line);
-      margin: 14px 0 0;
-    }
-
-    /* Architecture flow */
-    .flow{
-      display:grid;
-      gap: 12px;
-    }
-    .flow-row{
-      display:grid;
-      grid-template-columns: 1fr 64px 1fr;
-      gap: 10px;
-      align-items:center;
-    }
-    .pill{
-      padding: 12px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-    }
-    .pill .label{
-      font-size: 11px;
-      color: var(--faint);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .pill .title{
-      font-size: 13px;
-      font-weight: 600;
-      margin-top: 4px;
-    }
-    .pill .desc{
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 6px;
-    }
-    .arrow{
-      text-align:center;
-      color: var(--faint);
-      font-size: 22px;
-      user-select:none;
-    }
-
-    /* Footer */
-    footer{
-      padding: 26px 0 40px;
-      border-top: 1px solid var(--line);
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .footgrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    /* Responsive */
-    @media (max-width: 900px){
-      .hero-grid{ grid-template-columns: 1fr; }
-      .grid-3{ grid-template-columns: 1fr; }
-      .grid-2{ grid-template-columns: 1fr; }
-      .flow-row{ grid-template-columns: 1fr; }
-      .arrow{ display:none; }
-      .brand .tag{ display:none; }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
 <body>
@@ -285,102 +17,104 @@
     <div class="wrap">
       <div class="topbar">
         <div class="brand">
-          <div class="name">NADIR</div>
-          <div class="tag">Deterministic AI Decision-State Recorder</div>
+          <div class="mark">NADIR</div>
+          <div class="descriptor">Deterministic AI Decision-State Recorder</div>
         </div>
         <nav>
-          <a href="#problem">Problem</a>
-          <a href="#architecture">Architecture</a>
-          <a href="#benefits">Benefits</a>
-          <a href="#docs">Docs</a>
-          <a href="#contact">Contact</a>
+          <a data-page="index.html" href="index.html">Overview</a>
+          <a data-page="platform.html" href="platform.html">Architecture</a>
+          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
+          <a data-page="docs.html" href="docs.html">Documents</a>
+          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
+          <a data-page="contact.html" href="contact.html">Contact</a>
         </nav>
       </div>
     </div>
   </header>
 
-  <main class="wrap">
+  <main class="wrap page">
+    <!-- 1. Hero Section (The Hook) -->
     <section class="hero">
       <div class="hero-grid">
         <div>
-          <div class="kicker">Compliance Layer • Deterministic Anchoring • Audit Readiness</div>
-          <h1>AI decision-state traceability without IP exposure</h1>
+          <div class="kicker">A Compliance Layer for Accountable Autonomous Systems</div>
+          <h1>NADIR: Deterministic AI Decision-State Recorder</h1>
           <p class="lead">
-            NADIR is a deterministic compliance-layer abstraction intended to generate tamper-evident audit fingerprints
-            from inference-time decision-state representations, enabling forensic review without disclosing proprietary
-            model weights, source code, or confidential architecture.
+            Bridging the accountability gap between observable system inputs and opaque internal inference transformations
+            without exposing proprietary model architecture or weights.
           </p>
 
           <div class="cta-row">
-            <a class="btn primary" href="#docs">View Document Suite</a>
-            <a class="btn" href="#contact">Request Controlled Review</a>
+            <a class="btn primary" href="platform.html">How It Works</a>
+            <a class="btn" href="docs.html">Document Suite</a>
           </div>
 
-          <div class="divider"></div>
+          <hr>
 
-          <p class="section-sub" style="margin-top:14px;">
-            This page is designed to be “institutional-first”: restrained language, clear scope boundaries, and documentation-forward structure.
-          </p>
+          <div class="callout">
+            <p class="small">
+              <strong>Reality-bound claim:</strong> NADIR is designed to produce deterministic, tamper-evident audit artifacts for review.
+              It does not claim to “explain” model internals or guarantee decision correctness. It claims integrity, reproducibility (under defined conditions),
+              and constrained-disclosure verification.
+            </p>
+          </div>
         </div>
 
         <aside class="card">
-          <div class="section-title" style="margin-bottom:8px;">Control Block</div>
+          <h2 style="margin-bottom:8px;">Legal & Control</h2>
           <div class="meta">
-            <div><span>Status</span><span>Private draft</span></div>
-            <div><span>Owner</span><span>Brian Covarrubias</span></div>
-            <div><span>Version</span><span>v2026.02.19</span></div>
-            <div><span>Location</span><span>San Diego, CA</span></div>
+            <div class="row"><span class="k">Owner</span><span>Brian Covarrubias</span></div>
+            <div class="row"><span class="k">Version</span><span>V2026.02.19</span></div>
+            <div class="row"><span class="k">Location</span><span>San Diego, California, United States</span></div>
+            <div class="row"><span class="k">Status</span><span>All Rights Reserved</span></div>
           </div>
-          <div class="divider"></div>
-          <p class="section-sub" style="margin:12px 0 0;">
-            Proprietary intellectual property. Unauthorized distribution prohibited.
-          </p>
+          <hr>
+          <p class="small">Unauthorized distribution prohibited.</p>
         </aside>
       </div>
     </section>
 
-    <section id="problem">
-      <div class="section-title">Problem</div>
-      <p class="section-sub">
-        Autonomous and AI-enabled systems often expose inputs and outputs but not the internal inference-state transformations that led to decisions.
-        This limits auditability, incident reconstruction, and oversight in regulated environments.
+    <!-- 2. The Problem Statement -->
+    <section>
+      <h2>The problem</h2>
+      <p class="sub">
+        Autonomous systems lack structured mechanisms for reconstructing internal decision-state evolution during critical events.
+        This opacity limits post-incident analysis and creates significant liability ambiguity across regulated environments.
       </p>
 
       <div class="grid-3">
-        <div class="card item">
-          <h3>Accountability gap</h3>
-          <p>Internal logic paths are typically opaque during review, creating audit and liability ambiguity.</p>
+        <div class="card">
+          <h3>Post-incident reconstruction</h3>
+          <p class="small">Review is reduced to surface telemetry rather than decision-state evidence.</p>
         </div>
-        <div class="card item">
-          <h3>Forensic constraints</h3>
-          <p>Post-event reconstruction is reduced to surface telemetry rather than decision-state evidence.</p>
+        <div class="card">
+          <h3>Audit & oversight</h3>
+          <p class="small">Independent validation is constrained by trade secret boundaries.</p>
         </div>
-        <div class="card item">
-          <h3>Oversight friction</h3>
-          <p>Trade secret boundaries complicate third-party validation and compliance verification.</p>
+        <div class="card">
+          <h3>Liability ambiguity</h3>
+          <p class="small">Opaque decisions create uncertainty across regulated and mission-critical deployments.</p>
         </div>
       </div>
     </section>
 
-    <section id="architecture">
-      <div class="section-title">Architecture</div>
-      <p class="section-sub">
-        The system is positioned as a deterministic overlay: capture → transform → sign, producing a compliance-safe fingerprint
-        suitable for audit and evidentiary preservation.
-      </p>
+    <!-- 3. How It Works: Three-Layer Accountability Flow -->
+    <section style="margin-top:18px;">
+      <h2>How it works: three-layer accountability flow</h2>
+      <p class="sub">Capture → abstract → sign, producing an audit artifact suitable for verification under constrained disclosure.</p>
 
       <div class="card flow">
         <div class="flow-row">
           <div class="pill">
             <div class="label">Layer 1</div>
             <div class="title">Input Baseline Hash</div>
-            <div class="desc">Deterministic cryptographic anchoring of structured inference inputs at time t₀.</div>
+            <div class="desc">Cryptographic anchoring of structured input state at inference time.</div>
           </div>
           <div class="arrow">↓</div>
           <div class="pill">
             <div class="label">Layer 2</div>
             <div class="title">Decision-State Abstraction</div>
-            <div class="desc">Deterministic transformation of inference vectors into compliance-safe representations.</div>
+            <div class="desc">Deterministic transformation of internal inference vectors into compliance-safe representations.</div>
           </div>
         </div>
 
@@ -388,114 +122,68 @@
           <div class="pill">
             <div class="label">Layer 3</div>
             <div class="title">NADIR Signature (DWSH)</div>
-            <div class="desc">Tamper-evident, collision-resistant state fingerprint for third-party verification without IP exposure.</div>
+            <div class="desc">A tamper-evident cryptographic fingerprint enabling third-party validation without disclosure of proprietary architecture.</div>
           </div>
           <div class="arrow">↓</div>
           <div class="pill">
             <div class="label">Output</div>
-            <div class="title">Independent Audit / Oversight</div>
-            <div class="desc">Verification of decision-state integrity and traceability with preserved proprietary boundaries.</div>
+            <div class="title">Audit / Compliance Artifact</div>
+            <div class="desc">Deterministic integrity record designed for evidentiary preservation and oversight review.</div>
           </div>
         </div>
       </div>
-    </section>
 
-    <section id="benefits">
-      <div class="section-title">Operational capabilities</div>
-      <p class="section-sub">
-        Benefits are framed conservatively: integrity, audit readiness, and interoperability—without overstating guarantees.
-      </p>
-
-      <div class="grid-2">
-        <div class="card item">
-          <h3>Compliance enablement</h3>
-          <p>Supports audit-grade trace documentation and evidentiary preservation workflows.</p>
-        </div>
-        <div class="card item">
-          <h3>Trade secret preservation</h3>
-          <p>Enables validation without disclosure of model weights, proprietary architecture, or confidential code.</p>
-        </div>
-        <div class="card item">
-          <h3>Forensic reconstruction support</h3>
-          <p>Provides deterministic anchoring artifacts for post-event review and integrity checks.</p>
-        </div>
-        <div class="card item">
-          <h3>Interoperability posture</h3>
-          <p>Designed for regulated enterprise and multi-stakeholder oversight environments.</p>
-        </div>
+      <div class="cta-row" style="margin-top:14px;">
+        <a class="btn primary" href="platform.html">Technical Architecture (DWSH)</a>
+        <a class="btn" href="use-cases.html">Operational Integration</a>
       </div>
     </section>
 
-    <section id="docs">
-      <div class="section-title">Document suite</div>
-      <p class="section-sub">
-        Internal documents are structured into four “dialects” to match leadership, legal, operational, and clearance contexts.
-        Replace the placeholders below with your real PDF links.
-      </p>
+    <!-- 7. Document Suite (For Download Links) -->
+    <section style="margin-top:18px;">
+      <h2>Document suite</h2>
+      <p class="sub">Four disclosure “dialects” aligned to leadership, IP, operational, and minimal disclosure contexts.</p>
 
       <div class="grid-2">
-        <div class="card item">
+        <div class="card">
           <h3>I. Executive Brief</h3>
-          <p>Policy & leadership framing. Problem, architecture, strategic value.</p>
-          <p style="margin-top:10px;"><a class="btn" href="#" onclick="alert('Link your PDF here'); return false;">Open PDF</a></p>
+          <p class="small">Policy & leadership ready.</p>
+          <div class="cta-row"><a class="btn" href="docs.html">View</a></div>
         </div>
-        <div class="card item">
-          <h3>II. Patent-Aligned Framework</h3>
-          <p>System configuration, method steps, functional constraints, novelty posture.</p>
-          <p style="margin-top:10px;"><a class="btn" href="#" onclick="alert('Link your PDF here'); return false;">Open PDF</a></p>
+        <div class="card">
+          <h3>II. Patent-Aligned Architecture</h3>
+          <p class="small">Technical framework.</p>
+          <div class="cta-row"><a class="btn" href="docs.html">View</a></div>
         </div>
-        <div class="card item">
-          <h3>III. Operational Integration</h3>
-          <p>DoD/DHS framing. Integration boundary, chain-of-custody posture, use cases.</p>
-          <p style="margin-top:10px;"><a class="btn" href="#" onclick="alert('Link your PDF here'); return false;">Open PDF</a></p>
+        <div class="card">
+          <h3>III. Operational Security Integration</h3>
+          <p class="small">DoD/DHS framing.</p>
+          <div class="cta-row"><a class="btn" href="docs.html">View</a></div>
         </div>
-        <div class="card item">
-          <h3>IV. Clearance Overview</h3>
-          <p>Minimal disclosure. Scope boundaries and non-interference affirmations.</p>
-          <p style="margin-top:10px;"><a class="btn" href="#" onclick="alert('Link your PDF here'); return false;">Open PDF</a></p>
+        <div class="card">
+          <h3>IV. Clearance-Sensitive Briefing</h3>
+          <p class="small">Minimal disclosure overview.</p>
+          <div class="cta-row"><a class="btn" href="docs.html">View</a></div>
         </div>
       </div>
     </section>
 
-    <section id="contact">
-      <div class="section-title">Contact</div>
-      <p class="section-sub">
-        Use controlled language. Keep contact simple. Avoid over-collecting info.
-      </p>
-
-      <div class="card">
-        <div class="grid-2">
-          <div class="item">
-            <h3>Controlled review requests</h3>
-            <p>Email: <a href="mailto:nacenatur@gmail.com">nacenatur@gmail.com</a></p>
-            <p style="margin-top:6px; color: var(--faint); font-size:12px;">
-              Use a dedicated NADIR email if you want separation from NACÉ later.
-            </p>
+    <footer>
+      <div class="wrap">
+        <div class="footgrid">
+          <div>
+            <div class="badge">NADIR • Deterministic AI Decision-State Recorder</div>
+            <div style="margin-top:10px;">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
           </div>
-          <div class="item">
-            <h3>Disclosure</h3>
-            <p>
-              NADIR materials are proprietary. No license or rights are granted absent a separate written agreement.
-            </p>
+          <div class="right">
+            <div>NADIR V2026.02.19</div>
+            <div>Unauthorized distribution prohibited.</div>
           </div>
         </div>
       </div>
-    </section>
+    </footer>
   </main>
 
-  <footer>
-    <div class="wrap">
-      <div class="footgrid">
-        <div>
-          <div style="font-family:'Julius Sans One',sans-serif; letter-spacing:.14em; text-transform:uppercase; margin-bottom:8px;">NADIR</div>
-          <div>Deterministic AI Decision-State Recorder</div>
-        </div>
-        <div style="text-align:right;">
-          <div>Version v2026.02.19</div>
-          <div>Proprietary intellectual property</div>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <script src="assets/site.js"></script>
 </body>
 </html>
