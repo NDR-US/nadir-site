@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NADIR — Operational Integration & Use Cases</title>
-  <meta name="description" content="NADIR operates as an overlay at middleware or inference-call boundaries without modifying core model logic, supporting mission and regulated deployments." />
+  <title>NADIR — Technical Architecture (DWSH)</title>
+  <meta name="description" content="Technical architecture for NADIR: Differential Weight-State Hashing (DWSH), a deterministic compliance layer operably coupled to an AI inference engine." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,71 +34,101 @@
 
   <main class="wrap page">
     <section class="hero">
-      <div class="kicker">Overlay Integration • Mission-Critical Review • Constrained Disclosure</div>
-      <h1>Operational integration & use cases</h1>
+      <div class="kicker">Deterministic Compliance Layer • Constrained Disclosure • Verifiable Artifacts</div>
+      <h1>Technical architecture (the DWSH engine)</h1>
       <p class="lead">
-        NADIR operates as an overlay at middleware or inference-call boundary layers without modifying core model logic.
-        It does not alter model parameters or access classified datasets.
+        The innovation resides in the Differential Weight-State Hashing (DWSH) module, a deterministic compliance-layer module
+        operably coupled to an AI inference engine.
       </p>
 
       <div class="cta-row">
-        <a class="btn primary" href="platform.html">Technical Architecture</a>
-        <a class="btn" href="docs.html">Documents</a>
+        <a class="btn" href="docs.html">Document Suite</a>
+        <a class="btn" href="use-cases.html">Operational Integration</a>
       </div>
     </section>
 
     <section>
-      <h2>Primary use cases</h2>
-      <p class="sub">Designed for environments where accountability must exist without forcing IP disclosure.</p>
+      <h2>DWSH system configuration</h2>
+      <p class="sub">A structured capture → deterministic abstraction → cryptographic signature pipeline designed for audit workflows.</p>
 
       <div class="grid-2">
         <div class="card">
-          <h3>Autonomous Navigation Systems</h3>
-          <p class="small">Audit artifacts for route selection, obstacle response, escalation, and failover behavior.</p>
+          <h3>1) Input State Capture</h3>
+          <p class="small">Receives structured inputs to generate a cryptographic hash at time T0.</p>
         </div>
         <div class="card">
-          <h3>ISR Decision Support Systems</h3>
-          <p class="small">Integrity-anchored artifacts for prioritization, escalation decisions, and analyst-assist workflows.</p>
+          <h3>2) State Transformation</h3>
+          <p class="small">Transforms internal vectors into a reduced abstracted representation via deterministic weighting.</p>
         </div>
         <div class="card">
-          <h3>AI-Enabled Targeting Validation</h3>
-          <p class="small">Deterministic signatures for review, validation gates, and post-event accountability processes.</p>
+          <h3>3) NADIR Signature (DWSH)</h3>
+          <p class="small">Generates a tamper-evident cryptographic fingerprint derived from the abstracted representation.</p>
         </div>
         <div class="card">
-          <h3>Incident Reconstruction in Contested (A2/AD) Environments</h3>
-          <p class="small">Chain-of-custody records to support review boards under constrained disclosure requirements.</p>
+          <h3>4) Audit Artifact Record</h3>
+          <p class="small">Persists a chain-of-custody-ready artifact for retrieval, verification, and oversight review.</p>
         </div>
       </div>
     </section>
 
     <section style="margin-top:18px;">
-      <h2>Integration posture</h2>
-      <p class="sub">
-        NADIR is designed to attach at the inference-call boundary (gateway, middleware, or service wrapper). This reduces adoption friction,
-        enables phased deployment, and preserves proprietary implementation boundaries.
-      </p>
+      <h2>Functional constraints</h2>
+      <p class="sub">These constraints are non-negotiable. They keep the system adoption-ready and legally defensible.</p>
+
+      <div class="card">
+        <div class="grid-2">
+          <div>
+            <h3 style="margin-bottom:8px;">Reproducibility</h3>
+            <p class="small" style="margin-bottom:0;">The fingerprint is reproducible under identical conditions (defined determinism boundary).</p>
+          </div>
+
+          <div>
+            <h3 style="margin-bottom:8px;">Non-disclosure</h3>
+            <p class="small" style="margin-bottom:0;">It does not disclose model weights or source code.</p>
+          </div>
+
+          <div>
+            <h3 style="margin-bottom:8px;">Evidentiary posture</h3>
+            <p class="small" style="margin-bottom:0;">It is suitable for evidentiary preservation and regulatory oversight.</p>
+          </div>
+
+          <div>
+            <h3 style="margin-bottom:8px;">Correctness disclaimer</h3>
+            <p class="small" style="margin-bottom:0;">Integrity is verifiable; decision correctness is not claimed by the signature itself.</p>
+          </div>
+        </div>
+
+        <hr>
+
+        <p class="small" style="margin-bottom:0;">
+          <strong>Determinism boundary:</strong> determinism is engineered, not assumed. NADIR requires canonicalization of captured state and documented
+          inference conditions (software/hardware constraints, randomness control, instrumentation stability) to ensure reproducible artifacts.
+        </p>
+      </div>
+    </section>
+
+    <section style="margin-top:18px;">
+      <h2>What NADIR does not do</h2>
+      <p class="sub">This prevents over-claiming and aligns with real oversight expectations.</p>
 
       <div class="grid-3">
         <div class="card">
-          <h3>Overlay boundary</h3>
-          <p class="small">No core model rewrite required to begin producing audit artifacts.</p>
+          <h3>No weight exposure</h3>
+          <p class="small">NADIR does not require revealing model weights or proprietary architecture.</p>
         </div>
         <div class="card">
-          <h3>Minimal exposure</h3>
-          <p class="small">Verification without weight disclosure or architecture exposure.</p>
+          <h3>No classified dependency</h3>
+          <p class="small">NADIR does not require classified datasets, restricted systems, or government facilities.</p>
         </div>
         <div class="card">
-          <h3>Audit workflow fit</h3>
-          <p class="small">Artifacts designed for retention, verification, and review under oversight frameworks.</p>
+          <h3>No explainability promise</h3>
+          <p class="small">NADIR is audit artifact infrastructure, not interpretability-by-disclosure.</p>
         </div>
       </div>
 
-      <hr>
-      <div class="callout">
-        <p class="small">
-          <strong>Governance note:</strong> NADIR supports integrity and audit readiness. It does not replace safety engineering, policy gating,
-          or human authorization controls in mission-critical environments.
-        </p>
+      <div class="cta-row" style="margin-top:14px;">
+        <a class="btn primary" href="use-cases.html">Operational Integration</a>
+        <a class="btn" href="roadmap.html">Build Roadmap</a>
       </div>
     </section>
 
@@ -106,7 +136,7 @@
       <div class="wrap">
         <div class="footgrid">
           <div>
-            <div class="badge">Integration • Use Cases</div>
+            <div class="badge">Architecture • DWSH Engine</div>
             <div style="margin-top:10px;">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
           </div>
           <div class="right">
