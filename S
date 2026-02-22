@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NADIR — Operational Integration & Use Cases</title>
+  <meta name="description" content="NADIR operates as an overlay at middleware or inference-call boundaries without modifying core model logic, supporting mission and regulated deployments." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">NADIR</div>
+          <div class="descriptor">Deterministic AI Decision-State Recorder</div>
+        </div>
+        <nav>
+          <a data-page="index.html" href="index.html">Overview</a>
+          <a data-page="platform.html" href="platform.html">Architecture</a>
+          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
+          <a data-page="docs.html" href="docs.html">Documents</a>
+          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
+          <a data-page="contact.html" href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap page">
+    <section class="hero">
+      <div class="kicker">Overlay Integration • Mission-Critical Review • Constrained Disclosure</div>
+      <h1>Operational integration & use cases</h1>
+      <p class="lead">
+        NADIR operates as an overlay at middleware or inference-call boundary layers without modifying core model logic.
+        It does not alter model parameters or access classified datasets.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn primary" href="platform.html">Technical Architecture</a>
+        <a class="btn" href="docs.html">Documents</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Primary use cases</h2>
+      <p class="sub">Designed for environments where accountability must exist without forcing IP disclosure.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Autonomous Navigation Systems</h3>
+          <p class="small">Audit artifacts for route selection, obstacle response, escalation, and failover behavior.</p>
+        </div>
+        <div class="card">
+          <h3>ISR Decision Support Systems</h3>
+          <p class="small">Integrity-anchored artifacts for prioritization, escalation decisions, and analyst-assist workflows.</p>
+        </div>
+        <div class="card">
+          <h3>AI-Enabled Targeting Validation</h3>
+          <p class="small">Deterministic signatures for review, validation gates, and post-event accountability processes.</p>
+        </div>
+        <div class="card">
+          <h3>Incident Reconstruction in Contested (A2/AD) Environments</h3>
+          <p class="small">Chain-of-custody records to support review boards under constrained disclosure requirements.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-top:18px;">
+      <h2>Integration posture</h2>
+      <p class="sub">
+        NADIR is designed to attach at the inference-call boundary (gateway, middleware, or service wrapper). This reduces adoption friction,
+        enables phased deployment, and preserves proprietary implementation boundaries.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Overlay boundary</h3>
+          <p class="small">No core model rewrite required to begin producing audit artifacts.</p>
+        </div>
+        <div class="card">
+          <h3>Minimal exposure</h3>
+          <p class="small">Verification without weight disclosure or architecture exposure.</p>
+        </div>
+        <div class="card">
+          <h3>Audit workflow fit</h3>
+          <p class="small">Artifacts designed for retention, verification, and review under oversight frameworks.</p>
+        </div>
+      </div>
+
+      <hr>
+      <div class="callout">
+        <p class="small">
+          <strong>Governance note:</strong> NADIR supports integrity and audit readiness. It does not replace safety engineering, policy gating,
+          or human authorization controls in mission-critical environments.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <div class="footgrid">
+          <div>
+            <div class="badge">Integration • Use Cases</div>
+            <div style="margin-top:10px;">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
+          </div>
+          <div class="right">
+            <div>NADIR V2026.02.19</div>
+            <div>Unauthorized distribution prohibited.</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="assets/site.js"></script>
+</body>
+</html>
