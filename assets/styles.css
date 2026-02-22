@@ -265,4 +265,33 @@ footer{
 
 /* If you ever add a bottom-fixed bar later, keep this pattern:
    body{ padding-bottom: calc( (barHeight) + env(safe-area-inset-bottom) ); }
-*/
+*//* === MOBILE OVERLAP FIX (minimal patch) === */
+
+/* iOS safe-area + make sure last content isn't hidden */
+body{
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+}
+
+/* CTAs should wrap instead of colliding on narrow widths */
+.cta-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Ensure buttons can shrink/wrap cleanly */
+.cta-row .btn{
+  white-space: nowrap;
+}
+
+/* Footer must never be overlapped */
+footer{
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+}
+
+/* If ANY element is fixed at bottom, it can cause overlap. Neutralize if present. */
+.bottom-bar,
+.sticky-cta,
+.fixed-cta{
+  position: static !important;
+}
