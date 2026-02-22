@@ -1,6 +1,7 @@
 /* =========================================================
-   NADIR — Mobile overlap fix (CTA + Footer + iOS safe-area)
-   Paste as FULL REPLACEMENT for assets/styles.css OR at bottom.
+   NADIR — styles.css (CLEAN CONSOLIDATED)
+   Includes: mobile overlap fix + iOS safe-area + SVG logo sizing
+   Replace entire assets/styles.css with this file.
    ========================================================= */
 
 /* ---------- Base / Resets ---------- */
@@ -8,7 +9,6 @@
   --bg-0:#070b12;
   --bg-1:#0a1020;
   --card:rgba(255,255,255,.06);
-  --card-2:rgba(255,255,255,.08);
   --stroke:rgba(255,255,255,.12);
   --text:rgba(255,255,255,.92);
   --muted:rgba(255,255,255,.68);
@@ -20,15 +20,16 @@
 
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
+
 body{
   margin:0;
   color:var(--text);
   background: radial-gradient(1200px 900px at 20% 0%, #121a2e 0%, var(--bg-0) 55%, #05070c 100%);
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-
-  /* Critical: prevent iOS bottom UI + final section collisions */
-  padding-bottom: calc(28px + env(safe-area-inset-bottom));
   overflow-x:hidden;
+
+  /* iOS bottom UI + last-section safety */
+  padding-bottom: calc(28px + env(safe-area-inset-bottom));
 }
 
 a{ color:inherit; text-decoration:none; }
@@ -61,12 +62,29 @@ header{
   padding: 18px 0;
 }
 
+/* Brand lockup */
+.brand{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+/* If you use text instead of SVG on any page */
 .brand .mark{
   font-family: "Julius Sans One", Inter, sans-serif;
   letter-spacing:.42em;
   font-size: 20px;
   opacity:.92;
 }
+
+/* SVG logo sizing (animated SVG must be inline in HTML) */
+.brand svg{
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
+/* Descriptor under logo */
 .brand .descriptor{
   margin-top:8px;
   letter-spacing:.16em;
@@ -81,6 +99,7 @@ nav{
   flex-wrap:wrap;
   justify-content:flex-end;
 }
+
 nav a{
   padding:10px 14px;
   border-radius:999px;
@@ -88,11 +107,13 @@ nav a{
   border:1px solid transparent;
   background: transparent;
 }
+
 nav a:hover{
   color:var(--text);
   border-color: rgba(255,255,255,.14);
   background: rgba(255,255,255,.04);
 }
+
 nav a.active{
   color:var(--text);
   border-color: rgba(255,255,255,.16);
@@ -103,6 +124,7 @@ nav a.active{
 .hero{
   padding: 36px 0 20px;
 }
+
 .kicker{
   color:var(--muted2);
   text-transform:uppercase;
@@ -110,6 +132,7 @@ nav a.active{
   font-size:12px;
   margin-bottom:14px;
 }
+
 h1{
   margin:0;
   font-family: "Julius Sans One", Inter, sans-serif;
@@ -118,6 +141,7 @@ h1{
   font-size: clamp(34px, 5.5vw, 64px);
   line-height:1.1;
 }
+
 .lead{
   margin-top:18px;
   max-width: 62ch;
@@ -126,7 +150,7 @@ h1{
   line-height:1.7;
 }
 
-/* ---------- Buttons ---------- */
+/* ---------- Buttons / CTAs ---------- */
 .btn{
   display:inline-flex;
   align-items:center;
@@ -138,25 +162,27 @@ h1{
   color: var(--text);
   box-shadow: none;
   transition: transform .12s ease, background .12s ease, border-color .12s ease;
+  white-space: nowrap;
 }
+
 .btn:hover{
   background: rgba(255,255,255,.10);
   border-color: rgba(255,255,255,.22);
   transform: translateY(-1px);
 }
+
 .btn.primary{
   background: rgba(255,255,255,.12);
   border-color: rgba(255,255,255,.22);
 }
 
 .cta-row{
-  /* Critical: prevent overlap on mobile */
   display:flex;
   gap:12px;
   flex-wrap:wrap;
   align-items:center;
 
-  /* Critical: prevent any overlay behavior */
+  /* Ensure nothing tries to “overlay” on mobile */
   position: static !important;
   inset: auto !important;
 }
@@ -184,16 +210,19 @@ h2{
   font-size: 14px;
   color: var(--muted2);
 }
+
 h3{
   margin: 0 0 10px;
   font-size: 20px;
   letter-spacing:.02em;
 }
+
 .sub{
   margin: 0 0 14px;
   color: var(--muted);
   line-height:1.7;
 }
+
 .small{
   margin: 0;
   color: var(--muted);
@@ -205,6 +234,7 @@ h3{
   gap:14px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+
 .grid-3{
   display:grid;
   gap:14px;
@@ -218,13 +248,11 @@ h3{
   padding: 14px 16px;
 }
 
-/* ---------- Footer (Critical) ---------- */
+/* ---------- Footer (no overlap) ---------- */
 footer{
   margin-top: 26px;
   padding: 18px 0 calc(24px + env(safe-area-inset-bottom));
   border-top: 1px solid rgba(255,255,255,.10);
-
-  /* Critical: footer must not be overlapped by any sticky/fixed element */
   position: relative;
   z-index: 1;
 }
@@ -235,6 +263,7 @@ footer{
   justify-content:space-between;
   gap:14px;
 }
+
 .badge{
   display:inline-flex;
   padding: 10px 14px;
@@ -253,6 +282,13 @@ footer{
   line-height:1.7;
 }
 
+/* ---------- If ANY element is fixed at bottom, kill it ---------- */
+.bottom-bar,
+.sticky-cta,
+.fixed-cta{
+  position: static !important;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 860px){
   .grid-3{ grid-template-columns: 1fr; }
@@ -261,55 +297,4 @@ footer{
   nav{ width:100%; justify-content:flex-start; }
   .footgrid{ flex-direction:column; }
   .right{ text-align:left; }
-}
-
-/* If you ever add a bottom-fixed bar later, keep this pattern:
-   body{ padding-bottom: calc( (barHeight) + env(safe-area-inset-bottom) ); }
-*//* === MOBILE OVERLAP FIX (minimal patch) === */
-
-/* iOS safe-area + make sure last content isn't hidden */
-body{
-  padding-bottom: calc(24px + env(safe-area-inset-bottom));
-}
-
-/* CTAs should wrap instead of colliding on narrow widths */
-.cta-row{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-/* Ensure buttons can shrink/wrap cleanly */
-.cta-row .btn{
-  white-space: nowrap;
-}
-
-/* Footer must never be overlapped */
-footer{
-  padding-bottom: calc(24px + env(safe-area-inset-bottom));
-}
-
-/* If ANY element is fixed at bottom, it can cause overlap. Neutralize if present. */
-.bottom-bar,
-.sticky-cta,
-.fixed-cta{
-  position: static !important;
-}
-.brand svg {
-  height: 48px;
-  width: auto;
-  display: block;
-}
-
-.brand {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.descriptor {
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  margin-top: 6px;
-  opacity: 0.7;
 }
