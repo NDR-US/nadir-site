@@ -9,11 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
 <body>
-  <header>
+  <header class="siteHeader">
     <div class="wrap">
       <div class="topbar">
         <div class="brand">
@@ -21,7 +22,7 @@
           <div class="descriptor">Integration</div>
         </div>
 
-        <nav>
+        <nav class="nav">
           <a data-page="index.html" href="index.html">Overview</a>
           <a data-page="platform.html" href="platform.html">Architecture</a>
           <a data-page="use-cases.html" href="use-cases.html">Integration</a>
@@ -29,6 +30,8 @@
           <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
           <a data-page="founder.html" href="founder.html">Founder</a>
           <a data-page="governance.html" href="governance.html">Governance</a>
+          <a data-page="privacy.html" href="privacy.html">Privacy</a>
+          <a data-page="terms.html" href="terms.html">Terms</a>
           <a data-page="contact.html" href="contact.html">Contact</a>
         </nav>
       </div>
@@ -36,32 +39,32 @@
   </header>
 
   <main class="wrap page">
-    <section>
-      <div class="kicker">Overlay attachment • Chain-of-custody posture • Constrained disclosure</div>
+    <section class="hero">
+      <div class="kicker">BOUNDARY ATTACHMENT • CHAIN-OF-CUSTODY POSTURE • CONSTRAINED DISCLOSURE</div>
       <h1>Operational integration</h1>
       <p class="lead">
-        NADIR is designed to attach at the inference boundary (gateway, middleware, or service wrapper) to produce integrity-sealed
-        artifacts without modifying core model parameters. Deployment can be phased, and disclosure can be tiered.
+        NADIR attaches at the inference boundary (gateway, middleware, or service wrapper) to produce integrity-sealed artifacts without modifying core model parameters.
+        Deployment can be phased, and disclosure can be tiered.
       </p>
 
-      <div class="cta-row">
+      <div class="ctaRow">
         <a class="btn primary" href="platform.html">Architecture mechanics</a>
-        <a class="btn" href="roadmap.html">Build roadmap</a>
-        <a class="btn" href="docs.html">Docs</a>
+        <a class="btn" href="roadmap.html">Roadmap</a>
+        <a class="btn" href="docs.html">Documents</a>
       </div>
     </section>
 
     <section class="section">
       <h2>Integration posture</h2>
       <p class="sub">
-        NADIR is not an “AI platform replacement.” It is an attachable integrity layer that produces auditable records for later verification.
+        NADIR is not a platform replacement. It is an attachable integrity layer that produces auditable records for later verification.
         Integration is intended to be low-friction and does not require exposing proprietary internals to begin generating artifacts.
       </p>
 
       <div class="grid-3">
         <div class="card">
           <h3>Attach at the boundary</h3>
-          <p class="small">Sidecar, gateway, or wrapper layer around inference calls—avoids core model rewrite.</p>
+          <p class="small">Sidecar, gateway, or wrapper around inference calls—avoids core model rewrite.</p>
         </div>
         <div class="card">
           <h3>Policy-defined scope</h3>
@@ -76,9 +79,7 @@
 
     <section class="section">
       <h2>Primary use cases</h2>
-      <p class="sub">
-        Use cases are framed conservatively: NADIR supports integrity and reconstruction workflows. It does not certify correctness or safety.
-      </p>
+      <p class="sub">Use cases are framed conservatively: NADIR supports integrity and reconstruction workflows. It does not certify correctness or safety.</p>
 
       <div class="grid-2">
         <div class="card">
@@ -94,7 +95,7 @@
           <p class="small">Artifacts to support review gates and accountability procedures—without disclosing model internals on the public surface.</p>
         </div>
         <div class="card">
-          <h3>Incident reconstruction (contested/A2/AD)</h3>
+          <h3>Incident reconstruction</h3>
           <p class="small">Chain-of-custody-ready artifacts for review boards where disclosure must remain constrained.</p>
         </div>
       </div>
@@ -102,7 +103,7 @@
 
     <section class="section">
       <div class="boundary">
-        <div class="title">Boundary Declaration</div>
+        <div class="title">Boundary declaration</div>
         <ul>
           <li>NADIR supports integrity verification and forensic reconstruction workflows.</li>
           <li>NADIR does not replace safety engineering, policy gating, or human authorization controls.</li>
@@ -111,20 +112,10 @@
       </div>
     </section>
 
-    <footer>
-      <div class="wrap">
-        <div class="footgrid">
-          <div>
-            <div class="badge">Integration • Mission and regulated deployments</div>
-            <div style="margin-top:10px;" class="small">
-              © 2026 NADIR. All rights reserved. — <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="contact.html">Contact</a>
-            </div>
-          </div>
-          <div class="right">
-            <div>V2026.02.19</div>
-            <div>Unauthorized distribution prohibited.</div>
-          </div>
-        </div>
+    <footer class="siteFooter">
+      <div class="footgrid">
+        <div class="badge">INTEGRATION</div>
+        <div class="right">© 2026 NADIR. All rights reserved. — V2026.02.19</div>
       </div>
     </footer>
   </main>
