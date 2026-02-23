@@ -1,193 +1,91 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NADIR — Deterministic AI Governance Artifacts</title>
-  <meta name="description" content="NADIR is a deterministic, tamper-evident compliance layer for AI inference systems. It generates verifiable forensic artifacts without exposing proprietary model weights or architecture." />
-
-  <meta property="og:title" content="NADIR — Deterministic AI Decision-State Recorder" />
-  <meta property="og:description" content="Deterministic, tamper-evident compliance artifacts for AI inference under constrained disclosure." />
-  <meta property="og:type" content="website" />
-
-  <meta name="robots" content="noindex,nofollow" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css" />
-</head>
-
-<body>
-
-<header>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <a class="brandlink" href="index.html" aria-label="NADIR Home">
-          <svg class="nadir-logo" viewBox="0 0 520 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NADIR">
-            <text x="0" y="62"
-                  font-family="Julius Sans One, sans-serif"
-                  font-size="54"
-                  letter-spacing="14"
-                  fill="#E6ECF7">NADIR</text>
-          </svg>
-        </a>
-        <div class="descriptor">Deterministic AI Decision-State Recorder</div>
-      </div>
-
-      <nav aria-label="Primary navigation">
-        <a href="index.html">Overview</a>
-        <a href="platform.html">Architecture</a>
-        <a href="use-cases.html">Integration</a>
-        <a href="docs.html">Documents</a>
-        <a href="roadmap.html">Roadmap</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </div>
-  </div>
-</header>
-
 <main class="page">
   <div class="wrap">
 
-    <section class="section">
-      <div class="kicker">Determinism • Audit integrity • Constrained disclosure</div>
+    <section class="hero">
+      <div class="kicker">Determinism • Audit Integrity • Constrained Disclosure</div>
       <h1>Forensic compliance artifacts for AI inference</h1>
       <p class="lead">
-        NADIR is a deterministic compliance-layer abstraction designed to generate tamper-evident audit artifacts derived from
-        inference-time decision-state representations. It supports oversight, verification, and incident reconstruction workflows
-        without disclosing proprietary model weights, source code, or confidential architecture.
+        NADIR records a reproducible, tamper-evident evidence package at inference time—so reviewers can verify what happened
+        without requiring model weight exposure or source disclosure.
       </p>
 
-      <div class="pills" aria-label="Positioning tags">
-        <span class="pill">Governance-ready</span>
-        <span class="pill">Audit artifacts</span>
-        <span class="pill">Determinism boundary</span>
-        <span class="pill">Non-invasive overlay</span>
-      </div>
-
-      <div class="cta-row">
-        <a class="btn primary" href="platform.html">Technical architecture</a>
-        <a class="btn" href="docs.html">Briefing suite</a>
+      <div class="cta-row" style="margin-top:16px;">
+        <a class="btn primary" href="platform.html">How it works</a>
+        <a class="btn" href="docs.html">Briefs & documents</a>
+        <a class="btn" href="contact.html">Request controlled review</a>
       </div>
     </section>
 
     <hr>
 
-    <section class="section grid-2">
+    <section class="grid-2">
       <div class="card">
-        <h2>The accountability gap</h2>
+        <h2>What NADIR is</h2>
         <p class="sub">
-          Many AI systems expose inputs and outputs, but lack deterministic internal state representations that can be preserved
-          and validated as evidentiary-grade artifacts after critical events.
+          A compliance overlay that generates deterministic audit artifacts derived from inference-time decision-state representations.
         </p>
         <p class="small">
-          This creates audit friction in regulated deployments and increases ambiguity in post-incident review.
+          Designed for oversight, incident reconstruction, and verification in high-liability deployments.
         </p>
       </div>
 
       <div class="card">
-        <h2>NADIR’s function</h2>
-        <p class="sub">
-          NADIR attaches at the inference boundary (gateway, middleware, or service wrapper) to produce a structured artifact:
-          capture → deterministic abstraction → cryptographic signature.
-        </p>
+        <h2>What NADIR is not</h2>
         <p class="small">
-          NADIR does not claim decision correctness and does not require disclosure of weights or proprietary implementation.
+          Not a model. Not a training method. Not a safety policy replacement. Not an “interpretability” claim.
+          NADIR provides integrity and reproducibility of records—your safety and authorization controls remain separate.
         </p>
       </div>
     </section>
 
-    <section class="section">
-      <div class="card deep">
-        <h2>Core pipeline</h2>
-        <p class="sub">Designed for verification under constrained disclosure, not interpretability-by-disclosure.</p>
+    <section style="margin-top:14px;" class="grid-3">
+      <div class="card">
+        <h3>Deterministic capture</h3>
+        <p class="small">Canonicalized records designed for repeatability under defined conditions.</p>
+      </div>
+      <div class="card">
+        <h3>Tamper-evident integrity</h3>
+        <p class="small">Hash-chained artifacts and verification fields support chain-of-custody workflows.</p>
+      </div>
+      <div class="card">
+        <h3>Constrained disclosure</h3>
+        <p class="small">Verification without exposing model weights, proprietary code paths, or confidential architecture.</p>
+      </div>
+    </section>
 
-        <div class="grid-3">
-          <div class="callout">
-            <h3>Layer 1 — Input baseline anchoring</h3>
-            <p class="small">Cryptographic anchoring of structured inference inputs at time t₀.</p>
-          </div>
-          <div class="callout">
-            <h3>Layer 2 — Decision-state abstraction</h3>
-            <p class="small">Deterministic transformation of internal vector states into compliance-safe representations.</p>
-          </div>
-          <div class="callout">
-            <h3>Layer 3 — NADIR signature (DWSH)</h3>
-            <p class="small">Tamper-evident fingerprint enabling later validation without disclosing proprietary architecture.</p>
-          </div>
+    <hr>
+
+    <section class="card">
+      <h2>Where it fits</h2>
+      <div class="grid-2" style="margin-top:10px;">
+        <div class="callout">
+          <h3 style="margin:0 0 8px;">Autonomy & robotics</h3>
+          <p class="small" style="margin:0;">Route selection, obstacle response, escalation and failover review artifacts.</p>
         </div>
-
-        <div class="cta-row">
-          <a class="btn" href="use-cases.html">Operational environments</a>
-          <a class="btn" href="roadmap.html">Build path</a>
+        <div class="callout">
+          <h3 style="margin:0 0 8px;">Decision support</h3>
+          <p class="small" style="margin:0;">Analyst-assist integrity records for prioritization and escalation pathways.</p>
+        </div>
+        <div class="callout">
+          <h3 style="margin:0 0 8px;">Post-incident reconstruction</h3>
+          <p class="small" style="margin:0;">Evidentiary posture for review boards under constrained disclosure requirements.</p>
+        </div>
+        <div class="callout">
+          <h3 style="margin:0 0 8px;">Regulated operations</h3>
+          <p class="small" style="margin:0;">Artifact retention and audit support for high-liability deployments.</p>
         </div>
       </div>
     </section>
 
-    <section class="section grid-3">
-      <div class="card">
-        <h2>Governance posture</h2>
-        <p class="sub">Integrity artifacts designed for oversight workflows.</p>
-        <p class="small">Supports validation and reconstruction. Does not replace safety engineering, policy gating, or human authorization.</p>
-      </div>
+    <hr>
 
-      <div class="card">
-        <h2>Security boundaries</h2>
-        <p class="sub">Designed to preserve IP and sensitive implementation.</p>
-        <p class="small">Artifacts are generated without exposing model weights or source code. Public site remains intentionally high-level.</p>
-      </div>
-
-      <div class="card">
-        <h2>Reviewer fit</h2>
-        <p class="sub">Clear, conservative claims.</p>
-        <p class="small">Structured for technical reviewers, governance committees, and compliance-focused labs.</p>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="card">
-        <h2>Legal &amp; control</h2>
-
-        <div class="grid-2">
-          <div class="callout">
-            <h3>Ownership</h3>
-            <p class="small">
-              Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved. Unauthorized distribution prohibited.
-            </p>
-          </div>
-          <div class="callout">
-            <h3>Version</h3>
-            <p class="small">NADIR V2026.02.19 • San Diego, California, United States</p>
-          </div>
-        </div>
-
-        <p class="small" style="margin-top:12px;">
-          Disclaimer: NADIR is a private-sector compliance abstraction designed to support evidentiary and oversight functions under constrained disclosure conditions.
-        </p>
-      </div>
+    <section class="card">
+      <h2>Boundary claims</h2>
+      <p class="small">
+        Keep public materials precise. NADIR does not claim decision correctness. It provides reproducibility and tamper-evident
+        audit artifacts suitable for oversight workflows, under minimal disclosure.
+      </p>
     </section>
 
   </div>
 </main>
-
-<footer>
-  <div class="wrap">
-    <div class="footgrid">
-      <div>
-        <div class="badge">NADIR • Deterministic Compliance Layer</div>
-        <div style="height:10px;"></div>
-        <div class="small">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
-      </div>
-      <div class="right">
-        <div>NADIR V2026.02.19</div>
-        <div>Unauthorized distribution prohibited.</div>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<script src="assets/site.js"></script>
-</body>
-</html>
