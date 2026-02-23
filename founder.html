@@ -1,10 +1,11 @@
+<!-- /founder.html  (PAGE 6 — FOUNDER) -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NADIR — Founder’s Letter</title>
-  <meta name="description" content="Founder’s letter outlining NADIR’s purpose: evidentiary records for AI inference under constrained disclosure." />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NADIR — Founder</title>
+  <meta name="description" content="Founder’s letter: institutional posture, minimal claims, oversight readiness." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,89 +13,66 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
-<body class="page-founder">
+<body>
+  <header class="siteHeader">
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">NADIR</div>
+          <div class="descriptor">Founder</div>
+        </div>
 
-<header class="siteHeader">
-  <div class="wrap">
-    <div class="topbar">
-      <a class="brand" href="index.html">
-        <div class="mark">NADIR</div>
-        <div class="descriptor">Founder</div>
-      </a>
-
-      <button class="navToggle" aria-expanded="false" aria-controls="siteNav">Menu</button>
-
-      <nav id="siteNav" class="navMenu" hidden>
-        <a data-page="index.html" href="index.html">Overview</a>
-        <a data-page="platform.html" href="platform.html">Architecture</a>
-        <a data-page="use-cases.html" href="use-cases.html">Integration</a>
-        <a data-page="docs.html" href="docs.html">Documents</a>
-        <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
-        <a data-page="founder.html" href="founder.html">Founder</a>
-        <a data-page="governance.html" href="governance.html">Governance</a>
-        <a data-page="privacy.html" href="privacy.html">Privacy</a>
-        <a data-page="terms.html" href="terms.html">Terms</a>
-        <a data-page="contact.html" href="contact.html">Contact</a>
-      </nav>
-    </div>
-  </div>
-</header>
-
-<main class="wrap page">
-
-  <section class="hero">
-    <div class="kicker">Institutional posture • Minimal claims • Oversight readiness</div>
-    <h1>Founder’s letter</h1>
-    <p class="lead">
-      NADIR exists to make review possible when AI systems matter—without demanding that builders disclose proprietary internals to prove integrity.
-    </p>
-  </section>
-
-  <section class="section">
-    <div class="panel" style="max-width: 92ch;">
-      <h3>Letter from the founder</h3>
-      <p class="small" style="margin-top:12px;">
-        AI systems are increasingly present in environments where the cost of ambiguity is unacceptable. Yet most deployments preserve outputs and
-        surface telemetry, not canonical records designed to survive formal review.
-      </p>
-      <p class="small" style="margin-top:12px;">
-        NADIR is built around a simple idea: when decisions are disputed later, institutions need integrity-sealed records with defined boundaries.
-        NADIR does not claim correctness. It produces records that can be verified.
-      </p>
-      <p class="small" style="margin-top:12px;">
-        The objective is clarity under constrained disclosure: protect proprietary model weights and confidential architecture while enabling
-        independent verification of provenance and tamper-resistance.
-      </p>
-
-      <div style="margin-top:18px; color:rgba(255,255,255,.78); font-size:14px;">
-        — Brian Covarrubias
+        <nav class="nav">
+          <a data-page="index.html" href="index.html">Overview</a>
+          <a data-page="platform.html" href="platform.html">Architecture</a>
+          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
+          <a data-page="docs.html" href="docs.html">Documents</a>
+          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
+          <a data-page="founder.html" href="founder.html">Founder</a>
+          <a data-page="governance.html" href="governance.html">Governance</a>
+          <a data-page="contact.html" href="contact.html">Contact</a>
+        </nav>
       </div>
     </div>
-  </section>
+  </header>
 
-  <section class="section">
-    <div class="boundary">
-      <div class="boundaryTitle">Boundary Declaration</div>
-      <ul>
-        <li>NADIR is record infrastructure, not adjudication.</li>
-        <li>NADIR does not certify compliance, legality, or decision correctness.</li>
-        <li>NADIR supports oversight conducted by authorized reviewers.</li>
-      </ul>
-    </div>
-  </section>
+  <main class="wrap page">
+    <section class="hero">
+      <div class="kicker">INSTITUTIONAL POSTURE • MINIMAL CLAIMS • OVERSIGHT READINESS</div>
+      <h1>Founder’s letter</h1>
+      <p class="lead">
+        NADIR exists to make review possible when AI systems matter — without demanding that builders disclose proprietary internals to prove integrity.
+      </p>
+    </section>
 
-  <footer class="siteFooter">
-    <div class="footerLine">© 2026 NADIR. Proprietary infrastructure. Version V2026.02.19.</div>
-    <div class="footerLinks">
-      <a href="governance.html">Governance</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </footer>
+    <section class="section prose">
+      <h2>Letter from the founder</h2>
+      <p>
+        AI systems are increasingly present in environments where the cost of ambiguity is unacceptable. Yet most deployments preserve outputs and surface telemetry, not canonical records designed to survive formal review.
+      </p>
+      <p>
+        NADIR is built around a simple idea: when decisions are disputed later, institutions need integrity-sealed records with defined boundaries. NADIR does not claim correctness. It produces records that can be verified.
+      </p>
+      <p>
+        The objective is clarity under constrained disclosure: protect proprietary model weights and confidential architecture while enabling independent verification of provenance and tamper-resistance.
+      </p>
+      <p class="sig">— Brian Covarrubias</p>
 
-</main>
+      <div class="noteLine">NADIR is record infrastructure, not adjudication.</div>
+    </section>
 
-<script src="assets/site.js"></script>
+    <footer class="siteFooter">
+      <div class="footgrid">
+        <div>
+          <div class="badge">© 2026 NADIR. Proprietary infrastructure. Version V2026.02.19.</div>
+          <div class="small" style="margin-top:10px;">
+            <a href="governance.html">Governance</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="governance.html">Ethical Use</a> · <a href="contact.html">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="assets/site.js"></script>
 </body>
 </html>
