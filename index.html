@@ -1,110 +1,61 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NADIR — Evidentiary Infrastructure</title>
-  <meta name="description" content="NADIR is evidentiary infrastructure for AI inference: policy-scoped capture, canonical records, cryptographic sealing, and verification support under controlled disclosure." />
+<!-- index.html main body (keep your header/nav/footer structure) -->
+<main class="wrap page">
+  <section class="hero">
+    <div class="kicker">Integrity-first records • Controlled disclosure</div>
+    <h1>Evidentiary records for AI inference</h1>
+    <p class="lead">
+      NADIR generates policy-scoped, canonical records of inference events and seals them with cryptographic integrity controls—so authorized reviewers can verify provenance and detect tampering without requiring disclosure of proprietary model internals.
+    </p>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css" />
-</head>
+    <div class="cta-row">
+      <a class="btn primary" href="platform.html">How it works</a>
+      <a class="btn" href="docs.html">Documents</a>
+      <a class="btn" href="contact.html">Controlled review</a>
+    </div>
+  </section>
 
-<body>
-  <header>
-    <div class="wrap">
-      <div class="topbar">
-        <div class="brand">
-          <div class="mark">NADIR</div>
-          <div class="descriptor">Evidentiary Infrastructure</div>
-        </div>
-
-        <nav>
-          <a data-page="index.html" href="index.html">Overview</a>
-          <a data-page="platform.html" href="platform.html">Architecture</a>
-          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
-          <a data-page="docs.html" href="docs.html">Documents</a>
-          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
-          <a data-page="founder.html" href="founder.html">Founder</a>
-          <a data-page="governance.html" href="governance.html">Governance</a>
-          <a data-page="contact.html" href="contact.html">Contact</a>
-        </nav>
+  <section class="section">
+    <h2>Core functions</h2>
+    <div class="grid-3">
+      <div class="panel">
+        <h3>Capture</h3>
+        <p class="small">Attach beside inference. Scope is policy-defined.</p>
+      </div>
+      <div class="panel">
+        <h3>Canonicalize</h3>
+        <p class="small">Normalize and version the record format for repeatability.</p>
+      </div>
+      <div class="panel">
+        <h3>Seal</h3>
+        <p class="small">Hash + signature to support authenticity and tamper detection.</p>
       </div>
     </div>
-  </header>
+  </section>
 
-  <main class="wrap page">
-    <section class="hero">
-      <div class="kicker">Integrity-first records • Controlled disclosure • Oversight readiness</div>
-      <h1>NADIR: evidentiary infrastructure for AI inference</h1>
-      <p class="lead">
-        NADIR generates policy-scoped, canonical records of inference events and seals them with cryptographic integrity controls—so reviewers can later verify provenance and detect tampering without requiring disclosure of proprietary model internals.
+  <section class="section">
+    <div class="boundary">
+      <div class="title">Boundary Declaration</div>
+      <ul>
+        <li>Not a regulator</li>
+        <li>Not a certification body</li>
+        <li>Not a model safety guarantor</li>
+        <li>Not a decision-making system</li>
+        <li>Not a compliance determination engine</li>
+      </ul>
+      <p>
+        NADIR does not certify correctness, legality, fairness, or policy compliance. It generates integrity-sealed records to support oversight processes performed by authorized reviewers.
       </p>
+    </div>
+  </section>
 
-      <div class="cta-row">
-        <a class="btn primary" href="platform.html">Architecture</a>
-        <a class="btn" href="use-cases.html">Integration</a>
-        <a class="btn" href="docs.html">Documents</a>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2>What it does</h2>
-
-      <div class="grid-3">
-        <div class="card">
-          <h3>Capture (policy-scoped)</h3>
-          <p class="small">Defines what is included, excluded, and masked at the inference boundary.</p>
-        </div>
-        <div class="card">
-          <h3>Canonical record</h3>
-          <p class="small">Normalizes captured fields into a repeatable artifact format under stated conditions.</p>
-        </div>
-        <div class="card">
-          <h3>Integrity + verification</h3>
-          <p class="small">Hashes and signs artifacts so third parties can verify integrity and provenance.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2>Why it exists</h2>
-      <p class="sub">
-        Many systems retain outputs and telemetry, but not a verification-ready record suitable for formal review. NADIR is designed to close that gap with integrity-bound artifacts and a clear disclosure posture.
-      </p>
-    </section>
-
-    <section class="section">
-      <div class="boundary">
-        <div class="title">Boundary Declaration</div>
-        <ul>
-          <li>NADIR is record infrastructure, not an adjudicator.</li>
-          <li>It does not certify legality, safety, fairness, or correctness.</li>
-          <li>Oversight conclusions are made by authorized reviewers.</li>
-        </ul>
-      </div>
-    </section>
-
-    <footer>
-      <div class="wrap">
-        <div class="footgrid">
-          <div>
-            <div class="badge">NADIR • Evidentiary Infrastructure</div>
-            <div style="margin-top:10px;" class="small">
-              © 2026 NADIR. All rights reserved. —
-              <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="contact.html">Contact</a>
-            </div>
-          </div>
-          <div class="right">
-            <div>V2026.02.19</div>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </main>
-
-  <script src="assets/site.js"></script>
-</body>
-</html>
+  <footer class="siteFooter">
+    <div class="footerLine">© 2026 NADIR. Proprietary infrastructure.</div>
+    <div class="footerLinks">
+      <a href="platform.html">Architecture</a>
+      <a href="governance.html">Governance</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </footer>
+</main>
