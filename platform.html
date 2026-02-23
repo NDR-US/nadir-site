@@ -1,149 +1,168 @@
-<!-- platform.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NADIR — Technical Architecture (DWSH)</title>
-  <meta name="description" content="Technical architecture for NADIR: Differential Weight-State Hashing (DWSH), a deterministic compliance layer operably coupled to an AI inference engine." />
+  <title>NADIR — Architecture (DWSH)</title>
+  <meta name="description" content="Technical overview of NADIR’s deterministic compliance pipeline and DWSH signature posture." />
+  <meta name="robots" content="noindex,nofollow" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
 <body>
-  <header>
-    <div class="wrap">
-      <div class="topbar">
-        <div class="brand">
-          <div class="mark">NADIR</div>
-          <div class="descriptor">Deterministic AI Decision-State Recorder</div>
+<header>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <a class="brandlink" href="index.html" aria-label="NADIR Home">
+          <svg class="nadir-logo" viewBox="0 0 520 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NADIR">
+            <text x="0" y="62" font-family="Julius Sans One, sans-serif" font-size="54" letter-spacing="14" fill="#E6ECF7">NADIR</text>
+          </svg>
+        </a>
+        <div class="descriptor">Deterministic AI Decision-State Recorder</div>
+      </div>
+
+      <nav aria-label="Primary navigation">
+        <a href="index.html">Overview</a>
+        <a href="platform.html">Architecture</a>
+        <a href="use-cases.html">Integration</a>
+        <a href="docs.html">Documents</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="wrap">
+
+    <section class="section">
+      <div class="kicker">Deterministic abstraction • Signature posture • Verification workflow</div>
+      <h1>Architecture and signature model</h1>
+      <p class="lead">
+        NADIR is positioned as an inference-boundary overlay that produces deterministic audit artifacts. The DWSH signature
+        is designed to be verifiable under constrained disclosure while preserving proprietary boundaries.
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" href="use-cases.html">Integration &amp; use cases</a>
+        <a class="btn" href="docs.html">Briefing suite</a>
+      </div>
+    </section>
+
+    <hr>
+
+    <section class="section">
+      <div class="card">
+        <h2>System configuration</h2>
+        <p class="sub">
+          A structured pipeline designed for audit workflows: capture state → canonicalize → abstract → sign → store artifact.
+        </p>
+
+        <div class="grid-2">
+          <div class="callout">
+            <h3>Input state capture</h3>
+            <p class="small">Receives structured inference inputs; generates an input baseline hash at time t₀.</p>
+          </div>
+          <div class="callout">
+            <h3>Deterministic canonicalization</h3>
+            <p class="small">Normalizes ordering, serialization formats, rounding policy, and metadata to reduce accidental entropy.</p>
+          </div>
+          <div class="callout">
+            <h3>Decision-state abstraction</h3>
+            <p class="small">Transforms internal inference vectors into compliance-safe representations under a defined determinism boundary.</p>
+          </div>
+          <div class="callout">
+            <h3>DWSH signature</h3>
+            <p class="small">Generates a tamper-evident fingerprint derived from the abstracted representation for later validation.</p>
+          </div>
         </div>
-        <nav>
-          <a data-page="index.html" href="index.html">Overview</a>
-          <a data-page="platform.html" href="platform.html">Architecture</a>
-          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
-          <a data-page="docs.html" href="docs.html">Documents</a>
-          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
-          <a data-page="contact.html" href="contact.html">Contact</a>
-        </nav>
+      </div>
+    </section>
+
+    <section class="section grid-2">
+      <div class="card">
+        <h2>Functional constraints</h2>
+        <p class="sub">These constraints are designed to keep the system legally defensible and adoption-ready.</p>
+        <ul class="small" style="margin:0; padding-left:18px;">
+          <li>Reproducible under identical conditions (documented determinism boundary).</li>
+          <li>Does not disclose model weights or source code.</li>
+          <li>Supports evidentiary preservation workflows (integrity, provenance, chain-of-custody posture).</li>
+          <li>Does not claim decision correctness.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>What this is not</h2>
+        <p class="sub">Clear boundaries prevent misinterpretation and over-claiming.</p>
+        <ul class="small" style="margin:0; padding-left:18px;">
+          <li>Not a safety system by itself.</li>
+          <li>Not an “explainability” product requiring internal disclosure.</li>
+          <li>Not a replacement for policy gating, human review, or authorization controls.</li>
+          <li>Not a claim of cross-hardware determinism unless explicitly proven and documented.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <h2>Determinism boundary (required)</h2>
+        <p class="sub">
+          Determinism is engineered, not assumed. The artifact pipeline requires documented capture scope and execution conditions.
+        </p>
+
+        <table aria-label="Determinism boundary table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>What is controlled</th>
+              <th>Why it matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Input canonicalization</td>
+              <td>Ordering, normalization, serialization, rounding policy</td>
+              <td>Prevents accidental entropy that breaks reproducibility</td>
+            </tr>
+            <tr>
+              <td>Runtime conditions</td>
+              <td>Hardware class, kernels, precision mode, randomness control</td>
+              <td>Inference can diverge across environments without constraints</td>
+            </tr>
+            <tr>
+              <td>Instrumentation</td>
+              <td>Stable hooks, consistent capture points</td>
+              <td>Ensures the same representation is captured each time</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footgrid">
+      <div>
+        <div class="badge">Architecture • DWSH Posture</div>
+        <div style="height:10px;"></div>
+        <div class="small">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
+      </div>
+      <div class="right">
+        <div>NADIR V2026.02.19</div>
+        <div>Unauthorized distribution prohibited.</div>
       </div>
     </div>
-  </header>
+  </div>
+</footer>
 
-  <main class="wrap page">
-    <section class="hero">
-      <div class="kicker">Deterministic Compliance Layer • DWSH • Verifiable Artifacts</div>
-      <h1>Technical architecture</h1>
-      <p class="lead">
-        NADIR’s core module, Differential Weight-State Hashing (DWSH), generates a deterministic abstracted representation of decision-state and signs it
-        to produce a verifiable audit artifact.
-      </p>
-
-      <div class="cta-row">
-        <a class="btn primary" href="use-cases.html">Integration posture</a>
-        <a class="btn" href="docs.html">Documents</a>
-      </div>
-    </section>
-
-    <section>
-      <h2>System flow (audit artifact pipeline)</h2>
-      <p class="sub">Capture → canonicalize → abstract (DWSH) → sign → record.</p>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3>Input & context capture</h3>
-          <p class="small">Structured inputs + required runtime context are captured at time T0 inside a defined boundary.</p>
-        </div>
-        <div class="card">
-          <h3>Canonicalization</h3>
-          <p class="small">Deterministic serialization and normalization prevent accidental entropy across runs.</p>
-        </div>
-        <div class="card">
-          <h3>DWSH abstraction</h3>
-          <p class="small">Internal state is transformed into a reduced abstracted representation via deterministic weighting.</p>
-        </div>
-        <div class="card">
-          <h3>Signature + record</h3>
-          <p class="small">A tamper-evident fingerprint is generated and stored with provenance metadata for verification.</p>
-        </div>
-      </div>
-    </section>
-
-    <section style="margin-top:18px;">
-      <h2>Functional constraints</h2>
-      <p class="sub">Non-negotiable constraints that keep the system defensible and adoption-ready.</p>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3>Reproducibility</h3>
-          <p class="small">Artifacts are reproducible under identical conditions inside the determinism boundary.</p>
-        </div>
-        <div class="card">
-          <h3>Constrained disclosure</h3>
-          <p class="small">Verification does not require revealing weights, source code, or proprietary architecture.</p>
-        </div>
-        <div class="card">
-          <h3>Evidentiary posture</h3>
-          <p class="small">Record format supports preservation and review under chain-of-custody expectations.</p>
-        </div>
-        <div class="card">
-          <h3>Correctness boundary</h3>
-          <p class="small">Integrity is verifiable; correctness of the decision is not claimed by the signature.</p>
-        </div>
-      </div>
-
-      <div class="callout" style="margin-top:14px;">
-        <p class="small">
-          <strong>Determinism boundary:</strong> determinism is engineered, not assumed. NADIR requires canonicalization of captured state and documented
-          inference conditions (software/hardware constraints, randomness control, instrumentation stability).
-        </p>
-      </div>
-    </section>
-
-    <section style="margin-top:18px;">
-      <h2>What NADIR does not do</h2>
-      <p class="sub">Boundaries that reduce legal risk and prevent over-claiming.</p>
-
-      <div class="grid-3">
-        <div class="card">
-          <h3>No weight exposure</h3>
-          <p class="small">No requirement to reveal weights or proprietary model internals.</p>
-        </div>
-        <div class="card">
-          <h3>No classified dependency</h3>
-          <p class="small">No requirement for classified datasets, restricted systems, or government facilities.</p>
-        </div>
-        <div class="card">
-          <h3>No interpretability promise</h3>
-          <p class="small">Audit artifact infrastructure, not interpretability-by-disclosure.</p>
-        </div>
-      </div>
-
-      <div class="cta-row" style="margin-top:14px;">
-        <a class="btn primary" href="roadmap.html">Build roadmap</a>
-        <a class="btn" href="contact.html">Controlled review</a>
-      </div>
-    </section>
-
-    <footer>
-      <div class="wrap">
-        <div class="footgrid">
-          <div>
-            <div class="badge">Architecture • DWSH Engine</div>
-            <div style="margin-top:10px;">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
-          </div>
-          <div class="right">
-            <div>NADIR V2026.02.19</div>
-            <div>Unauthorized distribution prohibited.</div>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </main>
-
-  <script src="assets/site.js"></script>
+<script src="assets/site.js"></script>
 </body>
 </html>
