@@ -1,10 +1,13 @@
+<!-- =========================
+     FILE: roadmap.html (Roadmap - shortened, non-repetitive)
+     ========================= -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NADIR — Roadmap</title>
-  <meta name="description" content="NADIR roadmap: prove artifact determinism, verification harness, chain-of-custody workflow, then controlled expansion." />
+  <meta name="description" content="NADIR roadmap: prove canonical artifacts, verification workflow, chain-of-custody retention, then controlled expansion." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,12 +39,12 @@
   </header>
 
   <main class="wrap page">
-    <section>
-      <div class="kicker">Proof → Verification → Workflow → Expansion</div>
+    <section class="section">
+      <div class="kicker">Proof first • Verification next • Workflow then • Expansion last</div>
       <h1>Roadmap</h1>
       <p class="lead">
-        The path from concept to infrastructure is proof. NADIR prioritizes deterministic artifact generation, independent verification,
-        and chain-of-custody workflow design before scope expansion.
+        The path from concept to infrastructure is proof. NADIR prioritizes canonical artifacts, independent verification,
+        and chain-of-custody workflow design before expanding scope.
       </p>
     </section>
 
@@ -51,32 +54,32 @@
 
       <div class="grid-2">
         <div class="card">
-          <h3>Define capture boundary</h3>
-          <p class="small">Specify fields included, excluded, and masked. Document the policy scope and disclosure tiers.</p>
+          <h3>Capture boundary</h3>
+          <p class="small">Define included, excluded, and masked fields; publish a policy scope and disclosure tiers.</p>
         </div>
         <div class="card">
-          <h3>Canonicalize</h3>
-          <p class="small">Normalize ordering, serialization, rounding, and metadata to remove accidental entropy.</p>
+          <h3>Canonical schema</h3>
+          <p class="small">Normalize ordering, serialization, and metadata to reduce ambiguity and accidental entropy.</p>
         </div>
         <div class="card">
           <h3>Integrity sealing</h3>
-          <p class="small">Hash and sign the canonical artifact; define key custody and verification procedure.</p>
+          <p class="small">Hash and sign artifacts; define key custody and verification procedure.</p>
         </div>
         <div class="card">
           <h3>Verification harness</h3>
-          <p class="small">Prove repeatability under identical conditions and detect tampering or mismatch states.</p>
+          <p class="small">Prove repeatability under defined conditions; detect tampering and mismatch states.</p>
         </div>
       </div>
     </section>
 
     <section class="section">
       <h2>Phase 2 — Chain-of-custody workflow</h2>
-      <p class="sub">Deliverable: retention-ready record format + retrieval + verification steps for review boards.</p>
+      <p class="sub">Deliverable: retention-ready record format + retrieval + verification steps suitable for review boards.</p>
 
       <div class="grid-3">
         <div class="card">
           <h3>Record schema</h3>
-          <p class="small">Timestamping, provenance, policy ID, disclosure tier, integrity fields, verification fields.</p>
+          <p class="small">Timestamp, provenance, policy ID, disclosure tier, integrity fields, verification fields.</p>
         </div>
         <div class="card">
           <h3>Retention posture</h3>
@@ -84,7 +87,7 @@
         </div>
         <div class="card">
           <h3>Review output</h3>
-          <p class="small">Controlled reports that preserve confidentiality while enabling verification.</p>
+          <p class="small">Controlled reporting that enables verification without unnecessary disclosure.</p>
         </div>
       </div>
     </section>
@@ -95,30 +98,20 @@
 
       <div class="grid-2">
         <div class="card">
-          <h3>Model class extension</h3>
-          <p class="small">Define capture/canonicalization per model type and deployment mode (batching, distributed inference).</p>
-        </div>
-        <div class="card">
-          <h3>Environment hardening</h3>
-          <p class="small">Document determinism boundaries across hardware, runtimes, and configuration drift.</p>
+          <h3>Model & runtime coverage</h3>
+          <p class="small">Define capture/canonicalization by deployment mode (batching, distributed inference, runtime differences).</p>
         </div>
         <div class="card">
           <h3>Third-party validation protocol</h3>
-          <p class="small">Verification steps suitable for independent oversight without requiring trade secret disclosure.</p>
-        </div>
-        <div class="card">
-          <h3>Compliance mapping</h3>
-          <p class="small">Map artifacts to review expectations without claiming correctness or certification.</p>
+          <p class="small">Verification steps suitable for independent oversight without trade secret disclosure.</p>
         </div>
       </div>
 
-      <div class="hr"></div>
-
-      <div class="boundary">
+      <div class="boundary" style="margin-top:18px;">
         <div class="title">Quality Bar</div>
         <ul>
-          <li>NADIR expands only after determinism and verification are proven in constrained scope.</li>
-          <li>Claims remain limited to integrity, provenance, and verification workflow support.</li>
+          <li>Expand only after repeatability and verification are proven in constrained scope.</li>
+          <li>Claims remain limited to integrity, provenance, and workflow support.</li>
           <li>Oversight conclusions are made by authorized reviewers.</li>
         </ul>
       </div>
@@ -128,7 +121,7 @@
       <div class="wrap">
         <div class="footgrid">
           <div>
-            <div class="badge">Roadmap • Infrastructure proof</div>
+            <div class="badge">Roadmap • Proof milestones</div>
             <div style="margin-top:10px;" class="small">
               © 2026 NADIR. All rights reserved. — <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="contact.html">Contact</a>
             </div>
