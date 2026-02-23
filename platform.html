@@ -1,168 +1,72 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NADIR — Architecture (DWSH)</title>
-  <meta name="description" content="Technical overview of NADIR’s deterministic compliance pipeline and DWSH signature posture." />
-  <meta name="robots" content="noindex,nofollow" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css" />
-</head>
-
-<body>
-<header>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <a class="brandlink" href="index.html" aria-label="NADIR Home">
-          <svg class="nadir-logo" viewBox="0 0 520 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NADIR">
-            <text x="0" y="62" font-family="Julius Sans One, sans-serif" font-size="54" letter-spacing="14" fill="#E6ECF7">NADIR</text>
-          </svg>
-        </a>
-        <div class="descriptor">Deterministic AI Decision-State Recorder</div>
-      </div>
-
-      <nav aria-label="Primary navigation">
-        <a href="index.html">Overview</a>
-        <a href="platform.html">Architecture</a>
-        <a href="use-cases.html">Integration</a>
-        <a href="docs.html">Documents</a>
-        <a href="roadmap.html">Roadmap</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </div>
-  </div>
-</header>
-
 <main class="page">
   <div class="wrap">
 
-    <section class="section">
-      <div class="kicker">Deterministic abstraction • Signature posture • Verification workflow</div>
-      <h1>Architecture and signature model</h1>
+    <section class="hero">
+      <div class="kicker">Architecture • Data Flow • Verification</div>
+      <h1>How NADIR produces an evidence package</h1>
       <p class="lead">
-        NADIR is positioned as an inference-boundary overlay that produces deterministic audit artifacts. The DWSH signature
-        is designed to be verifiable under constrained disclosure while preserving proprietary boundaries.
+        NADIR sits beside inference and emits structured artifacts for retention and review.
+        It is designed to integrate without requiring model weight disclosure.
       </p>
-      <div class="cta-row">
-        <a class="btn primary" href="use-cases.html">Integration &amp; use cases</a>
-        <a class="btn" href="docs.html">Briefing suite</a>
+    </section>
+
+    <hr>
+
+    <section class="grid-2">
+      <div class="card">
+        <h2>Flow</h2>
+        <ol class="small" style="margin:0; padding-left:18px; line-height:1.8;">
+          <li>Inference request enters the runtime (prompt + policy context + inputs).</li>
+          <li>NADIR captures a canonicalized record of the run under configured conditions.</li>
+          <li>Artifacts are hashed into a tamper-evident structure (chain-of-custody ready).</li>
+          <li>Verification fields are emitted for auditors without requiring proprietary disclosure.</li>
+          <li>Artifacts are stored per retention policy and can be replay-verified for disputes.</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h2>Outputs</h2>
+        <ul class="small" style="margin:0; padding-left:18px; line-height:1.8;">
+          <li>Run manifest (inputs, policy IDs, runtime identifiers, timestamps)</li>
+          <li>Deterministic transcript fields (canonicalized prompt/response payloads)</li>
+          <li>Integrity chain (hashes, signatures, verification fields)</li>
+          <li>Event timeline (system + model events, failures, escalations)</li>
+          <li>Disclosure profile (what is included / withheld by level)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section style="margin-top:14px;" class="card">
+      <h2>Disclosure levels</h2>
+      <div class="grid-2" style="margin-top:10px;">
+        <div class="callout">
+          <h3 style="margin:0 0 8px;">Level I — Public abstract</h3>
+          <p class="small" style="margin:0;">High-level description of artifact types and verification method.</p>
+        </div>
+        <div class="callout">
+          <h3 style="margin:0 0 8px;">Level II — Controlled overview</h3>
+          <p class="small" style="margin:0;">Interface details, sample artifacts, and workflow diagrams under NDA.</p>
+        </div>
+        <div class="callout">
+          <h3 style="margin:0 0 8px;">Level III — Technical review</h3>
+          <p class="small" style="margin:0;">Implementation specifics, threat model, and validation plan with redactions.</p>
+        </div>
+        <div class="callout">
+          <h3 style="margin:0 0 8px;">Level IV — Full evaluation</h3>
+          <p class="small" style="margin:0;">Hands-on test plan and artifact validation in a controlled environment.</p>
+        </div>
       </div>
     </section>
 
     <hr>
 
-    <section class="section">
-      <div class="card">
-        <h2>System configuration</h2>
-        <p class="sub">
-          A structured pipeline designed for audit workflows: capture state → canonicalize → abstract → sign → store artifact.
-        </p>
-
-        <div class="grid-2">
-          <div class="callout">
-            <h3>Input state capture</h3>
-            <p class="small">Receives structured inference inputs; generates an input baseline hash at time t₀.</p>
-          </div>
-          <div class="callout">
-            <h3>Deterministic canonicalization</h3>
-            <p class="small">Normalizes ordering, serialization formats, rounding policy, and metadata to reduce accidental entropy.</p>
-          </div>
-          <div class="callout">
-            <h3>Decision-state abstraction</h3>
-            <p class="small">Transforms internal inference vectors into compliance-safe representations under a defined determinism boundary.</p>
-          </div>
-          <div class="callout">
-            <h3>DWSH signature</h3>
-            <p class="small">Generates a tamper-evident fingerprint derived from the abstracted representation for later validation.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section grid-2">
-      <div class="card">
-        <h2>Functional constraints</h2>
-        <p class="sub">These constraints are designed to keep the system legally defensible and adoption-ready.</p>
-        <ul class="small" style="margin:0; padding-left:18px;">
-          <li>Reproducible under identical conditions (documented determinism boundary).</li>
-          <li>Does not disclose model weights or source code.</li>
-          <li>Supports evidentiary preservation workflows (integrity, provenance, chain-of-custody posture).</li>
-          <li>Does not claim decision correctness.</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h2>What this is not</h2>
-        <p class="sub">Clear boundaries prevent misinterpretation and over-claiming.</p>
-        <ul class="small" style="margin:0; padding-left:18px;">
-          <li>Not a safety system by itself.</li>
-          <li>Not an “explainability” product requiring internal disclosure.</li>
-          <li>Not a replacement for policy gating, human review, or authorization controls.</li>
-          <li>Not a claim of cross-hardware determinism unless explicitly proven and documented.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="card">
-        <h2>Determinism boundary (required)</h2>
-        <p class="sub">
-          Determinism is engineered, not assumed. The artifact pipeline requires documented capture scope and execution conditions.
-        </p>
-
-        <table aria-label="Determinism boundary table">
-          <thead>
-            <tr>
-              <th>Category</th>
-              <th>What is controlled</th>
-              <th>Why it matters</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Input canonicalization</td>
-              <td>Ordering, normalization, serialization, rounding policy</td>
-              <td>Prevents accidental entropy that breaks reproducibility</td>
-            </tr>
-            <tr>
-              <td>Runtime conditions</td>
-              <td>Hardware class, kernels, precision mode, randomness control</td>
-              <td>Inference can diverge across environments without constraints</td>
-            </tr>
-            <tr>
-              <td>Instrumentation</td>
-              <td>Stable hooks, consistent capture points</td>
-              <td>Ensures the same representation is captured each time</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <section class="card">
+      <h2>Non-claims</h2>
+      <p class="small">
+        NADIR does not certify model safety, correctness, or “truth.” It supports evidentiary review by providing reproducible
+        artifacts and tamper-evident integrity suitable for oversight and dispute handling.
+      </p>
     </section>
 
   </div>
 </main>
-
-<footer>
-  <div class="wrap">
-    <div class="footgrid">
-      <div>
-        <div class="badge">Architecture • DWSH Posture</div>
-        <div style="height:10px;"></div>
-        <div class="small">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
-      </div>
-      <div class="right">
-        <div>NADIR V2026.02.19</div>
-        <div>Unauthorized distribution prohibited.</div>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<script src="assets/site.js"></script>
-</body>
-</html>
