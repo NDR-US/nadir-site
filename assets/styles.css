@@ -1,46 +1,69 @@
 :root{
-  --bg-0:#070b12;
-  --text:rgba(255,255,255,.92);
-  --muted:rgba(255,255,255,.68);
-  --muted2:rgba(255,255,255,.52);
-  --shadow: 0 16px 40px rgba(0,0,0,.45);
-  --radius: 22px;
+  --bg:#070b12;
+  --bg2:#05070c;
+  --panel: rgba(255,255,255,.06);
+  --stroke: rgba(255,255,255,.12);
+  --text: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.70);
+  --muted2: rgba(255,255,255,.52);
   --max: 1100px;
+  --radius: 18px;
+  --shadow: 0 14px 36px rgba(0,0,0,.45);
 }
 
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
 
+html{
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
 body{
   margin:0;
   color:var(--text);
-  background: radial-gradient(1200px 900px at 20% 0%, #121a2e 0%, var(--bg-0) 55%, #05070c 100%);
+  background:
+    radial-gradient(1200px 900px at 20% 0%, #121a2e 0%, var(--bg) 55%, var(--bg2) 100%);
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
   padding-bottom: calc(28px + env(safe-area-inset-bottom));
-  overflow-x:hidden;
 }
+
+/* Prevent mobile “wobble” from accidental horizontal overflow */
+img, svg, video { max-width: 100%; height: auto; display:block; }
 
 a{ color:inherit; text-decoration:none; }
-.wrap{ width:min(var(--max), calc(100% - 40px)); margin:0 auto; }
-.page{ padding: 24px 0 26px; }
+a:hover{ text-decoration: underline; }
 
-header{
-  position:sticky;
-  top:0;
-  z-index:50;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  background: linear-gradient(to bottom, rgba(5,7,12,.88), rgba(5,7,12,.45));
-  border-bottom:1px solid rgba(255,255,255,.08);
-  transform: translateZ(0);
+.wrap{
+  width: min(var(--max), calc(100% - 40px));
+  margin: 0 auto;
 }
+
+.page{
+  padding: 20px 0 26px;
+}
+
+/* ---------- Header (NO blur — blur/backdrop causes iOS wobble) ---------- */
+header{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(7,11,18,.92);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+/* Keep header stable (avoid GPU jitter) */
+header, .topbar { transform: translateZ(0); }
 
 .topbar{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:16px;
-  padding: 18px 0;
+  padding: 14px 0;
 }
 
 .brand{
@@ -54,124 +77,120 @@ header{
   display:flex;
   align-items:center;
   gap:12px;
+  text-decoration:none !important;
 }
 
-/* SVG mark (Palantir-like: small, stable, doesn't affect layout) */
-.logo-img{
-  width: 150px;
-  height: 34px;        /* fixed height prevents wobble */
+/* Inline SVG logo sizing */
+.nadir-logo{
+  width: 170px;
+  height: 36px;
   display:block;
-  object-fit: contain;
 }
-
-.mark{
-  font-family: "Julius Sans One", Inter, sans-serif;
-  letter-spacing:.42em;
-  font-size: 18px;
-  opacity:.92;
-  display:none; /* fallback only */
-}
-
-/* If SVG fails to load for any reason, show text */
-.logo-img[alt="NADIR"]{}
 
 /* Descriptor */
 .descriptor{
-  margin-top:8px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  font-size:12px;
-  color:var(--muted2);
+  margin-top: 6px;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  white-space: nowrap;
 }
 
+/* Nav: horizontal scroll ON mobile, no overflow wobble */
 nav{
   display:flex;
   gap:10px;
-  flex-wrap:nowrap;
   overflow-x:auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width:none;
-  max-width:100%;
-  padding-bottom:2px;
+  max-width: 100%;
+  padding-bottom: 2px;
 }
 nav::-webkit-scrollbar{ display:none; }
 
 nav a{
-  flex:0 0 auto;
-  padding:10px 14px;
-  border-radius:999px;
-  color:var(--muted);
-  border:1px solid transparent;
+  flex: 0 0 auto;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--muted);
+  border: 1px solid transparent;
   background: transparent;
-  white-space:nowrap;
+  white-space: nowrap;
+  font-size: 13px;
 }
 nav a:hover{
-  color:var(--text);
+  color: var(--text);
   border-color: rgba(255,255,255,.14);
   background: rgba(255,255,255,.04);
+  text-decoration:none;
 }
 nav a.active{
-  color:var(--text);
+  color: var(--text);
   border-color: rgba(255,255,255,.16);
   background: rgba(255,255,255,.06);
 }
 
-.hero{ padding: 36px 0 20px; }
-
+/* ---------- Typography ---------- */
 .kicker{
-  color:var(--muted2);
-  text-transform:uppercase;
-  letter-spacing:.22em;
-  font-size:12px;
-  margin-bottom:14px;
+  color: var(--muted2);
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  font-size: 12px;
+  margin: 14px 0 10px;
 }
 
 h1{
-  margin:0;
-  font-family:"Julius Sans One", Inter, sans-serif;
-  letter-spacing:.22em;
-  font-weight:400;
-  font-size: clamp(34px, 5.5vw, 64px);
-  line-height:1.08;
+  margin: 0;
+  font-family: "Julius Sans One", Inter, sans-serif;
+  font-weight: 400;
+  letter-spacing: .12em; /* reduced to prevent overflow on mobile */
+  text-transform: uppercase;
+  font-size: clamp(30px, 6.3vw, 56px);
+  line-height: 1.1;
 }
 
 .lead{
-  margin-top:18px;
-  max-width: 62ch;
-  color:var(--muted);
-  font-size: 18px;
-  line-height:1.7;
+  margin: 14px 0 0;
+  max-width: 64ch;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+/* ---------- Buttons ---------- */
+.cta-row{
+  display:flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
 }
 
 .btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  padding: 14px 18px;
+  padding: 12px 16px;
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,.16);
   background: rgba(255,255,255,.06);
   color: var(--text);
-  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+  font-size: 13px;
   white-space: nowrap;
+  transition: transform .12s ease, background .12s ease, border-color .12s ease;
 }
 .btn:hover{
   background: rgba(255,255,255,.10);
   border-color: rgba(255,255,255,.22);
   transform: translateY(-1px);
+  text-decoration:none;
 }
 .btn.primary{
   background: rgba(255,255,255,.12);
   border-color: rgba(255,255,255,.22);
 }
 
-.cta-row{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  align-items:center;
-}
-
+/* ---------- Layout blocks ---------- */
 hr{
   border:0;
   height:1px;
@@ -179,53 +198,67 @@ hr{
   margin: 18px 0;
 }
 
+.section{
+  padding: 18px 0;
+}
+
 .card{
   border-radius: var(--radius);
   border: 1px solid rgba(255,255,255,.10);
   background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
   box-shadow: var(--shadow);
-  padding: 18px 18px;
+  padding: 16px 16px;
 }
 
 h2{
   margin: 0 0 10px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  font-size: 14px;
+  font-size: 13px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
   color: var(--muted2);
 }
+
 h3{
-  margin: 0 0 10px;
-  font-size: 20px;
-  letter-spacing:.02em;
+  margin: 0 0 8px;
+  font-size: 18px;
+  letter-spacing: .02em;
 }
-.sub, .small{
+
+.sub{
+  margin: 0 0 12px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+.small{
   margin: 0;
   color: var(--muted);
-  line-height:1.7;
+  line-height: 1.7;
+  font-size: 14px;
 }
-.sub{ margin-bottom:14px; }
 
 .grid-2{
   display:grid;
-  gap:14px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 .grid-3{
   display:grid;
-  gap:14px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .callout{
   border-radius: var(--radius);
   border: 1px solid rgba(255,255,255,.10);
   background: rgba(255,255,255,.05);
-  padding: 14px 16px;
+  padding: 14px 14px;
 }
 
+/* ---------- Footer ---------- */
 footer{
-  margin-top: 26px;
+  margin-top: 22px;
   padding: 18px 0 calc(24px + env(safe-area-inset-bottom));
   border-top: 1px solid rgba(255,255,255,.10);
   position: relative;
@@ -236,32 +269,36 @@ footer{
   display:flex;
   align-items:flex-start;
   justify-content:space-between;
-  gap:14px;
+  gap: 14px;
 }
+
 .badge{
   display:inline-flex;
   padding: 10px 14px;
   border-radius: 999px;
-  border:1px solid rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.12);
   background: rgba(255,255,255,.04);
   color: var(--muted);
-  letter-spacing:.14em;
-  text-transform:uppercase;
+  letter-spacing: .12em;
+  text-transform: uppercase;
   font-size: 11px;
 }
 
 .right{
   text-align:right;
   color: var(--muted2);
-  line-height:1.7;
+  line-height: 1.7;
+  font-size: 12px;
 }
 
+/* ---------- Mobile ---------- */
 @media (max-width: 860px){
+  .wrap{ width: calc(100% - 28px); }
+  .topbar{ flex-direction:column; align-items:flex-start; }
+  .descriptor{ white-space: normal; }
   .grid-3{ grid-template-columns: 1fr; }
   .grid-2{ grid-template-columns: 1fr; }
-  .topbar{ align-items:flex-start; flex-direction:column; }
-  nav{ width:100%; justify-content:flex-start; }
   .footgrid{ flex-direction:column; }
   .right{ text-align:left; }
-  .logo-img{ width: 130px; height: 30px; }
+  .nadir-logo{ width: 150px; height: 34px; }
 }
