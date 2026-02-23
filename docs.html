@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NADIR — Documents</title>
-  <meta name="description" content="NADIR document suite: executive brief, patent-aligned framework, operational integration brief, and minimal disclosure overview." />
+  <meta name="description" content="NADIR document suite: executive, IP/technical, operational, and minimal disclosure briefs." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,109 +12,87 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
-<body>
-  <header>
-    <div class="wrap">
-      <div class="topbar">
-        <div class="brand">
-          <div class="mark">NADIR</div>
-          <div class="descriptor">Documents</div>
-        </div>
+<body class="page-docs">
 
-        <nav>
-          <a data-page="index.html" href="index.html">Overview</a>
-          <a data-page="platform.html" href="platform.html">Architecture</a>
-          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
-          <a data-page="docs.html" href="docs.html">Documents</a>
-          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
-          <a data-page="founder.html" href="founder.html">Founder</a>
-          <a data-page="governance.html" href="governance.html">Governance</a>
-          <a data-page="contact.html" href="contact.html">Contact</a>
-        </nav>
+<header class="siteHeader">
+  <div class="wrap">
+    <div class="topbar">
+      <a class="brand" href="index.html">
+        <div class="mark">NADIR</div>
+        <div class="descriptor">Documents</div>
+      </a>
+
+      <button class="navToggle" aria-expanded="false" aria-controls="siteNav">Menu</button>
+
+      <nav id="siteNav" class="navMenu" hidden>
+        <a data-page="index.html" href="index.html">Overview</a>
+        <a data-page="platform.html" href="platform.html">Architecture</a>
+        <a data-page="use-cases.html" href="use-cases.html">Integration</a>
+        <a data-page="docs.html" href="docs.html">Documents</a>
+        <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
+        <a data-page="founder.html" href="founder.html">Founder</a>
+        <a data-page="governance.html" href="governance.html">Governance</a>
+        <a data-page="privacy.html" href="privacy.html">Privacy</a>
+        <a data-page="terms.html" href="terms.html">Terms</a>
+        <a data-page="contact.html" href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap page">
+
+  <section class="hero">
+    <div class="kicker">Disclosure levels • Briefing dialects • Controlled access</div>
+    <h1>Document suite</h1>
+    <p class="lead">
+      Public pages remain high-level. These briefs are structured for distinct audiences while maintaining strict intellectual property boundaries.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>Directory</h2>
+    <p class="sub">Replace each placeholder with your uploaded PDF URL when ready.</p>
+
+    <div class="grid-2">
+      <div class="panel">
+        <h3>I. Executive Brief</h3>
+        <p class="small">Leadership framing: what it is, what it is not, and why records matter.</p>
+        <div class="cta-row"><a class="btn" href="#" onclick="alert('Upload PDF and replace this link.');return false;">Open PDF</a></div>
+      </div>
+
+      <div class="panel">
+        <h3>II. IP / Technical Brief</h3>
+        <p class="small">Mechanics chain, canonicalization, integrity model, disclosure tiers.</p>
+        <div class="cta-row"><a class="btn" href="#" onclick="alert('Upload PDF and replace this link.');return false;">Open PDF</a></div>
+      </div>
+
+      <div class="panel">
+        <h3>III. Operational Brief</h3>
+        <p class="small">Integration posture, chain-of-custody workflow, review board orientation.</p>
+        <div class="cta-row"><a class="btn" href="#" onclick="alert('Upload PDF and replace this link.');return false;">Open PDF</a></div>
+      </div>
+
+      <div class="panel">
+        <h3>IV. Minimal Disclosure Brief</h3>
+        <p class="small">Scope boundaries and non-interference affirmations.</p>
+        <div class="cta-row"><a class="btn" href="#" onclick="alert('Upload PDF and replace this link.');return false;">Open PDF</a></div>
       </div>
     </div>
-  </header>
+  </section>
 
-  <main class="wrap page">
-    <section>
-      <div class="kicker">Disclosure tiers • Institutional briefing formats • Controlled access</div>
-      <h1>Document suite</h1>
-      <p class="lead">
-        NADIR materials are structured into distinct “dialects” for leadership, legal/IP review, operational integration, and minimal disclosure contexts.
-        Public links should remain redacted; controlled review is available under appropriate boundaries.
-      </p>
-    </section>
+  <footer class="siteFooter">
+    <div class="footerLine">© 2026 NADIR. Proprietary infrastructure. Version V2026.02.19.</div>
+    <div class="footerLinks">
+      <a href="contact.html">Controlled review</a>
+      <a href="governance.html">Governance</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </footer>
 
-    <section class="section">
-      <h2>Briefs</h2>
-      <p class="sub">
-        Replace the placeholders with your final PDF URLs (GitHub Pages can host PDFs in the repo, or you can link externally).
-      </p>
+</main>
 
-      <div class="grid-2">
-        <div class="card">
-          <h3>I. Executive Brief</h3>
-          <p class="small">Policy & leadership framing: problem, architecture, strategic value.</p>
-          <div class="cta-row">
-            <a class="btn" href="#" onclick="alert('Add your PDF link here.');return false;">Open (placeholder)</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>II. Patent-Aligned Framework</h3>
-          <p class="small">System configuration, method language, functional constraints.</p>
-          <div class="cta-row">
-            <a class="btn" href="#" onclick="alert('Add your PDF link here.');return false;">Open (placeholder)</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>III. Operational Integration Brief</h3>
-          <p class="small">Overlay attachment, chain-of-custody posture, use cases.</p>
-          <div class="cta-row">
-            <a class="btn" href="#" onclick="alert('Add your PDF link here.');return false;">Open (placeholder)</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>IV. Minimal Disclosure Overview</h3>
-          <p class="small">Scope boundaries and non-interference declarations for oversight contexts.</p>
-          <div class="cta-row">
-            <a class="btn" href="#" onclick="alert('Add your PDF link here.');return false;">Open (placeholder)</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="boundary">
-        <div class="title">Handling Note</div>
-        <ul>
-          <li>Public site: keep content redacted and policy-level.</li>
-          <li>Controlled review: provide expanded briefs under written boundaries.</li>
-          <li>Do not publish sensitive implementation details or operational procedures.</li>
-        </ul>
-      </div>
-    </section>
-
-    <footer>
-      <div class="wrap">
-        <div class="footgrid">
-          <div>
-            <div class="badge">Documents • Multi-disclosure levels</div>
-            <div style="margin-top:10px;" class="small">
-              © 2026 NADIR. All rights reserved. — <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="contact.html">Contact</a>
-            </div>
-          </div>
-          <div class="right">
-            <div>V2026.02.19</div>
-            <div>Unauthorized distribution prohibited.</div>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </main>
-
-  <script src="assets/site.js"></script>
+<script src="assets/site.js"></script>
 </body>
 </html>
