@@ -1,234 +1,151 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NADIR — Deterministic AI Decision-State Recorder</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>NADIR — Deterministic AI Decision-State Recorder</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
 
-<style>
-
-/* ===============================
-   NADIR PRODUCTION STYLES
-   =============================== */
-
-:root{
-  --bg-main:#05070f;
-  --bg-deep:#070b17;
-  --accent:#0d1630;
-  --text-primary:#e8ecf4;
-  --text-secondary:#aab2c5;
-  --border-soft:rgba(255,255,255,.08);
-}
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html,body{
-  height:100%;
-  background:linear-gradient(180deg,#060912 0%,#04060c 100%);
-  color:var(--text-primary);
-  font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  -webkit-font-smoothing:antialiased;
-}
-
-.wrap{
-  width:min(1100px, calc(100% - 48px));
-  margin:0 auto;
-}
-
-header{
-  border-bottom:1px solid var(--border-soft);
-  padding:28px 0 22px;
-}
-
-.brand{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.logo{
-  font-family:"Julius Sans One", sans-serif;
-  font-size:34px;
-  letter-spacing:.45em;
-  font-weight:400;
-}
-
-.descriptor{
-  font-size:12px;
-  letter-spacing:.25em;
-  text-transform:uppercase;
-  color:var(--text-secondary);
-}
-
-nav{
-  margin-top:26px;
-  display:flex;
-  gap:24px;
-  flex-wrap:wrap;
-}
-
-nav a{
-  text-decoration:none;
-  color:var(--text-secondary);
-  font-size:14px;
-  letter-spacing:.08em;
-  transition:color .2s ease;
-}
-
-nav a:hover{
-  color:var(--text-primary);
-}
-
-.hero{
-  padding:72px 0 60px;
-}
-
-.kicker{
-  font-size:12px;
-  letter-spacing:.28em;
-  text-transform:uppercase;
-  color:var(--text-secondary);
-  margin-bottom:22px;
-}
-
-h1{
-  font-family:"Julius Sans One", sans-serif;
-  font-weight:400;
-  letter-spacing:.18em;
-  font-size:clamp(34px,5vw,64px);
-  line-height:1.08;
-  margin-bottom:30px;
-}
-
-.lead{
-  max-width:760px;
-  font-size:18px;
-  line-height:1.7;
-  color:var(--text-secondary);
-}
-
-.section{
-  padding:60px 0;
-  border-top:1px solid var(--border-soft);
-}
-
-.section h2{
-  font-size:13px;
-  text-transform:uppercase;
-  letter-spacing:.25em;
-  margin-bottom:22px;
-  color:var(--text-secondary);
-}
-
-.grid{
-  display:grid;
-  gap:22px;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-}
-
-.card{
-  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03));
-  border:1px solid var(--border-soft);
-  padding:24px;
-  border-radius:18px;
-}
-
-.card h3{
-  margin-bottom:14px;
-  font-weight:500;
-  font-size:18px;
-}
-
-.card p{
-  font-size:15px;
-  line-height:1.7;
-  color:var(--text-secondary);
-}
-
-footer{
-  padding:50px 0 70px;
-  border-top:1px solid var(--border-soft);
-  font-size:12px;
-  color:var(--text-secondary);
-}
-
-@media (max-width: 680px){
-  .hero{
-    padding:50px 0 40px;
-  }
-}
-
-</style>
+  <!-- IMPORTANT: this must be exactly this path -->
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
 
 <body>
 
 <header>
   <div class="wrap">
-    <div class="brand">
-      <div class="logo">NADIR</div>
-      <div class="descriptor">Deterministic AI Decision-State Recorder</div>
-    </div>
+    <div class="topbar">
 
-    <nav>
-      <a href="index.html">Overview</a>
-      <a href="platform.html">Architecture</a>
-      <a href="use-cases.html">Integration</a>
-      <a href="docs.html">Documents</a>
-      <a href="roadmap.html">Roadmap</a>
-      <a href="contact.html">Contact</a>
-    </nav>
+      <div class="brand">
+        <!-- If you later add a logo.svg, put it inside .logo-media and keep .mark as fallback -->
+        <!--
+        <div class="logo-media">
+          <img src="assets/logo.svg" alt="NADIR logo">
+        </div>
+        -->
+        <div class="mark">NADIR</div>
+        <div class="descriptor">Deterministic AI Decision-State Recorder</div>
+      </div>
+
+      <nav>
+        <a class="active" href="index.html">Overview</a>
+        <a href="platform.html">Architecture</a>
+        <a href="use-cases.html">Integration</a>
+        <a href="docs.html">Documents</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+    </div>
   </div>
 </header>
 
-<main>
-
-<section class="hero">
+<main class="page">
   <div class="wrap">
-    <div class="kicker">Determinism • Audit Integrity • Controlled Disclosure</div>
-    <h1>Forensic Compliance Artifacts for AI Inference</h1>
-    <p class="lead">
-      NADIR is a deterministic compliance-layer abstraction designed to emit tamper-evident
-      decision-state artifacts at inference time. It enables structured oversight,
-      verification workflows, and dispute reconstruction without exposing proprietary
-      model weights, source code, or confidential architecture.
-    </p>
-  </div>
-</section>
 
-<section class="section">
-  <div class="wrap">
-    <h2>Core Principles</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Deterministic Capture</h3>
-        <p>Canonicalized inference-state records are generated under configured runtime policies for reproducibility and audit stability.</p>
-      </div>
-      <div class="card">
-        <h3>Tamper-Evident Integrity</h3>
-        <p>Artifacts are hashed and structured for chain-of-custody preservation, enabling evidentiary validation without internal model disclosure.</p>
-      </div>
-      <div class="card">
-        <h3>Constrained Disclosure</h3>
-        <p>Multi-level output profiles allow verification and oversight while protecting intellectual property and proprietary architecture.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <section class="hero">
+      <div class="kicker">Determinism • Audit Integrity • Controlled Disclosure</div>
 
+      <h1>Forensic Compliance Artifacts for AI Inference</h1>
+
+      <p class="lead">
+        NADIR sits beside inference and emits structured, tamper-evident artifacts for retention,
+        oversight, and dispute reconstruction. It is designed to support evidentiary review without
+        requiring disclosure of proprietary model weights, source code, or confidential architecture.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn primary" href="platform.html">How it works</a>
+        <a class="btn" href="docs.html">Briefs &amp; documents</a>
+        <a class="btn" href="contact.html">Request controlled review</a>
+      </div>
+    </section>
+
+    <hr>
+
+    <section class="section">
+      <div class="section-title">What it is</div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Deterministic capture</h3>
+          <p>
+            Canonicalized records designed for repeatability under defined conditions and policy context.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Tamper-evident integrity</h3>
+          <p>
+            Hashing and verification fields support chain-of-custody workflows suitable for high-liability review.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid-2">
+        <div class="card">
+          <h3>Constrained disclosure</h3>
+          <p>
+            Verification without disclosing weights, architecture details, or proprietary code paths.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Audit workflow fit</h3>
+          <p>
+            Outputs structured for retention, review, and oversight reporting.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">Where it fits</div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Autonomy &amp; robotics</h3>
+          <p>Route selection, obstacle response, escalation and failover review artifacts.</p>
+        </div>
+        <div class="card">
+          <h3>Decision support</h3>
+          <p>Analyst-assist integrity records for prioritization and escalation pathways.</p>
+        </div>
+        <div class="card">
+          <h3>Post-incident reconstruction</h3>
+          <p>Evidentiary posture for review boards under constrained disclosure requirements.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">Non-claims</div>
+      <div class="card">
+        <p>
+          NADIR does not certify model safety, correctness, or “truth,” and it does not provide interpretability-by-disclosure.
+          It supports evidentiary review by providing reproducible artifacts and tamper-evident integrity suitable for oversight and dispute handling.
+        </p>
+      </div>
+    </section>
+
+  </div>
 </main>
 
 <footer>
   <div class="wrap">
-    NADIR © 2026 — Proprietary AI Governance Infrastructure
+    <div class="footgrid">
+      <div>
+        <div class="badge">NADIR • Forensic Compliance Layer</div>
+        <div style="margin-top:10px; color: var(--muted); line-height:1.7;">
+          Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.
+        </div>
+      </div>
+      <div class="right">
+        NADIR V2026.02.19<br>
+        Unauthorized distribution prohibited.
+      </div>
+    </div>
   </div>
 </footer>
 
