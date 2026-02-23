@@ -1,39 +1,39 @@
-<!-- FILE: roadmap.html  (Roadmap page) — UPDATED TO RESOLVE PHASE vs STAGE -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NADIR — Roadmap</title>
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/styles.css?v=20260219" />
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
 <body>
   <header class="siteHeader">
-    <div class="wrap">
-      <div class="topbar">
-        <div class="brand">
-          <div class="mark">NADIR</div>
-          <div class="descriptor">Evidentiary Infrastructure</div>
-        </div>
-        <nav class="nav">
-          <a href="index.html">Overview</a>
-          <a href="platform.html">Architecture</a>
-          <a href="integration.html">Integration</a>
-          <a href="documents.html">Documents</a>
-          <a class="active" href="roadmap.html">Roadmap</a>
-          <a href="founder.html">Founder</a>
-          <a href="governance.html">Governance</a>
-          <a href="privacy.html">Privacy</a>
-          <a href="terms.html">Terms</a>
-          <a href="contact.html">Contact</a>
-        </nav>
+    <div class="wrap topbar">
+      <div class="brand">
+        <div class="mark">NADIR</div>
+        <div class="descriptor">Evidentiary Infrastructure</div>
       </div>
+
+      <nav class="nav">
+        <a href="index.html">Overview</a>
+        <a href="platform.html">Architecture</a>
+        <a href="use-cases.html">Integration</a>
+        <a href="docs.html">Documents</a>
+        <a class="active" href="roadmap.html">Roadmap</a>
+        <a href="founder.html">Founder</a>
+        <a href="governance.html">Governance</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="contact.html">Contact</a>
+      </nav>
     </div>
   </header>
 
@@ -51,44 +51,36 @@
         <div class="card">
           <h3>Current position</h3>
           <p class="small">
-            Phase 1 — Delivery of Stages 1–3 (Capture, Canonicalization, Sealing).
+            <strong>Phase 1 — Delivery of Stages 1–3 (Capture, Canonicalization, Sealing).</strong>
+            Claims remain limited to integrity, provenance, and workflow support.
           </p>
-          <div class="noteLine">
-            <span class="mono">Interpretation</span><br>
-            <span class="mono">Stages</span> are the mechanics chain steps in the data pipeline. <span class="mono">Phases</span> are delivery milestones over time.
-          </div>
         </div>
 
         <div class="grid-3" style="margin-top:14px">
           <div class="card">
             <h3>PHASE 1 — CORE MECHANICS</h3>
-            <p class="small">Delivery of Stages 1–3.</p>
-            <div class="noteLine">
-              <span class="mono">Stage 1:</span> Capture<br>
-              <span class="mono">Stage 2:</span> Canonicalization (masking pre-hash)<br>
-              <span class="mono">Stage 3:</span> Sealing (hash + signature)
-            </div>
+            <p class="small">
+              Delivery of Stages 1–3 (Capture, Canonicalization, Sealing). Define capture policy, normalize deterministically, hash and sign.
+            </p>
           </div>
 
           <div class="card">
             <h3>PHASE 2 — VERIFICATION</h3>
-            <p class="small">Verification harness and institutional review readiness.</p>
-            <div class="noteLine">
-              Recompute hashes, validate signatures, confirm policy alignment under defined conditions.
-            </div>
+            <p class="small">
+              Verification harness and reviewer workflow. Recompute, validate signature, confirm policy alignment under controlled disclosure.
+            </p>
           </div>
 
           <div class="card">
             <h3>PHASE 3 — CHAIN-OF-CUSTODY WORKFLOW</h3>
-            <p class="small">Retention posture and controlled review outputs.</p>
-            <div class="noteLine">
-              Storage, retrieval, audit-ready record handling, and constrained disclosure reporting.
-            </div>
+            <p class="small">
+              Retention posture, retrieval logging, audit-ready handling, and controlled review outputs suitable for formal proceedings.
+            </p>
           </div>
         </div>
 
         <div class="boundary" style="margin-top:14px">
-          <div class="title">QUALITY BAR</div>
+          <div class="title">Quality Bar</div>
           <ul>
             <li>Expand only after determinism and verification are proven in constrained scope.</li>
             <li>Keep claims limited to integrity, provenance, and workflow support.</li>
@@ -98,13 +90,8 @@
 
         <footer class="siteFooter">
           <div class="footgrid">
-            <div>
-              <div class="badge">ROADMAP</div>
-            </div>
-            <div class="right">
-              © 2026 NADIR. Proprietary infrastructure. Version <span class="mono">V2026.02.19</span>.<br>
-              <a href="platform.html">Architecture</a> · <a href="documents.html">Documents</a> · <a href="contact.html">Contact</a>
-            </div>
+            <div class="badge">ROADMAP</div>
+            <div class="right">© 2026 NADIR. Proprietary infrastructure. — V2026.02.19</div>
           </div>
         </footer>
       </section>
