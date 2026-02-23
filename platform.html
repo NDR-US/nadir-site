@@ -1,10 +1,13 @@
+<!-- =========================
+     FILE: platform.html (Architecture)
+     ========================= -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NADIR — Architecture</title>
-  <meta name="description" content="NADIR architecture: capture model, artifact schema, integrity controls, controlled disclosure, and verification workflow." />
+  <meta name="description" content="NADIR architecture: capture model, canonical artifact schema, cryptographic sealing, controlled disclosure tiers, and independent verification workflow." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,16 +39,17 @@
   </header>
 
   <main class="wrap page">
-    <section>
-      <div class="kicker">Capture boundary • Artifact schema • Integrity • Disclosure • Verification</div>
+    <section class="section">
+      <div class="kicker">Capture model • Artifact schema • Integrity model • Disclosure tiers • Verification</div>
       <h1>Architecture</h1>
       <p class="lead">
-        NADIR follows a strict mechanics chain: attach at the inference boundary, generate a canonical artifact schema,
-        seal it with integrity controls, enforce controlled disclosure, and enable independent verification.
+        Following an institutional hardening posture, NADIR uses a strict mechanics chain:
+        (1) attach at the inference boundary, (2) generate a canonical artifact schema, (3) seal with cryptographic integrity controls,
+        (4) enforce controlled disclosure fields, and (5) enable independent verification.
       </p>
 
       <div class="cta-row">
-        <a class="btn primary" href="use-cases.html">Operational integration</a>
+        <a class="btn primary" href="use-cases.html">Integration</a>
         <a class="btn" href="docs.html">Document suite</a>
       </div>
     </section>
@@ -53,18 +57,18 @@
     <section class="section">
       <h2>1) Capture model</h2>
       <p class="sub">
-        NADIR is designed to attach non-intrusively at the inference boundary (sidecar, gateway, or wrapper). Capture scope is policy-defined
-        and explicitly bounded to avoid unnecessary collection and to preserve confidential implementation boundaries.
+        NADIR is designed to attach non-intrusively at the inference boundary (sidecar, gateway, or wrapper). Capture scope is policy-defined:
+        what is included, excluded, and masked is explicit.
       </p>
 
       <div class="grid-2">
         <div class="card">
-          <h3>Inference boundary attachment</h3>
-          <p class="small">Instrumentation point is outside core model logic to reduce adoption friction and avoid mutating weights.</p>
+          <h3>Boundary attachment</h3>
+          <p class="small">Instrumentation is outside core model logic to reduce adoption friction and avoid modifying weights.</p>
         </div>
         <div class="card">
           <h3>Policy-scoped capture</h3>
-          <p class="small">Capture includes defined inputs and runtime context; excludes proprietary weights, architecture details, and unrelated data.</p>
+          <p class="small">Capture is limited to defined fields required for oversight workflows; unnecessary collection is avoided by design.</p>
         </div>
       </div>
     </section>
@@ -72,14 +76,13 @@
     <section class="section">
       <h2>2) Artifact schema</h2>
       <p class="sub">
-        Captured context is normalized into a canonical artifact structure intended to support reproducible verification under defined conditions.
-        The schema is designed for audit workflows and chain-of-custody compatible storage.
+        Captured context is normalized into a canonical artifact. Canonicalization reduces ambiguity and supports repeatable verification under defined conditions.
       </p>
 
       <div class="card">
-        <h3>Canonical artifact fields (example)</h3>
+        <h3>Canonical artifact (example fields)</h3>
         <p class="small">
-          Timestamp · Provenance metadata · Input hash · Policy ID · Canonicalization version · Disclosure tier · Integrity fields · Verification fields
+          Timestamp · Provenance metadata · Policy ID · Disclosure tier · Input hash · Canonicalization version · Runtime context (policy-scoped) · Integrity fields · Verification fields
         </p>
       </div>
     </section>
@@ -87,22 +90,21 @@
     <section class="section">
       <h2>3) Integrity model</h2>
       <p class="sub">
-        Artifacts are sealed using cryptographic hashing and digital signatures to support authenticity validation and tamper detection.
-        Specific primitives can be selected per deployment requirements.
+        NADIR seals artifacts using hashing and digital signatures to support authenticity validation and tamper detection. Cryptographic primitives may vary by deployment requirements.
       </p>
 
       <div class="grid-3">
         <div class="card">
-          <h3>Hashing</h3>
+          <h3>Hash</h3>
           <p class="small">Produces a fixed digest of the canonical artifact to detect modification.</p>
         </div>
         <div class="card">
-          <h3>Digital signature</h3>
+          <h3>Signature</h3>
           <p class="small">Authenticates artifact origin under key custody and verification policies.</p>
         </div>
         <div class="card">
           <h3>Time anchoring</h3>
-          <p class="small">Supports evidentiary posture by binding artifact integrity to reliable timestamps and retention controls.</p>
+          <p class="small">Binds integrity posture to reliable timestamps and retention controls suitable for review workflows.</p>
         </div>
       </div>
     </section>
@@ -110,17 +112,17 @@
     <section class="section">
       <h2>4) Disclosure field model</h2>
       <p class="sub">
-        NADIR supports tiered visibility: reviewers verify the fingerprint and integrity fields without receiving proprietary internals.
-        Disclosure boundaries are policy-defined and can vary by audience and agreement.
+        NADIR is designed for constrained disclosure: auditors verify integrity fields and fingerprints while proprietary details remain masked.
+        Disclosure policy can vary by audience and agreement.
       </p>
 
       <div class="grid-2">
         <div class="card">
-          <h3>Public / redacted</h3>
-          <p class="small">High-level description of artifacts and controls without sensitive operational detail.</p>
+          <h3>Redacted / public posture</h3>
+          <p class="small">High-level description of controls with sensitive operational detail omitted.</p>
         </div>
         <div class="card">
-          <h3>Controlled review</h3>
+          <h3>Controlled review posture</h3>
           <p class="small">Authorized reviewers receive expanded fields necessary for oversight while preserving trade secret boundaries.</p>
         </div>
       </div>
@@ -136,10 +138,15 @@
       <div class="boundary">
         <div class="title">Boundary Declaration</div>
         <ul>
-          <li>NADIR verifies artifact integrity and provenance under policy.</li>
-          <li>NADIR does not certify compliance or model correctness.</li>
+          <li>NADIR supports integrity and provenance verification under defined policy.</li>
+          <li>NADIR does not certify compliance or determine correctness.</li>
           <li>Oversight conclusions are made by authorized institutions and operators.</li>
         </ul>
+      </div>
+
+      <div class="cta-row" style="margin-top:14px;">
+        <a class="btn primary" href="use-cases.html">See operational integration</a>
+        <a class="btn" href="roadmap.html">See roadmap</a>
       </div>
     </section>
 
