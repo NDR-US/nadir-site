@@ -2,13 +2,15 @@
   --bg:#070b12;
   --bg2:#05070c;
   --panel: rgba(255,255,255,.06);
+  --panel2: rgba(255,255,255,.08);
   --stroke: rgba(255,255,255,.12);
   --text: rgba(255,255,255,.92);
   --muted: rgba(255,255,255,.70);
   --muted2: rgba(255,255,255,.52);
-  --max: 1100px;
+  --max: 1120px;
   --radius: 18px;
   --shadow: 0 14px 36px rgba(0,0,0,.45);
+  --shadow2: 0 18px 60px rgba(0,0,0,.55);
 }
 
 *{ box-sizing:border-box; }
@@ -26,19 +28,17 @@ body{
   background:
     radial-gradient(1200px 900px at 20% 0%, #121a2e 0%, var(--bg) 55%, var(--bg2) 100%);
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  line-height: 1.6;
+  line-height: 1.65;
   overflow-x: hidden;
   padding-bottom: calc(28px + env(safe-area-inset-bottom));
 }
 
-/* Prevent mobile “wobble” from accidental horizontal overflow */
 img, svg, video { max-width: 100%; height: auto; display:block; }
-
 a{ color:inherit; text-decoration:none; }
 a:hover{ text-decoration: underline; }
 
 .wrap{
-  width: min(var(--max), calc(100% - 40px));
+  width: min(var(--max), calc(100% - 44px));
   margin: 0 auto;
 }
 
@@ -46,7 +46,6 @@ a:hover{ text-decoration: underline; }
   padding: 20px 0 26px;
 }
 
-/* ---------- Header (NO blur — blur/backdrop causes iOS wobble) ---------- */
 header{
   position: sticky;
   top: 0;
@@ -55,7 +54,6 @@ header{
   border-bottom: 1px solid rgba(255,255,255,.08);
 }
 
-/* Keep header stable (avoid GPU jitter) */
 header, .topbar { transform: translateZ(0); }
 
 .topbar{
@@ -70,7 +68,7 @@ header, .topbar { transform: translateZ(0); }
   display:flex;
   flex-direction:column;
   justify-content:center;
-  min-width: 220px;
+  min-width: 240px;
 }
 
 .brandlink{
@@ -80,24 +78,20 @@ header, .topbar { transform: translateZ(0); }
   text-decoration:none !important;
 }
 
-/* Inline SVG logo sizing */
 .nadir-logo{
-  width: 170px;
+  width: 176px;
   height: 36px;
   display:block;
 }
 
-/* Descriptor */
 .descriptor{
   margin-top: 6px;
   font-size: 12px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--muted2);
-  white-space: nowrap;
 }
 
-/* Nav: horizontal scroll ON mobile, no overflow wobble */
 nav{
   display:flex;
   gap:10px;
@@ -131,7 +125,6 @@ nav a.active{
   background: rgba(255,255,255,.06);
 }
 
-/* ---------- Typography ---------- */
 .kicker{
   color: var(--muted2);
   text-transform: uppercase;
@@ -144,21 +137,20 @@ h1{
   margin: 0;
   font-family: "Julius Sans One", Inter, sans-serif;
   font-weight: 400;
-  letter-spacing: .12em; /* reduced to prevent overflow on mobile */
+  letter-spacing: .11em;
   text-transform: uppercase;
-  font-size: clamp(30px, 6.3vw, 56px);
-  line-height: 1.1;
+  font-size: clamp(30px, 6.2vw, 56px);
+  line-height: 1.08;
 }
 
 .lead{
   margin: 14px 0 0;
-  max-width: 64ch;
+  max-width: 70ch;
   color: var(--muted);
   font-size: 17px;
-  line-height: 1.75;
+  line-height: 1.78;
 }
 
-/* ---------- Buttons ---------- */
 .cta-row{
   display:flex;
   gap: 12px;
@@ -190,7 +182,6 @@ h1{
   border-color: rgba(255,255,255,.22);
 }
 
-/* ---------- Layout blocks ---------- */
 hr{
   border:0;
   height:1px;
@@ -210,6 +201,9 @@ hr{
   padding: 16px 16px;
 }
 
+.card.tight{ padding: 14px 14px; }
+.card.deep{ box-shadow: var(--shadow2); }
+
 h2{
   margin: 0 0 10px;
   font-size: 13px;
@@ -221,20 +215,20 @@ h2{
 h3{
   margin: 0 0 8px;
   font-size: 18px;
-  letter-spacing: .02em;
+  letter-spacing: .01em;
 }
 
 .sub{
   margin: 0 0 12px;
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.72;
   font-size: 15px;
 }
 
 .small{
   margin: 0;
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.72;
   font-size: 14px;
 }
 
@@ -256,7 +250,51 @@ h3{
   padding: 14px 14px;
 }
 
-/* ---------- Footer ---------- */
+.pills{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top: 10px;
+}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+table{
+  width:100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  overflow:hidden;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+}
+th,td{
+  padding: 12px 12px;
+  text-align:left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+th{
+  color: var(--muted2);
+  font-size: 12px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,.04);
+}
+td{
+  color: var(--muted);
+  font-size: 14px;
+}
+
 footer{
   margin-top: 22px;
   padding: 18px 0 calc(24px + env(safe-area-inset-bottom));
@@ -291,14 +329,16 @@ footer{
   font-size: 12px;
 }
 
-/* ---------- Mobile ---------- */
-@media (max-width: 860px){
+@media (max-width: 900px){
   .wrap{ width: calc(100% - 28px); }
   .topbar{ flex-direction:column; align-items:flex-start; }
-  .descriptor{ white-space: normal; }
   .grid-3{ grid-template-columns: 1fr; }
   .grid-2{ grid-template-columns: 1fr; }
   .footgrid{ flex-direction:column; }
   .right{ text-align:left; }
-  .nadir-logo{ width: 150px; height: 34px; }
+  .nadir-logo{ width: 156px; height: 34px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ scroll-behavior: auto !important; transition:none !important; animation:none !important; }
 }
