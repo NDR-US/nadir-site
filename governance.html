@@ -1,66 +1,139 @@
-<!DOCTYPE html>
+<!-- FILE: governance.html  (Governance page) -->
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Governance — NADIR</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NADIR — Governance</title>
+
+  <!-- Fonts (optional; safe to keep) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="assets/styles.css?v=20260219" />
 </head>
+
 <body>
+  <header class="siteHeader">
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">NADIR</div>
+          <div class="descriptor">Evidentiary Infrastructure</div>
+        </div>
+        <nav class="nav">
+          <a href="index.html">Overview</a>
+          <a href="platform.html">Architecture</a>
+          <a href="integration.html">Integration</a>
+          <a href="documents.html">Documents</a>
+          <a href="roadmap.html">Roadmap</a>
+          <a href="founder.html">Founder</a>
+          <a class="active" href="governance.html">Governance</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
 
-<nav>
-  <a href="index.html">Overview</a>
-  <a href="platform.html">Architecture</a>
-  <a href="docs.html">Documents</a>
-  <a href="governance.html">Governance</a>
-  <a href="roadmap.html">Roadmap</a>
-  <a href="founder.html">Founder</a>
-  <a href="contact.html">Contact</a>
-</nav>
+  <main class="page">
+    <div class="wrap">
+      <section class="hero">
+        <div class="kicker">PRIVACY-BY-DESIGN • HUMAN RIGHTS BOUNDARIES • OVERSIGHT READINESS</div>
+        <h1>Governance posture</h1>
+        <p class="lead">
+          NADIR is designed to support accountable review while minimizing collection and preserving confidentiality boundaries.
+        </p>
+      </section>
 
-<main class="page">
+      <section class="section">
+        <h2>Principles</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Privacy-by-design</h3>
+            <p class="small">Collect only what is necessary, define scope explicitly, and record policy identifiers and versions.</p>
+          </div>
+          <div class="card">
+            <h3>Controlled disclosure</h3>
+            <p class="small">Enable verification without default exposure of weights, confidential architecture, or proprietary source code.</p>
+          </div>
+          <div class="card">
+            <h3>Auditability</h3>
+            <p class="small">Prefer canonical records designed for formal review over ad-hoc logs.</p>
+          </div>
+          <div class="card">
+            <h3>Non-adjudication</h3>
+            <p class="small">NADIR produces records. Institutions make determinations.</p>
+          </div>
+        </div>
 
-  <p class="kicker">PRIVACY-BY-DESIGN • HUMAN RIGHTS BOUNDARIES • OVERSIGHT READINESS</p>
-  <h1>GOVERNANCE POSTURE</h1>
+        <div class="card" style="margin-top:14px">
+          <h3>NIST IR 8596 Alignment</h3>
+          <p class="small">
+            NADIR’s design posture aligns with the emerging NIST IR 8596 Cyber AI Profile, which treats AI systems as a distinct cybersecurity risk category. NADIR’s artifact layer supports the traceability, integrity, and accountability objectives described in that framework.
+          </p>
+        </div>
+      </section>
 
-  <h2>PRINCIPLES</h2>
+      <section class="section">
+        <h2>Policies</h2>
+        <p class="sub">Public summaries only. Detailed policies live in controlled documentation.</p>
 
-  <h3>Privacy-by-design</h3>
-  <p>Collect only what is necessary, define scope explicitly, and record policy identifiers and versions.</p>
+        <div class="stack">
+          <div class="docItem">
+            <div>
+              <div class="docTitle">Human Rights &amp; Lawful Use Policy</div>
+              <div class="docSub">Establishes lawful use requirements, prohibited deployments, operator obligations, and defense deployment boundaries. Available under controlled review. Contact: <span class="mono">contact@nadir-ai.com</span></div>
+            </div>
+            <a class="btn smallBtn" href="contact.html">Contact</a>
+          </div>
 
-  <h3>Controlled disclosure</h3>
-  <p>Enable verification without default exposure of weights, confidential architecture, or proprietary source code.</p>
+          <div class="docItem">
+            <div>
+              <div class="docTitle">Privacy statement</div>
+              <div class="docSub">Policy-scoped collection and tiered disclosure. See the full Privacy page.</div>
+            </div>
+            <a class="btn smallBtn" href="privacy.html">Privacy</a>
+          </div>
 
-  <h3>Auditability</h3>
-  <p>Prefer canonical records designed for formal review over ad-hoc logs.</p>
+          <div class="docItem">
+            <div>
+              <div class="docTitle">Terms of use</div>
+              <div class="docSub">Use is governed by stated boundaries, confidentiality, and legal terms. See Terms.</div>
+            </div>
+            <a class="btn smallBtn" href="terms.html">Terms</a>
+          </div>
+        </div>
+      </section>
 
-  <h3>Non-adjudication</h3>
-  <p>NADIR produces records. Institutions make determinations.</p>
+      <section class="section">
+        <div class="boundary">
+          <div class="title">BOUNDARY DECLARATION</div>
+          <ul>
+            <li>NADIR does not certify compliance, legality, or correctness.</li>
+            <li>NADIR does not guarantee inference reproducibility.</li>
+            <li>NADIR does not assume operational control over inference infrastructure.</li>
+            <li>NADIR supports integrity and provenance verification under policy.</li>
+            <li>Oversight conclusions are made by authorized reviewers.</li>
+          </ul>
+        </div>
 
-  <h3>NIST IR 8596 Alignment</h3>
-  <p>
-    NADIR’s design posture aligns with the emerging NIST IR 8596 Cyber AI Profile,
-    which treats AI systems as a distinct cybersecurity risk category.
-    NADIR’s artifact layer supports the traceability, integrity, and accountability
-    objectives described in that framework.
-  </p>
-
-  <section>
-    <h3>BOUNDARY DECLARATION</h3>
-    <ul>
-      <li>NADIR does not certify compliance, legality, or correctness.</li>
-      <li>NADIR does not guarantee inference reproducibility.</li>
-      <li>NADIR does not assume operational control over inference infrastructure.</li>
-      <li>NADIR supports integrity and provenance verification under policy.</li>
-      <li>Oversight conclusions are made by authorized reviewers.</li>
-    </ul>
-  </section>
-
-</main>
-
-<footer>
-  © 2026 NADIR. All rights reserved. · V2026.02.19
-</footer>
-
+        <footer class="siteFooter">
+          <div class="footgrid">
+            <div>
+              <div class="badge">GOVERNANCE POSTURE</div>
+            </div>
+            <div class="right">
+              © 2026 NADIR. Proprietary infrastructure. Version <span class="mono">V2026.02.19</span>.<br>
+              <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="contact.html">Contact</a>
+            </div>
+          </div>
+        </footer>
+      </section>
+    </div>
+  </main>
 </body>
 </html>
