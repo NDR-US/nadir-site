@@ -1,68 +1,134 @@
-<main class="page">
-  <div class="wrap">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NADIR — Integration</title>
+  <meta name="description" content="Operational integration posture and mission/regulated use cases for NADIR." />
 
-    <section class="hero">
-      <div class="kicker">Integration • Runtime hooks • Operations</div>
-      <h1>Designed to integrate beside inference</h1>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">NADIR</div>
+          <div class="descriptor">Integration</div>
+        </div>
+
+        <nav>
+          <a data-page="index.html" href="index.html">Overview</a>
+          <a data-page="platform.html" href="platform.html">Architecture</a>
+          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
+          <a data-page="docs.html" href="docs.html">Documents</a>
+          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
+          <a data-page="founder.html" href="founder.html">Founder</a>
+          <a data-page="governance.html" href="governance.html">Governance</a>
+          <a data-page="contact.html" href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap page">
+    <section>
+      <div class="kicker">Overlay attachment • Chain-of-custody posture • Constrained disclosure</div>
+      <h1>Operational integration</h1>
       <p class="lead">
-        NADIR is structured as an attachable layer: capture, artifact emission, and verification—without becoming the model.
+        NADIR is designed to attach at the inference boundary (gateway, middleware, or service wrapper) to produce integrity-sealed
+        artifacts without modifying core model parameters. Deployment can be phased, and disclosure can be tiered.
       </p>
-    </section>
 
-    <hr>
-
-    <section class="grid-2">
-      <div class="card">
-        <h2>Deployment patterns</h2>
-        <ul class="small" style="margin:0; padding-left:18px; line-height:1.8;">
-          <li>Sidecar to inference service (preferred)</li>
-          <li>Gateway mode (policy + capture at the edge)</li>
-          <li>Embedded SDK (when sidecar is not feasible)</li>
-          <li>Offline verifier (auditor workstation validation)</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h2>Operational controls</h2>
-        <ul class="small" style="margin:0; padding-left:18px; line-height:1.8;">
-          <li>Retention windows and redaction profiles</li>
-          <li>Incident flags and escalation triggers</li>
-          <li>Audit sampling for high-volume systems</li>
-          <li>Role-based access and controlled review</li>
-        </ul>
+      <div class="cta-row">
+        <a class="btn primary" href="platform.html">Architecture mechanics</a>
+        <a class="btn" href="roadmap.html">Build roadmap</a>
+        <a class="btn" href="docs.html">Docs</a>
       </div>
     </section>
 
-    <section style="margin-top:14px;" class="grid-3">
-      <div class="card">
-        <h3>Performance posture</h3>
-        <p class="small">Designed to minimize inference impact; capture scope is configurable by policy level.</p>
-      </div>
-      <div class="card">
-        <h3>Chain-of-custody ready</h3>
-        <p class="small">Artifacts are emitted with integrity fields for later verification and review board workflows.</p>
-      </div>
-      <div class="card">
-        <h3>Disclosure boundaries</h3>
-        <p class="small">Auditors verify artifacts without requiring model weight disclosure or proprietary code exposure.</p>
-      </div>
-    </section>
+    <section class="section">
+      <h2>Integration posture</h2>
+      <p class="sub">
+        NADIR is not an “AI platform replacement.” It is an attachable integrity layer that produces auditable records for later verification.
+        Integration is intended to be low-friction and does not require exposing proprietary internals to begin generating artifacts.
+      </p>
 
-    <hr>
-
-    <section class="card">
-      <h2>Example outcomes</h2>
-      <div class="grid-2" style="margin-top:10px;">
-        <div class="callout">
-          <h3 style="margin:0 0 8px;">Post-incident replay</h3>
-          <p class="small" style="margin:0;">Reconstruct a disputed decision using the stored evidence package and integrity chain.</p>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Attach at the boundary</h3>
+          <p class="small">Sidecar, gateway, or wrapper layer around inference calls—avoids core model rewrite.</p>
         </div>
-        <div class="callout">
-          <h3 style="margin:0 0 8px;">Oversight review</h3>
-          <p class="small" style="margin:0;">Provide reviewers a bounded, reproducible record aligned to disclosure level and retention policy.</p>
+        <div class="card">
+          <h3>Policy-defined scope</h3>
+          <p class="small">Capture fields are configured per deployment; unnecessary collection is explicitly excluded.</p>
+        </div>
+        <div class="card">
+          <h3>Chain-of-custody fit</h3>
+          <p class="small">Artifacts are structured for retention, verification, and review under oversight processes.</p>
         </div>
       </div>
     </section>
 
-  </div>
-</main>
+    <section class="section">
+      <h2>Primary use cases</h2>
+      <p class="sub">
+        Use cases are framed conservatively: NADIR supports integrity and reconstruction workflows. It does not certify correctness or safety.
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Autonomous navigation systems</h3>
+          <p class="small">Artifacts for route selection, obstacle response, escalation, and failover behavior under defined capture policy.</p>
+        </div>
+        <div class="card">
+          <h3>ISR decision support</h3>
+          <p class="small">Integrity-sealed records for prioritization, triage, escalation, and analyst-assist workflows under constrained disclosure.</p>
+        </div>
+        <div class="card">
+          <h3>AI-enabled targeting validation</h3>
+          <p class="small">Artifacts to support review gates and accountability procedures—without disclosing model internals on the public surface.</p>
+        </div>
+        <div class="card">
+          <h3>Incident reconstruction (contested/A2/AD)</h3>
+          <p class="small">Chain-of-custody-ready artifacts for review boards where disclosure must remain constrained.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="boundary">
+        <div class="title">Boundary Declaration</div>
+        <ul>
+          <li>NADIR supports integrity verification and forensic reconstruction workflows.</li>
+          <li>NADIR does not replace safety engineering, policy gating, or human authorization controls.</li>
+          <li>Deployment responsibility remains with the implementing organization.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <div class="footgrid">
+          <div>
+            <div class="badge">Integration • Mission and regulated deployments</div>
+            <div style="margin-top:10px;" class="small">
+              © 2026 NADIR. All rights reserved. — <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="contact.html">Contact</a>
+            </div>
+          </div>
+          <div class="right">
+            <div>V2026.02.19</div>
+            <div>Unauthorized distribution prohibited.</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="assets/site.js"></script>
+</body>
+</html>
