@@ -1,62 +1,328 @@
 /* =========================================================
-   NADIR — Institutional Minimal Site System
-   Single CSS to support ALL pages (index/platform/use-cases/docs/etc.)
+   NADIR — Institutional Minimal System (De-saturated)
+   FULL REPLACEMENT for assets/styles.css
    ========================================================= */
 
-/* -------- Root / Base -------- */
 :root{
   --bg0:#06080f;
   --bg1:#0a1020;
-  --panel:rgba(255,255,255,.06);
-  --stroke:rgba(255,255,255,.12);
+
   --text:rgba(255,255,255,.92);
   --muted:rgba(255,255,255,.70);
   --muted2:rgba(255,255,255,.52);
-  --white:#ffffff;
+
+  --panel:rgba(255,255,255,.05);
+  --stroke:rgba(255,255,255,.10);
 
   --radius:18px;
   --max:1120px;
 
-  --shadow: 0 18px 50px rgba(0,0,0,.45);
-  --space-1: 10px;
-  --space-2: 16px;
-  --space-3: 22px;
-  --space-4: 34px;
-  --space-5: 52px;
+  /* Less shadow = less “visual noise” */
+  --shadow: 0 10px 28px rgba(0,0,0,.35);
+
+  /* Breathing system */
+  --s1: 10px;
+  --s2: 16px;
+  --s3: 24px;
+  --s4: 40px;
+  --s5: 68px;
 }
 
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
+
 body{
   margin:0;
   background:
-    radial-gradient(1200px 900px at 20% 0%, #121a2e 0%, var(--bg0) 55%, #05070c 100%);
+    radial-gradient(1200px 900px at 20% 0%, #121a2e 0%, var(--bg0) 56%, #05070c 100%);
   color:var(--text);
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  line-height: 1.65;
-  overflow-x:hidden;
 
-  /* iOS safe area bottom so footer never collides */
-  padding-bottom: calc(26px + env(safe-area-inset-bottom));
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.75;
+
+  overflow-x:hidden;
+  padding-bottom: calc(30px + env(safe-area-inset-bottom));
 }
 
 a{ color:inherit; text-decoration:none; }
 a:hover{ text-decoration: underline; }
-img{ max-width:100%; display:block; }
 
-/* Container */
 .wrap{
-  width: min(var(--max), calc(100% - 44px));
+  width: min(var(--max), calc(100% - 48px));
   margin: 0 auto;
 }
+
 .page{
-  padding: var(--space-4) 0 var(--space-4);
+  padding: var(--s4) 0 var(--s4);
 }
 
-/* -------- Header / Nav -------- */
+/* ---------------- Header / Nav ---------------- */
 .siteHeader{
   position: sticky;
   top:0;
   z-index: 50;
   backdrop-filter: blur(12px);
-  background: linear-gradient(to bottom, rgba(5,7,12,.88), rgba(5,7,12,.50
+  background: linear-gradient(to bottom, rgba(5,7,12,.86), rgba(5,7,12,.48));
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: var(--s2);
+  padding: 16px 0;
+}
+
+.brand{
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+  min-width: 180px;
+}
+
+.mark{
+  font-family: "Julius Sans One", Inter, sans-serif;
+  letter-spacing: .46em;
+  text-transform: uppercase;
+  font-size: 24px; /* NADIR larger */
+  line-height: 1;
+}
+
+.descriptor{
+  color: var(--muted2);
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  font-size: 11px; /* descriptor smaller */
+}
+
+.navToggle{
+  display:none;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.05);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.navMenu{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content:flex-end;
+  align-items:center;
+}
+
+.navMenu a{
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--muted);
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 12px;
+  text-decoration:none;
+}
+
+.navMenu a:hover{
+  color: var(--text);
+  border-color: rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  text-decoration:none;
+}
+
+.navMenu a.active{
+  color: var(--text);
+  border-color: rgba(255,255,255,.12);
+  background: rgba(255,255,255,.05);
+}
+
+/* ---------------- Typography ---------------- */
+.kicker{
+  color: var(--muted2);
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  font-size: 12px;
+  margin-bottom: var(--s2);
+}
+
+h1{
+  margin:0;
+  font-family: "Julius Sans One", Inter, sans-serif;
+  letter-spacing: .22em;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(30px, 5vw, 56px);
+  line-height: 1.12;
+}
+
+.lead{
+  margin: var(--s3) 0 0;
+  color: var(--muted);
+  font-size: 18px;
+  max-width: 70ch;
+}
+
+h2{
+  margin: 0 0 var(--s2);
+  color: var(--muted2);
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  font-size: 13px;
+}
+
+h3{
+  margin: 0 0 10px;
+  font-size: 18px;
+  letter-spacing: .01em;
+}
+
+.sub{
+  margin: 0 0 var(--s3);
+  color: var(--muted);
+  max-width: 80ch;
+}
+
+.small{
+  margin:0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ---------------- Layout / Breathing ---------------- */
+.hero{
+  padding: var(--s4) 0 var(--s4);
+}
+
+.section{
+  padding: var(--s5) 0;  /* BIGGER spacing between sections */
+}
+
+.section + .section{
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+
+/* ---------------- Buttons ---------------- */
+.cta-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 12px;
+  margin-top: var(--s3);
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.05);
+  color: var(--text);
+  text-decoration:none;
+  font-size: 12px;
+  white-space: nowrap;
+  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+}
+
+.btn:hover{
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.18);
+  transform: translateY(-1px);
+  text-decoration:none;
+}
+
+.btn.primary{
+  background: rgba(255,255,255,.10);
+  border-color: rgba(255,255,255,.20);
+}
+
+/* ---------------- Cards / Grids (Less of them) ---------------- */
+.grid-2{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.grid-3{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card{
+  border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,.09);
+  background: rgba(255,255,255,.04); /* flatter */
+  box-shadow: none;                  /* remove heavy shadow */
+  padding: 18px;
+}
+
+/* ---------------- Boundary box (one only) ---------------- */
+.boundary{
+  border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  padding: 20px;
+  max-width: 88ch;
+}
+
+.boundary .title{
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  font-size: 12px;
+  color: var(--muted2);
+  margin-bottom: 12px;
+}
+
+.boundary ul{
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.boundary li{
+  margin: 8px 0;
+}
+
+/* ---------------- Footer (Quiet) ---------------- */
+.siteFooter{
+  margin-top: var(--s5);
+  padding: 20px 0 calc(26px + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.footerLine{
+  color: var(--muted2);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: 11px;
+}
+
+.footerLinks{
+  margin-top: 10px;
+  display:flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 980px){
+  .grid-3{ grid-template-columns: 1fr; }
+  .grid-2{ grid-template-columns: 1fr; }
+}
+
+@media (max-width: 860px){
+  .navToggle{ display:inline-flex; }
+  .navMenu{
+    width:100%;
+    justify-content:flex-start;
+    padding-bottom: 8px;
+  }
+  .topbar{
+    flex-wrap: wrap;
+    align-items:flex-start;
+  }
+}
