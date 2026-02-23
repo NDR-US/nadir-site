@@ -2,147 +2,165 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NADIR — Architecture</title>
+  <meta name="description" content="NADIR architecture: capture model, artifact schema, integrity controls, controlled disclosure, and verification workflow." />
 
-  <!-- Fonts (optional, remove if you already load these elsewhere) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
-
-  <!-- IMPORTANT: use RELATIVE path so it works on GitHub Pages -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
 <body>
-
   <header>
     <div class="wrap">
       <div class="topbar">
-
         <div class="brand">
           <div class="mark">NADIR</div>
-          <div class="descriptor">Deterministic AI Decision-State Recorder</div>
+          <div class="descriptor">Architecture</div>
         </div>
 
         <nav>
-          <a href="index.html">Overview</a>
-          <a class="active" href="platform.html">Architecture</a>
-          <a href="use-cases.html">Integration</a>
-          <a href="docs.html">Documents</a>
-          <a href="roadmap.html">Roadmap</a>
-          <a href="contact.html">Contact</a>
+          <a data-page="index.html" href="index.html">Overview</a>
+          <a data-page="platform.html" href="platform.html">Architecture</a>
+          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
+          <a data-page="docs.html" href="docs.html">Documents</a>
+          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
+          <a data-page="founder.html" href="founder.html">Founder</a>
+          <a data-page="governance.html" href="governance.html">Governance</a>
+          <a data-page="contact.html" href="contact.html">Contact</a>
         </nav>
-
       </div>
     </div>
   </header>
 
-  <main class="page">
-    <div class="wrap">
+  <main class="wrap page">
+    <section>
+      <div class="kicker">Capture boundary • Artifact schema • Integrity • Disclosure • Verification</div>
+      <h1>Architecture</h1>
+      <p class="lead">
+        NADIR follows a strict mechanics chain: attach at the inference boundary, generate a canonical artifact schema,
+        seal it with integrity controls, enforce controlled disclosure, and enable independent verification.
+      </p>
 
-      <section class="hero">
-        <div class="kicker">Architecture • Data Flow • Verification</div>
-        <h1>How NADIR produces an evidence package</h1>
-        <p class="lead">
-          NADIR sits beside inference and emits structured artifacts for retention and review.
-          It is designed to integrate without requiring model weight disclosure.
-        </p>
-      </section>
+      <div class="cta-row">
+        <a class="btn primary" href="use-cases.html">Operational integration</a>
+        <a class="btn" href="docs.html">Document suite</a>
+      </div>
+    </section>
 
-      <hr>
+    <section class="section">
+      <h2>1) Capture model</h2>
+      <p class="sub">
+        NADIR is designed to attach non-intrusively at the inference boundary (sidecar, gateway, or wrapper). Capture scope is policy-defined
+        and explicitly bounded to avoid unnecessary collection and to preserve confidential implementation boundaries.
+      </p>
 
-      <section class="grid-2">
+      <div class="grid-2">
         <div class="card">
-          <h2>Flow</h2>
-          <ol class="small" style="margin:0; padding-left:18px; line-height:1.8;">
-            <li>Inference request enters the runtime (prompt + policy context + inputs).</li>
-            <li>NADIR captures a canonicalized record of the run under configured conditions.</li>
-            <li>Artifacts are hashed into a tamper-evident structure (chain-of-custody ready).</li>
-            <li>Verification fields are emitted for auditors without requiring proprietary disclosure.</li>
-            <li>Artifacts are stored per retention policy and can be replay-verified for disputes.</li>
-          </ol>
+          <h3>Inference boundary attachment</h3>
+          <p class="small">Instrumentation point is outside core model logic to reduce adoption friction and avoid mutating weights.</p>
         </div>
-
         <div class="card">
-          <h2>Outputs</h2>
-          <ul class="small" style="margin:0; padding-left:18px; line-height:1.8;">
-            <li>Run manifest (inputs, policy IDs, runtime identifiers, timestamps)</li>
-            <li>Deterministic transcript fields (canonicalized prompt/response payloads)</li>
-            <li>Integrity chain (hashes, signatures, verification fields)</li>
-            <li>Event timeline (system + model events, failures, escalations)</li>
-            <li>Disclosure profile (what is included / withheld by level)</li>
-          </ul>
-        </div>
-      </section>
-
-      <section style="margin-top:14px;" class="card">
-        <h2>Disclosure levels</h2>
-
-        <div class="grid-2" style="margin-top:10px;">
-          <div class="callout">
-            <h3 style="margin:0 0 8px;">Level I — Public abstract</h3>
-            <p class="small" style="margin:0;">
-              High-level description of artifact types and verification method.
-            </p>
-          </div>
-
-          <div class="callout">
-            <h3 style="margin:0 0 8px;">Level II — Controlled overview</h3>
-            <p class="small" style="margin:0;">
-              Interface details, sample artifacts, and workflow diagrams under NDA.
-            </p>
-          </div>
-
-          <div class="callout">
-            <h3 style="margin:0 0 8px;">Level III — Technical review</h3>
-            <p class="small" style="margin:0;">
-              Implementation specifics, threat model, and validation plan with redactions.
-            </p>
-          </div>
-
-          <div class="callout">
-            <h3 style="margin:0 0 8px;">Level IV — Full evaluation</h3>
-            <p class="small" style="margin:0;">
-              Hands-on test plan and artifact validation in a controlled environment.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <hr>
-
-      <section class="card">
-        <h2>Non-claims</h2>
-        <p class="small">
-          NADIR does not certify model safety, correctness, or “truth.” It supports evidentiary review by providing reproducible
-          artifacts and tamper-evident integrity suitable for oversight and dispute handling.
-        </p>
-      </section>
-
-    </div>
-  </main>
-
-  <footer>
-    <div class="wrap">
-      <div class="footgrid">
-        <div>
-          <span class="badge">NADIR • Forensic Compliance Layer</span>
-          <div class="small" style="margin-top:10px; color: rgba(255,255,255,.52);">
-            Proprietary Intellectual Property. All Rights Reserved.
-          </div>
-        </div>
-
-        <div class="right">
-          NADIR V2026.02.19<br>
-          Unauthorized distribution prohibited.
+          <h3>Policy-scoped capture</h3>
+          <p class="small">Capture includes defined inputs and runtime context; excludes proprietary weights, architecture details, and unrelated data.</p>
         </div>
       </div>
-    </div>
-  </footer>
+    </section>
 
-  <!-- OPTIONAL: only if you actually have assets/site.js -->
+    <section class="section">
+      <h2>2) Artifact schema</h2>
+      <p class="sub">
+        Captured context is normalized into a canonical artifact structure intended to support reproducible verification under defined conditions.
+        The schema is designed for audit workflows and chain-of-custody compatible storage.
+      </p>
+
+      <div class="card">
+        <h3>Canonical artifact fields (example)</h3>
+        <p class="small">
+          Timestamp · Provenance metadata · Input hash · Policy ID · Canonicalization version · Disclosure tier · Integrity fields · Verification fields
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>3) Integrity model</h2>
+      <p class="sub">
+        Artifacts are sealed using cryptographic hashing and digital signatures to support authenticity validation and tamper detection.
+        Specific primitives can be selected per deployment requirements.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Hashing</h3>
+          <p class="small">Produces a fixed digest of the canonical artifact to detect modification.</p>
+        </div>
+        <div class="card">
+          <h3>Digital signature</h3>
+          <p class="small">Authenticates artifact origin under key custody and verification policies.</p>
+        </div>
+        <div class="card">
+          <h3>Time anchoring</h3>
+          <p class="small">Supports evidentiary posture by binding artifact integrity to reliable timestamps and retention controls.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>4) Disclosure field model</h2>
+      <p class="sub">
+        NADIR supports tiered visibility: reviewers verify the fingerprint and integrity fields without receiving proprietary internals.
+        Disclosure boundaries are policy-defined and can vary by audience and agreement.
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Public / redacted</h3>
+          <p class="small">High-level description of artifacts and controls without sensitive operational detail.</p>
+        </div>
+        <div class="card">
+          <h3>Controlled review</h3>
+          <p class="small">Authorized reviewers receive expanded fields necessary for oversight while preserving trade secret boundaries.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>5) Verification workflow</h2>
+      <p class="sub">
+        Verification is performed by recomputing hashes over the canonical artifact, validating signatures, and confirming policy alignment.
+        The goal is to confirm integrity and provenance—not to certify decision correctness.
+      </p>
+
+      <div class="boundary">
+        <div class="title">Boundary Declaration</div>
+        <ul>
+          <li>NADIR verifies artifact integrity and provenance under policy.</li>
+          <li>NADIR does not certify compliance or model correctness.</li>
+          <li>Oversight conclusions are made by authorized institutions and operators.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <div class="footgrid">
+          <div>
+            <div class="badge">Architecture • Mechanics chain</div>
+            <div style="margin-top:10px;" class="small">
+              © 2026 NADIR. All rights reserved. — <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="contact.html">Contact</a>
+            </div>
+          </div>
+          <div class="right">
+            <div>V2026.02.19</div>
+            <div>Unauthorized distribution prohibited.</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
   <script src="assets/site.js"></script>
-
 </body>
 </html>
