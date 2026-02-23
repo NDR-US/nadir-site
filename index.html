@@ -1,10 +1,13 @@
+<!-- =========================
+     FILE: index.html (Overview)
+     ========================= -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NADIR — Forensic Compliance Infrastructure for AI Inference</title>
-  <meta name="description" content="NADIR is evidentiary infrastructure for AI inference systems: policy-scoped artifact capture, canonical schema, cryptographic sealing, controlled disclosure, and verification workflows." />
+  <title>NADIR — Evidentiary Infrastructure for AI Inference</title>
+  <meta name="description" content="NADIR is an attachable evidentiary compliance layer for AI inference systems: policy-scoped capture, canonical artifacts, cryptographic sealing, controlled disclosure, and verification workflows." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +21,7 @@
       <div class="topbar">
         <div class="brand">
           <div class="mark">NADIR</div>
-          <div class="descriptor">Forensic Compliance Infrastructure</div>
+          <div class="descriptor">Evidentiary Infrastructure</div>
         </div>
 
         <nav>
@@ -36,104 +39,104 @@
   </header>
 
   <main class="wrap page">
-    <section>
-      <div class="kicker">Evidentiary integrity • Controlled disclosure • Oversight readiness</div>
-      <h1>NADIR: evidentiary infrastructure for AI inference systems</h1>
+    <!-- HERO -->
+    <section class="section">
+      <div class="kicker">Integrity-first records • Controlled disclosure • Oversight readiness</div>
+      <h1>NADIR: evidentiary infrastructure for AI inference</h1>
       <p class="lead">
-        NADIR is an attachable forensic compliance layer designed to generate policy-scoped, canonical artifacts representing
-        defined inference-time decision-state context, sealed with integrity controls to support later verification and structured oversight.
+        NADIR is an attachable forensic compliance layer designed to generate policy-scoped, canonical inference artifacts
+        and seal them with cryptographic integrity controls—so organizations can support later verification and structured oversight
+        without disclosing proprietary model weights, source code, or confidential architecture.
       </p>
 
       <div class="cta-row">
-        <a class="btn primary" href="platform.html">How it works</a>
+        <a class="btn primary" href="platform.html">Architecture</a>
+        <a class="btn" href="use-cases.html">Integration</a>
         <a class="btn" href="docs.html">Document suite</a>
-        <a class="btn" href="governance.html">Governance posture</a>
       </div>
     </section>
 
+    <!-- THE GAP (short, non-repetitive) -->
     <section class="section">
-      <h2>The oversight gap</h2>
+      <h2>The accountability gap</h2>
       <p class="sub">
-        AI inference systems are optimized for performance and scale. Many deployments retain outputs and surface telemetry,
-        but do not preserve canonical artifacts suitable for later integrity verification and reconstruction under formal review.
-        This creates a structural gap between deployment and institutional accountability.
+        Many AI deployments retain outputs and surface telemetry, but lack a canonical, integrity-sealed record designed for
+        formal review workflows. When an event is disputed later, the absence of verifiable artifacts creates uncertainty across
+        incident reconstruction, oversight, and liability.
       </p>
 
       <div class="grid-3">
         <div class="card">
-          <h3>Post-incident reconstruction</h3>
-          <p class="small">Logs often capture what happened at the surface, not what can be verified under defined evidentiary boundaries.</p>
+          <h3>Reconstruction limits</h3>
+          <p class="small">Logs may describe what happened, but not preserve a record designed for verification under defined evidentiary boundaries.</p>
         </div>
         <div class="card">
-          <h3>Oversight under constrained disclosure</h3>
-          <p class="small">Institutions need reviewability without forcing exposure of proprietary architecture, weights, or confidential code.</p>
+          <h3>Constrained disclosure</h3>
+          <p class="small">Institutions need reviewability without forcing exposure of trade secrets or confidential implementation details.</p>
         </div>
         <div class="card">
-          <h3>Liability ambiguity</h3>
-          <p class="small">Without integrity-bound artifacts, later disputes rely on incomplete records and non-reproducible context.</p>
+          <h3>Dispute posture</h3>
+          <p class="small">Without integrity controls and canonicalization, records are easier to contest and harder to validate.</p>
         </div>
       </div>
     </section>
 
+    <!-- HOW IT WORKS (high-level only; mechanics live on platform.html) -->
     <section class="section">
-      <h2>What NADIR is</h2>
+      <h2>How NADIR works (high level)</h2>
       <p class="sub">
-        NADIR attaches beside an inference system and produces artifacts designed for verification. Its purpose is to support oversight workflows
-        conducted by authorized institutions and operators. NADIR is infrastructure—its output is a record, not an adjudication.
+        NADIR follows a strict mechanics chain designed for audit workflows.
       </p>
 
       <div class="grid-2">
         <div class="card">
-          <h3>Policy-scoped capture</h3>
-          <p class="small">Capture scope is defined by configuration: what is included, what is excluded, and what is masked.</p>
+          <h3>1) Capture (policy-scoped)</h3>
+          <p class="small">Attach at the inference boundary and capture only what policy defines: included, excluded, and masked fields.</p>
         </div>
         <div class="card">
-          <h3>Canonical artifact schema</h3>
-          <p class="small">Inputs and defined runtime context are normalized into a schema intended to support reproducible verification under defined conditions.</p>
+          <h3>2) Canonicalize (schema)</h3>
+          <p class="small">Normalize captured context into a canonical artifact format to reduce ambiguity and support repeatable verification.</p>
         </div>
         <div class="card">
-          <h3>Integrity sealing</h3>
-          <p class="small">Artifacts are hashed and signed to support authenticity validation and tamper detection.</p>
+          <h3>3) Seal (integrity)</h3>
+          <p class="small">Hash and sign the canonical artifact to support authenticity validation and tamper detection.</p>
         </div>
         <div class="card">
-          <h3>Controlled disclosure</h3>
-          <p class="small">Artifacts are structured with tiered visibility so reviewers can verify integrity without accessing proprietary internals.</p>
+          <h3>4) Verify (workflow)</h3>
+          <p class="small">Independent reviewers recompute and validate integrity fields under defined conditions—without requiring IP disclosure.</p>
         </div>
+      </div>
+
+      <div class="cta-row" style="margin-top:14px;">
+        <a class="btn primary" href="platform.html">See the full mechanics chain</a>
       </div>
     </section>
 
+    <!-- BOUNDARY DECLARATION (tight, legally-defensive) -->
     <section class="section">
       <div class="boundary">
         <div class="title">Boundary Declaration</div>
         <ul>
-          <li>A regulatory authority</li>
-          <li>A certification body</li>
-          <li>A model safety guarantor</li>
-          <li>A decision-making system</li>
-          <li>A compliance determination engine</li>
+          <li>NADIR is not a regulator, certification authority, or compliance determination engine.</li>
+          <li>NADIR does not guarantee correctness, safety, fairness, legality, or policy compliance of AI decisions.</li>
+          <li>NADIR generates integrity-sealed artifacts to support verification and oversight workflows conducted by authorized reviewers.</li>
+          <li>NADIR does not require disclosure of proprietary weights, source code, or confidential architecture.</li>
         </ul>
-        <p>
-          NADIR does not validate correctness, fairness, legality, or policy compliance of AI systems. It generates structured artifacts
-          to support oversight processes conducted by authorized institutions.
-        </p>
       </div>
     </section>
 
+    <!-- NEXT STEP (single non-repetitive pointer) -->
     <section class="section">
-      <h2>Control block</h2>
-      <p class="sub">Public-facing posture for versioning and disclosure boundaries.</p>
+      <h2>Next steps</h2>
+      <p class="sub">
+        See Architecture for the strict logic flow (capture → artifact schema → integrity → disclosure tiers → verification),
+        or Documents for briefing formats aligned to leadership, IP, operational, and minimal-disclosure contexts.
+      </p>
 
-      <div class="card">
-        <div class="meta">
-          <div class="row"><span class="k">Owner</span><span>Brian Covarrubias</span></div>
-          <div class="row"><span class="k">Version</span><span>V2026.02.19</span></div>
-          <div class="row"><span class="k">Location</span><span>San Diego, California, United States</span></div>
-          <div class="row"><span class="k">Status</span><span>Proprietary. All rights reserved.</span></div>
-        </div>
-        <div class="hr"></div>
-        <p class="small">
-          NADIR materials are provided for informational purposes. Controlled review of non-public documentation may be available under appropriate boundaries.
-        </p>
+      <div class="cta-row">
+        <a class="btn primary" href="platform.html">Architecture</a>
+        <a class="btn" href="docs.html">Documents</a>
+        <a class="btn" href="governance.html">Governance</a>
       </div>
     </section>
 
@@ -143,9 +146,7 @@
           <div>
             <div class="badge">NADIR • Evidentiary infrastructure</div>
             <div style="margin-top:10px;" class="small">
-              © 2026 NADIR. All rights reserved.
-              <span style="opacity:.65;">—</span>
-              <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="governance.html">Ethical Use</a> · <a href="contact.html">Contact</a>
+              © 2026 NADIR. All rights reserved. — <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="contact.html">Contact</a>
             </div>
           </div>
           <div class="right">
