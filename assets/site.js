@@ -1,8 +1,8 @@
-/* NADIR site JS: highlight active nav item (no animations, no wobble) */
-(function () {
-  const path = (window.location.pathname || '').split('/').pop() || 'index.html';
-  const links = document.querySelectorAll('nav a[data-page]');
-  links.forEach(a => {
-    if (a.getAttribute('data-page') === path) a.classList.add('active');
+// /assets/site.js
+(function(){
+  const page = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+  document.querySelectorAll('nav a[data-page]').forEach(a=>{
+    const target = (a.getAttribute("data-page") || "").toLowerCase();
+    if(target === page) a.classList.add("active");
   });
 })();
