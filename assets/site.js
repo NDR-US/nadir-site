@@ -1,12 +1,16 @@
-/* assets/site.js
-   - active nav highlight
-   - safe default for project-repo GitHub Pages paths
-*/
-document.addEventListener("DOMContentLoaded", () => {
-  const current = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
+(function () {
+  // Active nav highlighting based on current path
+  try {
+    const path = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    document.querySelectorAll("nav a").forEach(a => {
+      const href = (a.getAttribute("href") || "").toLowerCase();
+      if (href === path) a.classList.add("active");
+      else a.classList.remove("active");
+    });
+  } catch (e) {}
 
-  document.querySelectorAll("nav a[data-page]").forEach((a) => {
-    const target = (a.getAttribute("data-page") || "").toLowerCase();
-    if (target === current) a.classList.add("active");
+  // Prevent accidental “#” anchors from jumping if you later add placeholders
+  document.querySelectorAll('a[href="#"]').forEach(a => {
+    a.addEventListener("click", (ev) => ev.preventDefault());
   });
-});
+})();
