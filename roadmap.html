@@ -1,111 +1,124 @@
-<!-- roadmap.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NADIR — Roadmap</title>
-  <meta name="description" content="NADIR roadmap: deterministic artifact prototype, verification harness, chain-of-custody workflow, and controlled expansion." />
+  <meta name="description" content="A proof-driven roadmap: deterministic artifact prototype, verification harness, chain-of-custody workflow, controlled expansion." />
+  <meta name="robots" content="noindex,nofollow" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
 <body>
-  <header>
-    <div class="wrap">
-      <div class="topbar">
-        <div class="brand">
-          <div class="mark">NADIR</div>
-          <div class="descriptor">Deterministic AI Decision-State Recorder</div>
-        </div>
-        <nav>
-          <a data-page="index.html" href="index.html">Overview</a>
-          <a data-page="platform.html" href="platform.html">Architecture</a>
-          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
-          <a data-page="docs.html" href="docs.html">Documents</a>
-          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
-          <a data-page="contact.html" href="contact.html">Contact</a>
-        </nav>
+<header>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <a class="brandlink" href="index.html" aria-label="NADIR Home">
+          <svg class="nadir-logo" viewBox="0 0 520 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NADIR">
+            <text x="0" y="62" font-family="Julius Sans One, sans-serif" font-size="54" letter-spacing="14" fill="#E6ECF7">NADIR</text>
+          </svg>
+        </a>
+        <div class="descriptor">Deterministic AI Decision-State Recorder</div>
       </div>
-    </div>
-  </header>
 
-  <main class="wrap page">
-    <section class="hero">
-      <div class="kicker">Prototype • Verification • Chain-of-Custody • Controlled Expansion</div>
+      <nav aria-label="Primary navigation">
+        <a href="index.html">Overview</a>
+        <a href="platform.html">Architecture</a>
+        <a href="use-cases.html">Integration</a>
+        <a href="docs.html">Documents</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="wrap">
+
+    <section class="section">
+      <div class="kicker">Proof first • Verification • Chain of custody • Controlled expansion</div>
       <h1>Roadmap</h1>
       <p class="lead">
-        The goal is proof before scale: a deterministic artifact pipeline, a verification harness,
-        and a retention-ready chain-of-custody workflow.
+        The objective is to move from concept to proof: a deterministic artifact pipeline, a verification harness,
+        and a retention-ready record format before expanding scope.
       </p>
     </section>
 
-    <section>
-      <h2>Phase 1 — Minimal viable artifact (MVA)</h2>
-      <p class="sub">Deliverable: deterministic artifact record + reproducibility tests under defined conditions.</p>
+    <hr>
 
-      <div class="grid-2">
-        <div class="card"><h3>Define capture boundary</h3><p class="small">Specify what is captured at inference time and what is excluded.</p></div>
-        <div class="card"><h3>Canonicalize</h3><p class="small">Normalize ordering, rounding, serialization, and metadata.</p></div>
-        <div class="card"><h3>DWSH signing</h3><p class="small">Generate tamper-evident signatures over the abstracted representation.</p></div>
-        <div class="card"><h3>Verification harness</h3><p class="small">Prove repeatability; detect tampering and mismatch states.</p></div>
-      </div>
-    </section>
+    <section class="section">
+      <div class="card">
+        <h2>Phase 1 — Minimal viable artifact</h2>
+        <p class="sub">Deliverable: deterministic artifact generation + reproducibility tests under defined conditions.</p>
 
-    <section style="margin-top:18px;">
-      <h2>Phase 2 — Audit workflow & chain-of-custody</h2>
-      <p class="sub">Deliverable: retention-ready record format + retrieval + verification procedure.</p>
-
-      <div class="grid-3">
-        <div class="card"><h3>Record schema</h3><p class="small">Timestamping, provenance metadata, input hash, abstraction ID, signature, verification fields.</p></div>
-        <div class="card"><h3>Retention posture</h3><p class="small">Storage and retention aligned to evidentiary preservation and audit review practices.</p></div>
-        <div class="card"><h3>Review outputs</h3><p class="small">Controlled reports for oversight review without disclosing proprietary internals.</p></div>
-      </div>
-    </section>
-
-    <section style="margin-top:18px;">
-      <h2>Phase 3 — Controlled expansion</h2>
-      <p class="sub">Deliverable: broader coverage while maintaining determinism and constrained disclosure.</p>
-
-      <div class="grid-2">
-        <div class="card"><h3>Model class extension</h3><p class="small">Define capture + canonicalization per model class and deployment mode.</p></div>
-        <div class="card"><h3>Environment hardening</h3><p class="small">Document determinism boundaries across hardware, batching, and distributed inference.</p></div>
-        <div class="card"><h3>Third-party validation</h3><p class="small">Verification steps suitable for oversight without trade secret disclosure.</p></div>
-        <div class="card"><h3>Compliance alignment</h3><p class="small">Map artifacts to oversight expectations without claiming correctness or interpretability-by-disclosure.</p></div>
-      </div>
-
-      <div class="callout" style="margin-top:14px;">
-        <p class="small">
-          <strong>Quality bar:</strong> NADIR expands only after determinism and verification are proven in constrained scope.
-          That is the difference between “idea” and “infrastructure.”
-        </p>
-      </div>
-
-      <div class="cta-row" style="margin-top:14px;">
-        <a class="btn primary" href="contact.html">Controlled review</a>
-        <a class="btn" href="docs.html">Documents</a>
-      </div>
-    </section>
-
-    <footer>
-      <div class="wrap">
-        <div class="footgrid">
-          <div>
-            <div class="badge">Roadmap • Proof → Workflow → Expansion</div>
-            <div style="margin-top:10px;">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
+        <div class="grid-2">
+          <div class="callout">
+            <h3>Define capture boundary</h3>
+            <p class="small">Specify exactly what is captured at inference time and what is excluded to preserve confidentiality.</p>
           </div>
-          <div class="right">
-            <div>NADIR V2026.02.19</div>
-            <div>Unauthorized distribution prohibited.</div>
+          <div class="callout">
+            <h3>Canonicalize inputs</h3>
+            <p class="small">Normalize ordering, serialization formats, rounding policy, and metadata to reduce entropy.</p>
+          </div>
+          <div class="callout">
+            <h3>Generate DWSH signature</h3>
+            <p class="small">Produce a tamper-evident fingerprint derived from the abstracted representation.</p>
+          </div>
+          <div class="callout">
+            <h3>Verification harness</h3>
+            <p class="small">Prove repeatability under identical conditions; detect mismatches and tampering.</p>
           </div>
         </div>
       </div>
-    </footer>
-  </main>
+    </section>
 
-  <script src="assets/site.js"></script>
+    <section class="section grid-2">
+      <div class="card">
+        <h2>Phase 2 — Record format &amp; custody posture</h2>
+        <p class="sub">Deliverable: retention-ready schema + verification procedure suitable for review workflows.</p>
+        <ul class="small" style="margin:0; padding-left:18px;">
+          <li>Record schema: timestamps, provenance metadata, input hash, abstraction ID, signature, verification fields.</li>
+          <li>Retention posture: storage, access controls, and lifecycle alignment with evidentiary practices.</li>
+          <li>Controlled reporting: review outputs that preserve IP boundaries.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Phase 3 — Controlled expansion</h2>
+        <p class="sub">Deliverable: broader coverage while maintaining determinism and conservative claims.</p>
+        <ul class="small" style="margin:0; padding-left:18px;">
+          <li>Model class extension: define capture/canonicalization by runtime and deployment mode.</li>
+          <li>Environment hardening: document determinism boundaries across hardware and distributed inference.</li>
+          <li>Independent validation protocol: verification steps that do not require weight disclosure.</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footgrid">
+      <div>
+        <div class="badge">Roadmap • Proof → Workflow → Expansion</div>
+        <div style="height:10px;"></div>
+        <div class="small">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
+      </div>
+      <div class="right">
+        <div>NADIR V2026.02.19</div>
+        <div>Unauthorized distribution prohibited.</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
 </body>
 </html>
