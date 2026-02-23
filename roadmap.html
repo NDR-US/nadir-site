@@ -1,10 +1,11 @@
+<!-- /roadmap.html  (PAGE 5 — ROADMAP) -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>NADIR — Roadmap</title>
-  <meta name="description" content="NADIR roadmap: prove canonical artifacts, verification harness, and chain-of-custody workflow before controlled expansion." />
+  <meta name="description" content="Roadmap: proof → verification → workflow → expansion." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,90 +13,102 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
-<body class="page-roadmap">
+<body>
+  <header class="siteHeader">
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">NADIR</div>
+          <div class="descriptor">Roadmap</div>
+        </div>
 
-<header class="siteHeader">
-  <div class="wrap">
-    <div class="topbar">
-      <a class="brand" href="index.html">
-        <div class="mark">NADIR</div>
-        <div class="descriptor">Roadmap</div>
-      </a>
-
-      <button class="navToggle" aria-expanded="false" aria-controls="siteNav">Menu</button>
-
-      <nav id="siteNav" class="navMenu" hidden>
-        <a data-page="index.html" href="index.html">Overview</a>
-        <a data-page="platform.html" href="platform.html">Architecture</a>
-        <a data-page="use-cases.html" href="use-cases.html">Integration</a>
-        <a data-page="docs.html" href="docs.html">Documents</a>
-        <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
-        <a data-page="founder.html" href="founder.html">Founder</a>
-        <a data-page="governance.html" href="governance.html">Governance</a>
-        <a data-page="privacy.html" href="privacy.html">Privacy</a>
-        <a data-page="terms.html" href="terms.html">Terms</a>
-        <a data-page="contact.html" href="contact.html">Contact</a>
-      </nav>
+        <nav class="nav">
+          <a data-page="index.html" href="index.html">Overview</a>
+          <a data-page="platform.html" href="platform.html">Architecture</a>
+          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
+          <a data-page="docs.html" href="docs.html">Documents</a>
+          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
+          <a data-page="founder.html" href="founder.html">Founder</a>
+          <a data-page="governance.html" href="governance.html">Governance</a>
+          <a data-page="contact.html" href="contact.html">Contact</a>
+        </nav>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<main class="wrap page">
+  <main class="wrap page">
+    <section class="hero">
+      <div class="kicker">PROOF → VERIFICATION → WORKFLOW → EXPANSION</div>
+      <h1>Roadmap</h1>
+      <p class="lead">
+        The product is proven records. NADIR prioritizes canonical artifacts, verification, and chain-of-custody before expanding scope.
+      </p>
+      <div class="noteLine">Current position: Phase 1 — Canonical Artifact Definition &amp; Prototype Sealing.</div>
+    </section>
 
-  <section class="hero">
-    <div class="kicker">Proof → Verification → Workflow → Expansion</div>
-    <h1>Roadmap</h1>
-    <p class="lead">
-      The product is proven records. NADIR prioritizes canonical artifacts, verification, and chain-of-custody before expanding scope.
-    </p>
-  </section>
+    <section class="section">
+      <h2>Phase 1 — Canonical artifact</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Define capture policy</h3>
+          <p class="small">What is included, excluded, and masked. Version the policy.</p>
+        </div>
+        <div class="card">
+          <h3>Canonicalize</h3>
+          <p class="small">Normalize ordering and serialization so verification is repeatable under defined capture conditions.</p>
+        </div>
+      </div>
+    </section>
 
-  <section class="section">
-    <h2>Phase 1 — Canonical artifact</h2>
-    <div class="grid-2">
-      <div class="card"><h3>Define capture policy</h3><p class="small">What is included, excluded, and masked. Version the policy.</p></div>
-      <div class="card"><h3>Canonicalize</h3><p class="small">Normalize ordering and serialization so verification is repeatable.</p></div>
-    </div>
-  </section>
+    <section class="section">
+      <h2>Phase 2 — Integrity + verification</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Seal records</h3>
+          <p class="small">Hash and sign the canonical record. Define key custody.</p>
+        </div>
+        <div class="card">
+          <h3>Verification harness</h3>
+          <p class="small">Recompute and validate integrity fields under defined conditions.</p>
+        </div>
+      </div>
+    </section>
 
-  <section class="section">
-    <h2>Phase 2 — Integrity + verification</h2>
-    <div class="grid-2">
-      <div class="card"><h3>Seal records</h3><p class="small">Hash and sign the canonical record. Define key custody.</p></div>
-      <div class="card"><h3>Verification harness</h3><p class="small">Recompute and validate integrity fields under defined conditions.</p></div>
-    </div>
-  </section>
+    <section class="section">
+      <h2>Phase 3 — Chain-of-custody workflow</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Retention posture</h3>
+          <p class="small">Storage, retrieval, and audit-ready record handling.</p>
+        </div>
+        <div class="card">
+          <h3>Review output</h3>
+          <p class="small">Controlled reports that preserve confidentiality while enabling verification.</p>
+        </div>
+      </div>
 
-  <section class="section">
-    <h2>Phase 3 — Chain-of-custody workflow</h2>
-    <div class="grid-2">
-      <div class="card"><h3>Retention posture</h3><p class="small">Storage, retrieval, and audit-ready record handling.</p></div>
-      <div class="card"><h3>Review output</h3><p class="small">Controlled reports that preserve confidentiality while enabling verification.</p></div>
-    </div>
-  </section>
+      <div class="boundary" style="margin-top:22px;">
+        <div class="title">Quality bar</div>
+        <ul>
+          <li>Expand only after determinism and verification are proven in constrained scope.</li>
+          <li>Keep claims limited to integrity, provenance, and workflow support.</li>
+          <li>Oversight conclusions belong to authorized reviewers.</li>
+        </ul>
+      </div>
+    </section>
 
-  <section class="section">
-    <div class="boundary">
-      <div class="boundaryTitle">Quality Bar</div>
-      <ul>
-        <li>Expand only after determinism and verification are proven in constrained scope.</li>
-        <li>Keep claims limited to integrity, provenance, and workflow support.</li>
-        <li>Oversight conclusions belong to authorized reviewers.</li>
-      </ul>
-    </div>
-  </section>
+    <footer class="siteFooter">
+      <div class="footgrid">
+        <div>
+          <div class="badge">© 2026 NADIR. Proprietary infrastructure. Version V2026.02.19.</div>
+          <div class="small" style="margin-top:10px;">
+            <a href="platform.html">Architecture</a> · <a href="docs.html">Documents</a> · <a href="governance.html">Ethical Use</a> · <a href="contact.html">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
 
-  <footer class="siteFooter">
-    <div class="footerLine">© 2026 NADIR. Proprietary infrastructure. Version V2026.02.19.</div>
-    <div class="footerLinks">
-      <a href="platform.html">Architecture</a>
-      <a href="docs.html">Documents</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </footer>
-
-</main>
-
-<script src="assets/site.js"></script>
+  <script src="assets/site.js"></script>
 </body>
 </html>
