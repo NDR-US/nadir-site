@@ -1,124 +1,133 @@
-<!-- use-cases.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NADIR — Operational Integration</title>
-  <meta name="description" content="NADIR integrates as an overlay at the inference boundary to produce audit artifacts without modifying core model logic." />
+  <title>NADIR — Integration</title>
+  <meta name="description" content="Operational integration posture and representative use cases for NADIR’s audit artifacts." />
+  <meta name="robots" content="noindex,nofollow" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
 <body>
-  <header>
-    <div class="wrap">
-      <div class="topbar">
-        <div class="brand">
-          <div class="mark">NADIR</div>
-          <div class="descriptor">Deterministic AI Decision-State Recorder</div>
-        </div>
-        <nav>
-          <a data-page="index.html" href="index.html">Overview</a>
-          <a data-page="platform.html" href="platform.html">Architecture</a>
-          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
-          <a data-page="docs.html" href="docs.html">Documents</a>
-          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
-          <a data-page="contact.html" href="contact.html">Contact</a>
-        </nav>
+<header>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <a class="brandlink" href="index.html" aria-label="NADIR Home">
+          <svg class="nadir-logo" viewBox="0 0 520 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NADIR">
+            <text x="0" y="62" font-family="Julius Sans One, sans-serif" font-size="54" letter-spacing="14" fill="#E6ECF7">NADIR</text>
+          </svg>
+        </a>
+        <div class="descriptor">Deterministic AI Decision-State Recorder</div>
       </div>
-    </div>
-  </header>
 
-  <main class="wrap page">
-    <section class="hero">
-      <div class="kicker">Overlay Integration • Audit Workflow Fit • Minimal Exposure</div>
+      <nav aria-label="Primary navigation">
+        <a href="index.html">Overview</a>
+        <a href="platform.html">Architecture</a>
+        <a href="use-cases.html">Integration</a>
+        <a href="docs.html">Documents</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="wrap">
+
+    <section class="section">
+      <div class="kicker">Overlay integration • Audit workflows • Minimal disclosure</div>
       <h1>Operational integration</h1>
       <p class="lead">
-        NADIR attaches at the inference-call boundary (gateway, middleware, or service wrapper) to generate audit artifacts without rewriting the model.
+        NADIR is designed to attach at the inference-call boundary (gateway, middleware, or wrapper service) to produce audit artifacts
+        with minimal disruption to existing deployments.
       </p>
-
       <div class="cta-row">
         <a class="btn primary" href="platform.html">Architecture</a>
-        <a class="btn" href="docs.html">Documents</a>
+        <a class="btn" href="roadmap.html">Roadmap</a>
       </div>
     </section>
 
-    <section>
-      <h2>Integration posture</h2>
-      <p class="sub">Designed to reduce adoption friction and preserve proprietary boundaries.</p>
+    <hr>
 
-      <div class="grid-3">
-        <div class="card">
-          <h3>Attach at the boundary</h3>
-          <p class="small">Deploy alongside inference services as an overlay module.</p>
-        </div>
-        <div class="card">
-          <h3>Constrained disclosure</h3>
-          <p class="small">Verification without exposing weights or architecture internals.</p>
-        </div>
-        <div class="card">
-          <h3>Audit workflow fit</h3>
-          <p class="small">Artifacts designed for retention, retrieval, and independent verification.</p>
+    <section class="section grid-2">
+      <div class="card">
+        <h2>Integration posture</h2>
+        <p class="sub">
+          NADIR attaches at an interface where inputs are received and inference outputs are produced. This enables phased adoption:
+          instrument first, expand scope only after determinism boundaries are proven.
+        </p>
+        <div class="pills">
+          <span class="pill">Gateway</span>
+          <span class="pill">Middleware</span>
+          <span class="pill">Service wrapper</span>
+          <span class="pill">Inference boundary</span>
         </div>
       </div>
 
-      <div class="callout" style="margin-top:14px;">
+      <div class="card">
+        <h2>Governance note</h2>
+        <p class="sub">
+          NADIR artifacts support integrity validation and reconstruction. They do not substitute for safety engineering,
+          human authorization, or rules-of-engagement governance.
+        </p>
         <p class="small">
-          <strong>Governance note:</strong> NADIR supports integrity and audit readiness. It does not replace safety engineering, policy gating,
-          human authorization, or mission rules of engagement.
+          Audit artifacts are strongest when paired with policy gating, logging discipline, and retention controls.
         </p>
       </div>
     </section>
 
-    <section style="margin-top:18px;">
-      <h2>Primary use cases</h2>
-      <p class="sub">Environments where accountability must exist without forcing IP disclosure.</p>
+    <section class="section">
+      <div class="card">
+        <h2>Representative use cases</h2>
+        <p class="sub">Examples are framed conservatively to avoid implying capabilities beyond audit artifacts.</p>
 
-      <div class="grid-2">
-        <div class="card">
-          <h3>Autonomous navigation</h3>
-          <p class="small">Audit artifacts for route selection, obstacle response, escalation, and failover behavior.</p>
+        <div class="grid-2">
+          <div class="callout">
+            <h3>Autonomous navigation</h3>
+            <p class="small">Artifacts supporting review of route selection, failover behavior, and decision-state divergence during incidents.</p>
+          </div>
+          <div class="callout">
+            <h3>Decision support systems</h3>
+            <p class="small">Integrity-anchored artifacts supporting post-event review of prioritization, escalation, and operator-assist decisions.</p>
+          </div>
+          <div class="callout">
+            <h3>Validation gates</h3>
+            <p class="small">Deterministic signatures used as part of governance workflows prior to downstream actions in regulated contexts.</p>
+          </div>
+          <div class="callout">
+            <h3>Incident reconstruction</h3>
+            <p class="small">Chain-of-custody posture supporting after-action review under constrained disclosure requirements.</p>
+          </div>
         </div>
-        <div class="card">
-          <h3>ISR decision support</h3>
-          <p class="small">Integrity-anchored artifacts for prioritization and analyst-assist workflows.</p>
-        </div>
-        <div class="card">
-          <h3>Validation gates</h3>
-          <p class="small">Deterministic signatures for review checkpoints and post-event accountability.</p>
-        </div>
-        <div class="card">
-          <h3>Incident reconstruction</h3>
-          <p class="small">Chain-of-custody records to support review boards under constrained disclosure.</p>
-        </div>
-      </div>
-
-      <div class="cta-row" style="margin-top:14px;">
-        <a class="btn primary" href="roadmap.html">Roadmap</a>
-        <a class="btn" href="contact.html">Request controlled review</a>
       </div>
     </section>
 
-    <footer>
-      <div class="wrap">
-        <div class="footgrid">
-          <div>
-            <div class="badge">Integration • Use Cases</div>
-            <div style="margin-top:10px;">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
-          </div>
-          <div class="right">
-            <div>NADIR V2026.02.19</div>
-            <div>Unauthorized distribution prohibited.</div>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </main>
+  </div>
+</main>
 
-  <script src="assets/site.js"></script>
+<footer>
+  <div class="wrap">
+    <div class="footgrid">
+      <div>
+        <div class="badge">Integration • Use Cases</div>
+        <div style="height:10px;"></div>
+        <div class="small">Proprietary Intellectual Property of Brian Covarrubias. All Rights Reserved.</div>
+      </div>
+      <div class="right">
+        <div>NADIR V2026.02.19</div>
+        <div>Unauthorized distribution prohibited.</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
 </body>
 </html>
