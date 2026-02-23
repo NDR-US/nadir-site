@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NADIR — Privacy</title>
-  <meta name="description" content="NADIR privacy statement." />
+  <meta name="description" content="NADIR privacy statement: policy-scoped collection, tiered disclosure, and minimal retention posture." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,34 +12,66 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
-<body>
-  <header>
-    <div class="wrap">
-      <div class="topbar">
-        <div class="brand">
-          <div class="mark">NADIR</div>
-          <div class="descriptor">Privacy</div>
-        </div>
+<body class="page-legal">
 
-        <nav>
-          <a data-page="index.html" href="index.html">Overview</a>
-          <a data-page="platform.html" href="platform.html">Architecture</a>
-          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
-          <a data-page="docs.html" href="docs.html">Documents</a>
-          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
-          <a data-page="founder.html" href="founder.html">Founder</a>
-          <a data-page="governance.html" href="governance.html">Governance</a>
-          <a data-page="privacy.html" href="privacy.html">Privacy</a>
-          <a data-page="terms.html" href="terms.html">Terms</a>
-          <a data-page="contact.html" href="contact.html">Contact</a>
-        </nav>
-      </div>
+<header class="siteHeader">
+  <div class="wrap">
+    <div class="topbar">
+      <a class="brand" href="index.html">
+        <div class="mark">NADIR</div>
+        <div class="descriptor">Privacy</div>
+      </a>
+
+      <button class="navToggle" aria-expanded="false" aria-controls="siteNav">Menu</button>
+
+      <nav id="siteNav" class="navMenu" hidden>
+        <a data-page="index.html" href="index.html">Overview</a>
+        <a data-page="platform.html" href="platform.html">Architecture</a>
+        <a data-page="use-cases.html" href="use-cases.html">Integration</a>
+        <a data-page="docs.html" href="docs.html">Documents</a>
+        <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
+        <a data-page="founder.html" href="founder.html">Founder</a>
+        <a data-page="governance.html" href="governance.html">Governance</a>
+        <a data-page="privacy.html" href="privacy.html">Privacy</a>
+        <a data-page="terms.html" href="terms.html">Terms</a>
+        <a data-page="contact.html" href="contact.html">Contact</a>
+      </nav>
     </div>
-  </header>
+  </div>
+</header>
 
-  <main class="wrap page">
-    <section>
-      <div class="kicker">Privacy-by-design • Minimized collection • Clear boundaries</div>
-      <h1>Privacy statement</h1>
-      <p class="lead">
-        NADIR is designed around minimized collection and controlled disclosure. This page describes privacy principles for this
+<main class="wrap page">
+
+  <section class="hero">
+    <div class="kicker">Policy-scoped collection • Tiered disclosure • Minimal retention</div>
+    <h1>Privacy statement</h1>
+    <p class="lead">
+      NADIR is designed to minimize collection by default. Capture scope should be explicitly defined by policy and aligned to lawful oversight requirements.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="panel" style="max-width: 92ch;">
+      <h3>Summary</h3>
+      <p class="small" style="margin-top:12px;">
+        NADIR supports policy-scoped records and tiered disclosure. Operators determine what is collected, what is excluded, and what is masked.
+      </p>
+      <p class="small" style="margin-top:12px;">
+        This public page is a high-level summary only. Detailed privacy posture belongs in controlled operational documentation.
+      </p>
+    </div>
+  </section>
+
+  <footer class="siteFooter">
+    <div class="footerLine">© 2026 NADIR. Proprietary infrastructure. Version V2026.02.19.</div>
+    <div class="footerLinks">
+      <a href="terms.html">Terms</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+</main>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
