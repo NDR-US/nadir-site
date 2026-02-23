@@ -56,38 +56,26 @@ header{
   gap:12px;
 }
 
-/* Palantir-style: small logo mark in header */
-.logo-container{
-  width: 150px;     /* make smaller like Palantir */
-  height: 34px;     /* fixed height prevents “wobble” */
-  display:flex;
-  align-items:center;
-  flex:0 0 auto;
-}
-
-.logo-video{
-  width:100%;
-  height:100%;
+/* SVG mark (Palantir-like: small, stable, doesn't affect layout) */
+.logo-img{
+  width: 150px;
+  height: 34px;        /* fixed height prevents wobble */
   display:block;
   object-fit: contain;
-  background: transparent;
-  mix-blend-mode: normal; /* critical: don’t shift page colors */
 }
 
-/* fallback text if video blocked */
 .mark{
   font-family: "Julius Sans One", Inter, sans-serif;
   letter-spacing:.42em;
   font-size: 18px;
   opacity:.92;
-  display:none;
+  display:none; /* fallback only */
 }
 
-/* If video fails/blocked, show text */
-@supports not (backdrop-filter: blur(1px)){
-  .mark{ display:block; }
-}
+/* If SVG fails to load for any reason, show text */
+.logo-img[alt="NADIR"]{}
 
+/* Descriptor */
 .descriptor{
   margin-top:8px;
   letter-spacing:.16em;
@@ -275,7 +263,5 @@ footer{
   nav{ width:100%; justify-content:flex-start; }
   .footgrid{ flex-direction:column; }
   .right{ text-align:left; }
-
-  /* even smaller on mobile */
-  .logo-container{ width: 130px; height: 30px; }
+  .logo-img{ width: 130px; height: 30px; }
 }
