@@ -2,190 +2,115 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NADIR — Architecture</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NADIR — Documents</title>
+  <meta name="description" content="Controlled documentation suite for NADIR: TRD, policy schema, benchmark, verification." />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Julius+Sans+One&display=swap" rel="stylesheet">
 
-  <!-- Styles (IMPORTANT: use relative path so it never breaks) -->
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
 <body>
   <header class="siteHeader">
-    <div class="wrap topbar">
-      <div class="brand">
-        <div class="mark">NADIR</div>
-        <div class="descriptor">Evidentiary Infrastructure</div>
-      </div>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">NADIR</div>
+          <div class="descriptor">Documents</div>
+        </div>
 
-      <nav class="nav">
-        <a href="index.html">Overview</a>
-        <a class="active" href="platform.html">Architecture</a>
-        <a href="use-cases.html">Integration</a>
-        <a href="docs.html">Documents</a>
-        <a href="roadmap.html">Roadmap</a>
-        <a href="founder.html">Founder</a>
-        <a href="governance.html">Governance</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="terms.html">Terms</a>
-        <a href="contact.html">Contact</a>
-      </nav>
+        <nav class="nav">
+          <a data-page="index.html" href="index.html">Overview</a>
+          <a data-page="platform.html" href="platform.html">Architecture</a>
+          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
+          <a data-page="docs.html" href="docs.html">Documents</a>
+          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
+          <a data-page="founder.html" href="founder.html">Founder</a>
+          <a data-page="governance.html" href="governance.html">Governance</a>
+          <a data-page="privacy.html" href="privacy.html">Privacy</a>
+          <a data-page="terms.html" href="terms.html">Terms</a>
+          <a data-page="contact.html" href="contact.html">Contact</a>
+        </nav>
+      </div>
     </div>
   </header>
 
-  <main class="page">
-    <div class="wrap">
-      <section class="hero">
-        <div class="kicker">CAPTURE BOUNDARY • ARTIFACT SCHEMA • INTEGRITY • DISCLOSURE • VERIFICATION</div>
-        <h1>Architecture</h1>
-        <p class="lead">
-          NADIR follows a strict mechanics chain: attach at the inference boundary, generate a canonical artifact schema,
-          seal it with integrity controls, enforce controlled disclosure, and enable independent verification.
-        </p>
-        <div class="ctaRow">
-          <a class="btn smallBtn" href="use-cases.html">Operational integration</a>
-          <a class="btn smallBtn" href="docs.html">Document suite</a>
-        </div>
-      </section>
+  <main class="wrap page">
+    <section class="hero">
+      <div class="kicker">CONTROLLED REVIEW • SPECIFICATIONS • POLICY SCHEMA</div>
+      <h1>Document suite</h1>
+      <p class="lead">
+        Public pages remain intentionally high-level. Engineering specifications, policy schemas, and review materials are available
+        under controlled disclosure.
+      </p>
 
-      <section class="section">
-        <div class="stack">
+      <div class="ctaRow">
+        <a class="btn primary" href="contact.html">Request controlled review</a>
+        <a class="btn" href="platform.html">Architecture mechanics</a>
+      </div>
+    </section>
 
-          <div class="card">
-            <h3>STAGE 1 — CAPTURE MODEL</h3>
-            <p class="small">
-              NADIR is designed to attach non-intrusively at the inference boundary (sidecar, gateway, or wrapper).
-              Capture scope is policy-defined and explicitly bounded to avoid unnecessary collection and to preserve confidential
-              implementation boundaries.
-            </p>
+    <section class="section">
+      <h2>Core engineering documents</h2>
+      <p class="sub">Titles and summaries only. Full content is provided under controlled review.</p>
 
-            <div class="noteLine">
-              <div class="muted">
-                <div><strong>Inference boundary attachment</strong></div>
-                <div>Instrumentation point is outside core model logic to reduce adoption friction and avoid mutating weights.</div>
-              </div>
-            </div>
-
-            <div class="noteLine">
-              <div class="muted">
-                <div><strong>Policy-scoped capture</strong></div>
-                <div>Capture includes defined inputs and runtime context; excludes proprietary weights, architecture details, and unrelated data.</div>
-              </div>
-            </div>
-
-            <div class="noteLine">
-              <div class="muted">
-                <div><strong>Mandatory fail-open architecture</strong></div>
-                <div>
-                  If the sealing layer encounters a failure condition, NADIR does not interrupt inference. The primary system
-                  continues operating. A fail-open exception is logged and the unsealed event is flagged for review. System
-                  availability is never compromised by the artifact layer.
-                </div>
-              </div>
-            </div>
+      <div class="stack">
+        <div class="docItem">
+          <div>
+            <div class="docTitle">Technical Requirements Document (TRD)</div>
+            <div class="docSub">Phase 1 core mechanics chain. Stateless, non-mutating capture; deterministic canonicalization; integrity sealing; fail-open mandate.</div>
           </div>
-
-          <div class="card">
-            <h3>STAGE 2 — ARTIFACT SCHEMA</h3>
-            <p class="small">
-              Captured context is normalized into a canonical artifact structure intended to support integrity verification under defined
-              capture conditions. The schema is designed for audit workflows and chain-of-custody compatible storage.
-            </p>
-
-            <div class="boundary">
-              <div class="title">Canonical artifact fields (example)</div>
-              <p class="small mono" style="margin:0">
-                Timestamp · Provenance metadata · Input hash · Policy ID · Policy version · Policy hash · Capture environment
-                fingerprint · Canonicalization version · Disclosure tier · Integrity fields · Verification fields
-              </p>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>STAGE 3 — INTEGRITY MODEL</h3>
-            <p class="small">
-              Artifacts are sealed using cryptographic hashing and digital signatures to support authenticity validation and tamper detection.
-              Default reference implementations may include SHA-256 for hashing and ECDSA (e.g., P-256) for digital signatures.
-              <strong>Canonicalization conforms to RFC 8785 (JSON Canonicalization Scheme) — the sole normative serialization method applied to artifact content prior to hashing.</strong>
-              Deployment-specific cryptographic suites may vary based on regulatory or operational requirements.
-            </p>
-
-            <div class="grid-2">
-              <div class="card">
-                <h3>Hashing</h3>
-                <p class="small">Produces a fixed digest of the canonical artifact to detect modification.</p>
-              </div>
-              <div class="card">
-                <h3>Digital signature</h3>
-                <p class="small">Authenticates artifact origin under key custody and verification policies.</p>
-              </div>
-            </div>
-
-            <div class="noteLine">
-              <div class="muted">
-                <div><strong>Time anchoring</strong></div>
-                <div>
-                  Supports evidentiary posture by binding artifact integrity to trusted timestamp authorities (TSA), hardware
-                  security module–based time sources, or cryptographically verifiable time attestation mechanisms as defined in the
-                  deployment configuration.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>STAGE 4 — DISCLOSURE FIELD MODEL</h3>
-            <p class="small">
-              NADIR supports tiered visibility: reviewers verify integrity and provenance without receiving proprietary internals.
-              Disclosure boundaries are policy-defined and can vary by audience and agreement.
-            </p>
-
-            <div class="grid-2">
-              <div class="card">
-                <h3>Public / redacted</h3>
-                <p class="small">High-level description of artifacts and controls without sensitive operational detail.</p>
-              </div>
-              <div class="card">
-                <h3>Controlled review</h3>
-                <p class="small">Expanded fields for authorized reviewers while preserving trade secret boundaries.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>STAGE 5 — VERIFICATION WORKFLOW</h3>
-            <p class="small">
-              Verification is performed by recomputing hashes over the canonical artifact, validating signatures, and confirming policy alignment.
-              Verification confirms artifact integrity and provenance — not inference reproducibility or decision correctness. Verification failure results
-              in a formally reportable integrity exception under the defined review workflow.
-            </p>
-          </div>
-
-          <div class="boundary">
-            <div class="title">BOUNDARY DECLARATION</div>
-            <ul>
-              <li>NADIR verifies artifact integrity and provenance under policy.</li>
-              <li>NADIR does not certify compliance, legality, or model correctness.</li>
-              <li>NADIR does not guarantee inference reproducibility.</li>
-              <li>NADIR does not assume operational control over inference infrastructure.</li>
-              <li>Oversight conclusions are made by authorized institutions and operators.</li>
-            </ul>
-          </div>
-
+          <a class="btn smallBtn" href="contact.html">Request</a>
         </div>
 
-        <footer class="siteFooter">
-          <div class="footgrid">
-            <div class="badge">ARCHITECTURE • MECHANICS CHAIN</div>
-            <div class="right">© 2026 NADIR. All rights reserved. — V2026.02.19</div>
+        <div class="docItem">
+          <div>
+            <div class="docTitle">Capture Policy &amp; Masking Schema</div>
+            <div class="docSub">Policy-scoped field selection, masking/redaction rules, disclosure tier definitions, and versioning requirements.</div>
           </div>
-        </footer>
-      </section>
-    </div>
+          <a class="btn smallBtn" href="contact.html">Request</a>
+        </div>
+
+        <div class="docItem">
+          <div>
+            <div class="docTitle">Phase 1 Performance &amp; Fail-Open Benchmark Report</div>
+            <div class="docSub">Latency overhead targets, fail-open behavior validation, and baseline performance results for reference deployment patterns.</div>
+          </div>
+          <a class="btn smallBtn" href="contact.html">Request</a>
+        </div>
+
+        <div class="docItem">
+          <div>
+            <div class="docTitle">Verification CLI Contract</div>
+            <div class="docSub">PASS/FAIL verification behavior: canonicalization (RFC 8785), hash recomputation, signature validation, policy alignment checks.</div>
+          </div>
+          <a class="btn smallBtn" href="contact.html">Request</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="boundary">
+        <div class="title">Disclosure boundary</div>
+        <ul>
+          <li>Public site content is descriptive only.</li>
+          <li>Operational specifics are provided under controlled disclosure.</li>
+          <li>Artifacts and schemas may be shared in tiered form to preserve trade secret boundaries.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="siteFooter">
+      <div class="footgrid">
+        <div class="badge">DOCUMENTS</div>
+        <div class="right">© 2026 NADIR. Proprietary infrastructure. — V2026.02.19</div>
+      </div>
+    </footer>
   </main>
+
+  <script src="assets/site.js"></script>
 </body>
 </html>
