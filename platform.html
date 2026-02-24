@@ -17,10 +17,15 @@
   <header class="siteHeader">
     <div class="wrap">
       <div class="topbar">
-        <div class="brand">
-          <div class="mark">NADIR</div>
-          <div class="descriptor">Evidentiary Infrastructure</div>
-        </div>
+
+        <!-- UPDATED LOGO HEADER -->
+        <a class="brand brandLink" href="index.html" aria-label="NADIR home">
+          <img class="brandLogo" src="assets/logo-nadir.png" alt="NADIR logo" />
+          <div class="brandText">
+            <div class="mark">NADIR</div>
+            <div class="descriptor">Evidentiary Infrastructure</div>
+          </div>
+        </a>
 
         <nav class="nav">
           <a data-page="index.html" href="index.html">Overview</a>
@@ -34,6 +39,7 @@
           <a data-page="terms.html" href="terms.html">Terms</a>
           <a data-page="contact.html" href="contact.html">Contact</a>
         </nav>
+
       </div>
     </div>
   </header>
@@ -65,25 +71,23 @@
 
           <div class="noteLine">
             <div class="muted">
-              <div><strong>Inference boundary attachment</strong></div>
-              <div>Instrumentation point is outside core model logic to reduce adoption friction and avoid mutating weights.</div>
+              <strong>Inference boundary attachment</strong><br/>
+              Instrumentation point is outside core model logic to reduce adoption friction and avoid mutating weights.
             </div>
           </div>
 
           <div class="noteLine">
             <div class="muted">
-              <div><strong>Policy-scoped capture</strong></div>
-              <div>Capture includes defined inputs and runtime context; excludes proprietary weights, architecture details, and unrelated data.</div>
+              <strong>Policy-scoped capture</strong><br/>
+              Capture includes defined inputs and runtime context; excludes proprietary weights, architecture details, and unrelated data.
             </div>
           </div>
 
           <div class="noteLine">
             <div class="muted">
-              <div><strong>Mandatory fail-open architecture</strong></div>
-              <div>
-                If the sealing layer encounters a failure condition, NADIR does not interrupt inference. The primary system continues operating.
-                A fail-open exception is logged and the unsealed event is flagged for review. System availability is never compromised by the artifact layer.
-              </div>
+              <strong>Mandatory fail-open architecture</strong><br/>
+              If the sealing layer encounters a failure condition, NADIR does not interrupt inference. The primary system continues operating.
+              A fail-open exception is logged and the unsealed event is flagged for review. System availability is never compromised by the artifact layer.
             </div>
           </div>
         </div>
@@ -126,11 +130,10 @@
 
           <div class="noteLine">
             <div class="muted">
-              <div><strong>Time anchoring</strong></div>
-              <div>
-                Supports evidentiary posture by binding artifact integrity to trusted timestamp authorities (TSA), hardware security module–based time sources,
-                or cryptographically verifiable time attestation mechanisms as defined in the deployment configuration.
-              </div>
+              <strong>Time anchoring</strong><br/>
+              Supports evidentiary posture by binding artifact integrity to trusted timestamp authorities (TSA),
+              hardware security module–based time sources, or cryptographically verifiable time attestation mechanisms
+              as defined in the deployment configuration.
             </div>
           </div>
         </div>
