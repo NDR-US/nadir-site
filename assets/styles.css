@@ -39,7 +39,19 @@ a:hover{opacity:.92}
   display:flex; gap:18px; align-items:center; justify-content:space-between;
   padding:18px 0;
 }
+
+/* BRAND / LOGO (UPDATED) */
 .brand{display:flex; gap:12px; align-items:baseline}
+.brandLink{display:flex; gap:12px; align-items:center}
+.brandText{display:flex; flex-direction:column; line-height:1.1}
+.brandLogo{
+  width:28px;
+  height:28px;
+  display:block;
+  object-fit:contain;
+}
+
+/* Keep original mark/descriptor styles */
 .mark{
   font-family:"Julius Sans One", system-ui;
   letter-spacing:.20em;
@@ -118,6 +130,9 @@ h1{
   .grid-3{grid-template-columns:1fr}
   .grid-2{grid-template-columns:1fr}
   h1{font-size:28px}
+
+  /* Ensure header brand stays readable on small screens */
+  .brandLogo{width:26px; height:26px}
 }
 
 .card{
@@ -129,61 +144,4 @@ h1{
 .card h3{margin:0 0 8px; font-size:14px}
 .small{margin:0; color:var(--muted); font-size:13px}
 
-.boundary{
-  border:1px solid var(--line2);
-  background:rgba(255,255,255,.03);
-  border-radius:var(--radius);
-  padding:16px 16px;
-}
-.boundary .title{
-  font-size:12px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--dim);
-  margin-bottom:10px;
-}
-.boundary ul{margin:0; padding-left:18px; color:var(--muted)}
-.boundary li{margin:6px 0}
-
-.noteLine{
-  margin-top:18px;
-  padding:12px 14px;
-  border-left:2px solid rgba(255,255,255,.18);
-  color:var(--muted);
-  background:rgba(255,255,255,.02);
-  border-radius:12px;
-}
-
-.stack{display:flex; flex-direction:column; gap:12px}
-.docItem{
-  display:flex; gap:14px; align-items:center; justify-content:space-between;
-  padding:14px 16px;
-  border:1px solid var(--line2);
-  border-radius:var(--radius);
-  background:rgba(255,255,255,.03);
-}
-.docTitle{font-size:13px; color:var(--ink)}
-.docSub{font-size:12px; color:var(--muted); margin-top:4px; max-width:70ch}
-.docItem > div{flex:1}
-.docItem .btn{flex:0 0 auto}
-
-.prose p{max-width:78ch; color:var(--muted)}
-.sig{color:var(--ink); margin-top:14px}
-
-.muted{color:var(--muted)}
-.mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
-
-.siteFooter{
-  margin-top:28px;
-  padding-top:18px;
-  border-top:1px solid var(--line2);
-}
-.footgrid{display:flex; justify-content:space-between; gap:18px; align-items:flex-start; flex-wrap:wrap}
-.badge{
-  display:inline-block;
-  font-size:11px;
-  color:var(--dim);
-  letter-spacing:.12em;
-  text-transform:uppercase;
-}
-.right{color:var(--dim); font-size:12px}
+.boundary
