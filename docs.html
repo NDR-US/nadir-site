@@ -17,10 +17,15 @@
   <header class="siteHeader">
     <div class="wrap">
       <div class="topbar">
-        <div class="brand">
-          <div class="mark">NADIR</div>
-          <div class="descriptor">Documents</div>
-        </div>
+
+        <!-- UPDATED LOGO HEADER -->
+        <a class="brand brandLink" href="index.html" aria-label="NADIR home">
+          <img class="brandLogo" src="assets/logo-nadir.png" alt="NADIR logo" />
+          <div class="brandText">
+            <div class="mark">NADIR</div>
+            <div class="descriptor">Evidentiary Infrastructure</div>
+          </div>
+        </a>
 
         <nav class="nav">
           <a data-page="index.html" href="index.html">Overview</a>
@@ -34,6 +39,7 @@
           <a data-page="terms.html" href="terms.html">Terms</a>
           <a data-page="contact.html" href="contact.html">Contact</a>
         </nav>
+
       </div>
     </div>
   </header>
@@ -58,10 +64,14 @@
       <p class="sub">Titles and summaries only. Full content is provided under controlled review.</p>
 
       <div class="stack">
+
         <div class="docItem">
           <div>
             <div class="docTitle">Technical Requirements Document (TRD)</div>
-            <div class="docSub">Phase 1 core mechanics chain. Stateless, non-mutating capture; deterministic canonicalization; integrity sealing; fail-open mandate.</div>
+            <div class="docSub">
+              Phase 1 core mechanics chain. Stateless, non-mutating capture; deterministic canonicalization (RFC 8785);
+              integrity sealing; fail-open mandate.
+            </div>
           </div>
           <a class="btn smallBtn" href="contact.html">Request</a>
         </div>
@@ -69,7 +79,10 @@
         <div class="docItem">
           <div>
             <div class="docTitle">Capture Policy &amp; Masking Schema</div>
-            <div class="docSub">Policy-scoped field selection, masking/redaction rules, disclosure tier definitions, and versioning requirements.</div>
+            <div class="docSub">
+              Policy-scoped field selection, masking/redaction rules, disclosure tier definitions,
+              and versioning requirements.
+            </div>
           </div>
           <a class="btn smallBtn" href="contact.html">Request</a>
         </div>
@@ -77,7 +90,10 @@
         <div class="docItem">
           <div>
             <div class="docTitle">Phase 1 Performance &amp; Fail-Open Benchmark Report</div>
-            <div class="docSub">Latency overhead targets, fail-open behavior validation, and baseline performance results for reference deployment patterns.</div>
+            <div class="docSub">
+              Latency overhead targets, fail-open behavior validation,
+              and baseline performance results for reference deployment patterns.
+            </div>
           </div>
           <a class="btn smallBtn" href="contact.html">Request</a>
         </div>
@@ -85,10 +101,14 @@
         <div class="docItem">
           <div>
             <div class="docTitle">Verification CLI Contract</div>
-            <div class="docSub">PASS/FAIL verification behavior: canonicalization (RFC 8785), hash recomputation, signature validation, policy alignment checks.</div>
+            <div class="docSub">
+              PASS/FAIL verification behavior: canonicalization (RFC 8785),
+              hash recomputation, signature validation, and policy alignment checks.
+            </div>
           </div>
           <a class="btn smallBtn" href="contact.html">Request</a>
         </div>
+
       </div>
     </section>
 
@@ -105,10 +125,15 @@
 
     <footer class="siteFooter">
       <div class="footgrid">
-        <div class="badge">DOCUMENTS</div>
-        <div class="right">© 2026 NADIR. Proprietary infrastructure. — V2026.02.19</div>
+        <div>
+          <div class="badge">DOCUMENTS</div>
+        </div>
+        <div class="right">
+          © 2026 NADIR. Proprietary infrastructure. — V2026.02.19
+        </div>
       </div>
     </footer>
+
   </main>
 
   <script src="assets/site.js"></script>
