@@ -1,4 +1,4 @@
-<!-- /terms.html (PAGE — TERMS) -->
+<!-- /terms.html  (PAGE 9 — TERMS OF USE) -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
@@ -18,12 +18,20 @@
   <header class="siteHeader">
     <div class="wrap">
       <div class="topbar">
-        <div class="brand">
-          <div class="mark">NADIR</div>
-          <div class="descriptor">Terms</div>
-        </div>
+        <a class="brand" href="index.html" aria-label="NADIR home">
+          <span class="logo" aria-hidden="true">
+            <svg viewBox="0 0 64 64" role="img" focusable="false">
+              <path d="M16 46V18l14 18 14-18v28" />
+              <path d="M16 46h6l8-10 8 10h6" />
+            </svg>
+          </span>
+          <span class="brandText">
+            <span class="mark">NADIR</span>
+            <span class="descriptor">Terms of use</span>
+          </span>
+        </a>
 
-        <nav class="nav">
+        <nav class="nav" aria-label="Primary">
           <a data-page="index.html" href="index.html">Overview</a>
           <a data-page="platform.html" href="platform.html">Architecture</a>
           <a data-page="use-cases.html" href="use-cases.html">Integration</a>
@@ -33,6 +41,7 @@
           <a data-page="governance.html" href="governance.html">Governance</a>
           <a data-page="privacy.html" href="privacy.html">Privacy</a>
           <a data-page="terms.html" href="terms.html">Terms</a>
+          <a data-page="ethical.html" href="ethical.html">Ethical Use</a>
           <a data-page="contact.html" href="contact.html">Contact</a>
         </nav>
       </div>
@@ -41,16 +50,31 @@
 
   <main class="wrap page">
     <section class="hero">
-      <div class="kicker">PROPRIETARY MATERIALS • CONTROLLED DISCLOSURE • NO RIGHTS GRANTED</div>
+      <div class="kicker">PROPRIETARY MATERIALS · CONTROLLED DISCLOSURE · NO RIGHTS GRANTED</div>
       <h1>Terms of use</h1>
-      <p class="lead">
-        NADIR materials are provided for informational purposes. No license or rights are granted absent a separate written agreement.
-      </p>
+      <p class="lead">NADIR materials are provided for informational purposes. No license or rights are granted absent a separate written agreement.</p>
     </section>
 
     <section class="section prose">
-      <h2>Summary</h2>
+      <h2>Content</h2>
       <p>Content may describe system concepts and governance posture at a high level. Any deeper technical disclosure may require controlled review.</p>
+
+      <h2>Intellectual property</h2>
+      <p>
+        All intellectual property, including schemas, documentation, architectural descriptions, and associated materials, remains the exclusive property of NADIR unless otherwise agreed in writing.
+        No license or rights are granted by access to this site or its materials absent a separate written agreement.
+      </p>
+
+      <h2>Export control and international law</h2>
+      <p>
+        Deployment and use of NADIR infrastructure must comply with applicable export control laws and international humanitarian law. It is the operator’s responsibility to ensure that deployment configurations,
+        use cases, and disclosed artifacts comply with all applicable legal and regulatory requirements in their jurisdiction.
+      </p>
+
+      <h2>Legal admissibility</h2>
+      <p>
+        Admissibility of artifacts in any legal or administrative proceeding is determined by the relevant authority. Nothing in NADIR’s design or documentation constitutes a representation of legal admissibility.
+      </p>
 
       <h2>Governing law</h2>
       <p>These terms are governed by the laws of the State of California, United States, without regard to conflict of law principles.</p>
@@ -59,7 +83,10 @@
       <p>Operators deploying NADIR infrastructure act as data controllers for purposes of applicable privacy law. NADIR operates as a data processor within the scope of defined capture policy.</p>
 
       <h2>Limitation of liability</h2>
-      <p>NADIR is provided as infrastructure. NADIR accepts no liability for operator deployment decisions, oversight determinations, or evidentiary sufficiency findings by any authority.</p>
+      <p>
+        NADIR is provided as infrastructure. NADIR accepts no liability for operator deployment decisions, oversight determinations, or evidentiary sufficiency findings by any authority.
+        NADIR makes no representation regarding regulatory sufficiency, evidentiary weight, or compliance status absent separate written agreement.
+      </p>
 
       <h2>No warranty</h2>
       <p>NADIR materials and infrastructure are provided without warranty of any kind, express or implied, including fitness for any particular legal, regulatory, or institutional purpose.</p>
@@ -69,12 +96,8 @@
 
     <footer class="siteFooter">
       <div class="footgrid">
-        <div>
-          <div class="badge">© 2026 NADIR. Proprietary infrastructure. Version V2026.02.19.</div>
-          <div class="small" style="margin-top:10px;">
-            <a href="privacy.html">Privacy</a> · <a href="governance.html">Ethical Use</a> · <a href="contact.html">Contact</a>
-          </div>
-        </div>
+        <div class="badge">TERMS</div>
+        <div class="right">© 2026 NADIR, a project of Brian Covarrubias. All rights reserved. — V2026.02.19</div>
       </div>
     </footer>
   </main>
