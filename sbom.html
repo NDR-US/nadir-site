@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NADIR — SBOM</title>
+  <meta name="description" content="Software Bill of Materials (SBOM) posture for NADIR: formats, availability, update cadence, and procurement-safe boundaries. Informational only; controlled disclosure may apply." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Public Sans', 'ui-sans-serif', 'system-ui'],
+            mono: ['Roboto Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+          },
+          colors: {
+            vellum: '#F9FAFB',
+            obsidian: '#0A0F1E',
+            slateblue: '#475569',
+            orange: '#EA580C',
+            verified: '#166534',
+            mismatch: '#991B1B',
+            neutral: '#64748B',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background:#F9FAFB; color:#0A0F1E; }
+    .hairline { border-color: rgba(71,85,105,0.22); }
+    .measure { max-width: 74ch; }
+    .no-rounded { border-radius: 0 !important; }
+    .mono-chip { font-family:'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  </style>
+</head>
+
+<body class="font-sans antialiased">
+
+  <!-- Institutional Header -->
+  <header class="sticky top-0 z-50 bg-vellum/80 backdrop-blur-md border-b hairline">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="h-16 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <img src="assets/nadir-wordmark.svg" alt="NADIR" class="h-7 w-auto" onerror="this.style.display='none'">
+          <div class="leading-tight">
+            <div class="text-[12px] tracking-[0.34em] uppercase">NADIR</div>
+            <div class="text-[10px] text-slateblue/80 uppercase tracking-[0.18em]">SBOM</div>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-1 text-[11px] uppercase tracking-[0.16em] text-slateblue/90">
+          <a class="px-3 py-2 hover:text-obsidian" href="index.html">Overview</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="platform.html">Platform</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="docs.html">Documents</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="trust.html">Trust</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="compliance.html">Compliance</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="contact.html">Contact</a>
+        </nav>
+
+        <a href="contact.html"
+           class="inline-flex items-center justify-center h-10 px-4 border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
+          Request SBOM access
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="nadir-hero relative h-screen overflow-hidden">
+      <div class="hero-pin absolute inset-0">
+        <div class="absolute inset-0 bg-vellum"></div>
+        <div class="absolute inset-0 opacity-[0.08]"
+          style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;">
+        </div>
+        <div class="absolute inset-0"
+          style="background:linear-gradient(to bottom, rgba(10,15,30,0.02), rgba(10,15,30,0.00) 40%, rgba(10,15,30,0.03));">
+        </div>
+      </div>
+
+      <div class="absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">
+        [V2026.02.19]
+      </div>
+
+      <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
+        <div class="grid grid-cols-12 h-full">
+          <div class="col-span-12 flex flex-col items-center justify-center text-center">
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
+              [SUPPLY CHAIN TRANSPARENCY] · [PROCUREMENT READINESS] · [CONTROLLED DISCLOSURE]
+            </div>
+
+            <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
+              Software bill of materials
+            </h1>
+
+            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
+              NADIR supports Software Bill of Materials (SBOM) publication suitable for institutional procurement workflows.
+              Where operational security or client confidentiality requires constrained disclosure, SBOM access may be provided
+              under controlled review.
+            </p>
+
+            <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+              <a href="#content"
+                 class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
+                SBOM posture
+              </a>
+              <a href="contact.html"
+                 class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
+                Request controlled review
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: What we provide -->
+    <section id="content" class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[DELIVERABLE]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              SBOM deliverable scope
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              SBOMs are intended to support supply chain risk review and dependency transparency. This page describes NADIR’s
+              publication posture; it does not disclose internal build details on the public surface.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="grid md:grid-cols-3 gap-6">
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[FORMAT]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Standard formats</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  SBOMs may be provided in recognized machine-readable formats such as SPDX and CycloneDX, depending on integration and procurement requirements.
+                </p>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[INTEGRITY]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Integrity controls</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  SBOM artifacts may be versioned and integrity-sealed (hash + signature) to support authenticity validation in review workflows.
+                </p>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARIES]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Constrained disclosure</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Public summaries remain high-level. Full dependency lists and build manifests may be shared under controlled review when appropriate.
+                </p>
+              </div>
+
+            </div>
+
+            <div class="mt-8 border hairline p-6 no-rounded reveal">
+              <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[NOTE]</div>
+              <p class="mt-3 text-slateblue leading-relaxed">
+                Procurement reviewers may request: SBOM format, signing method, version mapping, update cadence, and contact for vulnerability coordination.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: How SBOMs are generated -->
+    <section class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[GENERATION]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              Generation and update cadence
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              NADIR SBOMs are designed to be generated from build pipelines and release artifacts. Update cadence is tied to release cycles
+              and may be adapted for controlled environments.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="grid md:grid-cols-3 gap-6">
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[RELEASE]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Release mapping</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  SBOM versions map to product releases and may include a build identifier for traceability in institutional review.
+                </p>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[PATCH]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Patch posture</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Security patches may trigger SBOM regeneration and re-issuance to ensure supply chain transparency remains current.
+                </p>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[CONTROL]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Controlled environments</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  In restricted deployments, SBOM distribution may be limited to authorized recipients under procurement or security review.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Boundaries and disclaimers -->
+    <section class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[BOUNDARY]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              Disclosure boundaries
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              SBOM transparency supports supply chain review. It does not imply certification, endorsement, or warranty, and it does not
+              grant any rights to proprietary materials.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="border hairline p-6 no-rounded reveal">
+              <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STATEMENT]</div>
+              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
+                <li>Public SBOM posture is descriptive only and may remain redacted.</li>
+                <li>Full SBOM artifacts may be provided under controlled review.</li>
+                <li>SBOM disclosure does not grant a license to NADIR intellectual property.</li>
+                <li>Security findings should be reported through the VDP channel.</li>
+              </ul>
+            </div>
+
+            <div class="mt-8 border hairline p-6 no-rounded reveal">
+              <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[SECURITY]</div>
+              <p class="mt-3 text-slateblue leading-relaxed">
+                Report vulnerabilities to <a class="underline hover:text-obsidian" href="mailto:security@nadir-ai.com">security@nadir-ai.com</a>.
+                Coordinated disclosure is described on the <a class="underline hover:text-obsidian" href="vdp.html">VDP</a> page.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-obsidian text-vellum border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-6 py-14">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div>
+          <div class="text-[12px] tracking-[0.22em] uppercase">NADIR</div>
+          <div class="mt-3 text-sm text-white/70 leading-relaxed">
+            © 2026 NADIR, a project of Brian Covarrubias. All rights reserved.<br>
+            <span class="font-mono text-white/80">[V2026.02.19]</span> — Unauthorized distribution prohibited.
+          </div>
+        </div>
+
+        <div>
+          <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-white/70">Legal</div>
+          <ul class="mt-3 space-y-2 text-sm text-white/70">
+            <li><a class="hover:text-white" href="privacy.html">Privacy</a></li>
+            <li><a class="hover:text-white" href="terms.html">Terms</a></li>
+            <li><a class="hover:text-white" href="ethical.html">Ethical Use</a></li>
+            <li><a class="hover:text-white" href="accessibility.html">Accessibility</a></li>
+            <li><a class="hover:text-white" href="modern-slavery.html">Modern Slavery</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-white/70">Trust infrastructure</div>
+          <ul class="mt-3 space-y-2 text-sm text-white/70">
+            <li><a class="hover:text-white" href="trust.html">Trust Center</a></li>
+            <li><a class="hover:text-white" href="compliance.html">Compliance Crosswalk</a></li>
+            <li><a class="hover:text-white" href="vdp.html">Vulnerability Disclosure (VDP)</a></li>
+            <li><a class="hover:text-white" href="sbom.html">SBOM</a></li>
+            <li><a class="hover:text-white" href="sustainability.html">Sustainability</a></li>
+            <li><a class="hover:text-white" href="key-custody.html">Key Custody</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-white/70">Institutional</div>
+          <ul class="mt-3 space-y-2 text-sm text-white/70">
+            <li><a class="hover:text-white" href="pcl.html">Privacy &amp; Civil Liberties (PCL)</a></li>
+            <li><a class="hover:text-white" href="admissibility.html">Legal Admissibility Primer</a></li>
+            <li><a class="hover:text-white" href="incident-72h.html">72-Hour Playbook</a></li>
+            <li><a class="hover:text-white" href="contact.html">Contact</a></li>
+          </ul>
+          <div class="mt-6 text-sm text-white/70">
+            <a class="hover:text-white" href="mailto:contact@nadir-ai.com">contact@nadir-ai.com</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/site.js"></script>
+</body>
+</html>
