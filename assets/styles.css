@@ -1,318 +1,143 @@
-/* /assets/styles.css  — REPLACE ENTIRE FILE */
-:root{
-  --bg:#07090c;
-  --panel:#0e1219;
-  --panel2:#0b0f16;
-  --ink:#eef2f7;
-  --muted:#b2bccb;
-  --dim:#7f8a99;
-  --line:rgba(255,255,255,.12);
-  --line2:rgba(255,255,255,.07);
-  --accent:#ffffff;
+// /assets/site.js
+// NADIR Institutional Motion — GSAP + ScrollTrigger
+// Requirements:
+// - Hero pinned background (100vh)
+// - H1 scrubs: slight scale up + fade out as user scrolls
+// - Version tag remains anchored (no animation required)
+// - Narrative sections pin + scrub: section becomes the “reading frame”
+// - No bouncy motion. No large y-transforms for headings.
+// - Hover/scroll should feel heavy and deliberate.
 
-  --radius:16px;
-  --max:1100px;
+gsap.registerPlugin(ScrollTrigger);
 
-  /* Typography */
-  --sans: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  --serif: "Cormorant Garamond", ui-serif, Georgia, "Times New Roman", Times, serif;
-}
+(function initNadirMotion() {
+  // Respect reduced motion
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) return;
 
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  background:
-    radial-gradient(1200px 800px at 20% -10%, rgba(255,255,255,.07), transparent 60%),
-    radial-gradient(900px 600px at 90% 20%, rgba(255,255,255,.06), transparent 55%),
-    var(--bg);
-  color:var(--ink);
-  font-family:var(--sans);
-  line-height:1.55;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
+  // HERO: pin background; scrub H1 + lead
+  const hero = document.querySelector(".nadir-hero");
+  if (hero) {
+    const h1 = hero.querySelector(".hero-h1");
+    const lead = hero.querySelector(".hero-lead");
+    const pinBg = hero.querySelector(".hero-pin");
 
-a{color:inherit; text-decoration:none}
-a:hover{opacity:.92}
-.wrap{width:min(var(--max), calc(100% - 48px)); margin:0 auto}
+    // Pin the background surface for a cinematic “fixed” feel
+    if (pinBg) {
+      ScrollTrigger.create({
+        trigger: hero,
+        start: "top top",
+        end: "bottom top",
+        pin: pinBg,
+        pinSpacing: false
+      });
+    }
 
-.siteHeader{
-  position:sticky; top:0; z-index:50;
-  background:rgba(7,9,12,.78);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--line2);
-}
-.topbar{
-  display:flex;
-  gap:18px;
-  align-items:center;
-  justify-content:space-between;
-  padding:16px 0;
-}
+    // Scrub the headline out. Minimal transforms (no big y-shifts).
+    if (h1) {
+      gsap.fromTo(
+        h1,
+        { opacity: 1, scale: 1 },
+        {
+          opacity: 0,
+          scale: 1.04,
+          ease: "none",
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1
+          }
+        }
+      );
+    }
 
-/* Brand */
-.brandLink{display:flex; gap:12px; align-items:center}
-.brandLock{display:flex; flex-direction:column; gap:2px}
-.logoMark{
-  width:34px; height:34px;
-  display:block;
-  filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
-  opacity:.98;
-}
-.wordmark{
-  font-family:var(--serif);
-  font-weight:600;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  font-size:18px;
-  line-height:1;
-}
-.descriptor{
-  font-size:11px;
-  color:var(--dim);
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  line-height:1.2;
-}
-
-/* Nav */
-.navToggle{
-  display:none;
-  align-items:center;
-  justify-content:center;
-  width:42px; height:42px;
-  border-radius:14px;
-  border:1px solid var(--line2);
-  background:rgba(255,255,255,.04);
-  color:var(--ink);
-}
-.navToggle:active{transform:translateY(1px)}
-.nav{
-  display:flex;
-  gap:16px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-  align-items:center;
-}
-.nav a{
-  font-size:12px;
-  color:var(--muted);
-  letter-spacing:.10em;
-  text-transform:uppercase;
-  padding:8px 2px;
-  border-bottom:1px solid transparent;
-}
-.nav a.active{
-  color:var(--ink);
-  border-bottom-color:rgba(255,255,255,.45);
-}
-
-/* Mobile nav: off-canvas */
-@media (max-width: 900px){
-  .wrap{width:min(var(--max), calc(100% - 34px))}
-  h1{font-size:30px}
-
-  .navToggle{display:inline-flex}
-  .nav{
-    position:fixed;
-    top:72px; right:16px;
-    width:min(320px, calc(100% - 32px));
-    display:none;
-    flex-direction:column;
-    align-items:stretch;
-    gap:10px;
-    padding:14px;
-    border-radius:18px;
-    border:1px solid var(--line2);
-    background:rgba(10,13,18,.92);
-    backdrop-filter:blur(14px);
-    box-shadow:0 20px 60px rgba(0,0,0,.45);
+    if (lead) {
+      gsap.fromTo(
+        lead,
+        { opacity: 1 },
+        {
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: hero,
+            start: "top+=80 top",
+            end: "bottom top",
+            scrub: 1
+          }
+        }
+      );
+    }
   }
-  .nav.open{display:flex}
-  .nav a{
-    padding:12px 10px;
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,.06);
-    background:rgba(255,255,255,.03);
-    border-bottom-color:rgba(255,255,255,.06);
-  }
-  .nav a.active{
-    border-color:rgba(255,255,255,.16);
-    background:rgba(255,255,255,.06);
-  }
-}
 
-.page{padding:34px 0 60px}
+  // REVEAL blocks: subtle fade only (no motion)
+  gsap.utils.toArray(".reveal").forEach((el) => {
+    gsap.fromTo(
+      el,
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 0.9,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+  });
 
-.hero{padding:18px 0 10px}
-.kicker{
-  font-size:12px;
-  color:var(--dim);
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  margin-bottom:10px;
-}
-h1{
-  margin:0;
-  font-family:var(--serif);
-  font-weight:600;
-  font-size:40px;
-  line-height:1.08;
-  letter-spacing:-.01em;
-}
-.lead{
-  margin:14px 0 0;
-  max-width:74ch;
-  color:var(--muted);
-  font-size:16px;
-}
+  // NARRATIVE SECTIONS: pin each section; scrub the focal heading color/opacity
+  gsap.utils.toArray(".narrative-section").forEach((section) => {
+    const focus = section.querySelector(".scroll-text");
+    if (!focus) return;
 
-/* Buttons */
-.ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
-.btn{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding:10px 14px;
-  border-radius:14px;
-  border:1px solid var(--line2);
-  background:rgba(255,255,255,.04);
-  color:var(--ink);
-  font-size:13px;
-}
-.btn.primary{
-  background:rgba(255,255,255,.12);
-  border-color:rgba(255,255,255,.14);
-}
-.smallBtn{padding:8px 12px; border-radius:12px; font-size:12px}
+    // Pin the section to create a “reading frame”
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "+=900",
+      pin: true,
+      pinSpacing: true
+    });
 
-.section{padding:28px 0}
-.section h2{
-  margin:0 0 10px;
-  font-family:var(--serif);
-  font-weight:600;
-  font-size:18px;
-}
-.sub{margin:0 0 18px; max-width:82ch; color:var(--muted)}
+    // Scrub the focus heading: slight emphasis + color shift
+    gsap.fromTo(
+      focus,
+      { opacity: 0.55, color: "#475569" }, // slateblue
+      {
+        opacity: 1,
+        color: "#0A0F1E", // obsidian
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "+=450",
+          scrub: 1
+        }
+      }
+    );
 
-.grid-2{display:grid; gap:14px; grid-template-columns:repeat(2, minmax(0, 1fr))}
-.grid-3{display:grid; gap:14px; grid-template-columns:repeat(3, minmax(0, 1fr))}
-@media (max-width: 900px){
-  .grid-3{grid-template-columns:1fr}
-  .grid-2{grid-template-columns:1fr}
-}
+    // Fade it out near the end so it “disappears” as you continue
+    gsap.to(focus, {
+      opacity: 0.25,
+      ease: "none",
+      scrollTrigger: {
+        trigger: section,
+        start: "+=450 top",
+        end: "+=900 top",
+        scrub: 1
+      }
+    });
+  });
 
-.card{
-  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
-  border:1px solid var(--line2);
-  border-radius:var(--radius);
-  padding:16px 16px;
-}
-.card h3{
-  margin:0 0 8px;
-  font-family:var(--serif);
-  font-weight:600;
-  font-size:16px;
-}
-.small{margin:0; color:var(--muted); font-size:13px}
-
-.boundary{
-  border:1px solid var(--line2);
-  background:rgba(255,255,255,.03);
-  border-radius:var(--radius);
-  padding:16px 16px;
-}
-.boundary .title{
-  font-size:12px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--dim);
-  margin-bottom:10px;
-}
-.boundary ul{margin:0; padding-left:18px; color:var(--muted)}
-.boundary li{margin:6px 0}
-
-.noteLine{
-  margin-top:18px;
-  padding:12px 14px;
-  border-left:2px solid rgba(255,255,255,.22);
-  color:var(--muted);
-  background:rgba(255,255,255,.02);
-  border-radius:12px;
-}
-
-.stack{display:flex; flex-direction:column; gap:12px}
-.docItem{
-  display:flex; gap:14px; align-items:center; justify-content:space-between;
-  padding:14px 16px;
-  border:1px solid var(--line2);
-  border-radius:var(--radius);
-  background:rgba(255,255,255,.03);
-}
-.docTitle{font-size:13px; color:var(--ink)}
-.docSub{font-size:12px; color:var(--muted); margin-top:4px; max-width:70ch}
-.docItem > div{flex:1}
-.docItem .btn{flex:0 0 auto}
-
-/* Prose — make Founder and legal pages readable */
-.prose p{
-  max-width:78ch;
-  color:var(--muted);
-  font-size:16px;
-  line-height:1.7;
-}
-.prose h2{margin-top:0}
-.sig{color:var(--ink); margin-top:14px; font-size:16px}
-
-.muted{color:var(--muted)}
-.mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
-
-/* Form styling (for contact page) */
-.formGrid{display:grid; gap:12px; grid-template-columns:repeat(2, minmax(0, 1fr))}
-@media (max-width:900px){ .formGrid{grid-template-columns:1fr} }
-.field label{
-  display:block;
-  font-size:11px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--dim);
-  margin:0 0 6px;
-}
-.field input, .field select, .field textarea{
-  width:100%;
-  padding:12px 12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.03);
-  color:var(--ink);
-  outline:none;
-  font-family:var(--sans);
-}
-.field textarea{min-height:120px; resize:vertical}
-.field input::placeholder, .field textarea::placeholder{color:rgba(178,188,203,.65)}
-.formActions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
-.formNote{margin-top:10px; color:var(--muted); font-size:13px}
-.formSuccess{
-  display:none;
-  margin-top:10px;
-  padding:10px 12px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.04);
-  border-radius:14px;
-  color:var(--muted);
-}
-
-/* Footer */
-.siteFooter{
-  margin-top:28px;
-  padding-top:18px;
-  border-top:1px solid var(--line2);
-}
-.footgrid{display:flex; justify-content:space-between; gap:18px; align-items:flex-start; flex-wrap:wrap}
-.badge{
-  display:inline-block;
-  font-size:11px;
-  color:var(--dim);
-  letter-spacing:.14em;
-  text-transform:uppercase;
-}
-.right{color:var(--dim); font-size:12px}
+  // Optional: Copy-to-clipboard for elements that include data-copy attr
+  document.querySelectorAll("[data-copy]").forEach((el) => {
+    el.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(el.getAttribute("data-copy") || "");
+      } catch (_) {}
+    });
+  });
+})();
