@@ -1,4 +1,4 @@
-<!-- /roadmap.html (PAGE — ROADMAP) -->
+<!-- /roadmap.html  (PAGE 5 — ROADMAP) -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
@@ -18,12 +18,20 @@
   <header class="siteHeader">
     <div class="wrap">
       <div class="topbar">
-        <div class="brand">
-          <div class="mark">NADIR</div>
-          <div class="descriptor">Roadmap</div>
-        </div>
+        <a class="brand" href="index.html" aria-label="NADIR home">
+          <span class="logo" aria-hidden="true">
+            <svg viewBox="0 0 64 64" role="img" focusable="false">
+              <path d="M16 46V18l14 18 14-18v28" />
+              <path d="M16 46h6l8-10 8 10h6" />
+            </svg>
+          </span>
+          <span class="brandText">
+            <span class="mark">NADIR</span>
+            <span class="descriptor">Roadmap · Proof → verification → workflow</span>
+          </span>
+        </a>
 
-        <nav class="nav">
+        <nav class="nav" aria-label="Primary">
           <a data-page="index.html" href="index.html">Overview</a>
           <a data-page="platform.html" href="platform.html">Architecture</a>
           <a data-page="use-cases.html" href="use-cases.html">Integration</a>
@@ -33,6 +41,7 @@
           <a data-page="governance.html" href="governance.html">Governance</a>
           <a data-page="privacy.html" href="privacy.html">Privacy</a>
           <a data-page="terms.html" href="terms.html">Terms</a>
+          <a data-page="ethical.html" href="ethical.html">Ethical Use</a>
           <a data-page="contact.html" href="contact.html">Contact</a>
         </nav>
       </div>
@@ -43,38 +52,27 @@
     <section class="hero">
       <div class="kicker">PROOF → VERIFICATION → WORKFLOW → EXPANSION</div>
       <h1>Roadmap</h1>
-      <p class="lead">NADIR prioritizes canonical artifacts, verification, and chain-of-custody before expanding scope.</p>
+      <p class="lead">NADIR prioritizes canonical artifacts, verification, and chain-of-custody before expanding scope. Claims remain limited to integrity and workflow support.</p>
     </section>
 
     <section class="section">
       <div class="card">
         <h3>Current position</h3>
-        <p class="small">
-          <strong>Phase 1 — Canonical Artifact Definition &amp; Prototype Sealing.</strong>
-          Claims remain limited to integrity, provenance, and workflow support.
-        </p>
+        <p class="small"><strong>Phase 1 — Canonical Artifact &amp; Prototype Sealing.</strong></p>
       </div>
 
       <div class="grid-3" style="margin-top:14px">
         <div class="card">
-          <h3>PHASE 1 — CORE MECHANICS</h3>
-          <p class="small">
-            Canonical artifact definition and prototype sealing. Define capture policy, normalize deterministically, hash and sign.
-          </p>
+          <h3>Phase 1 · Current</h3>
+          <p class="small">Canonical artifact &amp; prototype sealing. Deterministic normalization. Prototype sealing. Policy configuration model.</p>
         </div>
-
         <div class="card">
-          <h3>PHASE 2 — VERIFICATION</h3>
-          <p class="small">
-            Verification harness and reviewer workflow. Recompute, validate signature, confirm policy alignment under controlled disclosure.
-          </p>
+          <h3>Phase 2</h3>
+          <p class="small">Verification harness. Independent verification tooling. Signature validation workflow. Policy alignment enforcement.</p>
         </div>
-
         <div class="card">
-          <h3>PHASE 3 — CHAIN-OF-CUSTODY WORKFLOW</h3>
-          <p class="small">
-            Retention posture, retrieval logging, audit-ready handling, and controlled review outputs suitable for formal proceedings.
-          </p>
+          <h3>Phase 3</h3>
+          <p class="small">Chain-of-custody workflow. Retrieval logging. Retention posture. Review-ready outputs suitable for formal proceedings.</p>
         </div>
       </div>
 
@@ -91,7 +89,7 @@
     <footer class="siteFooter">
       <div class="footgrid">
         <div class="badge">ROADMAP</div>
-        <div class="right">© 2026 NADIR. Proprietary infrastructure. — V2026.02.19</div>
+        <div class="right">© 2026 NADIR, a project of Brian Covarrubias. All rights reserved. — V2026.02.19</div>
       </div>
     </footer>
   </main>
