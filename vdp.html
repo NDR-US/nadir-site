@@ -1,54 +1,337 @@
-<main>
-  <section class="nadir-hero relative h-screen overflow-hidden">
-    <div class="hero-pin absolute inset-0">
-      <div class="absolute inset-0 bg-vellum"></div>
-      <div class="absolute inset-0 opacity-[0.08]"
-        style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;"></div>
-    </div>
-    <div class="absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">[V2026.02.19]</div>
-    <div class="relative z-10 mx-auto max-w-7xl px-6 h-full grid place-items-center text-center">
-      <div>
-        <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[SECURITY] · [SAFE HARBOR] · [DISCLOSURE]</div>
-        <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase">Vulnerability Disclosure</h1>
-        <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
-          NADIR welcomes responsible disclosure of security issues affecting integrity, disclosure controls, or artifact verification workflows.
-        </p>
-        <div class="mt-10 flex justify-center gap-3">
-          <a href="#content" class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] no-rounded">Read policy</a>
-          <a href="mailto:contact@nadir-ai.com" class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] no-rounded">Report issue</a>
-        </div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NADIR — Vulnerability Disclosure Program (VDP)</title>
+  <meta name="description" content="NADIR Vulnerability Disclosure Program (VDP): reporting channels, scope, coordinated disclosure workflow, and safe harbor statement. Informational security posture; not a bug bounty." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Public Sans', 'ui-sans-serif', 'system-ui'],
+            mono: ['Roboto Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+          },
+          colors: {
+            vellum: '#F9FAFB',
+            obsidian: '#0A0F1E',
+            slateblue: '#475569',
+            orange: '#EA580C',
+            verified: '#166534',
+            mismatch: '#991B1B',
+            neutral: '#64748B',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background:#F9FAFB; color:#0A0F1E; }
+    .hairline { border-color: rgba(71,85,105,0.22); }
+    .measure { max-width: 74ch; }
+    .no-rounded { border-radius: 0 !important; }
+    .mono-chip { font-family:'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  </style>
+</head>
+
+<body class="font-sans antialiased">
+
+  <!-- Institutional Header -->
+  <header class="sticky top-0 z-50 bg-vellum/80 backdrop-blur-md border-b hairline">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="h-16 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <img src="assets/nadir-wordmark.svg" alt="NADIR" class="h-7 w-auto" onerror="this.style.display='none'">
+          <div class="leading-tight">
+            <div class="text-[12px] tracking-[0.34em] uppercase">NADIR</div>
+            <div class="text-[10px] text-slateblue/80 uppercase tracking-[0.18em]">Vulnerability disclosure</div>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-1 text-[11px] uppercase tracking-[0.16em] text-slateblue/90">
+          <a class="px-3 py-2 hover:text-obsidian" href="index.html">Overview</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="platform.html">Platform</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="use-cases.html">Integration</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="oversight.html">Oversight</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="docs.html">Documents</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="compliance.html">Compliance</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="trust.html">Trust</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="roadmap.html">Roadmap</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="contact.html">Contact</a>
+        </nav>
+
+        <a href="contact.html"
+           class="inline-flex items-center justify-center h-10 px-4 border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
+          Security contact
+        </a>
       </div>
     </div>
-  </section>
+  </header>
 
-  <section id="content" class="narrative-section border-t hairline">
-    <div class="mx-auto max-w-7xl px-6 py-20 grid grid-cols-12 gap-10">
-      <div class="col-span-12 lg:col-span-4">
-        <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[SCOPE]</div>
-        <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold text-slateblue">What to report</h2>
-        <p class="mt-4 text-slateblue leading-relaxed measure">
-          Issues involving artifact integrity, disclosure boundaries, authentication, authorization, signing workflows, or data exposure risks.
-        </p>
+  <main>
+
+    <!-- HERO -->
+    <section class="nadir-hero relative h-screen overflow-hidden">
+      <div class="hero-pin absolute inset-0">
+        <div class="absolute inset-0 bg-vellum"></div>
+        <div class="absolute inset-0 opacity-[0.08]"
+          style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;">
+        </div>
+        <div class="absolute inset-0"
+          style="background:linear-gradient(to bottom, rgba(10,15,30,0.02), rgba(10,15,30,0.00) 40%, rgba(10,15,30,0.03));">
+        </div>
       </div>
 
-      <div class="col-span-12 lg:col-span-8">
-        <div class="border hairline p-6 no-rounded reveal">
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[SUBMISSION]</div>
-          <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
-            <li>Email: <a class="underline text-obsidian" href="mailto:contact@nadir-ai.com">contact@nadir-ai.com</a></li>
-            <li>Include: affected URL/component, reproduction steps, impact assessment, and any supporting artifacts.</li>
-            <li>Do not include sensitive personal data in reports unless strictly necessary for reproduction.</li>
-          </ul>
-        </div>
+      <div class="absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">
+        [V2026.02.19]
+      </div>
 
-        <div class="mt-8 border hairline p-6 no-rounded reveal">
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[SAFE HARBOR INTENT]</div>
-          <p class="mt-3 text-slateblue leading-relaxed">
-            NADIR intends to treat good-faith research as constructive. Researchers should avoid disruption, avoid data exfiltration,
-            and coordinate disclosure to prevent harm. This statement is a posture description and may be superseded by written agreements.
-          </p>
+      <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
+        <div class="grid grid-cols-12 h-full">
+          <div class="col-span-12 flex flex-col items-center justify-center text-center">
+
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
+              [RESPONSIBLE DISCLOSURE] · [SAFE HARBOR] · [COORDINATED RESPONSE]
+            </div>
+
+            <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
+              Vulnerability disclosure program
+            </h1>
+
+            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
+              NADIR encourages responsible disclosure of security vulnerabilities affecting publicly accessible NADIR-owned assets.
+              This program provides a reporting channel and coordinated response posture. It is not a bug bounty program and does not
+              guarantee financial compensation.
+            </p>
+
+            <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+              <a href="#content"
+                 class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
+                Report a vulnerability
+              </a>
+              <a href="trust.html"
+                 class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
+                Trust center
+              </a>
+            </div>
+
+          </div>
         </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: Reporting channel -->
+    <section id="content" class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[REPORTING]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              How to report
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              If you believe you have identified a security vulnerability in a NADIR-controlled public asset, please report it
+              through the channel below. Do not publicly disclose the issue until coordinated remediation has occurred.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="border hairline p-6 no-rounded reveal">
+              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[SECURITY CONTACT]</div>
+
+              <p class="mt-3 text-slateblue leading-relaxed">
+                Email: <a class="underline hover:text-obsidian" href="mailto:security@nadir-ai.com">security@nadir-ai.com</a>
+              </p>
+
+              <p class="mt-4 text-slateblue leading-relaxed">
+                Please include:
+              </p>
+
+              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
+                <li>A clear description of the vulnerability and affected asset.</li>
+                <li>Steps to reproduce (if applicable).</li>
+                <li>Proof-of-concept details sufficient for validation.</li>
+                <li>Your contact information for coordinated follow-up.</li>
+              </ul>
+
+              <p class="mt-4 text-slateblue leading-relaxed">
+                Encrypted submissions may be supported upon request. Public PGP keys, if available, will be published on this page.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Scope -->
+    <section class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[SCOPE]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              In-scope and out-of-scope
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              The VDP applies to publicly accessible NADIR-owned domains and assets. It does not apply to third-party integrations,
+              client-controlled deployments, or infrastructure outside NADIR’s direct control.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="grid md:grid-cols-2 gap-6">
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[IN SCOPE]</div>
+                <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
+                  <li>NADIR-owned public web domains.</li>
+                  <li>Public documentation assets hosted by NADIR.</li>
+                  <li>Security misconfigurations directly attributable to NADIR-controlled infrastructure.</li>
+                </ul>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[OUT OF SCOPE]</div>
+                <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
+                  <li>Client deployments or environments.</li>
+                  <li>Social engineering or physical attacks.</li>
+                  <li>Denial-of-service testing without authorization.</li>
+                  <li>Issues requiring unauthorized data access.</li>
+                </ul>
+              </div>
+
+            </div>
+
+            <div class="mt-8 border hairline p-6 no-rounded reveal">
+              <p class="text-slateblue leading-relaxed">
+                Testing must not degrade service availability, violate privacy, or access data beyond what is strictly necessary
+                to demonstrate the vulnerability. NADIR reserves the right to determine scope applicability.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Coordinated disclosure workflow -->
+    <section class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[COORDINATED DISCLOSURE]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              Response timeline
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              NADIR will acknowledge receipt of valid vulnerability reports within a reasonable timeframe and will coordinate
+              remediation and disclosure in good faith.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="grid md:grid-cols-3 gap-6">
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[ACKNOWLEDGMENT]</div>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Initial acknowledgment within a commercially reasonable timeframe.
+                </p>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[VALIDATION]</div>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Internal validation and risk assessment. Clarifications may be requested from the reporter.
+                </p>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[REMEDIATION]</div>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Remediation planning and deployment, followed by coordinated disclosure where appropriate.
+                </p>
+              </div>
+
+            </div>
+
+            <div class="mt-8 border hairline p-6 no-rounded reveal">
+              <p class="text-slateblue leading-relaxed">
+                NADIR may publish security advisories where remediation materially affects publicly exposed systems.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Safe harbor -->
+    <section class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[SAFE HARBOR]</div>
+            <h2 class="mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              Good-faith research protection
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              NADIR will not pursue legal action against individuals who act in good faith and in accordance with this policy.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="border hairline p-6 no-rounded reveal">
+              <p class="text-slateblue leading-relaxed">
+                If you conduct testing consistent with this policy, avoid privacy violations, avoid service disruption,
+                and provide timely disclosure through the reporting channel, NADIR considers your research authorized
+                for the limited purpose of vulnerability identification and coordinated disclosure.
+              </p>
+
+              <p class="mt-4 text-slateblue leading-relaxed">
+                This safe harbor does not extend to actions outside the scope defined above or to violations of law.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-obsidian text-vellum border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-6 py-14">
+      <div class="text-[12px] tracking-[0.22em] uppercase">NADIR</div>
+      <div class="mt-3 text-sm text-white/70">
+        © 2026 NADIR. All rights reserved.
       </div>
     </div>
-  </section>
-</main>
+  </footer>
+
+  <script src="assets/site.js"></script>
+</body>
+</html>
