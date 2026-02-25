@@ -1,148 +1,129 @@
-<!-- /assets/site.js
-GLOBAL GSAP SCROLL LOGIC (Palantir-style scrub + pin)
-Applies to:
-- .nadir-hero (pins background + scrubs hero text)
-- .narrative-section (pins left column focus text + reveals right-column cards)
-No bounce. No elastic. Procurement-safe motion.
--->
-<script>
-  (function () {
-    if (!window.gsap || !window.ScrollTrigger) return;
+// assets/site.js
+// NADIR Institutional Motion System (GSAP + ScrollTrigger)
+// - No bouncy motion. Linear-ish, calm, procurement-safe.
+// - Hero pinned background, H1 scrubs (scale + fade).
+// - Narrative sections pin and shift focal text color to International Orange.
 
-    gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
-    // Respect reduced motion
-    const reduce =
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+(function () {
+  // Respect reduced motion
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) return;
 
-    if (reduce) return;
+  // HERO: pinned background + scrub headline
+  const hero = document.querySelector(".nadir-hero");
+  if (hero) {
+    const h1 = hero.querySelector(".hero-h1");
+    const lead = hero.querySelector(".hero-lead");
+    const pin = hero.querySelector(".hero-pin");
 
-    // HERO: pin background while scrubbing headline + lead
-    const hero = document.querySelector(".nadir-hero");
-    if (hero) {
-      const h1 = hero.querySelector(".hero-h1");
-      const lead = hero.querySelector(".hero-lead");
-      const version = hero.querySelector(".hero-version");
-      const pinBg = hero.querySelector(".hero-pin");
-
-      if (pinBg) {
-        ScrollTrigger.create({
-          trigger: hero,
-          start: "top top",
-          end: "+=1200",
-          pin: pinBg,
-          pinSpacing: false
-        });
-      }
-
-      if (h1) {
-        gsap.to(h1, {
-          scrollTrigger: {
-            trigger: hero,
-            start: "top top",
-            end: "+=900",
-            scrub: 1
-          },
-          opacity: 0,
-          y: -24,
-          scale: 1.04,
-          ease: "none"
-        });
-      }
-
-      if (lead) {
-        gsap.to(lead, {
-          scrollTrigger: {
-            trigger: hero,
-            start: "top+=120 top",
-            end: "+=900",
-            scrub: 1
-          },
-          opacity: 0,
-          y: -10,
-          ease: "none"
-        });
-      }
-
-      if (version) {
-        gsap.fromTo(
-          version,
-          { opacity: 0.85 },
-          {
-            scrollTrigger: {
-              trigger: hero,
-              start: "top top",
-              end: "+=900",
-              scrub: 1
-            },
-            opacity: 1,
-            ease: "none"
-          }
-        );
-      }
+    if (pin) {
+      ScrollTrigger.create({
+        trigger: hero,
+        start: "top top",
+        end: "bottom top",
+        pin: pin,
+        pinSpacing: false
+      });
     }
 
-    // NARRATIVE SECTIONS: pin the left column and gently focus the h2 color
-    const sections = gsap.utils.toArray(".narrative-section");
-    sections.forEach((section) => {
-      const focus = section.querySelector(".scroll-text");
-      const pinCol = section.querySelector(".pin-col");
-      const reveals = section.querySelectorAll(".reveal");
-
-      // Pin the left column so the narrative holds while the right side scrolls.
-      if (pinCol) {
-        ScrollTrigger.create({
-          trigger: section,
+    if (h1) {
+      gsap.to(h1, {
+        scrollTrigger: {
+          trigger: hero,
           start: "top top",
-          end: "+=1100",
-          pin: pinCol,
-          pinSpacing: true
-        });
-      }
+          end: "bottom top",
+          scrub: 1
+        },
+        opacity: 0,
+        scale: 1.06,
+        y: -16,
+        ease: "none"
+      });
+    }
 
-      // Focus transition (slate -> obsidian -> orange accent at focal point)
-      if (focus) {
-        gsap.to(focus, {
+    if (lead) {
+      gsap.to(lead, {
+        scrollTrigger: {
+          trigger: hero,
+          start: "top+=80 top",
+          end: "bottom top",
+          scrub: 1
+        },
+        opacity: 0.15,
+        y: -10,
+        ease: "none"
+      });
+    }
+  }
+
+  // NARRATIVE SECTIONS: pin left column + focus color shift for the heading
+  const narrativeSections = gsap.utils.toArray(".narrative-section");
+  narrativeSections.forEach((section) => {
+    const focus = section.querySelector(".scroll-text");
+    const leftCol = section.querySelector(".narrative-left");
+    const reveals = section.querySelectorAll(".reveal");
+
+    // Pin only when marked as narrative (avoid pinning on pure legal pages)
+    const pinEnabled = section.dataset.pin === "true";
+
+    if (pinEnabled && leftCol) {
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        end: "+=900",
+        pin: leftCol,
+        pinSpacing: true
+      });
+    }
+
+    if (focus) {
+      gsap.fromTo(
+        focus,
+        { opacity: 0.45 },
+        {
           scrollTrigger: {
             trigger: section,
-            start: "top+=120 top",
-            end: "+=900",
+            start: "top 70%",
+            end: "top 25%",
             scrub: 1
           },
-          color: "#0A0F1E",
-          ease: "none"
-        });
-
-        gsap.to(focus, {
-          scrollTrigger: {
-            trigger: section,
-            start: "top+=420 top",
-            end: "+=500",
-            scrub: 1
-          },
+          opacity: 1,
           color: "#EA580C",
           ease: "none"
-        });
-      }
+        }
+      );
 
-      // Reveal cards (subtle)
-      reveals.forEach((el) => {
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 18 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 82%"
-            }
-          }
-        );
+      gsap.to(focus, {
+        scrollTrigger: {
+          trigger: section,
+          start: "top 25%",
+          end: "bottom 10%",
+          scrub: 1
+        },
+        color: "#0A0F1E",
+        ease: "none"
       });
+    }
+
+    // Calm reveals: small fade + y
+    reveals.forEach((el) => {
+      gsap.fromTo(
+        el,
+        { opacity: 0, y: 10 },
+        {
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.45,
+          ease: "power2.out"
+        }
+      );
     });
-  })();
-</script>
+  });
+})();
