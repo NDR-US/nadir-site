@@ -1,149 +1,93 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NADIR — Founder</title>
-  <meta name="description" content="Founder’s letter: why NADIR exists, what it is, what it is not, and the disciplined boundary posture behind the project." />
+<main>
+  <section class="nadir-hero relative h-screen overflow-hidden">
+    <div class="hero-pin absolute inset-0">
+      <div class="absolute inset-0 bg-vellum"></div>
+      <div class="absolute inset-0 opacity-[0.08]"
+        style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;"></div>
+    </div>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <div class="absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">[V2026.02.19]</div>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans:['Public Sans','ui-sans-serif','system-ui'], mono:['Roboto Mono','ui-monospace','SFMono-Regular','Menlo','Monaco','Consolas','monospace'] },
-          colors: { vellum:'#F9FAFB', obsidian:'#0A0F1E', slateblue:'#475569', orange:'#EA580C' }
-        }
-      }
-    }
-  </script>
+    <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
+      <div class="grid grid-cols-12 h-full">
+        <div class="col-span-12 flex flex-col items-center justify-center text-center">
+          <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
+            [FOUNDER] · [BOUNDARIES] · [INSTITUTIONAL INTENT]
+          </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+          <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
+            Founder’s Letter
+          </h1>
 
-  <style>
-    html { scroll-behavior: smooth; }
-    body { background:#F9FAFB; color:#0A0F1E; }
-    .hairline { border-color: rgba(71,85,105,0.22); }
-    .measure { max-width: 74ch; }
-    .no-rounded { border-radius: 0 !important; }
-  </style>
-</head>
+          <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
+            NADIR exists because “logs” are not evidence. When systems become autonomous, accountability depends on records that are
+            deterministic, integrity-bound, and reviewable without forcing disclosure of trade secrets.
+          </p>
 
-<body class="font-sans antialiased">
-  <div id="siteHeader"></div>
-
-  <main>
-    <!-- HERO -->
-    <section class="nadir-hero relative h-screen overflow-hidden">
-      <div class="hero-pin absolute inset-0">
-        <div class="absolute inset-0 bg-vellum"></div>
-        <div class="absolute inset-0 opacity-[0.08]"
-          style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;"></div>
-      </div>
-
-      <div class="hero-version absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">[V2026.02.19]</div>
-
-      <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
-        <div class="grid grid-cols-12 h-full">
-          <div class="col-span-12 flex flex-col items-center justify-center text-center">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
-              [FOUNDER’S LETTER] · [BOUNDARIES] · [WHY NOW]
-            </div>
-            <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
-              Founder
-            </h1>
-            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
-              NADIR exists to make review possible when AI systems matter, without requiring disclosure of proprietary internals to prove integrity.
-              This letter states the purpose, posture, and boundaries of the project in plain language.
-            </p>
-
-            <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-              <a href="#content" class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
-                Read letter
-              </a>
-              <a href="governance.html" class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-                Governance posture
-              </a>
-            </div>
+          <div class="mt-10">
+            <a href="#content" class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] no-rounded">
+              Read letter
+            </a>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- LETTER -->
-    <section id="content" class="narrative-section border-t hairline">
-      <div class="mx-auto max-w-7xl px-6">
-        <div class="grid grid-cols-12 gap-10 py-20 items-start">
-          <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[LETTER]</div>
-            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-              Evidence first, judgment later
-            </h2>
-            <p class="mt-4 text-slateblue leading-relaxed measure">
-              NADIR is record infrastructure. Institutions make determinations.
-            </p>
-          </div>
+  <section id="content" class="narrative-section border-t hairline">
+    <div class="mx-auto max-w-7xl px-6 py-20 grid grid-cols-12 gap-10">
+      <div class="col-span-12 lg:col-span-4">
+        <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[WHY]</div>
+        <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold text-slateblue">Why NADIR exists</h2>
+        <p class="mt-4 text-slateblue leading-relaxed measure">
+          A procurement reviewer is not only assessing technology. They are assessing institutional risk, evidentiary defensibility,
+          and whether the vendor understands liability boundaries.
+        </p>
+      </div>
 
-          <div class="col-span-12 lg:col-span-8">
-            <div class="border hairline p-8 no-rounded reveal">
-              <p class="text-slateblue leading-relaxed">
-                AI inference systems are increasingly deployed in environments where ambiguity is expensive. In many deployments, outputs and surface telemetry exist,
-                but the records are not designed to survive adversarial scrutiny. What is logged may be helpful operationally, yet insufficient when a decision is disputed later.
-              </p>
+      <div class="col-span-12 lg:col-span-8">
+        <div class="border hairline p-6 no-rounded reveal">
+          <p class="text-slateblue leading-relaxed">
+            I built NADIR around a simple principle: infrastructure should make oversight possible without becoming the judge.
+            NADIR is not a “safety layer” and it does not certify compliance. It is an evidentiary substrate—designed to preserve
+            a decision-state record that can be verified later by authorized institutions.
+          </p>
 
-              <p class="mt-5 text-slateblue leading-relaxed">
-                NADIR exists to close that gap with a disciplined approach: policy-scoped capture, deterministic canonicalization, cryptographic integrity sealing, and
-                controlled disclosure. The objective is to support review processes without forcing builders to expose model weights, confidential architecture, or trade-secret implementation details.
-              </p>
+          <p class="mt-5 text-slateblue leading-relaxed">
+            The technical details matter because evidence fails at the edges. That is why NADIR treats canonicalization as a first-class
+            requirement. JSON artifacts are canonicalized deterministically (RFC 8785) before hashing, so trivial differences do not
+            break integrity claims across heterogeneous environments.
+          </p>
 
-              <p class="mt-5 text-slateblue leading-relaxed">
-                The boundary is deliberate. NADIR does not claim to determine whether an output was correct, fair, lawful, or compliant.
-                NADIR produces verifiable records that allow authorized institutions and operators to perform oversight using their own standards, processes, and authority.
-              </p>
+          <p class="mt-5 text-slateblue leading-relaxed">
+            NADIR is designed to minimize liability surfaces. Signing keys are intended to remain non-custodial: generated and retained
+            within the operator’s controlled environment (HSM/KMS where available). That separation is deliberate. If NADIR does not hold
+            keys, NADIR cannot forge records and is harder to coerce into altering evidence.
+          </p>
 
-              <p class="mt-5 text-slateblue leading-relaxed">
-                The technical posture is designed to be robust across environments. For JSON artifacts, NADIR uses deterministic canonicalization (RFC 8785) prior to hashing so that
-                integrity checks remain stable across heterogeneous systems. Integrity sealing uses deployment-defined cryptographic suites. Key custody is non-custodial by design:
-                signing keys are generated and retained within the client’s controlled environment (HSM/KMS), and NADIR does not possess private keys.
-              </p>
+          <p class="mt-5 text-slateblue leading-relaxed">
+            If NADIR succeeds, oversight becomes more precise, disputes become less ambiguous, and institutions can verify integrity
+            without default exposure of proprietary systems. That is the purpose. The record is the foundation. The judgment remains human.
+          </p>
 
-              <p class="mt-5 text-slateblue leading-relaxed">
-                NADIR is being built with institutional workflows in mind: constrained disclosure, chain-of-custody posture, and verification steps that can be performed independently.
-                Where the implementation is still under active development, the roadmap states the scope and maturity explicitly.
-              </p>
-
-              <div class="mt-8 pt-6 border-t hairline">
-                <div class="text-slateblue leading-relaxed">
-                  — Brian Covarrubias<br>
-                  <span class="font-mono text-[11px] text-slateblue/90">[NADIR]</span>
-                </div>
-                <div class="mt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">
-                  [CORE POSITION] NADIR is record infrastructure, not adjudication.
-                </div>
-              </div>
+          <div class="mt-8 border-t hairline pt-6">
+            <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[SIGNATURE]</div>
+            <div class="mt-3 text-slateblue leading-relaxed">
+              Brian Covarrubias<br>
+              Founder, NADIR
             </div>
-
-            <div class="mt-8 border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARY]</div>
-              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
-                <li>NADIR does not certify compliance, legality, or model correctness.</li>
-                <li>NADIR verifies artifact integrity and provenance under defined policy.</li>
-                <li>Admissibility and oversight conclusions are determined by relevant authorities and authorized reviewers.</li>
-              </ul>
-            </div>
-
           </div>
         </div>
-      </div>
-    </section>
-  </main>
 
-  <div id="siteFooter"></div>
-  <script src="assets/site.js"></script>
-</body>
-</html>
+        <div class="mt-8 border hairline p-6 no-rounded reveal">
+          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARY]</div>
+          <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
+            <li>This letter describes intent and architectural posture; it is not legal advice.</li>
+            <li>NADIR does not adjudicate correctness, fairness, legality, or compliance.</li>
+            <li>Authorized institutions and operators make determinations and retain responsibility for governance outcomes.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
