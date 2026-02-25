@@ -3,12 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NADIR — Modern Slavery & Human Rights Statement</title>
-  <meta name="description" content="NADIR’s statement on modern slavery, human trafficking, and human rights expectations across operations and suppliers." />
+  <title>NADIR — Modern Slavery & Human Rights</title>
+  <meta name="description" content="NADIR Modern Slavery & Human Rights Statement: scope, supply chain boundaries, due diligence posture, reporting mechanisms, and review cadence. Informational statement." />
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -23,55 +26,60 @@
             obsidian: '#0A0F1E',
             slateblue: '#475569',
             orange: '#EA580C',
+            verified: '#166534',
+            mismatch: '#991B1B',
+            neutral: '#64748B',
           }
         }
       }
     }
   </script>
 
+  <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background:#F9FAFB; color:#0A0F1E; }
+    .hairline { border-color: rgba(71,85,105,0.22); }
+    .measure { max-width: 74ch; }
+    .no-rounded { border-radius: 0 !important; }
+    .mono-chip { font-family:'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  </style>
 </head>
 
-<body class="font-sans antialiased bg-vellum text-obsidian">
+<body class="font-sans antialiased">
 
-  <!-- HEADER (keep your existing header here) -->
-  <header class="sticky top-0 z-50 bg-vellum/80 backdrop-blur-md border-b" style="border-color:rgba(71,85,105,0.22);">
+  <!-- Institutional Header -->
+  <header class="sticky top-0 z-50 bg-vellum/80 backdrop-blur-md border-b hairline">
     <div class="mx-auto max-w-7xl px-6">
       <div class="h-16 flex items-center justify-between">
         <a href="index.html" class="flex items-center gap-3">
-          <img src="assets/nadir-wordmark.svg" alt="NADIR" class="h-7 w-auto">
+          <img src="assets/nadir-wordmark.svg" alt="NADIR" class="h-7 w-auto" onerror="this.style.display='none'">
           <div class="leading-tight">
             <div class="text-[12px] tracking-[0.34em] uppercase">NADIR</div>
-            <div class="text-[10px] text-slateblue/80 uppercase tracking-[0.18em]">Institutional framework</div>
+            <div class="text-[10px] text-slateblue/80 uppercase tracking-[0.18em]">Modern Slavery</div>
           </div>
         </a>
 
         <nav class="hidden md:flex items-center gap-1 text-[11px] uppercase tracking-[0.16em] text-slateblue/90">
           <a class="px-3 py-2 hover:text-obsidian" href="index.html">Overview</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="platform.html">Platform</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="use-cases.html">Integration</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="docs.html">Documents</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="roadmap.html">Roadmap</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="governance.html">Governance</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="trust.html">Trust</a>
           <a class="px-3 py-2 hover:text-obsidian" href="privacy.html">Privacy</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="terms.html">Terms</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="ethical.html">Ethical</a>
           <a class="px-3 py-2 hover:text-obsidian" href="contact.html">Contact</a>
         </nav>
 
-        <a href="contact.html"
-           class="inline-flex items-center justify-center h-10 px-4 border text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition"
-           style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-          Request controlled review
+        <a href="mailto:contact@nadir-ai.com"
+           class="inline-flex items-center justify-center h-10 px-4 border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
+          Report concern
         </a>
       </div>
     </div>
   </header>
 
   <main>
+
     <!-- HERO -->
     <section class="nadir-hero relative h-screen overflow-hidden">
       <div class="hero-pin absolute inset-0">
@@ -84,169 +92,183 @@
         </div>
       </div>
 
-      <div class="absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">
+      <div class="absolute top-6 left-6 z-10 mono-chip text-[11px] text-slateblue/90 tracking-[0.14em]">
         [V2026.02.19]
       </div>
 
       <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
         <div class="grid grid-cols-12 h-full">
           <div class="col-span-12 flex flex-col items-center justify-center text-center">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
-              [HUMAN RIGHTS] · [SUPPLY CHAIN] · [PROCUREMENT]
+
+            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
+              [HUMAN RIGHTS] · [SUPPLY CHAIN BOUNDARIES] · [DUE DILIGENCE]
             </div>
 
             <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
-              Modern Slavery & Human Rights Statement
+              Modern slavery & human rights statement
             </h1>
 
-            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue max-w-[74ch]">
-              This statement describes NADIR’s expectations and operating posture regarding modern slavery, human trafficking,
-              and human rights risks across our operations and supply chain. It is designed for institutional procurement
-              review and will evolve as NADIR scales.
+            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
+              NADIR is committed to respecting internationally recognized human rights and to opposing
+              modern slavery, forced labor, and human trafficking in its operations and supply relationships.
+              This statement describes scope, boundaries, and review posture.
             </p>
 
             <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
               <a href="#content"
-                 class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition"
-                 style="border-radius:0;">
-                Enter statement
+                 class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
+                View scope
               </a>
-              <a href="contact.html"
-                 class="inline-flex h-11 px-6 items-center justify-center border text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition"
-                 style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-                Report a concern
+              <a href="mailto:contact@nadir-ai.com"
+                 class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
+                Report concern
               </a>
             </div>
+
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CONTENT -->
-    <section id="content" class="narrative-section border-t" style="border-color:rgba(71,85,105,0.22);">
+    <!-- SECTION 1: Scope -->
+    <section id="content" class="narrative-section border-t hairline">
       <div class="mx-auto max-w-7xl px-6">
         <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
           <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
-              [SCOPE]
-            </div>
+            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[SCOPE]</div>
             <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-              What this covers
+              Operational scope
             </h2>
-            <p class="mt-4 text-slateblue leading-relaxed max-w-[74ch]">
-              This statement applies to NADIR’s internal operations and to suppliers and service providers who support
-              NADIR’s business functions. It is not a representation of third-party compliance, nor a certification.
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              This statement applies to NADIR’s public-facing operations and direct supplier relationships.
+              It does not automatically extend to independent client environments or third-party services.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="border hairline p-6 no-rounded reveal">
+              <ul class="space-y-2 text-slateblue leading-relaxed">
+                <li>Internal business operations and governance.</li>
+                <li>Direct service providers and contracted vendors.</li>
+                <li>Infrastructure providers engaged for hosting or tooling.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Due diligence posture -->
+    <section class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[DUE DILIGENCE]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              Supplier expectations
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              Suppliers are expected to operate in accordance with applicable labor laws and human rights standards.
+              This expectation may be reflected in contractual terms where appropriate.
             </p>
           </div>
 
           <div class="col-span-12 lg:col-span-8">
             <div class="grid md:grid-cols-3 gap-6">
-              <div class="border p-6 reveal" style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[COMMITMENT]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Human rights posture</h3>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[FORCED LABOR]</div>
                 <p class="mt-3 text-slateblue leading-relaxed">
-                  NADIR intends to operate with respect for human rights and to avoid supporting practices inconsistent
-                  with modern slavery and human trafficking prohibitions.
+                  No tolerance for forced, bonded, or involuntary labor.
                 </p>
               </div>
 
-              <div class="border p-6 reveal" style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[RISK]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Risk awareness</h3>
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[CHILD LABOR]</div>
                 <p class="mt-3 text-slateblue leading-relaxed">
-                  NADIR prioritizes risk-based review of suppliers based on geography, labor intensity, and service type,
-                  with heightened attention to vendors involved in physical goods or labor-intensive services.
+                  Compliance with applicable minimum age laws.
                 </p>
               </div>
 
-              <div class="border p-6 reveal" style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[EXPECTATIONS]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Supplier standards</h3>
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[FAIR TREATMENT]</div>
                 <p class="mt-3 text-slateblue leading-relaxed">
-                  Where feasible, NADIR seeks to work with suppliers and providers that maintain appropriate labor and
-                  human rights policies, including prohibition of forced labor and child labor.
+                  Respect for lawful working conditions and non-discrimination.
                 </p>
               </div>
-            </div>
 
-            <div class="mt-8 border p-6 reveal" style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[DUE DILIGENCE]</div>
-              <ul class="mt-3 space-y-3 text-slateblue leading-relaxed">
-                <li><span class="font-semibold text-obsidian">Supplier onboarding review:</span> NADIR may request basic corporate identity information, ownership disclosures where appropriate, and confirmation of labor policy posture for higher-risk services.</li>
-                <li><span class="font-semibold text-obsidian">Contract posture:</span> where commercially reasonable, supplier agreements may include obligations to comply with applicable labor laws and to prohibit forced labor and trafficking.</li>
-                <li><span class="font-semibold text-obsidian">Escalation:</span> credible allegations may trigger internal review, requests for remediation, or discontinuation of the relationship depending on severity and feasibility.</li>
-              </ul>
-            </div>
-
-            <div class="mt-8 border p-6 reveal" style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[REPORTING]</div>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                Concerns related to unethical labor practices may be reported to
-                <a class="underline text-obsidian" href="mailto:contact@nadir-ai.com">contact@nadir-ai.com</a>.
-                Reports should include enough detail to permit review (vendor name, relationship context, and supporting information where available).
-              </p>
-            </div>
-
-            <div class="mt-8 border p-6 reveal" style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARY]</div>
-              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
-                <li>This statement describes intent and operating posture; it is not legal advice.</li>
-                <li>NADIR does not represent supplier compliance, certification status, or audit outcomes absent a separate written agreement.</li>
-                <li>Statement updates are tracked by version; institutional reviewers should reference the version tag shown on this page.</li>
-              </ul>
             </div>
 
           </div>
+
         </div>
       </div>
     </section>
+
+    <!-- SECTION 3: Reporting and review -->
+    <section class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[REPORTING]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              Reporting concerns
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              Concerns relating to modern slavery or human rights may be reported confidentially.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="border hairline p-6 no-rounded reveal">
+              <p class="text-slateblue leading-relaxed">
+                To report a concern, email
+                <a class="underline hover:text-obsidian" href="mailto:contact@nadir-ai.com">contact@nadir-ai.com</a>.
+                Include relevant details to allow review.
+              </p>
+            </div>
+
+            <div class="mt-8 border hairline p-6 no-rounded reveal">
+              <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[REVIEW CADENCE]</div>
+              <p class="mt-3 text-slateblue leading-relaxed">
+                This statement is reviewed periodically and may be updated to reflect operational or regulatory developments.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- FOOTER (keep your existing footer here) -->
+  <!-- FOOTER -->
   <footer class="bg-obsidian text-vellum border-t border-white/10">
     <div class="mx-auto max-w-7xl px-6 py-14">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
           <div class="text-[12px] tracking-[0.22em] uppercase">NADIR</div>
           <div class="mt-3 text-sm text-white/70 leading-relaxed">
-            © 2026 NADIR, a project of Brian Covarrubias. All rights reserved.<br>
-            <span class="font-mono text-white/80">[V2026.02.19]</span> — Unauthorized distribution prohibited.
+            © 2026 NADIR. All rights reserved.<br>
+            <span class="font-mono text-white/80">[V2026.02.19]</span>
           </div>
         </div>
-
         <div>
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Legal</div>
+          <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-white/70">Legal</div>
           <ul class="mt-3 space-y-2 text-sm text-white/70">
             <li><a class="hover:text-white" href="privacy.html">Privacy</a></li>
             <li><a class="hover:text-white" href="terms.html">Terms</a></li>
-            <li><a class="hover:text-white" href="ethical.html">Ethical Use</a></li>
             <li><a class="hover:text-white" href="accessibility.html">Accessibility</a></li>
-            <li><a class="hover:text-white" href="modern-slavery.html">Modern Slavery</a></li>
           </ul>
         </div>
-
         <div>
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Trust infrastructure</div>
-          <ul class="mt-3 space-y-2 text-sm text-white/70">
-            <li><a class="hover:text-white" href="trust.html">Trust Center</a></li>
-            <li><a class="hover:text-white" href="compliance.html">Compliance Crosswalk</a></li>
-            <li><a class="hover:text-white" href="vdp.html">Vulnerability Disclosure (VDP)</a></li>
-            <li><a class="hover:text-white" href="sbom.html">SBOM</a></li>
-            <li><a class="hover:text-white" href="sustainability.html">Sustainability</a></li>
-            <li><a class="hover:text-white" href="key-custody.html">Key Custody</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Institutional</div>
-          <ul class="mt-3 space-y-2 text-sm text-white/70">
-            <li><a class="hover:text-white" href="pcl.html">Privacy & Civil Liberties (PCL)</a></li>
-            <li><a class="hover:text-white" href="admissibility.html">Legal Admissibility Primer</a></li>
-            <li><a class="hover:text-white" href="incident-72h.html">72-Hour Playbook</a></li>
-            <li><a class="hover:text-white" href="contact.html">Contact</a></li>
-          </ul>
-
-          <div class="mt-6 text-sm text-white/70">
+          <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-white/70">Contact</div>
+          <div class="mt-3 text-sm text-white/70">
             <a class="hover:text-white" href="mailto:contact@nadir-ai.com">contact@nadir-ai.com</a>
           </div>
         </div>
@@ -254,6 +276,6 @@
     </div>
   </footer>
 
-  <script src="assets/site.js" defer></script>
+  <script src="assets/site.js"></script>
 </body>
 </html>
