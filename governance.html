@@ -1,115 +1,147 @@
-<!-- /governance.html  (PAGE 7 — GOVERNANCE) -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>NADIR — Governance</title>
-  <meta name="description" content="Governance posture: privacy-by-design, constrained disclosure, auditability, non-adjudication." />
+  <meta name="description" content="Governance posture: privacy-by-design, controlled disclosure, auditability, and non-adjudication. Informed by NIST IR 8596." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/styles.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans:['Public Sans','ui-sans-serif','system-ui'], mono:['Roboto Mono','ui-monospace','SFMono-Regular','Menlo','Monaco','Consolas','monospace'] },
+          colors: { vellum:'#F9FAFB', obsidian:'#0A0F1E', slateblue:'#475569', orange:'#EA580C' }
+        }
+      }
+    }
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background:#F9FAFB; color:#0A0F1E; }
+    .hairline { border-color: rgba(71,85,105,0.22); }
+    .measure { max-width: 74ch; }
+    .no-rounded { border-radius: 0 !important; }
+  </style>
 </head>
 
-<body>
-  <header class="siteHeader">
-    <div class="wrap">
-      <div class="topbar">
-        <a class="brand" href="index.html" aria-label="NADIR home">
-          <span class="logo" aria-hidden="true">
-            <svg viewBox="0 0 64 64" role="img" focusable="false">
-              <path d="M16 46V18l14 18 14-18v28" />
-              <path d="M16 46h6l8-10 8 10h6" />
-            </svg>
-          </span>
-          <span class="brandText">
-            <span class="mark">NADIR</span>
-            <span class="descriptor">Governance · Privacy-by-design</span>
-          </span>
-        </a>
+<body class="font-sans antialiased">
+  <div id="siteHeader"></div>
 
-        <nav class="nav" aria-label="Primary">
-          <a data-page="index.html" href="index.html">Overview</a>
-          <a data-page="platform.html" href="platform.html">Architecture</a>
-          <a data-page="use-cases.html" href="use-cases.html">Integration</a>
-          <a data-page="docs.html" href="docs.html">Documents</a>
-          <a data-page="roadmap.html" href="roadmap.html">Roadmap</a>
-          <a data-page="founder.html" href="founder.html">Founder</a>
-          <a data-page="governance.html" href="governance.html">Governance</a>
-          <a data-page="privacy.html" href="privacy.html">Privacy</a>
-          <a data-page="terms.html" href="terms.html">Terms</a>
-          <a data-page="ethical.html" href="ethical.html">Ethical Use</a>
-          <a data-page="contact.html" href="contact.html">Contact</a>
-        </nav>
-      </div>
-    </div>
-  </header>
-
-  <main class="wrap page">
-    <section class="hero">
-      <div class="kicker">PRIVACY-BY-DESIGN · CONTROLLED DISCLOSURE · NON-ADJUDICATION</div>
-      <h1>Governance</h1>
-      <p class="lead">NADIR supports accountable review while minimizing collection and preserving confidentiality boundaries.</p>
-    </section>
-
-    <section class="section">
-      <h2>Principles</h2>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3>Privacy-by-design</h3>
-          <p class="small">Collect only what is necessary, define scope explicitly, and record policy identifiers and versions.</p>
-        </div>
-
-        <div class="card">
-          <h3>Controlled disclosure</h3>
-          <p class="small">Enable verification without default exposure of weights, confidential architecture, or proprietary source code.</p>
-        </div>
-
-        <div class="card">
-          <h3>Auditability</h3>
-          <p class="small">Prefer canonical records designed for formal review over ad-hoc logs.</p>
-        </div>
-
-        <div class="card">
-          <h3>Non-adjudication</h3>
-          <p class="small">NADIR produces records. Institutions make determinations.</p>
-        </div>
+  <main>
+    <!-- HERO -->
+    <section class="nadir-hero relative h-screen overflow-hidden">
+      <div class="hero-pin absolute inset-0">
+        <div class="absolute inset-0 bg-vellum"></div>
+        <div class="absolute inset-0 opacity-[0.08]"
+          style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;"></div>
       </div>
 
-      <div class="card" style="margin-top:14px">
-        <h3>NIST IR 8596</h3>
-        <p class="small">
-          NADIR’s design posture is informed by the NIST IR 8596 Cyber AI Profile, which addresses cybersecurity considerations specific to AI systems.
-          NADIR’s artifact layer is designed to support integrity-oriented and oversight-aligned objectives consistent with that profile.
-          This reference does not constitute endorsement or certification by NIST.
-        </p>
-      </div>
+      <div class="hero-version absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">[V2026.02.19]</div>
 
-      <div class="boundary" style="margin-top:14px">
-        <div class="title">Boundary declaration</div>
-        <ul>
-          <li>NADIR does not certify compliance, legality, or correctness.</li>
-          <li>NADIR does not guarantee inference reproducibility.</li>
-          <li>NADIR does not assume operational control over inference infrastructure.</li>
-          <li>NADIR supports integrity and provenance verification under policy.</li>
-          <li>Oversight conclusions are made by authorized reviewers.</li>
-          <li>Admissibility of artifacts in any legal or administrative proceeding is determined by the relevant authority.</li>
-        </ul>
+      <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
+        <div class="grid grid-cols-12 h-full">
+          <div class="col-span-12 flex flex-col items-center justify-center text-center">
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
+              [PRIVACY-BY-DESIGN] · [CONTROLLED DISCLOSURE] · [NON-ADJUDICATION]
+            </div>
+            <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
+              Governance posture
+            </h1>
+            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
+              NADIR supports accountable review while minimizing collection and preserving confidentiality boundaries.
+              Governance statements describe posture and boundaries and do not constitute certification or endorsement by any third party.
+            </p>
+
+            <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+              <a href="#content" class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
+                View principles
+              </a>
+              <a href="privacy.html" class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
+                Privacy statement
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <footer class="siteFooter">
-      <div class="footgrid">
-        <div class="badge">GOVERNANCE</div>
-        <div class="right">© 2026 NADIR, a project of Brian Covarrubias. All rights reserved. — V2026.02.19</div>
+    <!-- PRINCIPLES -->
+    <section id="content" class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+          <div class="col-span-12 lg:col-span-4">
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[PRINCIPLES]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              Governance principles
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              Governance is implemented through capture policy, disclosure tiers, and verification workflows. Determinations remain with authorized reviewers.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[PRIVACY-BY-DESIGN]</div>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Collect only what is necessary, define scope explicitly, and record policy identifiers and versions to preserve clarity under review.
+                </p>
+              </div>
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[CONTROLLED DISCLOSURE]</div>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Enable verification without default exposure of weights, confidential architecture, or proprietary source code through tiered disclosure.
+                </p>
+              </div>
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[AUDITABILITY]</div>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Prefer canonical records designed for formal review over ad-hoc logs. Verification steps are designed to be independently repeatable.
+                </p>
+              </div>
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[NON-ADJUDICATION]</div>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  NADIR produces records. Institutions and authorized operators perform oversight and make determinations under their authority.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-8 border hairline p-6 no-rounded reveal">
+              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[NIST IR 8596]</div>
+              <p class="mt-3 text-slateblue leading-relaxed">
+                NADIR’s design posture is informed by the NIST IR 8596 Cyber AI Profile, which addresses cybersecurity considerations specific to AI systems.
+                This reference does not constitute endorsement, certification, or formal alignment by NIST.
+              </p>
+            </div>
+
+            <div class="mt-8 border hairline p-6 no-rounded reveal">
+              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARY]</div>
+              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
+                <li>NADIR does not certify compliance, legality, or correctness.</li>
+                <li>NADIR does not guarantee inference reproducibility.</li>
+                <li>NADIR supports integrity and provenance verification under policy.</li>
+                <li>Admissibility is determined by the relevant authority.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
       </div>
-    </footer>
+    </section>
   </main>
 
+  <div id="siteFooter"></div>
   <script src="assets/site.js"></script>
 </body>
 </html>
