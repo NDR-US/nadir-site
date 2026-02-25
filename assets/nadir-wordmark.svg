@@ -1,0 +1,8 @@
+<!-- /assets/nadir-wordmark.svg
+REPLACE THIS FILE WITH YOUR REAL WORDMARK SVG.
+This placeholder prevents layout breakage if you haven’t added the SVG yet.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="44" viewBox="0 0 240 44" role="img" aria-label="NADIR">
+  <rect width="240" height="44" fill="none"/>
+  <text x="0" y="30" font-family="Public Sans, system-ui, sans-serif" font-size="28" letter-spacing="0.18em" fill="#0A0F1E">NADIR</text>
+</svg>
