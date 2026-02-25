@@ -1,4 +1,4 @@
-<!-- /docs.html (PAGE — DOCUMENTS) -->
+<!-- /docs.html  (PAGE 4 — DOCUMENT SUITE) -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
@@ -18,12 +18,20 @@
   <header class="siteHeader">
     <div class="wrap">
       <div class="topbar">
-        <div class="brand">
-          <div class="mark">NADIR</div>
-          <div class="descriptor">Documents</div>
-        </div>
+        <a class="brand" href="index.html" aria-label="NADIR home">
+          <span class="logo" aria-hidden="true">
+            <svg viewBox="0 0 64 64" role="img" focusable="false">
+              <path d="M16 46V18l14 18 14-18v28" />
+              <path d="M16 46h6l8-10 8 10h6" />
+            </svg>
+          </span>
+          <span class="brandText">
+            <span class="mark">NADIR</span>
+            <span class="descriptor">Document suite · Controlled disclosure</span>
+          </span>
+        </a>
 
-        <nav class="nav">
+        <nav class="nav" aria-label="Primary">
           <a data-page="index.html" href="index.html">Overview</a>
           <a data-page="platform.html" href="platform.html">Architecture</a>
           <a data-page="use-cases.html" href="use-cases.html">Integration</a>
@@ -33,6 +41,7 @@
           <a data-page="governance.html" href="governance.html">Governance</a>
           <a data-page="privacy.html" href="privacy.html">Privacy</a>
           <a data-page="terms.html" href="terms.html">Terms</a>
+          <a data-page="ethical.html" href="ethical.html">Ethical Use</a>
           <a data-page="contact.html" href="contact.html">Contact</a>
         </nav>
       </div>
@@ -41,11 +50,10 @@
 
   <main class="wrap page">
     <section class="hero">
-      <div class="kicker">CONTROLLED REVIEW • SPECIFICATIONS • POLICY SCHEMA</div>
+      <div class="kicker">CONTROLLED REVIEW · SPECIFICATIONS · POLICY SCHEMA</div>
       <h1>Document suite</h1>
       <p class="lead">
-        Public pages remain intentionally high-level. Engineering specifications, policy schemas, and review materials are available
-        under controlled disclosure.
+        Full technical documentation is available under controlled disclosure. Public content remains high-level by design.
       </p>
 
       <div class="ctaRow">
@@ -55,14 +63,11 @@
     </section>
 
     <section class="section">
-      <h2>Core engineering documents</h2>
-      <p class="sub">Titles and summaries only. Full content is provided under controlled review.</p>
-
       <div class="stack">
         <div class="docItem">
           <div>
             <div class="docTitle">Technical Requirements Document (TRD)</div>
-            <div class="docSub">Phase 1 core mechanics chain. Stateless, non-mutating capture; deterministic canonicalization; integrity sealing; fail-open mandate.</div>
+            <div class="docSub">Phase 1 core mechanics chain. Non-mutating capture with minimal operational state; deterministic canonicalization; integrity sealing; fail-open mandate.</div>
           </div>
           <a class="btn smallBtn" href="contact.html">Request</a>
         </div>
@@ -86,15 +91,13 @@
         <div class="docItem">
           <div>
             <div class="docTitle">Verification CLI Contract</div>
-            <div class="docSub">PASS/FAIL verification behavior: canonicalization (RFC 8785), hash recomputation, signature validation, policy alignment checks.</div>
+            <div class="docSub">PASS/FAIL verification behavior: canonicalization per RFC 8785 for JSON artifacts, hash recomputation, signature validation, policy alignment checks.</div>
           </div>
           <a class="btn smallBtn" href="contact.html">Request</a>
         </div>
       </div>
-    </section>
 
-    <section class="section">
-      <div class="boundary">
+      <div class="boundary" style="margin-top:14px">
         <div class="title">Disclosure boundary</div>
         <ul>
           <li>Public site content is descriptive only.</li>
@@ -107,7 +110,7 @@
     <footer class="siteFooter">
       <div class="footgrid">
         <div class="badge">DOCUMENTS</div>
-        <div class="right">© 2026 NADIR. Proprietary infrastructure. — V2026.02.19</div>
+        <div class="right">© 2026 NADIR, a project of Brian Covarrubias. All rights reserved. — V2026.02.19</div>
       </div>
     </footer>
   </main>
