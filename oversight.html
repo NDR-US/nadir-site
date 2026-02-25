@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>NADIR — Oversight Portal</title>
-  <meta name="description" content="Institutional oversight for NADIR: role-based access, constrained disclosure, policy-scoped redaction, and verification workflow for integrity-sealed artifacts." />
+  <meta name="description" content="NADIR Oversight Portal: role-based verification workflows, policy-scoped redaction, disclosure tiers, and a procurement-safe institutional access model for integrity-sealed artifacts." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,6 +45,7 @@
     .hairline { border-color: rgba(71,85,105,0.22); }
     .measure { max-width: 74ch; }
     .no-rounded { border-radius: 0 !important; }
+    .mono-chip { font-family: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
   </style>
 </head>
 
@@ -58,7 +59,7 @@
           <img src="assets/nadir-wordmark.svg" alt="NADIR" class="h-7 w-auto" onerror="this.style.display='none'">
           <div class="leading-tight">
             <div class="text-[12px] tracking-[0.34em] uppercase">NADIR</div>
-            <div class="text-[10px] text-slateblue/80 uppercase tracking-[0.18em]">Institutional oversight</div>
+            <div class="text-[10px] text-slateblue/80 uppercase tracking-[0.18em]">Oversight portal</div>
           </div>
         </a>
 
@@ -72,7 +73,7 @@
           <a class="px-3 py-2 hover:text-obsidian" href="trust.html">Trust</a>
           <a class="px-3 py-2 hover:text-obsidian" href="roadmap.html">Roadmap</a>
           <a class="px-3 py-2 hover:text-obsidian" href="founder.html">Founder</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="pcl.html">PCL</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="contact.html">Contact</a>
         </nav>
 
         <a href="contact.html"
@@ -105,27 +106,27 @@
         <div class="grid grid-cols-12 h-full">
           <div class="col-span-12 flex flex-col items-center justify-center text-center">
             <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
-              [AUTHORIZED ACCESS] · [POLICY-SCOPED REDACTION] · [INDEPENDENT VERIFICATION]
+              [ROLE-BASED ACCESS] · [POLICY-SCOPED REDACTION] · [INDEPENDENT VERIFICATION]
             </div>
 
             <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
-              Oversight Portal
+              Oversight portal
             </h1>
 
             <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
-              The oversight posture is designed for institutional review under constrained disclosure.
-              Authorized reviewers can verify integrity and policy alignment of specific artifacts without default exposure
-              of proprietary weights, confidential architecture, or unrelated operational data.
+              NADIR supports institutional review workflows by providing integrity-sealed artifacts under controlled disclosure.
+              Oversight verifies provenance and tamper-resistance under policy without requiring exposure of client proprietary internals.
+              This page describes the access model and verification workflow; it does not represent an operational deployment or a live product dashboard.
             </p>
 
             <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
               <a href="#content"
                  class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
-                Enter oversight
+                Enter oversight model
               </a>
-              <a href="compliance.html"
+              <a href="docs.html"
                  class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-                Compliance crosswalk
+                Verification contract
               </a>
             </div>
 
@@ -134,19 +135,20 @@
       </div>
     </section>
 
-    <!-- SECTION 1: Stakeholder access model -->
+    <!-- SECTION 1: Stakeholders / access tiers -->
     <section id="content" class="narrative-section border-t hairline">
       <div class="mx-auto max-w-7xl px-6">
         <div class="grid grid-cols-12 gap-10 py-20 items-start">
 
           <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[ROLE-BASED OVERSIGHT]</div>
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[ACCESS MODEL]</div>
             <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-              Institutional access without proprietary exposure
+              Role-based oversight boundaries
             </h2>
             <p class="mt-4 text-slateblue leading-relaxed measure">
-              NADIR is designed to support an “air-gap” between operator infrastructure and external review:
-              disclosure is tiered by policy, access is authorized, and verification focuses on integrity and provenance—not adjudication.
+              NADIR separates operational control from review authority. The deployer operates the inference system; authorized reviewers
+              validate artifact integrity and policy alignment under a constrained disclosure posture. Access is policy-defined and can be
+              layered by audience, mandate, and agreement.
             </p>
           </div>
 
@@ -154,26 +156,29 @@
             <div class="grid md:grid-cols-3 gap-6">
 
               <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[OPERATORS]</div>
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[DEPLOYER]</div>
                 <h3 class="mt-3 font-semibold tracking-[-0.01em]">Regulated operators</h3>
                 <p class="mt-3 text-slateblue leading-relaxed">
-                  Define policy scope, retention posture, disclosure tiers, and escalation thresholds under internal governance and legal obligations.
+                  Configure capture policy, masking rules, disclosure tiers, retention posture, and verification trust anchors within their
+                  governance environment. Maintain custody and accountability for operations.
                 </p>
               </div>
 
               <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[INSTITUTIONS]</div>
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[REVIEWER]</div>
                 <h3 class="mt-3 font-semibold tracking-[-0.01em]">Authorized institutions</h3>
                 <p class="mt-3 text-slateblue leading-relaxed">
-                  Verify integrity, provenance, and policy alignment for specific artifacts under controlled review—without default access to trade secrets.
+                  Verify hashes, signatures, timestamps (if configured), and policy identifiers. Review artifacts under constrained disclosure
+                  without default access to weights, architecture internals, or proprietary source code.
                 </p>
               </div>
 
               <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[AUDITORS]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Forensic reviewers</h3>
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[AUDITOR]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Forensic auditors</h3>
                 <p class="mt-3 text-slateblue leading-relaxed">
-                  Perform incident reconstruction and chain-of-custody workflow checks using verified artifact packages and retrieval logs.
+                  Support incident reconstruction by validating integrity and provenance, correlating artifacts to case timelines, and producing
+                  review-ready outputs consistent with chain-of-custody workflows defined by the deployer and authority.
                 </p>
               </div>
 
@@ -182,9 +187,9 @@
             <div class="mt-8 border hairline p-6 no-rounded reveal">
               <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARY]</div>
               <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
-                <li>Oversight workflows validate integrity and provenance under policy; they do not certify correctness, legality, or compliance status.</li>
-                <li>Disclosure and access are defined by the implementing organization and applicable jurisdictional requirements.</li>
-                <li>Admissibility and evidentiary weight are determined by the relevant authority.</li>
+                <li>NADIR provides evidence artifacts; institutions provide oversight and determinations.</li>
+                <li>NADIR does not adjudicate model correctness, legality, or compliance status.</li>
+                <li>Authorization, access, and disclosure are defined by deployment policy and governance agreements.</li>
               </ul>
             </div>
 
@@ -194,19 +199,20 @@
       </div>
     </section>
 
-    <!-- SECTION 2: Policy-scoped redaction -->
+    <!-- SECTION 2: Disclosure tiers + policy-scoped redaction -->
     <section class="narrative-section border-t hairline">
       <div class="mx-auto max-w-7xl px-6">
         <div class="grid grid-cols-12 gap-10 py-20 items-start">
 
           <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[POLICY-SCOPED REDACTION]</div>
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[DISCLOSURE TIERS]</div>
             <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-              Constrained disclosure with verifiable integrity
+              Policy-scoped redaction under verification
             </h2>
             <p class="mt-4 text-slateblue leading-relaxed measure">
-              Masking and disclosure are policy-defined. The objective is to enable verification while minimizing unnecessary exposure of
-              personal data, sensitive operational details, or proprietary implementation information.
+              Oversight often requires a “verify without exposure” posture. NADIR supports tiered disclosure: high-level public summaries
+              and controlled review views for authorized audiences. Redaction and masking are policy-scoped so integrity checks remain valid
+              even when sensitive fields are withheld.
             </p>
           </div>
 
@@ -214,37 +220,40 @@
             <div class="grid md:grid-cols-3 gap-6">
 
               <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[MINIMIZATION]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Field selection</h3>
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[PUBLIC / REDACTED]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">High-level summary</h3>
                 <p class="mt-3 text-slateblue leading-relaxed">
-                  Policies define included fields, excluded fields, and masking rules. Unnecessary collection is explicitly excluded by design.
+                  Non-sensitive metadata and policy identifiers suitable for public description. No proprietary internals. No default exposure
+                  of prompts, inputs, outputs, or operational details unless policy explicitly allows.
                 </p>
               </div>
 
               <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[REDACTION]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Tiered visibility</h3>
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[CONTROLLED REVIEW]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Authorized verification view</h3>
                 <p class="mt-3 text-slateblue leading-relaxed">
-                  Disclosure tiers can be structured so reviewers receive only what is necessary for integrity verification and oversight tasks.
+                  Expanded fields required to validate integrity, provenance, and policy alignment, subject to authorization and agreement.
+                  Masking rules can preserve privacy and trade secrets while allowing verification checks.
                 </p>
               </div>
 
               <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[PROVENANCE]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Policy binding</h3>
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[CASE-SPECIFIC]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Disclosure by mandate</h3>
                 <p class="mt-3 text-slateblue leading-relaxed">
-                  Artifacts include policy identifiers, versions, and hashes so verification can confirm which scope rules governed capture.
+                  Where legally required, case-specific disclosure can be performed under formal process. NADIR’s role is to preserve artifact
+                  integrity and a verifiable lineage, not to determine disclosure scope.
                 </p>
               </div>
 
             </div>
 
             <div class="mt-8 border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[PURPOSE LIMITATION]</div>
+              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[MASKING MODEL]</div>
               <p class="mt-3 text-slateblue leading-relaxed">
-                Audit artifacts are generated for defined oversight and reconstruction purposes under policy scope.
-                Repurposing artifacts for unrelated surveillance, secondary use, or other non-authorized purposes should be governed by
-                explicit institutional authorization, applicable law, and the operator’s policy constraints.
+                Capture policy defines what is included, what is excluded, and what is masked. Where fields must be withheld, artifacts can
+                preserve verification properties via stable identifiers, hashed representations, or disclosure-tier segmentation, as defined
+                in the Capture Policy & Masking Schema under controlled review.
               </p>
             </div>
 
@@ -254,115 +263,178 @@
       </div>
     </section>
 
-    <!-- SECTION 3: Verification workflow (portal mock) -->
+    <!-- SECTION 3: Verification workflow (step sequence + anchored mock feed) -->
     <section class="narrative-section border-t hairline">
       <div class="mx-auto max-w-7xl px-6">
         <div class="grid grid-cols-12 gap-10 py-20 items-start">
 
           <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[VERIFICATION WORKFLOW]</div>
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[VERIFICATION]</div>
             <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-              Deterministic checks, pass/fail outputs
+              Verification sequence
             </h2>
             <p class="mt-4 text-slateblue leading-relaxed measure">
-              Verification recomputes integrity values over canonicalized artifacts, validates signatures, and confirms policy alignment.
-              Verification confirms integrity and provenance—not correctness, safety, or legal compliance.
+              Verification is a deterministic procedure: canonicalize, recompute hash, validate signature, and confirm policy identifiers.
+              Verification confirms integrity and provenance under policy. It does not confirm correctness, fairness, legality, or compliance
+              status of the underlying system.
             </p>
           </div>
 
           <div class="col-span-12 lg:col-span-8">
-            <div class="border hairline p-6 no-rounded reveal">
-              <div class="flex flex-wrap items-start justify-between gap-3">
-                <div>
-                  <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[PORTAL MOCK]</div>
-                  <h3 class="mt-2 font-semibold tracking-[-0.01em]">Artifact verification queue</h3>
-                  <p class="mt-2 text-slateblue leading-relaxed">
-                    Illustrative display only. Field names and visibility are governed by policy scope and disclosure tier.
-                  </p>
-                </div>
-                <div class="font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">[PASS/FAIL]</div>
-              </div>
+            <div class="grid md:grid-cols-3 gap-6">
 
-              <div class="mt-6 overflow-x-auto border hairline no-rounded">
-                <table class="min-w-full text-left text-sm">
-                  <thead class="border-b hairline bg-vellum">
-                    <tr class="text-slateblue">
-                      <th class="px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em]">Artifact ID</th>
-                      <th class="px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em]">Policy</th>
-                      <th class="px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em]">Disclosure</th>
-                      <th class="px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em]">Integrity</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y hairline">
-                    <tr>
-                      <td class="px-4 py-3 font-mono text-[12px] text-slateblue">0xA19F…3C7D</td>
-                      <td class="px-4 py-3 text-slateblue">POL-INT-012</td>
-                      <td class="px-4 py-3 text-slateblue">Controlled</td>
-                      <td class="px-4 py-3"><span class="font-mono text-[12px] text-verified">VERIFIED</span></td>
-                    </tr>
-                    <tr>
-                      <td class="px-4 py-3 font-mono text-[12px] text-slateblue">0xB004…91A2</td>
-                      <td class="px-4 py-3 text-slateblue">POL-INT-012</td>
-                      <td class="px-4 py-3 text-slateblue">Controlled</td>
-                      <td class="px-4 py-3"><span class="font-mono text-[12px] text-mismatch">MISMATCH</span></td>
-                    </tr>
-                    <tr>
-                      <td class="px-4 py-3 font-mono text-[12px] text-slateblue">0xC7E1…5521</td>
-                      <td class="px-4 py-3 text-slateblue">POL-PUB-004</td>
-                      <td class="px-4 py-3 text-slateblue">Redacted</td>
-                      <td class="px-4 py-3"><span class="font-mono text-[12px] text-neutral">PENDING</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div class="mt-6 grid md:grid-cols-3 gap-6">
-                <div class="border hairline p-5 no-rounded">
-                  <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STEP 01]</div>
-                  <p class="mt-2 text-slateblue leading-relaxed">
-                    Canonicalize JSON artifacts deterministically (e.g., RFC 8785) as defined by the verification contract.
-                  </p>
-                </div>
-                <div class="border hairline p-5 no-rounded">
-                  <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STEP 02]</div>
-                  <p class="mt-2 text-slateblue leading-relaxed">
-                    Recompute hash and validate digital signature against the configured verification keys and trust policy.
-                  </p>
-                </div>
-                <div class="border hairline p-5 no-rounded">
-                  <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STEP 03]</div>
-                  <p class="mt-2 text-slateblue leading-relaxed">
-                    Confirm the artifact was generated under the declared policy identifier, version, and scope rules.
-                  </p>
-                </div>
-              </div>
-
-              <div class="mt-8 border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[KEY CUSTODY]</div>
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STEP 01]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Canonicalize</h3>
                 <p class="mt-3 text-slateblue leading-relaxed">
-                  NADIR is designed for non-custodial deployments: signing keys are generated and retained within the client’s controlled
-                  environment (HSM/KMS or equivalent); NADIR does not require possession of client private keys to produce verifiable records.
-                  Key management and custody policies are defined by the implementing organization.
+                  Serialize the artifact deterministically for verification. JSON artifacts may use RFC 8785 canonicalization where specified
+                  by the verification contract.
+                </p>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STEP 02]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Recompute hash</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Recompute the digest over the canonical artifact to detect modification. Hash suites are deployment-defined; contracts specify
+                  inputs and expected outputs for PASS/FAIL behavior.
+                </p>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STEP 03]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Validate signature</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Validate that the artifact signature matches the computed digest and the declared verification key. Key custody and trust anchors
+                  are governed by deployment configuration.
                 </p>
               </div>
 
             </div>
 
+            <div class="mt-6 grid md:grid-cols-3 gap-6">
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STEP 04]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Confirm policy alignment</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Confirm Policy ID, Policy version, and policy hash (where applicable). Verify that the artifact claims match the policy scope
+                  that governed capture and masking.
+                </p>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STEP 05]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Check timestamps (optional)</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Where configured, validate time anchoring attestations (e.g., TSA or equivalent). Timestamp posture depends on deployment
+                  architecture and governance requirements.
+                </p>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[OUTPUT]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Produce review record</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Produce a verification result suitable for audit trails: PASS/FAIL, reason codes, policy identifiers, and reviewer metadata
+                  as allowed by disclosure policy.
+                </p>
+              </div>
+            </div>
+
             <div class="mt-8 border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[NEXT]</div>
-              <div class="mt-3 flex flex-wrap gap-3">
-                <a href="pcl.html"
-                   class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-                  Privacy & Civil Liberties (PCL)
-                </a>
-                <a href="admissibility.html"
-                   class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-                  Legal admissibility primer
-                </a>
-                <a href="incident-72h.html"
-                   class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-                  72-hour playbook
-                </a>
+              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARY]</div>
+              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
+                <li>Verification confirms integrity and provenance under policy; it does not certify correctness or compliance.</li>
+                <li>Disclosure and access are controlled by authorization, mandate, and policy scope.</li>
+                <li>Admissibility and evidentiary weight are determined by relevant authorities.</li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Mock portal feed (non-operational, illustrative) -->
+    <section class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[ILLUSTRATIVE FEED]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              Review queue (example)
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              The portal view below is illustrative only. It demonstrates how a reviewer might receive a queue of artifacts with disclosure tier,
+              policy identifiers, and verification state. Operational implementations are deployment-specific and provided under controlled review.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="border hairline no-rounded overflow-hidden reveal">
+              <div class="px-6 py-4 border-b hairline flex items-center justify-between">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">
+                  [QUEUE] [CONTROLLED REVIEW]
+                </div>
+                <div class="font-mono text-[11px] tracking-[0.14em] text-slateblue/70">
+                  Policy: <span class="text-slateblue">NDR-CP-001</span> · <span class="text-slateblue">v1.0</span>
+                </div>
+              </div>
+
+              <div class="divide-y" style="border-color: rgba(71,85,105,0.22);">
+                <div class="px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                  <div class="space-y-1">
+                    <div class="mono-chip text-[12px] text-slateblue/90 tracking-[0.08em]">
+                      Artifact ID: [A9F3-18C2-7D11]
+                    </div>
+                    <div class="text-sm text-slateblue">
+                      Disclosure tier: Controlled review · Capture scope: Policy-scoped · Status: Verification pending
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="mono-chip text-[11px] px-3 py-2 border hairline no-rounded text-slateblue/90">[PENDING]</span>
+                    <a href="docs.html" class="mono-chip text-[11px] px-3 py-2 bg-obsidian text-vellum no-rounded hover:opacity-90 transition">Verify</a>
+                  </div>
+                </div>
+
+                <div class="px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                  <div class="space-y-1">
+                    <div class="mono-chip text-[12px] text-slateblue/90 tracking-[0.08em]">
+                      Artifact ID: [B41E-90D4-22AF]
+                    </div>
+                    <div class="text-sm text-slateblue">
+                      Disclosure tier: Redacted · Capture scope: Policy-scoped · Status: Verified
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="mono-chip text-[11px] px-3 py-2 border hairline no-rounded text-verified">[VERIFIED]</span>
+                    <a href="trust.html" class="mono-chip text-[11px] px-3 py-2 border hairline no-rounded hover:bg-obsidian hover:text-vellum transition">View posture</a>
+                  </div>
+                </div>
+
+                <div class="px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                  <div class="space-y-1">
+                    <div class="mono-chip text-[12px] text-slateblue/90 tracking-[0.08em]">
+                      Artifact ID: [C02A-11F0-6B9C]
+                    </div>
+                    <div class="text-sm text-slateblue">
+                      Disclosure tier: Controlled review · Capture scope: Policy-scoped · Status: Mismatch (requires escalation)
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="mono-chip text-[11px] px-3 py-2 border hairline no-rounded text-mismatch">[MISMATCH]</span>
+                    <a href="incident-72h.html" class="mono-chip text-[11px] px-3 py-2 bg-obsidian text-vellum no-rounded hover:opacity-90 transition">Escalate</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="px-6 py-4 border-t hairline">
+                <p class="text-sm text-slateblue leading-relaxed">
+                  Verification results shown here are illustrative. Operational verification outputs should include reason codes, policy identifiers,
+                  canonicalization version, and trust anchors as specified by the Verification CLI Contract under controlled review.
+                </p>
               </div>
             </div>
 
