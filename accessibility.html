@@ -3,12 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NADIR — Accessibility Statement</title>
-  <meta name="description" content="Accessibility posture for NADIR web properties and institutional interfaces." />
+  <title>NADIR — Accessibility</title>
+  <meta name="description" content="NADIR Accessibility Statement: conformance targets, scope, testing methodology, known limitations, and contact process. Informational only." />
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -23,54 +26,60 @@
             obsidian: '#0A0F1E',
             slateblue: '#475569',
             orange: '#EA580C',
+            verified: '#166534',
+            mismatch: '#991B1B',
+            neutral: '#64748B',
           }
         }
       }
     }
   </script>
 
+  <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background:#F9FAFB; color:#0A0F1E; }
+    .hairline { border-color: rgba(71,85,105,0.22); }
+    .measure { max-width: 74ch; }
+    .no-rounded { border-radius: 0 !important; }
+    .mono-chip { font-family:'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  </style>
 </head>
 
-<body class="font-sans antialiased bg-vellum text-obsidian">
+<body class="font-sans antialiased">
 
-  <!-- HEADER (same as your template header) -->
-  <header class="sticky top-0 z-50 bg-vellum/80 backdrop-blur-md border-b" style="border-color:rgba(71,85,105,0.22);">
+  <!-- Institutional Header -->
+  <header class="sticky top-0 z-50 bg-vellum/80 backdrop-blur-md border-b hairline">
     <div class="mx-auto max-w-7xl px-6">
       <div class="h-16 flex items-center justify-between">
         <a href="index.html" class="flex items-center gap-3">
-          <img src="assets/nadir-wordmark.svg" alt="NADIR" class="h-7 w-auto">
+          <img src="assets/nadir-wordmark.svg" alt="NADIR" class="h-7 w-auto" onerror="this.style.display='none'">
           <div class="leading-tight">
             <div class="text-[12px] tracking-[0.34em] uppercase">NADIR</div>
-            <div class="text-[10px] text-slateblue/80 uppercase tracking-[0.18em]">Institutional framework</div>
+            <div class="text-[10px] text-slateblue/80 uppercase tracking-[0.18em]">Accessibility</div>
           </div>
         </a>
 
         <nav class="hidden md:flex items-center gap-1 text-[11px] uppercase tracking-[0.16em] text-slateblue/90">
           <a class="px-3 py-2 hover:text-obsidian" href="index.html">Overview</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="platform.html">Platform</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="docs.html">Documents</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="roadmap.html">Roadmap</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="governance.html">Governance</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="trust.html">Trust</a>
           <a class="px-3 py-2 hover:text-obsidian" href="privacy.html">Privacy</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="terms.html">Terms</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="ethical.html">Ethical</a>
           <a class="px-3 py-2 hover:text-obsidian" href="contact.html">Contact</a>
         </nav>
 
-        <a href="contact.html"
-           class="inline-flex items-center justify-center h-10 px-4 border text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition"
-           style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-          Accessibility contact
+        <a href="mailto:contact@nadir-ai.com"
+           class="inline-flex items-center justify-center h-10 px-4 border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
+          Report accessibility issue
         </a>
       </div>
     </div>
   </header>
 
   <main>
+
     <!-- HERO -->
     <section class="nadir-hero relative h-screen overflow-hidden">
       <div class="hero-pin absolute inset-0">
@@ -83,176 +92,182 @@
         </div>
       </div>
 
-      <div class="absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">
+      <div class="absolute top-6 left-6 z-10 mono-chip text-[11px] text-slateblue/90 tracking-[0.14em]">
         [V2026.02.19]
       </div>
 
       <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
         <div class="grid grid-cols-12 h-full">
           <div class="col-span-12 flex flex-col items-center justify-center text-center">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
-              [WCAG] · [INSTITUTIONAL ACCESS] · [USABILITY]
+
+            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
+              [WCAG TARGET] · [INCLUSIVE DESIGN] · [CONTINUOUS IMPROVEMENT]
             </div>
 
             <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
-              Accessibility Statement
+              Accessibility statement
             </h1>
 
-            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue max-w-[74ch]">
-              NADIR is designed to be usable by a broad range of people, including those using assistive technologies.
-              This statement describes accessibility goals, testing posture, and how to report issues.
+            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
+              NADIR is committed to providing a digital experience that is accessible to users with disabilities.
+              This statement outlines conformance targets, scope, known limitations, and how to report accessibility issues.
             </p>
 
             <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
               <a href="#content"
-                 class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition"
-                 style="border-radius:0;">
-                Read accessibility posture
+                 class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
+                View accessibility scope
               </a>
               <a href="mailto:contact@nadir-ai.com"
-                 class="inline-flex h-11 px-6 items-center justify-center border text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition"
-                 style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-                Report an issue
+                 class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
+                Report issue
               </a>
             </div>
+
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CONTENT -->
-    <section id="content" class="narrative-section border-t" style="border-color:rgba(71,85,105,0.22);">
+    <!-- SECTION 1: Conformance target -->
+    <section id="content" class="narrative-section border-t hairline">
       <div class="mx-auto max-w-7xl px-6">
         <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
           <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
-              [STANDARD]
-            </div>
+            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[CONFORMANCE]</div>
             <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-              Accessibility target
+              Conformance objective
             </h2>
-            <p class="mt-4 text-slateblue leading-relaxed max-w-[74ch]">
-              NADIR aims to align with WCAG 2.2 Level AA principles for public-facing pages and institutional review interfaces,
-              subject to ongoing iteration and system evolution.
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              The public NADIR website is designed with reference to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA.
+              Conformance is an ongoing objective and may evolve as standards are updated.
             </p>
           </div>
 
           <div class="col-span-12 lg:col-span-8">
             <div class="grid md:grid-cols-3 gap-6">
-              <div class="border p-6 reveal" style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[FOUNDATION]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Semantic structure</h3>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[PERCEIVABLE]</div>
                 <p class="mt-3 text-slateblue leading-relaxed">
-                  Pages are structured with readable heading order, consistent navigation landmarks, and clear focus states
-                  to support screen readers and keyboard navigation.
+                  Text alternatives for non-text content. Sufficient color contrast between foreground and background.
                 </p>
               </div>
 
-              <div class="border p-6 reveal" style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[KEYBOARD]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Operable controls</h3>
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[OPERABLE]</div>
                 <p class="mt-3 text-slateblue leading-relaxed">
-                  Interactive elements are designed to be reachable and usable without a mouse. Motion behaviors are scrub-linked
-                  and avoid attention-grabbing effects.
+                  Keyboard-accessible navigation. Logical focus order. No content that flashes in a way that may cause seizures.
                 </p>
               </div>
 
-              <div class="border p-6 reveal" style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[MOTION]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Reduced motion</h3>
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[UNDERSTANDABLE]</div>
                 <p class="mt-3 text-slateblue leading-relaxed">
-                  Where supported, NADIR respects “prefers-reduced-motion” and will limit scroll-linked transforms for users who
-                  opt out of motion.
+                  Clear navigation labels. Predictable interface behavior. Structured heading hierarchy.
                 </p>
               </div>
-            </div>
 
-            <div class="mt-8 border p-6 reveal" style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[TESTING POSTURE]</div>
-              <ul class="mt-3 space-y-3 text-slateblue leading-relaxed">
-                <li><span class="font-semibold text-obsidian">Manual review:</span> periodic keyboard-only navigation checks, focus visibility review, and heading/landmark structure validation.</li>
-                <li><span class="font-semibold text-obsidian">Assistive technology:</span> targeted checks with common screen reader/browser combinations where feasible.</li>
-                <li><span class="font-semibold text-obsidian">Contrast and readability:</span> typography and color choices prioritize low-chroma authority while maintaining legibility.</li>
-              </ul>
-            </div>
-
-            <div class="mt-8 border p-6 reveal" style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[KNOWN LIMITATIONS]</div>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                NADIR is under active development. Some pages or interactive elements may change rapidly.
-                If you encounter an accessibility barrier, report it and include the page URL, device/browser, and a brief description.
-              </p>
-            </div>
-
-            <div class="mt-8 border p-6 reveal" style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[CONTACT]</div>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                Accessibility issues may be reported to
-                <a class="underline text-obsidian" href="mailto:contact@nadir-ai.com">contact@nadir-ai.com</a>.
-                NADIR intends to review reports and respond within a reasonable timeframe appropriate to project stage and resourcing.
-              </p>
-            </div>
-
-            <div class="mt-8 border p-6 reveal" style="border-color:rgba(71,85,105,0.22); border-radius:0;">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARY]</div>
-              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
-                <li>This statement describes goals and operating posture; it is not a certification of compliance.</li>
-                <li>Accessibility posture may evolve as pages, tooling, and institutional workflows expand.</li>
-                <li>Institutional deployments may require additional accessibility commitments under separate written agreement.</li>
-              </ul>
             </div>
 
           </div>
+
         </div>
       </div>
     </section>
+
+    <!-- SECTION 2: Scope and limitations -->
+    <section class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[SCOPE]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              Scope and limitations
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              This statement applies to the public NADIR website. Controlled-access portals and third-party
+              services may have separate accessibility policies.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="border hairline p-6 no-rounded reveal">
+              <ul class="space-y-2 text-slateblue leading-relaxed">
+                <li>Some downloadable documents (PDF or external formats) may not yet be fully optimized for accessibility.</li>
+                <li>Third-party embedded services are subject to their own accessibility practices.</li>
+                <li>Accessibility features are tested periodically but may not cover every assistive technology combination.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Feedback and review cadence -->
+    <section class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[FEEDBACK]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              Reporting and review
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              Accessibility feedback is reviewed as part of ongoing site maintenance.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="border hairline p-6 no-rounded reveal">
+              <p class="text-slateblue leading-relaxed">
+                To report an accessibility issue, email
+                <a class="underline hover:text-obsidian" href="mailto:contact@nadir-ai.com">contact@nadir-ai.com</a>.
+                Please include the page URL, a description of the issue, and any assistive technology used.
+              </p>
+            </div>
+
+            <div class="mt-8 border hairline p-6 no-rounded reveal">
+              <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[UPDATE CADENCE]</div>
+              <p class="mt-3 text-slateblue leading-relaxed">
+                This accessibility statement is reviewed periodically and may be updated to reflect changes in standards
+                or implementation.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- FOOTER (same as your footer, with live links) -->
+  <!-- FOOTER -->
   <footer class="bg-obsidian text-vellum border-t border-white/10">
     <div class="mx-auto max-w-7xl px-6 py-14">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
           <div class="text-[12px] tracking-[0.22em] uppercase">NADIR</div>
           <div class="mt-3 text-sm text-white/70 leading-relaxed">
-            © 2026 NADIR, a project of Brian Covarrubias. All rights reserved.<br>
-            <span class="font-mono text-white/80">[V2026.02.19]</span> — Unauthorized distribution prohibited.
+            © 2026 NADIR. All rights reserved.<br>
+            <span class="font-mono text-white/80">[V2026.02.19]</span>
           </div>
         </div>
-
         <div>
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Legal</div>
+          <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-white/70">Legal</div>
           <ul class="mt-3 space-y-2 text-sm text-white/70">
             <li><a class="hover:text-white" href="privacy.html">Privacy</a></li>
             <li><a class="hover:text-white" href="terms.html">Terms</a></li>
-            <li><a class="hover:text-white" href="ethical.html">Ethical Use</a></li>
-            <li><a class="hover:text-white" href="accessibility.html">Accessibility</a></li>
             <li><a class="hover:text-white" href="modern-slavery.html">Modern Slavery</a></li>
           </ul>
         </div>
-
         <div>
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Trust infrastructure</div>
-          <ul class="mt-3 space-y-2 text-sm text-white/70">
-            <li><a class="hover:text-white" href="trust.html">Trust Center</a></li>
-            <li><a class="hover:text-white" href="compliance.html">Compliance Crosswalk</a></li>
-            <li><a class="hover:text-white" href="vdp.html">Vulnerability Disclosure (VDP)</a></li>
-            <li><a class="hover:text-white" href="sbom.html">SBOM</a></li>
-            <li><a class="hover:text-white" href="sustainability.html">Sustainability</a></li>
-            <li><a class="hover:text-white" href="key-custody.html">Key Custody</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Institutional</div>
-          <ul class="mt-3 space-y-2 text-sm text-white/70">
-            <li><a class="hover:text-white" href="pcl.html">Privacy & Civil Liberties (PCL)</a></li>
-            <li><a class="hover:text-white" href="admissibility.html">Legal Admissibility Primer</a></li>
-            <li><a class="hover:text-white" href="incident-72h.html">72-Hour Playbook</a></li>
-            <li><a class="hover:text-white" href="contact.html">Contact</a></li>
-          </ul>
-
-          <div class="mt-6 text-sm text-white/70">
+          <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-white/70">Contact</div>
+          <div class="mt-3 text-sm text-white/70">
             <a class="hover:text-white" href="mailto:contact@nadir-ai.com">contact@nadir-ai.com</a>
           </div>
         </div>
@@ -260,6 +275,6 @@
     </div>
   </footer>
 
-  <script src="assets/site.js" defer></script>
+  <script src="assets/site.js"></script>
 </body>
 </html>
