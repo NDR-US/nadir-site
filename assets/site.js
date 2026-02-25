@@ -1,114 +1,148 @@
-/* /assets/site.js
-GLOBAL GSAP SCROLL LOGIC — apply to every page using the template above.
-- Hero pin + scrub (H1 scale + fade)
-- Narrative section pin + scrub (color shift into focus)
-- Subtle reveals for cards (no bounce)
-- Reduced-motion safe
-*/
-(() => {
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+<!-- /assets/site.js
+GLOBAL GSAP SCROLL LOGIC (Palantir-style scrub + pin)
+Applies to:
+- .nadir-hero (pins background + scrubs hero text)
+- .narrative-section (pins left column focus text + reveals right-column cards)
+No bounce. No elastic. Procurement-safe motion.
+-->
+<script>
+  (function () {
+    if (!window.gsap || !window.ScrollTrigger) return;
 
-  // Nav active state (simple filename match)
-  const here = location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('nav a[href]').forEach(a => {
-    if (a.getAttribute('href') === here) a.classList.add('text-obsidian');
-  });
+    gsap.registerPlugin(ScrollTrigger);
 
-  if (prefersReduced) return;
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    // Respect reduced motion
+    const reduce =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  gsap.registerPlugin(ScrollTrigger);
+    if (reduce) return;
 
-  // 1) HERO: pin background + scrub H1 / lead
-  const hero = document.querySelector('.nadir-hero');
-  if (hero) {
-    const pinLayer = hero.querySelector('.hero-pin');
-    const h1 = hero.querySelector('.hero-h1');
-    const lead = hero.querySelector('.hero-lead');
+    // HERO: pin background while scrubbing headline + lead
+    const hero = document.querySelector(".nadir-hero");
+    if (hero) {
+      const h1 = hero.querySelector(".hero-h1");
+      const lead = hero.querySelector(".hero-lead");
+      const version = hero.querySelector(".hero-version");
+      const pinBg = hero.querySelector(".hero-pin");
 
-    // Pin the background surface
-    if (pinLayer) {
-      ScrollTrigger.create({
-        trigger: hero,
-        start: 'top top',
-        end: '+=900',
-        pin: pinLayer,
-        pinSpacing: true
-      });
-    }
-
-    // Scrub the hero narrative (no bounce, no “elastic”)
-    const tlHero = gsap.timeline({
-      scrollTrigger: {
-        trigger: hero,
-        start: 'top top',
-        end: '+=900',
-        scrub: 1.2
+      if (pinBg) {
+        ScrollTrigger.create({
+          trigger: hero,
+          start: "top top",
+          end: "+=1200",
+          pin: pinBg,
+          pinSpacing: false
+        });
       }
-    });
 
-    if (h1) {
-      tlHero.to(h1, {
-        opacity: 0,
-        scale: 1.06,
-        y: -18,
-        ease: 'none',
-        duration: 1
-      }, 0);
+      if (h1) {
+        gsap.to(h1, {
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "+=900",
+            scrub: 1
+          },
+          opacity: 0,
+          y: -24,
+          scale: 1.04,
+          ease: "none"
+        });
+      }
+
+      if (lead) {
+        gsap.to(lead, {
+          scrollTrigger: {
+            trigger: hero,
+            start: "top+=120 top",
+            end: "+=900",
+            scrub: 1
+          },
+          opacity: 0,
+          y: -10,
+          ease: "none"
+        });
+      }
+
+      if (version) {
+        gsap.fromTo(
+          version,
+          { opacity: 0.85 },
+          {
+            scrollTrigger: {
+              trigger: hero,
+              start: "top top",
+              end: "+=900",
+              scrub: 1
+            },
+            opacity: 1,
+            ease: "none"
+          }
+        );
+      }
     }
 
-    if (lead) {
-      tlHero.to(lead, {
-        opacity: 0.25,
-        y: -10,
-        ease: 'none',
-        duration: 1
-      }, 0.15);
-    }
-  }
+    // NARRATIVE SECTIONS: pin the left column and gently focus the h2 color
+    const sections = gsap.utils.toArray(".narrative-section");
+    sections.forEach((section) => {
+      const focus = section.querySelector(".scroll-text");
+      const pinCol = section.querySelector(".pin-col");
+      const reveals = section.querySelectorAll(".reveal");
 
-  // 2) Pinned narrative sections (Palantir-style)
-  gsap.utils.toArray('.narrative-section').forEach(section => {
-    const focal = section.querySelector('.scroll-text');
-    if (!focal) return;
-
-    // Pin each narrative block for controlled disclosure
-    ScrollTrigger.create({
-      trigger: section,
-      start: 'top top',
-      end: '+=900',
-      pin: true,
-      scrub: 1
-    });
-
-    // Text color transition as it becomes focal
-    gsap.fromTo(
-      focal,
-      { color: 'rgba(71,85,105,0.95)' }, // slateblue-ish
-      {
-        color: '#EA580C',                // International Orange
-        ease: 'none',
-        scrollTrigger: {
+      // Pin the left column so the narrative holds while the right side scrolls.
+      if (pinCol) {
+        ScrollTrigger.create({
           trigger: section,
-          start: 'top top',
-          end: '+=900',
-          scrub: 1
-        }
+          start: "top top",
+          end: "+=1100",
+          pin: pinCol,
+          pinSpacing: true
+        });
       }
-    );
-  });
 
-  // 3) Subtle reveal for cards and blocks (no bouncing)
-  gsap.utils.toArray('.reveal').forEach(el => {
-    gsap.fromTo(el, { opacity: 0, y: 14 }, {
-      opacity: 1,
-      y: 0,
-      duration: 0.7,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 85%'
+      // Focus transition (slate -> obsidian -> orange accent at focal point)
+      if (focus) {
+        gsap.to(focus, {
+          scrollTrigger: {
+            trigger: section,
+            start: "top+=120 top",
+            end: "+=900",
+            scrub: 1
+          },
+          color: "#0A0F1E",
+          ease: "none"
+        });
+
+        gsap.to(focus, {
+          scrollTrigger: {
+            trigger: section,
+            start: "top+=420 top",
+            end: "+=500",
+            scrub: 1
+          },
+          color: "#EA580C",
+          ease: "none"
+        });
       }
+
+      // Reveal cards (subtle)
+      reveals.forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 18 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 82%"
+            }
+          }
+        );
+      });
     });
-  });
-})();
+  })();
+</script>
