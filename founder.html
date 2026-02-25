@@ -1,4 +1,4 @@
-<!-- /founder.html (PAGE — FOUNDER) -->
+<!-- /founder.html  (PAGE 6 — FOUNDER’S LETTER) -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
@@ -18,12 +18,20 @@
   <header class="siteHeader">
     <div class="wrap">
       <div class="topbar">
-        <div class="brand">
-          <div class="mark">NADIR</div>
-          <div class="descriptor">Founder</div>
-        </div>
+        <a class="brand" href="index.html" aria-label="NADIR home">
+          <span class="logo" aria-hidden="true">
+            <svg viewBox="0 0 64 64" role="img" focusable="false">
+              <path d="M16 46V18l14 18 14-18v28" />
+              <path d="M16 46h6l8-10 8 10h6" />
+            </svg>
+          </span>
+          <span class="brandText">
+            <span class="mark">NADIR</span>
+            <span class="descriptor">Founder’s letter · Institutional posture</span>
+          </span>
+        </a>
 
-        <nav class="nav">
+        <nav class="nav" aria-label="Primary">
           <a data-page="index.html" href="index.html">Overview</a>
           <a data-page="platform.html" href="platform.html">Architecture</a>
           <a data-page="use-cases.html" href="use-cases.html">Integration</a>
@@ -33,6 +41,7 @@
           <a data-page="governance.html" href="governance.html">Governance</a>
           <a data-page="privacy.html" href="privacy.html">Privacy</a>
           <a data-page="terms.html" href="terms.html">Terms</a>
+          <a data-page="ethical.html" href="ethical.html">Ethical Use</a>
           <a data-page="contact.html" href="contact.html">Contact</a>
         </nav>
       </div>
@@ -41,15 +50,14 @@
 
   <main class="wrap page">
     <section class="hero">
-      <div class="kicker">INSTITUTIONAL POSTURE • MINIMAL CLAIMS • OVERSIGHT READINESS</div>
+      <div class="kicker">INSTITUTIONAL POSTURE · MINIMAL CLAIMS · OVERSIGHT READINESS</div>
       <h1>Founder’s letter</h1>
       <p class="lead">
-        NADIR exists to make review possible when AI systems matter — without demanding that builders disclose proprietary internals to prove integrity.
+        NADIR exists to make review possible when AI systems matter — without requiring disclosure of proprietary internals to prove integrity.
       </p>
     </section>
 
-    <section class="section prose">
-      <h2>Letter from the founder</h2>
+    <section class="section prose proseLarge">
       <p>
         AI systems are increasingly present in environments where the cost of ambiguity is unacceptable. Yet most deployments preserve outputs and surface telemetry, not canonical records designed to survive formal review.
       </p>
@@ -59,19 +67,22 @@
       <p>
         The objective is clarity under constrained disclosure: protect proprietary model weights and confidential architecture while enabling independent verification of provenance and tamper-resistance.
       </p>
-      <p class="sig">— Brian Covarrubias</p>
+      <p class="lead" style="margin-top:16px;">It produces records capable of deterministic verification.</p>
 
-      <div class="noteLine">NADIR is record infrastructure, not adjudication.</div>
+      <p class="sig">— Brian Covarrubias<br><span class="muted">NADIR</span></p>
+
+      <div class="boundary" style="margin-top:18px">
+        <div class="title">Core position</div>
+        <ul>
+          <li>NADIR is record infrastructure, not adjudication.</li>
+        </ul>
+      </div>
     </section>
 
     <footer class="siteFooter">
       <div class="footgrid">
-        <div>
-          <div class="badge">© 2026 NADIR. Proprietary infrastructure. Version V2026.02.19.</div>
-          <div class="small" style="margin-top:10px;">
-            <a href="governance.html">Governance</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="governance.html">Ethical Use</a> · <a href="contact.html">Contact</a>
-          </div>
-        </div>
+        <div class="badge">FOUNDER</div>
+        <div class="right">© 2026 NADIR, a project of Brian Covarrubias. All rights reserved. — V2026.02.19</div>
       </div>
     </footer>
   </main>
