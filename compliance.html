@@ -1,138 +1,504 @@
-<main>
-  <section class="nadir-hero relative h-screen overflow-hidden">
-    <div class="hero-pin absolute inset-0">
-      <div class="absolute inset-0 bg-vellum"></div>
-      <div class="absolute inset-0 opacity-[0.08]"
-        style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;"></div>
-      <div class="absolute inset-0"
-        style="background:linear-gradient(to bottom, rgba(10,15,30,0.02), rgba(10,15,30,0.00) 40%, rgba(10,15,30,0.03));"></div>
-    </div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NADIR — Compliance Crosswalk</title>
+  <meta name="description" content="Regulatory interoperability crosswalk for NADIR: EU AI Act logging/transparency posture, NIST AI RMF mapping, state-level disclosures, and versioned statutory alignment log." />
 
-    <div class="absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">[V2026.02.19]</div>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
-      <div class="grid grid-cols-12 h-full">
-        <div class="col-span-12 flex flex-col items-center justify-center text-center">
-          <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
-            [REGULATORY INTEROPERABILITY] · [CROSSWALK] · [INSTITUTIONAL REVIEW]
-          </div>
-          <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
-            Compliance Crosswalk
-          </h1>
-          <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
-            NADIR supports structured record-keeping and verification workflows required in regulated environments.
-            This page maps NADIR’s evidentiary functions to common governance frameworks. This is not a claim of compliance.
-          </p>
-          <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <a href="#content"
-              class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
-              Enter crosswalk
-            </a>
-            <a href="docs.html"
-              class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-              Document suite
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Public Sans', 'ui-sans-serif', 'system-ui'],
+            mono: ['Roboto Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+          },
+          colors: {
+            vellum: '#F9FAFB',
+            obsidian: '#0A0F1E',
+            slateblue: '#475569',
+            orange: '#EA580C',
+            verified: '#166534',
+            mismatch: '#991B1B',
+            neutral: '#64748B',
+          }
+        }
+      }
+    }
+  </script>
 
-  <section id="content" class="narrative-section border-t hairline">
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background:#F9FAFB; color:#0A0F1E; }
+    .hairline { border-color: rgba(71,85,105,0.22); }
+    .measure { max-width: 74ch; }
+    .no-rounded { border-radius: 0 !important; }
+  </style>
+</head>
+
+<body class="font-sans antialiased">
+
+  <!-- Institutional Header -->
+  <header class="sticky top-0 z-50 bg-vellum/80 backdrop-blur-md border-b hairline">
     <div class="mx-auto max-w-7xl px-6">
-      <div class="grid grid-cols-12 gap-10 py-20 items-start">
-        <div class="col-span-12 lg:col-span-4">
-          <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[EU AI ACT]</div>
-          <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-            Record-keeping and transparency support
-          </h2>
-          <p class="mt-4 text-slateblue leading-relaxed measure">
-            NADIR is positioned to support high-risk system operators with consistent artifact generation and later verification,
-            under defined policy scope and constrained disclosure.
-          </p>
+      <div class="h-16 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <img src="assets/nadir-wordmark.svg" alt="NADIR" class="h-7 w-auto" onerror="this.style.display='none'">
+          <div class="leading-tight">
+            <div class="text-[12px] tracking-[0.34em] uppercase">NADIR</div>
+            <div class="text-[10px] text-slateblue/80 uppercase tracking-[0.18em]">Regulatory interoperability</div>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-1 text-[11px] uppercase tracking-[0.16em] text-slateblue/90">
+          <a class="px-3 py-2 hover:text-obsidian" href="index.html">Overview</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="platform.html">Platform</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="use-cases.html">Integration</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="oversight.html">Oversight</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="docs.html">Documents</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="compliance.html">Compliance</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="trust.html">Trust</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="roadmap.html">Roadmap</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="founder.html">Founder</a>
+          <a class="px-3 py-2 hover:text-obsidian" href="pcl.html">PCL</a>
+        </nav>
+
+        <a href="contact.html"
+           class="inline-flex items-center justify-center h-10 px-4 border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
+          Request controlled review
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO (100vh) -->
+    <section class="nadir-hero relative h-screen overflow-hidden">
+      <div class="hero-pin absolute inset-0">
+        <div class="absolute inset-0 bg-vellum"></div>
+        <div class="absolute inset-0 opacity-[0.08]"
+          style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;">
         </div>
+        <div class="absolute inset-0"
+          style="background:linear-gradient(to bottom, rgba(10,15,30,0.02), rgba(10,15,30,0.00) 40%, rgba(10,15,30,0.03));">
+        </div>
+      </div>
 
-        <div class="col-span-12 lg:col-span-8">
-          <div class="grid md:grid-cols-3 gap-6">
-            <div class="border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[LOGGING]</div>
-              <h3 class="mt-3 font-semibold tracking-[-0.01em]">Structured records</h3>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                Canonical artifacts represent defined inference-time context suitable for later review and reconstruction.
-              </p>
+      <div class="absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">
+        [V2026.02.19]
+      </div>
+
+      <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
+        <div class="grid grid-cols-12 h-full">
+          <div class="col-span-12 flex flex-col items-center justify-center text-center">
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
+              [CROSSWALK] · [DISCLOSURE] · [VERSIONED POSTURE]
             </div>
 
-            <div class="border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[TRANSPARENCY]</div>
-              <h3 class="mt-3 font-semibold tracking-[-0.01em]">Deployer-facing interpretability</h3>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                Artifact structure is designed to be interpretable by deployers and authorized reviewers without exposing IP by default.
-              </p>
+            <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
+              Compliance Crosswalk
+            </h1>
+
+            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
+              This page provides a structured mapping between NADIR’s evidentiary mechanics and common regulatory expectations for
+              logging, transparency, governance, and incident response. It is a posture reference, not legal advice, and does not
+              represent certification or compliance status.
+            </p>
+
+            <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+              <a href="#content"
+                 class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
+                Enter crosswalk
+              </a>
+              <a href="trust.html"
+                 class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
+                Trust Center
+              </a>
             </div>
 
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: EU AI Act posture (high-level, non-assertive) -->
+    <section id="content" class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[EU POSTURE]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              Logging and transparency support posture
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              NADIR is designed to produce policy-scoped, integrity-sealed records that may support deployer logging and transparency
+              obligations for regulated AI systems. Exact obligations depend on system classification, role (provider/deployer),
+              and jurisdictional implementation.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="grid md:grid-cols-3 gap-6">
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[LOGGING]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Record-keeping mechanics</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Policy-defined capture converts selected inference context into canonical artifacts, then seals them cryptographically
+                  to support integrity verification and later reconstruction under oversight.
+                </p>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[TRANSPARENCY]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Deployer interpretability</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Artifacts can be structured with tiered disclosure so deployers and reviewers can interpret provenance,
+                  applied policy scope, and integrity status without default exposure of proprietary internals.
+                </p>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[DOCUMENTATION]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Technical documentation support</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  NADIR’s controlled documentation suite is intended to provide implementation details, capture schemas,
+                  and verification contracts suitable for formal review when disclosure is authorized.
+                </p>
+              </div>
+
+            </div>
+
+            <div class="mt-8 border hairline p-6 no-rounded reveal">
+              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARY]</div>
+              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
+                <li>This crosswalk is descriptive and non-exhaustive; it does not constitute legal advice or a representation of compliance.</li>
+                <li>Deployers remain responsible for determining regulatory classification, implementing required controls, and maintaining documentation.</li>
+                <li>NADIR provides verifiable records; authorized institutions determine oversight conclusions.</li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: NIST AI RMF mapping -->
+    <section class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[NIST AI RMF]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              Governance-oriented controls mapping
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              NADIR is designed to support risk governance by producing integrity-bound artifacts and verification workflows.
+              Mapping below is functional: it describes where NADIR can support operational practices, not where it replaces them.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
             <div class="border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[TECH DOC]</div>
-              <h3 class="mt-3 font-semibold tracking-[-0.01em]">Support for technical documentation</h3>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                NADIR artifacts can be referenced as integrity-bound evidence inputs within broader governance and technical documentation programs.
-              </p>
+              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[CROSSWALK TABLE]</div>
+
+              <div class="mt-4 overflow-x-auto border hairline no-rounded">
+                <table class="min-w-full text-left text-sm">
+                  <thead class="border-b hairline bg-vellum">
+                    <tr class="text-slateblue">
+                      <th class="px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em]">NIST Function</th>
+                      <th class="px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em]">NADIR Support</th>
+                      <th class="px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em]">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y hairline">
+                    <tr>
+                      <td class="px-4 py-3 text-slateblue">GOVERN</td>
+                      <td class="px-4 py-3 text-slateblue">Policy identifiers, versioning, disclosure tiers, custody posture</td>
+                      <td class="px-4 py-3 text-slateblue">Supports accountable oversight workflows; does not adjudicate outcomes.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-3 text-slateblue">MAP</td>
+                      <td class="px-4 py-3 text-slateblue">Defined capture scope for decision-state context and provenance</td>
+                      <td class="px-4 py-3 text-slateblue">Scope is configured; unnecessary collection is excluded by policy.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-3 text-slateblue">MEASURE</td>
+                      <td class="px-4 py-3 text-slateblue">Integrity verification, mismatch detection, audit-ready artifact packages</td>
+                      <td class="px-4 py-3 text-slateblue">Confirms integrity/provenance; not correctness or semantic equivalence.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-3 text-slateblue">MANAGE</td>
+                      <td class="px-4 py-3 text-slateblue">Escalation triggers, retrieval logs, incident reconstruction posture</td>
+                      <td class="px-4 py-3 text-slateblue">Operational response remains with the deploying organization.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="mt-6 grid md:grid-cols-3 gap-6">
+                <div class="border hairline p-5 no-rounded">
+                  <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[INPUT]</div>
+                  <p class="mt-2 text-slateblue leading-relaxed">
+                    Policy-scoped capture defines what is recorded, excluded, and masked under versioned governance.
+                  </p>
+                </div>
+                <div class="border hairline p-5 no-rounded">
+                  <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[INTEGRITY]</div>
+                  <p class="mt-2 text-slateblue leading-relaxed">
+                    Deterministic canonicalization and cryptographic sealing support reproducible verification across environments.
+                  </p>
+                </div>
+                <div class="border hairline p-5 no-rounded">
+                  <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[REVIEW]</div>
+                  <p class="mt-2 text-slateblue leading-relaxed">
+                    Tiered disclosure enables oversight review without default disclosure of trade-secret internals.
+                  </p>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <div class="mt-8 border hairline p-6 no-rounded reveal">
-            <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARY]</div>
-            <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
-              <li>This crosswalk is informational and does not constitute legal advice.</li>
-              <li>NADIR does not certify compliance; compliance requires organizational controls and authorized determinations.</li>
-              <li>Mappings may change as statutes and guidance evolve; refer to version tags for review.</li>
-            </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: State-level disclosures (careful, general) -->
+    <section class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[STATE POSTURE]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              State-level transparency and incident response posture
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              U.S. state AI requirements vary and evolve. NADIR’s posture is to support verifiable record generation, controlled disclosure,
+              and incident reconstruction workflows that may assist deployers in meeting transparency and reporting obligations.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="grid md:grid-cols-3 gap-6">
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[DISCLOSURE]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Public vs. controlled tiers</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  Public-facing outputs can remain intentionally high-level, while controlled review can provide expanded fields under authorization.
+                </p>
+              </div>
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[INCIDENTS]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">72-hour workflow support</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  A structured playbook can help teams assemble verified summaries and retrieval packages. Reporting duties remain with deployers.
+                </p>
+              </div>
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[RETENTION]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Deployment-defined retention</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  NADIR does not prescribe retention periods. Implementing organizations define retention consistent with law and policy.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-8 border hairline p-6 no-rounded reveal">
+              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[NOTE]</div>
+              <p class="mt-3 text-slateblue leading-relaxed">
+                If you publish state-specific claims (named statutes, deadlines, or mandates), keep them in a versioned appendix and
+                update them as laws change. Avoid marketing superlatives. Use only verifiable, bounded language.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Statutory alignment log + procurement anchors -->
+    <section class="narrative-section border-t hairline">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-12 gap-10 py-20 items-start">
+
+          <div class="col-span-12 lg:col-span-4">
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[VERSIONED ALIGNMENT]</div>
+            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
+              Statutory alignment log and hard-truth clauses
+            </h2>
+            <p class="mt-4 text-slateblue leading-relaxed measure">
+              Procurement reviewers look for operational and legal separation: deterministic canonicalization, resource isolation,
+              and non-custodial key posture. These clauses are included here as explicit, reviewable statements.
+            </p>
+          </div>
+
+          <div class="col-span-12 lg:col-span-8">
+            <div class="grid md:grid-cols-3 gap-6">
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STABILIZATION]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Canonicalization standard</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  NADIR’s verification contract can specify deterministic canonicalization for JSON artifacts (e.g., RFC 8785)
+                  prior to hashing, to support integrity checks across heterogeneous environments.
+                </p>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BACK-PRESSURE]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Resource isolation posture</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  NADIR is designed to support strict sidecar isolation and resource quotas (e.g., cgroup-based limits),
+                  preventing the audit layer from consuming CPU or memory reserved for core inference pathways.
+                </p>
+              </div>
+
+              <div class="border hairline p-6 no-rounded reveal">
+                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[KEY CUSTODY]</div>
+                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Non-custodial design intent</h3>
+                <p class="mt-3 text-slateblue leading-relaxed">
+                  NADIR is designed for non-custodial deployments: signing keys are generated and retained within the client’s
+                  controlled environment (HSM/KMS or equivalent). NADIR does not require possession of client private keys.
+                </p>
+              </div>
+
+            </div>
+
+            <div class="mt-8 border hairline p-6 no-rounded reveal">
+              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[PQC READINESS]</div>
+              <p class="mt-3 text-slateblue leading-relaxed">
+                Cryptographic suites evolve. NADIR’s posture is to support cryptographic agility and a roadmap for post-quantum readiness
+                where required by institutional standards, procurement profiles, or future regulatory guidance. Specific algorithm choices
+                belong in controlled technical documentation.
+              </p>
+            </div>
+
+            <div class="mt-8 border hairline p-6 no-rounded reveal">
+              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[ALIGNMENT LOG]</div>
+              <p class="mt-3 text-slateblue leading-relaxed">
+                This site version is <span class="font-mono text-[12px]">[V2026.02.19]</span>. The statutory alignment log records
+                the reference frameworks used to inform public posture language. Detailed mappings and citations are provided under controlled review.
+              </p>
+
+              <div class="mt-4 overflow-x-auto border hairline no-rounded">
+                <table class="min-w-full text-left text-sm">
+                  <thead class="border-b hairline bg-vellum">
+                    <tr class="text-slateblue">
+                      <th class="px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em]">Framework</th>
+                      <th class="px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em]">Posture</th>
+                      <th class="px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em]">Where documented</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y hairline">
+                    <tr>
+                      <td class="px-4 py-3 text-slateblue">EU AI Act (logging/transparency posture)</td>
+                      <td class="px-4 py-3 text-slateblue">Descriptive support mapping</td>
+                      <td class="px-4 py-3 text-slateblue">Controlled documentation under request</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-3 text-slateblue">NIST AI RMF (risk governance mapping)</td>
+                      <td class="px-4 py-3 text-slateblue">Functional crosswalk</td>
+                      <td class="px-4 py-3 text-slateblue">Public summary + controlled appendix</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-3 text-slateblue">State-level transparency posture</td>
+                      <td class="px-4 py-3 text-slateblue">Generalized posture</td>
+                      <td class="px-4 py-3 text-slateblue">Versioned appendix (recommended)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+
+            <div class="mt-8 border hairline p-6 no-rounded reveal">
+              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARY]</div>
+              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
+                <li>This page does not constitute legal advice, a compliance determination, or a certification claim.</li>
+                <li>NADIR provides evidence-grade records; deployers remain responsible for governance controls, reporting, and documentation.</li>
+                <li>Admissibility, sufficiency, and oversight outcomes are determined by the relevant authority.</li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-obsidian text-vellum border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-6 py-14">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div>
+          <div class="text-[12px] tracking-[0.22em] uppercase">NADIR</div>
+          <div class="mt-3 text-sm text-white/70 leading-relaxed">
+            © 2026 NADIR. All rights reserved.<br>
+            <span class="font-mono text-white/80">[V2026.02.19]</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Legal</div>
+          <ul class="mt-3 space-y-2 text-sm text-white/70">
+            <li><a class="hover:text-white" href="privacy.html">Privacy</a></li>
+            <li><a class="hover:text-white" href="terms.html">Terms</a></li>
+            <li><a class="hover:text-white" href="ethical.html">Ethical Use</a></li>
+            <li><a class="hover:text-white" href="accessibility.html">Accessibility</a></li>
+            <li><a class="hover:text-white" href="modern-slavery.html">Modern Slavery</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Trust infrastructure</div>
+          <ul class="mt-3 space-y-2 text-sm text-white/70">
+            <li><a class="hover:text-white" href="trust.html">Trust Center</a></li>
+            <li><a class="hover:text-white" href="compliance.html">Compliance Crosswalk</a></li>
+            <li><a class="hover:text-white" href="vdp.html">Vulnerability Disclosure (VDP)</a></li>
+            <li><a class="hover:text-white" href="sbom.html">SBOM</a></li>
+            <li><a class="hover:text-white" href="sustainability.html">Sustainability</a></li>
+            <li><a class="hover:text-white" href="key-custody.html">Key Custody</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Institutional</div>
+          <ul class="mt-3 space-y-2 text-sm text-white/70">
+            <li><a class="hover:text-white" href="pcl.html">Privacy & Civil Liberties (PCL)</a></li>
+            <li><a class="hover:text-white" href="admissibility.html">Legal Admissibility Primer</a></li>
+            <li><a class="hover:text-white" href="incident-72h.html">72-Hour Playbook</a></li>
+            <li><a class="hover:text-white" href="contact.html">Contact</a></li>
+          </ul>
+
+          <div class="mt-6 text-sm text-white/70">
+            <a class="hover:text-white" href="mailto:contact@nadir-ai.com">contact@nadir-ai.com</a>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </footer>
 
-  <section class="narrative-section border-t hairline">
-    <div class="mx-auto max-w-7xl px-6">
-      <div class="grid grid-cols-12 gap-10 py-20 items-start">
-        <div class="col-span-12 lg:col-span-4">
-          <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[NIST AI RMF]</div>
-          <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-            Governance mapping
-          </h2>
-          <p class="mt-4 text-slateblue leading-relaxed measure">
-            NADIR aligns as evidentiary infrastructure supporting oversight programs, incident response, and accountability workflows.
-          </p>
-        </div>
-
-        <div class="col-span-12 lg:col-span-8">
-          <div class="grid md:grid-cols-3 gap-6">
-            <div class="border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[GOVERN]</div>
-              <h3 class="mt-3 font-semibold tracking-[-0.01em]">Govern</h3>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                Policy scope, custody declarations, and constrained disclosure principles define institutional oversight posture.
-              </p>
-            </div>
-
-            <div class="border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[MEASURE]</div>
-              <h3 class="mt-3 font-semibold tracking-[-0.01em]">Measure</h3>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                Integrity proofs, canonicalization, timestamps, and verifiable structures support measurement and audit readiness.
-              </p>
-            </div>
-
-            <div class="border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[MANAGE]</div>
-              <h3 class="mt-3 font-semibold tracking-[-0.01em]">Manage</h3>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                Incident reconstruction packets and reporting workflows support risk response and escalation processes.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
+  <script src="assets/site.js"></script>
+</body>
+</html>
