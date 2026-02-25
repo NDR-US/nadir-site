@@ -1,15 +1,15 @@
-<!-- /use-cases.html (PAGE — INTEGRATION) -->
+<!-- /use-cases.html  (PAGE 3 — OPERATIONAL INTEGRATION) -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NADIR — Integration</title>
-  <meta name="description" content="Operational integration posture and mission/regulated use cases for NADIR." />
+  <meta name="description" content="Operational integration posture for NADIR: overlay attachment, chain-of-custody posture, constrained disclosure." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
@@ -18,12 +18,20 @@
   <header class="siteHeader">
     <div class="wrap">
       <div class="topbar">
-        <div class="brand">
-          <div class="mark">NADIR</div>
-          <div class="descriptor">Integration</div>
-        </div>
+        <a class="brand" href="index.html" aria-label="NADIR home">
+          <span class="logo" aria-hidden="true">
+            <svg viewBox="0 0 64 64" role="img" focusable="false">
+              <path d="M16 46V18l14 18 14-18v28" />
+              <path d="M16 46h6l8-10 8 10h6" />
+            </svg>
+          </span>
+          <span class="brandText">
+            <span class="mark">NADIR</span>
+            <span class="descriptor">Operational integration · Chain-of-custody posture</span>
+          </span>
+        </a>
 
-        <nav class="nav">
+        <nav class="nav" aria-label="Primary">
           <a data-page="index.html" href="index.html">Overview</a>
           <a data-page="platform.html" href="platform.html">Architecture</a>
           <a data-page="use-cases.html" href="use-cases.html">Integration</a>
@@ -33,6 +41,7 @@
           <a data-page="governance.html" href="governance.html">Governance</a>
           <a data-page="privacy.html" href="privacy.html">Privacy</a>
           <a data-page="terms.html" href="terms.html">Terms</a>
+          <a data-page="ethical.html" href="ethical.html">Ethical Use</a>
           <a data-page="contact.html" href="contact.html">Contact</a>
         </nav>
       </div>
@@ -41,15 +50,15 @@
 
   <main class="wrap page">
     <section class="hero">
-      <div class="kicker">OVERLAY ATTACHMENT • CHAIN-OF-CUSTODY POSTURE • CONSTRAINED DISCLOSURE</div>
+      <div class="kicker">OVERLAY ATTACHMENT · CHAIN-OF-CUSTODY POSTURE · CONSTRAINED DISCLOSURE</div>
       <h1>Operational integration</h1>
       <p class="lead">
-        NADIR is designed to attach at the inference boundary (gateway, middleware, or service wrapper) to produce integrity-sealed
-        artifacts without modifying core model parameters. Deployment can be phased, and disclosure can be tiered.
+        NADIR is an attachable integrity overlay. It does not replace inference systems, assume operational control, or modify core model parameters.
+        Implementation architecture is under active development.
       </p>
 
       <div class="ctaRow">
-        <a class="btn primary" href="platform.html">Architecture mechanics</a>
+        <a class="btn" href="platform.html">Architecture mechanics</a>
         <a class="btn" href="roadmap.html">Roadmap</a>
         <a class="btn" href="docs.html">Documents</a>
       </div>
@@ -57,48 +66,43 @@
 
     <section class="section">
       <h2>Integration posture</h2>
-      <p class="sub">
-        NADIR is not a platform replacement. It is an attachable integrity layer that produces auditable records for later verification.
-        Integration is intended to be low-friction and does not require exposing proprietary internals to begin generating artifacts.
-        <strong>Implementation architecture is under active development.</strong>
-      </p>
 
       <div class="grid-3">
         <div class="card">
           <h3>Attach at the boundary</h3>
-          <p class="small">Sidecar, gateway, or wrapper around inference calls—avoids core model rewrite.</p>
+          <p class="small">Sidecar, gateway, or wrapper around inference calls. Avoids core model rewrite.</p>
         </div>
         <div class="card">
           <h3>Policy-defined scope</h3>
           <p class="small">Capture fields are configured per deployment; unnecessary collection is explicitly excluded.</p>
         </div>
         <div class="card">
-          <h3>Chain-of-custody fit</h3>
-          <p class="small">Artifacts are structured for retention, verification, and review under oversight processes.</p>
+          <h3>Chain-of-custody posture</h3>
+          <p class="small">Artifacts are structured to support retention, verification, and review under oversight processes.</p>
         </div>
       </div>
     </section>
 
     <section class="section">
-      <h2>Primary use cases</h2>
-      <p class="sub">Use cases are framed conservatively: NADIR supports integrity and reconstruction workflows. It does not certify correctness or safety.</p>
+      <h2>Deployment contexts (illustrative)</h2>
+      <p class="sub">Use cases are descriptive and do not imply endorsement, certification, or operational authorization.</p>
 
       <div class="grid-2">
         <div class="card">
-          <h3>Autonomous navigation systems</h3>
-          <p class="small">Artifacts for route selection, obstacle response, escalation, and failover behavior under defined capture policy.</p>
+          <h3>Regulated decision-support systems</h3>
+          <p class="small">Integrity-sealed records for structured oversight and accountability review.</p>
         </div>
         <div class="card">
-          <h3>ISR decision support</h3>
+          <h3>Autonomous navigation record preservation</h3>
+          <p class="small">Artifacts for route selection, escalation, and failover behavior under defined capture policy.</p>
+        </div>
+        <div class="card">
+          <h3>Incident reconstruction workflows</h3>
+          <p class="small">Artifacts structured to support chain-of-custody workflows for review boards where disclosure must remain constrained.</p>
+        </div>
+        <div class="card">
+          <h3>Institutional oversight review environments</h3>
           <p class="small">Integrity-sealed records for prioritization, triage, escalation, and analyst-assist workflows under constrained disclosure.</p>
-        </div>
-        <div class="card">
-          <h3>AI-enabled targeting validation</h3>
-          <p class="small">Artifacts to support review gates and accountability procedures—without disclosing model internals on the public surface.</p>
-        </div>
-        <div class="card">
-          <h3>Incident reconstruction</h3>
-          <p class="small">Chain-of-custody-ready artifacts for review boards where disclosure must remain constrained.</p>
         </div>
       </div>
     </section>
@@ -118,7 +122,7 @@
     <footer class="siteFooter">
       <div class="footgrid">
         <div class="badge">INTEGRATION</div>
-        <div class="right">© 2026 NADIR. All rights reserved. — V2026.02.19</div>
+        <div class="right">© 2026 NADIR, a project of Brian Covarrubias. All rights reserved. — V2026.02.19</div>
       </div>
     </footer>
   </main>
