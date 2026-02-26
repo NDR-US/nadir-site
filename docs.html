@@ -1,96 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NADIR — Document Suite</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :root { --border: rgba(255, 255, 255, 0.08); }
-    body { background-color: #05070a; color: #F9FAFB; overflow-x: hidden; font-family: 'Inter', sans-serif; }
-    .hairline { border: 1px solid var(--border); }
-    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
-    .font-display { font-family: 'Space Grotesk', sans-serif; }
-    .font-mono { font-family: 'JetBrains Mono', monospace; }
-    .doc-card { transition: all 0.3s ease; }
-    .doc-card:hover { border-color: rgba(234, 88, 12, 0.4); background: rgba(234, 88, 12, 0.02); }
-  </style>
-</head>
-<body class="antialiased">
-
-  <nav class="fixed top-0 inset-x-0 z-[100] glass">
-    <div class="max-w-[1600px] mx-auto px-8 h-16 flex items-center justify-between">
-      <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
-      <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
-        <a href="platform.html" class="opacity-50">Architecture</a>
-        <a href="integration.html" class="opacity-50">Integration</a>
-        <a href="docs.html" class="text-[#EA580C]">Documents</a>
-        <a href="roadmap.html" class="opacity-50">Roadmap</a>
-      </div>
-      <a href="#" class="bg-white text-black px-5 py-1 text-[9px] font-mono uppercase tracking-widest font-bold">Secure_Login</a>
+<main class="pt-40">
+  <section class="px-8 max-w-[1600px] mx-auto mb-32">
+    <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8 scroll-reveal">Document <br> Suite</h1>
+    <p class="text-slate-400 text-xl max-w-3xl leading-relaxed scroll-reveal">
+      Public pages are intentionally high-level. Engineering specifications, policy schemas, and performance benchmarks are available under controlled disclosure.
+    </p>
+    <div class="mt-12 scroll-reveal">
+      <a href="contact.html" class="bg-[#EA580C] text-white px-10 py-5 font-mono text-[11px] uppercase tracking-widest font-bold">Request Controlled Review</a>
     </div>
-  </nav>
+  </section>
 
-  <main class="pt-40">
-    <section class="px-8 max-w-[1600px] mx-auto mb-20">
-      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">Document Suite</h1>
-      <p class="text-slate-400 text-xl max-w-2xl mb-12">Public materials are intentionally high-level. Technical documents are available under controlled disclosure.</p>
-      
-      <div class="flex flex-wrap gap-4">
-        <a href="contact.html" class="bg-[#EA580C] text-white px-8 py-4 font-mono text-[10px] uppercase tracking-widest font-bold">Request Controlled Review</a>
-        <a href="platform.html" class="border hairline px-8 py-4 font-mono text-[10px] uppercase tracking-widest text-slate-300">Architecture Mechanics</a>
-      </div>
-    </section>
-
+  <section class="px-8 max-w-[1600px] mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-40">
     
+    <div class="border hairline p-10 hover:border-[#EA580C]/50 transition-all scroll-reveal">
+      <h3 class="font-display text-lg mb-6 uppercase">Technical Requirements (TRD)</h3>
+      <ul class="text-[10px] font-mono text-slate-500 space-y-2 mb-8 uppercase tracking-wider">
+        <li>— Phase 1 mechanics chain</li>
+        <li>— Non-mutating capture</li>
+        <li>— Deterministic canonical.</li>
+        <li>— Fail-open mandate</li>
+      </ul>
+      <a href="#" class="font-mono text-[9px] text-[#EA580C] uppercase tracking-widest hover:underline">[ Request Access ]</a>
+    </div>
 
-    <section class="px-8 max-w-[1600px] mx-auto mb-32 grid md:grid-cols-2 gap-px bg-white/10 hairline">
-      
-      <div class="bg-black p-10 doc-card flex flex-col justify-between">
-        <div>
-          <h3 class="font-display text-xl mb-4">Technical Requirements Document (TRD)</h3>
-          <p class="text-slate-500 text-sm mb-8 leading-relaxed">Phase 1 mechanics: non-mutating capture, deterministic canonicalization, integrity sealing, fail-open mandate.</p>
-        </div>
-        <a href="#" class="text-[#EA580C] font-mono text-[10px] uppercase tracking-widest">[Request_Access]</a>
-      </div>
+    <div class="border hairline p-10 hover:border-[#EA580C]/50 transition-all scroll-reveal">
+        <h3 class="font-display text-lg mb-6 uppercase">Capture Policy & Masking</h3>
+        <ul class="text-[10px] font-mono text-slate-500 space-y-2 mb-8 uppercase tracking-wider">
+          <li>— Field selection logic</li>
+          <li>— Redaction tiers</li>
+          <li>— Schema versioning</li>
+          <li>— Signed Policy ID</li>
+        </ul>
+        <a href="#" class="font-mono text-[9px] text-[#EA580C] uppercase tracking-widest hover:underline">[ Request Access ]</a>
+    </div>
 
-      <div class="bg-black p-10 doc-card flex flex-col justify-between">
-        <div>
-          <h3 class="font-display text-xl mb-4">Capture Policy & Masking Schema</h3>
-          <p class="text-slate-500 text-sm mb-8 leading-relaxed">Policy-scoped field selection, masking rules, disclosure tiers, versioning logic.</p>
-        </div>
-        <a href="#" class="text-[#EA580C] font-mono text-[10px] uppercase tracking-widest">[Request_Access]</a>
-      </div>
+    <div class="border hairline p-10 hover:border-[#EA580C]/50 transition-all scroll-reveal">
+        <h3 class="font-display text-lg mb-6 uppercase">Benchmark Report</h3>
+        <ul class="text-[10px] font-mono text-slate-500 space-y-2 mb-8 uppercase tracking-wider">
+          <li>— Latency targets</li>
+          <li>— Stress validation</li>
+          <li>— Hardware profiles</li>
+          <li>— Orchestration impact</li>
+        </ul>
+        <a href="#" class="font-mono text-[9px] text-[#EA580C] uppercase tracking-widest hover:underline">[ Request Access ]</a>
+    </div>
 
-      <div class="bg-black p-10 doc-card flex flex-col justify-between">
-        <div>
-          <h3 class="font-display text-xl mb-4">Verification CLI Contract</h3>
-          <p class="text-slate-500 text-sm mb-8 leading-relaxed">PASS/FAIL behavior: RFC 8785, hash recomputation, signature validation, policy checks.</p>
-        </div>
-        <a href="#" class="text-[#EA580C] font-mono text-[10px] uppercase tracking-widest">[Request_Access]</a>
-      </div>
+    <div class="border hairline p-10 hover:border-[#EA580C]/50 transition-all scroll-reveal">
+        <h3 class="font-display text-lg mb-6 uppercase">Verification CLI Contract</h3>
+        <ul class="text-[10px] font-mono text-slate-500 space-y-2 mb-8 uppercase tracking-wider">
+          <li>— Pass/Fail behavior</li>
+          <li>— RFC 8785 checks</li>
+          <li>— Signature validation</li>
+          <li>— Hash recomputation</li>
+        </ul>
+        <a href="#" class="font-mono text-[9px] text-[#EA580C] uppercase tracking-widest hover:underline">[ Request Access ]</a>
+    </div>
 
-      <div class="bg-black p-10 doc-card flex flex-col justify-between">
-        <div>
-          <h3 class="font-display text-xl mb-4">Phase 1 Performance & Fail-Open Report</h3>
-          <p class="text-slate-500 text-sm mb-8 leading-relaxed">Latencies targets, fail-open validation, and baseline results under high-load inference.</p>
-        </div>
-        <a href="#" class="text-[#EA580C] font-mono text-[10px] uppercase tracking-widest">[Request_Access]</a>
-      </div>
+  </section>
 
-    </section>
+  
 
-    <section class="mx-8 mb-32 p-8 border border-white/10 bg-white/5 max-w-[1600px] lg:mx-auto">
-      <div class="flex items-center gap-6">
-        <div class="w-12 h-[1px] bg-[#EA580C]"></div>
-        <div class="font-mono text-[10px] text-slate-400 uppercase tracking-[0.4em]">Performance Note</div>
-      </div>
-      <p class="mt-6 text-2xl font-display uppercase tracking-tight">Latency mission target <span class="text-[#EA580C]">&lt; 5 ms</span> per event <span class="text-slate-500 text-sm">(deployment-dependent)</span>.</p>
-    </section>
+  <section class="mx-8 mb-40 p-12 border border-[#EA580C]/20 bg-[#EA580C]/5 max-w-[1600px] lg:mx-auto scroll-reveal">
+    <div class="font-mono text-[10px] text-[#EA580C] uppercase tracking-widest mb-6">Performance Note</div>
+    <div class="grid lg:grid-cols-2 gap-12 items-end">
+      <p class="text-3xl font-display uppercase leading-tight">Latency overhead targets <span class="text-white underline decoration-white/20">&lt; 5 ms / event</span> are reference-build figures.</p>
+      <p class="text-slate-500 text-sm leading-relaxed">Actual impact depends on hardware, policy scope, and container orchestration. Full benchmark methodology is provided in the report.</p>
+    </div>
+  </section>
 
-    </main>
-</body>
-</html>
+  </main>
