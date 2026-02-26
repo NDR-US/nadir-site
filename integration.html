@@ -9,16 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root { --border: rgba(255, 255, 255, 0.08); }
-    body { background-color: #05070a; color: #F9FAFB; overflow-x: hidden; font-family: 'Inter', sans-serif; }
-    .grain::before { content: ""; fixed: inset 0; width: 100%; height: 100%; background-image: url("https://grainy-gradients.vercel.app/noise.svg"); opacity: 0.03; pointer-events: none; z-index: 9999; position: fixed; }
+    :root { --border: rgba(255, 255, 255, 0.08); --nadirOrange: #EA580C; }
+    body { background-color: #05070a; color: #F9FAFB; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
     .hairline { border: 1px solid var(--border); }
     .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
     .font-display { font-family: 'Space Grotesk', sans-serif; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .scroll-reveal { opacity: 0.1; transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); transform: translateY(20px); }
+    .scroll-reveal.active { opacity: 1; transform: translateY(0); }
   </style>
 </head>
-<body class="antialiased grain">
+<body class="antialiased">
 
   <nav class="fixed top-0 inset-x-0 z-[100] glass">
     <div class="max-w-[1600px] mx-auto px-8 h-16 flex items-center justify-between">
@@ -26,77 +27,100 @@
       <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
         <a href="platform.html" class="opacity-50 hover:opacity-100">Architecture</a>
         <a href="integration.html" class="text-[#EA580C]">Integration</a>
-        <a href="docs.html" class="opacity-50 hover:opacity-100">Documents</a>
+        <a href="docs.html" class="opacity-50 hover:opacity-100">Docs</a>
         <a href="roadmap.html" class="opacity-50 hover:opacity-100">Roadmap</a>
       </div>
-      <div class="font-mono text-[9px] text-[#EA580C] uppercase tracking-widest">Op_Ready</div>
+      <div class="font-mono text-[9px] text-white/40 uppercase tracking-widest">Op_Status: Active</div>
     </div>
   </nav>
 
   <main class="pt-40">
-    <section class="px-8 max-w-[1600px] mx-auto mb-24">
-      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">Operational <br> Integration</h1>
-      <p class="text-slate-400 text-xl max-w-3xl leading-relaxed">
-        NADIR integrates as a sidecar, gateway, or wrapper; no model rewrite; phased deployment; disclosure tiers configurable. 
-        <span class="text-white/40 italic">Implementation architecture is under active development.</span>
+    <section class="px-8 max-w-[1600px] mx-auto mb-32">
+      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8 scroll-reveal">Operational <br> Integration</h1>
+      <p class="text-slate-400 text-xl max-w-3xl leading-relaxed scroll-reveal">
+        NADIR attaches beside inference systems—sidecar, gateway, or wrapper—without rewriting model code. 
+        <span class="text-white">Implementation architecture is under active development.</span>
       </p>
+    </section>
+
+    <section class="px-8 max-w-[1600px] mx-auto grid md:grid-cols-3 gap-px bg-white/10 hairline mb-40">
+      <div class="bg-black p-12 scroll-reveal">
+        <h3 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.3em] mb-8">Low-Friction Attachment</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">Add the sidecar container; point inference calls through the gateway; begin artifact generation immediately—no model retrain required.</p>
+      </div>
+      <div class="bg-black p-12 scroll-reveal">
+        <h3 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.3em] mb-8">Policy-Defined Scope</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">Operators configure included fields, exclusions, masking rules, and disclosure tiers via a signed Policy ID.</p>
+      </div>
+      <div class="bg-black p-12 scroll-reveal">
+        <h3 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.3em] mb-8">Chain-of-Custody Posture</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">Artifacts are retention-ready, signature-verified, and hash-reproducible—structured for formal review.</p>
+      </div>
     </section>
 
     
 
-    <section class="px-8 max-w-[1600px] mx-auto grid md:grid-cols-3 gap-px bg-white/10 hairline mb-32">
-      <div class="bg-black p-12">
-        <h3 class="font-display text-xl mb-4 uppercase text-[#EA580C]">Low-Friction Attachment</h3>
-        <p class="text-slate-400 text-sm">Non-invasive integration layer ensures model weights and core logic remain untouched.</p>
-      </div>
-      <div class="bg-black p-12">
-        <h3 class="font-display text-xl mb-4 uppercase text-[#EA580C]">Policy-Defined Scope</h3>
-        <p class="text-slate-400 text-sm">Granular control over which inference-time fields are captured, masked, or discarded.</p>
-      </div>
-      <div class="bg-black p-12">
-        <h3 class="font-display text-xl mb-4 uppercase text-[#EA580C]">Chain-of-Custody Artifacts</h3>
-        <p class="text-slate-400 text-sm">Every generated record is bound to its origin via cryptographic provenance and environment fingerprints.</p>
-      </div>
-    </section>
-
-    <section class="px-8 max-w-[1600px] mx-auto mb-40">
-      <h2 class="font-mono text-[10px] uppercase tracking-[0.4em] text-slate-500 mb-12">Illustrative Contexts</h2>
-      <div class="grid lg:grid-cols-3 gap-8">
-        <div class="border hairline p-10 bg-white/5">
-          <h4 class="font-display text-lg mb-4">Regulated Decision-Support</h4>
-          <p class="text-slate-500 text-xs leading-relaxed uppercase tracking-wider">High-stakes human-in-the-loop environments requiring evidentiary backing for AI suggestions.</p>
+    <section class="py-40 px-8 max-w-[1600px] mx-auto border-t hairline">
+      <div class="grid lg:grid-cols-12 gap-20">
+        <div class="lg:col-span-4 scroll-reveal">
+          <h2 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em] mb-8">Deployment Contexts</h2>
+          <p class="text-xs text-slate-600 uppercase leading-relaxed tracking-widest">Contexts below are illustrative. NADIR does not endorse or certify any particular use.</p>
         </div>
-        <div class="border hairline p-10 bg-white/5">
-          <h4 class="font-display text-lg mb-4">Incident Reconstruction</h4>
-          <p class="text-slate-500 text-xs leading-relaxed uppercase tracking-wider">Post-hoc analysis of system failures or anomalies using integrity-sealed runtime state.</p>
-        </div>
-        <div class="border hairline p-10 bg-white/5">
-          <h4 class="font-display text-lg mb-4">Autonomy Oversight Support</h4>
-          <p class="text-slate-500 text-xs leading-relaxed uppercase tracking-wider">Independent audit layers for autonomous systems operating under strict regulatory mandates.</p>
+        <div class="lg:col-span-8 scroll-reveal">
+          <ul class="space-y-12 font-display text-3xl md:text-4xl uppercase tracking-tight">
+            <li class="flex items-start gap-8 group">
+              <span class="text-[#EA580C] font-mono text-sm mt-2 opacity-50 group-hover:opacity-100">01</span>
+              <span>Regulated decision-support in critical infrastructure</span>
+            </li>
+            <li class="flex items-start gap-8 group">
+              <span class="text-[#EA580C] font-mono text-sm mt-2 opacity-50 group-hover:opacity-100">02</span>
+              <span>Post-incident forensic reconstruction</span>
+            </li>
+            <li class="flex items-start gap-8 group">
+              <span class="text-[#EA580C] font-mono text-sm mt-2 opacity-50 group-hover:opacity-100">03</span>
+              <span>Autonomous navigation oversight</span>
+            </li>
+            <li class="flex items-start gap-8 group">
+              <span class="text-[#EA580C] font-mono text-sm mt-2 opacity-50 group-hover:opacity-100">04</span>
+              <span>ISR decision triage under constrained disclosure</span>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <section class="py-24 px-8 bg-[#030407] border-t hairline">
-      <div class="max-w-[1200px] mx-auto border hairline p-8 bg-[#05070a] font-mono text-[11px] text-slate-500 leading-relaxed">
-        <div class="text-[#EA580C] uppercase tracking-[0.3em] mb-6 pb-4 border-b hairline flex justify-between">
-          <span>Boundary Declaration</span>
-          <span class="opacity-30">PROT_01</span>
-        </div>
-        <ul class="space-y-4">
-          <li>• NADIR does not validate correctness, fairness, legality, or policy compliance of AI systems.</li>
-          <li>• NADIR does not certify regulatory compliance or legal admissibility.</li>
-          <li>• NADIR does not guarantee inference reproducibility.</li>
-          <li>• Verification confirms integrity & provenance only.</li>
-          <li>• Oversight decisions belong to the relevant authority.</li>
-        </ul>
+    <section class="py-40 px-8 bg-white/5 border-t hairline">
+      <div class="max-w-[1600px] mx-auto scroll-reveal">
+        <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-8">Implementation Status</h2>
+        <p class="text-2xl font-light max-w-3xl leading-relaxed">
+          Phase 1 prototype sealing is live in reference builds. Production-hardened verification harness ships in Phase 2. 
+          <span class="text-white font-medium underline underline-offset-8 decoration-[#EA580C]">Operators may pilot today under a controlled review agreement.</span>
+        </p>
       </div>
     </section>
+
+    <section class="py-24 px-8 border-t hairline">
+        <div class="max-w-[1200px] mx-auto border hairline p-10 bg-black font-mono text-[11px] text-slate-500 leading-relaxed scroll-reveal">
+          <div class="text-[#EA580C] uppercase tracking-[0.3em] mb-8 pb-4 border-b hairline">Boundary Declaration</div>
+          <ul class="space-y-4">
+            <li>• NADIR does not validate fairness, legality, or regulatory compliance of AI systems.</li>
+            <li>• Verification confirms integrity and provenance under policy—oversight determinations are made by the competent authority.</li>
+            <li>• This public content is descriptive; no rights are granted without separate agreement.</li>
+          </ul>
+        </div>
+      </section>
   </main>
 
-  <footer class="bg-[#030407] border-t hairline py-8 px-8 flex flex-col md:flex-row items-center justify-between font-mono text-[9px] uppercase tracking-[0.2em] text-slate-600">
-    <div>NADIR provides the evidence; authorized institutions provide the oversight.</div>
-    <div>© 2026 NADIR [V2026.02.19] All rights reserved.</div>
+  <footer class="py-12 px-8 border-t hairline flex flex-col md:flex-row justify-between items-center text-slate-600 font-mono text-[9px] uppercase tracking-[0.2em]">
+    <div>"NADIR provides the evidence; institutions provide the oversight."</div>
+    <div>© 2026 NADIR — A Project of Brian Covarrubias</div>
   </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
