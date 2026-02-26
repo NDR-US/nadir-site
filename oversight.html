@@ -1,107 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NADIR — Oversight Portal</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :root { --border: rgba(255, 255, 255, 0.08); }
-    body { background-color: #05070a; color: #F9FAFB; overflow-x: hidden; font-family: 'Inter', sans-serif; }
-    .hairline { border: 1px solid var(--border); }
-    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
-    .font-display { font-family: 'Space Grotesk', sans-serif; }
-    .font-mono { font-family: 'JetBrains Mono', monospace; }
-  </style>
-</head>
-<body class="antialiased">
+<main class="pt-40">
+  <section class="px-8 max-w-[1600px] mx-auto mb-32">
+    <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8 scroll-reveal">Oversight <br> Portal</h1>
+    <p class="text-slate-400 text-xl max-w-3xl leading-relaxed scroll-reveal">
+      NADIR enables <span class="text-white">role-based, deterministic verification</span> of integrity-sealed artifacts. Calibrated access without default exposure of proprietary internals.
+    </p>
+  </section>
 
-  <nav class="fixed top-0 inset-x-0 z-[100] glass">
-    <div class="max-w-[1600px] mx-auto px-8 h-16 flex items-center justify-between">
-      <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
-      <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
-        <a href="platform.html" class="opacity-50">Architecture</a>
-        <a href="oversight.html" class="text-[#EA580C]">Oversight</a>
-        <a href="compliance.html" class="opacity-50">Compliance</a>
-        <a href="trust.html" class="opacity-50">Trust</a>
-      </div>
-      <div class="font-mono text-[9px] text-white/40 uppercase tracking-widest">Auth_Required</div>
-    </div>
-  </nav>
-
-  <main class="pt-40">
-    <section class="px-8 max-w-[1600px] mx-auto mb-24">
-      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">Oversight <br> Portal</h1>
-      <p class="text-slate-400 text-xl max-w-3xl leading-relaxed">Role-based artifact access and deterministic verification for institutional workflows.</p>
-    </section>
-
-    <section class="px-8 max-w-[1600px] mx-auto grid md:grid-cols-3 gap-px bg-white/10 hairline mb-32">
-      <div class="bg-black p-12">
-        <span class="font-mono text-[#EA580C] text-[10px] uppercase mb-6 block">01 Operator</span>
-        <h3 class="font-display text-xl mb-4">Regulated Operator</h3>
-        <p class="text-slate-500 text-sm">Configures capture policy, manages local retention, and generates integrity-sealed artifacts.</p>
-      </div>
-      <div class="bg-black p-12">
-        <span class="font-mono text-[#EA580C] text-[10px] uppercase mb-6 block">02 Institution</span>
-        <h3 class="font-display text-xl mb-4">Authorized Institution</h3>
-        <p class="text-slate-500 text-sm">Validates signatures, confirms artifact integrity, and ensures policy alignment for compliance.</p>
-      </div>
-      <div class="bg-black p-12">
-        <span class="font-mono text-[#EA580C] text-[10px] uppercase mb-6 block">03 Auditor</span>
-        <h3 class="font-display text-xl mb-4">Forensic Auditor</h3>
-        <p class="text-slate-500 text-sm">Facilitates incident-scoped retrieval and independent verification of runtime state.</p>
-      </div>
-    </section>
-
-    
-
-    <section class="px-8 max-w-[1600px] mx-auto mb-32">
-      <h2 class="font-mono text-[10px] uppercase tracking-[0.4em] text-slate-500 mb-12">Verification Workflow</h2>
-      <div class="flex flex-col md:flex-row gap-4">
-        <div class="flex-1 border hairline p-6 bg-white/5 font-mono text-xs uppercase tracking-widest text-slate-300">1. Retrieve</div>
-        <div class="flex-1 border hairline p-6 bg-white/5 font-mono text-xs uppercase tracking-widest text-slate-300">2. Canonicalize</div>
-        <div class="flex-1 border hairline p-6 bg-white/5 font-mono text-xs uppercase tracking-widest text-slate-300">3. Re-hash</div>
-        <div class="flex-1 border hairline p-6 bg-white/5 font-mono text-xs uppercase tracking-widest text-slate-300">4. Validate Sig</div>
-        <div class="flex-1 border hairline p-6 bg-white/5 font-mono text-xs uppercase tracking-widest text-white">5. Confirm Policy</div>
-      </div>
-    </section>
-
-    <section class="px-8 max-w-[1600px] mx-auto mb-32 border-t hairline pt-20">
-      <h2 class="font-display text-3xl mb-12 uppercase">Disclosure Tiers</h2>
-      <div class="grid md:grid-cols-2 gap-12">
-        <div class="p-8 border hairline bg-white/5">
-          <h4 class="font-mono text-[10px] text-[#EA580C] mb-4 uppercase">Public / Redacted</h4>
-          <p class="text-slate-400 text-sm">Non-sensitive metadata, high-level summary, and cryptographic proof-of-integrity.</p>
-        </div>
-        <div class="p-8 border hairline bg-white/5">
-          <h4 class="font-mono text-[10px] text-[#EA580C] mb-4 uppercase">Controlled Review</h4>
-          <p class="text-slate-400 text-sm">Expanded fields, full environment fingerprints, and granular policy metadata.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="py-24 px-8 bg-[#030407] border-t hairline">
-      <div class="max-w-[1200px] mx-auto border hairline p-8 bg-[#05070a] font-mono text-[11px] text-slate-500 leading-relaxed">
-        <div class="text-[#EA580C] uppercase tracking-[0.3em] mb-6 pb-4 border-b hairline flex justify-between">
-          <span>Boundary Declaration</span>
-        </div>
-        <ul class="space-y-4">
-          <li>• NADIR does not validate correctness, fairness, legality, or policy compliance of AI systems.</li>
-          <li>• NADIR does not certify regulatory compliance or legal admissibility.</li>
-          <li>• NADIR does not guarantee inference reproducibility.</li>
-          <li>• Verification confirms integrity & provenance only.</li>
-          <li>• Oversight decisions belong to the relevant authority.</li>
+  <section class="px-8 max-w-[1600px] mx-auto mb-40">
+    <h2 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em] mb-12 scroll-reveal">Section A // Role-Based Access</h2>
+    <div class="grid lg:grid-cols-3 gap-8">
+      
+      <div class="border hairline p-8 bg-white/5 scroll-reveal">
+        <div class="font-mono text-[10px] text-[#EA580C] mb-6 tracking-widest uppercase">Role: Regulated Operator</div>
+        <ul class="text-[11px] font-mono text-slate-400 space-y-4 mb-8">
+          <li>• Defines Policy ID & Scope</li>
+          <li>• Manages local key custody</li>
+          <li>• Responds to artifact requests</li>
         </ul>
+        <div class="pt-6 border-t border-white/10 font-mono text-[9px] text-slate-500 uppercase">Access: Full Set (Policy Scoped)</div>
       </div>
-    </section>
-  </main>
 
-  <footer class="bg-[#030407] border-t hairline py-8 px-8 flex flex-col md:flex-row items-center justify-between font-mono text-[9px] uppercase tracking-[0.2em] text-slate-600">
-    <div>NADIR provides the evidence; authorized institutions provide the oversight.</div>
-    <div>© 2026 NADIR [V2026.02.19] All rights reserved. — Project of Brian Covarrubias</div>
-  </footer>
-</body>
-</html>
+      <div class="border hairline p-8 bg-white/5 scroll-reveal">
+        <div class="font-mono text-[10px] text-[#EA580C] mb-6 tracking-widest uppercase">Role: Authorized Institution</div>
+        <ul class="text-[11px] font-mono text-slate-400 space-y-4 mb-8">
+          <li>• Receives controlled artifacts</li>
+          <li>• Recomputes hashes & sigs</li>
+          <li>• Issues oversight determinations</li>
+        </ul>
+        <div class="pt-6 border-t border-white/10 font-mono text-[9px] text-slate-500 uppercase">Access: Controlled Review Tier</div>
+      </div>
+
+      <div class="border hairline p-8 bg-white/5 scroll-reveal">
+        <div class="font-mono text-[10px] text-[#EA580C] mb-6 tracking-widest uppercase">Role: Forensic Auditor</div>
+        <ul class="text-[11px] font-mono text-slate-400 space-y-4 mb-8">
+          <li>• Retrieves incident-scoped sets</li>
+          <li>• Independent verification</li>
+          <li>• Chain-of-custody production</li>
+        </ul>
+        <div class="pt-6 border-t border-white/10 font-mono text-[9px] text-slate-500 uppercase">Access: Mandate-Scoped</div>
+      </div>
+
+    </div>
+    
+    <div class="mt-8 p-6 bg-[#EA580C]/5 border border-[#EA580C]/20 font-mono text-[10px] text-[#EA580C] uppercase tracking-widest scroll-reveal">
+       Note: Verification confirms integrity and provenance. It does NOT confirm decision correctness.
+    </div>
+  </section>
+
+  <section class="py-40 px-8 max-w-[1600px] mx-auto border-t hairline scroll-reveal">
+    <h2 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em] mb-12">Section B // Five-Step Workflow</h2>
+    <div class="grid md:grid-cols-5 gap-4">
+      <div class="bg-white/5 border hairline p-6 font-mono text-[10px] uppercase text-slate-400">1. Retrieve</div>
+      <div class="bg-white/5 border hairline p-6 font-mono text-[10px] uppercase text-slate-400">2. Canonicalize</div>
+      <div class="bg-white/5 border hairline p-6 font-mono text-[10px] uppercase text-slate-400">3. Re-Hash</div>
+      <div class="bg-white/5 border hairline p-6 font-mono text-[10px] uppercase text-slate-400">4. Validate Sig</div>
+      <div class="bg-white/5 border hairline p-6 font-mono text-[10px] uppercase text-white border-[#EA580C]">5. Confirm Policy</div>
+    </div>
+  </section>
+
+  <section class="py-40 px-8 max-w-[1600px] mx-auto border-t hairline scroll-reveal">
+    <h2 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em] mb-12">Section C // Disclosure Tiers</h2>
+    <div class="grid md:grid-cols-2 gap-12">
+      <div class="space-y-4">
+        <h4 class="font-display text-2xl uppercase">Public / Redacted</h4>
+        <p class="text-slate-500 text-sm">Artifact summary, Policy ID, timestamp. No sensitive fields. Open access.</p>
+      </div>
+      <div class="space-y-4">
+        <h4 class="font-display text-2xl uppercase text-[#EA580C]">Controlled Review</h4>
+        <p class="text-slate-500 text-sm">Expanded fields, full signature, environment metadata. Requires executed NDA / review agreement.</p>
+      </div>
+    </div>
+  </section>
+
+  </main>
