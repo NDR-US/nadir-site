@@ -2,82 +2,77 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NADIR | AI Integrity Layer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="assets/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
 </head>
-<body class="bg-[#05070a] text-white antialiased">
+<body>
+    <header>
+        <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+            <div style="font-weight:500; letter-spacing:0.6em; font-size:1.5rem;">NADIR</div>
+            <nav class="font-mono text-data" style="display:flex; gap:3rem;">
+                <a href="platform.html">Architecture</a>
+                <a href="trust.html">Trust_Center</a>
+                <a href="compliance.html">Compliance</a>
+            </nav>
+            <div class="font-mono text-data" style="border:1px solid var(--nadir-orange); padding:8px 16px;">
+                STATUS: ACTIVE // 2026
+            </div>
+        </div>
+    </header>
 
-    <div id="header-placeholder"></div>
+    <main style="padding-top:200px;">
+        <section style="padding: 0 4rem; margin-bottom: 240px;">
+            <p class="font-mono text-data tracking-institutional mb-8">PCL_FRAMEWORK // V.2026.02.19</p>
+            <h1 style="font-size: clamp(4rem, 10vw, 8rem); line-height:0.85; text-transform:uppercase; font-weight:600; letter-spacing:-0.04em;">
+                THE AI <br><span style="color:#1e293b;">INTEGRITY LAYER</span>
+            </h1>
+            <p style="font-size:2.5rem; color:#94a3b8; max-width:1100px; margin-top:3rem; line-height:1.2;">
+                NADIR provides an <span style="color:white;">immutable evidence chain</span> for AI decision-support. Engineered for technical accountability via cryptographic sealing and statutory alignment.
+            </p>
+        </section>
 
-    <main>
-        <section class="min-h-screen flex flex-col justify-center px-8 md:px-24 pt-20">
-            <div class="max-w-[1600px] mx-auto w-full">
-                <p class="font-mono text-[#EA580C] tracking-[0.5em] mb-8 text-[10px] uppercase">Project Nadir // v2026.02.19</p>
-                <h1 class="text-[10vw] md:text-[8vw] font-bold leading-[0.85] tracking-tighter uppercase mb-12">
-                    The AI <br> <span class="text-slate-800">Integrity Layer</span>
-                </h1>
-                <p class="text-2xl md:text-4xl text-slate-400 max-w-4xl leading-tight">
-                    NADIR provides an <span class="text-white">immutable evidence chain</span> for AI decision-support systems. Ensure technical accountability through cryptographic sealing.
-                </p>
+        <section style="padding: 0 4rem; margin-bottom: 240px;">
+            <div style="border-top:1px solid var(--border-subtle); padding-top:80px;">
+                <h2 class="font-mono text-data mb-16">01_DECOUPLED_ARCHITECTURE</h2>
+                <div class="mechanics-grid">
+                    <div class="step-card"><p class="text-data">01</p><p class="font-mono" style="margin-top:1rem; font-size:12px;">ATTACH BOUNDARY</p></div>
+                    <div class="step-card"><p class="text-data">02</p><p class="font-mono" style="margin-top:1rem; font-size:12px;">CAPTURE POLICY SCOPE</p></div>
+                    <div class="step-card"><p class="text-data">03</p><p class="font-mono" style="margin-top:1rem; font-size:12px;">NORMALIZE</p></div>
+                    <div class="step-card"><p class="text-data">04</p><p class="font-mono" style="margin-top:1rem; font-size:12px;">CANONICALIZE</p></div>
+                    <div class="step-card"><p class="text-data">05</p><p class="font-mono" style="margin-top:1rem; font-size:12px;">HASH & SIGN</p></div>
+                    <div class="step-card"><p class="text-data">06</p><p class="font-mono" style="margin-top:1rem; font-size:12px;">ENFORCE TIERS</p></div>
+                    <div class="step-card"><p class="text-data">07</p><p class="font-mono" style="margin-top:1rem; font-size:12px;">VERIFY INDEPENDENT</p></div>
+                    <div class="step-card" style="background:var(--nadir-orange); color:black;"><p style="font-weight:bold; font-size:10px;">SEAL_COMPLETE</p></div>
+                </div>
             </div>
         </section>
 
-        <section class="py-32 px-8 md:px-24 border-t border-white/10">
-            <div class="max-w-[1600px] mx-auto">
-                <div class="grid lg:grid-cols-12 gap-12">
-                    <div class="lg:col-span-4">
-                        <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-4">Architecture // Mechanics</h2>
-                        <h3 class="text-4xl uppercase font-bold mb-8">Seven-Step <br>Integrity Chain</h3>
-                        <p class="text-slate-500 font-mono text-xs uppercase leading-relaxed">
-                            A strict mechanics chain to produce integrity-sealed artifacts while preserving proprietary boundaries.
-                        </p>
-                    </div>
-                    
-                    <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
-                        <div class="bg-[#05070a] p-8 hover:bg-[#EA580C]/5 transition-colors">
-                            <span class="font-mono text-[#EA580C] text-[10px]">01</span>
-                            <p class="font-mono text-xs uppercase mt-4">Attach Boundary</p>
-                        </div>
-                        <div class="bg-[#05070a] p-8 hover:bg-[#EA580C]/5 transition-colors">
-                            <span class="font-mono text-[#EA580C] text-[10px]">02</span>
-                            <p class="font-mono text-xs uppercase mt-4">Capture Policy Scope</p>
-                        </div>
-                        <div class="bg-[#05070a] p-8 hover:bg-[#EA580C]/5 transition-colors">
-                            <span class="font-mono text-[#EA580C] text-[10px]">03</span>
-                            <p class="font-mono text-xs uppercase mt-4">Normalize</p>
-                        </div>
-                        <div class="bg-[#05070a] p-8 hover:bg-[#EA580C]/5 transition-colors">
-                            <span class="font-mono text-[#EA580C] text-[10px]">04</span>
-                            <p class="font-mono text-xs uppercase mt-4">Canonicalize</p>
-                        </div>
-                        <div class="bg-[#05070a] p-8 hover:bg-[#EA580C]/5 transition-colors">
-                            <span class="font-mono text-[#EA580C] text-[10px]">05</span>
-                            <p class="font-mono text-xs uppercase mt-4">Hash & Sign</p>
-                        </div>
-                        <div class="bg-[#05070a] p-8 hover:bg-[#EA580C]/5 transition-colors">
-                            <span class="font-mono text-[#EA580C] text-[10px]">06</span>
-                            <p class="font-mono text-xs uppercase mt-4">Enforce Tiers</p>
-                        </div>
-                        <div class="bg-[#05070a] p-8 hover:bg-[#EA580C]/5 transition-colors">
-                            <span class="font-mono text-[#EA580C] text-[10px]">07</span>
-                            <p class="font-mono text-xs uppercase mt-4">Verify Independent</p>
-                        </div>
-                    </div>
+        <section style="padding: 0 4rem; margin-bottom: 240px;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:100px;">
+                <div>
+                    <h3 style="font-size:3rem; text-transform:uppercase; margin-bottom:2rem;">Fail-Open <br>Architecture</h3>
+                    <p style="color:#94a3b8; font-family:'JetBrains Mono'; font-size:14px; text-transform:uppercase; line-height:2;">
+                        In the event of an integrity layer failure, inference remains non-blocking. NADIR logs the failure event and marks the resulting artifact as "unsealed" for post-hoc forensic review.
+                    </p>
+                </div>
+                <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-subtle); padding:60px;">
+                    <ul class="font-mono" style="list-style:none; font-size:12px; color:var(--nadir-orange); space-y:20px;">
+                        <li style="margin-bottom:1rem;">✓ INFERENCE CONTINUES</li>
+                        <li style="margin-bottom:1rem;">✓ FAILURE EVENT LOGGED</li>
+                        <li style="margin-bottom:1rem;">✓ MARKED UNSEALED</li>
+                        <li style="margin-bottom:1rem;">✓ POST-HOC REVIEW</li>
+                    </ul>
                 </div>
             </div>
         </section>
     </main>
 
-    <div id="footer-placeholder"></div>
-
-    <script>
-        // Scripts to load your existing partials
-        fetch('partials/header.html').then(res => res.text()).then(data => document.getElementById('header-placeholder').innerHTML = data);
-        fetch('partials/footer.html').then(res => res.text()).then(data => document.getElementById('footer-placeholder').innerHTML = data);
-    </script>
+    <footer style="border-t:1px solid var(--border-subtle); padding:100px 4rem; background:black;">
+        <p class="text-data mb-8">Statutory_Boundary</p>
+        <p class="font-mono" style="font-size:11px; color:#475569; text-transform:uppercase; max-width:800px; line-height:2;">
+            NADIR is a project of Brian Covarrubias. This system provides technical artifacts for oversight and does not constitute legal advice. PCL Framework Version 2026.02.19.
+        </p>
+    </footer>
 </body>
 </html>
