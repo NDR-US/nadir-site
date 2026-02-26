@@ -19,11 +19,7 @@
             display: ['Space Grotesk', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace']
           },
-          colors: {
-            obsidian: '#05070a',
-            nadirOrange: '#EA580C',
-            slate: '#475569'
-          }
+          colors: { obsidian: '#05070a', nadirOrange: '#EA580C', slate: '#475569' }
         }
       }
     }
@@ -31,20 +27,12 @@
   <style>
     :root { --border: rgba(255, 255, 255, 0.08); }
     body { background-color: #05070a; color: #F9FAFB; overflow-x: hidden; }
-    .grain::before {
-      content: ""; fixed: inset 0; width: 100%; height: 100%;
-      background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-      opacity: 0.03; pointer-events: none; z-index: 9999; position: fixed;
-    }
+    .grain::before { content: ""; fixed: inset 0; width: 100%; height: 100%; background-image: url("https://grainy-gradients.vercel.app/noise.svg"); opacity: 0.03; pointer-events: none; z-index: 9999; position: fixed; }
     .hairline { border: 1px solid var(--border); }
     .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
     .nav-link { position: relative; opacity: 0.5; transition: opacity 0.3s; }
     .nav-link:hover { opacity: 1; }
-    .nav-link::after {
-      content: ''; position: absolute; width: 0; height: 1px;
-      bottom: -4px; left: 0; background: #EA580C;
-      transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    }
+    .nav-link::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -4px; left: 0; background: #EA580C; transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
     .nav-link:hover::after { width: 100%; }
   </style>
 </head>
@@ -55,61 +43,113 @@
       <div class="flex items-center gap-10">
         <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em] text-white">NADIR</a>
         <div class="hidden md:flex items-center gap-6 font-mono text-[9px] text-slate tracking-widest uppercase border-l hairline pl-6">
-          <span class="text-nadirOrange animate-pulse">● Active</span>
-          <span>Core_v2.6</span>
+          <span class="text-nadirOrange animate-pulse">● System_Live</span>
+          <span>Node_2026.02</span>
         </div>
       </div>
       <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
-        <a href="platform.html" class="nav-link">Platform</a>
-        <a href="oversight.html" class="nav-link">Oversight</a>
-        <a href="compliance.html" class="nav-link">Compliance</a>
+        <a href="platform.html" class="nav-link">Framework</a>
+        <a href="#" class="nav-link">Oversight</a>
+        <a href="#" class="nav-link">Compliance</a>
       </div>
-      <a href="contact.html" class="bg-white text-black px-6 py-2 font-display text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-nadirOrange transition-colors">
-        Request Review
-      </a>
+      <a href="contact.html" class="bg-white text-black px-6 py-2 font-display text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-nadirOrange transition-colors">Request Access</a>
     </div>
   </nav>
 
   <main>
     <section class="min-h-screen flex flex-col justify-center px-8 pt-20">
       <div class="max-w-[1600px] mx-auto w-full">
-        <div class="mb-8 font-mono text-nadirOrange text-[10px] uppercase tracking-[0.4em] hero-sub">[ System Initialization ]</div>
-        <h1 class="font-display text-5xl md:text-8xl lg:text-[110px] leading-[0.9] tracking-tighter mb-10 hero-title uppercase">
+        <div class="mb-8 font-mono text-nadirOrange text-[10px] uppercase tracking-[0.4em] hero-sub">[ V2026.02.19_INIT ]</div>
+        <h1 class="font-display text-5xl md:text-8xl lg:text-[100px] leading-[0.9] tracking-tighter mb-10 hero-title uppercase">
           Evidentiary <br> Infrastructure <br>
           <span class="text-white/20 text-4xl md:text-6xl lg:text-[70px] tracking-tight">For AI Inference Systems</span>
         </h1>
         <div class="grid lg:grid-cols-2 gap-16 items-start mt-16">
           <p class="text-lg text-slate leading-relaxed font-light hero-p">
-            NADIR is an attachable integrity and forensic compliance layer that generates policy-scoped, canonical artifacts representing defined inference-time decision-state context. 
-            <br><br>
-            Artifacts are sealed with integrity controls to support later verification and structured oversight under constrained disclosure.
+            NADIR is an attachable integrity and forensic compliance layer that generates policy-scoped, canonical artifacts representing defined inference-time decision-state context. Artifacts are integrity-sealed to support later verification and structured oversight under constrained disclosure. <b>NADIR produces verifiable records; it does not adjudicate model correctness.</b>
           </p>
           <div class="flex flex-col sm:flex-row gap-6 hero-btns lg:justify-end">
-            <a href="platform.html" class="border hairline px-8 py-4 font-mono text-[10px] uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-colors">Enter Framework</a>
-            <a href="docs.html" class="border hairline px-8 py-4 font-mono text-[10px] uppercase tracking-[0.2em] text-slate bg-white/5">Document Suite</a>
+            <a href="platform.html" class="border hairline px-8 py-4 font-mono text-[10px] uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all">Enter Framework</a>
+            <a href="docs.html" class="border hairline px-8 py-4 font-mono text-[10px] uppercase tracking-[0.2em] text-slate bg-white/5 hover:border-white/40 transition-all">Document Suite</a>
           </div>
         </div>
       </div>
     </section>
 
+    <section class="py-32 px-8 border-t hairline bg-obsidian">
+      <div class="max-w-[1600px] mx-auto">
+        <h2 class="font-display text-4xl mb-20 uppercase tracking-tight">Structural deficits in accountability infrastructure</h2>
+        <div class="grid md:grid-cols-3 gap-px bg-white/10 hairline">
+          <div class="bg-obsidian p-12 group hover:bg-white/[0.02] transition-colors">
+            <span class="font-mono text-nadirOrange text-[10px] mb-6 block">CARD_A</span>
+            <h3 class="text-2xl mb-4 font-display">Telemetry ≠ Evidence</h3>
+            <p class="text-slate text-sm leading-relaxed">Surface logs describe activity but not deterministic, policy-scoped records suitable for formal scrutiny.</p>
+          </div>
+          <div class="bg-obsidian p-12 group hover:bg-white/[0.02] transition-colors">
+            <span class="font-mono text-nadirOrange text-[10px] mb-6 block">CARD_B</span>
+            <h3 class="text-2xl mb-4 font-display">Constrained Disclosure Unresolved</h3>
+            <p class="text-slate text-sm leading-relaxed">Reviewers need verifiability without seeing proprietary weights, confidential code, or implementation secrets.</p>
+          </div>
+          <div class="bg-obsidian p-12 group hover:bg-white/[0.02] transition-colors">
+            <span class="font-mono text-nadirOrange text-[10px] mb-6 block">CARD_C</span>
+            <h3 class="text-2xl mb-4 font-display">Liability Ambiguity</h3>
+            <p class="text-slate text-sm leading-relaxed">Without sealed artifacts, disputes rely on incomplete telemetry and non-reproducible environment context.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-32 px-8 border-t hairline bg-[#080b12]">
+      <div class="max-w-[1600px] mx-auto">
+        <h2 class="font-display text-4xl mb-20 uppercase tracking-tight">Record infrastructure, not adjudication</h2>
+        <div class="grid md:grid-cols-3 gap-12">
+          <div class="p-8 border-l-2 border-nadirOrange/30">
+            <h3 class="font-display text-xl mb-4">Policy-Scoped Capture</h3>
+            <p class="text-slate text-sm leading-relaxed">Operators configure explicit inclusion, exclusion, and masking rules to protect sensitive IP.</p>
+          </div>
+          <div class="p-8 border-l-2 border-nadirOrange/30">
+            <h3 class="font-display text-xl mb-4">Canonical Artifact Schema</h3>
+            <p class="text-slate text-sm leading-relaxed">Normalized structure supports deterministic verification and established chain-of-custody workflows.</p>
+          </div>
+          <div class="p-8 border-l-2 border-nadirOrange/30">
+            <h3 class="font-display text-xl mb-4">Integrity Sealing</h3>
+            <p class="text-slate text-sm leading-relaxed">Deployment-defined suites: RFC 8785 canonicalization, SHA-256 hashing, and ECDSA-P256 signing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-24 px-8 border-t hairline text-center">
+      <p class="text-slate font-mono text-sm mb-10">Full specifications and verification contracts are available under controlled disclosure.</p>
+      <a href="contact.html" class="inline-block border hairline px-12 py-4 font-display text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all">Request Controlled Review</a>
+    </section>
+
     <section class="py-24 px-8 bg-[#030407] border-t hairline">
-      <div class="max-w-[1200px] mx-auto border hairline p-8 bg-[#05070a] font-mono text-[11px] text-slate/80">
-        <div class="text-nadirOrange uppercase tracking-[0.3em] mb-6 pb-4 border-b hairline">Boundary Declaration</div>
-        <ul class="space-y-3">
-          <li>• NADIR does not validate correctness, fairness, or legality.</li>
-          <li>• Verification confirms integrity and provenance under policy, not decision correctness.</li>
-          <li>• Oversight determinations rest with the relevant authority.</li>
+      <div class="max-w-[1200px] mx-auto border hairline p-8 bg-[#05070a] font-mono text-[11px] text-slate/80 leading-relaxed">
+        <div class="text-nadirOrange uppercase tracking-[0.3em] mb-6 pb-4 border-b hairline flex justify-between">
+          <span>Boundary Declaration</span>
+          <span class="opacity-30">PROT_01</span>
+        </div>
+        <ul class="space-y-4">
+          <li class="flex gap-4"><span>•</span> NADIR does not validate correctness, fairness, legality, or policy compliance of AI systems.</li>
+          <li class="flex gap-4"><span>•</span> NADIR does not certify regulatory compliance or legal admissibility.</li>
+          <li class="flex gap-4"><span>•</span> NADIR does not guarantee inference reproducibility.</li>
+          <li class="flex gap-4"><span>•</span> Verification confirms integrity & provenance only.</li>
+          <li class="flex gap-4"><span>•</span> Oversight decisions belong to the relevant authority.</li>
         </ul>
       </div>
     </section>
   </main>
 
   <footer class="bg-[#030407] border-t hairline py-8 px-8 flex flex-col md:flex-row items-center justify-between font-mono text-[9px] uppercase tracking-[0.2em] text-slate/60">
-    <div>NADIR provides verifiable records; authorized institutions provide oversight.</div>
-    <div class="flex gap-6 items-center">
-      <span>© 2026 NADIR, a project of Brian Covarrubias</span>
-      <span class="text-white/40 border border-white/10 px-2 py-1">[V2026.02.19]</span>
-    </div>
+    <div>NADIR provides the evidence; authorized institutions provide the oversight.</div>
+    <div>© 2026 NADIR [V2026.02.19] All rights reserved.</div>
   </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from(".hero-title", {y: 50, opacity: 0, duration: 1.2, delay: 0.2});
+    gsap.from(".hero-p", {y: 20, opacity: 0, duration: 1, delay: 0.5});
+  </script>
 </body>
 </html>
