@@ -1,457 +1,107 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>NADIR — Oversight Portal</title>
-  <meta name="description" content="Institutional verification workflows for policy-scoped, integrity-sealed artifacts under constrained disclosure." />
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-  <!-- Tailwind -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Public Sans', 'ui-sans-serif', 'system-ui'],
-            mono: ['Roboto Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-          },
-          colors: {
-            vellum: '#F9FAFB',
-            obsidian: '#0A0F1E',
-            slateblue: '#475569',
-            orange: '#EA580C',
-            verified: '#166534',
-            mismatch: '#991B1B',
-            neutral: '#64748B',
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
   <style>
-    html { scroll-behavior: smooth; }
-    body { background:#F9FAFB; color:#0A0F1E; }
-    .hairline { border-color: rgba(71,85,105,0.22); }
-    .measure { max-width: 74ch; }
-    .no-rounded { border-radius: 0 !important; }
+    :root { --border: rgba(255, 255, 255, 0.08); }
+    body { background-color: #05070a; color: #F9FAFB; overflow-x: hidden; font-family: 'Inter', sans-serif; }
+    .hairline { border: 1px solid var(--border); }
+    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
   </style>
 </head>
+<body class="antialiased">
 
-<body class="font-sans antialiased">
-
-  <!-- Institutional Header -->
-  <header class="sticky top-0 z-50 bg-vellum/80 backdrop-blur-md border-b hairline">
-    <div class="mx-auto max-w-7xl px-6">
-      <div class="h-16 flex items-center justify-between">
-        <a href="index.html" class="flex items-center gap-3">
-          <img src="assets/nadir-wordmark.svg" alt="NADIR" class="h-7 w-auto" onerror="this.style.display='none'">
-          <div class="leading-tight">
-            <div class="text-[12px] tracking-[0.34em] uppercase">NADIR</div>
-            <div class="text-[10px] text-slateblue/80 uppercase tracking-[0.18em]">Institutional framework</div>
-          </div>
-        </a>
-
-        <nav class="hidden md:flex items-center gap-1 text-[11px] uppercase tracking-[0.16em] text-slateblue/90">
-          <a class="px-3 py-2 hover:text-obsidian" href="index.html">Overview</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="platform.html">Platform</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="use-cases.html">Integration</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="oversight.html">Oversight</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="docs.html">Documents</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="compliance.html">Compliance</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="trust.html">Trust</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="roadmap.html">Roadmap</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="founder.html">Founder</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="governance.html">Governance</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="privacy.html">Privacy</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="terms.html">Terms</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="ethical.html">Ethical</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="contact.html">Contact</a>
-        </nav>
-
-        <a href="contact.html"
-           class="inline-flex items-center justify-center h-10 px-4 border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-          Request controlled review
-        </a>
+  <nav class="fixed top-0 inset-x-0 z-[100] glass">
+    <div class="max-w-[1600px] mx-auto px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
+      <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
+        <a href="platform.html" class="opacity-50">Architecture</a>
+        <a href="oversight.html" class="text-[#EA580C]">Oversight</a>
+        <a href="compliance.html" class="opacity-50">Compliance</a>
+        <a href="trust.html" class="opacity-50">Trust</a>
       </div>
+      <div class="font-mono text-[9px] text-white/40 uppercase tracking-widest">Auth_Required</div>
     </div>
-  </header>
+  </nav>
 
-  <main>
+  <main class="pt-40">
+    <section class="px-8 max-w-[1600px] mx-auto mb-24">
+      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">Oversight <br> Portal</h1>
+      <p class="text-slate-400 text-xl max-w-3xl leading-relaxed">Role-based artifact access and deterministic verification for institutional workflows.</p>
+    </section>
 
-    <!-- HERO -->
-    <section class="nadir-hero relative h-screen overflow-hidden">
-      <div class="hero-pin absolute inset-0">
-        <div class="absolute inset-0 bg-vellum"></div>
-
-        <div class="absolute inset-0 opacity-[0.08]"
-          style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;">
-        </div>
-
-        <div class="absolute inset-0"
-          style="background:linear-gradient(to bottom, rgba(10,15,30,0.03), rgba(10,15,30,0.00) 45%, rgba(10,15,30,0.035));">
-        </div>
+    <section class="px-8 max-w-[1600px] mx-auto grid md:grid-cols-3 gap-px bg-white/10 hairline mb-32">
+      <div class="bg-black p-12">
+        <span class="font-mono text-[#EA580C] text-[10px] uppercase mb-6 block">01 Operator</span>
+        <h3 class="font-display text-xl mb-4">Regulated Operator</h3>
+        <p class="text-slate-500 text-sm">Configures capture policy, manages local retention, and generates integrity-sealed artifacts.</p>
       </div>
-
-      <div class="absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">
-        [V2026.02.19]
+      <div class="bg-black p-12">
+        <span class="font-mono text-[#EA580C] text-[10px] uppercase mb-6 block">02 Institution</span>
+        <h3 class="font-display text-xl mb-4">Authorized Institution</h3>
+        <p class="text-slate-500 text-sm">Validates signatures, confirms artifact integrity, and ensures policy alignment for compliance.</p>
       </div>
+      <div class="bg-black p-12">
+        <span class="font-mono text-[#EA580C] text-[10px] uppercase mb-6 block">03 Auditor</span>
+        <h3 class="font-display text-xl mb-4">Forensic Auditor</h3>
+        <p class="text-slate-500 text-sm">Facilitates incident-scoped retrieval and independent verification of runtime state.</p>
+      </div>
+    </section>
 
-      <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
-        <div class="grid grid-cols-12 h-full">
-          <div class="col-span-12 flex flex-col items-center justify-center text-center">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
-              [AUTHORIZED ACCESS] · [CONSTRAINED DISCLOSURE] · [CRYPTOGRAPHIC VERIFICATION]
-            </div>
+    
 
-            <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
-              Oversight Portal
-            </h1>
+    <section class="px-8 max-w-[1600px] mx-auto mb-32">
+      <h2 class="font-mono text-[10px] uppercase tracking-[0.4em] text-slate-500 mb-12">Verification Workflow</h2>
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex-1 border hairline p-6 bg-white/5 font-mono text-xs uppercase tracking-widest text-slate-300">1. Retrieve</div>
+        <div class="flex-1 border hairline p-6 bg-white/5 font-mono text-xs uppercase tracking-widest text-slate-300">2. Canonicalize</div>
+        <div class="flex-1 border hairline p-6 bg-white/5 font-mono text-xs uppercase tracking-widest text-slate-300">3. Re-hash</div>
+        <div class="flex-1 border hairline p-6 bg-white/5 font-mono text-xs uppercase tracking-widest text-slate-300">4. Validate Sig</div>
+        <div class="flex-1 border hairline p-6 bg-white/5 font-mono text-xs uppercase tracking-widest text-white">5. Confirm Policy</div>
+      </div>
+    </section>
 
-            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
-              NADIR is designed to enable institutional verification of integrity-sealed artifacts without default exposure of model weights, proprietary architecture, or trade-secret implementation. The Oversight Portal describes verification workflows and role-scoped access patterns used under controlled review.
-            </p>
-
-            <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-              <a href="#portal"
-                 class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
-                Enter portal model
-              </a>
-              <a href="pcl.html"
-                 class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-                PCL controls
-              </a>
-            </div>
-          </div>
+    <section class="px-8 max-w-[1600px] mx-auto mb-32 border-t hairline pt-20">
+      <h2 class="font-display text-3xl mb-12 uppercase">Disclosure Tiers</h2>
+      <div class="grid md:grid-cols-2 gap-12">
+        <div class="p-8 border hairline bg-white/5">
+          <h4 class="font-mono text-[10px] text-[#EA580C] mb-4 uppercase">Public / Redacted</h4>
+          <p class="text-slate-400 text-sm">Non-sensitive metadata, high-level summary, and cryptographic proof-of-integrity.</p>
+        </div>
+        <div class="p-8 border hairline bg-white/5">
+          <h4 class="font-mono text-[10px] text-[#EA580C] mb-4 uppercase">Controlled Review</h4>
+          <p class="text-slate-400 text-sm">Expanded fields, full environment fingerprints, and granular policy metadata.</p>
         </div>
       </div>
     </section>
 
-    <!-- SECTION: ROLE TIERS -->
-    <section id="portal" class="border-t hairline">
-      <div class="mx-auto max-w-7xl px-6 py-20">
-        <div class="grid grid-cols-12 gap-10 items-start">
-          <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[ACCESS TIERS]</div>
-            <h2 class="section-title mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em]">
-              Role-based oversight
-            </h2>
-            <p class="mt-4 text-slateblue leading-relaxed measure">
-              Oversight is designed around constrained disclosure. Roles determine what can be viewed, what can be verified, and what remains masked under policy scope.
-            </p>
-          </div>
-
-          <div class="col-span-12 lg:col-span-8">
-            <div class="border hairline no-rounded overflow-hidden reveal">
-              <div class="px-6 py-4 border-b hairline bg-vellum">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[TIERS]</div>
-              </div>
-
-              <div class="divide-y" style="border-color: rgba(71,85,105,0.22);">
-                <div class="grid grid-cols-12 px-6 py-4 gap-4">
-                  <div class="col-span-12 md:col-span-4 font-mono text-[11px] text-slateblue/90 uppercase tracking-[0.16em]">
-                    Regulated operators
-                  </div>
-                  <div class="col-span-12 md:col-span-8 text-slateblue leading-relaxed">
-                    Configure Policy Scope, retention, residency, and internal access controls. Operators remain responsible for deployment decisions and lawful use.
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-12 px-6 py-4 gap-4">
-                  <div class="col-span-12 md:col-span-4 font-mono text-[11px] text-slateblue/90 uppercase tracking-[0.16em]">
-                    Authorized institutions
-                  </div>
-                  <div class="col-span-12 md:col-span-8 text-slateblue leading-relaxed">
-                    Verify integrity and provenance of specific artifacts under constrained disclosure. Verification does not require default access to model weights or proprietary architecture.
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-12 px-6 py-4 gap-4">
-                  <div class="col-span-12 md:col-span-4 font-mono text-[11px] text-slateblue/90 uppercase tracking-[0.16em]">
-                    Forensic auditors
-                  </div>
-                  <div class="col-span-12 md:col-span-8 text-slateblue leading-relaxed">
-                    Reconstruct incident timelines using custody-ready artifacts, hashes, signatures, and policy scope logs. Access is role-scoped and jurisdiction-sensitive.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-8 border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARY]</div>
-              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
-                <li>NADIR produces integrity-bound records. It does not adjudicate correctness, fairness, legality, or compliance outcomes.</li>
-                <li>Authorized institutions and operators make determinations and retain responsibility for decisions.</li>
-                <li>Policy Scope governs inclusion, exclusion, masking, access tiers, and retention.</li>
-              </ul>
-            </div>
-          </div>
+    <section class="py-24 px-8 bg-[#030407] border-t hairline">
+      <div class="max-w-[1200px] mx-auto border hairline p-8 bg-[#05070a] font-mono text-[11px] text-slate-500 leading-relaxed">
+        <div class="text-[#EA580C] uppercase tracking-[0.3em] mb-6 pb-4 border-b hairline flex justify-between">
+          <span>Boundary Declaration</span>
         </div>
+        <ul class="space-y-4">
+          <li>• NADIR does not validate correctness, fairness, legality, or policy compliance of AI systems.</li>
+          <li>• NADIR does not certify regulatory compliance or legal admissibility.</li>
+          <li>• NADIR does not guarantee inference reproducibility.</li>
+          <li>• Verification confirms integrity & provenance only.</li>
+          <li>• Oversight decisions belong to the relevant authority.</li>
+        </ul>
       </div>
     </section>
-
-    <!-- SECTION: VERIFICATION WORKFLOW (step blocks to avoid repetitive cards) -->
-    <section class="border-t hairline">
-      <div class="mx-auto max-w-7xl px-6 py-20">
-        <div class="grid grid-cols-12 gap-10">
-          <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[WORKFLOW]</div>
-            <h2 class="section-title mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em]">
-              Verification without IP exposure
-            </h2>
-            <p class="mt-4 text-slateblue leading-relaxed measure">
-              The portal’s primary function is to allow a reviewer to verify that an artifact was generated under defined policy scope and has not been altered, while minimizing disclosure of sensitive fields.
-            </p>
-          </div>
-
-          <div class="col-span-12 lg:col-span-8">
-            <div class="grid gap-6">
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STEP 01]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Select an artifact identifier</h3>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  A reviewer begins with a single artifact ID, timestamp window, or incident case reference. Review is initiated under controlled review procedures defined by the operator and authorized institution.
-                </p>
-              </div>
-
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STEP 02]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Confirm policy scope and masking</h3>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  The portal surfaces the policy scope version associated with the artifact, including inclusion/exclusion rules and masking directives. Sensitive fields may be redacted while preserving cryptographic verifiability.
-                </p>
-              </div>
-
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STEP 03]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Verify deterministic sealing</h3>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  JSON artifacts are canonicalized prior to hashing (RFC 8785 for JSON artifacts), then hashed and signed. Verification confirms the signature over the canonical form to support tamper-evidence.
-                </p>
-              </div>
-
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STEP 04]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Produce a verification record</h3>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  The output of review is a verification record (hash, signature status, scope version, timestamp bounds, and reviewer attestations as applicable). The portal is designed to support later reconstruction and institutional handling.
-                </p>
-              </div>
-            </div>
-
-            <div class="mt-8 border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[KEY CUSTODY]</div>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                NADIR is designed for non-custodial key posture: signing keys are generated and retained within the operator’s controlled environment (e.g., HSM/KMS). NADIR does not require possession or transmission of private keys for verification workflows.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION: MOCK PORTAL PANEL (table-like list; avoids repeated “cards”) -->
-    <section class="border-t hairline">
-      <div class="mx-auto max-w-7xl px-6 py-20">
-        <div class="grid grid-cols-12 gap-10">
-          <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[PORTAL VIEW]</div>
-            <h2 class="section-title mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em]">
-              Artifact verification panel (illustrative)
-            </h2>
-            <p class="mt-4 text-slateblue leading-relaxed measure">
-              This is a representative layout. Actual fields and visibility vary by policy scope, jurisdiction, and access tier under controlled review.
-            </p>
-          </div>
-
-          <div class="col-span-12 lg:col-span-8">
-            <div class="border hairline no-rounded overflow-hidden reveal">
-              <div class="px-6 py-4 border-b hairline bg-vellum flex items-center justify-between">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[ARTIFACT LIST]</div>
-                <div class="font-mono text-[11px] tracking-[0.14em] text-slateblue/80">Status key: Verified / Masked / Review</div>
-              </div>
-
-              <div class="divide-y" style="border-color: rgba(71,85,105,0.22);">
-                <div class="grid grid-cols-12 px-6 py-4 gap-4 items-start">
-                  <div class="col-span-12 md:col-span-4">
-                    <div class="font-mono text-[12px] text-obsidian tracking-[0.08em]">ART-7F2C…A19D</div>
-                    <div class="mt-1 font-mono text-[11px] text-slateblue/80">[SCOPE V2026.02]</div>
-                  </div>
-                  <div class="col-span-12 md:col-span-5 text-slateblue leading-relaxed">
-                    Decision-state context artifact (policy-scoped). Selected fields masked under scope rules. Custody metadata present.
-                  </div>
-                  <div class="col-span-12 md:col-span-3">
-                    <div class="inline-flex items-center px-2 py-1 border hairline no-rounded font-mono text-[11px] text-verified">
-                      VERIFIED
-                    </div>
-                    <div class="mt-2 font-mono text-[11px] text-slateblue/80">[SIG OK] · [HASH OK]</div>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-12 px-6 py-4 gap-4 items-start">
-                  <div class="col-span-12 md:col-span-4">
-                    <div class="font-mono text-[12px] text-obsidian tracking-[0.08em]">ART-93B1…2E04</div>
-                    <div class="mt-1 font-mono text-[11px] text-slateblue/80">[SCOPE V2026.02]</div>
-                  </div>
-                  <div class="col-span-12 md:col-span-5 text-slateblue leading-relaxed">
-                    System parameter snapshot (policy-scoped). Redaction applied. Suitable for verification without proprietary architecture disclosure.
-                  </div>
-                  <div class="col-span-12 md:col-span-3">
-                    <div class="inline-flex items-center px-2 py-1 border hairline no-rounded font-mono text-[11px] text-neutral">
-                      MASKED
-                    </div>
-                    <div class="mt-2 font-mono text-[11px] text-slateblue/80">[FIELDS REDACTED]</div>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-12 px-6 py-4 gap-4 items-start">
-                  <div class="col-span-12 md:col-span-4">
-                    <div class="font-mono text-[12px] text-obsidian tracking-[0.08em]">ART-0C44…9D10</div>
-                    <div class="mt-1 font-mono text-[11px] text-slateblue/80">[SCOPE V2026.02]</div>
-                  </div>
-                  <div class="col-span-12 md:col-span-5 text-slateblue leading-relaxed">
-                    Incident reconstruction chain (illustrative). Links multiple artifacts by time bounds and custody metadata.
-                  </div>
-                  <div class="col-span-12 md:col-span-3">
-                    <div class="inline-flex items-center px-2 py-1 border hairline no-rounded font-mono text-[11px] text-orange">
-                      REVIEW
-                    </div>
-                    <div class="mt-2 font-mono text-[11px] text-slateblue/80">[ATTEST PENDING]</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-8 border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[CONSTRAINED DISCLOSURE NOTE]</div>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                The portal is designed so that institutional verification can be performed over canonicalized artifacts even when content is partially redacted under policy scope. This is intended to reduce unnecessary exposure while preserving integrity verification.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION: OPERATIONAL GUARANTEES (careful wording; no absolute claims) -->
-    <section class="border-t hairline">
-      <div class="mx-auto max-w-7xl px-6 py-20">
-        <div class="grid grid-cols-12 gap-10">
-          <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[OPERATIONAL]</div>
-            <h2 class="section-title mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em]">
-              Integrity–availability balance
-            </h2>
-            <p class="mt-4 text-slateblue leading-relaxed measure">
-              High-stakes environments may require explicit posture about audit continuity versus inference continuity. The portal documents expected behavior under defined operator configuration.
-            </p>
-          </div>
-
-          <div class="col-span-12 lg:col-span-8">
-            <div class="border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[FAIL-OPEN / FAIL-CLOSED]</div>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                NADIR is designed so that audit capture failure does not necessarily imply operational inference failure. Operators define whether the deployment is configured to fail-open (continue inference with audit degradation) or fail-closed (halt under integrity failure) based on risk posture and governance requirements.
-              </p>
-            </div>
-
-            <div class="mt-6 border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[RESOURCE ISOLATION]</div>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                Where applicable, NADIR may be deployed with resource isolation controls (e.g., cgroup-based quotas) to reduce risk of operational back-pressure on the inference engine. Exact constraints and performance targets are deployment-specific and documented under controlled review.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="border-t hairline">
-      <div class="mx-auto max-w-7xl px-6 py-16">
-        <div class="border hairline p-10 no-rounded reveal">
-          <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[CONTROLLED REVIEW]</div>
-          <h2 class="section-title mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em]">
-            Request access for institutional evaluation
-          </h2>
-          <p class="mt-4 text-slateblue leading-relaxed measure">
-            Detailed field schemas, example artifacts, and deployment-specific disclosure posture are provided under controlled review.
-          </p>
-          <div class="mt-8">
-            <a href="contact.html"
-               class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
-              Request controlled review
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-obsidian text-vellum border-t border-white/10">
-    <div class="mx-auto max-w-7xl px-6 py-14">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
-        <div>
-          <div class="text-[12px] tracking-[0.22em] uppercase">NADIR</div>
-          <div class="mt-3 text-sm text-white/70 leading-relaxed">
-            © 2026 NADIR, a project of Brian Covarrubias. All rights reserved.<br>
-            <span class="font-mono text-white/80">[V2026.02.19]</span> — Unauthorized distribution prohibited.
-          </div>
-        </div>
-
-        <div>
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Legal</div>
-          <ul class="mt-3 space-y-2 text-sm text-white/70">
-            <li><a class="hover:text-white" href="privacy.html">Privacy</a></li>
-            <li><a class="hover:text-white" href="terms.html">Terms</a></li>
-            <li><a class="hover:text-white" href="ethical.html">Ethical Use</a></li>
-            <li><a class="hover:text-white" href="accessibility.html">Accessibility</a></li>
-            <li><a class="hover:text-white" href="modern-slavery.html">Modern Slavery</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Trust infrastructure</div>
-          <ul class="mt-3 space-y-2 text-sm text-white/70">
-            <li><a class="hover:text-white" href="trust.html">Trust Center</a></li>
-            <li><a class="hover:text-white" href="compliance.html">Compliance Crosswalk</a></li>
-            <li><a class="hover:text-white" href="vdp.html">Vulnerability Disclosure (VDP)</a></li>
-            <li><a class="hover:text-white" href="sbom.html">SBOM</a></li>
-            <li><a class="hover:text-white" href="sustainability.html">Sustainability</a></li>
-            <li><a class="hover:text-white" href="key-custody.html">Key Custody</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Institutional</div>
-          <ul class="mt-3 space-y-2 text-sm text-white/70">
-            <li><a class="hover:text-white" href="pcl.html">Privacy & Civil Liberties (PCL)</a></li>
-            <li><a class="hover:text-white" href="admissibility.html">Legal Admissibility Primer</a></li>
-            <li><a class="hover:text-white" href="incident-72h.html">72-Hour Playbook</a></li>
-            <li><a class="hover:text-white" href="contact.html">Contact</a></li>
-          </ul>
-
-          <div class="mt-6 text-sm text-white/70">
-            <a class="hover:text-white" href="mailto:contact@nadir-ai.com">contact@nadir-ai.com</a>
-          </div>
-        </div>
-      </div>
-    </div>
+  <footer class="bg-[#030407] border-t hairline py-8 px-8 flex flex-col md:flex-row items-center justify-between font-mono text-[9px] uppercase tracking-[0.2em] text-slate-600">
+    <div>NADIR provides the evidence; authorized institutions provide the oversight.</div>
+    <div>© 2026 NADIR [V2026.02.19] All rights reserved. — Project of Brian Covarrubias</div>
   </footer>
-
-  <!-- Global JS -->
-  <script src="assets/site.js"></script>
 </body>
 </html>
