@@ -1,142 +1,94 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NADIR — Ethical Use</title>
-  <meta name="description" content="Ethical use policy: authorized oversight contexts, operator responsibility, non-weaponization, and human oversight." />
-
+  <title>NADIR — Ethical Use Policy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans:['Public Sans','ui-sans-serif','system-ui'], mono:['Roboto Mono','ui-monospace','SFMono-Regular','Menlo','Monaco','Consolas','monospace'] },
-          colors: { vellum:'#F9FAFB', obsidian:'#0A0F1E', slateblue:'#475569', orange:'#EA580C' }
-        }
-      }
-    }
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
   <style>
-    html { scroll-behavior: smooth; }
-    body { background:#F9FAFB; color:#0A0F1E; }
-    .hairline { border-color: rgba(71,85,105,0.22); }
-    .measure { max-width: 74ch; }
-    .no-rounded { border-radius: 0 !important; }
+    :root { --border: rgba(255, 255, 255, 0.08); --nadirOrange: #EA580C; --redLine: #ef4444; }
+    body { background-color: #05070a; color: #F9FAFB; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+    .hairline { border: 1px solid var(--border); }
+    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .scroll-reveal { opacity: 0.1; transition: all 0.8s ease; transform: translateY(20px); }
+    .scroll-reveal.active { opacity: 1; transform: translateY(0); }
   </style>
 </head>
+<body class="antialiased">
 
-<body class="font-sans antialiased">
-  <div id="siteHeader"></div>
-
-  <main>
-    <!-- HERO -->
-    <section class="nadir-hero relative h-screen overflow-hidden">
-      <div class="hero-pin absolute inset-0">
-        <div class="absolute inset-0 bg-vellum"></div>
-        <div class="absolute inset-0 opacity-[0.08]"
-          style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;"></div>
+  <nav class="fixed top-0 inset-x-0 z-[100] glass">
+    <div class="max-w-[1600px] mx-auto px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
+      <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
+        <a href="ethics.html" class="text-[#EA580C]">Ethics</a>
+        <a href="pcl.html" class="opacity-50 hover:opacity-100">PCL_Framework</a>
+        <a href="governance.html" class="opacity-50 hover:opacity-100">Governance</a>
       </div>
+      <div class="font-mono text-[9px] text-white/40 uppercase tracking-widest">Policy_V: 2026.02.19</div>
+    </div>
+  </nav>
 
-      <div class="hero-version absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">[V2026.02.19]</div>
+  <main class="pt-40 px-8">
+    <section class="max-w-[1600px] mx-auto mb-32">
+      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8 scroll-reveal">Ethical Use <br> Policy</h1>
+      <p class="text-slate-400 text-xl max-w-3xl leading-relaxed scroll-reveal">
+        NADIR is infrastructure for lawful oversight—not a tool for <span class="text-white">clandestine surveillance or disinformation.</span>
+      </p>
+    </section>
 
-      <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
-        <div class="grid grid-cols-12 h-full">
-          <div class="col-span-12 flex flex-col items-center justify-center text-center">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
-              [AUTHORIZED USE] · [RED LINES] · [HUMAN OVERSIGHT]
-            </div>
-            <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
-              Ethical use
-            </h1>
-            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
-              NADIR is designed for deployment by authorized institutions in lawful oversight contexts.
-              Use of NADIR infrastructure for purposes inconsistent with lawful oversight, human rights obligations, or applicable law is not authorized.
-            </p>
+    <section class="max-w-[1600px] mx-auto grid md:grid-cols-2 gap-px bg-white/10 hairline border hairline mb-40">
+      <div class="bg-black p-12 scroll-reveal">
+        <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-8">Authorized Deployments</h2>
+        <ul class="space-y-4 font-display text-lg uppercase">
+          <li>• Regulated operators (Finance, Health)</li>
+          <li>• Government oversight bodies</li>
+          <li>• Independent auditors</li>
+        </ul>
+      </div>
+      <div class="bg-black p-12 scroll-reveal">
+        <h2 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em] mb-8">Operator Responsibilities</h2>
+        <ul class="space-y-4 text-slate-400 text-sm leading-relaxed">
+          <li>— Define explicit capture policy and disclosure tiers</li>
+          <li>— Retain artifacts per applicable jurisdictional law</li>
+          <li>— Ensure mandatory human review of sensitive outputs</li>
+        </ul>
+      </div>
+    </section>
 
-            <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-              <a href="#content" class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
-                View policy
-              </a>
-              <a href="terms.html" class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-                Terms
-              </a>
-            </div>
-          </div>
+    <section class="max-w-[1600px] mx-auto mb-40 scroll-reveal">
+      <div class="border-2 border-red-900/30 bg-red-950/5 p-12">
+        <h2 class="font-mono text-[10px] text-red-500 uppercase tracking-[0.5em] mb-12 text-center">Red-Line Prohibitions</h2>
+        <div class="grid md:grid-cols-2 gap-12">
+          <ul class="space-y-6 font-display text-xl uppercase tracking-tight text-slate-300">
+            <li class="flex gap-4">
+               <span class="text-red-500 font-mono">✗</span> Untargeted biometric scraping
+            </li>
+            <li class="flex gap-4">
+               <span class="text-red-500 font-mono">✗</span> Unauthorized mass surveillance
+            </li>
+          </ul>
+          <ul class="space-y-6 font-display text-xl uppercase tracking-tight text-slate-300">
+            <li class="flex gap-4">
+               <span class="text-red-500 font-mono">✗</span> Fabrication of disinformation artifacts
+            </li>
+            <li class="flex gap-4">
+               <span class="text-red-500 font-mono">✗</span> Lethal autonomous loops (No Human Override)
+            </li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- POLICY -->
-    <section id="content" class="narrative-section border-t hairline">
-      <div class="mx-auto max-w-7xl px-6">
-        <div class="grid grid-cols-12 gap-10 py-20 items-start">
-          <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[POLICY]</div>
-            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-              Authorized use in oversight contexts
-            </h2>
-            <p class="mt-4 text-slateblue leading-relaxed measure">
-              Ethical posture is enforced through disclosure boundaries, policy-scoped capture, and operator responsibility.
-            </p>
-          </div>
-
-          <div class="col-span-12 lg:col-span-8">
-            <div class="grid md:grid-cols-2 gap-6">
-              <div class="border hairline p-6 no-rounded reveal">
-                <h3 class="font-semibold">Authorized deployment contexts</h3>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  NADIR is intended for regulated operators, institutional oversight bodies, and organizations with lawful authority to conduct structured review of AI inference systems.
-                </p>
-              </div>
-
-              <div class="border hairline p-6 no-rounded reveal">
-                <h3 class="font-semibold">Operator responsibility</h3>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  Operators are responsible for ensuring deployment and use of NADIR infrastructure complies with applicable law, institutional policy, and ethical obligations in their jurisdiction and domain.
-                </p>
-              </div>
-
-              <div class="border hairline p-6 no-rounded reveal">
-                <h3 class="font-semibold">Non-weaponization</h3>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  NADIR infrastructure must not be used to circumvent legal protections, enable unauthorized surveillance, or produce artifacts intended to misrepresent inference behavior.
-                  Nothing in this policy constitutes authorization for military, intelligence, or enforcement activity absent lawful authority and compliance with applicable law.
-                </p>
-              </div>
-
-              <div class="border hairline p-6 no-rounded reveal">
-                <h3 class="font-semibold">Human oversight</h3>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  NADIR supports human oversight workflows. It is not a substitute for human judgment, legal process, or institutional accountability mechanisms.
-                </p>
-              </div>
-            </div>
-
-            <div class="mt-8 border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARY]</div>
-              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
-                <li>NADIR does not authorize any use that violates applicable law or international humanitarian law.</li>
-                <li>NADIR does not endorse, certify, or validate the lawfulness of any AI system or its outputs.</li>
-                <li>Deployment responsibility and ethical accountability remain with the implementing organization.</li>
-              </ul>
-            </div>
-
-          </div>
-        </div>
-      </div>
+    <section class="max-w-[1600px] mx-auto py-24 text-center scroll-reveal border-t hairline">
+        <h3 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em] mb-8">Human-in-the-Loop</h3>
+        <p class="text-3xl md:text-5xl font-display uppercase tracking-tighter max-w-4xl mx-auto">
+            NADIR augments—not replaces—human judgment. Every critical decision <span class="text-white underline decoration-[#EA580C]">must include a human review</span> of the artifact trail.
+        </p>
     </section>
-  </main>
 
-  <div id="siteFooter"></div>
-  <script src="assets/site.js"></script>
-</body>
-</html>
+    </main>
