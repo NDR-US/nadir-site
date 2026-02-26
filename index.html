@@ -3,138 +3,87 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NADIR — Evidentiary Infrastructure</title>
+  <title>NADIR — AI Integrity Layer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :root { --border: rgba(255, 255, 255, 0.08); --nadirOrange: #EA580C; }
-    body { background-color: #05070a; color: #F9FAFB; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-    .hairline { border: 1px solid var(--border); }
-    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
-    .font-display { font-family: 'Space Grotesk', sans-serif; }
-    .font-mono { font-family: 'JetBrains Mono', monospace; }
-    
-    /* SCROLL HIGHLIGHT LOGIC */
-    .scroll-reveal { opacity: 0.3; transition: all 0.6s ease; transform: translateY(10px); }
-    .scroll-reveal.active { opacity: 1; transform: translateY(0); color: white; }
-    .highlight-text { color: var(--nadirOrange); }
-  </style>
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body class="antialiased">
+<body class="antialiased bg-[#05070a] text-[#F9FAFB]">
 
-  <nav class="fixed top-0 inset-x-0 z-[100] glass">
-    <div class="max-w-[1600px] mx-auto px-8 h-16 flex items-center justify-between">
-      <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
-      <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
-        <a href="index.html" class="text-[#EA580C]">Overview</a>
-        <a href="platform.html" class="opacity-50 hover:opacity-100">Architecture</a>
-        <a href="integration.html" class="opacity-50 hover:opacity-100">Integration</a>
-        <a href="docs.html" class="opacity-50 hover:opacity-100">Docs</a>
-      </div>
-      <div class="font-mono text-[9px] text-white/40 uppercase tracking-widest">v2026.02.19</div>
-    </div>
-  </nav>
+  <div id="header-injection"></div>
 
-  <main>
-    <section class="min-h-screen flex flex-col justify-center px-8 max-w-[1600px] mx-auto">
-      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter leading-[0.9] mb-12">
-        Evidentiary <br> Infrastructure <br> <span class="text-slate-600">for AI Inference</span>
-      </h1>
-      <p class="text-slate-400 text-xl md:text-2xl max-w-4xl leading-relaxed mb-16">
-        NADIR is an attachable integrity and forensic compliance layer designed to generate <span class="text-white">policy-scoped, canonical artifacts</span> representing inference-time decision-state.
-      </p>
-      <div class="flex flex-wrap gap-6">
-        <a href="#structural" class="bg-[#EA580C] text-white px-10 py-5 font-mono text-[11px] uppercase tracking-widest font-bold">Enter Framework</a>
-        <a href="docs.html" class="border hairline px-10 py-5 font-mono text-[11px] uppercase tracking-widest text-slate-300 hover:bg-white/5">Document Suite</a>
-      </div>
-    </section>
-
-    <section id="structural" class="py-40 px-8 max-w-[1600px] mx-auto border-t hairline">
-      <div class="mb-32">
-        <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-12 scroll-reveal">Section A // Structural Deficits</h2>
-        <p class="text-4xl md:text-6xl font-display uppercase tracking-tight max-w-5xl scroll-reveal">
-          Many AI deployments lack <span class="highlight-text">canonical, integrity-bound artifacts</span> suitable for formal review.
-        </p>
-      </div>
-
-      <div class="grid lg:grid-cols-3 gap-px bg-white/10 hairline">
-        <div class="bg-black p-12 scroll-reveal">
-          <h3 class="font-mono text-[10px] uppercase mb-8 text-slate-500">01 / Telemetry ≠ Evidence</h3>
-          <p class="text-slate-400 text-sm leading-relaxed">Surface logs lack deterministic structure and integrity metadata required for admissible review.</p>
-        </div>
-        <div class="bg-black p-12 scroll-reveal">
-          <h3 class="font-mono text-[10px] uppercase mb-8 text-slate-500">02 / Constrained Disclosure</h3>
-          <p class="text-slate-400 text-sm leading-relaxed">Institutions must verify provenance without default exposure of proprietary model weights.</p>
-        </div>
-        <div class="bg-black p-12 scroll-reveal">
-          <h3 class="font-mono text-[10px] uppercase mb-8 text-slate-500">03 / Liability Ambiguity</h3>
-          <p class="text-slate-400 text-sm leading-relaxed">Disputes rely on partial telemetry, increasing legal uncertainty for operators and regulators.</p>
-        </div>
-      </div>
-    </section>
-
+  <main class="pt-40 px-8">
     
+    <section class="max-w-[1600px] mx-auto mb-32">
+      <div class="inline-block border border-[#EA580C] px-4 py-1 mb-8 font-mono text-[10px] uppercase tracking-[0.3em] text-[#EA580C] scroll-reveal">
+        Project Nadir // v2026.02.19
+      </div>
+      <h1 class="font-display text-6xl md:text-9xl uppercase tracking-tighter mb-8 scroll-reveal">
+        The AI <br> <span class="text-slate-500">Integrity Layer</span>
+      </h1>
+      <p class="text-slate-400 text-xl md:text-2xl max-w-4xl leading-relaxed scroll-reveal">
+        NADIR provides an immutable evidence chain for AI decision-support systems. 
+        Ensure <span class="text-white">technical accountability</span> through cryptographic sealing and 
+        statutory alignment.
+      </p>
+    </section>
 
-    <section class="py-40 px-8 max-w-[1600px] mx-auto border-t hairline">
-      <div class="mb-32">
-        <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-12 scroll-reveal">Section B // Infrastructure, Not Adjudication</h2>
-        <p class="text-4xl md:text-6xl font-display uppercase tracking-tight max-w-5xl scroll-reveal">
-          NADIR attaches beside the engine to <span class="highlight-text">generate verifiable records.</span>
+    <section class="max-w-[1600px] mx-auto grid md:grid-cols-3 gap-px bg-white/10 border hairline mb-40 scroll-reveal">
+      
+      <a href="platform.html" class="bg-black p-12 hover:bg-white/5 transition-all group">
+        <h3 class="font-display text-2xl uppercase mb-6 group-hover:text-[#EA580C] transition-colors">Platform</h3>
+        <p class="text-slate-500 text-sm font-mono uppercase leading-relaxed mb-12">
+          Architecture, sidecar deployment, and Phase 1 prototype sealing mechanics.
         </p>
-      </div>
+        <span class="font-mono text-[10px] text-[#EA580C] tracking-widest uppercase">Explore System →</span>
+      </a>
 
-      <div class="grid lg:grid-cols-3 gap-12 mb-32">
+      <a href="trust.html" class="bg-black p-12 hover:bg-white/5 transition-all group border-x hairline">
+        <h3 class="font-display text-2xl uppercase mb-6 group-hover:text-[#EA580C] transition-colors">Trust Center</h3>
+        <p class="text-slate-500 text-sm font-mono uppercase leading-relaxed mb-12">
+          PCL Framework, SBOM transparency, and Vulnerability Disclosure protocols.
+        </p>
+        <span class="font-mono text-[10px] text-[#EA580C] tracking-widest uppercase">Verify Integrity →</span>
+      </a>
+
+      <a href="compliance.html" class="bg-black p-12 hover:bg-white/5 transition-all group">
+        <h3 class="font-display text-2xl uppercase mb-6 group-hover:text-[#EA580C] transition-colors">Compliance</h3>
+        <p class="text-slate-500 text-sm font-mono uppercase leading-relaxed mb-12">
+          Ethical Use Policy, Legal Admissibility Primer, and Statutory Reporting.
+        </p>
+        <span class="font-mono text-[10px] text-[#EA580C] tracking-widest uppercase">Review Terms →</span>
+      </a>
+
+    </section>
+
+    <section class="max-w-[1600px] mx-auto mb-40 border-t hairline pt-20">
+      <div class="grid md:grid-cols-2 gap-24">
         <div class="scroll-reveal">
-          <h4 class="font-display text-xl mb-6 uppercase">Policy-Scoped Capture</h4>
-          <p class="text-slate-500 text-sm">Operators enumerate included fields and masking rules in a signed Policy Scope.</p>
+          <h4 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.4em] mb-8">Documentation Suite</h4>
+          <p class="text-slate-400 text-lg mb-8 leading-relaxed">
+            Technical Requirements (TRD), Benchmark Reports, and Engineering Specifications are available under controlled review.
+          </p>
+          <a href="docs.html" class="text-white font-mono text-xs uppercase tracking-widest underline underline-offset-8 decoration-[#EA580C] hover:text-[#EA580C]">
+            Request Access
+          </a>
         </div>
         <div class="scroll-reveal">
-          <h4 class="font-display text-xl mb-6 uppercase">Canonical Schema</h4>
-          <p class="text-slate-500 text-sm">Records are normalized into a deterministic structure including environment fingerprints and hash versions.</p>
-        </div>
-        <div class="scroll-reveal">
-          <h4 class="font-display text-xl mb-6 uppercase">Integrity Sealing</h4>
-          <p class="text-slate-500 text-sm">Artifacts are canonicalized (RFC 8785) and signed (ECDSA P-256) at the moment of inference.</p>
+          <h4 class="font-mono text-[10px] text-red-500 uppercase tracking-[0.4em] mb-8">Operational Crisis</h4>
+          <p class="text-slate-400 text-lg mb-8 leading-relaxed">
+            Meeting a statutory incident deadline? Use our procedural guide for artifact retrieval and verification.
+          </p>
+          <a href="incident-72h.html" class="text-red-500 font-mono text-xs uppercase tracking-widest underline underline-offset-8 decoration-red-900 hover:text-white">
+            72-Hour Playbook
+          </a>
         </div>
       </div>
     </section>
 
-    <section class="py-40 px-8 bg-white/5 border-t hairline text-center">
-      <div class="max-w-3xl mx-auto scroll-reveal">
-        <h2 class="font-display text-4xl uppercase mb-8">Controlled Review</h2>
-        <p class="text-slate-400 mb-12">Full specifications and verification CLI contracts are available under controlled disclosure.</p>
-        <a href="contact.html" class="inline-block border hairline border-[#EA580C] text-[#EA580C] px-10 py-5 font-mono text-[11px] uppercase tracking-widest font-bold hover:bg-[#EA580C] hover:text-white transition-all">Request Controlled Review</a>
-      </div>
-    </section>
-
-    <section class="py-24 px-8 border-t hairline">
-      <div class="max-w-[1200px] mx-auto border hairline p-10 bg-black font-mono text-[11px] text-slate-500 leading-relaxed scroll-reveal">
-        <div class="text-[#EA580C] uppercase tracking-[0.3em] mb-8 pb-4 border-b hairline">Boundary Declaration</div>
-        <ul class="space-y-4">
-          <li>• NADIR does not validate fairness, legality, or regulatory compliance of AI systems.</li>
-          <li>• Verification confirms integrity and provenance under policy—oversight determinations are made by the competent authority.</li>
-          <li>• This public content is descriptive; no rights are granted without separate agreement.</li>
-        </ul>
-      </div>
-    </section>
   </main>
 
-  <footer class="py-12 px-8 border-t hairline flex flex-col md:flex-row justify-between items-center text-slate-600 font-mono text-[9px] uppercase tracking-[0.2em]">
-    <div>"NADIR provides the evidence; institutions provide the oversight."</div>
-    <div>© 2026 NADIR — A Project of Brian Covarrubias</div>
-  </footer>
+  <div id="footer-injection"></div>
 
-  <script>
-    const observerOptions = { threshold: 0.2 };
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('active');
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
-  </script>
+  <script src="assets/site.js" defer></script>
 </body>
 </html>
