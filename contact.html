@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NADIR — Contact & Disclosure Requests</title>
+  <title>NADIR — Contact</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
@@ -22,6 +22,8 @@
       transition: all 0.3s ease;
     }
     input:focus, textarea:focus { border-color: var(--nadirOrange) !important; outline: none; background: rgba(255, 255, 255, 0.05) !important; }
+    .scroll-reveal { opacity: 0.1; transition: all 0.8s ease; transform: translateY(20px); }
+    .scroll-reveal.active { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body class="antialiased">
@@ -31,11 +33,10 @@
       <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
       <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
         <a href="platform.html" class="opacity-50">Architecture</a>
-        <a href="about.html" class="opacity-50">Manifesto</a>
-        <a href="docs.html" class="opacity-50">Docs</a>
+        <a href="statement.html" class="opacity-50">Statement</a>
         <a href="contact.html" class="text-[#EA580C]">Contact</a>
       </div>
-      <div class="font-mono text-[9px] text-[#EA580C] uppercase tracking-widest">Inquiry_Portal</div>
+      <div class="font-mono text-[9px] text-white/40 uppercase tracking-widest">Protocol: Established</div>
     </div>
   </nav>
 
@@ -43,28 +44,30 @@
     <div class="max-w-[1600px] mx-auto">
       <div class="grid lg:grid-cols-2 gap-24 items-start">
         
-        <div>
-          <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">Connect</h1>
+        <div class="scroll-reveal">
+          <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">Contact</h1>
           <p class="text-slate-400 text-xl max-w-md leading-relaxed mb-12">
-            Controlled review requests and institutional inquiries for the NADIR evidentiary framework.
+            Public content is intentionally concise; detailed specifications are shared under NDA.
           </p>
           
           <div class="space-y-12">
             <div>
-              <h3 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.4em] mb-4">Direct Channel</h3>
+              <h3 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.4em] mb-4">Email</h3>
               <a href="mailto:contact@nadir-ai.com" class="text-2xl font-mono hover:text-[#EA580C] transition-colors">contact@nadir-ai.com</a>
             </div>
             
-            <div class="p-8 border hairline bg-white/5 max-w-md">
-              <h4 class="font-mono text-[10px] text-white/40 mb-4 uppercase tracking-widest">Disclosure Boundary</h4>
-              <p class="text-slate-500 text-xs leading-relaxed">
-                No rights or licenses are granted by virtue of this inquiry. Technical disclosures and "Controlled Review" access are subject to a separate written Non-Disclosure Agreement (NDA).
+            <div>
+              <h3 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.4em] mb-4">Legal Notice Address</h3>
+              <p class="font-mono text-sm text-slate-400 leading-relaxed">
+                NADIR Operations<br>
+                548 Market Street, Suite 70931<br>
+                San Francisco, CA 94104 USA
               </p>
             </div>
           </div>
         </div>
 
-        <div class="bg-white/[0.02] border hairline p-8 md:p-12">
+        <div class="bg-white/[0.02] border hairline p-8 md:p-12 scroll-reveal">
           <form class="space-y-8">
             <div class="grid md:grid-cols-2 gap-8">
               <div class="flex flex-col gap-3">
@@ -78,55 +81,65 @@
             </div>
 
             <div class="flex flex-col gap-3">
-              <label class="font-mono text-[9px] uppercase tracking-widest text-slate-500">Organization / Institution</label>
+              <label class="font-mono text-[9px] uppercase tracking-widest text-slate-500">Organization</label>
               <input type="text" class="p-4 font-mono text-sm">
             </div>
 
             <div class="flex flex-col gap-3">
-              <label class="font-mono text-[9px] uppercase tracking-widest text-slate-500">Official Email Address</label>
+              <label class="font-mono text-[9px] uppercase tracking-widest text-slate-500">Work Email</label>
               <input type="email" class="p-4 font-mono text-sm">
             </div>
 
             <div class="flex flex-col gap-3">
-              <label class="font-mono text-[9px] uppercase tracking-widest text-slate-500">Inquiry Classification</label>
+              <label class="font-mono text-[9px] uppercase tracking-widest text-slate-500">Inquiry Type</label>
               <select class="p-4 font-mono text-sm appearance-none cursor-pointer">
-                <option>Request Controlled Review (Technical)</option>
-                <option>Institutional Oversight Integration</option>
-                <option>Regulatory Interoperability Inquiry</option>
-                <option>General Systems Inquiry</option>
+                <option>Controlled Review Request</option>
+                <option>Deployment Inquiry</option>
+                <option>Institutional Partnership</option>
+                <option>IP / Licensing</option>
+                <option>Other</option>
               </select>
             </div>
 
             <div class="flex flex-col gap-3">
-              <label class="font-mono text-[9px] uppercase tracking-widest text-slate-500">Inquiry Context</label>
+              <label class="font-mono text-[9px] uppercase tracking-widest text-slate-500">Message (2000 chars max)</label>
               <textarea rows="4" class="p-4 font-mono text-sm"></textarea>
             </div>
 
-            <button type="submit" class="w-full bg-white text-black py-5 font-display font-bold uppercase tracking-[0.3em] text-xs hover:bg-[#EA580C] hover:text-white transition-all">
-              Initialize Submission
-            </button>
+            <div class="space-y-4">
+              <p class="text-[10px] font-mono text-slate-500 leading-relaxed italic">
+                Submission does not grant rights or access. Replies are prioritized for institutional inquiries.
+              </p>
+              <button type="submit" class="w-full bg-[#EA580C] text-white py-5 font-mono font-bold uppercase tracking-[0.3em] text-[10px] hover:bg-white hover:text-black transition-all">
+                Initialize Inquiry
+              </button>
+            </div>
           </form>
         </div>
       </div>
     </div>
 
-    <section class="py-40 max-w-[1200px] mx-auto">
-      <div class="border hairline p-8 bg-[#05070a] font-mono text-[11px] text-slate-500 leading-relaxed">
-        <div class="text-[#EA580C] uppercase tracking-[0.3em] mb-6 pb-4 border-b hairline flex justify-between">
-          <span>Boundary Declaration</span>
-        </div>
+    <section class="py-40 max-w-[1200px] mx-auto scroll-reveal">
+      <div class="border hairline p-8 bg-black font-mono text-[11px] text-slate-500 leading-relaxed">
+        <div class="text-[#EA580C] uppercase tracking-[0.3em] mb-6 pb-4 border-b hairline">Boundary Declaration</div>
         <ul class="space-y-4">
-          <li>• NADIR does not determine correctness, fairness, or legality of model outputs.</li>
-          <li>• NADIR produces integrity-sealed records; admissibility is decided by the relevant authority.</li>
-          <li>• No rights or licenses are granted absent a separate written agreement.</li>
+          <li>• NADIR supplies records; institutions supply oversight.</li>
+          <li>• Communications may create legal obligations only if memorialized in a signed agreement.</li>
+          <li>• No warranty or regulatory guarantee is provided by replying to this form.</li>
         </ul>
       </div>
     </section>
   </main>
 
-  <footer class="bg-[#030407] border-t hairline py-8 px-8 flex flex-col md:flex-row items-center justify-between font-mono text-[9px] uppercase tracking-[0.2em] text-slate-600">
-    <div>NADIR provides the evidence; authorized institutions provide the oversight.</div>
-    <div>© 2026 NADIR [V2026.02.19] All rights reserved. — A Project of Brian Covarrubias</div>
+  <footer class="py-8 px-8 border-t hairline flex flex-col md:flex-row items-center justify-between font-mono text-[9px] uppercase tracking-[0.2em] text-slate-600">
+    <div>© 2026 NADIR — A Project of Brian Covarrubias</div>
   </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
