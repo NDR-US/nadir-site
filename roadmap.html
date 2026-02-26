@@ -1,137 +1,97 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>NADIR — Roadmap</title>
-  <meta name="description" content="NADIR roadmap: Phase 1 canonical artifacts and prototype sealing, Phase 2 verification harness, Phase 3 chain-of-custody workflow." />
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans:['Public Sans','ui-sans-serif','system-ui'], mono:['Roboto Mono','ui-monospace','SFMono-Regular','Menlo','Monaco','Consolas','monospace'] },
-          colors: { vellum:'#F9FAFB', obsidian:'#0A0F1E', slateblue:'#475569', orange:'#EA580C' }
-        }
-      }
-    }
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
   <style>
-    html { scroll-behavior: smooth; }
-    body { background:#F9FAFB; color:#0A0F1E; }
-    .hairline { border-color: rgba(71,85,105,0.22); }
-    .measure { max-width: 74ch; }
-    .no-rounded { border-radius: 0 !important; }
+    :root { --border: rgba(255, 255, 255, 0.08); }
+    body { background-color: #05070a; color: #F9FAFB; overflow-x: hidden; font-family: 'Inter', sans-serif; }
+    .hairline { border: 1px solid var(--border); }
+    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
   </style>
 </head>
+<body class="antialiased">
 
-<body class="font-sans antialiased">
-  <div id="siteHeader"></div>
-
-  <main>
-    <!-- HERO -->
-    <section class="nadir-hero relative h-screen overflow-hidden">
-      <div class="hero-pin absolute inset-0">
-        <div class="absolute inset-0 bg-vellum"></div>
-        <div class="absolute inset-0 opacity-[0.08]"
-          style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;"></div>
+  <nav class="fixed top-0 inset-x-0 z-[100] glass">
+    <div class="max-w-[1600px] mx-auto px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
+      <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
+        <a href="platform.html" class="opacity-50">Architecture</a>
+        <a href="integration.html" class="opacity-50">Integration</a>
+        <a href="docs.html" class="opacity-50">Documents</a>
+        <a href="roadmap.html" class="text-[#EA580C]">Roadmap</a>
       </div>
+      <div class="font-mono text-[9px] text-white/40 uppercase tracking-widest">v.2026.02</div>
+    </div>
+  </nav>
 
-      <div class="hero-version absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">[V2026.02.19]</div>
+  <main class="pt-40">
+    <section class="px-8 max-w-[1600px] mx-auto mb-24">
+      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">Development <br> Roadmap</h1>
+      <p class="text-slate-400 text-xl max-w-3xl leading-relaxed">NADIR prioritizes canonical artifacts, verification, and chain-of-custody before expanding scope. Current phase: <b>Phase 1</b>.</p>
+    </section>
 
-      <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
-        <div class="grid grid-cols-12 h-full">
-          <div class="col-span-12 flex flex-col items-center justify-center text-center">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
-              [PROOF] → [VERIFICATION] → [WORKFLOW] → [EXPANSION]
-            </div>
-            <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
-              Roadmap
-            </h1>
-            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
-              NADIR prioritizes canonical artifacts, verification, and chain-of-custody handling before expanding scope.
-              Claims remain limited to integrity, provenance, and workflow support.
-            </p>
+    
 
-            <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-              <a href="#content" class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
-                View phases
-              </a>
-              <a href="platform.html" class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-                Platform
-              </a>
+    <section class="px-8 max-w-[1600px] mx-auto mb-40">
+      <div class="flex flex-col gap-12">
+        
+        <div class="grid lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-3 font-mono text-[#EA580C] text-[10px] uppercase tracking-widest pt-2">Phase 01 // Active</div>
+          <div class="lg:col-span-9 border-l hairline pl-8 pb-12">
+            <h3 class="font-display text-2xl mb-4 uppercase">Canonical Artifact & Prototype Sealing</h3>
+            <p class="text-slate-400 text-sm mb-6 max-w-xl">Focusing on the foundational ability to generate deterministic, normalized records from live inference state.</p>
+            <div class="font-mono text-[10px] text-white/60 space-y-2">
+              <div>[✓] Deterministic normalization</div>
+              <div>[✓] Prototype sealing</div>
+              <div>[ ] Policy configuration model</div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- PHASES -->
-    <section id="content" class="narrative-section border-t hairline">
-      <div class="mx-auto max-w-7xl px-6">
-        <div class="grid grid-cols-12 gap-10 py-20 items-start">
-          <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[PHASED EXECUTION]</div>
-            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-              Scope discipline
-            </h2>
-            <p class="mt-4 text-slateblue leading-relaxed measure">
-              Each phase expands only after determinism and verification are proven in constrained scope.
-            </p>
-          </div>
-
-          <div class="col-span-12 lg:col-span-8">
-            <div class="grid md:grid-cols-3 gap-6">
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[PHASE 1]</div>
-                <h3 class="mt-3 font-semibold">Canonical artifact & prototype sealing</h3>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  Define policy-scoped capture. Normalize deterministically. Canonicalize prior to hashing (RFC 8785 for JSON artifacts). Hash and sign. Enforce fail-open logging posture.
-                </p>
-              </div>
-
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[PHASE 2]</div>
-                <h3 class="mt-3 font-semibold">Verification harness</h3>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  Independent verification tooling: hash recomputation, signature validation, and policy alignment checks under controlled disclosure.
-                </p>
-              </div>
-
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[PHASE 3]</div>
-                <h3 class="mt-3 font-semibold">Chain-of-custody workflow</h3>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  Retention posture, retrieval logging, review-ready outputs, and handling procedures suitable for formal proceedings.
-                </p>
-              </div>
+        <div class="grid lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-3 font-mono text-slate-600 text-[10px] uppercase tracking-widest pt-2">Phase 02 // Scheduled</div>
+          <div class="lg:col-span-9 border-l hairline pl-8 pb-12">
+            <h3 class="font-display text-2xl mb-4 uppercase opacity-60">Verification Harness</h3>
+            <p class="text-slate-500 text-sm mb-6 max-w-xl">Deployment of independent tooling to validate artifact integrity without connecting to the original inference engine.</p>
+            <div class="font-mono text-[10px] text-white/20 space-y-2">
+              <div>[ ] Independent tooling</div>
+              <div>[ ] Signature validation</div>
+              <div>[ ] Policy alignment checks</div>
             </div>
-
-            <div class="mt-8 border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[QUALITY BAR]</div>
-              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
-                <li>Expand only after determinism and verification are demonstrated in constrained scope.</li>
-                <li>Keep claims limited to integrity, provenance, and workflow support.</li>
-                <li>Oversight conclusions belong to authorized reviewers.</li>
-              </ul>
-            </div>
-
           </div>
         </div>
+
+        <div class="grid lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-3 font-mono text-slate-600 text-[10px] uppercase tracking-widest pt-2">Phase 03 // Future</div>
+          <div class="lg:col-span-9 border-l hairline pl-8 pb-12">
+            <h3 class="font-display text-2xl mb-4 uppercase opacity-60">Chain-of-Custody Workflow</h3>
+            <p class="text-slate-500 text-sm mb-6 max-w-xl">Expanding to long-term artifact retention, retrieval security, and automated reporting for oversight authorities.</p>
+            <div class="font-mono text-[10px] text-white/20 space-y-2">
+              <div>[ ] Retention posture</div>
+              <div>[ ] Retrieval logging</div>
+              <div>[ ] Audit-ready outputs</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
-  </main>
 
-  <div id="siteFooter"></div>
-  <script src="assets/site.js"></script>
+    <section class="mx-8 mb-40 border-t border-b hairline py-16 max-w-[1600px] lg:mx-auto">
+      <div class="max-w-2xl">
+        <h4 class="font-mono text-[#EA580C] text-[10px] uppercase tracking-[0.4em] mb-6">Quality Bar</h4>
+        <p class="text-xl font-display leading-snug">No scope expansion will occur until the core mandates of <b>determinism</b> and <b>verification</b> are proven and stress-tested.</p>
+      </div>
+    </section>
+
+    </main>
 </body>
 </html>
