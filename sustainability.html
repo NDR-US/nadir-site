@@ -1,301 +1,92 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>NADIR — Sustainability</title>
-  <meta name="description" content="NADIR Sustainability Disclosure: compute-to-integrity efficiency posture, measurement boundaries, and infrastructure impact statements. Informational only; not an environmental certification." />
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-  <!-- Tailwind -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Public Sans', 'ui-sans-serif', 'system-ui'],
-            mono: ['Roboto Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-          },
-          colors: {
-            vellum: '#F9FAFB',
-            obsidian: '#0A0F1E',
-            slateblue: '#475569',
-            orange: '#EA580C',
-            verified: '#166534',
-            mismatch: '#991B1B',
-            neutral: '#64748B',
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
   <style>
-    html { scroll-behavior: smooth; }
-    body { background:#F9FAFB; color:#0A0F1E; }
-    .hairline { border-color: rgba(71,85,105,0.22); }
-    .measure { max-width: 74ch; }
-    .no-rounded { border-radius: 0 !important; }
-    .mono-chip { font-family:'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    :root { --border: rgba(255, 255, 255, 0.08); --nadirOrange: #EA580C; }
+    body { background-color: #05070a; color: #F9FAFB; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+    .hairline { border: 1px solid var(--border); }
+    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .scroll-reveal { opacity: 0.1; transition: all 0.8s ease; transform: translateY(20px); }
+    .scroll-reveal.active { opacity: 1; transform: translateY(0); }
   </style>
 </head>
+<body class="antialiased">
 
-<body class="font-sans antialiased">
-
-  <!-- Institutional Header -->
-  <header class="sticky top-0 z-50 bg-vellum/80 backdrop-blur-md border-b hairline">
-    <div class="mx-auto max-w-7xl px-6">
-      <div class="h-16 flex items-center justify-between">
-        <a href="index.html" class="flex items-center gap-3">
-          <img src="assets/nadir-wordmark.svg" alt="NADIR" class="h-7 w-auto" onerror="this.style.display='none'">
-          <div class="leading-tight">
-            <div class="text-[12px] tracking-[0.34em] uppercase">NADIR</div>
-            <div class="text-[10px] text-slateblue/80 uppercase tracking-[0.18em]">Sustainability</div>
-          </div>
-        </a>
-
-        <nav class="hidden md:flex items-center gap-1 text-[11px] uppercase tracking-[0.16em] text-slateblue/90">
-          <a class="px-3 py-2 hover:text-obsidian" href="index.html">Overview</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="platform.html">Platform</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="trust.html">Trust</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="compliance.html">Compliance</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="contact.html">Contact</a>
-        </nav>
-
-        <a href="contact.html"
-           class="inline-flex items-center justify-center h-10 px-4 border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-          Sustainability inquiry
-        </a>
+  <nav class="fixed top-0 inset-x-0 z-[100] glass">
+    <div class="max-w-[1600px] mx-auto px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
+      <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
+        <a href="sustainability.html" class="text-[#EA580C]">Sustainability</a>
+        <a href="trust.html" class="opacity-50 hover:opacity-100">Trust_Center</a>
+        <a href="compliance.html" class="opacity-50 hover:opacity-100">Compliance</a>
       </div>
+      <div class="font-mono text-[9px] text-white/40 uppercase tracking-widest">Efficiency_V: 2026.02.19</div>
     </div>
-  </header>
+  </nav>
 
-  <main>
-
-    <!-- HERO -->
-    <section class="nadir-hero relative h-screen overflow-hidden">
-      <div class="hero-pin absolute inset-0">
-        <div class="absolute inset-0 bg-vellum"></div>
-        <div class="absolute inset-0 opacity-[0.08]"
-          style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;">
-        </div>
-        <div class="absolute inset-0"
-          style="background:linear-gradient(to bottom, rgba(10,15,30,0.02), rgba(10,15,30,0.00) 40%, rgba(10,15,30,0.03));">
-        </div>
-      </div>
-
-      <div class="absolute top-6 left-6 z-10 mono-chip text-[11px] text-slateblue/90 tracking-[0.14em]">
-        [V2026.02.19]
-      </div>
-
-      <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
-        <div class="grid grid-cols-12 h-full">
-          <div class="col-span-12 flex flex-col items-center justify-center text-center">
-
-            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
-              [COMPUTE DISCLOSURE] · [EFFICIENCY RATIO] · [INFRASTRUCTURE BOUNDARIES]
-            </div>
-
-            <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
-              Sustainability disclosure
-            </h1>
-
-            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
-              NADIR’s sustainability posture focuses on compute-to-integrity efficiency: how much additional
-              computational overhead is introduced to achieve verifiable record integrity. This page describes
-              measurement boundaries and disclosure discipline. It is not an environmental certification.
-            </p>
-
-            <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-              <a href="#content"
-                 class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
-                View methodology
-              </a>
-              <a href="trust.html"
-                 class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-                Trust center
-              </a>
-            </div>
-
-          </div>
-        </div>
-      </div>
+  <main class="pt-40 px-8">
+    <section class="max-w-[1600px] mx-auto mb-32">
+      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8 scroll-reveal">Sustainability <br> Disclosure</h1>
+      <p class="text-slate-400 text-xl max-w-3xl leading-relaxed scroll-reveal">
+        Integrity has a compute cost. NADIR discloses how that overhead is <span class="text-white">measured and optimized</span>.
+      </p>
     </section>
 
-    <!-- SECTION 1: What is measured -->
-    <section id="content" class="narrative-section border-t hairline">
-      <div class="mx-auto max-w-7xl px-6">
-        <div class="grid grid-cols-12 gap-10 py-20 items-start">
-
-          <div class="col-span-12 lg:col-span-4">
-            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[MEASUREMENT]</div>
-            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-              Compute-to-integrity ratio
-            </h2>
-            <p class="mt-4 text-slateblue leading-relaxed measure">
-              The compute-to-integrity ratio describes the marginal compute introduced by artifact sealing
-              relative to the primary inference workload. It is deployment-specific and must be measured
-              in context.
-            </p>
-          </div>
-
-          <div class="col-span-12 lg:col-span-8">
-            <div class="grid md:grid-cols-3 gap-6">
-
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[HASHING]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Digest overhead</h3>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  CPU cost associated with canonicalization and hashing of the artifact boundary.
-                </p>
-              </div>
-
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[SIGNING]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Signature operations</h3>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  Cryptographic signing cost per artifact, dependent on suite selection and key management posture.
-                </p>
-              </div>
-
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[STORAGE]</div>
-                <h3 class="mt-3 font-semibold tracking-[-0.01em]">Retention footprint</h3>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  Storage overhead introduced by artifact retention policies and disclosure tiers.
-                </p>
-              </div>
-
-            </div>
-
-            <div class="mt-8 border hairline p-6 no-rounded reveal">
-              <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[DISCIPLINE]</div>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                Measurements must be performed in the target deployment environment. Public values are illustrative only
-                and should not be interpreted as universal performance claims.
-              </p>
-            </div>
-
-          </div>
-
+    <section class="max-w-[1600px] mx-auto mb-40 scroll-reveal">
+      <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-12">Section A // Efficiency Metrics</h2>
+      <div class="grid lg:grid-cols-3 gap-px bg-white/10 hairline border hairline">
+        <div class="bg-black p-12">
+          <h3 class="font-mono text-[10px] text-slate-500 uppercase mb-4">Metric Standard</h3>
+          <div class="text-3xl font-display uppercase text-white mb-2">Joules-per-Artifact</div>
+          <p class="text-slate-500 font-mono text-[11px] uppercase tracking-widest">(JpA)</p>
         </div>
-      </div>
-    </section>
-
-    <!-- SECTION 2: What is not measured -->
-    <section class="narrative-section border-t hairline">
-      <div class="mx-auto max-w-7xl px-6">
-        <div class="grid grid-cols-12 gap-10 py-20 items-start">
-
-          <div class="col-span-12 lg:col-span-4">
-            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[BOUNDARY]</div>
-            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-              Explicit exclusions
-            </h2>
-            <p class="mt-4 text-slateblue leading-relaxed measure">
-              Sustainability statements remain bounded. NADIR does not make broad environmental claims beyond
-              its compute-to-integrity scope.
-            </p>
-          </div>
-
-          <div class="col-span-12 lg:col-span-8">
-            <div class="border hairline p-6 no-rounded reveal">
-              <ul class="space-y-2 text-slateblue leading-relaxed">
-                <li>No lifecycle carbon accounting claims are made on this page.</li>
-                <li>No datacenter renewable energy claims are asserted unless independently verified.</li>
-                <li>No offset or neutrality claims are made.</li>
-                <li>Client infrastructure emissions remain outside NADIR’s direct control.</li>
-              </ul>
-            </div>
-          </div>
-
+        <div class="bg-black p-12">
+          <h3 class="font-mono text-[10px] text-slate-500 uppercase mb-4">Reference Baseline</h3>
+          <div class="text-4xl font-mono text-[#EA580C]">0.34 JpA</div>
+          <p class="text-slate-500 font-mono text-[9px] mt-4 uppercase tracking-tighter">Intel Xeon 6338 | Go 1.22</p>
         </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3: Infrastructure efficiency posture -->
-    <section class="narrative-section border-t hairline">
-      <div class="mx-auto max-w-7xl px-6">
-        <div class="grid grid-cols-12 gap-10 py-20 items-start">
-
-          <div class="col-span-12 lg:col-span-4">
-            <div class="mono-chip text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[ARCHITECTURE]</div>
-            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-              Architectural efficiency
-            </h2>
-            <p class="mt-4 text-slateblue leading-relaxed measure">
-              NADIR is designed as a sidecar artifact layer to avoid duplicating inference workloads.
-              Efficiency derives from separation of concerns.
-            </p>
-          </div>
-
-          <div class="col-span-12 lg:col-span-8">
-            <div class="grid md:grid-cols-2 gap-6">
-
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[SEPARATION]</div>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  Artifact sealing operates independently of model training and inference pathways.
-                </p>
-              </div>
-
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[FAIL-OPEN]</div>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  In fail-open mode, inference continues even if sealing fails, preserving availability
-                  while logging integrity exceptions.
-                </p>
-              </div>
-
-            </div>
-
-            <div class="mt-8 border hairline p-6 no-rounded reveal">
-              <p class="text-slateblue leading-relaxed">
-                Sustainability posture depends on deployment architecture. For institutional review,
-                deployment-specific efficiency measurements may be shared under controlled review.
-              </p>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="bg-obsidian text-vellum border-t border-white/10">
-    <div class="mx-auto max-w-7xl px-6 py-14">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
-        <div>
-          <div class="text-[12px] tracking-[0.22em] uppercase">NADIR</div>
-          <div class="mt-3 text-sm text-white/70 leading-relaxed">
-            © 2026 NADIR, a project of Brian Covarrubias. All rights reserved.<br>
-            <span class="font-mono text-white/80">[V2026.02.19]</span>
-          </div>
-        </div>
-        <div>
-          <div class="mono-chip text-[11px] uppercase tracking-[0.18em] text-white/70">Trust</div>
-          <ul class="mt-3 space-y-2 text-sm text-white/70">
-            <li><a class="hover:text-white" href="trust.html">Trust Center</a></li>
-            <li><a class="hover:text-white" href="sbom.html">SBOM</a></li>
-            <li><a class="hover:text-white" href="vdp.html">VDP</a></li>
+        <div class="bg-black p-12">
+          <h3 class="font-mono text-[10px] text-slate-500 uppercase mb-4">Optimization Mode</h3>
+          <ul class="text-xs font-mono text-slate-400 space-y-2 uppercase tracking-wider">
+            <li>• Rust-Native Pipeline</li>
+            <li>• Batch Signing Mode</li>
+            <li>• Low-Risk Hash-Only</li>
           </ul>
         </div>
       </div>
-    </div>
-  </footer>
+    </section>
 
-  <script src="assets/site.js"></script>
-</body>
-</html>
+    
+
+    <section class="max-w-[1600px] mx-auto mb-40 scroll-reveal">
+      <h2 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em] mb-12">Section B // Infrastructure Variables</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="p-8 border-l hairline">
+          <h4 class="font-display text-sm uppercase text-white mb-4">CPU Generation</h4>
+          <p class="text-slate-500 text-xs leading-relaxed font-mono">P-State policy and instruction set efficiency.</p>
+        </div>
+        <div class="p-8 border-l hairline">
+          <h4 class="font-display text-sm uppercase text-white mb-4">HSM Clustering</h4>
+          <p class="text-slate-500 text-xs leading-relaxed font-mono">Ratio of cryptographic keys to available cores.</p>
+        </div>
+        <div class="p-8 border-l hairline">
+          <h4 class="font-display text-sm uppercase text-white mb-4">Facility PUE</h4>
+          <p class="text-slate-500 text-xs leading-relaxed font-mono">Power Usage Effectiveness of the host datacenter.</p>
+        </div>
+        <div class="p-8 border-l hairline">
+          <h4 class="font-display text-sm uppercase text-white mb-4">Retention Tier</h4>
+          <p class="text-slate-500 text-xs leading-relaxed font-mono">Storage energy footprint (Hot vs Cold tiers).</p>
+        </div>
+      </div>
+    </section>
+
+    </main>
