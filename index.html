@@ -4,86 +4,80 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>NADIR — AI Integrity Layer</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css">
-</head>
-<body class="antialiased bg-[#05070a] text-[#F9FAFB]">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  <div id="header-injection"></div>
+  <link rel="stylesheet" href="assets/styles.css">
+
+  <style>
+    /* EMERGENCY FALLBACK STYLES (If CSS file fails to load) */
+    body { background-color: #05070a; color: #F9FAFB; font-family: 'Inter', sans-serif; }
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.8); border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .hairline { border: 1px solid rgba(255,255,255,0.1); }
+    a { transition: all 0.2s ease; }
+    .scroll-reveal { opacity: 1; transform: none; } /* Set to 1 so text isn't invisible if JS fails */
+  </style>
+</head>
+<body class="antialiased">
+
+  <div id="header-injection">
+    <nav class="fixed top-0 inset-x-0 z-[100] glass h-16 flex items-center px-8 justify-between">
+        <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
+        <div class="hidden md:flex gap-8 font-mono text-[10px] uppercase tracking-widest text-slate-400">
+            <a href="platform.html" class="hover:text-white">Platform</a>
+            <a href="trust.html" class="hover:text-white">Trust_Center</a>
+            <a href="docs.html" class="hover:text-white">Docs</a>
+            <a href="sitemap.html" class="hover:text-white">Sitemap</a>
+        </div>
+    </nav>
+  </div>
 
   <main class="pt-40 px-8">
     
-    <section class="max-w-[1600px] mx-auto mb-32">
-      <div class="inline-block border border-[#EA580C] px-4 py-1 mb-8 font-mono text-[10px] uppercase tracking-[0.3em] text-[#EA580C] scroll-reveal">
+    <section class="max-w-[1400px] mx-auto mb-32">
+      <div class="inline-block border border-[#EA580C] px-3 py-1 mb-6 font-mono text-[10px] text-[#EA580C] uppercase tracking-widest">
         Project Nadir // v2026.02.19
       </div>
-      <h1 class="font-display text-6xl md:text-9xl uppercase tracking-tighter mb-8 scroll-reveal">
+      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">
         The AI <br> <span class="text-slate-500">Integrity Layer</span>
       </h1>
-      <p class="text-slate-400 text-xl md:text-2xl max-w-4xl leading-relaxed scroll-reveal">
-        NADIR provides an immutable evidence chain for AI decision-support systems. 
-        Ensure <span class="text-white">technical accountability</span> through cryptographic sealing and 
-        statutory alignment.
+      <p class="text-slate-400 text-xl md:text-2xl max-w-3xl leading-relaxed">
+        NADIR provides an immutable evidence chain for AI systems. Ensure <span class="text-white font-medium">technical accountability</span> through cryptographic sealing.
       </p>
     </section>
 
-    <section class="max-w-[1600px] mx-auto grid md:grid-cols-3 gap-px bg-white/10 border hairline mb-40 scroll-reveal">
+    <section class="max-w-[1400px] mx-auto grid md:grid-cols-3 gap-px bg-white/10 border hairline mb-40">
       
-      <a href="platform.html" class="bg-black p-12 hover:bg-white/5 transition-all group">
-        <h3 class="font-display text-2xl uppercase mb-6 group-hover:text-[#EA580C] transition-colors">Platform</h3>
-        <p class="text-slate-500 text-sm font-mono uppercase leading-relaxed mb-12">
-          Architecture, sidecar deployment, and Phase 1 prototype sealing mechanics.
-        </p>
-        <span class="font-mono text-[10px] text-[#EA580C] tracking-widest uppercase">Explore System →</span>
+      <a href="platform.html" class="bg-[#05070a] p-10 hover:bg-white/5 group">
+        <h3 class="font-display text-xl uppercase mb-4 group-hover:text-[#EA580C]">Platform</h3>
+        <p class="text-slate-500 text-sm font-mono uppercase mb-8">Architecture & Sidecar Deployment</p>
+        <span class="text-[#EA580C] font-mono text-[10px]">Explore →</span>
       </a>
 
-      <a href="trust.html" class="bg-black p-12 hover:bg-white/5 transition-all group border-x hairline">
-        <h3 class="font-display text-2xl uppercase mb-6 group-hover:text-[#EA580C] transition-colors">Trust Center</h3>
-        <p class="text-slate-500 text-sm font-mono uppercase leading-relaxed mb-12">
-          PCL Framework, SBOM transparency, and Vulnerability Disclosure protocols.
-        </p>
-        <span class="font-mono text-[10px] text-[#EA580C] tracking-widest uppercase">Verify Integrity →</span>
+      <a href="trust.html" class="bg-[#05070a] p-10 hover:bg-white/5 group border-x hairline">
+        <h3 class="font-display text-xl uppercase mb-4 group-hover:text-[#EA580C]">Trust Center</h3>
+        <p class="text-slate-500 text-sm font-mono uppercase mb-8">PCL Framework & SBOM</p>
+        <span class="text-[#EA580C] font-mono text-[10px]">Verify →</span>
       </a>
 
-      <a href="compliance.html" class="bg-black p-12 hover:bg-white/5 transition-all group">
-        <h3 class="font-display text-2xl uppercase mb-6 group-hover:text-[#EA580C] transition-colors">Compliance</h3>
-        <p class="text-slate-500 text-sm font-mono uppercase leading-relaxed mb-12">
-          Ethical Use Policy, Legal Admissibility Primer, and Statutory Reporting.
-        </p>
-        <span class="font-mono text-[10px] text-[#EA580C] tracking-widest uppercase">Review Terms →</span>
+      <a href="compliance.html" class="bg-[#05070a] p-10 hover:bg-white/5 group">
+        <h3 class="font-display text-xl uppercase mb-4 group-hover:text-[#EA580C]">Compliance</h3>
+        <p class="text-slate-500 text-sm font-mono uppercase mb-8">Ethical Use & Reporting</p>
+        <span class="text-[#EA580C] font-mono text-[10px]">Review →</span>
       </a>
 
-    </section>
-
-    <section class="max-w-[1600px] mx-auto mb-40 border-t hairline pt-20">
-      <div class="grid md:grid-cols-2 gap-24">
-        <div class="scroll-reveal">
-          <h4 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.4em] mb-8">Documentation Suite</h4>
-          <p class="text-slate-400 text-lg mb-8 leading-relaxed">
-            Technical Requirements (TRD), Benchmark Reports, and Engineering Specifications are available under controlled review.
-          </p>
-          <a href="docs.html" class="text-white font-mono text-xs uppercase tracking-widest underline underline-offset-8 decoration-[#EA580C] hover:text-[#EA580C]">
-            Request Access
-          </a>
-        </div>
-        <div class="scroll-reveal">
-          <h4 class="font-mono text-[10px] text-red-500 uppercase tracking-[0.4em] mb-8">Operational Crisis</h4>
-          <p class="text-slate-400 text-lg mb-8 leading-relaxed">
-            Meeting a statutory incident deadline? Use our procedural guide for artifact retrieval and verification.
-          </p>
-          <a href="incident-72h.html" class="text-red-500 font-mono text-xs uppercase tracking-widest underline underline-offset-8 decoration-red-900 hover:text-white">
-            72-Hour Playbook
-          </a>
-        </div>
-      </div>
     </section>
 
   </main>
 
   <div id="footer-injection"></div>
 
-  <script src="assets/site.js" defer></script>
+  <script src="assets/site.js"></script>
 </body>
 </html>
