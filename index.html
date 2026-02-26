@@ -11,73 +11,103 @@
   
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <link rel="stylesheet" href="assets/styles.css">
-
   <style>
-    /* EMERGENCY FALLBACK STYLES (If CSS file fails to load) */
-    body { background-color: #05070a; color: #F9FAFB; font-family: 'Inter', sans-serif; }
+    :root { --nadirOrange: #EA580C; --border: rgba(255, 255, 255, 0.1); }
+    body { background-color: #05070a; color: #F9FAFB; font-family: 'Inter', sans-serif; margin: 0; }
     .font-display { font-family: 'Space Grotesk', sans-serif; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
-    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.8); border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .hairline { border: 1px solid rgba(255,255,255,0.1); }
-    a { transition: all 0.2s ease; }
-    .scroll-reveal { opacity: 1; transform: none; } /* Set to 1 so text isn't invisible if JS fails */
+    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.85); border-bottom: 1px solid var(--border); }
+    .hairline { border: 1px solid var(--border); }
+    .gate-card { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); background: #05070a; position: relative; overflow: hidden; }
+    .gate-card:hover { border-color: var(--nadirOrange); background: rgba(234, 88, 12, 0.02); }
+    .scroll-reveal { opacity: 0; transform: translateY(30px); transition: all 0.9s ease-out; }
+    .scroll-reveal.active { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body class="antialiased">
 
-  <div id="header-injection">
-    <nav class="fixed top-0 inset-x-0 z-[100] glass h-16 flex items-center px-8 justify-between">
-        <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
-        <div class="hidden md:flex gap-8 font-mono text-[10px] uppercase tracking-widest text-slate-400">
-            <a href="platform.html" class="hover:text-white">Platform</a>
-            <a href="trust.html" class="hover:text-white">Trust_Center</a>
-            <a href="docs.html" class="hover:text-white">Docs</a>
-            <a href="sitemap.html" class="hover:text-white">Sitemap</a>
-        </div>
-    </nav>
-  </div>
-
-  <main class="pt-40 px-8">
-    
-    <section class="max-w-[1400px] mx-auto mb-32">
-      <div class="inline-block border border-[#EA580C] px-3 py-1 mb-6 font-mono text-[10px] text-[#EA580C] uppercase tracking-widest">
-        Project Nadir // v2026.02.19
+  <nav class="fixed top-0 inset-x-0 z-[100] glass">
+    <div class="max-w-[1600px] mx-auto px-8 h-20 flex items-center justify-between">
+      <a href="index.html" class="font-display text-xl font-medium tracking-[0.5em] text-white">NADIR</a>
+      <div class="hidden lg:flex gap-12 font-mono text-[10px] uppercase tracking-[0.25em]">
+        <a href="platform.html" class="hover:text-[#EA580C] transition-colors">Platform</a>
+        <a href="trust.html" class="hover:text-[#EA580C] transition-colors">Trust_Center</a>
+        <a href="compliance.html" class="hover:text-[#EA580C] transition-colors">Compliance</a>
+        <a href="docs.html" class="hover:text-[#EA580C] transition-colors">Documents</a>
+        <a href="sitemap.html" class="hover:text-[#EA580C] transition-colors">Sitemap</a>
       </div>
-      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">
-        The AI <br> <span class="text-slate-500">Integrity Layer</span>
+      <div class="font-mono text-[9px] text-[#EA580C] uppercase tracking-widest border border-[#EA580C]/30 px-3 py-1">Operational // 2026.02.19</div>
+    </div>
+  </nav>
+
+  <main class="pt-56 px-8 pb-32">
+    
+    <section class="max-w-[1600px] mx-auto mb-40">
+      <h1 class="font-display text-7xl md:text-9xl uppercase tracking-tighter mb-10 scroll-reveal">
+        The AI <br> <span class="text-slate-600">Integrity Layer</span>
       </h1>
-      <p class="text-slate-400 text-xl md:text-2xl max-w-3xl leading-relaxed">
-        NADIR provides an immutable evidence chain for AI systems. Ensure <span class="text-white font-medium">technical accountability</span> through cryptographic sealing.
+      <p class="text-slate-400 text-2xl md:text-3xl max-w-5xl leading-tight scroll-reveal">
+        NADIR provides an <span class="text-white">immutable evidence chain</span> for AI decision-support systems. 
+        Ensure technical accountability through cryptographic sealing and statutory alignment.
       </p>
     </section>
 
-    <section class="max-w-[1400px] mx-auto grid md:grid-cols-3 gap-px bg-white/10 border hairline mb-40">
+    <section class="max-w-[1600px] mx-auto grid md:grid-cols-3 gap-px bg-white/10 border hairline mb-48 scroll-reveal">
       
-      <a href="platform.html" class="bg-[#05070a] p-10 hover:bg-white/5 group">
-        <h3 class="font-display text-xl uppercase mb-4 group-hover:text-[#EA580C]">Platform</h3>
-        <p class="text-slate-500 text-sm font-mono uppercase mb-8">Architecture & Sidecar Deployment</p>
-        <span class="text-[#EA580C] font-mono text-[10px]">Explore →</span>
+      <a href="platform.html" class="gate-card p-14 group">
+        <h3 class="font-display text-2xl uppercase mb-6 group-hover:text-[#EA580C] transition-colors">Operational Integration</h3>
+        <p class="text-slate-500 text-sm font-mono uppercase leading-relaxed mb-16">
+          Non-invasive attachment via sidecar or gateway. Phase 1 prototype sealing for live inference.
+        </p>
+        <span class="font-mono text-[10px] text-[#EA580C] tracking-[0.3em] uppercase">Architecture Spec →</span>
       </a>
 
-      <a href="trust.html" class="bg-[#05070a] p-10 hover:bg-white/5 group border-x hairline">
-        <h3 class="font-display text-xl uppercase mb-4 group-hover:text-[#EA580C]">Trust Center</h3>
-        <p class="text-slate-500 text-sm font-mono uppercase mb-8">PCL Framework & SBOM</p>
-        <span class="text-[#EA580C] font-mono text-[10px]">Verify →</span>
+      <a href="trust.html" class="gate-card p-14 group border-x hairline">
+        <h3 class="font-display text-2xl uppercase mb-6 group-hover:text-[#EA580C] transition-colors">Trust Infrastructure</h3>
+        <p class="text-slate-500 text-sm font-mono uppercase leading-relaxed mb-16">
+          PCL Framework, SBOM transparency, and ECDSA-P256 cryptographic verification protocols.
+        </p>
+        <span class="font-mono text-[10px] text-[#EA580C] tracking-[0.3em] uppercase">Verification Center →</span>
       </a>
 
-      <a href="compliance.html" class="bg-[#05070a] p-10 hover:bg-white/5 group">
-        <h3 class="font-display text-xl uppercase mb-4 group-hover:text-[#EA580C]">Compliance</h3>
-        <p class="text-slate-500 text-sm font-mono uppercase mb-8">Ethical Use & Reporting</p>
-        <span class="text-[#EA580C] font-mono text-[10px]">Review →</span>
+      <a href="compliance.html" class="gate-card p-14 group">
+        <h3 class="font-display text-2xl uppercase mb-6 group-hover:text-[#EA580C] transition-colors">Governance</h3>
+        <p class="text-slate-500 text-sm font-mono uppercase leading-relaxed mb-16">
+          Ethical Use Policy, Modern Slavery Statement, and statutory alignment for serious incident reporting.
+        </p>
+        <span class="font-mono text-[10px] text-[#EA580C] tracking-[0.3em] uppercase">Review Framework →</span>
       </a>
 
+    </section>
+
+    <section class="max-w-[1600px] mx-auto py-24 border-t hairline scroll-reveal">
+      <div class="max-w-[1200px] border hairline p-12 bg-black/60 font-mono text-[12px] text-slate-500 leading-relaxed">
+        <div class="text-[#EA580C] uppercase tracking-[0.4em] mb-10 pb-4 border-b hairline font-medium">Boundary Declaration</div>
+        <ul class="space-y-5 uppercase tracking-tighter list-none p-0">
+          <li>• NADIR is a project of Brian Covarrubias.</li>
+          <li>• The system provides technical artifacts for oversight; it does not provide legal advice.</li>
+          <li>• Communications create obligations only via signed institutional agreement.</li>
+          <li>• PCL Framework Version: 2026.02.19.</li>
+        </ul>
+      </div>
     </section>
 
   </main>
 
-  <div id="footer-injection"></div>
+  <footer class="py-12 border-t hairline flex justify-between items-center text-slate-600 font-mono text-[10px] uppercase tracking-[0.3em] px-8">
+    <div>A Project of Brian Covarrubias</div>
+    <div>© 2026 NADIR // San Diego, CA</div>
+  </footer>
 
-  <script src="assets/site.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('active');
+        });
+      }, { threshold: 0.05 });
+      document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    });
+  </script>
 </body>
 </html>
