@@ -1,147 +1,34 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NADIR — Governance</title>
-  <meta name="description" content="Governance posture: privacy-by-design, controlled disclosure, auditability, and non-adjudication. Informed by NIST IR 8596." />
+<main class="pt-40">
+  <section class="px-8 max-w-[1600px] mx-auto mb-24">
+    <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">Governance <br> Posture</h1>
+    <p class="text-slate-400 text-xl max-w-3xl">NADIR supports accountability while minimizing collection and preserving confidentiality.</p>
+  </section>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <section class="px-8 max-w-[1600px] mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-32">
+    <div class="border hairline p-8 hover:bg-white/5 transition-colors">
+      <h3 class="font-display text-lg mb-4">Privacy-by-Design</h3>
+      <p class="text-slate-500 text-xs">Masking rules and policy-scoped capture minimize data footprint at the source.</p>
+    </div>
+    <div class="border hairline p-8 hover:bg-white/5 transition-colors">
+      <h3 class="font-display text-lg mb-4">Controlled Disclosure</h3>
+      <p class="text-slate-500 text-xs">Verify the record without exposing proprietary weights or model internals.</p>
+    </div>
+    <div class="border hairline p-8 hover:bg-white/5 transition-colors">
+      <h3 class="font-display text-lg mb-4">Auditability</h3>
+      <p class="text-slate-500 text-xs">Deterministic canonicalization ensures records remain verifiable over time.</p>
+    </div>
+    <div class="border hairline p-8 hover:bg-white/5 transition-colors">
+      <h3 class="font-display text-lg mb-4">Non-Adjudication</h3>
+      <p class="text-slate-500 text-xs">Infrastructure focused on evidence generation, not automated judgment.</p>
+    </div>
+  </section>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans:['Public Sans','ui-sans-serif','system-ui'], mono:['Roboto Mono','ui-monospace','SFMono-Regular','Menlo','Monaco','Consolas','monospace'] },
-          colors: { vellum:'#F9FAFB', obsidian:'#0A0F1E', slateblue:'#475569', orange:'#EA580C' }
-        }
-      }
-    }
-  </script>
+  <section class="mx-8 p-12 border border-[#EA580C]/20 bg-[#EA580C]/5 max-w-[1600px] lg:mx-auto mb-40">
+    <div class="font-mono text-[10px] text-[#EA580C] uppercase tracking-widest mb-6">Framework Alignment</div>
+    <h2 class="font-display text-2xl mb-4">NIST IR 8596 Reference</h2>
+    <p class="text-slate-400 text-sm max-w-2xl leading-relaxed">
+      Design informed by the NIST Cyber AI Profile; however, no endorsement, partnership, or certification is implied. NADIR is an independent implementation of evidence-layer best practices.
+    </p>
+  </section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
-  <style>
-    html { scroll-behavior: smooth; }
-    body { background:#F9FAFB; color:#0A0F1E; }
-    .hairline { border-color: rgba(71,85,105,0.22); }
-    .measure { max-width: 74ch; }
-    .no-rounded { border-radius: 0 !important; }
-  </style>
-</head>
-
-<body class="font-sans antialiased">
-  <div id="siteHeader"></div>
-
-  <main>
-    <!-- HERO -->
-    <section class="nadir-hero relative h-screen overflow-hidden">
-      <div class="hero-pin absolute inset-0">
-        <div class="absolute inset-0 bg-vellum"></div>
-        <div class="absolute inset-0 opacity-[0.08]"
-          style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;"></div>
-      </div>
-
-      <div class="hero-version absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">[V2026.02.19]</div>
-
-      <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
-        <div class="grid grid-cols-12 h-full">
-          <div class="col-span-12 flex flex-col items-center justify-center text-center">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
-              [PRIVACY-BY-DESIGN] · [CONTROLLED DISCLOSURE] · [NON-ADJUDICATION]
-            </div>
-            <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
-              Governance posture
-            </h1>
-            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
-              NADIR supports accountable review while minimizing collection and preserving confidentiality boundaries.
-              Governance statements describe posture and boundaries and do not constitute certification or endorsement by any third party.
-            </p>
-
-            <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-              <a href="#content" class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
-                View principles
-              </a>
-              <a href="privacy.html" class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-                Privacy statement
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PRINCIPLES -->
-    <section id="content" class="narrative-section border-t hairline">
-      <div class="mx-auto max-w-7xl px-6">
-        <div class="grid grid-cols-12 gap-10 py-20 items-start">
-          <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[PRINCIPLES]</div>
-            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-              Governance principles
-            </h2>
-            <p class="mt-4 text-slateblue leading-relaxed measure">
-              Governance is implemented through capture policy, disclosure tiers, and verification workflows. Determinations remain with authorized reviewers.
-            </p>
-          </div>
-
-          <div class="col-span-12 lg:col-span-8">
-            <div class="grid md:grid-cols-2 gap-6">
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[PRIVACY-BY-DESIGN]</div>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  Collect only what is necessary, define scope explicitly, and record policy identifiers and versions to preserve clarity under review.
-                </p>
-              </div>
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[CONTROLLED DISCLOSURE]</div>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  Enable verification without default exposure of weights, confidential architecture, or proprietary source code through tiered disclosure.
-                </p>
-              </div>
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[AUDITABILITY]</div>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  Prefer canonical records designed for formal review over ad-hoc logs. Verification steps are designed to be independently repeatable.
-                </p>
-              </div>
-              <div class="border hairline p-6 no-rounded reveal">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[NON-ADJUDICATION]</div>
-                <p class="mt-3 text-slateblue leading-relaxed">
-                  NADIR produces records. Institutions and authorized operators perform oversight and make determinations under their authority.
-                </p>
-              </div>
-            </div>
-
-            <div class="mt-8 border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[NIST IR 8596]</div>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                NADIR’s design posture is informed by the NIST IR 8596 Cyber AI Profile, which addresses cybersecurity considerations specific to AI systems.
-                This reference does not constitute endorsement, certification, or formal alignment by NIST.
-              </p>
-            </div>
-
-            <div class="mt-8 border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARY]</div>
-              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
-                <li>NADIR does not certify compliance, legality, or correctness.</li>
-                <li>NADIR does not guarantee inference reproducibility.</li>
-                <li>NADIR supports integrity and provenance verification under policy.</li>
-                <li>Admissibility is determined by the relevant authority.</li>
-              </ul>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
-
-  <div id="siteFooter"></div>
-  <script src="assets/site.js"></script>
-</body>
-</html>
