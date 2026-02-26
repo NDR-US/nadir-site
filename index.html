@@ -15,27 +15,29 @@
     :root { --nadirOrange: #EA580C; --border: rgba(255, 255, 255, 0.08); }
     body { background-color: #05070a; color: #F9FAFB; font-family: 'Inter', sans-serif; overflow-x: hidden; }
     
-    /* Billion-Dollar Institutional Polish */
+    /* Institutional Design Language */
     .font-display { font-family: 'Space Grotesk', sans-serif; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     .glass { backdrop-filter: blur(24px); background: rgba(5, 7, 10, 0.85); border-bottom: 1px solid var(--border); }
     .hairline { border: 1px solid var(--border); }
     
-    /* High-Caliber Movement Effects */
+    /* High-Caliber Kinetic Effects */
     .scroll-reveal { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
     .scroll-reveal.active { opacity: 1; transform: translateY(0); }
     
-    .gate-card { position: relative; background: #05070a; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; }
-    .gate-card:hover { background: rgba(234, 88, 12, 0.03); border-color: var(--nadirOrange); transform: translateY(-4px); }
-    .gate-card::after { content: ''; position: absolute; inset: 0; border: 1px solid var(--nadirOrange); opacity: 0; transition: opacity 0.5s ease; }
-    .gate-card:hover::after { opacity: 0.3; }
-
-    /* Kinetic Background Subtle Mesh */
+    .gate-card { position: relative; background: #05070a; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; border: 1px solid var(--border); }
+    .gate-card:hover { border-color: var(--nadirOrange); background: rgba(234, 88, 12, 0.02); transform: translateY(-4px); }
+    
+    /* Kinetic Mesh Background */
     .bg-mesh {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
       background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.03) 1px, transparent 0);
       background-size: 48px 48px;
     }
+
+    /* Step-Chain Styling */
+    .step-box { background: #05070a; border: 1px solid var(--border); padding: 1.5rem; transition: all 0.3s ease; }
+    .step-box:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.02); }
   </style>
 </head>
 <body class="antialiased">
@@ -52,30 +54,28 @@
           <a href="docs.html" class="hover:text-white transition-colors">Documents</a>
         </div>
       </div>
-      <div class="flex items-center gap-6">
-        <div class="font-mono text-[9px] text-[#EA580C] uppercase tracking-widest border border-[#EA580C]/40 px-4 py-2">
-          System_Status: Operational // 2026.02.19
-        </div>
+      <div class="font-mono text-[9px] text-[#EA580C] uppercase tracking-widest border border-[#EA580C]/40 px-4 py-2">
+        OPERATIONAL // 2026.02.19
       </div>
     </div>
   </nav>
 
-  <main class="pt-64 px-10">
+  <main class="pt-64 px-10 pb-32">
     
     <section class="max-w-[1600px] mx-auto mb-60">
       <h1 class="font-display text-7xl md:text-[10rem] uppercase tracking-tighter leading-[0.85] mb-12 scroll-reveal">
-        The AI <br> <span class="text-slate-700">Integrity Layer</span>
+        THE AI <br> <span class="text-slate-700">INTEGRITY LAYER</span>
       </h1>
       <p class="text-slate-400 text-2xl md:text-4xl max-w-5xl leading-tight scroll-reveal">
         NADIR provides an <span class="text-white">immutable evidence chain</span> for AI decision-support systems. 
-        Engineered for technical accountability through cryptographic sealing and statutory alignment.
+        Ensure technical accountability through cryptographic sealing and statutory alignment.
       </p>
     </section>
 
-    <section class="max-w-[1600px] mx-auto mb-60 scroll-reveal">
-      <div class="grid lg:grid-cols-12 gap-16 border-t hairline pt-20">
+    <section class="max-w-[1600px] mx-auto mb-60 border-t border-white/10 pt-24 scroll-reveal">
+      <div class="grid lg:grid-cols-12 gap-16">
         <div class="lg:col-span-4 font-mono text-xs text-[#EA580C] uppercase tracking-[0.5em]">
-          Architecture Spec // v1.0
+          Technical Artifacts // Mechanics Chain
         </div>
         <div class="lg:col-span-8">
           <h2 class="font-display text-5xl uppercase mb-12">Decoupled Architecture</h2>
@@ -83,29 +83,29 @@
             NADIR follows a strict seven-step mechanics chain to produce integrity-sealed artifacts while preserving proprietary boundaries.
           </p>
           
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border hairline mb-20">
-            <div class="bg-black p-8 font-mono text-[11px] uppercase tracking-widest text-white">01 Attach Boundary</div>
-            <div class="bg-black p-8 font-mono text-[11px] uppercase tracking-widest text-white">02 Capture Policy Scope</div>
-            <div class="bg-black p-8 font-mono text-[11px] uppercase tracking-widest text-white">03 Normalize</div>
-            <div class="bg-black p-8 font-mono text-[11px] uppercase tracking-widest text-white">04 Canonicalize</div>
-            <div class="bg-black p-8 font-mono text-[11px] uppercase tracking-widest text-white">05 Hash & Sign</div>
-            <div class="bg-black p-8 font-mono text-[11px] uppercase tracking-widest text-white">06 Enforce Tiers</div>
-            <div class="bg-black p-8 font-mono text-[11px] uppercase tracking-widest text-white">07 Verify Independent</div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-24">
+            <div class="step-box font-mono text-[10px] text-white tracking-widest uppercase">01 Attach Boundary</div>
+            <div class="step-box font-mono text-[10px] text-white tracking-widest uppercase">02 Capture Policy Scope</div>
+            <div class="step-box font-mono text-[10px] text-white tracking-widest uppercase">03 Normalize</div>
+            <div class="step-box font-mono text-[10px] text-white tracking-widest uppercase">04 Canonicalize</div>
+            <div class="step-box font-mono text-[10px] text-white tracking-widest uppercase">05 Hash & Sign</div>
+            <div class="step-box font-mono text-[10px] text-white tracking-widest uppercase">06 Enforce Tiers</div>
+            <div class="step-box font-mono text-[10px] text-white tracking-widest uppercase">07 Verify Independent</div>
           </div>
 
-          <div class="grid md:grid-cols-2 gap-12">
-            <div class="p-10 border border-white/5 bg-white/[0.02]">
-              <h4 class="font-display text-xl uppercase mb-6 text-[#EA580C]">Fail-Open Mandate</h4>
-              <ul class="space-y-4 font-mono text-xs text-slate-500 uppercase">
-                <li class="flex items-center gap-3">✓ Inference Continues</li>
-                <li class="flex items-center gap-3">✓ Failure Event Logged</li>
-                <li class="flex items-center gap-3">✓ Marked Unsealed</li>
-                <li class="flex items-center gap-3">✓ Post-Hoc Review</li>
+          <div class="grid md:grid-cols-2 gap-px bg-white/10 border hairline">
+            <div class="bg-black p-12">
+              <h4 class="font-display text-xl uppercase mb-8 text-[#EA580C]">Fail-Open Architecture</h4>
+              <ul class="space-y-4 font-mono text-xs text-slate-500 uppercase tracking-widest">
+                <li>✓ Inference Continues</li>
+                <li>✓ Failure Event Logged</li>
+                <li>✓ Marked Unsealed</li>
+                <li>✓ Post-Hoc Review</li>
               </ul>
             </div>
-            <div class="p-10 border border-white/5 bg-white/[0.02]">
-              <h4 class="font-display text-xl uppercase mb-6 text-[#EA580C]">Integrity Model</h4>
-              <p class="text-slate-400 font-mono text-xs leading-relaxed uppercase">
+            <div class="bg-black p-12">
+              <h4 class="font-display text-xl uppercase mb-8 text-[#EA580C]">Integrity Model</h4>
+              <p class="text-slate-400 font-mono text-xs leading-relaxed uppercase tracking-widest">
                 SHA-256 + ECDSA P-256 Default Suite. Signing keys remain inside the operator's HSM/KMS; NADIR never holds private keys.
               </p>
             </div>
@@ -114,51 +114,47 @@
       </div>
     </section>
 
-    <section class="max-w-[1600px] mx-auto grid md:grid-cols-3 gap-px bg-white/10 border hairline mb-60 scroll-reveal">
+    <section class="max-w-[1600px] mx-auto grid md:grid-cols-3 gap-10 mb-60 scroll-reveal">
       <a href="platform.html" class="gate-card p-16">
         <h3 class="font-display text-3xl uppercase mb-6">Platform</h3>
-        <p class="text-slate-500 text-sm font-mono uppercase mb-12 leading-relaxed">Architecture, sidecar deployment, and resource-isolation specs.</p>
-        <span class="text-[#EA580C] font-mono text-[10px] tracking-[0.4em]">Initialize →</span>
+        <p class="text-slate-500 text-sm font-mono uppercase mb-12">Architecture, sidecar deployment, and instrumentation specs.</p>
+        <div class="text-[#EA580C] font-mono text-[10px] tracking-[0.4em]">INITIATE →</div>
       </a>
-      <a href="trust.html" class="gate-card p-16 border-x hairline">
+      <a href="trust.html" class="gate-card p-16">
         <h3 class="font-display text-3xl uppercase mb-6">Trust Center</h3>
-        <p class="text-slate-500 text-sm font-mono uppercase mb-12 leading-relaxed">PCL Framework, VDP, and SBOM transparency assets.</p>
-        <span class="text-[#EA580C] font-mono text-[10px] tracking-[0.4em]">Verify →</span>
+        <p class="text-slate-500 text-sm font-mono uppercase mb-12">PCL Framework, VDP, and SBOM transparency assets.</p>
+        <div class="text-[#EA580C] font-mono text-[10px] tracking-[0.4em]">VERIFY →</div>
       </a>
       <a href="compliance.html" class="gate-card p-16">
         <h3 class="font-display text-3xl uppercase mb-6">Governance</h3>
-        <p class="text-slate-500 text-sm font-mono uppercase mb-12 leading-relaxed">Ethical use, statutory alignment, and admissibility primer.</p>
-        <span class="text-[#EA580C] font-mono text-[10px] tracking-[0.4em]">Audit →</span>
+        <p class="text-slate-500 text-sm font-mono uppercase mb-12">Ethical use, statutory alignment, and reporting protocols.</p>
+        <div class="text-[#EA580C] font-mono text-[10px] tracking-[0.4em]">AUDIT →</div>
       </a>
     </section>
 
   </main>
 
-  <footer class="px-10 py-20 border-t hairline bg-black">
+  <footer class="px-10 py-24 border-t hairline bg-black">
     <div class="max-w-[1600px] mx-auto">
         <div class="mb-20">
             <div class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-10 pb-4 border-b hairline">Boundary Declaration</div>
-            <ul class="space-y-4 font-mono text-[11px] text-slate-500 uppercase tracking-tighter">
-              <li>• NADIR is a project of Brian Covarrubias.</li>
-              <li>• The system provides technical artifacts for oversight; it does not provide legal advice.</li>
-              <li>• PCL Framework Version: 2026.02.19.</li>
-            </ul>
+            <p class="font-mono text-[11px] text-slate-500 uppercase tracking-tighter leading-relaxed">
+              NADIR is a project of Brian Covarrubias. The system provides technical artifacts for oversight; it does not provide legal advice.
+            </p>
         </div>
-        <div class="flex flex-col md:flex-row justify-between items-center text-slate-700 font-mono text-[9px] uppercase tracking-[0.3em]">
+        <div class="flex justify-between items-center text-slate-700 font-mono text-[9px] uppercase tracking-[0.4em]">
           <div>© 2026 NADIR // INSTITUTIONAL PROOF</div>
-          <div>San Diego, CA // Global Ops</div>
+          <div>SAN DIEGO, CA // GLOBAL OPS</div>
         </div>
     </div>
   </footer>
 
   <script>
-    // High-Performance Scroll Reveal
+    // Kinetic Reveal Logic
     document.addEventListener('DOMContentLoaded', () => {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-          }
+          if (entry.isIntersecting) entry.target.classList.add('active');
         });
       }, { threshold: 0.1 });
       document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
