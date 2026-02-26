@@ -1,143 +1,101 @@
-// /assets/site.js
-// NADIR Institutional Motion — GSAP + ScrollTrigger
-// Requirements:
-// - Hero pinned background (100vh)
-// - H1 scrubs: slight scale up + fade out as user scrolls
-// - Version tag remains anchored (no animation required)
-// - Narrative sections pin + scrub: section becomes the “reading frame”
-// - No bouncy motion. No large y-transforms for headings.
-// - Hover/scroll should feel heavy and deliberate.
-
-gsap.registerPlugin(ScrollTrigger);
-
-(function initNadirMotion() {
-  // Respect reduced motion
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduce) return;
-
-  // HERO: pin background; scrub H1 + lead
-  const hero = document.querySelector(".nadir-hero");
-  if (hero) {
-    const h1 = hero.querySelector(".hero-h1");
-    const lead = hero.querySelector(".hero-lead");
-    const pinBg = hero.querySelector(".hero-pin");
-
-    // Pin the background surface for a cinematic “fixed” feel
-    if (pinBg) {
-      ScrollTrigger.create({
-        trigger: hero,
-        start: "top top",
-        end: "bottom top",
-        pin: pinBg,
-        pinSpacing: false
-      });
-    }
-
-    // Scrub the headline out. Minimal transforms (no big y-shifts).
-    if (h1) {
-      gsap.fromTo(
-        h1,
-        { opacity: 1, scale: 1 },
-        {
-          opacity: 0,
-          scale: 1.04,
-          ease: "none",
-          scrollTrigger: {
-            trigger: hero,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1
-          }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevated Vision | 2026 Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #050505;
+            --accent: #3b82f6;
         }
-      );
-    }
-
-    if (lead) {
-      gsap.fromTo(
-        lead,
-        { opacity: 1 },
-        {
-          opacity: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: hero,
-            start: "top+=80 top",
-            end: "bottom top",
-            scrub: 1
-          }
+        body {
+            background-color: var(--bg-deep);
+            font-family: 'Inter', sans-serif;
+            color: #e5e7eb;
+            overflow-x: hidden;
         }
-      );
-    }
-  }
-
-  // REVEAL blocks: subtle fade only (no motion)
-  gsap.utils.toArray(".reveal").forEach((el) => {
-    gsap.fromTo(
-      el,
-      { opacity: 0 },
-      {
-        opacity: 1,
-        duration: 0.9,
-        ease: "power1.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 85%",
-          toggleActions: "play none none reverse"
+        .hud-nav {
+            backdrop-filter: blur(12px);
+            background: rgba(20, 20, 20, 0.7);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-      }
-    );
-  });
-
-  // NARRATIVE SECTIONS: pin each section; scrub the focal heading color/opacity
-  gsap.utils.toArray(".narrative-section").forEach((section) => {
-    const focus = section.querySelector(".scroll-text");
-    if (!focus) return;
-
-    // Pin the section to create a “reading frame”
-    ScrollTrigger.create({
-      trigger: section,
-      start: "top top",
-      end: "+=900",
-      pin: true,
-      pinSpacing: true
-    });
-
-    // Scrub the focus heading: slight emphasis + color shift
-    gsap.fromTo(
-      focus,
-      { opacity: 0.55, color: "#475569" }, // slateblue
-      {
-        opacity: 1,
-        color: "#0A0F1E", // obsidian
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "+=450",
-          scrub: 1
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
         }
-      }
-    );
+        .glass-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+        .hero-text {
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.05em;
+            line-height: 0.9;
+        }
+        /* Custom spacing to emulate Palantir's "White Paper" luxury */
+        .section-gap { padding-top: 10rem; padding-bottom: 10rem; }
+    </style>
+</head>
+<body>
 
-    // Fade it out near the end so it “disappears” as you continue
-    gsap.to(focus, {
-      opacity: 0.25,
-      ease: "none",
-      scrollTrigger: {
-        trigger: section,
-        start: "+=450 top",
-        end: "+=900 top",
-        scrub: 1
-      }
-    });
-  });
+    <nav class="hud-nav fixed top-0 w-full z-50 px-8 py-4 flex justify-between items-center">
+        <div class="text-xl font-bold tracking-tighter">PHANTOM.SYSTEMS</div>
+        <div class="hidden md:flex space-x-12 text-sm uppercase tracking-widest font-medium opacity-70">
+            <a href="#" class="hover:text-blue-400 transition">Intelligence</a>
+            <a href="#" class="hover:text-blue-400 transition">Operations</a>
+            <a href="#" class="hover:text-blue-400 transition">Network</a>
+        </div>
+        <button class="px-6 py-2 border border-white/20 rounded-full text-xs hover:bg-white hover:text-black transition">
+            INITIATE DEPOT
+        </button>
+    </nav>
 
-  // Optional: Copy-to-clipboard for elements that include data-copy attr
-  document.querySelectorAll("[data-copy]").forEach((el) => {
-    el.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(el.getAttribute("data-copy") || "");
-      } catch (_) {}
-    });
-  });
-})();
+    <main class="relative pt-40 px-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="text-blue-500 font-mono text-xs tracking-[0.3em] uppercase mb-4 block">Deployment v4.0.26</span>
+                <h1 class="hero-text text-7xl md:text-9xl mb-8">
+                    DATA IS <br> <span class="text-white/40">ARMAMENT.</span>
+                </h1>
+                <p class="text-lg text-gray-400 max-w-md leading-relaxed mb-10">
+                    Integrating decentralized intelligence into tactical decision engines. We build the architecture for the next era of sovereign infrastructure.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="bg-blue-600 px-8 py-4 rounded-sm text-sm font-bold hover:bg-blue-500 transition">EXPLORE STACK</a>
+                    <a href="#" class="px-8 py-4 border border-white/10 rounded-sm text-sm font-bold hover:bg-white/5 transition">VIEW CASE STUDIES</a>
+                </div>
+            </div>
+            
+            <div class="relative h-[500px] w-full glass-card rounded-2xl flex items-center justify-center overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-transparent"></div>
+                <div class="text-xs font-mono opacity-20 animate-pulse">
+                    [ STREAMING ENCRYPTED_FEED... ]
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="section-gap px-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-card p-10 rounded-xl">
+                <h3 class="text-2xl font-semibold mb-4">Tactical HUD</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Advanced viewport quadrants designed for zero-latency awareness in high-stakes environments.</p>
+            </div>
+            <div class="glass-card p-10 rounded-xl">
+                <h3 class="text-2xl font-semibold mb-4">Neural Mesh</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Proprietary AI filters that sift through petabytes of noise to deliver single-source truth.</p>
+            </div>
+            <div class="glass-card p-10 rounded-xl">
+                <h3 class="text-2xl font-semibold mb-4">Sovereign Cloud</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Infrastructure that exists everywhere but belongs to no one. Secure, distributed, immutable.</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
