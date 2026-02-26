@@ -1,40 +1,61 @@
 <main class="pt-40">
-  <section class="px-8 max-w-[1600px] mx-auto mb-24">
-    <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">Regulatory <br> Crosswalk</h1>
-    <p class="text-slate-400 text-xl max-w-3xl">Descriptive mapping only; not a certification of compliance.</p>
+  <section class="px-8 max-w-[1600px] mx-auto mb-32">
+    <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8 scroll-reveal">Regulatory <br> Interop</h1>
+    <p class="text-slate-400 text-xl max-w-3xl leading-relaxed scroll-reveal">
+      Functional correspondence to key 2026 regulatory mandates. 
+      <span class="text-white italic">Mappings are descriptive; they do not constitute legal certification.</span>
+    </p>
   </section>
 
-  
-
-  <section class="px-8 max-w-[1600px] mx-auto mb-32">
-    <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.4em] mb-12">EU AI Act Alignment</h2>
-    <div class="grid md:grid-cols-2 gap-px bg-white/10 hairline">
-      <div class="bg-black p-8">
-        <h4 class="font-display text-md mb-2">Article 12 Record-Keeping</h4>
-        <p class="text-slate-500 text-xs">Enabled via the generation of integrity-sealed, canonical artifacts.</p>
+  <section class="px-8 max-w-[1600px] mx-auto mb-40 scroll-reveal">
+    <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-12">Section A // EU AI Act Functional Mapping</h2>
+    <div class="space-y-px bg-white/10 hairline border hairline">
+      <div class="bg-black p-8 grid lg:grid-cols-4 gap-8 hover:bg-white/[0.02] transition-colors">
+        <div class="font-mono text-xs text-white uppercase tracking-widest">Article 12 (Logging)</div>
+        <div class="lg:col-span-3 text-slate-400 text-sm leading-relaxed">Canonical artifacts with signature + Policy ID satisfy the requirement for tamper-evident, inference-time records for high-risk systems.</div>
       </div>
-      <div class="bg-black p-8">
-        <h4 class="font-display text-md mb-2">Article 13 Transparency</h4>
-        <p class="text-slate-500 text-xs">Policy-scoped disclosure tiers support mandatory reporting obligations.</p>
+      <div class="bg-black p-8 grid lg:grid-cols-4 gap-8 hover:bg-white/[0.02] transition-colors">
+        <div class="font-mono text-xs text-white uppercase tracking-widest">Article 13 (Transparency)</div>
+        <div class="lg:col-span-3 text-slate-400 text-sm leading-relaxed">Operators can furnish NADIR artifacts to deployers and supervisory authorities, providing structured context for output interpretation without surrendering weights.</div>
       </div>
-      <div class="bg-black p-8">
-        <h4 class="font-display text-md mb-2">Article 52 Transparency</h4>
-        <p class="text-slate-500 text-xs">Operator-defined workflows for providing context to end-users.</p>
-      </div>
-      <div class="bg-black p-8">
-        <h4 class="font-display text-md mb-2">Annex IV Documentation</h4>
-        <p class="text-slate-500 text-xs">Structured schema and metadata assistance for operator record management.</p>
+      <div class="bg-black p-8 grid lg:grid-cols-4 gap-8 hover:bg-white/[0.02] transition-colors">
+        <div class="font-mono text-xs text-white uppercase tracking-widest">Article 52 (Obligations)</div>
+        <div class="lg:col-span-3 text-slate-400 text-sm leading-relaxed">NADIR’s disclosure tiers help operators meet transparency duties for general-purpose AI while protecting IP via redaction.</div>
       </div>
     </div>
   </section>
 
-  <section class="px-8 max-w-[1600px] mx-auto mb-40">
-    <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.4em] mb-12">NIST AI RMF Functional Correspondence</h2>
-    <div class="flex flex-wrap gap-4 font-mono text-[10px]">
-      <div class="border hairline px-6 py-4">GOVERN</div>
-      <div class="border hairline px-6 py-4">MAP</div>
-      <div class="border hairline px-6 py-4">MEASURE</div>
-      <div class="border hairline px-6 py-4">MANAGE</div>
+  
+
+  <section class="px-8 max-w-[1600px] mx-auto mb-40 scroll-reveal">
+    <h2 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em] mb-12">Section B // NIST AI RMF 1.0 Mapping</h2>
+    <div class="w-full overflow-x-auto">
+        <table class="w-full text-left font-mono text-[11px] border-collapse">
+            <thead>
+                <tr class="border-b hairline text-[#EA580C]">
+                    <th class="p-6 uppercase tracking-widest">RMF Function</th>
+                    <th class="p-6 uppercase tracking-widest">NADIR Contribution (Summary)</th>
+                </tr>
+            </thead>
+            <tbody class="text-slate-400">
+                <tr class="border-b hairline">
+                    <td class="p-6 text-white uppercase">Govern</td>
+                    <td class="p-6">Policy ID, versioning logic, and mandatory integrity logs.</td>
+                </tr>
+                <tr class="border-b hairline">
+                    <td class="p-6 text-white uppercase">Map</td>
+                    <td class="p-6">Explicit capture scope definition and redaction tiers.</td>
+                </tr>
+                <tr class="border-b hairline">
+                    <td class="p-6 text-white uppercase">Measure</td>
+                    <td class="p-6">Deterministic hash checks + ECDSA signature verification.</td>
+                </tr>
+                <tr class="border-b hairline">
+                    <td class="p-6 text-white uppercase">Manage</td>
+                    <td class="p-6">Chain-of-custody workflow + 72-hour incident playbook support.</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
   </section>
 
