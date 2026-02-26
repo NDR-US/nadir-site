@@ -1,164 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NADIR — Architecture</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'ui-sans-serif'], display: ['Space Grotesk', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
-          colors: { obsidian: '#05070a', nadirOrange: '#EA580C', slate: '#475569' }
-        }
-      }
-    }
-  </script>
-  <style>
-    :root { --border: rgba(255, 255, 255, 0.08); }
-    body { background-color: #05070a; color: #F9FAFB; overflow-x: hidden; }
-    .hairline { border: 1px solid var(--border); }
-    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
-  </style>
-</head>
-<body class="antialiased">
+<main class="pt-40">
+  <section class="px-8 max-w-[1600px] mx-auto mb-32">
+    <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">Decoupled <br> Architecture</h1>
+    <p class="text-slate-400 text-xl max-w-3xl scroll-reveal">NADIR follows a strict seven-step mechanics chain to produce integrity-sealed artifacts while preserving proprietary boundaries.</p>
+  </section>
 
-  <nav class="fixed top-0 inset-x-0 z-[100] glass">
-    <div class="max-w-[1600px] mx-auto px-8 h-16 flex items-center justify-between">
-      <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
-      <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
-        <a href="platform.html" class="text-nadirOrange">Architecture</a>
-        <a href="#" class="opacity-50">Oversight</a>
-        <a href="#" class="opacity-50">Trust</a>
-      </div>
-      <a href="contact.html" class="border border-white/20 px-6 py-2 font-display text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all">Connect</a>
+  <section class="bg-[#EA580C] text-white py-4 overflow-hidden mb-40">
+    <div class="flex gap-12 font-mono text-[9px] uppercase tracking-[0.3em] whitespace-nowrap animate-pulse">
+      <span>01 Attach Boundary</span> <span>02 Capture Policy Scope</span> <span>03 Normalize</span> <span>04 Canonicalize</span> <span>05 Hash & Sign</span> <span>06 Enforce Tiers</span> <span>07 Verify Independent</span>
     </div>
-  </nav>
+  </section>
 
-  <main class="pt-40">
-    <section class="px-8 max-w-[1600px] mx-auto mb-24">
-      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">Decoupled <br> Verification</h1>
-      <p class="text-slate text-xl max-w-3xl leading-relaxed">NADIR follows a seven-step mechanics chain that preserves reviewability without disclosing proprietary internals.</p>
-    </section>
+  
 
-    <div class="border-y hairline bg-white/[0.02] py-6 overflow-x-auto whitespace-nowrap mb-32">
-      <div class="max-w-[1600px] mx-auto px-8 flex gap-12 font-mono text-[10px] uppercase tracking-[0.3em] text-slate">
-        <span class="text-white"><b class="text-nadirOrange">1</b> Attach</span>
-        <span class="opacity-50">→</span>
-        <span><b class="text-nadirOrange">2</b> Capture</span>
-        <span class="opacity-50">→</span>
-        <span><b class="text-nadirOrange">3</b> Normalize</span>
-        <span class="opacity-50">→</span>
-        <span><b class="text-nadirOrange">4</b> Canonize</span>
-        <span class="opacity-50">→</span>
-        <span><b class="text-nadirOrange">5</b> Hash/Sign</span>
-        <span class="opacity-50">→</span>
-        <span><b class="text-nadirOrange">6</b> Enforce</span>
-        <span class="opacity-50">→</span>
-        <span><b class="text-nadirOrange">7</b> Verify</span>
-      </div>
+  <div class="px-8 max-w-[1600px] mx-auto grid lg:grid-cols-12 gap-20">
+    <div class="lg:col-span-4 scroll-reveal">
+      <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-8">Stage 1 / Attachment</h2>
+      <p class="text-slate-300 mb-8 leading-relaxed">NADIR deploys as a sidecar, gateway, or wrapper. Instrumentation occurs outside core weights to avoid mutating parameters.</p>
+      <ul class="text-[11px] font-mono text-slate-500 space-y-4">
+        <li>• Weight-Neutral: Never ingests model weights by policy.</li>
+        <li>• Resource-Isolation: Enforced cgroup quotas prevent back-pressure.</li>
+      </ul>
     </div>
 
-    <section class="px-8 max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-px bg-white/10 border-y hairline mb-32">
-      <div class="bg-obsidian p-12 border-r hairline">
-        <span class="font-mono text-nadirOrange text-[10px] mb-8 block">[ STAGE 01 ] Capture Model</span>
-        <ul class="space-y-4 text-slate text-sm">
-          <li>• Sidecar / gateway / wrapper architecture</li>
-          <li>• Policy-scoped fields with versioned masking</li>
-          <li>• cgroup quotas prevent audit layer interference</li>
-        </ul>
-        <div class="mt-10 p-4 bg-white/5 font-mono text-[9px] uppercase tracking-widest text-white/40">
-          Excluded: Weights · Internals · Training_Data
-        </div>
-        
+    <div class="lg:col-span-8 border-l hairline pl-12 scroll-reveal">
+      <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-8">Stage 3 / Integrity Model</h2>
+      <p class="text-2xl font-display uppercase mb-12">SHA-256 + ECDSA P-256 Default Suite.</p>
+      <div class="bg-white/5 p-8 border hairline">
+        <h4 class="font-mono text-[10px] uppercase mb-4 text-white">Non-Custodial Key Protocol</h4>
+        <p class="text-slate-400 text-sm">Signing keys remain inside the operator’s HSM/KMS; NADIR never holds private keys.</p>
       </div>
-      <div class="bg-obsidian p-12">
-        <span class="font-mono text-nadirOrange text-[10px] mb-8 block">[ STAGE 02 ] Artifact Schema</span>
-        <div class="font-mono text-[11px] grid grid-cols-2 gap-4 text-slate">
-          <div class="border-b hairline pb-2">Timestamp</div>
-          <div class="border-b hairline pb-2">Provenance</div>
-          <div class="border-b hairline pb-2">Input Hash</div>
-          <div class="border-b hairline pb-2">Policy ID</div>
-          <div class="border-b hairline pb-2">Env Fingerprint</div>
-          <div class="border-b hairline pb-2">Disclosure Tier</div>
-        </div>
-      </div>
-    </section>
+    </div>
+  </div>
 
-    <section class="px-8 max-w-[1600px] mx-auto mb-32">
-      <h2 class="font-display text-4xl mb-12 uppercase">Integrity Model</h2>
-      <div class="grid md:grid-cols-2 gap-12">
-        <div class="border-l hairline pl-8">
-          <ul class="space-y-6 font-mono text-xs text-slate uppercase tracking-widest">
-            <li>RFC 8785 Canonicalization</li>
-            <li>SHA-256 Hashing ref</li>
-            <li>ECDSA-P256 Signatures ref</li>
-            <li>Non-custodial Key (HSM/KMS)</li>
-          </ul>
-          
-        </div>
-        <div class="bg-white/5 p-8 border border-white/10 font-mono text-[10px] text-slate uppercase leading-loose">
-          Optional: RFC 3161 TSA or HSM clock anchoring enabled for high-criticality nodes.
-        </div>
-      </div>
-    </section>
-
-    <section class="px-8 max-w-[1600px] mx-auto grid md:grid-cols-2 gap-20 py-20 border-t hairline mb-32">
-      <div>
-        <h3 class="font-display text-2xl mb-6 uppercase">Disclosure Field Model</h3>
-        <div class="space-y-4">
-          <div class="p-6 hairline bg-white/5 flex justify-between items-center">
-            <span class="text-sm">Public/Redacted Tier</span>
-            <span class="font-mono text-[9px] opacity-40">L1_SUMMARY</span>
-          </div>
-          <div class="p-6 hairline bg-white/5 flex justify-between items-center">
-            <span class="text-sm">Controlled Review Tier</span>
-            <span class="font-mono text-[9px] opacity-40">L2_EXPANDED</span>
-          </div>
-        </div>
-      </div>
-      <div>
-        <h3 class="font-display text-2xl mb-6 uppercase">Verification Workflow</h3>
-        <div class="font-mono text-[10px] space-y-2 uppercase text-slate">
-          <p>1. Retrieve 2. Canonize 3. Recompute 4. Validate 5. Align</p>
-          <div class="pt-6 space-y-3">
-            <div class="text-green-500">→ Integrity Confirmed</div>
-            <div class="text-red-500">→ Integrity Failed</div>
-            <div class="text-yellow-500">→ Policy Mismatch</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="mx-8 bg-nadirOrange/10 border border-nadirOrange/30 p-10 max-w-[1600px] lg:mx-auto mb-32">
-      <h4 class="font-display text-xl mb-4 text-nadirOrange uppercase">Fail-Open Note</h4>
-      <p class="text-slate text-sm leading-relaxed max-w-2xl">If sealing fails, inference continues. Event is logged and the artifact is flagged “unsealed.” Operators may configure a stricter enforcement mode for critical assets.</p>
-    </section>
-
-    <section class="py-24 px-8 bg-[#030407] border-t hairline">
-      <div class="max-w-[1200px] mx-auto border hairline p-8 bg-[#05070a] font-mono text-[11px] text-slate/80 leading-relaxed">
-        <div class="text-nadirOrange uppercase tracking-[0.3em] mb-6 pb-4 border-b hairline flex justify-between">
-          <span>Boundary Declaration</span>
-          <span class="opacity-30">PROT_01</span>
-        </div>
-        <ul class="space-y-4">
-          <li class="flex gap-4"><span>•</span> NADIR does not validate correctness, fairness, legality, or policy compliance of AI systems.</li>
-          <li class="flex gap-4"><span>•</span> NADIR does not certify regulatory compliance or legal admissibility.</li>
-          <li class="flex gap-4"><span>•</span> NADIR does not guarantee inference reproducibility.</li>
-          <li class="flex gap-4"><span>•</span> Verification confirms integrity & provenance only.</li>
-          <li class="flex gap-4"><span>•</span> Oversight decisions belong to the relevant authority.</li>
-        </ul>
-      </div>
-    </section>
+  <section class="py-40 px-8 max-w-[1600px] mx-auto mt-40 border-t hairline scroll-reveal">
+    <h2 class="font-display text-4xl mb-12 uppercase">Fail-Open Architecture</h2>
+    <div class="grid md:grid-cols-4 gap-8 font-mono text-[10px] uppercase tracking-widest text-slate-400">
+      <div class="border hairline p-6">✓ Inference Continues</div>
+      <div class="border hairline p-6">✓ Failure Event Logged</div>
+      <div class="border hairline p-6">✓ Marked Unsealed</div>
+      <div class="border hairline p-6">✓ Post-Hoc Review</div>
+    </div>
+  </section>
+  
   </main>
-
-  <footer class="bg-[#030407] border-t hairline py-8 px-8 flex flex-col md:flex-row items-center justify-between font-mono text-[9px] uppercase tracking-[0.2em] text-slate/60">
-    <div>NADIR provides the evidence; authorized institutions provide the oversight.</div>
-    <div>© 2026 NADIR [V2026.02.19] All rights reserved.</div>
-  </footer>
-</body>
-</html>
