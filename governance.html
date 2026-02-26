@@ -1,34 +1,106 @@
-<main class="pt-40">
-  <section class="px-8 max-w-[1600px] mx-auto mb-24">
-    <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">Governance <br> Posture</h1>
-    <p class="text-slate-400 text-xl max-w-3xl">NADIR supports accountability while minimizing collection and preserving confidentiality.</p>
-  </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NADIR — Governance Posture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --border: rgba(255, 255, 255, 0.08); --nadirOrange: #EA580C; }
+    body { background-color: #05070a; color: #F9FAFB; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+    .hairline { border: 1px solid var(--border); }
+    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .scroll-reveal { opacity: 0.1; transition: all 0.8s ease; transform: translateY(20px); }
+    .scroll-reveal.active { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body class="antialiased">
 
-  <section class="px-8 max-w-[1600px] mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-32">
-    <div class="border hairline p-8 hover:bg-white/5 transition-colors">
-      <h3 class="font-display text-lg mb-4">Privacy-by-Design</h3>
-      <p class="text-slate-500 text-xs">Masking rules and policy-scoped capture minimize data footprint at the source.</p>
+  <nav class="fixed top-0 inset-x-0 z-[100] glass">
+    <div class="max-w-[1600px] mx-auto px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
+      <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
+        <a href="governance.html" class="text-[#EA580C]">Governance</a>
+        <a href="compliance.html" class="opacity-50">Compliance</a>
+        <a href="oversight.html" class="opacity-50">Oversight</a>
+        <a href="docs.html" class="opacity-50">Docs</a>
+      </div>
+      <div class="font-mono text-[9px] text-white/40 uppercase tracking-widest">Post_Review: v2026.02.19</div>
     </div>
-    <div class="border hairline p-8 hover:bg-white/5 transition-colors">
-      <h3 class="font-display text-lg mb-4">Controlled Disclosure</h3>
-      <p class="text-slate-500 text-xs">Verify the record without exposing proprietary weights or model internals.</p>
-    </div>
-    <div class="border hairline p-8 hover:bg-white/5 transition-colors">
-      <h3 class="font-display text-lg mb-4">Auditability</h3>
-      <p class="text-slate-500 text-xs">Deterministic canonicalization ensures records remain verifiable over time.</p>
-    </div>
-    <div class="border hairline p-8 hover:bg-white/5 transition-colors">
-      <h3 class="font-display text-lg mb-4">Non-Adjudication</h3>
-      <p class="text-slate-500 text-xs">Infrastructure focused on evidence generation, not automated judgment.</p>
-    </div>
-  </section>
+  </nav>
 
-  <section class="mx-8 p-12 border border-[#EA580C]/20 bg-[#EA580C]/5 max-w-[1600px] lg:mx-auto mb-40">
-    <div class="font-mono text-[10px] text-[#EA580C] uppercase tracking-widest mb-6">Framework Alignment</div>
-    <h2 class="font-display text-2xl mb-4">NIST IR 8596 Reference</h2>
-    <p class="text-slate-400 text-sm max-w-2xl leading-relaxed">
-      Design informed by the NIST Cyber AI Profile; however, no endorsement, partnership, or certification is implied. NADIR is an independent implementation of evidence-layer best practices.
-    </p>
-  </section>
+  <main class="pt-40">
+    <section class="px-8 max-w-[1600px] mx-auto mb-32">
+      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8 scroll-reveal">Governance <br> Posture</h1>
+      <p class="text-slate-400 text-xl max-w-3xl leading-relaxed scroll-reveal">
+        NADIR supports accountable review while preserving confidentiality boundaries. Records are <span class="text-white">deterministic</span>; institutions render judgment.
+      </p>
+    </section>
 
+    <section class="px-8 max-w-[1600px] mx-auto mb-40">
+      <h2 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em] mb-12 scroll-reveal">Section A // Core Principles</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 hairline scroll-reveal">
+        <div class="bg-black p-10 h-full">
+          <h3 class="font-mono text-[10px] text-[#EA580C] uppercase mb-6 tracking-widest">Privacy-by-Design</h3>
+          <p class="text-slate-400 text-sm">Capture only policy-defined fields; record Policy ID + version in every artifact to ensure scoped data minimization.</p>
+        </div>
+        <div class="bg-black p-10 h-full">
+          <h3 class="font-mono text-[10px] text-[#EA580C] uppercase mb-6 tracking-widest">Controlled Disclosure</h3>
+          <p class="text-slate-400 text-sm">Tiered visibility allows reviewers to verify integrity without default exposure of trade secrets or proprietary weights.</p>
+        </div>
+        <div class="bg-black p-10 h-full">
+          <h3 class="font-mono text-[10px] text-[#EA580C] uppercase mb-6 tracking-widest">Auditability</h3>
+          <p class="text-slate-400 text-sm">Canonical records supersede ad-hoc logs. Every artifact is reproducible, hash-stable, and suitable for legal review.</p>
+        </div>
+        <div class="bg-black p-10 h-full">
+          <h3 class="font-mono text-[10px] text-[#EA580C] uppercase mb-6 tracking-widest">Non-Adjudication</h3>
+          <p class="text-slate-400 text-sm">NADIR produces the infrastructure for truth; final oversight decisions belong to authorized institutions.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-40 px-8 max-w-[1600px] mx-auto border-t hairline scroll-reveal">
+      <div class="grid lg:grid-cols-12 gap-20">
+        <div class="lg:col-span-4">
+          <h2 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em] mb-8">NIST IR 8596 Alignment</h2>
+          <div class="bg-white/5 border hairline p-6 font-mono text-[9px] text-slate-500 uppercase">Informative Reference Only</div>
+        </div>
+        <div class="lg:col-span-8">
+          <p class="text-3xl font-display uppercase leading-tight mb-8">Addressing traceability, integrity, and accountability.</p>
+          <p class="text-slate-400 text-lg leading-relaxed">
+            NADIR’s design is informed by the NIST IR 8596 “Cyber AI Profile.” This alignment ensures that the evidentiary artifacts generated by our framework meet international expectations for secure AI traceability.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-24 px-8 border-t hairline">
+        <div class="max-w-[1200px] mx-auto border hairline p-10 bg-black font-mono text-[11px] text-slate-500 leading-relaxed scroll-reveal">
+          <div class="text-[#EA580C] uppercase tracking-[0.3em] mb-8 pb-4 border-b hairline">Boundary Declaration</div>
+          <ul class="space-y-4">
+            <li>• NADIR verifies integrity and provenance; it does not judge correctness, legality, or policy sufficiency.</li>
+            <li>• Admissibility and oversight determinations rest with the competent authority.</li>
+            <li>• No compliance guarantee is expressed or implied.</li>
+          </ul>
+        </div>
+      </section>
   </main>
+
+  <footer class="py-12 px-8 border-t hairline flex justify-between items-center text-slate-600 font-mono text-[9px] uppercase tracking-[0.2em]">
+    <div>"NADIR provides the evidence; institutions provide the oversight."</div>
+    <div>© 2026 NADIR — A Project of Brian Covarrubias</div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
