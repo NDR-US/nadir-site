@@ -1,80 +1,42 @@
-<main class="pt-40 px-8 lg:px-20 min-h-screen">
-    <section class="max-w-[1600px] mx-auto mb-60">
-        <div class="reveal-content">
-            <p class="mono-label mb-8">PCL_FRAMEWORK // V.2026.02.19</p>
-            <h1 class="display-scale mb-16">
-                THE AI <br>
-                <span class="opacity-20 font-extralight italic">INTEGRITY LAYER</span>
-            </h1>
-            <div class="h-[1px] w-60 bg-white/10 mb-16"></div>
-            <p class="text-2xl md:text-3xl text-white/40 max-w-4xl leading-relaxed font-light">
-                NADIR provides an <span class="text-white">immutable evidence chain</span> for AI decision-support systems. Engineered for technical accountability through cryptographic sealing and statutory alignment.
-            </p>
-        </div>
-    </section>
+:root {
+    --p-gray: #050505; /* Deep, ink-black depth */
+    --p-accent: #EA580C; /* High-visibility engineering orange */
+    --border-hairline: rgba(255, 255, 255, 0.06); /* Ultra-thin institutional borders */
+}
 
-    <section class="max-w-[1600px] mx-auto mb-60">
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-px bg-white/5 border border-white/5">
-            <div class="md:col-span-4 p-12 bg-[#050505]">
-                <p class="mono-label mb-4">01 // ARCHITECTURE</p>
-                <h2 class="text-4xl font-light mb-8">Seven-Step <br>Integrity Chain</h2>
-                <p class="text-white/40 font-mono text-xs uppercase leading-loose">
-                    Strict mechanics chain to produce integrity-sealed artifacts while preserving proprietary boundaries.
-                </p>
-            </div>
-            
-            <div class="md:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5">
-                <div class="p-10 bg-[#050505] flex flex-col justify-between h-48 hover:bg-white/5 transition-colors">
-                    <span class="mono-label">01</span>
-                    <span class="text-[11px] uppercase tracking-widest font-mono">Attach Boundary</span>
-                </div>
-                <div class="p-10 bg-[#050505] flex flex-col justify-between h-48 hover:bg-white/5 transition-colors">
-                    <span class="mono-label">02</span>
-                    <span class="text-[11px] uppercase tracking-widest font-mono">Capture Scope</span>
-                </div>
-                <div class="p-10 bg-[#050505] flex flex-col justify-between h-48 hover:bg-white/5 transition-colors">
-                    <span class="mono-label">03</span>
-                    <span class="text-[11px] uppercase tracking-widest font-mono">Normalize</span>
-                </div>
-                <div class="p-10 bg-[#050505] flex flex-col justify-between h-48 hover:bg-white/5 transition-colors">
-                    <span class="mono-label">04</span>
-                    <span class="text-[11px] uppercase tracking-widest font-mono">Canonicalize</span>
-                </div>
-                <div class="p-10 bg-[#050505] flex flex-col justify-between h-48 hover:bg-white/5 transition-colors">
-                    <span class="mono-label">05</span>
-                    <span class="text-[11px] uppercase tracking-widest font-mono">Hash & Sign</span>
-                </div>
-                <div class="p-10 bg-[#050505] flex flex-col justify-between h-48 hover:bg-white/5 transition-colors">
-                    <span class="mono-label">06</span>
-                    <span class="text-[11px] uppercase tracking-widest font-mono">Enforce Tiers</span>
-                </div>
-                <div class="p-10 bg-[#050505] flex flex-col justify-between h-48 hover:bg-white/5 transition-colors">
-                    <span class="mono-label">07</span>
-                    <span class="text-[11px] uppercase tracking-widest font-mono">Verify Independent</span>
-                </div>
-                <div class="p-10 bg-orange-600 flex flex-col justify-between h-48">
-                    <span class="text-black font-bold text-[10px] tracking-widest uppercase">Artifact Locked</span>
-                    <span class="text-black text-[11px] font-mono">SEAL_COMPLETE</span>
-                </div>
-            </div>
-        </div>
-    </section>
+body {
+    background: var(--p-gray);
+    color: #f8fafc;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
 
-    <section class="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 mb-60">
-        <div class="layer-secondary p-16">
-            <h3 class="text-5xl font-light mb-12">Fail-Open <br>Architecture</h3>
-            <p class="text-white/40 font-mono text-xs uppercase leading-loose mb-12">
-                In the event of an integrity layer failure, inference continues non-blocking. Nadir logs the failure event and marks the resulting artifact as "unsealed" for post-hoc forensic review.
-            </p>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="layer-primary p-6 text-[10px] font-mono text-orange-500 uppercase tracking-widest">Inference Continues</div>
-                <div class="layer-primary p-6 text-[10px] font-mono text-orange-500 uppercase tracking-widest">Marked Unsealed</div>
-            </div>
-        </div>
-        <div class="flex flex-col justify-center items-center layer-primary p-20 border-dashed">
-             <div class="mono-label mb-4">SYSTEM_VISUAL_REF</div>
-             <div class="h-px w-full bg-white/10 my-8"></div>
-             <p class="text-white/20 text-center font-mono text-[9px]">DECOUPLED_LOGIC_SCHEMATIC_V1.PNG</p>
-        </div>
-    </section>
-</main>
+/* Palantir-style Navigation */
+.nav-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover { color: #fff; }
+
+/* The Grid Standard */
+.grid-institutional {
+    display: grid;
+    gap: 1px;
+    background-color: var(--border-hairline);
+    border: 1px solid var(--border-hairline);
+}
+
+.cell-institutional {
+    background: var(--p-gray);
+    padding: 3rem;
+    transition: background 0.4s ease;
+}
+
+.cell-institutional:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
