@@ -1,37 +1,119 @@
-<main class="pt-40">
-  <section class="px-8 max-w-[1600px] mx-auto mb-24">
-    <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">Trust <br> Infrastructure</h1>
-    <p class="text-slate-400 text-xl max-w-3xl leading-relaxed">Trust is grounded in deterministic mechanics, constrained disclosure, and clear boundary declarations.</p>
-  </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NADIR — Trust Infrastructure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --border: rgba(255, 255, 255, 0.08); --nadirOrange: #EA580C; }
+    body { background-color: #05070a; color: #F9FAFB; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+    .hairline { border: 1px solid var(--border); }
+    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .scroll-reveal { opacity: 0.1; transition: all 0.8s ease; transform: translateY(20px); }
+    .scroll-reveal.active { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body class="antialiased">
 
-  <section class="px-8 max-w-[1600px] mx-auto mb-32">
-    <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.4em] mb-12">Integrity Architecture</h2>
-    <div class="grid lg:grid-cols-2 gap-16 items-center">
-      <ul class="space-y-6 font-mono text-sm text-slate-300">
-        <li class="flex items-center gap-4"><div class="w-1.5 h-1.5 bg-[#EA580C]"></div> RFC 8785 canonicalization</li>
-        <li class="flex items-center gap-4"><div class="w-1.5 h-1.5 bg-[#EA580C]"></div> SHA-256 hashing</li>
-        <li class="flex items-center gap-4"><div class="w-1.5 h-1.5 bg-[#EA580C]"></div> ECDSA-P256 signatures</li>
-        <li class="flex items-center gap-4"><div class="w-1.5 h-1.5 bg-[#EA580C]"></div> Non-custodial keys</li>
-        <li class="flex items-center gap-4"><div class="w-1.5 h-1.5 bg-[#EA580C]"></div> Fail-open design</li>
-      </ul>
-      
+  <nav class="fixed top-0 inset-x-0 z-[100] glass">
+    <div class="max-w-[1600px] mx-auto px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
+      <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
+        <a href="trust.html" class="text-[#EA580C]">Trust_Center</a>
+        <a href="resources.html" class="opacity-50 hover:opacity-100">Resources</a>
+        <a href="governance.html" class="opacity-50 hover:opacity-100">Governance</a>
+        <a href="docs.html" class="opacity-50 hover:opacity-100">Docs</a>
+      </div>
+      <div class="font-mono text-[9px] text-white/40 uppercase tracking-widest">Trust_Baseline: Verified</div>
     </div>
-  </section>
+  </nav>
 
-  <section class="px-8 max-w-[1600px] mx-auto mb-32 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 hairline">
-    <div class="bg-black p-8 font-mono text-[10px] uppercase tracking-widest text-slate-500 hover:text-white transition">Key Custody</div>
-    <div class="bg-black p-8 font-mono text-[10px] uppercase tracking-widest text-slate-500 hover:text-white transition">VDP</div>
-    <div class="bg-black p-8 font-mono text-[10px] uppercase tracking-widest text-slate-500 hover:text-white transition">SBOM</div>
-    <div class="bg-black p-8 font-mono text-[10px] uppercase tracking-widest text-slate-500 hover:text-white transition">Sustainability</div>
-    <div class="bg-black p-8 font-mono text-[10px] uppercase tracking-widest text-slate-500 hover:text-white transition">Admissibility</div>
-    <div class="bg-black p-8 font-mono text-[10px] uppercase tracking-widest text-slate-500 hover:text-white transition">PCL</div>
-    <div class="bg-black p-8 font-mono text-[10px] uppercase tracking-widest text-slate-500 hover:text-white transition">Crosswalk</div>
-  </section>
+  <main class="pt-40">
+    <section class="px-8 max-w-[1600px] mx-auto mb-32">
+      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8 scroll-reveal">Trust <br> Infrastructure</h1>
+      <p class="text-slate-400 text-xl max-w-3xl leading-relaxed scroll-reveal">
+        Determinism, cryptographic integrity, and transparent governance establish NADIR’s trust baseline.
+      </p>
+    </section>
 
-  <section class="px-8 max-w-[1600px] mx-auto mb-40">
-    <div class="bg-white/5 p-12 hairline border-l-4 border-l-[#EA580C]">
-       <h4 class="font-display text-xl mb-4">Compute-to-Integrity Note</h4>
-       <p class="text-slate-400 text-sm italic">Verification confirming integrity and provenance under policy, not correctness of the model output.</p>
-    </div>
-  </section>
-</main>
+    <section class="px-8 max-w-[1600px] mx-auto mb-40 scroll-reveal">
+      <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-12">Section A // Integrity Architecture</h2>
+      <div class="grid md:grid-cols-2 gap-12">
+        <ul class="space-y-6 font-display text-2xl uppercase tracking-tight">
+          <li class="border-b hairline pb-4">RFC 8785 Canonicalization</li>
+          <li class="border-b hairline pb-4">SHA-256 / ECDSA-P256 Suite</li>
+          <li class="border-b hairline pb-4">Non-Custodial Key Protocol</li>
+          <li class="border-b hairline pb-4">Fail-Open Availability</li>
+          <li class="border-b hairline pb-4">Role-Based Redaction</li>
+        </ul>
+        <div class="bg-white/5 p-12 flex items-center justify-center border hairline">
+           <p class="font-mono text-[11px] text-slate-500 uppercase tracking-widest leading-relaxed">
+             [ Cryptographic primitives are versioned under V2026.02 and subject to PQC roadmap transition parameters. ]
+           </p>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <section class="px-8 max-w-[1600px] mx-auto mb-40">
+      <h2 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em] mb-12 scroll-reveal">Section B // Trust Assets</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 scroll-reveal">
+        <a href="#" class="border hairline p-8 hover:bg-[#EA580C]/5 hover:border-[#EA580C] transition-all">
+          <div class="font-mono text-[10px] uppercase mb-4 text-[#EA580C]">VDP</div>
+          <div class="font-display text-sm uppercase">Vulnerability Disclosure</div>
+        </a>
+        <a href="#" class="border hairline p-8 hover:bg-[#EA580C]/5 hover:border-[#EA580C] transition-all">
+          <div class="font-mono text-[10px] uppercase mb-4 text-[#EA580C]">SBOM</div>
+          <div class="font-display text-sm uppercase">Software Bill of Materials</div>
+        </a>
+        <a href="#" class="border hairline p-8 hover:bg-[#EA580C]/5 hover:border-[#EA580C] transition-all">
+          <div class="font-mono text-[10px] uppercase mb-4 text-[#EA580C]">KMS</div>
+          <div class="font-display text-sm uppercase">Key Custody Declaration</div>
+        </a>
+        <a href="#" class="border hairline p-8 hover:bg-[#EA580C]/5 hover:border-[#EA580C] transition-all">
+          <div class="font-mono text-[10px] uppercase mb-4 text-[#EA580C]">ESG</div>
+          <div class="font-display text-sm uppercase">Sustainability Disclosure</div>
+        </a>
+      </div>
+    </section>
+
+    <section class="py-40 px-8 max-w-[1600px] mx-auto border-t hairline scroll-reveal">
+      <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-12">Section C // Compute-to-Integrity Efficiency</h2>
+      <div class="grid lg:grid-cols-2 gap-20 items-end">
+        <p class="text-3xl font-display uppercase leading-tight">Integrity cost measured in <span class="text-white">microseconds + joules</span> per artifact.</p>
+        <p class="text-slate-500 text-sm leading-relaxed">Benchmark sheets identifying deployment-specific energy impact and latency overhead are available under controlled review. Deployment figures vary by hardware architecture.</p>
+      </div>
+    </section>
+
+    <section class="py-24 px-8 border-t hairline">
+        <div class="max-w-[1200px] mx-auto border hairline p-10 bg-black font-mono text-[11px] text-slate-500 leading-relaxed scroll-reveal">
+          <div class="text-[#EA580C] uppercase tracking-[0.3em] mb-8 pb-4 border-b hairline">Boundary Declaration</div>
+          <ul class="space-y-4">
+            <li>• NADIR does not validate fairness, legality, or regulatory compliance of AI systems.</li>
+            <li>• Verification confirms integrity and provenance under policy—oversight determinations are made by the competent authority.</li>
+            <li>• This public content is descriptive; no rights are granted without separate agreement.</li>
+          </ul>
+        </div>
+      </section>
+  </main>
+
+  <footer class="py-12 px-8 border-t hairline flex justify-between items-center text-slate-600 font-mono text-[9px] uppercase tracking-[0.2em]">
+    <div>"NADIR provides the evidence; institutions provide the oversight."</div>
+    <div>© 2026 NADIR — A Project of Brian Covarrubias</div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
