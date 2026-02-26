@@ -1,53 +1,65 @@
-/* NADIR Industrial Design System */
+/* NADIR INSTITUTIONAL DESIGN SYSTEM V2026.02.19 */
 :root {
   --bg-black: #05070a;
   --nadir-orange: #EA580C;
-  --slate-gray: #1e293b;
+  --slate-400: #94a3b8;
   --border-subtle: rgba(255, 255, 255, 0.08);
+  --glass: rgba(5, 7, 10, 0.85);
 }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   background-color: var(--bg-black);
   color: #f9fafb;
   font-family: 'Inter', sans-serif;
-  margin: 0;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-/* Palantir-Style Monospaced Data Labels */
-.data-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--nadir-orange);
-}
+/* Typography Caliber */
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+.tracking-institutional { letter-spacing: 0.5em; }
+.text-data { font-size: 11px; text-transform: uppercase; color: var(--nadir-orange); }
 
-/* Anduril-Style Glassmorphism for Nav */
+/* Cinematic Navigation */
 header {
-  backdrop-filter: blur(12px);
-  background: rgba(5, 7, 10, 0.8);
-  border-bottom: 1px solid var(--border-subtle);
   position: fixed;
+  top: 0;
   width: 100%;
-  z-index: 100;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  padding: 0 4rem;
+  backdrop-filter: blur(24px);
+  background: var(--glass);
+  border-bottom: 1px solid var(--border-subtle);
+  z-index: 1000;
 }
 
-/* Data-Dense Grid for your 7-Step Mechanics */
+/* The Seven-Step Grid Architecture */
 .mechanics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1px;
   background-color: var(--border-subtle);
   border: 1px solid var(--border-subtle);
 }
 
+@media (max-width: 1024px) { .mechanics-grid { grid-template-columns: repeat(2, 1fr); } }
+
 .step-card {
   background-color: var(--bg-black);
-  padding: 2rem;
-  transition: background 0.3s ease;
+  padding: 2.5rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .step-card:hover {
-  background: rgba(234, 88, 12, 0.05);
+  background: rgba(234, 88, 12, 0.03);
+  border-color: var(--nadir-orange);
 }
+
+/* Scroll-Triggered Animation Hooks */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+.reveal.active { opacity: 1; transform: translateY(0); }
