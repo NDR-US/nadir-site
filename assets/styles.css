@@ -1,57 +1,26 @@
-/* NADIR DEFENSE-TECH CORE V2 */
 :root {
-  --bg-deep: #020203; /* True Midnight Black */
-  --nadir-glow: #FF5F1F; /* Kinetic Neon Orange */
-  --slate-data: #1a1f26; /* Dark Industrial Slate */
-  --text-dim: #64748b; /* Muted Engineering Gray */
-  --border-glass: rgba(255, 255, 255, 0.05);
+    --bg-black: #050505;
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --nadir-orange: #EA580C; /* Using your signature accent from documents */
 }
 
 body {
-  background-color: var(--bg-deep);
-  color: #ffffff;
-  font-family: 'Inter', sans-serif;
-  letter-spacing: -0.01em;
+    background-color: var(--bg-black);
+    color: #f8fafc;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* Fix for awful nav links */
-header nav a {
-  color: var(--text-dim);
-  text-decoration: none;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-}
+/* Institutional Elevation Levels */
+.layer-primary { background: var(--bg-black); border: 1px solid var(--border-subtle); }
+.layer-secondary { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); }
 
-header nav a:hover {
-  color: #ffffff;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-}
+/* The "Palantir" underline */
+.nav-link { position: relative; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.3s; }
+.nav-link:hover { color: white; }
+.nav-link::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -4px; left: 0; background: var(--nadir-orange); transition: width 0.3s ease; }
+.nav-link:hover::after { width: 100%; }
 
-/* The Grid Component */
-.decoupled-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  background-color: var(--border-glass);
-  gap: 1px;
-  border: 1px solid var(--border-glass);
-}
-
-.grid-node {
-  background-color: var(--bg-deep);
-  padding: 2.5rem;
-  border: 1px solid transparent;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.grid-node:hover {
-  background-color: rgba(255, 95, 31, 0.02);
-  border-color: var(--nadir-glow);
-}
-
-.node-active {
-  background-color: var(--nadir-glow) !important;
-  color: #000000 !important;
-}
+/* Typography for Scale */
+.display-scale { font-size: clamp(3.5rem, 8vw, 8.5rem); font-weight: 300; letter-spacing: -0.05em; line-height: 0.9; }
+.mono-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.4em; color: var(--nadir-orange); text-transform: uppercase; }
