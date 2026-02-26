@@ -8,148 +8,133 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui'],
-            display: ['Space Grotesk', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace']
-          },
-          colors: { obsidian: '#05070a', nadirOrange: '#EA580C', slate: '#475569' }
-        }
-      }
-    }
-  </script>
   <style>
-    :root { --border: rgba(255, 255, 255, 0.08); }
-    body { background-color: #05070a; color: #F9FAFB; overflow-x: hidden; }
-    .grain::before { content: ""; fixed: inset 0; width: 100%; height: 100%; background-image: url("https://grainy-gradients.vercel.app/noise.svg"); opacity: 0.03; pointer-events: none; z-index: 9999; position: fixed; }
+    :root { --border: rgba(255, 255, 255, 0.08); --nadirOrange: #EA580C; }
+    body { background-color: #05070a; color: #F9FAFB; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
     .hairline { border: 1px solid var(--border); }
     .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
-    .nav-link { position: relative; opacity: 0.5; transition: opacity 0.3s; }
-    .nav-link:hover { opacity: 1; }
-    .nav-link::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -4px; left: 0; background: #EA580C; transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
-    .nav-link:hover::after { width: 100%; }
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    
+    /* SCROLL HIGHLIGHT LOGIC */
+    .scroll-reveal { opacity: 0.3; transition: all 0.6s ease; transform: translateY(10px); }
+    .scroll-reveal.active { opacity: 1; transform: translateY(0); color: white; }
+    .highlight-text { color: var(--nadirOrange); }
   </style>
 </head>
-<body class="antialiased grain">
+<body class="antialiased">
 
   <nav class="fixed top-0 inset-x-0 z-[100] glass">
     <div class="max-w-[1600px] mx-auto px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-10">
-        <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em] text-white">NADIR</a>
-        <div class="hidden md:flex items-center gap-6 font-mono text-[9px] text-slate tracking-widest uppercase border-l hairline pl-6">
-          <span class="text-nadirOrange animate-pulse">● System_Live</span>
-          <span>Node_2026.02</span>
-        </div>
-      </div>
+      <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
       <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
-        <a href="platform.html" class="nav-link">Framework</a>
-        <a href="#" class="nav-link">Oversight</a>
-        <a href="#" class="nav-link">Compliance</a>
+        <a href="index.html" class="text-[#EA580C]">Overview</a>
+        <a href="platform.html" class="opacity-50 hover:opacity-100">Architecture</a>
+        <a href="integration.html" class="opacity-50 hover:opacity-100">Integration</a>
+        <a href="docs.html" class="opacity-50 hover:opacity-100">Docs</a>
       </div>
-      <a href="contact.html" class="bg-white text-black px-6 py-2 font-display text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-nadirOrange transition-colors">Request Access</a>
+      <div class="font-mono text-[9px] text-white/40 uppercase tracking-widest">v2026.02.19</div>
     </div>
   </nav>
 
   <main>
-    <section class="min-h-screen flex flex-col justify-center px-8 pt-20">
-      <div class="max-w-[1600px] mx-auto w-full">
-        <div class="mb-8 font-mono text-nadirOrange text-[10px] uppercase tracking-[0.4em] hero-sub">[ V2026.02.19_INIT ]</div>
-        <h1 class="font-display text-5xl md:text-8xl lg:text-[100px] leading-[0.9] tracking-tighter mb-10 hero-title uppercase">
-          Evidentiary <br> Infrastructure <br>
-          <span class="text-white/20 text-4xl md:text-6xl lg:text-[70px] tracking-tight">For AI Inference Systems</span>
-        </h1>
-        <div class="grid lg:grid-cols-2 gap-16 items-start mt-16">
-          <p class="text-lg text-slate leading-relaxed font-light hero-p">
-            NADIR is an attachable integrity and forensic compliance layer that generates policy-scoped, canonical artifacts representing defined inference-time decision-state context. Artifacts are integrity-sealed to support later verification and structured oversight under constrained disclosure. <b>NADIR produces verifiable records; it does not adjudicate model correctness.</b>
-          </p>
-          <div class="flex flex-col sm:flex-row gap-6 hero-btns lg:justify-end">
-            <a href="platform.html" class="border hairline px-8 py-4 font-mono text-[10px] uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all">Enter Framework</a>
-            <a href="docs.html" class="border hairline px-8 py-4 font-mono text-[10px] uppercase tracking-[0.2em] text-slate bg-white/5 hover:border-white/40 transition-all">Document Suite</a>
-          </div>
+    <section class="min-h-screen flex flex-col justify-center px-8 max-w-[1600px] mx-auto">
+      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter leading-[0.9] mb-12">
+        Evidentiary <br> Infrastructure <br> <span class="text-slate-600">for AI Inference</span>
+      </h1>
+      <p class="text-slate-400 text-xl md:text-2xl max-w-4xl leading-relaxed mb-16">
+        NADIR is an attachable integrity and forensic compliance layer designed to generate <span class="text-white">policy-scoped, canonical artifacts</span> representing inference-time decision-state.
+      </p>
+      <div class="flex flex-wrap gap-6">
+        <a href="#structural" class="bg-[#EA580C] text-white px-10 py-5 font-mono text-[11px] uppercase tracking-widest font-bold">Enter Framework</a>
+        <a href="docs.html" class="border hairline px-10 py-5 font-mono text-[11px] uppercase tracking-widest text-slate-300 hover:bg-white/5">Document Suite</a>
+      </div>
+    </section>
+
+    <section id="structural" class="py-40 px-8 max-w-[1600px] mx-auto border-t hairline">
+      <div class="mb-32">
+        <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-12 scroll-reveal">Section A // Structural Deficits</h2>
+        <p class="text-4xl md:text-6xl font-display uppercase tracking-tight max-w-5xl scroll-reveal">
+          Many AI deployments lack <span class="highlight-text">canonical, integrity-bound artifacts</span> suitable for formal review.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-px bg-white/10 hairline">
+        <div class="bg-black p-12 scroll-reveal">
+          <h3 class="font-mono text-[10px] uppercase mb-8 text-slate-500">01 / Telemetry ≠ Evidence</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Surface logs lack deterministic structure and integrity metadata required for admissible review.</p>
+        </div>
+        <div class="bg-black p-12 scroll-reveal">
+          <h3 class="font-mono text-[10px] uppercase mb-8 text-slate-500">02 / Constrained Disclosure</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Institutions must verify provenance without default exposure of proprietary model weights.</p>
+        </div>
+        <div class="bg-black p-12 scroll-reveal">
+          <h3 class="font-mono text-[10px] uppercase mb-8 text-slate-500">03 / Liability Ambiguity</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Disputes rely on partial telemetry, increasing legal uncertainty for operators and regulators.</p>
         </div>
       </div>
     </section>
 
-    <section class="py-32 px-8 border-t hairline bg-obsidian">
-      <div class="max-w-[1600px] mx-auto">
-        <h2 class="font-display text-4xl mb-20 uppercase tracking-tight">Structural deficits in accountability infrastructure</h2>
-        <div class="grid md:grid-cols-3 gap-px bg-white/10 hairline">
-          <div class="bg-obsidian p-12 group hover:bg-white/[0.02] transition-colors">
-            <span class="font-mono text-nadirOrange text-[10px] mb-6 block">CARD_A</span>
-            <h3 class="text-2xl mb-4 font-display">Telemetry ≠ Evidence</h3>
-            <p class="text-slate text-sm leading-relaxed">Surface logs describe activity but not deterministic, policy-scoped records suitable for formal scrutiny.</p>
-          </div>
-          <div class="bg-obsidian p-12 group hover:bg-white/[0.02] transition-colors">
-            <span class="font-mono text-nadirOrange text-[10px] mb-6 block">CARD_B</span>
-            <h3 class="text-2xl mb-4 font-display">Constrained Disclosure Unresolved</h3>
-            <p class="text-slate text-sm leading-relaxed">Reviewers need verifiability without seeing proprietary weights, confidential code, or implementation secrets.</p>
-          </div>
-          <div class="bg-obsidian p-12 group hover:bg-white/[0.02] transition-colors">
-            <span class="font-mono text-nadirOrange text-[10px] mb-6 block">CARD_C</span>
-            <h3 class="text-2xl mb-4 font-display">Liability Ambiguity</h3>
-            <p class="text-slate text-sm leading-relaxed">Without sealed artifacts, disputes rely on incomplete telemetry and non-reproducible environment context.</p>
-          </div>
+    
+
+    <section class="py-40 px-8 max-w-[1600px] mx-auto border-t hairline">
+      <div class="mb-32">
+        <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-12 scroll-reveal">Section B // Infrastructure, Not Adjudication</h2>
+        <p class="text-4xl md:text-6xl font-display uppercase tracking-tight max-w-5xl scroll-reveal">
+          NADIR attaches beside the engine to <span class="highlight-text">generate verifiable records.</span>
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-12 mb-32">
+        <div class="scroll-reveal">
+          <h4 class="font-display text-xl mb-6 uppercase">Policy-Scoped Capture</h4>
+          <p class="text-slate-500 text-sm">Operators enumerate included fields and masking rules in a signed Policy Scope.</p>
+        </div>
+        <div class="scroll-reveal">
+          <h4 class="font-display text-xl mb-6 uppercase">Canonical Schema</h4>
+          <p class="text-slate-500 text-sm">Records are normalized into a deterministic structure including environment fingerprints and hash versions.</p>
+        </div>
+        <div class="scroll-reveal">
+          <h4 class="font-display text-xl mb-6 uppercase">Integrity Sealing</h4>
+          <p class="text-slate-500 text-sm">Artifacts are canonicalized (RFC 8785) and signed (ECDSA P-256) at the moment of inference.</p>
         </div>
       </div>
     </section>
 
-    <section class="py-32 px-8 border-t hairline bg-[#080b12]">
-      <div class="max-w-[1600px] mx-auto">
-        <h2 class="font-display text-4xl mb-20 uppercase tracking-tight">Record infrastructure, not adjudication</h2>
-        <div class="grid md:grid-cols-3 gap-12">
-          <div class="p-8 border-l-2 border-nadirOrange/30">
-            <h3 class="font-display text-xl mb-4">Policy-Scoped Capture</h3>
-            <p class="text-slate text-sm leading-relaxed">Operators configure explicit inclusion, exclusion, and masking rules to protect sensitive IP.</p>
-          </div>
-          <div class="p-8 border-l-2 border-nadirOrange/30">
-            <h3 class="font-display text-xl mb-4">Canonical Artifact Schema</h3>
-            <p class="text-slate text-sm leading-relaxed">Normalized structure supports deterministic verification and established chain-of-custody workflows.</p>
-          </div>
-          <div class="p-8 border-l-2 border-nadirOrange/30">
-            <h3 class="font-display text-xl mb-4">Integrity Sealing</h3>
-            <p class="text-slate text-sm leading-relaxed">Deployment-defined suites: RFC 8785 canonicalization, SHA-256 hashing, and ECDSA-P256 signing.</p>
-          </div>
-        </div>
+    <section class="py-40 px-8 bg-white/5 border-t hairline text-center">
+      <div class="max-w-3xl mx-auto scroll-reveal">
+        <h2 class="font-display text-4xl uppercase mb-8">Controlled Review</h2>
+        <p class="text-slate-400 mb-12">Full specifications and verification CLI contracts are available under controlled disclosure.</p>
+        <a href="contact.html" class="inline-block border hairline border-[#EA580C] text-[#EA580C] px-10 py-5 font-mono text-[11px] uppercase tracking-widest font-bold hover:bg-[#EA580C] hover:text-white transition-all">Request Controlled Review</a>
       </div>
     </section>
 
-    <section class="py-24 px-8 border-t hairline text-center">
-      <p class="text-slate font-mono text-sm mb-10">Full specifications and verification contracts are available under controlled disclosure.</p>
-      <a href="contact.html" class="inline-block border hairline px-12 py-4 font-display text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all">Request Controlled Review</a>
-    </section>
-
-    <section class="py-24 px-8 bg-[#030407] border-t hairline">
-      <div class="max-w-[1200px] mx-auto border hairline p-8 bg-[#05070a] font-mono text-[11px] text-slate/80 leading-relaxed">
-        <div class="text-nadirOrange uppercase tracking-[0.3em] mb-6 pb-4 border-b hairline flex justify-between">
-          <span>Boundary Declaration</span>
-          <span class="opacity-30">PROT_01</span>
-        </div>
+    <section class="py-24 px-8 border-t hairline">
+      <div class="max-w-[1200px] mx-auto border hairline p-10 bg-black font-mono text-[11px] text-slate-500 leading-relaxed scroll-reveal">
+        <div class="text-[#EA580C] uppercase tracking-[0.3em] mb-8 pb-4 border-b hairline">Boundary Declaration</div>
         <ul class="space-y-4">
-          <li class="flex gap-4"><span>•</span> NADIR does not validate correctness, fairness, legality, or policy compliance of AI systems.</li>
-          <li class="flex gap-4"><span>•</span> NADIR does not certify regulatory compliance or legal admissibility.</li>
-          <li class="flex gap-4"><span>•</span> NADIR does not guarantee inference reproducibility.</li>
-          <li class="flex gap-4"><span>•</span> Verification confirms integrity & provenance only.</li>
-          <li class="flex gap-4"><span>•</span> Oversight decisions belong to the relevant authority.</li>
+          <li>• NADIR does not validate fairness, legality, or regulatory compliance of AI systems.</li>
+          <li>• Verification confirms integrity and provenance under policy—oversight determinations are made by the competent authority.</li>
+          <li>• This public content is descriptive; no rights are granted without separate agreement.</li>
         </ul>
       </div>
     </section>
   </main>
 
-  <footer class="bg-[#030407] border-t hairline py-8 px-8 flex flex-col md:flex-row items-center justify-between font-mono text-[9px] uppercase tracking-[0.2em] text-slate/60">
-    <div>NADIR provides the evidence; authorized institutions provide the oversight.</div>
-    <div>© 2026 NADIR [V2026.02.19] All rights reserved.</div>
+  <footer class="py-12 px-8 border-t hairline flex flex-col md:flex-row justify-between items-center text-slate-600 font-mono text-[9px] uppercase tracking-[0.2em]">
+    <div>"NADIR provides the evidence; institutions provide the oversight."</div>
+    <div>© 2026 NADIR — A Project of Brian Covarrubias</div>
   </footer>
 
   <script>
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.from(".hero-title", {y: 50, opacity: 0, duration: 1.2, delay: 0.2});
-    gsap.from(".hero-p", {y: 20, opacity: 0, duration: 1, delay: 0.5});
+    const observerOptions = { threshold: 0.2 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('active');
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
