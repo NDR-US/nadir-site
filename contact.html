@@ -1,201 +1,42 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NADIR — Contact</title>
-  <meta name="description" content="Contact NADIR for controlled review requests, deployment inquiries, and institutional partnership discussions." />
+<main class="pt-40">
+  <section class="px-8 max-w-[1600px] mx-auto mb-20 text-center md:text-left">
+    <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8">Contact</h1>
+    <p class="text-slate-400 text-xl max-w-2xl mb-12">Controlled review requests and institutional inquiries.</p>
+    <a href="mailto:contact@nadir-ai.com" class="font-mono text-[#EA580C] text-lg">contact@nadir-ai.com</a>
+  </section>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans:['Public Sans','ui-sans-serif','system-ui'], mono:['Roboto Mono','ui-monospace','SFMono-Regular','Menlo','Monaco','Consolas','monospace'] },
-          colors: { vellum:'#F9FAFB', obsidian:'#0A0F1E', slateblue:'#475569', orange:'#EA580C' }
-        }
-      }
-    }
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
-  <style>
-    html { scroll-behavior: smooth; }
-    body { background:#F9FAFB; color:#0A0F1E; }
-    .hairline { border-color: rgba(71,85,105,0.22); }
-    .measure { max-width: 74ch; }
-    .no-rounded { border-radius: 0 !important; }
-    input, select, textarea { outline: none; }
-  </style>
-</head>
-
-<body class="font-sans antialiased">
-  <div id="siteHeader"></div>
-
-  <main>
-    <!-- HERO -->
-    <section class="nadir-hero relative h-screen overflow-hidden">
-      <div class="hero-pin absolute inset-0">
-        <div class="absolute inset-0 bg-vellum"></div>
-        <div class="absolute inset-0 opacity-[0.08]"
-          style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;"></div>
+  <section class="px-8 max-w-[800px] mx-auto mb-40">
+    <form class="grid md:grid-cols-2 gap-8 font-mono text-[10px] uppercase tracking-widest">
+      <div class="flex flex-col gap-2">
+        <label>First Name</label>
+        <input type="text" class="bg-transparent border hairline p-4 focus:border-[#EA580C] outline-none">
       </div>
-
-      <div class="hero-version absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">[V2026.02.19]</div>
-
-      <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
-        <div class="grid grid-cols-12 h-full">
-          <div class="col-span-12 flex flex-col items-center justify-center text-center">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
-              [CONTROLLED REVIEW] · [DEPLOYMENT INQUIRIES] · [INSTITUTIONAL PARTNERSHIPS]
-            </div>
-            <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
-              Contact
-            </h1>
-            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
-              For controlled review requests and professional inquiries. Public pages remain intentionally high-level. Technical specifics can be shared under controlled review.
-            </p>
-
-            <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-              <a href="#content" class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
-                Open form
-              </a>
-              <a href="mailto:contact@nadir-ai.com" class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-                Email: contact@nadir-ai.com
-              </a>
-            </div>
-          </div>
-        </div>
+      <div class="flex flex-col gap-2">
+        <label>Last Name</label>
+        <input type="text" class="bg-transparent border hairline p-4 focus:border-[#EA580C] outline-none">
       </div>
-    </section>
-
-    <!-- FORM -->
-    <section id="content" class="narrative-section border-t hairline">
-      <div class="mx-auto max-w-7xl px-6">
-        <div class="grid grid-cols-12 gap-10 py-20 items-start">
-          <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[INQUIRY]</div>
-            <h2 class="scroll-text mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em] text-slateblue">
-              Request controlled review
-            </h2>
-            <p class="mt-4 text-slateblue leading-relaxed measure">
-              Use this form to structure a request. If you do not have a submission backend yet, the form will open your email client with a pre-filled message.
-            </p>
-
-            <div class="mt-6 border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[PRIMARY CONTACT]</div>
-              <div class="mt-3 text-slateblue leading-relaxed">
-                <a class="underline decoration-slateblue/40 hover:decoration-slateblue" href="mailto:contact@nadir-ai.com">contact@nadir-ai.com</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-span-12 lg:col-span-8">
-            <!--
-              OPTION 1 (No backend): JS builds a mailto link and opens the user's email client.
-              OPTION 2 (Netlify): add data-netlify="true" and a hidden input name="form-name" value="nadir-contact"
-              OPTION 3 (Formspree): set action="https://formspree.io/f/YOUR_ID" method="POST"
-            -->
-            <form id="contactForm" class="border hairline p-8 no-rounded reveal">
-              <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">First name</label>
-                  <input name="firstName" required class="mt-2 w-full border hairline bg-vellum p-3 no-rounded" />
-                </div>
-                <div>
-                  <label class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">Last name</label>
-                  <input name="lastName" required class="mt-2 w-full border hairline bg-vellum p-3 no-rounded" />
-                </div>
-                <div>
-                  <label class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">Organization</label>
-                  <input name="org" class="mt-2 w-full border hairline bg-vellum p-3 no-rounded" />
-                </div>
-                <div>
-                  <label class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">Email</label>
-                  <input name="email" type="email" required class="mt-2 w-full border hairline bg-vellum p-3 no-rounded" />
-                </div>
-                <div class="md:col-span-2">
-                  <label class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">Inquiry type</label>
-                  <select name="type" class="mt-2 w-full border hairline bg-vellum p-3 no-rounded">
-                    <option>Controlled review request</option>
-                    <option>Deployment inquiry</option>
-                    <option>Institutional partnership</option>
-                    <option>Security / vulnerability disclosure</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-                <div class="md:col-span-2">
-                  <label class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">Message</label>
-                  <textarea name="message" rows="6" required class="mt-2 w-full border hairline bg-vellum p-3 no-rounded"></textarea>
-                </div>
-              </div>
-
-              <div class="mt-8 flex flex-wrap items-center gap-3">
-                <button type="submit"
-                        class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
-                  Send inquiry
-                </button>
-                <div id="formStatus" class="text-slateblue text-sm"></div>
-              </div>
-
-              <div class="mt-8 border-t hairline pt-6 text-slateblue leading-relaxed">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[CONFIDENTIALITY]</div>
-                <p class="mt-3">
-                  NADIR intends to treat inquiries as confidential. Communications may be subject to NDA upon mutual agreement.
-                </p>
-              </div>
-            </form>
-
-            <script>
-              (function () {
-                const form = document.getElementById('contactForm');
-                const status = document.getElementById('formStatus');
-                const TO = 'contact@nadir-ai.com';
-
-                function enc(v){ return encodeURIComponent(v || ''); }
-
-                form.addEventListener('submit', function (e) {
-                  e.preventDefault();
-
-                  const data = new FormData(form);
-                  const first = data.get('firstName');
-                  const last = data.get('lastName');
-                  const org = data.get('org');
-                  const email = data.get('email');
-                  const type = data.get('type');
-                  const msg = data.get('message');
-
-                  const subject = `NADIR Inquiry — ${type}`;
-                  const body =
-`Name: ${first} ${last}
-Organization: ${org || '(not provided)'}
-Email: ${email}
-Inquiry type: ${type}
-
-Message:
-${msg}
-`;
-
-                  const mailto = `mailto:${TO}?subject=${enc(subject)}&body=${enc(body)}`;
-                  status.textContent = 'Opening your email client with a pre-filled message...';
-                  window.location.href = mailto;
-                });
-              })();
-            </script>
-
-          </div>
-        </div>
+      <div class="md:col-span-2 flex flex-col gap-2">
+        <label>Organization</label>
+        <input type="text" class="bg-transparent border hairline p-4 focus:border-[#EA580C] outline-none">
       </div>
-    </section>
-  </main>
+      <div class="md:col-span-2 flex flex-col gap-2">
+        <label>Inquiry Type</label>
+        <select class="bg-black border hairline p-4 outline-none">
+          <option>Controlled Disclosure Request</option>
+          <option>Technical Integration Inquiry</option>
+          <option>Regulatory Crosswalk Discussion</option>
+        </select>
+      </div>
+      <div class="md:col-span-2 flex flex-col gap-2">
+        <label>Message</label>
+        <textarea rows="5" class="bg-transparent border hairline p-4 focus:border-[#EA580C] outline-none"></textarea>
+      </div>
+      <button class="md:col-span-2 bg-white text-black py-4 font-display font-bold text-[12px] hover:bg-[#EA580C] hover:text-white transition">SUBMIT_REQUEST</button>
+    </form>
+  </section>
 
-  <div id="siteFooter"></div>
-  <script src="assets/site.js"></script>
-</body>
-</html>
+  <section class="px-8 max-w-[800px] mx-auto mb-40 border hairline p-8 bg-white/5">
+     <h4 class="font-mono text-[#EA580C] text-[10px] mb-4">Disclosure Boundary</h4>
+     <p class="text-slate-500 text-[10px] leading-relaxed">No rights are granted by virtue of this inquiry. Technical disclosures may be subject to a Non-Disclosure Agreement (NDA).</p>
+  </section>
+</main>
