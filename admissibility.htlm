@@ -1,272 +1,53 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NADIR — Legal Admissibility Primer</title>
-  <meta name="description" content="Non-legal educational primer on integrity-bound business records and evidentiary artifacts." />
+<main class="pt-40 px-8">
+  <section class="max-w-[1000px] mx-auto mb-32">
+    <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8 scroll-reveal">Legal <br> Primer</h1>
+    <p class="text-slate-400 text-xl leading-relaxed scroll-reveal">
+      How integrity-sealed artifacts satisfy common <span class="text-white italic">Business-Records Rules.</span>
+    </p>
+  </section>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Public Sans', 'ui-sans-serif', 'system-ui'],
-            mono: ['Roboto Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-          },
-          colors: {
-            vellum: '#F9FAFB',
-            obsidian: '#0A0F1E',
-            slateblue: '#475569',
-            orange: '#EA580C',
-          }
-        }
-      }
-    }
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
-  <style>
-    html { scroll-behavior: smooth; }
-    body { background:#F9FAFB; color:#0A0F1E; }
-    .hairline { border-color: rgba(71,85,105,0.22); }
-    .measure { max-width: 74ch; }
-    .no-rounded { border-radius: 0 !important; }
-  </style>
-</head>
-
-<body class="font-sans antialiased">
-
-  <header class="sticky top-0 z-50 bg-vellum/80 backdrop-blur-md border-b hairline">
-    <div class="mx-auto max-w-7xl px-6">
-      <div class="h-16 flex items-center justify-between">
-        <a href="index.html" class="flex items-center gap-3">
-          <img src="assets/nadir-wordmark.svg" alt="NADIR" class="h-7 w-auto" onerror="this.style.display='none'">
-          <div class="leading-tight">
-            <div class="text-[12px] tracking-[0.34em] uppercase">NADIR</div>
-            <div class="text-[10px] text-slateblue/80 uppercase tracking-[0.18em]">Institutional framework</div>
-          </div>
-        </a>
-
-        <nav class="hidden md:flex items-center gap-1 text-[11px] uppercase tracking-[0.16em] text-slateblue/90">
-          <a class="px-3 py-2 hover:text-obsidian" href="index.html">Overview</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="platform.html">Platform</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="oversight.html">Oversight</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="compliance.html">Compliance</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="trust.html">Trust</a>
-          <a class="px-3 py-2 hover:text-obsidian" href="contact.html">Contact</a>
-        </nav>
-
-        <a href="contact.html"
-           class="inline-flex items-center justify-center h-10 px-4 border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-          Request controlled review
-        </a>
+  <section class="max-w-[1000px] mx-auto mb-24 scroll-reveal">
+    <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-8">Section A // Authenticity</h2>
+    <div class="space-y-6 text-slate-300 text-lg leading-relaxed border-l-2 border-[#EA580C] pl-10">
+      <p>Deterministic <strong>RFC 8785</strong> canonicalization eliminates serialization variance—the "ghost in the machine" of digital evidence.</p>
+      <p>A SHA-256 hash is embedded in the header, bound by an <strong>ECDSA-P256</strong> signature to the operator’s identity key.</p>
+      <div class="bg-white/5 p-6 font-mono text-xs uppercase text-slate-500">
+        Status: A verifier reproduces the hash; mismatch = evidence of tampering.
       </div>
     </div>
-  </header>
+  </section>
 
-  <main>
+  <section class="max-w-[1000px] mx-auto mb-24 scroll-reveal">
+    <h2 class="font-mono text-[10px] text-[#EA580C] uppercase tracking-[0.5em] mb-8">Section B // Contemporaneousness</h2>
+    
+    <div class="mt-8 space-y-6 text-slate-300 text-lg leading-relaxed">
+      <p>Artifacts are generated <strong>at inference-time</strong>. By recording at the point of decision rather than retrospectively, NADIR fulfills the “recorded at or near the time” criterion found in <strong>FRE 803(6)(A)</strong>.</p>
+    </div>
+  </section>
 
-    <section class="nadir-hero relative h-screen overflow-hidden">
-      <div class="hero-pin absolute inset-0">
-        <div class="absolute inset-0 bg-vellum"></div>
-        <div class="absolute inset-0 opacity-[0.08]"
-          style="background-image:linear-gradient(to right, #475569 1px, transparent 1px),linear-gradient(to bottom, #475569 1px, transparent 1px);background-size:80px 80px;">
-        </div>
+  <section class="max-w-[1000px] mx-auto mb-40 py-16 border-y hairline scroll-reveal">
+    <h2 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em] mb-12">Section D // Jurisdictional Frameworks</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="p-6 border hairline">
+        <h4 class="font-mono text-[9px] text-[#EA580C] uppercase mb-4">USA</h4>
+        <p class="font-display text-sm uppercase">FRE 803(6) "Business Records"</p>
       </div>
-
-      <div class="absolute top-6 left-6 z-10 font-mono text-[11px] text-slateblue/90 tracking-[0.14em]">
-        [V2026.02.19]
+      <div class="p-6 border hairline">
+        <h4 class="font-mono text-[9px] text-[#EA580C] uppercase mb-4">United Kingdom</h4>
+        <p class="font-display text-sm uppercase">Civil Evidence Act 1995</p>
       </div>
-
-      <div class="relative z-10 mx-auto max-w-7xl px-6 h-full">
-        <div class="grid grid-cols-12 h-full">
-          <div class="col-span-12 flex flex-col items-center justify-center text-center">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">
-              [INSTITUTIONAL] · [INTEGRITY RECORDS] · [EDUCATIONAL PRIMER]
-            </div>
-
-            <h1 class="hero-h1 mt-6 text-4xl md:text-6xl font-bold tracking-[0.10em] uppercase leading-[1.02]">
-              Legal Admissibility Primer
-            </h1>
-
-            <p class="hero-lead mt-8 text-[16px] md:text-[18px] leading-relaxed text-slateblue measure">
-              This page is a non-legal educational overview of common evidentiary concepts relevant to integrity-bound records. It does not provide legal advice, does not create legal obligations, and should be reviewed by counsel for jurisdiction-specific interpretation.
-            </p>
-
-            <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-              <a href="#primer"
-                 class="inline-flex h-11 px-6 items-center justify-center bg-obsidian text-vellum text-[11px] uppercase tracking-[0.18em] hover:opacity-90 transition no-rounded">
-                Enter primer
-              </a>
-              <a href="pcl.html"
-                 class="inline-flex h-11 px-6 items-center justify-center border hairline text-[11px] uppercase tracking-[0.18em] hover:bg-obsidian hover:text-vellum transition no-rounded">
-                PCL framework
-              </a>
-            </div>
-          </div>
-        </div>
+      <div class="p-6 border hairline">
+        <h4 class="font-mono text-[9px] text-[#EA580C] uppercase mb-4">European Union</h4>
+        <p class="font-display text-sm uppercase">eIDAS Regulation (AES)</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="primer" class="border-t hairline">
-      <div class="mx-auto max-w-7xl px-6 py-20">
-        <div class="grid grid-cols-12 gap-10">
-          <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[OVERVIEW]</div>
-            <h2 class="section-title mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em]">
-              What “integrity-bound records” support
-            </h2>
-            <p class="mt-4 text-slateblue leading-relaxed measure">
-              In institutional review, the question is often not “Is the output correct?” but “Can a specific event be verified as authentic, unaltered, and generated under defined controls?”
-            </p>
-          </div>
-
-          <div class="col-span-12 lg:col-span-8">
-            <div class="border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[CORE PROPERTIES]</div>
-              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
-                <li><span class="font-semibold">Authenticity:</span> whether a record can be attributed to a system and time window under controlled operation.</li>
-                <li><span class="font-semibold">Integrity:</span> whether a record is tamper-evident (hash + signature over a canonical form).</li>
-                <li><span class="font-semibold">Contemporaneousness:</span> whether a record is generated systematically near the time of the event.</li>
-                <li><span class="font-semibold">Repeatability of structure:</span> whether the record format is stable enough for later review and verification workflows.</li>
-              </ul>
-            </div>
-
-            <div class="mt-8 border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[BOUNDARY]</div>
-              <ul class="mt-3 space-y-2 text-slateblue leading-relaxed">
-                <li>NADIR does not decide admissibility. Courts, regulators, or authorized institutions make admissibility determinations.</li>
-                <li>NADIR does not validate the correctness of model outputs; it preserves integrity-bound records under defined policy scope.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section: Mechanics (table + protocol, not “same 3 cards”) -->
-    <section class="border-t hairline">
-      <div class="mx-auto max-w-7xl px-6 py-20">
-        <div class="grid grid-cols-12 gap-10">
-          <div class="col-span-12 lg:col-span-4">
-            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-slateblue/90">[MECHANICS]</div>
-            <h2 class="section-title mt-4 text-2xl md:text-3xl font-semibold tracking-[-0.01em]">
-              Deterministic sealing: why canonicalization matters
-            </h2>
-            <p class="mt-4 text-slateblue leading-relaxed measure">
-              Integrity claims depend on deterministic inputs to hashing and signing. If the artifact’s representation can vary across environments, integrity verification becomes brittle.
-            </p>
-          </div>
-
-          <div class="col-span-12 lg:col-span-8">
-            <div class="border hairline no-rounded overflow-hidden reveal">
-              <div class="px-6 py-4 border-b hairline bg-vellum">
-                <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[SEALING PIPELINE]</div>
-              </div>
-
-              <div class="divide-y" style="border-color: rgba(71,85,105,0.22);">
-                <div class="grid grid-cols-12 px-6 py-4 gap-4">
-                  <div class="col-span-12 md:col-span-4 font-mono text-[11px] text-slateblue/90 uppercase tracking-[0.16em]">Canonicalize</div>
-                  <div class="col-span-12 md:col-span-8 text-slateblue leading-relaxed">
-                    JSON artifacts are canonicalized prior to hashing (e.g., RFC 8785 for JSON canonicalization) to preserve deterministic integrity across heterogeneous systems.
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-12 px-6 py-4 gap-4">
-                  <div class="col-span-12 md:col-span-4 font-mono text-[11px] text-slateblue/90 uppercase tracking-[0.16em]">Hash</div>
-                  <div class="col-span-12 md:col-span-8 text-slateblue leading-relaxed">
-                    A cryptographic digest is computed over the canonical form to create a stable integrity fingerprint.
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-12 px-6 py-4 gap-4">
-                  <div class="col-span-12 md:col-span-4 font-mono text-[11px] text-slateblue/90 uppercase tracking-[0.16em]">Sign</div>
-                  <div class="col-span-12 md:col-span-8 text-slateblue leading-relaxed">
-                    The digest is signed under an operator-controlled key posture (non-custodial by design). Signatures support tamper-evidence and provenance.
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-12 px-6 py-4 gap-4">
-                  <div class="col-span-12 md:col-span-4 font-mono text-[11px] text-slateblue/90 uppercase tracking-[0.16em]">Verify</div>
-                  <div class="col-span-12 md:col-span-8 text-slateblue leading-relaxed">
-                    Authorized parties verify the signature against the canonicalized artifact and published verification material without requiring model weights or proprietary architecture.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-8 border hairline p-6 no-rounded reveal">
-              <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-slateblue/90">[KEY CUSTODY]</div>
-              <p class="mt-3 text-slateblue leading-relaxed">
-                NADIR is designed for non-custodial operation: signing keys are generated and retained within the operator environment (HSM/KMS where available). NADIR does not require possession or transmission of private keys.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <section class="max-w-[1000px] mx-auto mb-40 text-center scroll-reveal">
+    <div class="inline-block border border-red-900/40 bg-red-950/10 px-12 py-8">
+       <h3 class="font-mono text-[10px] text-red-500 uppercase tracking-widest mb-4">Cautionary Note</h3>
+       <p class="text-slate-400 text-sm italic">This primer is informational and does not constitute legal advice. Courts determine weight and admissibility. Consult counsel.</p>
+    </div>
+  </section>
 
   </main>
-
-  <footer class="bg-obsidian text-vellum border-t border-white/10">
-    <div class="mx-auto max-w-7xl px-6 py-14">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
-        <div>
-          <div class="text-[12px] tracking-[0.22em] uppercase">NADIR</div>
-          <div class="mt-3 text-sm text-white/70 leading-relaxed">
-            © 2026 NADIR, a project of Brian Covarrubias. All rights reserved.<br>
-            <span class="font-mono text-white/80">[V2026.02.19]</span> — Unauthorized distribution prohibited.
-          </div>
-        </div>
-
-        <div>
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Legal</div>
-          <ul class="mt-3 space-y-2 text-sm text-white/70">
-            <li><a class="hover:text-white" href="privacy.html">Privacy</a></li>
-            <li><a class="hover:text-white" href="terms.html">Terms</a></li>
-            <li><a class="hover:text-white" href="ethical.html">Ethical Use</a></li>
-            <li><a class="hover:text-white" href="accessibility.html">Accessibility</a></li>
-            <li><a class="hover:text-white" href="modern-slavery.html">Modern Slavery</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Trust infrastructure</div>
-          <ul class="mt-3 space-y-2 text-sm text-white/70">
-            <li><a class="hover:text-white" href="trust.html">Trust Center</a></li>
-            <li><a class="hover:text-white" href="compliance.html">Compliance Crosswalk</a></li>
-            <li><a class="hover:text-white" href="vdp.html">Vulnerability Disclosure (VDP)</a></li>
-            <li><a class="hover:text-white" href="sbom.html">SBOM</a></li>
-            <li><a class="hover:text-white" href="sustainability.html">Sustainability</a></li>
-            <li><a class="hover:text-white" href="key-custody.html">Key Custody</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">Institutional</div>
-          <ul class="mt-3 space-y-2 text-sm text-white/70">
-            <li><a class="hover:text-white" href="pcl.html">Privacy & Civil Liberties (PCL)</a></li>
-            <li><a class="hover:text-white" href="admissibility.html">Legal Admissibility Primer</a></li>
-            <li><a class="hover:text-white" href="incident-72h.html">72-Hour Playbook</a></li>
-            <li><a class="hover:text-white" href="contact.html">Contact</a></li>
-          </ul>
-
-          <div class="mt-6 text-sm text-white/70">
-            <a class="hover:text-white" href="mailto:contact@nadir-ai.com">contact@nadir-ai.com</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script src="assets/site.js"></script>
-</body>
-</html>
