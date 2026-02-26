@@ -1,38 +1,53 @@
-/* NADIR // Global Stylesheet v2026.02.19 */
+/* NADIR Industrial Design System */
 :root {
-  --background: #05070a;
-  --text-main: #F9FAFB;
-  --text-muted: #94a3b8;
+  --bg-black: #05070a;
   --nadir-orange: #EA580C;
+  --slate-gray: #1e293b;
   --border-subtle: rgba(255, 255, 255, 0.08);
 }
 
 body {
-  background-color: var(--background);
-  color: var(--text-main);
+  background-color: var(--bg-black);
+  color: #f9fafb;
   font-family: 'Inter', sans-serif;
   margin: 0;
   -webkit-font-smoothing: antialiased;
 }
 
-.font-display { font-family: 'Space Grotesk', sans-serif; }
-.font-mono { font-family: 'JetBrains Mono', monospace; }
-.hairline { border: 1px solid var(--border-subtle); }
-
-.glass { 
-  backdrop-filter: blur(20px); 
-  background: rgba(5, 7, 10, 0.7); 
-  border-bottom: 1px solid var(--border-subtle); 
+/* Palantir-Style Monospaced Data Labels */
+.data-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--nadir-orange);
 }
 
-/* Scroll Reveal Animation */
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+/* Anduril-Style Glassmorphism for Nav */
+header {
+  backdrop-filter: blur(12px);
+  background: rgba(5, 7, 10, 0.8);
+  border-bottom: 1px solid var(--border-subtle);
+  position: fixed;
+  width: 100%;
+  z-index: 100;
 }
 
-.scroll-reveal.active {
-  opacity: 1;
-  transform: translateY(0);
+/* Data-Dense Grid for your 7-Step Mechanics */
+.mechanics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background-color: var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+}
+
+.step-card {
+  background-color: var(--bg-black);
+  padding: 2rem;
+  transition: background 0.3s ease;
+}
+
+.step-card:hover {
+  background: rgba(234, 88, 12, 0.05);
 }
