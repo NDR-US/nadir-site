@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NADIR — Key Custody</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --border: rgba(255, 255, 255, 0.08); --nadirOrange: #EA580C; }
+    body { background-color: #05070a; color: #F9FAFB; font-family: 'Inter', sans-serif; }
+    .hairline { border: 1px solid var(--border); }
+    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .scroll-reveal { opacity: 0.1; transition: all 0.8s ease; transform: translateY(20px); }
+    .scroll-reveal.active { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body class="antialiased">
+
+  <nav class="fixed top-0 inset-x-0 z-[100] glass">
+    <div class="max-w-[1600px] mx-auto px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em]">NADIR</a>
+      <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
+        <a href="keys.html" class="text-[#EA580C]">Key_Custody</a>
+        <a href="admissibility.html" class="opacity-50 hover:opacity-100">Legal_Primer</a>
+        <a href="trust.html" class="opacity-50 hover:opacity-100">Trust_Center</a>
+      </div>
+      <div class="font-mono text-[9px] text-white/40 uppercase tracking-widest">Key_Control: Local</div>
+    </div>
+  </nav>
+
+  <main class="pt-40 px-8">
+    <section class="max-w-[1600px] mx-auto mb-32">
+      <h1 class="font-display text-5xl md:text-8xl uppercase tracking-tighter mb-8 scroll-reveal">Key Custody <br> Declaration</h1>
+      <p class="text-slate-400 text-xl max-w-3xl leading-relaxed scroll-reveal">
+        NADIR never holds customer private keys. Signing authority remains <span class="text-white">fully under operator control.</span>
+      </p>
+    </section>
+
+    <section class="max-w-[1600px] mx-auto mb-40 scroll-reveal">
+      <h2 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em] mb-12">Section A // Non-Custodial Architecture</h2>
+      
+      <div class="grid md:grid-cols-3 gap-8 mt-12">
+        <div class="border hairline p-8 bg-white/5">
+          <h3 class="font-mono text-[10px] text-[#EA580C] uppercase mb-4">Hardware Control</h3>
+          <p class="text-slate-400 text-xs">FIPS-140-2/3 HSM (On-Prem or Cloud)</p>
+        </div>
+        <div class="border hairline p-8 bg-white/5">
+          <h3 class="font-mono text-[10px] text-[#EA580C] uppercase mb-4">Cloud Native</h3>
+          <p class="text-slate-400 text-xs">AWS KMS, Azure Key Vault, GCP KMS</p>
+        </div>
+        <div class="border hairline p-8 bg-white/5">
+          <h3 class="font-mono text-[10px] text-[#EA580C] uppercase mb-4">Secure Enclaves</h3>
+          <p class="text-slate-400 text-xs">Intel SGX, AWS Nitro TEE</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-[1600px] mx-auto mb-40 border-t hairline py-24 scroll-reveal">
+      <div class="grid lg:grid-cols-2 gap-24">
+        <h2 class="font-display text-4xl uppercase leading-tight">Zero-Trust <br> Liability Separation</h2>
+        <div class="space-y-8 font-mono text-sm text-slate-400 uppercase tracking-widest">
+           <p class="flex gap-4"><span class="text-[#EA580C]">»</span> A compromised NADIR service cannot falsify artifacts.</p>
+           <p class="flex gap-4"><span class="text-[#EA580C]">»</span> Legal subpoenas for keys are directed to the operator.</p>
+           <p class="flex gap-4"><span class="text-[#EA580C]">»</span> Chain-of-custody is traceable to the institution.</p>
+        </div>
+      </div>
+    </section>
