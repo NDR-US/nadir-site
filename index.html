@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NADIR — Sovereign Evidentiary Infrastructure</title>
+  <title>NADIR — Evidentiary Infrastructure</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -25,7 +25,8 @@
           colors: {
             obsidian: '#05070a',
             nadirOrange: '#EA580C',
-            slate: '#475569'
+            slate: '#475569',
+            vellum: '#F9FAFB'
           }
         }
       }
@@ -36,25 +37,18 @@
     :root { --border: rgba(255, 255, 255, 0.08); }
     body { background-color: #05070a; color: #F9FAFB; overflow-x: hidden; }
     
-    /* Noise Texture Overlay */
+    /* System Noise Overlay */
     .grain::before {
       content: ""; fixed: inset 0; width: 100%; height: 100%;
       background-image: url("https://grainy-gradients.vercel.app/noise.svg");
       opacity: 0.03; pointer-events: none; z-index: 9999; position: fixed;
     }
 
-    /* Kinetic Border Animation */
+    /* Structural Elements */
     .hairline { border: 1px solid var(--border); }
-    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.6); }
+    .glass { backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.7); border-bottom: 1px solid var(--border); }
     
-    /* Reveal Animation Mask */
-    .mask-reveal {
-      clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
-      transition: clip-path 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-    }
-    .mask-reveal.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
-
-    /* Palantir-style nav link */
+    /* Palantir-style Links */
     .nav-link { position: relative; opacity: 0.5; transition: opacity 0.3s; }
     .nav-link:hover { opacity: 1; }
     .nav-link::after {
@@ -63,190 +57,231 @@
       transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1);
     }
     .nav-link:hover::after { width: 100%; }
+
+    /* Interactive Data Blocks */
+    .data-block { transition: all 0.4s ease; border: 1px solid transparent; }
+    .data-block:hover { background: rgba(255,255,255,0.02); border-color: var(--border); }
   </style>
 </head>
 
 <body class="antialiased grain">
 
-  <nav class="fixed top-0 inset-x-0 z-[100] glass border-b hairline">
-    <div class="max-w-[1800px] mx-auto px-8 h-20 flex items-center justify-between">
+  <nav class="fixed top-0 inset-x-0 z-[100] glass">
+    <div class="max-w-[1600px] mx-auto px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-10">
-        <a href="index.html" class="font-display text-xl font-medium tracking-[0.4em] text-white">NADIR</a>
-        <div class="hidden xl:flex items-center gap-8 font-mono text-[9px] text-slate tracking-widest uppercase border-l hairline pl-10">
-          <span>Core_v2.6.0</span>
-          <span class="text-nadirOrange animate-pulse">● System_Live</span>
+        <a href="index.html" class="font-display text-lg font-medium tracking-[0.4em] text-white">NADIR</a>
+        <div class="hidden md:flex items-center gap-6 font-mono text-[9px] text-slate tracking-widest uppercase border-l hairline pl-6">
+          <span class="text-nadirOrange animate-pulse">● Active</span>
+          <span>Core_v2.6</span>
         </div>
       </div>
 
-      <div class="hidden lg:flex gap-12 font-mono text-[10px] uppercase tracking-[0.25em]">
-        <a href="platform.html" class="nav-link">Platform</a>
-        <a href="oversight.html" class="nav-link">Oversight</a>
-        <a href="compliance.html" class="nav-link">Network</a>
-        <a href="trust.html" class="nav-link">Trust</a>
+      <div class="hidden lg:flex gap-10 font-mono text-[10px] uppercase tracking-[0.2em]">
+        <a href="#deficit" class="nav-link">Structural Deficit</a>
+        <a href="#infrastructure" class="nav-link">Record Infrastructure</a>
+        <a href="#boundary" class="nav-link">Boundary</a>
       </div>
 
-      <div class="flex items-center gap-6">
-        <button class="font-mono text-[10px] uppercase tracking-widest text-slate hover:text-white transition">Docs</button>
-        <a href="contact.html" class="bg-white text-black px-6 py-2.5 font-display text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-nadirOrange transition-colors duration-500">
-          Initialize Access
-        </a>
-      </div>
+      <a href="contact.html" class="bg-white text-black px-6 py-2 font-display text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-nadirOrange transition-colors duration-500">
+        Request Review
+      </a>
     </div>
   </nav>
 
-  <main class="relative">
-    <section class="min-h-screen flex flex-col justify-center px-10 pt-20 overflow-hidden">
-      <div class="absolute inset-0 opacity-10 pointer-events-none" 
-           style="background-image: radial-gradient(circle at 1px 1px, #475569 1px, transparent 0); background-size: 40px 40px;">
+  <main>
+    <section class="relative min-h-screen flex flex-col justify-center px-8 pt-20 overflow-hidden">
+      <div class="absolute inset-0 opacity-[0.05] pointer-events-none" 
+           style="background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 50px 50px;">
       </div>
 
-      <div class="max-w-7xl mx-auto w-full relative z-10">
-        <div class="mb-8 overflow-hidden">
-          <span class="inline-block font-mono text-nadirOrange text-[11px] uppercase tracking-[0.5em] hero-sub">
-            [ Evidentiary Sovereignty ]
-          </span>
+      <div class="max-w-[1600px] mx-auto w-full relative z-10 pt-10">
+        <div class="mb-8 font-mono text-nadirOrange text-[10px] uppercase tracking-[0.4em] hero-sub flex items-center gap-4">
+          <span class="w-8 h-px bg-nadirOrange"></span>
+          [ System Initialization ]
         </div>
 
-        <h1 class="font-display text-7xl md:text-[140px] leading-[0.85] tracking-tighter mb-12 hero-title">
-          DATA IS THE <br>
-          <span class="text-white/10 italic">FOUNDATION OF</span> <br>
-          CERTAINTY.
+        <h1 class="font-display text-5xl md:text-8xl lg:text-[110px] leading-[0.9] tracking-tighter mb-10 hero-title uppercase">
+          Evidentiary <br> Infrastructure <br>
+          <span class="text-white/20 text-4xl md:text-6xl lg:text-[70px] tracking-tight">For AI Inference Systems</span>
         </h1>
 
-        <div class="grid lg:grid-cols-12 gap-12 items-end">
-          <div class="lg:col-span-5">
-            <p class="text-xl text-slate leading-relaxed mb-10 hero-p">
-              NADIR attaches to inference systems to produce cryptographically sealed artifacts. 
-              We provide the architecture for institutional verification in an era of machine-led decisioning.
-            </p>
-            <div class="flex gap-8 hero-btns">
-              <button class="border hairline px-10 py-4 font-mono text-[11px] uppercase tracking-widest hover:bg-white/5 transition">Explore Stack</button>
-              <button class="flex items-center gap-4 group">
-                <span class="w-10 h-[1px] bg-slate group-hover:bg-nadirOrange transition-all"></span>
-                <span class="font-mono text-[10px] uppercase tracking-widest opacity-50">Watch Technical Demo</span>
-              </button>
-            </div>
-          </div>
+        <div class="grid lg:grid-cols-2 gap-16 items-start mt-16">
+          <p class="text-lg md:text-xl text-slate leading-relaxed font-light hero-p max-w-2xl">
+            NADIR is an attachable integrity and forensic compliance layer that generates policy-scoped, canonical artifacts representing defined inference-time decision-state context. 
+            <br><br>
+            Artifacts are sealed with integrity controls to support later verification and structured oversight under constrained disclosure. NADIR produces verifiable records; it does not adjudicate model correctness.
+          </p>
           
-          <div class="lg:col-span-7 hidden lg:block">
-            <div class="hairline p-8 font-mono text-[10px] text-slate/40 flex flex-col gap-2 glass">
-              <p>> ACCESSING_NODE_049...</p>
-              <p>> LOADING_CRYPTO_PROVENANCE_LAYER...</p>
-              <p>> VERIFYING_STATE_CANONICALIZATION...</p>
-              <div class="w-full bg-white/5 h-1 mt-4">
-                <div class="bg-nadirOrange h-full w-1/3 animate-[shimmer_2s_infinite]"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="py-40 border-t hairline px-10">
-      <div class="max-w-[1800px] mx-auto">
-        <div class="grid lg:grid-cols-12 gap-px bg-white/10 hairline overflow-hidden">
-          
-          <div class="lg:col-span-8 bg-obsidian p-16 flex flex-col justify-between min-h-[600px] group cursor-crosshair">
-            <div>
-              <span class="font-mono text-nadirOrange text-[10px] tracking-widest mb-10 block">01 // PROVENANCE</span>
-              <h2 class="font-display text-5xl md:text-7xl leading-tight tracking-tighter">
-                Telemetry is not <br> sufficient evidence.
-              </h2>
-            </div>
-            <p class="max-w-md text-slate text-lg">
-              Standard logs drift and truncate. NADIR creates immutable records (RFC 8785) that survive 
-              legal scrutiny without exposing model weights.
-            </p>
-          </div>
-
-          <div class="lg:col-span-4 bg-obsidian p-12 border-l hairline hover:bg-white/[0.02] transition-colors">
-            <span class="font-mono text-slate text-[10px] tracking-widest mb-6 block">02 // INTEGRITY</span>
-            <h3 class="text-2xl font-display mb-4">Post-Quantum Sealed</h3>
-            <p class="text-slate text-sm leading-relaxed mb-10">
-              Artifacts are cryptographically bound using PQC-ready algorithms, ensuring verification longevity into the 2030s.
-            </p>
-            <div class="w-full h-px bg-white/5"></div>
-          </div>
-
-          <div class="lg:col-span-4 bg-obsidian p-12 border-l border-t hairline hover:bg-white/[0.02] transition-colors">
-             <span class="font-mono text-slate text-[10px] tracking-widest mb-6 block">03 // COMPLIANCE</span>
-             <h3 class="text-2xl font-display mb-4">Institutional Oversight</h3>
-             <p class="text-slate text-sm leading-relaxed">
-               Built for regulated industries: Finance, Defense, and Healthcare where "Black Box" reasoning is a liability.
-             </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="py-40 text-center px-10 relative">
-        <div class="absolute inset-0 bg-nadirOrange/5 blur-[120px] rounded-full scale-50"></div>
-        <div class="relative z-10">
-            <h2 class="font-display text-4xl md:text-6xl tracking-tighter mb-10">Build on Sovereign <br> Infrastructure.</h2>
-            <a href="contact.html" class="inline-block bg-white text-black px-12 py-5 font-display text-xs font-bold uppercase tracking-[0.3em] hover:bg-nadirOrange transition-all duration-500">
-                Request Controlled Review
+          <div class="flex flex-col sm:flex-row gap-6 hero-btns lg:justify-end lg:mt-8">
+            <a href="#deficit" class="border hairline px-8 py-4 font-mono text-[10px] uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-colors text-center">
+              Enter Framework
             </a>
-            <p class="mt-8 font-mono text-[9px] text-slate tracking-widest uppercase">Limited V2026_Cycle Deployment slots remaining.</p>
+            <a href="docs.html" class="border hairline px-8 py-4 font-mono text-[10px] uppercase tracking-[0.2em] text-slate hover:text-white hover:border-white/30 transition-colors text-center bg-white/5">
+              Document Suite
+            </a>
+          </div>
         </div>
+      </div>
     </section>
+
+    <section id="deficit" class="py-32 px-8 border-t hairline relative bg-obsidian">
+      <div class="max-w-[1600px] mx-auto">
+        
+        <div class="mb-20 max-w-3xl fade-up">
+          <h2 class="font-display text-4xl md:text-5xl tracking-tight mb-6">Structural deficits in accountability infrastructure.</h2>
+          <p class="text-slate text-lg leading-relaxed">
+            Most AI deployments retain outputs and surface telemetry but do not preserve canonical, integrity-bound artifacts suitable for formal review. This gap hampers institutional accountability when decisions are contested.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-px bg-white/10 hairline fade-up">
+          
+          <div class="bg-obsidian p-10 lg:p-14 data-block group">
+            <div class="font-mono text-nadirOrange text-[10px] tracking-[0.2em] mb-6">01 // TRACEABILITY</div>
+            <h3 class="text-2xl font-display mb-4">Telemetry ≠ Evidence</h3>
+            <p class="text-slate text-sm leading-relaxed">
+              Surface logs can describe events but rarely conform to deterministic, integrity-sealed formats.
+            </p>
+          </div>
+
+          <div class="bg-obsidian p-10 lg:p-14 data-block group">
+            <div class="font-mono text-nadirOrange text-[10px] tracking-[0.2em] mb-6">02 // EXPOSURE</div>
+            <h3 class="text-2xl font-display mb-4">Constrained Review Unsolved</h3>
+            <p class="text-slate text-sm leading-relaxed">
+              Institutions need verifiability without exposing proprietary weights, confidential architecture, or trade-secret implementation details.
+            </p>
+          </div>
+
+          <div class="bg-obsidian p-10 lg:p-14 data-block group">
+            <div class="font-mono text-nadirOrange text-[10px] tracking-[0.2em] mb-6">03 // RISK</div>
+            <h3 class="text-2xl font-display mb-4">Liability Ambiguity</h3>
+            <p class="text-slate text-sm leading-relaxed">
+              Without integrity-bound artifacts, disputes rely on partial telemetry and non-reproducible context.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="infrastructure" class="py-32 px-8 border-t hairline bg-[#080b12]">
+      <div class="max-w-[1600px] mx-auto grid lg:grid-cols-12 gap-16 lg:gap-8 items-start">
+        
+        <div class="lg:col-span-5 sticky top-32 fade-up">
+          <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate mb-4">[ Architecture ]</div>
+          <h2 class="font-display text-4xl md:text-5xl tracking-tight mb-6">Record infrastructure, not adjudication.</h2>
+          <p class="text-slate text-lg leading-relaxed mb-8">
+            NADIR attaches beside an inference system and produces artifacts structured for verification. Capture scope is policy-defined: what is included, excluded, and masked.
+          </p>
+        </div>
+
+        <div class="lg:col-span-7 flex flex-col gap-px bg-white/10 hairline fade-up">
+          
+          <div class="bg-[#080b12] p-8 lg:p-12 flex flex-col md:flex-row gap-6 md:gap-12 hover:bg-white/[0.02] transition">
+            <div class="font-mono text-nadirOrange text-[10px] tracking-[0.2em] md:w-32 shrink-0 pt-2">DATA_SCOPE</div>
+            <div>
+              <h3 class="text-xl font-display mb-3">Policy-scoped capture</h3>
+              <p class="text-slate text-sm leading-relaxed">Operators configure explicit inclusion / exclusion lists.</p>
+            </div>
+          </div>
+
+          <div class="bg-[#080b12] p-8 lg:p-12 flex flex-col md:flex-row gap-6 md:gap-12 hover:bg-white/[0.02] transition">
+            <div class="font-mono text-nadirOrange text-[10px] tracking-[0.2em] md:w-32 shrink-0 pt-2">NORMALIZE</div>
+            <div>
+              <h3 class="text-xl font-display mb-3">Canonical artifact schema</h3>
+              <p class="text-slate text-sm leading-relaxed">Inputs and runtime context are normalized into a schema aligned to audit workflows.</p>
+            </div>
+          </div>
+
+          <div class="bg-[#080b12] p-8 lg:p-12 flex flex-col md:flex-row gap-6 md:gap-12 hover:bg-white/[0.02] transition">
+            <div class="font-mono text-nadirOrange text-[10px] tracking-[0.2em] md:w-32 shrink-0 pt-2">CRYPTOGRAPHY</div>
+            <div>
+              <h3 class="text-xl font-display mb-3">Integrity sealing</h3>
+              <p class="text-slate text-sm leading-relaxed">Deterministic canonicalization → hashing → digital signature. Deployment chooses crypto suite.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="py-24 px-8 border-t hairline text-center bg-obsidian relative">
+      <div class="absolute inset-0 bg-nadirOrange/5 blur-[100px] pointer-events-none"></div>
+      <div class="max-w-3xl mx-auto relative z-10 fade-up">
+        <h2 class="font-display text-2xl md:text-3xl mb-8">Public materials are intentionally high-level.</h2>
+        <a href="contact.html" class="inline-block bg-white text-black px-10 py-4 font-display text-[11px] font-bold uppercase tracking-[0.3em] hover:bg-nadirOrange transition-colors duration-500">
+          Request Controlled Review
+        </a>
+      </div>
+    </section>
+
+    <section id="boundary" class="py-24 px-8 bg-[#030407] border-t hairline">
+      <div class="max-w-[1200px] mx-auto border hairline p-8 md:p-12 bg-[#05070a] relative fade-up">
+        
+        <div class="flex items-center justify-between border-b hairline pb-6 mb-8">
+          <div class="font-mono text-[10px] text-nadirOrange tracking-[0.3em] uppercase">Boundary Declaration</div>
+          <div class="flex gap-2">
+            <div class="w-2 h-2 rounded-full bg-white/20"></div>
+            <div class="w-2 h-2 rounded-full bg-white/20"></div>
+            <div class="w-2 h-2 rounded-full bg-white/20"></div>
+          </div>
+        </div>
+
+        <ul class="space-y-4 font-mono text-[11px] md:text-xs text-slate/80 tracking-wide leading-relaxed">
+          <li class="flex gap-4"><span class="text-white/30">•</span> NADIR does not validate correctness, fairness, legality, or policy compliance of AI systems.</li>
+          <li class="flex gap-4"><span class="text-white/30">•</span> NADIR does not certify regulatory compliance or legal admissibility.</li>
+          <li class="flex gap-4"><span class="text-white/30">•</span> NADIR does not guarantee inference reproducibility.</li>
+          <li class="flex gap-4"><span class="text-white/30">•</span> Verification confirms integrity and provenance under policy, not decision correctness.</li>
+          <li class="flex gap-4"><span class="text-white/30">•</span> Oversight and admissibility determinations rest with the relevant authority.</li>
+        </ul>
+      </div>
+    </section>
+
   </main>
 
-  <footer class="bg-obsidian border-t hairline py-20 px-10">
-    <div class="max-w-[1800px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 font-mono text-[10px] text-slate tracking-widest uppercase">
-      <div class="flex flex-col gap-4">
-        <span class="text-white mb-2 font-display text-[12px]">Infrastructure</span>
-        <a href="#" class="hover:text-nadirOrange">Platform</a>
-        <a href="#" class="hover:text-nadirOrange">Cryptography</a>
-        <a href="#" class="hover:text-nadirOrange">Edge Nodes</a>
-      </div>
-      <div class="flex flex-col gap-4">
-        <span class="text-white mb-2 font-display text-[12px]">Trust Center</span>
-        <a href="#" class="hover:text-nadirOrange">Compliance</a>
-        <a href="#" class="hover:text-nadirOrange">SBOM</a>
-        <a href="#" class="hover:text-nadirOrange">VDP</a>
-      </div>
-      <div class="flex flex-col gap-4">
-        <span class="text-white mb-2 font-display text-[12px]">Legal</span>
-        <a href="#" class="hover:text-nadirOrange">Ethics</a>
-        <a href="#" class="hover:text-nadirOrange">Privacy</a>
-        <a href="#" class="hover:text-nadirOrange">Terms</a>
-      </div>
-      <div class="flex flex-col gap-4 items-end">
-        <span class="text-white mb-2 font-display text-[12px]">Coordinates</span>
-        <span>37.7749° N</span>
-        <span>122.4194° W</span>
-        <span class="mt-4 opacity-30 italic">© 2026 NADIR SYSTEMS</span>
-      </div>
+  <footer class="bg-[#030407] border-t hairline py-8 px-8 flex flex-col md:flex-row items-center justify-between font-mono text-[9px] uppercase tracking-[0.2em] text-slate/60">
+    <div class="mb-4 md:mb-0">
+      NADIR provides verifiable records; authorized institutions provide oversight.
+    </div>
+    <div class="flex gap-6 items-center">
+      <span>© 2026 NADIR</span>
+      <span class="text-white/40 border border-white/10 px-2 py-1">[V2026.02.19]</span>
+      <a href="#" class="hover:text-white transition">Rate this information</a>
     </div>
   </footer>
 
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
-    // Initial Load Animation
-    const tl = gsap.timeline({defaults: {ease: "power4.out"}});
-    tl.from(".hero-title", {y: 100, opacity: 0, duration: 1.5, skewY: 7})
-      .from(".hero-sub", {opacity: 0, y: 20, duration: 1}, "-=1")
-      .from(".hero-p", {opacity: 0, x: -20, duration: 1}, "-=0.8")
-      .from(".hero-btns", {opacity: 0, y: 20, duration: 1}, "-=0.8");
+    // Hero Load Sequence
+    const tl = gsap.timeline({defaults: {ease: "power3.out"}});
+    tl.from(".hero-title", {y: 40, opacity: 0, duration: 1.2, delay: 0.2})
+      .from(".hero-sub", {opacity: 0, x: -20, duration: 0.8}, "-=0.8")
+      .from(".hero-p", {opacity: 0, y: 20, duration: 0.8}, "-=0.6")
+      .from(".hero-btns", {opacity: 0, duration: 0.8}, "-=0.4");
 
-    // Scroll-triggered skew and parallax on title
-    gsap.to(".hero-title", {
-      scrollTrigger: {
-        trigger: ".hero-title",
-        start: "top top",
-        scrub: true
-      },
-      y: -100,
-      opacity: 0.2,
-      scale: 1.05
+    // Scroll Fade Ups
+    gsap.utils.toArray('.fade-up').forEach(element => {
+      gsap.from(element, {
+        scrollTrigger: {
+          trigger: element,
+          start: "top 85%",
+        },
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        ease: "power2.out"
+      });
     });
 
-    // Interaction: Mouse Tracking for title
-    document.addEventListener("mousemove", (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 30;
-      const y = (e.clientY / window.innerHeight - 0.5) * 30;
-      gsap.to(".hero-title", { x: x, y: y, duration: 2, ease: "power2.out" });
+    // Slight parallax on the boundary box
+    gsap.to("#boundary > div", {
+      scrollTrigger: {
+        trigger: "#boundary",
+        start: "top bottom",
+        scrub: true
+      },
+      y: -20
     });
   </script>
 </body>
