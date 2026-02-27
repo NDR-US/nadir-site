@@ -1,256 +1,345 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CEYO // Substrate</title>
-
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Outfit:wght@900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
-
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CEYO — Evidentiary Infrastructure for Autonomous Systems</title>
+<meta name="description" content="CEYO is a weight-neutral, policy-scoped integrity layer that seals inference-time decision state into canonical, independently verifiable artifacts."/>
+<meta property="og:title" content="CEYO — Go Beyond Telemetry"/>
+<meta property="og:description" content="CEYO produces verifiable records. It does not replace models, modify inference outputs, or evaluate correctness."/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-    --dark-olive: #0D0E0B; 
-    --ivory-wash: #FFFFF0;
-    --tactical: #4A5D3B;
-    --interface-line: rgba(255, 255, 240, 0.1);
-    --glow: rgba(255, 255, 240, 0.05);
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
-
-body {
-    background-color: var(--dark-olive);
-    color: var(--ivory-wash);
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-    /* Brighter, tighter interactive spotlight */
-    background: radial-gradient(circle 300px at var(--x, 50%) var(--y, 50%), rgba(255, 255, 240, 0.08) 0%, transparent 100%),
-                var(--dark-olive);
-    background-attachment: fixed;
-}
-
-/* Texture Overlay */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: url('https://grainy-gradients.vercel.app/noise.svg');
-    opacity: 0.05;
-    pointer-events: none;
-    z-index: 9999;
-}
-
-/* Custom Mouse Follower (The Brighter Light) */
-#cursor-light {
-    position: fixed;
-    top: 0; left: 0;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(255, 255, 240, 0.1) 0%, transparent 70%);
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    mix-blend-mode: screen;
-}
-
-.candela { font-family: 'Outfit', sans-serif; font-weight: 900; text-transform: uppercase; }
-.mono { font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: 0.2em; }
-
-nav.top-nav {
-    position: fixed;
-    top: 0; left: 0; width: 100%;
-    padding: 40px;
-    z-index: 1000;
-}
-.brand { font-size: 2.5rem; letter-spacing: -0.05em; }
-
-.hero-wrap { height: 150vh; position: relative; }
-#hero {
-    position: sticky; top: 0; height: 100vh;
-    display: flex; flex-direction: column; justify-content: center; padding: 0 10%;
-}
-
-h1 { font-size: clamp(3rem, 10vw, 8rem); line-height: 0.8; margin-bottom: 20px; font-style: italic; }
-.hero-sub { font-size: clamp(1.5rem, 4vw, 3rem); font-style: italic; margin-bottom: 30px; }
-
-/* Active Section Highlighting */
-.section { 
-    padding: 120px 10%; 
-    border-top: 1px solid var(--interface-line); 
-    transition: background 0.5s ease, border-color 0.5s ease;
-    position: relative;
-    z-index: 2;
-}
-.section.active-focus {
-    background: rgba(255, 255, 240, 0.02);
-    border-top-color: var(--ivory-wash);
-}
-
-.section h2 { font-size: 3rem; margin-bottom: 40px; font-style: italic; }
-.section p { font-size: 1.25rem; line-height: 1.6; opacity: 0.6; margin-bottom: 24px; max-width: 1000px; }
-
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-.card {
-    border: 1px solid var(--interface-line);
-    padding: 30px;
-    background: rgba(0,0,0,0.2);
-    transition: 0.3s;
-}
-.card:active, .card.touched { 
-    background: var(--ivory-wash); 
-    color: var(--dark-olive); 
-}
-
-/* Bottom Index Bar */
-.index-bar {
-    position: fixed;
-    bottom: 30px; left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    background: #000;
-    border: 1px solid var(--interface-line);
-    z-index: 1001;
-}
-.index-item {
-    padding: 15px 30px;
-    font-size: 11px;
-    color: var(--ivory-wash);
-    text-decoration: none;
-    border-right: 1px solid var(--interface-line);
-}
-.index-item:hover { background: var(--tactical); }
-
-.typewriter { visibility: hidden; }
-
-footer { padding: 120px 10% 200px; border-top: 1px solid var(--interface-line); }
+:root{--bg:#0D0E0B;--ivory:#FFFFF0;--green:#4A5D3B;--green2:#6B8F52;--muted:rgba(255,255,240,.58);--muted2:rgba(255,255,240,.34);--muted3:rgba(255,255,240,.16);--stroke:rgba(255,255,240,.10);--stroke2:rgba(255,255,240,.06);--red:rgba(255,80,80,.44);--max:1120px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ivory);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7;overflow-x:hidden;cursor:none}
+body::after{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.048;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
+#cur{position:fixed;width:7px;height:7px;border-radius:50%;background:var(--ivory);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:transform .1s}
+#light{position:fixed;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,255,240,.09) 0%,rgba(255,255,240,.03) 35%,transparent 70%)}
+a{color:inherit;text-decoration:none}
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:500;padding:0 44px;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(13,14,11,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--stroke2)}
+.logo{font-family:'Outfit',sans-serif;font-size:21px;font-weight:900;font-style:italic;letter-spacing:-0.05em;color:var(--ivory)}
+.hdr-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);display:flex;align-items:center;gap:14px}
+.hdr-dot{width:4px;height:4px;border-radius:50%;background:var(--green2);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:.4}50%{opacity:1}}
+/* INDEX BAR */
+.ibar{position:fixed;bottom:0;left:0;right:0;z-index:500;height:42px;background:rgba(0,0,0,.94);border-top:1px solid var(--stroke);display:flex;align-items:center;justify-content:center}
+.ibar a{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted2);padding:0 26px;height:100%;display:flex;align-items:center;border-right:1px solid var(--stroke2);transition:color .15s,background .15s;cursor:none}
+.ibar a:first-child{border-left:1px solid var(--stroke2)}
+.ibar a:hover,.ibar a.active{color:var(--ivory);background:rgba(255,255,240,.04)}
+/* HERO STICKY */
+.hero-shell{height:270vh;position:relative}
+.hero-pin{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:1fr 400px;align-items:center;padding:56px 44px 42px;max-width:var(--max);margin:0 auto;gap:56px;overflow:hidden}
+.hero-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.hero-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--green)}
+.hero-h1{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;letter-spacing:-0.05em;font-size:clamp(44px,8.5vw,100px);line-height:.92;color:var(--ivory);margin-bottom:26px;will-change:opacity,filter,transform}
+.hero-lead{font-size:16px;line-height:1.8;color:var(--muted);max-width:460px;margin-bottom:26px}
+.hero-negs{display:flex;flex-direction:column;gap:5px;margin-bottom:26px}
+.neg{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--red)}
+.affirm{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--ivory);margin-top:6px;display:flex;align-items:center;gap:8px}
+.affirm::before{content:'→';color:var(--green2)}
+.hero-ctas{display:flex;gap:10px;flex-wrap:wrap}
+.hero-right{border:1px solid var(--stroke);padding:24px;position:relative;will-change:opacity,transform}
+.hero-right::before{content:'SYSTEM STATE';position:absolute;top:-1px;left:16px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;background:var(--bg);padding:0 8px;color:var(--green);transform:translateY(-50%)}
+.srow{display:grid;grid-template-columns:100px 1fr;border-bottom:1px solid var(--stroke2)}
+.srow:last-child{border-bottom:none}
+.sk{padding:9px 12px;border-right:1px solid var(--stroke2);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--green);display:flex;align-items:center}
+.sv{padding:9px 14px;font-size:12px;color:var(--muted2);display:flex;align-items:center;gap:6px}
+.sv.on{color:var(--ivory)}.dot{width:5px;height:5px;border-radius:50%;background:var(--green2);flex-shrink:0}.dot.r{background:rgba(255,80,80,.6)}
+.scroll-hint{position:absolute;bottom:52px;left:44px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted2);display:flex;align-items:center;gap:10px;animation:pulse 2.5s ease-in-out infinite}
+.scroll-hint::after{content:'↓';color:var(--green)}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:.9}}
+.hero-bg{position:absolute;right:-8px;bottom:5vh;font-family:'Outfit',sans-serif;font-size:18vw;font-weight:900;font-style:italic;letter-spacing:-0.05em;color:rgba(255,255,240,.014);pointer-events:none;line-height:1;user-select:none}
+/* BTN */
+.btn{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:11px 22px;border:1px solid var(--stroke);color:var(--muted2);background:transparent;transition:all .15s;cursor:none;display:inline-flex;align-items:center}
+.btn:hover,.btn:active{background:var(--ivory);color:var(--bg);border-color:var(--ivory)}
+.btn.p{border-color:rgba(74,93,59,.6);color:var(--green2);background:rgba(74,93,59,.1)}
+.btn.p:hover{background:var(--green);color:var(--ivory);border-color:var(--green)}
+/* SECTIONS */
+main{position:relative;z-index:2;background:var(--bg);padding-bottom:80px}
+.sec{padding:72px 0;border-top:1px solid var(--stroke2);transition:border-top-color .4s,background .4s}
+.sec.lit{border-top-color:rgba(255,255,240,.28);background:rgba(255,255,240,.011)}
+.si{max-width:var(--max);margin:0 auto;padding:0 44px}
+.slabel{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.sidx{color:var(--muted3)}
+.sec h2{font-family:'Outfit',sans-serif;font-size:clamp(26px,4.5vw,50px);font-weight:900;font-style:italic;letter-spacing:-0.05em;line-height:1;color:var(--ivory);margin-bottom:20px}
+.sec p{font-size:15px;line-height:1.8;color:var(--muted);max-width:680px;margin-bottom:14px}
+.sec p:last-child{margin-bottom:0}
+.tw{opacity:0}.tw.vis{opacity:1}
+/* DEFICIT LAYOUT */
+.def-split{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin:22px 0}
+.def-bad{padding:20px;border:1px solid rgba(255,80,80,.15);background:rgba(255,80,80,.03)}
+.def-bad-lbl{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,80,80,.55);margin-bottom:10px}
+/* REQ BOX */
+.req-box{border:1px solid var(--stroke);margin:26px 0;position:relative}
+.req-box::before{content:'INSTITUTIONS REQUIRE';position:absolute;top:-1px;left:20px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);background:var(--bg);padding:0 10px;transform:translateY(-50%)}
+.rlist{list-style:none;padding:18px}
+.ritem{display:grid;grid-template-columns:30px 1fr;gap:8px;padding:11px 0;border-bottom:1px solid var(--stroke2);align-items:start}
+.ritem:last-child{border-bottom:none}
+.rnum{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);padding-top:2px}
+.rtxt{font-size:14px;color:var(--muted);line-height:1.6}
+.rtxt strong{color:var(--ivory);font-weight:600;display:block;margin-bottom:2px}
+/* PROPS */
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--stroke);margin:26px 0}
+.pcell{background:var(--bg);padding:22px 20px;transition:background .2s;cursor:none}
+.pcell:hover{background:rgba(74,93,59,.1)}
+.pcell:active,.pcell.touched{background:var(--ivory);color:var(--bg)}
+.plbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.pcell:active .plbl,.pcell.touched .plbl{color:var(--bg)}
+.pdsc{font-size:12px;color:var(--muted2);line-height:1.6}
+.pcell:active .pdsc,.pcell.touched .pdsc{color:rgba(13,14,11,.65)}
+/* NOT GRID */
+.ngrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--stroke);margin:22px 0}
+.nc{background:var(--bg);padding:18px 16px;display:flex;align-items:flex-start;gap:10px;transition:background .15s}
+.nc:hover{background:rgba(255,80,80,.04)}
+.nx{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--red);flex-shrink:0;line-height:1.4}
+.nt{font-size:13px;color:var(--muted2);line-height:1.5}
+/* PRINCIPLE */
+.principle{border:1px solid var(--stroke);padding:44px;margin:28px 0;text-align:center;position:relative}
+.principle::before{content:'CORE PRINCIPLE';position:absolute;top:-1px;left:50%;transform:translate(-50%,-50%);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);background:var(--bg);padding:0 14px}
+.pstmt{font-family:'Outfit',sans-serif;font-size:clamp(18px,3.5vw,38px);font-weight:900;font-style:italic;letter-spacing:-0.04em;color:var(--ivory);line-height:1.05;margin-bottom:22px}
+.ppair{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;margin-top:16px}
+.ph{text-align:left}
+.ps{font-size:15px;font-weight:600;color:var(--ivory);line-height:1.4}
+.psub{font-size:12px;color:var(--muted2);margin-top:3px}
+/* TECH */
+.ttable{display:flex;flex-direction:column;margin:22px 0;border-top:1px solid var(--stroke2)}
+.tr{display:grid;grid-template-columns:180px 1fr;border-bottom:1px solid var(--stroke2);transition:background .15s}
+.tr:hover{background:rgba(255,255,240,.025)}
+.tk{padding:16px 14px;border-right:1px solid var(--stroke2);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);display:flex;align-items:flex-start;gap:8px;padding-top:18px}
+.tki{color:var(--muted3);font-size:9px}
+.tv{padding:16px 20px;font-size:14px;color:var(--muted);line-height:1.65}
+/* CTA + BOUNDARY */
+.ctarow{border:1px solid var(--stroke);padding:32px 40px;margin:44px 0 0;display:flex;align-items:center;justify-content:space-between;gap:24px;background:rgba(255,255,240,.018)}
+.ctatxt{font-size:14px;color:var(--muted);max-width:500px;line-height:1.65}
+.ctatxt strong{color:var(--ivory);display:block;margin-bottom:4px;font-size:15px}
+.boundary{background:rgba(0,0,0,.3);border-top:1px solid var(--stroke);padding:30px 44px;margin-top:48px}
+.blbl{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted2);margin-bottom:14px}
+.bitems{display:flex;flex-direction:column;gap:7px;max-width:680px}
+.bitem{font-size:12px;color:var(--muted2);padding-left:14px;position:relative;line-height:1.65}
+.bitem::before{content:'·';position:absolute;left:0}
+.bclose{margin-top:14px;padding-top:14px;border-top:1px solid var(--stroke2);font-size:12px;color:var(--muted2);font-style:italic}
+/* FOOTER */
+footer{border-top:1px solid var(--stroke2);padding:40px 44px 84px;display:grid;grid-template-columns:180px 1fr 1fr 1fr;gap:32px;max-width:var(--max);margin:0 auto}
+.flogo{font-family:'Outfit',sans-serif;font-size:18px;font-weight:900;font-style:italic;letter-spacing:-0.05em;color:var(--ivory);margin-bottom:8px}
+.fcopy{font-size:11px;color:var(--muted2);line-height:1.75}
+.fcolt{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted2);margin-bottom:12px}
+.flinks{list-style:none;display:flex;flex-direction:column;gap:8px}
+.flinks a{font-size:12px;color:var(--muted2);transition:color .12s;cursor:none}
+.flinks a:hover{color:var(--ivory)}
+.fbot{grid-column:1/-1;padding-top:18px;border-top:1px solid var(--stroke2);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--muted2);display:flex;justify-content:space-between}
+@media(max-width:900px){.hero-pin{grid-template-columns:1fr;padding:56px 20px 42px}.hero-right{display:none}.def-split,.pgrid{grid-template-columns:1fr}.ngrid{grid-template-columns:1fr 1fr}footer{grid-template-columns:1fr 1fr;padding:40px 20px 84px}.si,.boundary,.ctarow{padding-left:20px;padding-right:20px}.ctarow{flex-direction:column;align-items:flex-start}}
+@media(max-width:500px){.ngrid{grid-template-columns:1fr}footer{grid-template-columns:1fr}.tr{grid-template-columns:1fr}.tk{border-right:none;border-bottom:1px solid var(--stroke2)}}
 </style>
 </head>
-
 <body>
-
-<div id="cursor-light"></div>
-
-<nav class="top-nav">
-    <div class="brand candela">CEYO</div>
+<div id="cur"></div><div id="light"></div>
+<header>
+  <a href="index.html" class="logo">Ceyo</a>
+  <div class="hdr-tag"><div class="hdr-dot"></div><span>V2026.02.19 · Evidentiary substrate</span></div>
+</header>
+<nav class="ibar" aria-label="Site index">
+  <a href="index.html" class="active">Index</a>
+  <a href="architecture.html">Arch</a>
+  <a href="trust.html">Trust</a>
+  <a href="governance.html">Gov</a>
+  <a href="contact.html">Contact</a>
 </nav>
 
-<div class="hero-wrap">
-<section id="hero">
-    <div class="mono" style="color:var(--tactical); margin-bottom:20px; font-size: 12px;">VERIFICATION_LAYER</div>
-    <h1 class="candela">Go Beyond<br>Telemetry.</h1>
-    <div class="hero-sub candela">Verifiable Decision Records.</div>
-    <div class="hero-text mono" style="font-size: 14px; opacity: 0.5; max-width: 600px;">
-        A decoupled evidentiary substrate producing cryptographically sealed inference artifacts without modifying core model logic.
+<!-- STICKY HERO -->
+<div class="hero-shell">
+  <div class="hero-pin">
+    <div>
+      <div class="hero-eyebrow">V2026.02.19 — Inference record infrastructure</div>
+      <h1 class="hero-h1" id="htitle">Evidentiary<br>Infrastructure<br>for Autonomous<br>Systems</h1>
+      <p class="hero-lead" id="hlead">CEYO is a weight-neutral, policy-scoped integrity layer that seals inference-time decision state into canonical, independently verifiable artifacts — without modifying model behavior.</p>
+      <div class="hero-negs" id="hnegs">
+        <span class="neg">× CEYO does not replace models.</span>
+        <span class="neg">× CEYO does not modify inference outputs.</span>
+        <span class="neg">× CEYO does not evaluate correctness.</span>
+        <span class="affirm">CEYO produces verifiable records.</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="architecture.html" class="btn p">Enter Framework</a>
+        <a href="contact.html" class="btn">Request Controlled Review</a>
+      </div>
     </div>
-</section>
+    <div class="hero-right">
+      <div class="srow"><div class="sk">Status</div><div class="sv on"><div class="dot"></div>Infrastructure active</div></div>
+      <div class="srow"><div class="sk">Version</div><div class="sv on">V2026.02.19</div></div>
+      <div class="srow"><div class="sk">Canon</div><div class="sv on">RFC 8785</div></div>
+      <div class="srow"><div class="sk">Hash</div><div class="sv on">SHA-256 (ref.)</div></div>
+      <div class="srow"><div class="sk">Sig</div><div class="sv on">ECDSA P-256 (ref.)</div></div>
+      <div class="srow"><div class="sk">Keys</div><div class="sv on">Non-custodial</div></div>
+      <div class="srow"><div class="sk">Fail mode</div><div class="sv on"><div class="dot"></div>Fail-open</div></div>
+      <div class="srow"><div class="sk">Adjudication</div><div class="sv"><div class="dot r"></div>Not CEYO's role</div></div>
+    </div>
+    <div class="hero-bg">SEAL</div>
+    <div class="scroll-hint">Scroll to explore</div>
+  </div>
 </div>
 
-<section class="section" id="s1">
-    <h2 class="candela typewriter" data-text="Evidentiary Infrastructure"></h2>
-    <p class="typewriter" data-text="AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces that were never designed to function as durable evidence."></p>
-    
-    <div style="height:1px; background:var(--interface-line); margin:60px 0;"></div>
-    
-    <p class="candela" style="font-size:2.5rem; font-style:italic; margin-bottom: 40px;">
-        Telemetry describes activity.<br>
-        <span style="opacity: 0.3">It does not preserve proof.</span>
-    </p>
-
-    <p class="typewriter" data-text="CEYO is a decoupled evidentiary layer that attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined inference-time decision-state context. These artifacts are deterministically structured and cryptographically sealed to support later institutional verification without default disclosure of proprietary internals."></p>
-
-    <div class="grid">
-        <div class="card" onmousedown="this.classList.add('touched')" onmouseup="this.classList.remove('touched')">
-            <div class="mono" style="color: var(--tactical); margin-bottom: 10px;">// BOUNDARY</div>
-            <p style="font-size: 0.9rem;">CEYO does not evaluate outputs. CEYO does not adjudicate compliance. CEYO produces records.</p>
+<main>
+  <!-- 01 -->
+  <section class="sec" id="deficit" data-obs>
+    <div class="si">
+      <div class="slabel"><span class="sidx">01</span> Structural deficit</div>
+      <h2 class="tw">The Structural Deficit</h2>
+      <div class="def-split">
+        <div>
+          <p class="tw">Modern AI systems generate logs, telemetry, and traces. These signals describe activity — but they do not constitute evidence.</p>
+          <p class="tw">Telemetry may show that a model executed. It may show input and output. It may show timestamps and service states.</p>
         </div>
-        <div class="card" onmousedown="this.classList.add('touched')" onmouseup="this.classList.remove('touched')">
-            <div class="mono" style="color: var(--tactical); margin-bottom: 10px;">// DISCLOSURE</div>
-            <p style="font-size: 0.9rem;">Tiered disclosure enables validation without exposure of proprietary internals.</p>
+        <div class="def-bad">
+          <div class="def-bad-lbl">What telemetry cannot provide</div>
+          <p style="font-size:14px;color:var(--muted);line-height:1.7">A canonicalized, integrity-bound, policy-scoped artifact suitable for independent verification at a later date. Reconstruction is inherently interpretive. Not deterministic proof.</p>
         </div>
-        <div class="card" onmousedown="this.classList.add('touched')" onmouseup="this.classList.remove('touched')">
-            <div class="mono" style="color: var(--tactical); margin-bottom: 10px;">// AVAILABILITY</div>
-            <p style="font-size: 0.9rem;">Fail-open posture preserves inference continuity unless configured otherwise.</p>
-        </div>
+      </div>
+      <p class="tw">When decisions are disputed — in regulatory review, litigation, incident analysis, or institutional audit — partial logs are insufficient. <strong style="color:var(--ivory)">This is the structural deficit.</strong></p>
+      <div class="req-box">
+        <ul class="rlist">
+          <li class="ritem"><span class="rnum">01</span><div class="rtxt"><strong>Deterministic structure</strong>Stable byte representation independent of serialization environment</div></li>
+          <li class="ritem"><span class="rnum">02</span><div class="rtxt"><strong>Integrity sealing</strong>Cryptographic tamper-evidence and origin authenticity</div></li>
+          <li class="ritem"><span class="rnum">03</span><div class="rtxt"><strong>Explicit disclosure scope</strong>Policy-defined boundaries; no implicit expansion</div></li>
+          <li class="ritem"><span class="rnum">04</span><div class="rtxt"><strong>Separation of internals from oversight</strong>Verification without default exposure of proprietary IP</div></li>
+        </ul>
+      </div>
+      <p class="tw">Without those properties, accountability relies on trust in system operators rather than verifiable record integrity.</p>
     </div>
-</section>
+  </section>
 
-<section class="section" id="s2">
-    <h2 class="candela typewriter" data-text="The Accountability Gap"></h2>
-    <p class="typewriter" data-text="Modern AI deployments optimize for throughput. Accountability is frequently secondary. When a decision is questioned through regulatory inquiry, audit, incident review, or litigation, organizations reconstruct events from partial logs. Reconstruction is interpretive. It is not deterministic."></p>
-    <p class="candela" style="font-size: 1.8rem; opacity: 0.5;">This is an architectural deficit, not an operational oversight.</p>
-</section>
+  <!-- 02 -->
+  <section class="sec" id="is" data-obs>
+    <div class="si">
+      <div class="slabel"><span class="sidx">02</span> What Ceyo is</div>
+      <h2 class="tw">A Decoupled<br>Evidentiary Substrate</h2>
+      <p class="tw">CEYO attaches at the inference boundary — as a sidecar, wrapper, or gateway — and captures only what operator policy explicitly defines. It normalizes captured fields into a stable artifact schema, applies deterministic canonicalization, and seals the result cryptographically.</p>
+      <div class="pgrid" role="list">
+        <div class="pcell" role="listitem"><div class="plbl">Canonical</div><div class="pdsc">Normalized structure; deterministic byte representation across heterogeneous environments</div></div>
+        <div class="pcell" role="listitem"><div class="plbl">Policy-scoped</div><div class="pdsc">Content bounded by explicit operator configuration; no implicit expansion beyond declared scope</div></div>
+        <div class="pcell" role="listitem"><div class="plbl">Tamper-evident</div><div class="pdsc">Cryptographic hash and digital signature enable post-hoc detection of alteration</div></div>
+        <div class="pcell" role="listitem"><div class="plbl">Independently verifiable</div><div class="pdsc">Verification workflows require no default exposure of proprietary IP or model internals</div></div>
+      </div>
+      <p class="tw">Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of model output.</p>
+    </div>
+  </section>
 
-<section class="section" id="s3">
-    <h2 class="candela typewriter" data-text="A Decoupled Layer"></h2>
-    <p class="typewriter" data-text="CEYO operates beside inference engines without modifying model weights. It captures only what policy defines, normalizes context into canonical structure, and seals the artifact for tamper-evidence. Verification confirms integrity and provenance. It does not confirm correctness of output."></p>
-    <p class="candela" style="font-size: 1.8rem; color: var(--tactical);">CEYO PROVIDES THE RECORD. INSTITUTIONS PROVIDE OVERSIGHT.</p>
-</section>
+  <!-- 03 -->
+  <section class="sec" id="not" data-obs>
+    <div class="si">
+      <div class="slabel"><span class="sidx">03</span> What Ceyo is not</div>
+      <h2 class="tw">Not Adjudication.<br>Not Certification.</h2>
+      <div class="ngrid">
+        <div class="nc"><span class="nx">×</span><span class="nt">A model evaluation system</span></div>
+        <div class="nc"><span class="nx">×</span><span class="nt">A fairness certification system</span></div>
+        <div class="nc"><span class="nx">×</span><span class="nt">A compliance automation tool</span></div>
+        <div class="nc"><span class="nx">×</span><span class="nt">A legal adjudication engine</span></div>
+        <div class="nc"><span class="nx">×</span><span class="nt">A regulatory certification authority</span></div>
+        <div class="nc"><span class="nx">×</span><span class="nt">A determinant of lawfulness or fairness</span></div>
+      </div>
+      <p class="tw">CEYO produces integrity-sealed artifacts that institutions may use as part of their oversight processes. Authorized institutions retain responsibility for determinations.</p>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section class="sec" id="principle" data-obs>
+    <div class="si">
+      <div class="slabel"><span class="sidx">04</span> Core principle</div>
+      <div class="principle">
+        <div class="pstmt tw">Evidence infrastructure must remain<br>separate from decision authority.</div>
+        <div class="ppair">
+          <div class="ph"><div class="ps">CEYO provides the artifact.</div><div class="psub">Sealed. Canonical. Independently verifiable.</div></div>
+          <div class="ph"><div class="ps">Institutions provide the oversight.</div><div class="psub">Determinations belong to authorized reviewers.</div></div>
+        </div>
+      </div>
+      <p class="tw">This separation preserves neutrality. It ensures the evidentiary layer does not become an adjudicator of its own output. It avoids structural conflicts between record generation and policy enforcement.</p>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section class="sec" id="how" data-obs>
+    <div class="si">
+      <div class="slabel"><span class="sidx">05</span> Technical properties</div>
+      <h2 class="tw">How It Works</h2>
+      <div class="ttable">
+        <div class="tr"><div class="tk"><span class="tki">01</span>Policy Capture</div><div class="tv tw">Operators define included fields, excluded fields, and masking rules. Policy is explicit and versioned. Artifacts reflect declared scope and do not implicitly expand beyond it.</div></div>
+        <div class="tr"><div class="tk"><span class="tki">02</span>Canonicalization</div><div class="tv tw">JSON artifacts are canonicalized using RFC 8785, producing a stable byte representation independent of serialization order. Required for reproducible hashing across environments.</div></div>
+        <div class="tr"><div class="tk"><span class="tki">03</span>Integrity Sealing</div><div class="tv tw">SHA-256 hashing and ECDSA P-256 digital signature applied as reference implementations. Private keys remain in operator HSM/KMS — never in CEYO infrastructure. Non-custodial key posture.</div></div>
+        <div class="tr"><div class="tk"><span class="tki">04</span>Disclosure Tiers</div><div class="tv tw">Public/Redacted tier exposes summary and policy ID only. Controlled Review tier exposes expanded fields to authorized reviewers. Integrity verification requires no exposure of proprietary internals.</div></div>
+        <div class="tr"><div class="tk"><span class="tki">05</span>Fail-Open</div><div class="tv tw">Inference continuity is independent of artifact sealing. If generation fails, inference proceeds. Seal failures are logged and flagged. CEYO does not interrupt operational systems by default.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div style="max-width:var(--max);margin:0 auto;padding:0 44px">
+    <div class="ctarow">
+      <div class="ctatxt"><strong>Controlled Review</strong>Detailed documentation, verification contracts, capture schema specifications, and benchmark methodology available under controlled disclosure. Access granted following review request evaluation.</div>
+      <a href="contact.html" class="btn p" style="flex-shrink:0;white-space:nowrap">Request Controlled Review</a>
+    </div>
+  </div>
+
+  <div class="boundary">
+    <div class="blbl">Boundary Declaration · V2026.02.19</div>
+    <div class="bitems">
+      <p class="bitem">CEYO produces records. It does not validate correctness, fairness, legality, or compliance outcomes.</p>
+      <p class="bitem">CEYO does not certify regulatory compliance or guarantee legal admissibility.</p>
+      <p class="bitem">CEYO does not guarantee inference reproducibility.</p>
+      <p class="bitem">Authorized institutions and operators retain responsibility for decisions and determinations.</p>
+    </div>
+    <p class="bclose">Verification confirms integrity and provenance under policy scope — not correctness of model output.</p>
+  </div>
+</main>
 
 <footer>
-    <div class="candela" style="font-size:2.5rem; margin-bottom:20px;">Institutional Reality.</div>
-    <div class="mono" style="font-size:10px; opacity:0.3; letter-spacing: 0.5em;">
-        ALL RIGHTS RESERVED © 2026 CEYO SYSTEMS.
-    </div>
+  <div><div class="flogo">Ceyo</div><div class="fcopy">Evidentiary infrastructure<br>for AI inference systems.<br><br>© <span class="yr"></span> CEYO,<br>a project of Brian Covarrubias.<br>All rights reserved. V2026.02.19</div></div>
+  <div><div class="fcolt">Legal</div><ul class="flinks"><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Use</a></li><li><a href="ethical-use.html">Ethical Use</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="modern-slavery.html">Modern Slavery</a></li></ul></div>
+  <div><div class="fcolt">Trust Infrastructure</div><ul class="flinks"><li><a href="trust.html">Trust Center</a></li><li><a href="compliance.html">Compliance Crosswalk</a></li><li><a href="vdp.html">Vulnerability Disclosure</a></li><li><a href="sbom.html">SBOM</a></li><li><a href="key-custody.html">Key Custody</a></li></ul></div>
+  <div><div class="fcolt">Institutional</div><ul class="flinks"><li><a href="pcl.html">Privacy &amp; Civil Liberties</a></li><li><a href="admissibility.html">Admissibility Primer</a></li><li><a href="incident-72h.html">72-Hour Playbook</a></li><li><a href="contact.html">Contact</a></li><li><a href="mailto:contact@ceyo.io">contact@ceyo.io</a></li></ul></div>
+  <div class="fbot"><span>Governed by the laws of the State of California. Unauthorized distribution prohibited.</span><a href="sitemap.html" style="color:var(--muted2)">Site map</a></div>
 </footer>
 
-<div class="index-bar mono">
-    <a href="#s1" class="index-item">INDEX</a>
-    <a href="#s2" class="index-item">ARCH</a>
-    <a href="#s3" class="index-item">TRUST</a>
-    <a href="#" class="index-item">GOV</a>
-</div>
-
 <script>
-const cursorLight = document.getElementById('cursor-light');
-
-window.addEventListener('mousemove', e => {
-    // Spotlight Logic
-    document.body.style.setProperty('--x', e.clientX + 'px');
-    document.body.style.setProperty('--y', e.clientY + 'px');
-    
-    // Smooth Cursor Follower
-    cursorLight.style.left = e.clientX + 'px';
-    cursorLight.style.top = e.clientY + 'px';
+document.querySelectorAll('.yr').forEach(e=>e.textContent=new Date().getFullYear());
+const cur=document.getElementById('cur'),light=document.getElementById('light');
+let mx=window.innerWidth/2,my=window.innerHeight/2,lx=mx,ly=my;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function loop(){lx+=(mx-lx)*.1;ly+=(my-ly)*.1;light.style.left=lx+'px';light.style.top=ly+'px';requestAnimationFrame(loop)})();
+document.addEventListener('mousedown',()=>cur.style.transform='translate(-50%,-50%) scale(2.2)');
+document.addEventListener('mouseup',()=>cur.style.transform='translate(-50%,-50%) scale(1)');
+document.querySelectorAll('a,.btn,.pcell').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.style.transform='translate(-50%,-50%) scale(3)');
+  el.addEventListener('mouseleave',()=>cur.style.transform='translate(-50%,-50%) scale(1)');
 });
-
+// Hero fade
+const htitle=document.getElementById('htitle'),hlead=document.getElementById('hlead'),hnegs=document.getElementById('hnegs');
+window.addEventListener('scroll',()=>{
+  const p=Math.min(window.scrollY/(window.innerHeight*.65),1);
+  htitle.style.opacity=1-p;htitle.style.filter=`blur(${p*14}px)`;htitle.style.transform=`translateY(${p*-26}px)`;
+  hlead.style.opacity=Math.max(1-p*1.6,0);hnegs.style.opacity=Math.max(1-p*1.9,0);
+},{passive:true});
+// Section glow
+const sobs=new IntersectionObserver(e=>e.forEach(x=>x.target.classList.toggle('lit',x.isIntersecting)),{threshold:.15});
+document.querySelectorAll('[data-obs]').forEach(el=>sobs.observe(el));
 // Typewriter
-function typeWriter(element, text, i = 0) {
-    if (i < text.length) {
-        element.innerHTML += text.charAt(i);
-        setTimeout(() => typeWriter(element, text, i + 1), 15);
-    }
-}
-
-// Intersection Observer for Typing AND Section Highlighting
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            // Typing Trigger
-            if (entry.target.classList.contains('typewriter') && entry.target.style.visibility !== 'visible') {
-                entry.target.style.visibility = 'visible';
-                typeWriter(entry.target, entry.target.getAttribute('data-text'));
-            }
-            // Section Highlight Trigger
-            if (entry.target.classList.contains('section')) {
-                document.querySelectorAll('.section').forEach(s => s.classList.remove('active-focus'));
-                entry.target.classList.add('active-focus');
-            }
-        }
-    });
-}, { threshold: 0.3 });
-
-document.querySelectorAll('.typewriter, .section').forEach(el => observer.observe(el));
-
-// Hero Blur
-window.addEventListener("scroll", () => {
-    const s = window.scrollY;
-    const hero = document.getElementById("hero");
-    if(s < 1000) {
-        hero.style.filter = `blur(${s/50}px)`;
-        hero.style.opacity = 1 - (s/800);
-    }
+const twobs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting||e.target._done)return;
+    e.target._done=true;
+    const el=e.target,full=el.innerHTML;
+    el.innerHTML='';el.classList.add('vis');
+    let i=0;
+    const t=()=>{if(i>full.length)return;el.innerHTML=full.slice(0,i++);setTimeout(t,i<30?0:7)};t();
+  });
+},{threshold:.25});
+document.querySelectorAll('.tw').forEach(el=>twobs.observe(el));
+// Touch invert
+document.querySelectorAll('.pcell,.btn,.nc').forEach(el=>{
+  el.addEventListener('touchstart',()=>el.classList.add('touched'),{passive:true});
+  el.addEventListener('touchend',()=>{setTimeout(()=>el.classList.remove('touched'),220)},{passive:true});
 });
 </script>
-
 </body>
 </html>
