@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Center | NADIR</title>
+    <meta property="og:title" content="Compliance Center | NADIR">
+    <meta property="og:description" content="Regulatory interoperability crosswalk for EU AI Act and NIST AI RMF.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #0A0A0A; --text: #E5E5E5; --accent: #0057FF; --border: #262626; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); letter-spacing: -0.01em; }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+        .table-row { border-bottom: 1px solid var(--border); transition: background 0.2s; }
+        .table-row:hover { background: #111; }
+    </style>
+</head>
+<body class="selection:bg-blue-500">
+    <nav class="border-b border-[#262626] p-4 bg-black/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center text-[10px] uppercase font-bold tracking-[0.2em] mono text-gray-400">
+            <a href="index.html" class="text-white text-lg tracking-tighter italic">NADIR</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html">01. Overview</a>
+                <a href="architecture.html">02. Architecture</a>
+                <a href="compliance.html" class="text-blue-500 underline underline-offset-4">07. Compliance</a>
+                <a href="trust.html">08. Trust</a>
+                <a href="sitemap.html">Index</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto py-24 px-6">
+        <header class="mb-20 border-l-4 border-blue-600 pl-8">
+            <h1 class="text-6xl font-bold tracking-tighter mb-4 italic uppercase">Compliance Center</h1>
+            <p class="mono text-gray-500 text-sm tracking-widest uppercase">Regulatory Interoperability Crosswalk</p>
+        </header>
+
+        <section class="mb-24">
+            <h2 class="text-2xl font-semibold mb-10 italic">European Union AI Act</h2>
+            <div class="space-y-0 border-t border-[#262626]">
+                <div class="table-row py-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="mono text-blue-500 text-xs font-bold">ARTICLE 12</div>
+                    <div class="col-span-1 font-bold">Record-Keeping</div>
+                    <div class="col-span-2 text-sm text-gray-400 leading-relaxed">
+                        NADIR generates canonical artifacts representing defined inference-time context. This supports structured record-keeping workflows for high-risk AI systems.
+                    </div>
+                </div>
+                <div class="table-row py-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="mono text-blue-500 text-xs font-bold">ARTICLE 13</div>
+                    <div class="col-span-1 font-bold">Transparency</div>
+                    <div class="col-span-2 text-sm text-gray-400 leading-relaxed">
+                        Enables deployers to access structured artifacts under configured disclosure tiers, providing transparency into system decision-state without exposing weights.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+
+        <section class="mb-24">
+            <h2 class="text-2xl font-semibold mb-10 italic">NIST AI Risk Management Framework</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#262626] border border-[#262626]">
+                <div class="bg-black p-10">
+                    <p class="mono text-xs text-blue-500 mb-2 uppercase">Function: Govern</p>
+                    <p class="text-sm text-gray-400">Artifact versioning and policy identifiers support accountability workflows under defined governance structures.</p>
+                </div>
+                <div class="bg-black p-10">
+                    <p class="mono text-xs text-blue-500 mb-2 uppercase">Function: Measure</p>
+                    <p class="text-sm text-gray-400">Deterministic canonicalization and cryptographic verification enable reproducible integrity validation.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-20 p-8 bg-[#111] border border-[#262626]">
+            <p class="text-[10px] mono uppercase text-gray-500 font-bold mb-4 tracking-widest underline decoration-blue-500 underline-offset-4">Institutional Position</p>
+            <p class="text-sm text-gray-400 italic leading-relaxed">
+                Compliance is an institutional responsibility. NADIR provides infrastructure that may support compliance workflows through structured artifact generation. It does not certify regulatory sufficiency.
+            </p>
+        </footer>
+    </main>
+</body>
+</html>
