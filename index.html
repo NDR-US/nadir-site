@@ -1,189 +1,200 @@
-<!-- =========================
-FILE: index.html (Overview)
-========================= -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>CEYO — Evidentiary Infrastructure</title>
-  <meta name="description" content="Evidentiary infrastructure for autonomous systems. Deterministic, policy-scoped, cryptographically sealed artifacts for institutional verification."/>
+  <meta name="description" content="Decoupled evidentiary infrastructure producing policy-scoped, canonical, cryptographically sealed artifacts for AI inference systems."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-:root{
-  --bg:#0D0E0B;--ivory:#FFFFF0;--green:#4A5D3B;--green2:#5E7A4A;
-  --text:rgba(255,255,240,.88);--muted:rgba(255,255,240,.52);--muted2:rgba(255,255,240,.30);
-  --stroke:rgba(255,255,240,.12);--stroke2:rgba(255,255,240,.06);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
-body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;overflow-x:hidden;min-height:100vh;}
-body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.04;}
-a{color:inherit;text-decoration:none;}
-
-#cursor{position:fixed;top:0;left:0;z-index:9999;width:8px;height:8px;background:var(--ivory);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .12s,height .12s,opacity .12s;mix-blend-mode:exclusion;}
-#cursor.hover{width:32px;height:32px;opacity:.5;}
-#spotlight{position:fixed;inset:0;z-index:1;pointer-events:none;}
-
-.topnav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;background:linear-gradient(to bottom,rgba(13,14,11,.95) 0%,transparent 100%);}
-.brand{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:22px;letter-spacing:-.03em;color:var(--ivory);text-transform:uppercase;}
-.brand span{color:var(--green2);}
-.topnav-right{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted2);display:flex;gap:28px;}
-.topnav-right a{color:var(--muted2);transition:color .12s;}
-.topnav-right a:hover,.topnav-right a.active{color:var(--ivory);}
-
-.index-bar{position:fixed;bottom:0;left:0;right:0;z-index:500;display:flex;align-items:stretch;height:44px;background:#000;border-top:1px solid var(--stroke);}
-.index-item{flex:1;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted2);border-right:1px solid var(--stroke);transition:color .12s,background .12s;}
-.index-item:last-child{border-right:none;}
-.index-item:hover,.index-item.active{color:var(--ivory);background:rgba(255,255,240,.04);}
-
-.hero{min-height:100vh;display:flex;align-items:flex-end;padding:110px 40px 90px;position:relative;overflow:hidden;}
-.hero::after{content:'';position:absolute;inset:-1px;z-index:0;background:
-radial-gradient(800px 500px at 20% 20%, rgba(94,122,74,.18), transparent 60%),
-radial-gradient(700px 500px at 80% 30%, rgba(255,255,240,.06), transparent 60%);}
-.hero-inner{position:relative;z-index:2;max-width:1100px;}
-.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin-bottom:20px;display:flex;align-items:center;gap:12px;}
-.eyebrow::before{content:'';width:28px;height:1px;background:var(--green);}
-.h1{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:clamp(44px,7vw,92px);letter-spacing:-.05em;line-height:.92;text-transform:uppercase;color:var(--ivory);margin-bottom:22px;}
-.h1 .accent{color:var(--green2);}
-.lead{font-size:15px;line-height:1.8;color:var(--muted);max-width:62ch;margin-bottom:26px;}
-.kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--muted2);line-height:1.8;max-width:70ch;}
-
-.main{padding:0 40px 90px;max-width:1100px;margin:0 auto;}
-.section{padding:70px 0;border-top:1px solid var(--stroke2);opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease;}
-.section.visible{opacity:1;transform:translateY(0);}
-.h2{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:clamp(22px,3.2vw,38px);letter-spacing:-.04em;line-height:1.05;text-transform:uppercase;color:var(--ivory);margin-bottom:14px;}
-.p{font-size:15px;line-height:1.9;color:var(--muted);max-width:78ch;margin-bottom:12px;}
-.hr{height:1px;background:var(--stroke2);margin:22px 0;}
-.ul{list-style:none;display:flex;flex-direction:column;gap:10px;margin:18px 0 0;}
-.ul li{font-size:13px;color:var(--muted);padding-left:20px;position:relative;line-height:1.7;}
-.ul li::before{content:'·';position:absolute;left:0;color:var(--green2);font-size:16px;line-height:1.2;}
-
-.cardrow{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;}
-.card{border:1px solid var(--stroke2);background:rgba(255,255,240,.02);padding:16px 18px;}
-.card b{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ivory);margin-bottom:8px;font-family:'IBM Plex Mono',monospace;}
-.card p{margin:0;font-size:13px;line-height:1.7;color:var(--muted2);}
-
-@media(max-width:900px){
-  .topnav,.hero,.main{padding-left:20px;padding-right:20px;}
-  .cardrow{grid-template-columns:1fr;}
-}
-@media(max-width:500px){.topnav-right{display:none;}}
-@media (hover:hover) and (pointer:fine){body{cursor:none;}}
-@media print{body{background:#fff;color:#000;cursor:auto;}#cursor,#spotlight,.topnav,.index-bar,body::before{display:none;}.section{opacity:1;transform:none;}}
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Canela: keep the name in CSS; add your licensed Canela files later via @font-face if you have them -->
+  <link rel="stylesheet" href="app/css/global.css"/>
+  <script src="app/js/nav.js" defer></script>
 </head>
-<body>
-<div id="cursor" aria-hidden="true"></div>
-<div id="spotlight" aria-hidden="true"></div>
 
-<nav class="topnav" aria-label="Primary navigation">
-  <a href="index.html" class="brand">CE<span>YO</span></a>
-  <div class="topnav-right">
-    <a href="architecture.html">Architecture</a>
-    <a href="trust.html">Trust</a>
-    <a href="governance.html">Governance</a>
-    <a href="contact.html">Contact</a>
-  </div>
-</nav>
+<body data-theme="overview">
+  <div id="cursorDot" aria-hidden="true"></div>
+  <div id="spotlight" aria-hidden="true"></div>
 
-<header class="hero">
-  <div class="hero-inner">
-    <div class="eyebrow">Overview · V2026.02.19</div>
-    <h1 class="h1">Evidentiary<br><span class="accent">Infrastructure</span><br>for Autonomous Systems</h1>
-    <p class="lead">AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces that were never designed to function as durable evidence.</p>
-    <p class="kicker">Telemetry describes activity. It does not preserve proof.</p>
-  </div>
-</header>
-
-<main class="main">
-  <section class="section" id="gap">
-    <h2 class="h2">The Accountability Gap</h2>
-    <p class="p">Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is frequently secondary.</p>
-    <p class="p">When a decision is later questioned—through regulatory inquiry, internal audit, incident review, or litigation—organizations often reconstruct events from partial logs and distributed traces. Reconstruction is interpretive. It is not deterministic.</p>
-    <p class="p">Institutions require more than reconstructed context. They require artifacts that are:</p>
-    <ul class="ul">
-      <li>Canonical in structure</li>
-      <li>Explicit in capture scope</li>
-      <li>Cryptographically sealed</li>
-      <li>Independently verifiable</li>
-    </ul>
-    <div class="hr"></div>
-    <p class="p">Without those properties, oversight depends on operator assertions rather than verifiable integrity. This is an architectural deficit, not an operational oversight.</p>
-  </section>
-
-  <section class="section" id="layer">
-    <h2 class="h2">A Decoupled Verification Layer</h2>
-    <p class="p">CEYO introduces an evidentiary substrate that operates beside inference engines. It does not modify model weights. It does not intervene in decision logic. It captures only what policy defines, normalizes that context into a stable artifact schema, applies deterministic canonicalization, and seals the artifact for tamper-evidence.</p>
-    <p class="p">Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of output.</p>
-    <div class="cardrow">
-      <div class="card"><b>CEYO does not</b><p>evaluate outputs, adjudicate compliance, certify legality, or determine fairness.</p></div>
-      <div class="card"><b>CEYO does</b><p>produce deterministic, integrity-sealed records under explicit policy scope.</p></div>
+  <nav class="topnav" aria-label="Primary navigation">
+    <a href="index.html" class="brand"><span class="mark">CE</span><span class="accent">YO</span></a>
+    <div class="navlinks" aria-label="Sections">
+      <a href="index.html">Overview</a>
+      <a href="architecture.html">Architecture</a>
+      <a href="trust.html">Trust</a>
+      <a href="governance.html">Governance</a>
+      <a href="contact.html">Contact</a>
     </div>
-  </section>
+  </nav>
 
-  <section class="section" id="disclosure">
-    <h2 class="h2">Constrained Disclosure</h2>
-    <p class="p">Oversight frequently requires validation without exposure of proprietary architecture, confidential model weights, or trade-secret implementation.</p>
-    <p class="p">Artifacts support tiered disclosure. Policy defines inclusion, exclusion, and masking rules before artifact generation. Disclosure boundaries are explicit rather than implied.</p>
-  </section>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-grid"></div>
+        <div class="hero-lines"></div>
+      </div>
 
-  <section class="section" id="availability">
-    <h2 class="h2">Availability by Design</h2>
-    <p class="p">CEYO does not introduce a default operational dependency that halts inference. Artifact sealing failures may be logged and flagged without interrupting inference unless explicitly configured otherwise. Availability remains an institutional decision.</p>
-  </section>
+      <div class="container hero-content">
+        <div class="eyebrow">Evidentiary Infrastructure · For Autonomous Systems · V2026.02.19</div>
 
-  <section class="section" id="position">
-    <h2 class="h2">Institutional Position</h2>
-    <p class="p">CEYO is infrastructure. It is not adjudication.</p>
-    <ul class="ul">
-      <li>It does not certify regulatory compliance.</li>
-      <li>It does not guarantee admissibility.</li>
-      <li>It does not determine fairness or legality.</li>
-    </ul>
-    <div class="hr"></div>
-    <p class="p">CEYO provides the record. Institutions provide the oversight.</p>
-  </section>
-</main>
+        <h1 class="h1">
+          <span class="telemetry">
+            Go Beyond <span class="accent">Telemetry</span>
+            <span class="telemetryDot" aria-hidden="true"></span>
+          </span>
+        </h1>
 
-<nav class="index-bar" aria-label="Site index">
-  <a class="index-item active" href="index.html">Index</a>
-  <a class="index-item" href="architecture.html">Arch</a>
-  <a class="index-item" href="integration.html">Integrate</a>
-  <a class="index-item" href="trust.html">Trust</a>
-  <a class="index-item" href="contact.html">Contact</a>
-</nav>
+        <p class="lead">
+          AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments.
+          When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces
+          that were never designed to function as durable evidence.
+        </p>
 
-<script>
-const cursor = document.getElementById('cursor');
-const spotlight = document.getElementById('spotlight');
+        <div class="pillrow" aria-label="Core attributes">
+          <div class="pill">Decoupled</div>
+          <div class="pill">Policy-scoped</div>
+          <div class="pill">Deterministic</div>
+          <div class="pill">Canonical</div>
+          <div class="pill">Cryptographically sealed</div>
+          <div class="pill">Independently verifiable</div>
+        </div>
+      </div>
+    </header>
 
-function isPointerFine(){ return window.matchMedia('(hover:hover) and (pointer:fine)').matches; }
+    <main>
+      <section class="section">
+        <div class="container grid-2">
+          <div class="reveal card">
+            <div class="kicker">Structural gap</div>
+            <h3 data-typewrite="1">Telemetry describes activity. It does not preserve proof.</h3>
+            <p>
+              When a decision is later questioned—through regulatory inquiry, internal audit, incident review, or litigation—
+              organizations often reconstruct events from partial logs and distributed traces. Reconstruction is interpretive.
+              It is not deterministic.
+            </p>
+          </div>
 
-if (isPointerFine()){
-  document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top  = e.clientY + 'px';
-    spotlight.style.background =
-      `radial-gradient(circle 280px at ${e.clientX}px ${e.clientY}px,rgba(255,255,240,.06) 0%,transparent 70%)`;
-  });
-  document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; spotlight.style.background='none'; });
-  document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
-  document.querySelectorAll('a,button,.index-item').forEach(el=>{
-    el.addEventListener('mouseenter',()=>cursor.classList.add('hover'));
-    el.addEventListener('mouseleave',()=>cursor.classList.remove('hover'));
-  });
-} else {
-  cursor.style.display = 'none';
-}
+          <div class="reveal card">
+            <div class="kicker">Narrow purpose</div>
+            <h3 data-typewrite="1">CEYO produces records. Institutions provide oversight.</h3>
+            <p>
+              CEYO attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined
+              inference-time decision-state context. These artifacts are deterministically structured and cryptographically sealed
+              for later institutional verification under constrained disclosure.
+            </p>
+          </div>
+        </div>
+      </section>
 
-const sections = document.querySelectorAll('.section');
-const obs = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-},{threshold:0.08});
-sections.forEach(s=>obs.observe(s));
-</script>
+      <section class="section">
+        <div class="container">
+          <div class="section-sub">The Accountability Gap</div>
+          <h2 class="section-title highlight reveal" data-typewrite="1">Determinism replaces reconstruction.</h2>
+
+          <div class="grid-3" style="margin-top:22px;">
+            <div class="reveal card">
+              <div class="kicker">Canonical</div>
+              <h3>Stable structure</h3>
+              <p>Artifacts are normalized into a review-ready schema, not free-form logs.</p>
+            </div>
+            <div class="reveal card">
+              <div class="kicker">Explicit scope</div>
+              <h3>Policy-defined capture</h3>
+              <p>Inclusion, exclusion, masking, and tiers are declared before generation.</p>
+            </div>
+            <div class="reveal card">
+              <div class="kicker">Verifiable</div>
+              <h3>Integrity sealing</h3>
+              <p>Deterministic canonicalization + cryptographic sealing supports independent validation.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container grid-2">
+          <div class="reveal">
+            <div class="section-sub">A Decoupled Verification Layer</div>
+            <h2 class="section-title" data-typewrite="1">Architectural neutrality by design.</h2>
+            <p class="lead" style="margin-bottom:0;">
+              CEYO operates beside inference engines. It does not modify model weights. It does not intervene in decision logic.
+              It captures only what policy defines, normalizes that context into a stable artifact schema, applies deterministic
+              canonicalization, and seals the artifact for tamper-evidence.
+            </p>
+          </div>
+
+          <div class="reveal card">
+            <div class="kicker">Boundary</div>
+            <h3>What CEYO does not do</h3>
+            <ul class="list">
+              <li>Does not evaluate outputs</li>
+              <li>Does not adjudicate compliance</li>
+              <li>Does not guarantee admissibility</li>
+              <li>Does not certify legality or correctness</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container grid-2">
+          <div class="reveal card">
+            <div class="kicker">Constrained disclosure</div>
+            <h3 data-typewrite="1">Verification without default exposure.</h3>
+            <p>
+              Oversight frequently requires validation without exposure of proprietary architecture, confidential model weights,
+              or trade-secret implementation. Artifacts support tiered disclosure. Integrity may be validated within declared scope.
+            </p>
+          </div>
+
+          <div class="reveal card">
+            <div class="kicker">Availability discipline</div>
+            <h3 data-typewrite="1">Fail-open by default.</h3>
+            <p>
+              Artifact sealing failures may be logged and flagged without interrupting inference unless explicitly configured otherwise.
+              Availability remains an institutional decision.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-sub">Institutional Position</div>
+          <h2 class="section-title highlight reveal" data-typewrite="1">Infrastructure, not adjudication.</h2>
+
+          <div class="reveal card" style="margin-top:18px;">
+            <p style="margin:0; color:var(--muted); line-height:1.85; font-size:14px;">
+              CEYO provides deterministic artifacts representing defined inference-time context under policy scope.
+              Institutions determine their meaning. Oversight authority remains institutional.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="container">
+          <div class="row">
+            <div>© 2026 CEYO. All rights reserved.</div>
+            <div class="links">
+              <a href="privacy.html">Privacy</a>
+              <a href="terms.html">Terms</a>
+              <a href="sitemap.html">Sitemap</a>
+              <a href="contact.html">Contact</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <nav class="indexbar" aria-label="Site index">
+    <a href="index.html">Overview</a>
+    <a href="architecture.html">Arch</a>
+    <a href="trust.html">Trust</a>
+    <a href="governance.html">Gov</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 </body>
 </html>
