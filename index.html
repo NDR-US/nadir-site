@@ -5,27 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CEYO // Institutional Substrate</title>
 
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Outfit:wght@900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Outfit:wght@900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
-    --deep-olive: #0D0E0B;
-    --ivory: #FFFFF0;
-    --tactical: #4A5D3B;
-    --border-soft: rgba(255, 255, 240, 0.1);
+    /* Updated to the Dark Olive and Ivory Wash palette */
+    --dark-olive: #1A1C14; 
+    --ivory-wash: #F2F2E6;
+    --tactical-accent: #6B7D5D;
+    --border-ivory: rgba(242, 242, 230, 0.15);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    background: var(--deep-olive);
-    color: var(--ivory);
+    background-color: var(--dark-olive);
+    color: var(--ivory-wash);
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
-    line-height: 1.5;
+    line-height: 1.4;
 }
 
-.candela { font-family: 'Outfit', sans-serif; font-weight: 900; text-transform: uppercase; }
+.candela { font-family: 'Outfit', sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; }
 .mono { font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; }
 
 /* Navigation */
@@ -34,22 +35,21 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 30px 50px;
+    padding: 40px 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
-    background: linear-gradient(to bottom, var(--deep-olive) 0%, transparent 100%);
 }
 
 .brand {
-    font-size: 2.5rem;
-    letter-spacing: -0.05em;
+    font-size: 2.2rem;
+    color: var(--ivory-wash);
 }
 
 /* Hero Section */
 .hero-wrap {
-    height: 180vh;
+    height: 160vh;
     position: relative;
 }
 
@@ -64,82 +64,92 @@ nav {
     transition: filter 0.1s linear, opacity 0.1s linear;
 }
 
-h1 {
-    font-size: clamp(3rem, 10vw, 12rem);
-    line-height: 0.85;
+.verification-tag {
+    color: var(--tactical-accent);
+    letter-spacing: 0.5em;
     margin-bottom: 20px;
+    font-size: 0.8rem;
+}
+
+h1 {
+    font-size: clamp(4rem, 12vw, 10rem);
+    line-height: 0.8;
+    margin-bottom: 10px;
 }
 
 .hero-sub {
-    font-size: clamp(1.5rem, 4vw, 4rem);
-    opacity: 0.9;
-    margin-top: 10px;
+    font-size: clamp(1.5rem, 4vw, 3.5rem);
+    opacity: 0.85;
 }
 
 .hero-text {
-    font-size: 1.25rem;
-    margin-top: 40px;
-    max-width: 700px;
-    color: rgba(255, 255, 240, 0.5);
+    font-size: 1.2rem;
+    margin-top: 50px;
+    max-width: 650px;
+    color: var(--ivory-wash);
+    opacity: 0.6;
 }
 
 /* Content Sections */
 .section {
-    padding: 120px 10%;
-    position: relative;
-    z-index: 2;
+    padding: 100px 10%;
+    border-top: 1px solid var(--border-ivory);
 }
 
 .section h2 {
-    font-size: 3.5rem;
-    margin-bottom: 50px;
-    letter-spacing: -0.02em;
+    font-size: 3rem;
+    margin-bottom: 40px;
+    color: var(--ivory-wash);
 }
 
 .section p {
     font-size: 1.25rem;
-    line-height: 1.7;
-    color: rgba(255, 255, 240, 0.7);
+    color: var(--ivory-wash);
+    opacity: 0.8;
+    max-width: 900px;
     margin-bottom: 30px;
-    max-width: 850px;
 }
 
-.divider {
-    height: 1px;
-    background: var(--border-soft);
-    margin: 80px 0;
+.callout-text {
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin: 60px 0;
+    color: var(--ivory-wash);
 }
 
-/* Grid Layout */
+/* Information Grid */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 60px;
 }
 
 .card {
-    border: 1px solid var(--border-soft);
-    padding: 40px;
-    background: rgba(255, 255, 240, 0.02);
+    border: 1px solid var(--border-ivory);
+    padding: 30px;
+    background: rgba(242, 242, 230, 0.03);
 }
 
 .card .mono {
-    color: var(--tactical);
-    font-size: 0.8rem;
-    letter-spacing: 0.2em;
-    margin-bottom: 20px;
+    font-size: 0.75rem;
+    color: var(--tactical-accent);
+    margin-bottom: 15px;
+    display: block;
 }
 
-/* Footer */
 footer {
-    padding: 100px 10%;
-    border-top: 1px solid var(--border-soft);
+    padding: 80px 10%;
+    border-top: 1px solid var(--border-ivory);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 .fade {
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+    transform: translateY(20px);
+    transition: all 0.8s ease-out;
 }
 .fade.show {
     opacity: 1;
@@ -148,8 +158,8 @@ footer {
 
 @media (max-width: 768px) {
     nav { padding: 20px; }
-    .brand { font-size: 1.8rem; }
-    .section h2 { font-size: 2.2rem; }
+    h1 { font-size: 4rem; }
+    .section h2 { font-size: 2rem; }
 }
 </style>
 </head>
@@ -158,21 +168,16 @@ footer {
 
 <nav>
     <div class="brand candela">CEYO</div>
-    <div class="mono" style="font-size: 10px; color: rgba(255,255,240,0.3); letter-spacing: 0.3em;">
+    <div class="mono" style="font-size: 9px; opacity: 0.4; letter-spacing: 0.3em;">
         INSTITUTIONAL_REL_1.0
     </div>
 </nav>
 
 <div class="hero-wrap">
     <section id="hero">
-        <div class="mono" style="color: var(--tactical); letter-spacing: 0.6em; margin-bottom: 20px; font-size: 0.9rem;">
-            VERIFICATION_LAYER
-        </div>
-
+        <div class="verification-tag mono">VERIFICATION_LAYER</div>
         <h1 class="candela">Go Beyond<br>Telemetry.</h1>
-
         <div class="hero-sub candela">Verifiable Decision Records.</div>
-
         <div class="hero-text">
             A decoupled evidentiary substrate producing cryptographically sealed inference artifacts without modifying core model logic.
         </div>
@@ -181,34 +186,31 @@ footer {
 
 <section class="section fade">
     <h2 class="candela">Evidentiary Infrastructure</h2>
-
     <p>
-    AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces that were never designed to function as durable evidence.
+    AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those decisions are reviewed, infrastructure often produces telemetry—logs and traces never designed to function as durable evidence.
     </p>
 
-    <div class="divider"></div>
-
-    <p class="candela" style="font-size: 2.5rem; line-height: 1.1; margin: 40px 0;">
+    <div class="callout-text candela">
         Telemetry describes activity.<br>
-        <span style="opacity: 0.5;">It does not preserve proof.</span>
-    </p>
+        <span style="opacity: 0.4;">It does not preserve proof.</span>
+    </div>
 
     <p>
-    CEYO is a decoupled evidentiary layer that attaches beside inference systems to produce policy-scoped, canonical artifacts. These artifacts are deterministically structured and cryptographically sealed to support later institutional verification without default disclosure of proprietary internals.
+    CEYO is a decoupled evidentiary layer that attaches beside inference systems to produce policy-scoped, canonical artifacts. These artifacts are cryptographically sealed to support later institutional verification.
     </p>
 
     <div class="grid">
         <div class="card">
-            <div class="mono">// BOUNDARY</div>
-            <p style="font-size: 1rem;">CEYO does not evaluate outputs. CEYO does not adjudicate compliance. CEYO produces records.</p>
+            <span class="mono">// BOUNDARY</span>
+            <p style="font-size: 1rem; opacity: 0.7; margin: 0;">CEYO does not evaluate outputs. CEYO produces records.</p>
         </div>
         <div class="card">
-            <div class="mono">// DISCLOSURE</div>
-            <p style="font-size: 1rem;">Tiered disclosure enables validation without exposure of proprietary internals.</p>
+            <span class="mono">// DISCLOSURE</span>
+            <p style="font-size: 1rem; opacity: 0.7; margin: 0;">Tiered disclosure enables validation without exposure of proprietary internals.</p>
         </div>
         <div class="card">
-            <div class="mono">// AVAILABILITY</div>
-            <p style="font-size: 1rem;">Fail-open posture preserves inference continuity unless configured otherwise.</p>
+            <span class="mono">// AVAILABILITY</span>
+            <p style="font-size: 1rem; opacity: 0.7; margin: 0;">Fail-open posture preserves inference continuity unless configured otherwise.</p>
         </div>
     </div>
 </section>
@@ -218,41 +220,40 @@ footer {
     <p>
     Modern AI deployments optimize for throughput and latency. When a decision is questioned, organizations reconstruct events from partial logs. Reconstruction is interpretive. It is not deterministic.
     </p>
-    <p class="candela" style="font-size: 1.5rem; color: var(--tactical);">
+    <p class="candela" style="font-size: 1.8rem; color: var(--tactical-accent);">
         This is an architectural deficit, not an operational oversight.
     </p>
 </section>
 
 <footer>
-    <div class="candela" style="font-size: 2rem; margin-bottom: 10px;">
-        Institutional Reality.
-    </div>
-    <div class="mono" style="font-size: 10px; color: rgba(255,255,240,0.3); letter-spacing: 0.4em;">
-        ALL RIGHTS RESERVED © 2026 CEYO SYSTEMS.
+    <div>
+        <div class="candela" style="font-size: 1.8rem;">Institutional Reality.</div>
+        <div class="mono" style="font-size: 9px; opacity: 0.4; letter-spacing: 0.3em; margin-top: 10px;">
+            © 2026 CEYO SYSTEMS. ALL RIGHTS RESERVED.
+        </div>
     </div>
 </footer>
 
 <script>
-// Scroll effect for Hero
+// Visual effects on scroll
 window.addEventListener("scroll", function() {
     const scroll = window.scrollY;
     const hero = document.getElementById("hero");
-    const blurVal = Math.min(scroll / 50, 15);
-    const opacityVal = 1 - (scroll / 800);
     
     if (scroll < 1000) {
+        const blurVal = (scroll / 60);
+        const opacityVal = 1 - (scroll / 850);
         hero.style.filter = `blur(${blurVal}px)`;
         hero.style.opacity = opacityVal;
-        hero.style.transform = `scale(${1 - (scroll / 10000)})`;
     }
 });
 
-// Reveal sections on scroll
+// Intersection observer for section reveals
 const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
         if (e.isIntersecting) e.target.classList.add("show");
     });
-}, { threshold: 0.1 });
+}, { threshold: 0.15 });
 
 document.querySelectorAll(".fade").forEach(el => observer.observe(el));
 </script>
