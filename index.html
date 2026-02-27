@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NADIR // Institutional Substrate</title>
+    <title>CEYO // Institutional Substrate</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Outfit:wght@900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
@@ -24,17 +24,17 @@
         .candela { font-family: 'Outfit', sans-serif; font-weight: 900; }
         .mono { font-family: 'IBM Plex Mono', monospace; }
 
-        /* HEADER BRANDING FIX */
+        /* HEADER BRANDING */
         nav.header-nav {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 40px 10%; display: flex;
             justify-content: space-between; align-items: center;
-            z-index: 9999; /* Highest priority */
+            z-index: 9999;
             pointer-events: none;
         }
-        .brand-nadir {
+        .brand-ceyo {
             font-family: 'Outfit', sans-serif; font-weight: 900;
-            text-transform: uppercase; letter-spacing: -0.07em;
+            text-transform: uppercase; letter-spacing: -0.05em;
             font-size: clamp(2.5rem, 6vw, 4.5rem);
             pointer-events: auto;
             background: linear-gradient(90deg, #444 0%, var(--ivory) 50%, #444 100%);
@@ -65,7 +65,7 @@
             padding: 0 10%; z-index: 10;
         }
 
-        /* GRID */
+        /* TACTICAL GRID */
         .horizon-grid {
             position: fixed; inset: 0;
             background-image: linear-gradient(rgba(255,255,240,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,240,0.02) 1px, transparent 1px);
@@ -101,8 +101,8 @@
     <div class="horizon-grid" id="grid"></div>
 
     <nav class="header-nav">
-        <div class="brand-nadir">NADIR</div>
-        <div class="mono text-[10px] text-white/20 tracking-[0.4em] font-bold uppercase pointer-events-auto">INSTITUTIONAL_REL_1.0</div>
+        <div class="brand-ceyo">CEYO</div>
+        <div class="mono text-[10px] text-white/20 tracking-[0.4em] font-bold uppercase pointer-events-auto">CEYO_STRATUM_REL_1.0</div>
     </nav>
 
     <main class="relative">
@@ -120,33 +120,33 @@
             </section>
         </div>
 
+        
+
         <section class="fade px-[10%] py-40">
             <h2 class="candela text-5xl lg:text-8xl uppercase italic tracking-tighter mb-16">Evidentiary Infrastructure</h2>
             <p class="text-xl lg:text-4xl font-light text-white/60 mb-12 max-w-5xl">
-                AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When decisions are reviewed, infrastructure often produces telemetry and logs <span class="text-white italic">never designed to function as durable evidence.</span>
+                AI systems increasingly influence decisions in institutional environments. When reviewed, infrastructure often produces telemetry <span class="text-white italic">not designed to function as durable evidence.</span>
             </p>
             <div class="divider"></div>
             <p class="candela text-3xl lg:text-6xl uppercase italic tracking-tighter mb-12">
                 Telemetry describes activity.<br><span class="text-white/20">It does not preserve proof.</span>
             </p>
             <p class="text-xl lg:text-3xl font-light text-white/50 mb-16 max-w-4xl">
-                <span class="typewriter" data-text="NADIR is a decoupled evidentiary layer that attaches beside inference systems to produce policy-scoped, canonical artifacts."></span><span class="cursor"></span>
+                <span class="typewriter" data-text="CEYO is a decoupled evidentiary layer that attaches beside inference systems to produce policy-scoped, canonical artifacts."></span><span class="cursor"></span>
             </p>
-
-            
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
                 <div class="card">
                     <div class="mono text-[10px] text-[#4A5D3B] mb-4 font-bold">// BOUNDARY</div>
-                    <p class="text-sm text-white/40 uppercase mono leading-relaxed">NADIR does not evaluate outputs. NADIR does not adjudicate compliance. <span class="text-white">NADIR produces records.</span></p>
+                    <p class="text-sm text-white/40 uppercase mono leading-relaxed">CEYO does not evaluate outputs. CEYO produces records.</p>
                 </div>
                 <div class="card">
                     <div class="mono text-[10px] text-[#4A5D3B] mb-4 font-bold">// DISCLOSURE</div>
-                    <p class="text-sm text-white/40 uppercase mono leading-relaxed">Tiered disclosure enables validation without exposure of proprietary internals.</p>
+                    <p class="text-sm text-white/40 uppercase mono leading-relaxed">Tiered disclosure enables validation without internal exposure.</p>
                 </div>
                 <div class="card">
                     <div class="mono text-[10px] text-[#4A5D3B] mb-4 font-bold">// AVAILABILITY</div>
-                    <p class="text-sm text-white/40 uppercase mono leading-relaxed">Fail-open posture preserves inference continuity unless configured otherwise.</p>
+                    <p class="text-sm text-white/40 uppercase mono leading-relaxed">Fail-open posture preserves inference continuity.</p>
                 </div>
             </div>
         </section>
@@ -154,39 +154,32 @@
         <section class="fade px-[10%] py-40">
             <h2 class="candela text-5xl lg:text-8xl uppercase italic tracking-tighter mb-16">The Accountability Gap</h2>
             <p class="text-xl lg:text-4xl font-light text-white/60 mb-12 max-w-5xl">
-                Modern AI deployments optimize for throughput. Accountability is frequently secondary. When a decision is questioned, organizations <span class="text-white">reconstruct events</span> from partial logs.
+                When a decision is questioned, organizations <span class="text-white">reconstruct events</span> from partial logs. This is interpretive.
             </p>
             <p class="candela text-3xl lg:text-5xl uppercase italic tracking-tighter opacity-80 mb-12">
-                Reconstruction is interpretive. It is not deterministic.
+                CEYO artifacts are canonical, explicit, and independently verifiable.
             </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mono text-xs text-white/30 uppercase tracking-widest">
-                <div>• Canonical in structure</div>
-                <div>• Explicit in capture scope</div>
-                <div>• Cryptographically sealed</div>
-                <div>• Independently verifiable</div>
-            </div>
+            <p class="text-xl lg:text-3xl font-light text-white/40 italic">
+                This is an architectural deficit, not an operational oversight.
+            </p>
         </section>
 
         
 
         <section class="fade px-[10%] py-40">
-            <h2 class="candela text-5xl lg:text-8xl uppercase italic tracking-tighter mb-16">A Decoupled Layer</h2>
+            <h2 class="candela text-5xl lg:text-8xl uppercase italic tracking-tighter mb-16">Institutional Position</h2>
             <p class="text-xl lg:text-4xl font-light text-white/60 mb-12 max-w-5xl">
-                NADIR operates beside inference engines without modifying model weights. It captures only what policy defines, applies deterministic canonicalization, and <span class="text-white italic">seals the artifact for tamper-evidence.</span>
+                Evidence infrastructure must remain structurally independent from decision authority. CEYO introduces that substrate.
             </p>
             <div class="divider"></div>
-            <h3 class="candela text-4xl lg:text-6xl uppercase italic tracking-tighter mb-10">Constrained Disclosure</h3>
-            <p class="text-xl lg:text-3xl font-light text-white/40 mb-16 max-w-4xl">
-                Policy defines inclusion, exclusion, and masking rules. Integrity may be validated <span class="text-white">without revealing internal mechanics</span> beyond policy scope.
-            </p>
             <p class="candela text-3xl lg:text-6xl uppercase italic tracking-tighter text-[#4A5D3B]">
-                NADIR provides the record.<br>Institutions provide oversight.
+                CEYO provides the record.<br>Institutions provide oversight.
             </p>
         </section>
 
         <footer class="px-[10%] py-60 border-t border-white/5 bg-black/40 relative z-30">
             <div class="candela text-4xl lg:text-7xl uppercase italic mb-8">Institutional Reality.</div>
-            <p class="mono text-[11px] text-white/20 uppercase tracking-[0.5em] font-bold">ALL RIGHTS RESERVED © 2026 NADIR SYSTEMS.</p>
+            <p class="mono text-[11px] text-white/20 uppercase tracking-[0.5em] font-bold">ALL RIGHTS RESERVED © 2026 CEYO SYSTEMS.</p>
         </footer>
     </main>
 
@@ -212,7 +205,7 @@
             const hero = document.getElementById("hero");
             const grid = document.getElementById("grid");
             if (s < 1200) {
-                hero.style.filter = `blur(${s/50}px)`;
+                hero.style.filter = `blur(${s/60}px)`;
                 hero.style.opacity = 1 - (s/900);
                 hero.style.transform = `scale(${1-(s/6000)}) translateY(${s*0.2}px)`;
             }
