@@ -80,22 +80,16 @@
         }
 
         .section-title {
-            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-size: clamp(2.5rem, 5vw, 6rem);
             margin-bottom: 2rem;
         }
 
         .divider { height: 1px; background: rgba(255,255,240,0.1); margin: 40px 0; }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
         .card {
             border: 1px solid rgba(74, 93, 59, 0.4);
             padding: 40px;
+            margin-top: 30px;
         }
 
         .control-hub {
@@ -104,6 +98,7 @@
             border: 1px solid rgba(255, 255, 240, 0.1);
             padding: 18px 45px; display: flex; gap: 40px; z-index: 9999;
         }
+        
         .nav-link { font-family: 'IBM Plex Mono'; font-size: 13px; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,240,0.4); text-decoration: none; }
         .nav-link.active { color: var(--ivory); }
 
@@ -132,150 +127,73 @@
         </div>
 
         <section class="content-section scroll-reveal">
-            <h2 class="heavy-italic section-title">Evidentiary Infrastructure</h2>
-            <p>
+            <h2 class="heavy-italic section-title">EVIDENTIARY INFRASTRUCTURE</h2>
+            <p class="text-xl lg:text-3xl">
                 AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments.
-                When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces that were never designed to function as durable evidence.
+                When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces 
+                that were never designed to function as durable evidence.
             </p>
 
             <div class="divider"></div>
 
-            <p class="heavy-italic" style="font-size:2.8rem; line-height: 1; color: var(--tactical-green);">
-                Telemetry describes activity.<br>
-                It does not preserve proof.
+            <p class="heavy-italic" style="font-size:3rem; line-height: 1; color: var(--tactical-green);">
+                TELEMETRY DESCRIBES ACTIVITY.<br>
+                IT DOES NOT PRESERVE PROOF.
             </p>
 
-            <p style="margin-top:18px;">
-                CEYO exists to address that structural gap.
+            <p class="mt-8 text-xl">
+                CEYO is a decoupled evidentiary layer that attaches beside inference systems to produce policy-scoped, 
+                canonical artifacts.
             </p>
 
-            <p>
-                CEYO is a decoupled evidentiary layer that attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined inference-time decision-state context.
-                These artifacts are deterministically structured and cryptographically sealed to support later institutional verification without default disclosure of proprietary internals.
-            </p>
-
-            <div class="divider"></div>
-
-            <div class="grid">
-                <div class="card">
-                    <div class="mono" style="font-size:12px;letter-spacing:.2em;color:rgba(255,255,240,.6);margin-bottom:10px;">
-                        // BOUNDARY
-                    </div>
-                    <p style="margin:0;">
-                        CEYO does not evaluate outputs.<br>
-                        CEYO does not adjudicate compliance.<br>
-                        <span style="color:var(--tactical-green); font-weight: bold;">CEYO produces records.</span>
-                    </p>
-                </div>
-
-                <div class="card">
-                    <div class="mono" style="font-size:12px;letter-spacing:.2em;color:rgba(255,255,240,.6);margin-bottom:10px;">
-                        // DISCLOSURE
-                    </div>
-                    <p style="margin:0;">
-                        Tiered disclosure enables validation without exposure of proprietary internals.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <div class="mono" style="font-size:12px;letter-spacing:.2em;color:rgba(255,255,240,.6);margin-bottom:10px;">
-                        // AVAILABILITY
-                    </div>
-                    <p style="margin:0;">
-                        Fail-open posture preserves inference continuity unless configured otherwise.
-                    </p>
-                </div>
+            <div class="card">
+                <div class="mono text-[12px] text-[#4A5D3B] mb-2 font-bold">// BOUNDARY</div>
+                <p class="heavy-italic text-2xl lg:text-4xl">
+                    CEYO DOES NOT EVALUATE OUTPUTS. CEYO DOES NOT ADJUDICATE COMPLIANCE. 
+                    <span class="text-white">CEYO PRODUCES RECORDS.</span>
+                </p>
             </div>
         </section>
 
         
 
         <section class="content-section scroll-reveal">
-            <h2 class="heavy-italic section-title">The Accountability Gap</h2>
-            <p>
-                Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is frequently secondary.
-            </p>
-            <p>
-                When a decision is later questioned—through regulatory inquiry, internal audit, incident review, or litigation—organizations often reconstruct events from partial logs and distributed traces.
+            <h2 class="heavy-italic section-title">THE ACCOUNTABILITY GAP</h2>
+            <p class="text-xl lg:text-3xl">
+                When a decision is questioned, organizations often reconstruct events from partial logs. 
                 Reconstruction is interpretive. It is not deterministic.
             </p>
-            <p style="margin-top:30px;">
-                Institutions require more than reconstructed context. They require artifacts that are:
-            </p>
-            <div style="margin-top:18px;">
-                <p style="margin:0 0 10px 0;">• Canonical in structure</p>
-                <p style="margin:0 0 10px 0;">• Explicit in capture scope</p>
-                <p style="margin:0 0 10px 0;">• Cryptographically sealed</p>
-                <p style="margin:0;">• Independently verifiable</p>
-            </div>
-            <p style="margin-top:24px;">
-                Without those properties, oversight depends on operator assertions rather than verifiable integrity.
-            </p>
-            <p class="heavy-italic" style="font-size:1.8rem; color: var(--tactical-green); margin-top:18px;">
-                This is an architectural deficit, not an operational oversight.
-            </p>
+
+            <div class="divider"></div>
+
+            <p class="text-xl">Institutions require artifacts that are:</p>
+            <ul class="mt-4 space-y-2 text-xl font-bold">
+                <li>• CANONICAL IN STRUCTURE</li>
+                <li>• EXPLICIT IN CAPTURE SCOPE</li>
+                <li>• CRYPTOGRAPHICALLY SEALED</li>
+                <li>• INDEPENDENTLY VERIFIABLE</li>
+            </ul>
         </section>
 
         
 
         <section class="content-section scroll-reveal">
-            <h2 class="heavy-italic section-title">A Decoupled Verification Layer</h2>
-            <p>
-                CEYO introduces an evidentiary substrate that operates beside inference engines.
-                It does not modify model weights. It does not intervene in decision logic. It does not replace governance frameworks.
-            </p>
-            <p>
-                It captures only what policy defines, normalizes that context into a stable artifact schema, applies deterministic canonicalization, and seals the artifact for tamper-evidence.
-            </p>
-            <p>
-                Verification confirms integrity and provenance under declared policy scope.
-                It does not confirm correctness of output.
-            </p>
-            <p>
-                This separation is deliberate. Evidence infrastructure must remain structurally independent from decision authority.
+            <h2 class="heavy-italic section-title">A DECOUPLED LAYER</h2>
+            <p class="text-xl">
+                CEYO operates beside inference engines without modifying core logic. 
+                It captures only what policy defines, applies deterministic canonicalization, and seals the artifact for tamper-evidence.
             </p>
 
             <div class="divider"></div>
 
-            <h2 class="heavy-italic" style="font-size:2.4rem;">Constrained Disclosure</h2>
-            <p>
-                Oversight frequently requires validation without exposure of proprietary architecture, confidential model weights, or trade-secret implementation.
-            </p>
-            <p>
-                CEYO artifacts are structured to enable tiered disclosure.
-                Integrity may be validated without revealing internal mechanics beyond policy scope.
-            </p>
-            <p>
-                Policy defines inclusion, exclusion, and masking rules before artifact generation.
-                Disclosure boundaries are explicit rather than implied.
-            </p>
-
-            <div class="divider"></div>
-
-            <h2 class="heavy-italic" style="font-size:2.4rem;">Availability by Design</h2>
-            <p>
-                CEYO does not introduce a default operational dependency that halts inference.
-                Artifact sealing failures may be logged and flagged without interrupting inference unless explicitly configured otherwise.
-                Availability remains an institutional decision.
-            </p>
-
-            <div class="divider"></div>
-
-            <h2 class="heavy-italic" style="font-size:2.4rem;">Institutional Position</h2>
-            <p>
-                CEYO is infrastructure. It is not adjudication.
-                It does not certify regulatory compliance. It does not guarantee admissibility. It does not determine fairness or legality.
-            </p>
-            <p>
-                Authorized institutions and regulated operators retain responsibility for determinations.
-            </p>
-            <p class="heavy-italic" style="font-size:1.8rem; color: var(--tactical-green); margin-top:22px;">
-                CEYO provides the record. Institutions provide oversight.
+            <p class="heavy-italic text-2xl lg:text-4xl" style="color: var(--tactical-green);">
+                CEYO PROVIDES THE RECORD. INSTITUTIONS PROVIDE OVERSIGHT.
             </p>
         </section>
 
-        <footer class="content-section opacity-20" style="padding: 4vh 8%;">
-            <div class="brand-ceyo" style="font-size: 1.2rem;">CEYO</div>
+        <footer class="content-section opacity-20">
+            <div class="brand-ceyo">CEYO</div>
+            <p class="mono text-xs">ALL RIGHTS RESERVED © 2026</p>
         </footer>
     </main>
 
@@ -290,7 +208,6 @@
         const observer = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if (e.isIntersecting) e.target.classList.add("visible");
-                else e.target.classList.remove("visible");
             });
         }, { threshold: 0.1 });
         document.querySelectorAll(".scroll-reveal").forEach(el => observer.observe(el));
