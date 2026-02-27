@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap | NADIR</title>
+    <meta property="og:title" content="Roadmap | NADIR">
+    <meta property="og:description" content="Phased development of evidentiary infrastructure, prioritizing structural stability over feature velocity.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #E5E5E5; }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+        .phase-gate { border-left: 2px solid #333; padding-left: 2rem; position: relative; }
+        .phase-gate::before { content: ''; position: absolute; left: -9px; top: 0; width: 16px; height: 16px; background: #0057FF; border-radius: 50%; }
+        .active-gate::before { background: #00FF41; box-shadow: 0 0 10px #00FF41; }
+    </style>
+</head>
+<body>
+    <nav class="border-b border-gray-800 p-6 bg-black sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center text-sm uppercase font-semibold">
+            <a href="index.html" class="text-white tracking-tighter">NADIR</a>
+            <div class="space-x-8 text-gray-400">
+                <a href="index.html">Overview</a>
+                <a href="architecture.html">Architecture</a>
+                <a href="roadmap.html" class="text-white border-b-2 border-white">Roadmap</a>
+                <a href="governance.html">Governance</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto py-20 px-6">
+        <header class="mb-20 text-center">
+            <h1 class="text-5xl font-bold tracking-tighter mb-4">DEVELOPMENT ROADMAP</h1>
+            <p class="mono text-blue-500 uppercase tracking-widest text-sm">Integrity Determinism Precedes Feature Expansion</p>
+        </header>
+
+        <section class="space-y-20">
+            <div class="phase-gate active-gate">
+                <p class="mono text-xs text-green-500 font-bold mb-2 uppercase">[ Phase 1: Foundation — Current ]</p>
+                <h2 class="text-2xl font-bold text-white mb-4 italic underline decoration-green-500">Canonical Definition & Sealing</h2>
+                <p class="text-gray-400 mb-6">Stabilization of the canonical artifact schema. Implementation of RFC 8785 (JCS) and cryptographic sealing workflows. Validation of non-custodial key integration in reference environments.</p>
+                <ul class="text-sm mono space-y-2 text-gray-500">
+                    <li>+ RFC 8785 Determinism</li>
+                    <li>+ SHA-256 / ECDSA Sealing</li>
+                    <li>+ Fail-Open Availability Testing</li>
+                </ul>
+            </div>
+
+            <div class="phase-gate">
+                <p class="mono text-xs text-gray-500 font-bold mb-2 uppercase">[ Phase 2: Verification ]</p>
+                <h2 class="text-2xl font-bold text-white mb-4 italic">Independent Verification Harness</h2>
+                <p class="text-gray-400 mb-6">Introduction of hardened verification tooling designed for independent use by auditors. Expansion of cross-environment consistency testing.</p>
+                <ul class="text-sm mono space-y-2 text-gray-500">
+                    <li>+ Standalone Verification CLI</li>
+                    <li>+ Public-Key Validation Workflow</li>
+                    <li>+ Automated Status Reporting</li>
+                </ul>
+            </div>
+
+            <div class="phase-gate">
+                <p class="mono text-xs text-gray-500 font-bold mb-2 uppercase">[ Phase 3: Workflow ]</p>
+                <h2 class="text-2xl font-bold text-white mb-4 italic text-gray-500">Chain-of-Custody Support</h2>
+                <p class="text-gray-400">Focus on institutional alignment. Introduction of incident-scoped artifact bundling and retrieval logging posture for formal review environments.</p>
+            </div>
+        </section>
+
+        
+
+        <div class="mt-20 p-8 border border-gray-800 bg-gray-900 rounded-sm">
+            <h3 class="mono text-xs font-bold uppercase text-red-500 mb-4 tracking-tighter">// Non-Scope Declarations</h3>
+            <p class="text-sm text-gray-400 leading-relaxed italic">
+                The roadmap does not include fairness evaluation engines, model correctness validation, or automated regulatory certification. NADIR remains intentionally narrow in scope. Integrity must be proven before it is scaled.
+            </p>
+        </div>
+
+        <footer class="mt-20 text-center">
+            <p class="text-xs mono uppercase text-gray-600">Institutional Position: NADIR prioritizes structural stability over feature velocity.</p>
+        </footer>
+    </main>
+</body>
+</html>
