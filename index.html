@@ -36,7 +36,7 @@ a{color:inherit;text-decoration:none;}
 .hero-version::before{content:'';display:inline-block;width:28px;height:1px;background:var(--green);}
 .hero-h1{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:clamp(52px,9.5vw,120px);letter-spacing:-.05em;line-height:.92;text-transform:uppercase;color:var(--ivory);max-width:900px;will-change:transform,opacity,filter;}
 .hero-h1 .accent{color:var(--green2);}
-.hero-lead-wrap{margin-top:36px;max-width:540px;}
+.hero-lead-wrap{margin-top:36px;max-width:560px;}
 .hero-lead{font-size:15px;line-height:1.75;color:var(--muted);font-weight:300;}
 .hero-negations{margin-top:24px;display:flex;flex-direction:column;gap:5px;}
 .neg,.pos{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.10em;text-transform:uppercase;display:flex;align-items:center;gap:10px;}
@@ -60,7 +60,7 @@ a{color:inherit;text-decoration:none;}
 .section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin-bottom:20px;display:flex;align-items:center;gap:12px;}
 .section-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--green),transparent);max-width:120px;}
 .section-h2{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:clamp(28px,4.5vw,56px);letter-spacing:-.04em;line-height:1.0;text-transform:uppercase;color:var(--ivory);margin-bottom:28px;}
-.section-body{font-size:15px;line-height:1.8;color:var(--muted);max-width:64ch;margin-bottom:14px;}
+.section-body{font-size:15px;line-height:1.8;color:var(--muted);max-width:72ch;margin-bottom:14px;}
 .stmt-group{margin:20px 0;display:flex;flex-direction:column;gap:5px;}
 .stmt{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;color:var(--muted2);padding-left:20px;position:relative;line-height:1.55;}
 .stmt::before{content:'—';position:absolute;left:0;color:var(--muted2);}
@@ -93,7 +93,7 @@ a{color:inherit;text-decoration:none;}
 .principle-divider{display:flex;align-items:center;gap:20px;max-width:600px;margin:0 auto 40px;}
 .principle-divider::before,.principle-divider::after{content:'';flex:1;height:1px;background:var(--stroke);}
 .principle-divider span{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted2);}
-.principle-quote{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:clamp(22px,3.5vw,40px);letter-spacing:-.03em;line-height:1.15;text-transform:uppercase;color:var(--ivory);max-width:700px;margin:0 auto;}
+.principle-quote{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:clamp(22px,3.5vw,40px);letter-spacing:-.03em;line-height:1.15;text-transform:uppercase;color:var(--ivory);max-width:760px;margin:0 auto;}
 .principle-quote em{color:var(--green2);font-style:normal;}
 .principle-attribution{margin-top:24px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2);}
 .tech-section{display:grid;grid-template-columns:200px 1fr;gap:48px;align-items:start;}
@@ -105,10 +105,10 @@ a{color:inherit;text-decoration:none;}
 .tech-panel:last-child{border-bottom:none;}
 .tech-panel-num{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.20em;color:var(--green);margin-bottom:8px;text-transform:uppercase;}
 .tech-panel-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.02em;color:var(--ivory);margin-bottom:10px;}
-.tech-panel-body{font-size:14px;line-height:1.75;color:var(--muted);max-width:52ch;}
+.tech-panel-body{font-size:14px;line-height:1.75;color:var(--muted);max-width:60ch;}
 .cta-strip{margin:0 auto;max-width:1160px;padding:40px 40px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid var(--stroke);}
 .cta-strip-text strong{font-family:'Outfit',sans-serif;font-weight:900;font-size:20px;letter-spacing:-.02em;text-transform:uppercase;color:var(--ivory);display:block;margin-bottom:4px;}
-.cta-strip-text p{font-size:13px;color:var(--muted);line-height:1.6;max-width:440px;}
+.cta-strip-text p{font-size:13px;color:var(--muted);line-height:1.6;max-width:520px;}
 .boundary-section{max-width:1160px;margin:0 auto;padding:0 40px 80px;}
 .boundary-wrap{border:1px solid var(--stroke);padding:28px 32px;background:rgba(255,255,240,.015);}
 .boundary-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted2);margin-bottom:20px;display:flex;align-items:center;gap:12px;}
@@ -143,12 +143,12 @@ a{color:inherit;text-decoration:none;}
     <div class="hero-version" id="hw1">V2026.02.19 &nbsp;·&nbsp; Evidentiary Infrastructure</div>
     <h1 class="hero-h1" id="hero-h1">Go Beyond<br><span class="accent">Telemetry</span></h1>
     <div class="hero-lead-wrap">
-      <p class="hero-lead" id="hw2">CEYO is a weight-neutral, policy-scoped integrity layer that attaches beside AI inference systems and produces canonical artifacts representing defined inference-time decision state — cryptographically sealed for institutional verification under constrained disclosure conditions.</p>
+      <p class="hero-lead" id="hw2">AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces that were never designed to function as durable evidence. CEYO exists to address that structural gap — a weight-neutral, policy-scoped integrity layer that attaches beside inference systems and produces canonical artifacts representing defined inference-time decision-state context, sealed for institutional verification under constrained disclosure.</p>
       <div class="hero-negations" id="hw3">
-        <span class="neg">CEYO does not replace models</span>
-        <span class="neg">CEYO does not modify inference outputs</span>
-        <span class="neg">CEYO does not evaluate correctness</span>
-        <span class="pos">CEYO produces verifiable records</span>
+        <span class="neg">CEYO does not evaluate outputs</span>
+        <span class="neg">CEYO does not adjudicate compliance</span>
+        <span class="neg">CEYO does not intervene in decision logic</span>
+        <span class="pos">CEYO produces records</span>
       </div>
       <div class="hero-cta-row" id="hw4">
         <a class="btn primary" href="platform.html">Enter Framework</a>
@@ -162,64 +162,97 @@ a{color:inherit;text-decoration:none;}
 <main class="content-scroll">
 
   <section class="section" id="deficit" aria-labelledby="deficit-h">
-    <div class="section-label">[Structural deficit]</div>
-    <h2 class="section-h2" id="deficit-h">The Structural Deficit</h2>
-    <p class="section-body">Modern AI systems generate logs, telemetry, and traces. These signals describe activity, but they do not constitute evidence.</p>
+    <div class="section-label">[The Accountability Gap]</div>
+    <h2 class="section-h2" id="deficit-h">Telemetry Describes Activity. It Does Not Preserve Proof.</h2>
+
+    <p class="section-body">Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is frequently secondary.</p>
+    <p class="section-body">When a decision is later questioned — through regulatory inquiry, internal audit, incident review, or litigation — organizations often reconstruct events from partial logs and distributed traces. Reconstruction is interpretive. It is not deterministic.</p>
+
     <div class="stmt-group">
-      <span class="stmt">Telemetry may show that a model executed</span>
-      <span class="stmt">It may show input and output</span>
-      <span class="stmt">It may show timestamps and service states</span>
+      <span class="stmt">Institutions require more than reconstructed context</span>
+      <span class="stmt">They require artifacts that are canonical, scoped, sealed, and independently verifiable</span>
+      <span class="stmt">Without those properties, oversight depends on operator assertions rather than verifiable integrity</span>
     </div>
-    <p class="section-body">What telemetry does not reliably preserve is a canonicalized, integrity-bound, policy-scoped artifact suitable for independent verification at a later date. When decisions are disputed — in regulatory review, litigation, incident analysis, or institutional audit — partial logs and reconstructed traces are insufficient. Reconstruction from telemetry is inherently interpretive. It is not deterministic proof.</p>
+
     <div class="deficit-grid" role="list">
-      <div class="deficit-cell" role="listitem"><div class="cell-label">Telemetry Gap</div><div class="cell-text">Logs describe activity. They are not integrity-sealed records designed for institutional verification. The distinction matters in post-hoc review.</div></div>
-      <div class="deficit-cell" role="listitem"><div class="cell-label">Disclosure Tension</div><div class="cell-text">Institutions require verification without exposure of proprietary weights, confidential architecture, or trade-secret implementation. Telemetry-based systems do not resolve this tension.</div></div>
-      <div class="deficit-cell" role="listitem"><div class="cell-label">Reconstruction vs. Proof</div><div class="cell-text">Reconstructed traces are inherently interpretive. They are not deterministic. Oversight that relies on reconstruction relies on operator assertions, not verifiable integrity.</div></div>
-      <div class="deficit-cell" role="listitem"><div class="cell-label">Liability Architecture</div><div class="cell-text">Absent integrity-bound artifacts, disputes resolve around partial evidence and non-reproducible context. This is an architectural deficit, not an operational oversight.</div></div>
+      <div class="deficit-cell" role="listitem">
+        <div class="cell-label">Canonical in structure</div>
+        <div class="cell-text">Review requires stable, deterministic structure — not free-form logs that vary by environment, serialization, or instrumentation.</div>
+      </div>
+      <div class="deficit-cell" role="listitem">
+        <div class="cell-label">Explicit in capture scope</div>
+        <div class="cell-text">Scope must be defined before generation: included fields, excluded fields, masked fields, tier configuration, and policy version identifiers.</div>
+      </div>
+      <div class="deficit-cell" role="listitem">
+        <div class="cell-label">Cryptographically sealed</div>
+        <div class="cell-text">Tamper-evidence and provenance require hashing and signatures on canonical bytes — not post-hoc narrative about what happened.</div>
+      </div>
+      <div class="deficit-cell" role="listitem">
+        <div class="cell-label">Independently verifiable</div>
+        <div class="cell-text">Oversight must be executable by third parties under deterministic procedure, without default disclosure of proprietary internals.</div>
+      </div>
     </div>
+
     <div class="req-block" role="region" aria-label="Institutional requirements">
-      <div class="req-header">Institutions require</div>
+      <div class="req-header">This is an architectural deficit, not an operational oversight.</div>
       <ul class="req-list">
-        <li><strong>Deterministic structure</strong></li>
-        <li><strong>Integrity sealing</strong></li>
-        <li><strong>Explicit disclosure scope</strong></li>
-        <li><strong>Separation between proprietary internals and oversight verification</strong></li>
+        <li><strong>Canonical structure</strong></li>
+        <li><strong>Policy-scoped capture</strong></li>
+        <li><strong>Cryptographic sealing</strong></li>
+        <li><strong>Independent verification</strong></li>
       </ul>
     </div>
   </section>
 
   <section class="section" id="what-ceyo-is" aria-labelledby="is-h">
-    <div class="section-label">[What CEYO is]</div>
-    <h2 class="section-h2" id="is-h">A Decoupled Evidentiary Substrate</h2>
-    <p class="section-body">CEYO attaches at the inference boundary — as a sidecar, wrapper, or gateway — and captures only what operator policy explicitly defines. It normalizes captured fields into a stable artifact schema aligned to review workflows, applies deterministic canonicalization, and seals the artifact cryptographically.</p>
-    <p class="section-body">Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of model output.</p>
+    <div class="section-label">[A Decoupled Verification Layer]</div>
+    <h2 class="section-h2" id="is-h">Evidence Infrastructure Beside Inference</h2>
+
+    <p class="section-body">CEYO introduces an evidentiary substrate that operates beside inference engines. It does not modify model weights. It does not intervene in decision logic. It does not replace governance frameworks.</p>
+    <p class="section-body">It captures only what policy defines, normalizes that context into a stable artifact schema, applies deterministic canonicalization, and seals the artifact for tamper-evidence.</p>
+    <p class="section-body">Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of output.</p>
+
     <div class="property-row" role="list">
-      <div class="prop-cell" role="listitem"><div class="prop-label">Canonical</div><div class="prop-desc">Normalized structure. Deterministic byte representation across heterogeneous environments.</div></div>
-      <div class="prop-cell" role="listitem"><div class="prop-label">Policy-scoped</div><div class="prop-desc">Content bounded by explicit operator configuration. No implicit expansion beyond declared scope.</div></div>
-      <div class="prop-cell" role="listitem"><div class="prop-label">Tamper-evident</div><div class="prop-desc">Cryptographic hash and digital signature enable post-hoc detection of alteration.</div></div>
-      <div class="prop-cell" role="listitem"><div class="prop-label">Independently verifiable</div><div class="prop-desc">Verification requires no default exposure of proprietary IP or model internals.</div></div>
+      <div class="prop-cell" role="listitem">
+        <div class="prop-label">Policy-scoped capture</div>
+        <div class="prop-desc">Operator-defined inclusion, exclusion, masking, disclosure tiers, and policy version identifiers.</div>
+      </div>
+      <div class="prop-cell" role="listitem">
+        <div class="prop-label">Canonicalization</div>
+        <div class="prop-desc">Deterministic JSON canonicalization (RFC 8785) for reproducible byte output across environments.</div>
+      </div>
+      <div class="prop-cell" role="listitem">
+        <div class="prop-label">Sealing</div>
+        <div class="prop-desc">Hashing + digital signatures to establish tamper-evidence and origin authenticity.</div>
+      </div>
+      <div class="prop-cell" role="listitem">
+        <div class="prop-label">Neutrality</div>
+        <div class="prop-desc">Evidence remains structurally independent from decision authority and adjudication.</div>
+      </div>
     </div>
   </section>
 
   <section class="section" id="what-ceyo-is-not" aria-labelledby="not-h">
-    <div class="section-label">[What CEYO is not]</div>
-    <h2 class="section-h2" id="not-h">Records, Not Judgments</h2>
+    <div class="section-label">[Institutional Position]</div>
+    <h2 class="section-h2" id="not-h">Records, Not Adjudication</h2>
+
     <div class="not-section">
       <div>
-        <ul class="not-list" aria-label="What CEYO is not">
-          <li>A model evaluation system</li>
-          <li>A fairness certification system</li>
-          <li>A compliance automation tool</li>
-          <li>A legal adjudication engine</li>
-          <li>A regulatory certification authority</li>
+        <ul class="not-list" aria-label="What CEYO does not do">
+          <li>Does not evaluate outputs</li>
+          <li>Does not adjudicate compliance</li>
+          <li>Does not certify regulatory sufficiency</li>
+          <li>Does not guarantee admissibility</li>
+          <li>Does not determine fairness or legality</li>
         </ul>
         <div class="not-affirm">
-          <p>CEYO does not determine whether a decision was lawful, ethical, or fair. CEYO produces integrity-sealed artifacts that institutions may use as part of their oversight processes. Authorized institutions retain responsibility for determinations.</p>
+          <p>CEYO is infrastructure. It produces integrity-sealed records under declared policy scope. Authorized institutions and regulated operators retain responsibility for determinations.</p>
         </div>
       </div>
+
       <div>
-        <p class="section-body">The system is designed around one principle: evidence infrastructure must remain separate from decision authority.</p>
-        <p class="section-body">This separation preserves neutrality. It ensures that the evidentiary layer does not become an adjudicator of its own output. It avoids structural conflicts between record generation and policy enforcement.</p>
+        <p class="section-body">This separation is deliberate. Evidence infrastructure must remain structurally independent from decision authority.</p>
+        <p class="section-body">CEYO’s role is narrow: to generate deterministic, policy-scoped artifacts representing defined inference-time decision-state context — sealed for later institutional verification without default disclosure of proprietary internals.</p>
       </div>
     </div>
   </section>
@@ -227,34 +260,61 @@ a{color:inherit;text-decoration:none;}
   <div class="principle-section section" aria-label="Core principle">
     <div class="principle-divider"><span>Core principle</span></div>
     <blockquote class="principle-quote">Evidence infrastructure must remain<br><em>separate from decision authority</em></blockquote>
-    <div class="principle-attribution">CEYO provides the artifact &nbsp;·&nbsp; Institutions provide the oversight</div>
+    <div class="principle-attribution">CEYO provides the record &nbsp;·&nbsp; Institutions provide the oversight</div>
   </div>
 
   <section class="section" id="technical" aria-labelledby="tech-h">
-    <div class="section-label">[Technical properties]</div>
-    <h2 class="section-h2" id="tech-h">How It Works</h2>
+    <div class="section-label">[Decoupled Verification Architecture]</div>
+    <h2 class="section-h2" id="tech-h">Deterministic Artifacts. Independent Verification.</h2>
+
     <div class="tech-section">
       <nav class="tech-index" aria-label="Technical property index">
-        <div class="tech-index-item active">01 · Capture</div>
-        <div class="tech-index-item">02 · Structure</div>
-        <div class="tech-index-item">03 · Sealing</div>
-        <div class="tech-index-item">04 · Disclosure</div>
+        <div class="tech-index-item active">01 · Attachment</div>
+        <div class="tech-index-item">02 · Policy</div>
+        <div class="tech-index-item">03 · Canonicalization</div>
+        <div class="tech-index-item">04 · Sealing</div>
         <div class="tech-index-item">05 · Availability</div>
       </nav>
+
       <div class="tech-panels">
-        <div class="tech-panel"><div class="tech-panel-num">01 · Policy-Scoped Capture</div><div class="tech-panel-title">Define Before You Collect</div><div class="tech-panel-body">Operators define what fields are included, excluded, and masked. Capture policy is explicit and versioned. Artifacts reflect declared policy scope; they do not implicitly expand beyond it.</div></div>
-        <div class="tech-panel"><div class="tech-panel-num">02 · Canonical Structure</div><div class="tech-panel-title">Deterministic Normalization</div><div class="tech-panel-body">Captured telemetry is normalized into a deterministic JSON artifact schema. Canonicalization is applied in accordance with RFC 8785 (JSON Canonicalization Scheme), producing a stable byte representation independent of serialization order.</div></div>
-        <div class="tech-panel"><div class="tech-panel-num">03 · Integrity Sealing</div><div class="tech-panel-title">Non-Custodial Key Architecture</div><div class="tech-panel-body">SHA-256 hashing and ECDSA P-256 digital signature are applied as reference implementations. Private signing keys remain within operator-controlled infrastructure — HSM or KMS environments. CEYO does not require possession, transmission, or storage of private keys.</div></div>
-        <div class="tech-panel"><div class="tech-panel-num">04 · Constrained Disclosure</div><div class="tech-panel-title">Tiered Verification Access</div><div class="tech-panel-body">Artifacts may be disclosed under Public&thinsp;/&thinsp;Redacted or Controlled Review tiers. Disclosure tiering allows verification of integrity without default exposure of model weights, proprietary architecture, or trade-secret implementation.</div></div>
-        <div class="tech-panel"><div class="tech-panel-num">05 · Fail-Open Architecture</div><div class="tech-panel-title">Inference Continuity First</div><div class="tech-panel-body">Inference continuity remains independent of artifact sealing. If artifact generation fails, inference proceeds. Seal failures are logged and flagged. CEYO is designed not to interrupt operational systems.</div></div>
+        <div class="tech-panel">
+          <div class="tech-panel-num">01 · Attachment at the Inference Boundary</div>
+          <div class="tech-panel-title">Sidecar · Gateway · API Wrapper</div>
+          <div class="tech-panel-body">CEYO integrates at the inference boundary so evidence infrastructure does not require mutation of model weights, training pipelines, or core inference engines. The inference engine remains unchanged. The integrity layer operates externally.</div>
+        </div>
+
+        <div class="tech-panel">
+          <div class="tech-panel-num">02 · Policy-Scoped Capture</div>
+          <div class="tech-panel-title">Define Before You Collect</div>
+          <div class="tech-panel-body">Artifact generation begins with explicit policy definition: which fields are included, excluded, masked; disclosure tier configuration; and policy version identifiers. Capture scope is versioned and embedded inside the artifact for reviewable boundaries.</div>
+        </div>
+
+        <div class="tech-panel">
+          <div class="tech-panel-num">03 · Deterministic Canonicalization</div>
+          <div class="tech-panel-title">RFC 8785 JSON Canonicalization</div>
+          <div class="tech-panel-body">Before hashing, artifacts are canonicalized using RFC 8785 (JSON Canonicalization Scheme), ensuring logically equivalent structures produce identical byte output across environments. Verification remains reproducible and not environment-dependent.</div>
+        </div>
+
+        <div class="tech-panel">
+          <div class="tech-panel-num">04 · Cryptographic Sealing</div>
+          <div class="tech-panel-title">Hashing + Signatures</div>
+          <div class="tech-panel-body">After canonicalization, artifacts are sealed via cryptographic hashing and digital signatures. Reference implementations include SHA-256 and ECDSA (P-256). Signing keys remain non-custodial within operator-controlled HSM/KMS/TEE environments.</div>
+        </div>
+
+        <div class="tech-panel">
+          <div class="tech-panel-num">05 · Integrity–Availability Balance</div>
+          <div class="tech-panel-title">Fail-Open by Default</div>
+          <div class="tech-panel-body">Integrity infrastructure must not halt inference by default. If sealing fails, inference may continue uninterrupted while seal failures are logged, flagged, and reviewable. Availability posture remains an institutional decision.</div>
+        </div>
       </div>
     </div>
   </section>
 
   <div class="cta-strip">
     <div class="cta-strip-text">
+      <p style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2);margin-bottom:10px;">For regulators · operators · institutional review</p>
       <strong>Controlled Review</strong>
-      <p>Detailed documentation, verification contracts, capture schema specifications, and benchmark methodology are available under controlled disclosure.</p>
+      <p>Technical requirements, capture policy schemas, verification contracts, and benchmark methodology are available under controlled disclosure.</p>
     </div>
     <a class="btn primary" href="contact.html">Request Controlled Review</a>
   </div>
@@ -263,13 +323,13 @@ a{color:inherit;text-decoration:none;}
     <div class="boundary-wrap" role="region" aria-label="Boundary declaration">
       <div class="boundary-lbl">Boundary Declaration &nbsp;·&nbsp; V2026.02.19</div>
       <div class="boundary-items">
-        <p class="bi">CEYO produces records. It does not validate correctness, fairness, legality, or compliance outcomes.</p>
-        <p class="bi">CEYO does not certify regulatory compliance.</p>
-        <p class="bi">CEYO does not guarantee legal admissibility.</p>
-        <p class="bi">CEYO does not guarantee inference reproducibility.</p>
-        <p class="bi">Authorized institutions and operators retain responsibility for decisions and determinations.</p>
+        <p class="bi">CEYO produces records. It does not evaluate outputs or adjudicate compliance.</p>
+        <p class="bi">CEYO does not certify regulatory compliance or guarantee admissibility.</p>
+        <p class="bi">Verification confirms integrity and provenance under declared policy scope.</p>
+        <p class="bi">Verification does not confirm correctness, legality, fairness, or operational safety.</p>
+        <p class="bi">Authorized institutions and regulated operators retain responsibility for determinations.</p>
       </div>
-      <p class="boundary-close">Verification confirms integrity and provenance under policy scope — not correctness of model output.</p>
+      <p class="boundary-close">Evidence infrastructure is mechanical. Oversight is institutional.</p>
     </div>
   </div>
 
@@ -300,13 +360,26 @@ document.querySelectorAll('a,button,.deficit-cell,.prop-cell,.btn').forEach(el=>
 
 const heroH1=document.getElementById('hero-h1');
 const heroWrap=document.querySelector('.hero-sticky-wrap');
+
 function onScroll(){
-  const pct=Math.min(window.scrollY/(heroWrap.offsetHeight*0.38),1);
-  heroH1.style.opacity=Math.max(0,1-pct*1.2);
-  heroH1.style.filter=`blur(${pct*12}px)`;
-  heroH1.style.transform=`translateY(${pct*-22}px)`;
+  const max = heroWrap.offsetHeight - window.innerHeight;
+  const progress = Math.min(window.scrollY / max, 1);
+  heroH1.style.opacity = 1 - (progress * 1.1);
+  heroH1.style.filter = `blur(${progress * 10}px)`;
+  heroH1.style.transform = `translateY(${progress * -18}px)`;
 }
-window.addEventListener('scroll',onScroll,{passive:true});
+
+let ticking=false;
+window.addEventListener('scroll',()=>{
+  if(!ticking){
+    window.requestAnimationFrame(()=>{
+      onScroll();
+      ticking=false;
+    });
+    ticking=true;
+  }
+},{passive:true});
+onScroll();
 
 const sections=document.querySelectorAll('.section,.principle-section');
 const focusObs=new IntersectionObserver(entries=>{
@@ -314,7 +387,7 @@ const focusObs=new IntersectionObserver(entries=>{
     if(e.isIntersecting){e.target.classList.add('visible','focus');}
     else{e.target.classList.remove('focus');}
   });
-},{threshold:0.10});
+},{threshold:0.08});
 sections.forEach(s=>focusObs.observe(s));
 
 function typewrite(el,text,speed){
@@ -327,24 +400,25 @@ function typewrite(el,text,speed){
     if(i>=original.length){clearInterval(iv);el.classList.remove('typewrite-cursor');}
   },speed||18);
 }
+
 const typeObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
-    if(e.isIntersecting&&!e.target.dataset.typed){
-      e.target.dataset.typed='1';
+    if(e.isIntersecting && !e.target.dataset.typed){
+      e.target.dataset.typed='true';
       typewrite(e.target,e.target.textContent,12);
     }
   });
-},{threshold:0.7});
+},{threshold:0.65});
 document.querySelectorAll('.hero-version').forEach(t=>typeObs.observe(t));
 
 const h2obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
-    if(e.isIntersecting&&!e.target.dataset.typed){
-      e.target.dataset.typed='1';
-      typewrite(e.target,e.target.textContent,22);
+    if(e.isIntersecting && !e.target.dataset.typed){
+      e.target.dataset.typed='true';
+      typewrite(e.target,e.target.textContent,20);
     }
   });
-},{threshold:0.5});
+},{threshold:0.45});
 document.querySelectorAll('.section-h2').forEach(h=>h2obs.observe(h));
 
 document.querySelectorAll('.btn,.deficit-cell,.prop-cell,.index-item').forEach(el=>{
