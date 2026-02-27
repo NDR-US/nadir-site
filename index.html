@@ -10,101 +10,130 @@
     
     <style>
         :root {
-            --palantir-indigo: #4f46e5;
-            --palantir-slate: #1e293b;
+            /* Switched to Electric Signal Blue - sharper and more industrial */
+            --signal-blue: #0066FF; 
+            --deep-black: #050505;
         }
 
         body {
-            background-color: #050505;
+            background-color: var(--deep-black);
             color: #f8fafc;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
 
-        /* Staggered Reveal Animations */
+        /* Initial Page Load Reveal */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .reveal-1 { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
-        .reveal-2 { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; opacity: 0; }
-        .reveal-3 { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards; opacity: 0; }
+        .reveal-1 { animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .reveal-2 { animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; opacity: 0; }
+        .reveal-3 { animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; opacity: 0; }
+
+        /* Scroll-Triggered Reveal Classes */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         .power-statement {
-            color: var(--palantir-indigo);
-            letter-spacing: -0.02em;
+            color: var(--signal-blue);
+            letter-spacing: -0.04em;
+            text-shadow: 0 0 30px rgba(0, 102, 255, 0.2);
         }
 
-        /* Minimalist Button Hover */
-        .btn-aip {
-            transition: all 0.3s ease;
+        .btn-industrial {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             border: 1px solid rgba(255,255,255,0.1);
         }
-        .btn-aip:hover {
-            background: rgba(255,255,255,0.05);
-            border-color: rgba(255,255,255,0.3);
+        .btn-industrial:hover {
+            border-color: var(--signal-blue);
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.15);
+            background: rgba(0, 102, 255, 0.05);
         }
 
         .mono { font-family: 'IBM Plex Mono', monospace; }
+        
+        /* Subtle scanline effect to feel like a high-end monitor */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
     </style>
 </head>
-<body class="min-h-screen selection:bg-indigo-500/30">
+<body class="min-h-screen selection:bg-blue-500/30">
 
     <nav id="institutional-nav"></nav>
 
-    <main class="relative z-10 max-w-7xl mx-auto pt-40 pb-60 px-8">
-        
-        <div class="max-w-4xl">
-            <div class="reveal-1 mono text-[11px] text-gray-500 tracking-[0.3em] mb-12">
-                [ SYSTEM CORE v1.0 // EVIDENTIARY SUBSTRATE ]
+    <main class="relative z-10 max-w-7xl mx-auto pt-48 pb-72 px-8">
+        <div class="max-w-5xl">
+            <div class="reveal-1 mono text-[11px] text-blue-500/70 tracking-[0.4em] mb-12 font-bold uppercase">
+                // SYSTEM_CORE_v1.0 // SUBSTRATE_ACTIVE
             </div>
 
-            <h1 class="reveal-2 text-7xl md:text-8xl font-extrabold tracking-tighter mb-8 leading-[0.9]">
+            <h1 class="reveal-2 text-7xl md:text-9xl font-extrabold tracking-tighter mb-10 leading-[0.85] uppercase italic">
                 Go beyond telemetry.<br>
                 <span class="power-statement">Enterprise Autonomy.</span>
             </h1>
 
             <p class="reveal-3 text-2xl font-light text-gray-400 max-w-2xl leading-relaxed mb-16">
-                Bridging the gap between raw data and durable proof with cryptographically sealed inference artifacts.
+                Bridging the structural gap between raw data and durable proof with cryptographically sealed inference artifacts.
             </p>
 
-            <div class="reveal-3 flex gap-6">
-                <button class="btn-aip px-8 py-3 text-sm mono uppercase tracking-widest bg-white text-black font-bold">
+            <div class="reveal-3 flex gap-8">
+                <button class="btn-industrial px-10 py-4 text-xs mono uppercase tracking-[0.2em] bg-white text-black font-black">
                     Deploy Substrate
                 </button>
-                <button class="btn-aip px-8 py-3 text-sm mono uppercase tracking-widest text-white">
+                <button class="btn-industrial px-10 py-4 text-xs mono uppercase tracking-[0.2em] text-white">
                     View Architecture
                 </button>
             </div>
         </div>
     </main>
 
-    <section class="max-w-7xl mx-auto px-8 py-40 border-t border-white/5">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
+    <section class="max-w-7xl mx-auto px-8 py-52 border-t border-white/5 scroll-reveal">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-32 items-start">
             
             <div class="space-y-12">
-                <h2 class="text-4xl font-bold tracking-tight">The Accountability Gap.</h2>
-                <div class="space-y-8 text-xl font-light text-gray-400">
-                    <p>Modern AI deployments optimize for throughput. <span class="text-white">Accountability is secondary.</span></p>
+                <h2 class="text-5xl font-black tracking-tighter uppercase italic">The Accountability Gap.</h2>
+                <div class="space-y-8 text-xl font-light text-gray-400 leading-relaxed">
+                    <p>Modern AI deployments optimize for throughput. <span class="text-white font-bold italic underline decoration-blue-600 underline-offset-8">Accountability is secondary.</span></p>
                     <p>When a decision is questioned, reconstruction from partial logs is not enough. NADIR provides the forensic record.</p>
                 </div>
             </div>
 
-            <div class="p-12 bg-slate-900/20 border border-white/5 backdrop-blur-3xl">
-                <div class="mono text-[10px] text-indigo-400 mb-8 uppercase tracking-widest">// Requirement_Manifest</div>
-                <ul class="space-y-6 text-sm mono uppercase tracking-widest">
-                    <li class="flex items-center gap-4">
-                        <span class="h-1 w-1 bg-indigo-500"></span> 01. Canonical Structure
+            <div class="p-16 bg-white/[0.02] border border-white/10 backdrop-blur-3xl relative">
+                <div class="absolute top-0 left-0 w-1 h-full bg-blue-600"></div>
+                <div class="mono text-[10px] text-blue-500 mb-10 uppercase tracking-[0.3em] font-bold">// Requirement_Manifest</div>
+                <ul class="space-y-8 text-xs mono uppercase tracking-[0.2em] font-bold">
+                    <li class="flex items-center gap-6 group">
+                        <span class="h-2 w-2 bg-blue-600 rotate-45"></span> 
+                        <span class="text-gray-500 group-hover:text-white transition-colors">01. Canonical Structure</span>
                     </li>
-                    <li class="flex items-center gap-4">
-                        <span class="h-1 w-1 bg-indigo-500"></span> 02. Explicit Scope
+                    <li class="flex items-center gap-6 group">
+                        <span class="h-2 w-2 bg-blue-600 rotate-45"></span> 
+                        <span class="text-gray-500 group-hover:text-white transition-colors">02. Explicit Scope</span>
                     </li>
-                    <li class="flex items-center gap-4">
-                        <span class="h-1 w-1 bg-indigo-500"></span> 03. Cryptographic Seal
+                    <li class="flex items-center gap-6 group">
+                        <span class="h-2 w-2 bg-blue-600 rotate-45"></span> 
+                        <span class="text-gray-500 group-hover:text-white transition-colors">03. Cryptographic Seal</span>
                     </li>
-                    <li class="flex items-center gap-4">
-                        <span class="h-1 w-1 bg-indigo-500"></span> 04. Independent Proof
+                    <li class="flex items-center gap-6 group">
+                        <span class="h-2 w-2 bg-blue-600 rotate-45"></span> 
+                        <span class="text-gray-500 group-hover:text-white transition-colors">04. Independent Proof</span>
                     </li>
                 </ul>
             </div>
@@ -112,20 +141,35 @@
     </section>
 
     
-
-    <footer class="max-w-7xl mx-auto px-8 py-20 border-t border-white/5 text-center lg:text-left">
+    <footer class="max-w-7xl mx-auto px-8 py-24 border-t border-white/5 scroll-reveal">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <p class="text-sm mono text-gray-600 uppercase tracking-widest italic">
-                NADIR provides the record; institutions provide the oversight.
+            <p class="text-sm mono text-gray-500 uppercase tracking-[0.2em] italic font-bold">
+                <span class="text-blue-500">//</span> NADIR provides the record; institutions provide the oversight.
             </p>
-            <div class="flex justify-center lg:justify-end gap-12 text-[10px] mono text-gray-500">
-                <span>VER: 2026.01.ALPHA</span>
-                <span>ENC: ECDSA_P256</span>
-                <span>STAL: ACTIVE</span>
+            <div class="flex justify-center lg:justify-end gap-12 text-[10px] mono text-gray-400 font-bold uppercase tracking-widest">
+                <span>VER: 2026.01.ALFA</span>
+                <span class="text-blue-600">ENC: ECDSA_P256</span>
+                <span>STATUS: OPS_ACTIVE</span>
             </div>
         </div>
     </footer>
 
+    <script>
+        const observerOptions = {
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    </script>
+    
     <script src="app/js/nav.js"></script>
 </body>
 </html>
