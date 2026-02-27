@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Infrastructure | NADIR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Inter:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #000; color: #FFF; }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+        .border-gray { border-color: #222; }
+    </style>
+</head>
+<body>
+    <nav class="border-b border-gray p-4 mono text-[10px] tracking-widest text-gray-500">
+        <div class="max-w-7xl mx-auto flex justify-between uppercase">
+            <span>Security Posture: V2026.02.19</span>
+            <div class="space-x-4">
+                <a href="index.html" class="hover:text-white">Home</a>
+                <a href="architecture.html" class="hover:text-white">Architecture</a>
+                <a href="trust.html" class="text-white border-b border-white pb-1">Trust</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto py-24 px-6">
+        <h1 class="text-7xl font-bold tracking-[ -0.05em] mb-20 italic">TRUST INFRASTRUCTURE</h1>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+            <div class="lg:col-span-2 space-y-20">
+                <section>
+                    <h2 class="text-xs mono uppercase text-blue-500 mb-6 font-bold tracking-widest tracking-tighter underline underline-offset-8 decoration-1 italic">01. Integrity Architecture</h2>
+                    <p class="text-2xl font-light leading-snug mb-8 text-gray-300">
+                        Trust in evidentiary systems is established through <span class="text-white font-semibold">verifiable mechanics</span>, not administrative assertions.
+                    </p>
+                    <p class="text-gray-500 leading-relaxed mb-8">
+                        NADIR's trust posture is anchored in determinism, non-custodial cryptographic architecture, and structural transparency.
+                    </p>
+                    <ul class="space-y-4 mono text-sm text-gray-400">
+                        <li class="flex items-start gap-4"><span class="text-blue-600">[+]</span> Deterministic JSON Canonicalization (RFC 8785)</li>
+                        <li class="flex items-start gap-4"><span class="text-blue-600">[+]</span> Non-Custodial Private Key Retainment</li>
+                        <li class="flex items-start gap-4"><span class="text-blue-600">[+]</span> Cryptographic Time Anchoring (Optional)</li>
+                    </ul>
+                </section>
+
+                
+
+                <section class="pt-20 border-t border-gray">
+                    <h2 class="text-xs mono uppercase text-blue-500 mb-6 font-bold tracking-widest tracking-tighter underline underline-offset-8 decoration-1 italic">02. Supply Chain Transparency</h2>
+                    <p class="text-gray-400 mb-10">NADIR maintains a Software Bill of Materials (SBOM) for reference builds to support institutional supply chain governance.</p>
+                    <div class="flex gap-4">
+                        <div class="px-6 py-3 border border-gray text-xs mono uppercase text-gray-500">Format: SPDX</div>
+                        <div class="px-6 py-3 border border-gray text-xs mono uppercase text-gray-500">Format: CycloneDX</div>
+                    </div>
+                </section>
+            </div>
+
+            <aside class="space-y-12">
+                <div class="p-8 border border-gray bg-[#0A0A0A]">
+                    <h3 class="text-sm font-bold mono mb-4 italic">Vulnerability Disclosure</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed mb-6">
+                        NADIR maintains a structured VDP to support responsible reporting of potential integrity-layer findings.
+                    </p>
+                    <a href="vdp.html" class="text-xs mono text-blue-500 underline uppercase tracking-widest">Review Policy</a>
+                </div>
+
+                <div class="p-8 border border-gray bg-[#0A0A0A]">
+                    <h3 class="text-sm font-bold mono mb-4 italic italic">Sustainability</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        Inference workloads represent the dominant energy profile. NADIR artifact generation constitutes incremental, policy-scoped overhead.
+                    </p>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="mt-32 pt-12 border-t border-gray text-[10px] mono text-gray-600 flex justify-between uppercase tracking-[0.2em]">
+            <span>NADIR Infrastructure Declaration</span>
+            <span>V2026.02.19</span>
+        </footer>
+    </main>
+</body>
+</html>
