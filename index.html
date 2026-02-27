@@ -75,14 +75,21 @@
         .card { 
             border: 1px solid rgba(255,255,240,0.08); padding: 40px; 
             background: rgba(255,255,240,0.01); backdrop-filter: blur(8px);
-            transition: border 0.5s;
         }
-        .card:hover { border: 1px solid var(--tactical-green); }
 
         .type-cursor { border-left: 3px solid var(--tactical-green); margin-left: 4px; animation: blink 0.8s infinite; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        nav { mix-blend-difference: exclusion; }
+        /* FIXED NAVIGATION HUB */
+        .control-hub {
+            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            background: rgba(13, 14, 11, 0.98); 
+            border: 1px solid rgba(255, 255, 240, 0.1);
+            padding: 1rem 2rem; display: flex; gap: 2.5rem; z-index: 2000;
+            width: max-content; max-width: 90vw;
+        }
+        .nav-link { font-family: 'IBM Plex Mono'; font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.3em; transition: 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--ivory); }
     </style>
 </head>
 <body class="antialiased">
@@ -118,119 +125,77 @@
 
         
 
-        <section class="px-[10%] space-y-[45vh] pb-80 relative z-20">
-            
-            <div class="fade grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
-                <div class="lg:col-span-6">
-                    <h2 class="mono text-[11px] text-[#4A5D3B] mb-8 tracking-widest font-bold uppercase">// 01_INFRASTRUCTURE</h2>
-                    <h3 class="candela text-5xl lg:text-9xl uppercase italic tracking-tighter leading-none mb-10">Evidentiary<br>Substrate.</h3>
+        <section class="fade px-[10%] py-40">
+            <h2 class="candela text-5xl lg:text-8xl uppercase italic tracking-tighter mb-16">Evidentiary Infrastructure</h2>
+            <p class="text-xl lg:text-4xl font-light text-white/60 mb-12 max-w-5xl">
+                AI systems increasingly influence decisions in regulated environments. When reviewed, underlying infrastructure often produces logs not designed as <span class="text-white font-bold italic">durable evidence.</span>
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card">
+                    <div class="mono text-[9px] text-[#4A5D3B] mb-4 font-bold">BOUNDARY</div>
+                    <p class="text-[10px] text-white/30 uppercase mono leading-relaxed font-bold">Pure record creation. No adjudicating logic.</p>
                 </div>
-                <div class="lg:col-span-6">
-                    <p class="text-xl lg:text-4xl font-light text-white/60 mb-14 leading-tight">
-                        AI telemetry describes activity. It does not <span class="text-white italic font-bold">preserve proof.</span> NADIR attaches at the boundary to produce policy-scoped, canonical artifacts.
-                    </p>
-                    <div class="h-[1px] w-full bg-white/10 mb-14"></div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="card">
-                            <div class="mono text-[9px] text-[#4A5D3B] mb-4 font-bold">BOUNDARY</div>
-                            <p class="text-[10px] text-white/30 uppercase mono leading-relaxed font-bold">Pure record creation. No adjudicating logic.</p>
-                        </div>
-                        <div class="card">
-                            <div class="mono text-[9px] text-[#4A5D3B] mb-4 font-bold">SEAL</div>
-                            <p class="text-[10px] text-white/30 uppercase mono leading-relaxed font-bold">Cryptographic permanence via RFC 8785.</p>
-                        </div>
-                        <div class="card">
-                            <div class="mono text-[9px] text-[#4A5D3B] mb-4 font-bold">STATUS</div>
-                            <p class="text-[10px] text-white/30 uppercase mono leading-relaxed font-bold">Fail-open architecture preserves continuity.</p>
-                        </div>
-                    </div>
+                <div class="card">
+                    <div class="mono text-[9px] text-[#4A5D3B] mb-4 font-bold">SEAL</div>
+                    <p class="text-[10px] text-white/30 uppercase mono leading-relaxed font-bold">Cryptographic permanence via RFC 8785.</p>
+                </div>
+                <div class="card">
+                    <div class="mono text-[9px] text-[#4A5D3B] mb-4 font-bold">STATUS</div>
+                    <p class="text-[10px] text-white/30 uppercase mono leading-relaxed font-bold">Fail-open architecture preserves continuity.</p>
                 </div>
             </div>
+        </section>
 
-            <div class="fade grid grid-cols-1 lg:grid-cols-12 gap-20">
-                <div class="lg:col-span-7">
-                    <h2 class="mono text-[11px] text-[#4A5D3B] mb-8 tracking-widest font-bold uppercase">// 02_THE_GAP</h2>
-                    <h3 class="candela text-5xl lg:text-9xl uppercase italic tracking-tighter leading-none mb-14">The Accountability Gap.</h3>
-                    <p class="text-xl lg:text-4xl font-light text-white/50 leading-relaxed italic">
-                        <span class="typewriter" data-text="When a decision is questioned, reconstruction from logs is interpretive. Reconstruction is not deterministic. This is an architectural deficit."></span><span class="type-cursor"></span>
-                    </p>
-                </div>
-                <div class="lg:col-span-5 flex flex-col justify-end items-end text-right">
-                    <div class="h-60 w-[1px] bg-[#4A5D3B] mb-10"></div>
-                    <p class="mono text-[10px] text-white/20 uppercase tracking-widest leading-loose">
-                        Institutional Reality Requires<br>Cryptographic Proof.
-                    </p>
-                </div>
-            </div>
+        
 
+        <section class="fade px-[10%] py-40">
+            <h2 class="candela text-5xl lg:text-8xl uppercase italic tracking-tighter mb-16">The Accountability Gap</h2>
+            <p class="text-xl lg:text-4xl font-light text-white/50 leading-relaxed italic">
+                <span class="typewriter" data-text="When a decision is questioned, reconstruction from logs is interpretive. Reconstruction is not deterministic. This is an architectural deficit."></span><span class="type-cursor"></span>
+            </p>
         </section>
 
         <footer class="px-[10%] py-60 border-t border-white/5 bg-black/40 relative z-30">
-            <div class="flex flex-col lg:flex-row justify-between items-end gap-16">
-                <div>
-                    <h2 class="candela text-5xl lg:text-7xl uppercase italic mb-8">Institutional Reality.</h2>
-                    <p class="mono text-[11px] text-white/20 uppercase tracking-[0.6em] font-bold leading-loose">
-                        All Rights Reserved © 2026 NADIR SYSTEMS.<br>
-                        SECURE_SUBSTRATE // VERIFIED_NODE.
-                    </p>
-                </div>
-                <div class="mono text-[10px] text-white/10 text-right tracking-widest font-bold">
-                    REL_STABLE // 0x992..AF
-                </div>
-            </div>
+            <div class="candela text-4xl lg:text-7xl uppercase italic mb-8">Institutional Reality.</div>
+            <p class="mono text-[11px] text-white/20 uppercase tracking-[0.6em] font-bold">ALL RIGHTS RESERVED © 2026 NADIR SYSTEMS.</p>
         </footer>
     </main>
 
+    <nav class="control-hub">
+        <a href="index.html" class="nav-link active">Index</a>
+        <a href="architecture.html" class="nav-link">Arch</a>
+        <a href="trust.html" class="nav-link">Trust</a>
+        <a href="governance.html" class="nav-link">Gov</a>
+    </nav>
+
     <script>
-        // TYPEWRITER SYSTEM
         function typeWriter(el) {
             const text = el.getAttribute('data-text');
-            el.innerHTML = '';
-            let i = 0;
+            el.innerHTML = ''; let i = 0;
             const timer = setInterval(() => {
-                if (i < text.length) {
-                    el.innerHTML += text.charAt(i);
-                    i++;
-                } else {
-                    clearInterval(timer);
-                    if(el.nextElementSibling) el.nextElementSibling.style.opacity = '0';
-                }
+                if (i < text.length) { el.innerHTML += text.charAt(i); i++; }
+                else { clearInterval(timer); if(el.nextElementSibling) el.nextElementSibling.style.opacity = '0'; }
             }, 18);
         }
 
-        // KINETIC SCROLL ENGINE
         window.addEventListener("scroll", function() {
             const s = window.scrollY;
             const hero = document.getElementById("hero");
             const grid = document.getElementById("grid");
-            
-            // DEPTH ERASE: Blur, Shrink, Push
             if (s < 1500) {
-                const blurVal = s / 50;
-                const scaleVal = 1 - (s / 6000);
-                const opacityVal = 1 - (s / 1200);
-                const travel = s * 0.25;
-                
-                hero.style.filter = `blur(${blurVal}px)`;
-                hero.style.opacity = opacityVal;
-                hero.style.transform = `scale(${scaleVal}) translateY(${travel}px)`;
+                hero.style.filter = `blur(${s/50}px)`;
+                hero.style.opacity = 1 - (s/1200);
+                hero.style.transform = `scale(${1-(s/6000)}) translateY(${s*0.25}px)`;
             }
-            
-            // 3D GRID SKEW
             grid.style.transform = `perspective(1000px) rotateX(${65 + s*0.006}deg) translateY(${s*0.06}px)`;
         });
 
-        // REVEAL OBSERVER
         const observer = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
                     e.target.classList.add("show");
-                    const writers = e.target.querySelectorAll('.typewriter');
-                    writers.forEach(w => {
-                        if (!w.classList.contains('typed')) {
-                            typeWriter(w);
-                            w.classList.add('typed');
-                        }
+                    e.target.querySelectorAll('.typewriter').forEach(w => {
+                        if (!w.classList.contains('typed')) { typeWriter(w); w.classList.add('typed'); }
                     });
                 }
             });
