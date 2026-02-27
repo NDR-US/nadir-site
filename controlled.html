@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controlled Review Tier | NADIR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Inter:wght@300;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #000; color: #fff; }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+        .gate-border { border: 1px solid #333; transition: border-color 0.5s; }
+        .gate-border:hover { border-color: #0057FF; }
+        .scanline { height: 2px; background: #0057FF; opacity: 0.1; width: 100%; position: absolute; top: 0; animation: scan 4s linear infinite; }
+        @keyframes scan { from { top: 0; } to { top: 100%; } }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <main class="flex-grow flex items-center justify-center px-6 py-20 relative overflow-hidden">
+        <div class="scanline"></div>
+        
+        <div class="max-w-3xl w-full">
+            <header class="mb-12">
+                <p class="mono text-blue-500 text-xs font-bold tracking-[0.4em] mb-4 uppercase italic italic italic italic italic">// Access Gated: Section 0x16</p>
+                <h1 class="text-6xl font-black tracking-tighter uppercase italic italic italic">Controlled Review Tier</h1>
+                <p class="text-gray-500 text-lg mt-4 font-light leading-relaxed">
+                    Detailed technical specifications, full TRD manuscripts, and deployment binaries are restricted to verified institutional partners.
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <div class="gate-border p-8 bg-[#0A0A0A]">
+                    <h3 class="text-sm font-bold mono mb-4 uppercase italic">Authorized Partners</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed mb-8">Existing partners with assigned credentials may proceed to the secure document repository.</p>
+                    <button class="w-full py-4 bg-white text-black mono text-xs uppercase font-bold tracking-widest hover:bg-blue-500 hover:text-white transition-all">Sign In</button>
+                </div>
+
+                <div class="gate-border p-8 bg-[#0A0A0A]">
+                    <h3 class="text-sm font-bold mono mb-4 uppercase italic">Request Verification</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed mb-8">Organizations seeking evidentiary infrastructure for regulatory or safety-critical review may request a vetting interview.</p>
+                    <button class="w-full py-4 border border-white text-white mono text-xs uppercase font-bold tracking-widest hover:border-blue-500 hover:text-blue-500 transition-all">Submit Intent</button>
+                </div>
+            </div>
+
+            
+
+            <div class="border-t border-white/10 pt-8 opacity-40">
+                <h4 class="text-[10px] mono uppercase font-bold tracking-widest mb-4 italic underline decoration-blue-500">Security Disclosure</h4>
+                <p class="text-[10px] mono leading-relaxed uppercase">
+                    All access attempts are logged. NADIR utilizes non-custodial cryptographic verification for user authentication. Possession of this URL does not constitute authorization.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="p-8 border-t border-white/10 text-center mono text-[10px] text-gray-600 uppercase tracking-widest">
+        NADIR_EVIDENTIARY_SYSTEMS // SECURE_LAYER_ACCESS
+    </footer>
+</body>
+</html>
