@@ -3,119 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NADIR | Evidentiary Infrastructure for Autonomous Systems</title>
+    <title>NADIR | Enterprise Autonomy</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="app/css/global.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
     
     <style>
-        /* Unique Page elevation: Strategic Charcoal Gradient */
+        :root {
+            --palantir-indigo: #4f46e5;
+            --palantir-slate: #1e293b;
+        }
+
         body {
-            background: radial-gradient(circle at top right, #1a1a1c, #0a0a0b);
-            color: #d1d1d1;
+            background-color: #050505;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
         }
-        .hero-title {
-            line-height: 0.85;
-            letter-spacing: -0.06em;
+
+        /* Staggered Reveal Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .accent-box {
-            background: linear-gradient(90deg, #000 0%, #111 100%);
-            border-left: 4px solid #0057ff;
+
+        .reveal-1 { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .reveal-2 { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; opacity: 0; }
+        .reveal-3 { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards; opacity: 0; }
+
+        .power-statement {
+            color: var(--palantir-indigo);
+            letter-spacing: -0.02em;
         }
+
+        /* Minimalist Button Hover */
+        .btn-aip {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-aip:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .mono { font-family: 'IBM Plex Mono', monospace; }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen selection:bg-indigo-500/30">
 
     <nav id="institutional-nav"></nav>
 
-    <main class="max-w-6xl mx-auto py-32 px-8">
+    <main class="relative z-10 max-w-7xl mx-auto pt-40 pb-60 px-8">
         
-        <header class="mb-32 max-w-4xl">
-            <div class="mono text-[10px] text-blue-500 font-bold tracking-[0.4em] mb-6 uppercase">// Core_Philosophy_v1.0</div>
-            <h1 class="hero-title text-8xl font-black italic uppercase text-white mb-8">
-                Evidentiary<br>Infrastructure
-            </h1>
-            <p class="text-2xl font-light tracking-tight text-gray-400 max-w-2xl leading-snug">
-                Bridging the structural gap between raw telemetry and durable proof through decoupled, cryptographically sealed inference artifacts.
-            </p>
-        </header>
-
-        <section class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start mb-32">
-            <div class="lg:col-span-7 space-y-8 text-xl font-light leading-relaxed">
-                <p>
-                    AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those decisions are reviewed, current infrastructure produces telemetry that was never designed to function as <span class="text-white font-medium">forensic evidence</span>.
-                </p>
-                
-                <div class="accent-box p-10 my-12">
-                    <p class="text-3xl font-light leading-tight text-white">
-                        Telemetry describes activity.<br>
-                        <span class="font-black italic text-blue-500 uppercase tracking-tighter">It does not preserve proof.</span>
-                    </p>
-                </div>
-
-                <p class="text-gray-400">
-                    NADIR attaches to the inference boundary to produce policy-scoped, canonical artifacts. These represent defined inference-time decision-state context, cryptographically sealed for institutional verification.
-                </p>
+        <div class="max-w-4xl">
+            <div class="reveal-1 mono text-[11px] text-gray-500 tracking-[0.3em] mb-12">
+                [ SYSTEM CORE v1.0 // EVIDENTIARY SUBSTRATE ]
             </div>
 
-            <aside class="lg:col-span-5 border border-white/10 bg-white/5 p-8">
-                <h3 class="mono text-xs font-bold text-white mb-8 tracking-widest uppercase italic">System_Characteristics</h3>
-                <ul class="space-y-6">
-                    <li class="flex justify-between items-end border-b border-white/10 pb-2">
-                        <span class="mono text-[10px] text-gray-500 uppercase">Structure</span>
-                        <span class="text-sm font-bold text-white uppercase italic">Canonical JCS</span>
+            <h1 class="reveal-2 text-7xl md:text-8xl font-extrabold tracking-tighter mb-8 leading-[0.9]">
+                Go beyond telemetry.<br>
+                <span class="power-statement">Enterprise Autonomy.</span>
+            </h1>
+
+            <p class="reveal-3 text-2xl font-light text-gray-400 max-w-2xl leading-relaxed mb-16">
+                Bridging the gap between raw data and durable proof with cryptographically sealed inference artifacts.
+            </p>
+
+            <div class="reveal-3 flex gap-6">
+                <button class="btn-aip px-8 py-3 text-sm mono uppercase tracking-widest bg-white text-black font-bold">
+                    Deploy Substrate
+                </button>
+                <button class="btn-aip px-8 py-3 text-sm mono uppercase tracking-widest text-white">
+                    View Architecture
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <section class="max-w-7xl mx-auto px-8 py-40 border-t border-white/5">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
+            
+            <div class="space-y-12">
+                <h2 class="text-4xl font-bold tracking-tight">The Accountability Gap.</h2>
+                <div class="space-y-8 text-xl font-light text-gray-400">
+                    <p>Modern AI deployments optimize for throughput. <span class="text-white">Accountability is secondary.</span></p>
+                    <p>When a decision is questioned, reconstruction from partial logs is not enough. NADIR provides the forensic record.</p>
+                </div>
+            </div>
+
+            <div class="p-12 bg-slate-900/20 border border-white/5 backdrop-blur-3xl">
+                <div class="mono text-[10px] text-indigo-400 mb-8 uppercase tracking-widest">// Requirement_Manifest</div>
+                <ul class="space-y-6 text-sm mono uppercase tracking-widest">
+                    <li class="flex items-center gap-4">
+                        <span class="h-1 w-1 bg-indigo-500"></span> 01. Canonical Structure
                     </li>
-                    <li class="flex justify-between items-end border-b border-white/10 pb-2">
-                        <span class="mono text-[10px] text-gray-500 uppercase">Integrity</span>
-                        <span class="text-sm font-bold text-white uppercase italic">ECDSA P-256</span>
+                    <li class="flex items-center gap-4">
+                        <span class="h-1 w-1 bg-indigo-500"></span> 02. Explicit Scope
                     </li>
-                    <li class="flex justify-between items-end border-b border-white/10 pb-2">
-                        <span class="mono text-[10px] text-gray-500 uppercase">Capture</span>
-                        <span class="text-sm font-bold text-white uppercase italic">Policy-Scoped</span>
+                    <li class="flex items-center gap-4">
+                        <span class="h-1 w-1 bg-indigo-500"></span> 03. Cryptographic Seal
                     </li>
-                    <li class="flex justify-between items-end border-b border-white/10 pb-2">
-                        <span class="mono text-[10px] text-gray-500 uppercase">Latency</span>
-                        <span class="text-sm font-bold text-white uppercase italic">&lt; 1.5ms avg</span>
+                    <li class="flex items-center gap-4">
+                        <span class="h-1 w-1 bg-indigo-500"></span> 04. Independent Proof
                     </li>
                 </ul>
-            </aside>
-        </section>
-
-        
-
-        <section class="border-t border-white/20 pt-20 mb-32">
-            <div class="flex flex-col md:flex-row justify-between gap-12">
-                <div class="md:w-1/2">
-                    <h2 class="text-4xl font-black italic uppercase text-white mb-6">The Accountability Gap</h2>
-                    <p class="text-gray-400 leading-relaxed">
-                        Modern AI deployments optimize for throughput. Accountability is frequently secondary. When a decision is questioned, organizations are forced to reconstruct events from partial, mutable logs.
-                    </p>
-                </div>
-                <div class="md:w-1/3 bg-blue-600 p-8">
-                    <p class="text-xs mono font-black text-white uppercase mb-4 tracking-widest italic">// Requirement_Manifest</p>
-                    <ul class="text-white font-bold italic text-lg leading-tight space-y-2 uppercase">
-                        <li>Canonical Structure</li>
-                        <li>Explicit Scope</li>
-                        <li>Cryptographic Seal</li>
-                        <li>Independent Proof</li>
-                    </ul>
-                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <footer class="border border-blue-500/30 bg-blue-500/5 p-12">
-            <div class="flex items-center gap-4 mb-4">
-                <div class="h-1 w-12 bg-blue-500"></div>
-                <span class="mono text-[10px] font-black text-blue-500 uppercase tracking-widest">Institutional Position</span>
-            </div>
-            <p class="text-lg text-blue-100 font-light leading-snug italic">
-                NADIR is infrastructure. It is not adjudication. Authorized institutions and regulated operators retain responsibility for determinations. NADIR provides the record; <span class="text-white font-bold underline decoration-blue-500">institutions provide the oversight.</span>
+    
+
+    <footer class="max-w-7xl mx-auto px-8 py-20 border-t border-white/5 text-center lg:text-left">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <p class="text-sm mono text-gray-600 uppercase tracking-widest italic">
+                NADIR provides the record; institutions provide the oversight.
             </p>
-        </footer>
-
-    </main>
+            <div class="flex justify-center lg:justify-end gap-12 text-[10px] mono text-gray-500">
+                <span>VER: 2026.01.ALPHA</span>
+                <span>ENC: ECDSA_P256</span>
+                <span>STAL: ACTIVE</span>
+            </div>
+        </div>
+    </footer>
 
     <script src="app/js/nav.js"></script>
 </body>
