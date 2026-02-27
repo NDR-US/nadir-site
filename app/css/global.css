@@ -1,0 +1,78 @@
+/* NADIR GLOBAL STYLING SYSTEM */
+
+:root {
+    --nadir-blue: #0057FF;
+    --nadir-black: #000000;
+    --nadir-gray-dark: #0A0A0A;
+    --nadir-gray-mid: #262626;
+    --nadir-gray-light: #E5E5E5;
+    --nadir-white: #FFFFFF;
+}
+
+/* 1. Reset & Typography */
+* {
+    border-radius: 0 !important; /* KILL ALL ROUNDED CORNERS */
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    letter-spacing: -0.02em; /* Tighter tracking for enterprise feel */
+    line-height: 1.5;
+}
+
+/* 2. Brutalist Headers */
+h1, h2, h3 {
+    text-transform: uppercase;
+    font-style: italic;
+    letter-spacing: -0.05em; /* Extreme tight tracking for impact */
+    font-weight: 900;
+}
+
+/* 3. The "Palantir" Monospace Meta-Data */
+.mono-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--nadir-gray-mid);
+}
+
+/* 4. High-Contrast Borders */
+.defense-border {
+    border: 1px solid var(--nadir-gray-mid);
+}
+
+.defense-border:hover {
+    border-color: var(--nadir-blue);
+}
+
+/* 5. Navigation & Density */
+nav {
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 6. Buttons (High-Visibility) */
+.btn-defense {
+    background: transparent;
+    border: 1px solid var(--nadir-gray-mid);
+    color: var(--nadir-gray-light);
+    padding: 0.75rem 1.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.btn-defense:hover {
+    background: var(--nadir-blue);
+    border-color: var(--nadir-blue);
+    color: white;
+}
+
+/* 7. Image Placeholders */
+img, .placeholder-img {
+    filter: grayscale(100%) contrast(1.2); /* "Hard" tech look */
+    border: 1px solid var(--nadir-gray-mid);
+}
