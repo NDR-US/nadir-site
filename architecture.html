@@ -405,4 +405,244 @@ a{color:inherit;text-decoration:none;}
       <div class="chain-node" role="listitem"><div class="cn-num">03</div><div class="cn-label">Normalize</div><div class="cn-sub">Canonical schema</div></div>
       <div class="chain-node" role="listitem"><div class="cn-num">04</div><div class="cn-label">Canonicalize</div><div class="cn-sub">RFC 8785</div></div>
       <div class="chain-node" role="listitem"><div class="cn-num">05</div><div class="cn-label">Seal</div><div class="cn-sub">Hash + signature</div></div>
-      <div class="chain-node" role="listitem"><div class="cn-num">06</div><div class="cn-label">Tier</div><div class="
+      <div class="chain-node" role="listitem"><div class="cn-num">06</div><div class="cn-label">Tier</div><div class="cn-sub">Disclosure scope</div></div>
+      <div class="chain-node" role="listitem"><div class="cn-num">07</div><div class="cn-label">Verify</div><div class="cn-sub">Independent</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="stages">
+
+  <div class="stage layout-left" id="s1" aria-labelledby="s1-h">
+    <div class="stage-sidebar">
+      <div class="stage-num-big">01</div>
+      <div class="stage-label">Attachment</div>
+    </div>
+    <div class="stage-body">
+      <h2 class="stage-h2" id="s1-h">Inference Boundary Attachment</h2>
+      <p class="stage-p">CEYO integrates at the inference boundary through a sidecar, gateway, or API wrapper configuration. This posture is intentional. Evidence infrastructure should not require mutation of model weights, training pipelines, or core inference engines.</p>
+      <p class="stage-p">Attachment at the boundary allows CEYO to:</p>
+      <ul class="stage-list">
+        <li>Observe defined inference events</li>
+        <li>Capture policy-scoped context</li>
+        <li>Normalize event structure</li>
+        <li>Produce deterministic artifacts</li>
+        <li>Seal artifacts without interfering with decision flow</li>
+      </ul>
+      <div class="excl-block">
+        <div class="excl-label">Excluded by default</div>
+        <ul class="excl-list">
+          <li>Model weights</li>
+          <li>Training datasets</li>
+          <li>Proprietary architecture internals</li>
+          <li>Unrelated system telemetry</li>
+          <li>Full conversational transcripts unless explicitly configured</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage layout-right" id="s2" aria-labelledby="s2-h">
+    <div class="stage-body">
+      <h2 class="stage-h2" id="s2-h">Policy-Scoped Capture</h2>
+      <p class="stage-p">Artifact generation begins with explicit policy definition. The deploying institution defines capture scope before any data is collected.</p>
+      <ul class="stage-list">
+        <li>Which fields are included</li>
+        <li>Which fields are excluded</li>
+        <li>Which fields are masked</li>
+        <li>Disclosure tier configuration</li>
+        <li>Policy version identifiers</li>
+      </ul>
+      <p class="stage-p">Capture scope is versioned and recorded within the artifact itself. Reviewers can verify not only integrity, but the declared capture boundary under which the artifact was produced.</p>
+    </div>
+    <div class="schema-panel" aria-label="Artifact schema fields">
+      <div class="schema-header">Artifact schema — fields</div>
+      <div class="schema-row"><div class="schema-key">timestamp</div><div class="schema-val">Inference event time</div></div>
+      <div class="schema-row"><div class="schema-key">policy_id</div><div class="schema-val">Capture policy identifier</div></div>
+      <div class="schema-row"><div class="schema-key">policy_version</div><div class="schema-val">Versioned policy reference</div></div>
+      <div class="schema-row"><div class="schema-key">policy_hash</div><div class="schema-val">Policy document integrity</div></div>
+      <div class="schema-row"><div class="schema-key">provenance</div><div class="schema-val">Origin and deployment context</div></div>
+      <div class="schema-row"><div class="schema-key">input_ref_hash</div><div class="schema-val">Where configured by policy</div></div>
+      <div class="schema-row"><div class="schema-key">env_fingerprint</div><div class="schema-val">Capture environment identifier</div></div>
+      <div class="schema-row"><div class="schema-key">canon_version</div><div class="schema-val">RFC 8785 implementation version</div></div>
+      <div class="schema-row"><div class="schema-key">disclosure_tier</div><div class="schema-val">Applied visibility level</div></div>
+      <div class="schema-row"><div class="schema-key">integrity</div><div class="schema-val">Hash digest + signature</div></div>
+      <div class="schema-row"><div class="schema-key">verification</div><div class="schema-val">Verification parameters</div></div>
+    </div>
+  </div>
+
+  <div class="stage layout-left" id="s3" aria-labelledby="s3-h">
+    <div class="stage-sidebar">
+      <div class="stage-num-big">03</div>
+      <div class="stage-label">Sealing</div>
+    </div>
+    <div class="stage-body">
+      <h2 class="stage-h2" id="s3-h">Deterministic Canonicalization & Cryptographic Sealing</h2>
+      <p class="stage-p">Before hashing, JSON artifacts are canonicalized using RFC 8785 (JSON Canonicalization Scheme). Canonicalization ensures that logically equivalent data structures produce identical byte representations across environments.</p>
+      <div class="callout"><p>CEYO treats canonicalization as a structural requirement, not an optimization. Without deterministic canonicalization, verification becomes environment-dependent.</p></div>
+      <p class="stage-p">After canonicalization, artifacts are sealed using cryptographic hashing and digital signatures. Reference implementations: SHA-256 hashing · ECDSA P-256 signatures. Suite selection is configurable based on regulatory and operational requirements.</p>
+      <p class="stage-p">Signing keys are generated and retained within the client-controlled environment — HSM, KMS, or TEE. CEYO does not possess, transmit, or store private signing keys. This non-custodial architecture preserves a clear separation between infrastructure provider and cryptographic authority.</p>
+    </div>
+  </div>
+
+  <div class="stage layout-wide" id="s4" aria-labelledby="s4-h">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;">
+      <div>
+        <h2 class="stage-h2" id="s4-h">Integrity–Availability Balance</h2>
+        <p class="stage-p">Integrity infrastructure must not compromise operational continuity by default. CEYO's fail-open design ensures that inference remains available even when sealing encounters a failure condition.</p>
+        <div class="failopen">
+          <div class="failopen-label">Fail-open behavior</div>
+          <ul class="failopen-list">
+            <li>Inference may continue uninterrupted</li>
+            <li>The failure event is logged</li>
+            <li>The artifact is marked as unsealed</li>
+            <li>The condition becomes reviewable</li>
+          </ul>
+          <p class="failopen-note">Fail-open behavior preserves availability unless the operator explicitly configures a stricter posture. Operational control remains with the deploying institution.</p>
+        </div>
+      </div>
+      <div>
+        <h2 class="stage-h2">Disclosure Tier Enforcement</h2>
+        <p class="stage-p">Artifacts support tiered disclosure. Disclosure boundaries are policy-defined before artifact generation. Reviewers verify within declared scope rather than relying on post hoc redaction.</p>
+        <div class="schema-panel" style="margin-top:16px;">
+          <div class="schema-header">Disclosure tiers</div>
+          <div class="schema-row" style="grid-template-columns:130px 1fr;">
+            <div class="schema-key" style="color:var(--muted2);">Public / Redacted</div>
+            <div class="schema-val">Artifact summary · Policy ID · Non-sensitive metadata · Available without agreement</div>
+          </div>
+          <div class="schema-row" style="grid-template-columns:130px 1fr;">
+            <div class="schema-key" style="color:rgba(94,122,74,.9);">Controlled Review</div>
+            <div class="schema-val">Expanded fields · Integrity data · Policy-aligned elements · Requires executed agreement</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage layout-left" id="s5" aria-labelledby="s5-h">
+    <div class="stage-sidebar">
+      <div class="stage-num-big">07</div>
+      <div class="stage-label">Verification</div>
+    </div>
+    <div class="stage-body">
+      <h2 class="stage-h2" id="s5-h">Independent Verification Workflow</h2>
+      <p class="stage-p">Verification is designed to be executable by independent parties using deterministic procedures, without requiring access to CEYO infrastructure.</p>
+      <div class="verify-steps" role="list">
+        <div class="vst" role="listitem"><div class="vst-num">01</div><div class="vst-body"><div class="vst-title">Deterministic canonicalization</div><div class="vst-detail">RFC 8785 applied to JSON artifact byte representation</div></div></div>
+        <div class="vst" role="listitem"><div class="vst-num">02</div><div class="vst-body"><div class="vst-title">Hash recomputation</div><div class="vst-detail">Over canonicalized byte representation</div></div></div>
+        <div class="vst" role="listitem"><div class="vst-num">03</div><div class="vst-body"><div class="vst-title">Digital signature validation</div><div class="vst-detail">Against operator-published public key</div></div></div>
+        <div class="vst" role="listitem"><div class="vst-num">04</div><div class="vst-body"><div class="vst-title">Policy alignment check</div><div class="vst-detail">Policy identifier and version confirmed</div></div></div>
+      </div>
+      <div class="outcome-row" role="list" aria-label="Verification outcomes">
+        <div class="outcome-card confirmed" role="listitem"><div class="outcome-icon">✓</div><div><div class="outcome-title">Integrity Confirmed</div><div class="outcome-desc">Artifact unmodified since sealing; policy aligned</div></div></div>
+        <div class="outcome-card failed" role="listitem"><div class="outcome-icon">✗</div><div><div class="outcome-title">Integrity Failed</div><div class="outcome-desc">Hash mismatch detected; artifact may have been altered</div></div></div>
+        <div class="outcome-card mismatch" role="listitem"><div class="outcome-icon">⚠</div><div><div class="outcome-title">Policy Scope Mismatch</div><div class="outcome-desc">Policy identifier or version discrepancy</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="boundary-section">
+    <div class="boundary-wrap" role="region" aria-label="Boundary declaration">
+      <div class="boundary-lbl">Boundary Declaration &nbsp;·&nbsp; V2026.02.19</div>
+      <div class="boundary-items">
+        <p class="bi">CEYO verifies integrity and provenance under defined policy; it does not certify compliance, legality, or correctness.</p>
+        <p class="bi">CEYO does not guarantee inference reproducibility or semantic equivalence of outputs.</p>
+        <p class="bi">Admissibility of artifacts is determined by the relevant authority, not by CEYO.</p>
+        <p class="bi">Cryptographic suite references are illustrative; deployments select suites appropriate to their regulatory context.</p>
+      </div>
+      <p class="boundary-close">It provides deterministic artifacts. Institutions determine their meaning.</p>
+    </div>
+  </div>
+
+</main>
+
+<nav class="index-bar" aria-label="Site index">
+  <a class="index-item" href="index.html">Index</a>
+  <a class="index-item active" href="platform.html">Arch</a>
+  <a class="index-item" href="trust.html">Trust</a>
+  <a class="index-item" href="governance.html">Gov</a>
+  <a class="index-item" href="contact.html">Contact</a>
+</nav>
+
+<script>
+const cursor = document.getElementById('cursor');
+const spotlight = document.getElementById('spotlight');
+
+function isPointerFine(){
+  return window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+}
+
+// Cursor + spotlight: only meaningful on pointer devices
+if (isPointerFine()){
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+
+    const isNarrow = window.matchMedia('(max-width: 600px)').matches;
+    const glow = isNarrow ? 0.04 : 0.06;
+
+    spotlight.style.background =
+      `radial-gradient(circle 280px at ${e.clientX}px ${e.clientY}px,rgba(255,255,240,${glow}) 0%,transparent 70%)`;
+  });
+
+  document.addEventListener('mouseleave', () => {
+    cursor.style.opacity = '0';
+    spotlight.style.background = 'none';
+  });
+  document.addEventListener('mouseenter', () => {
+    cursor.style.opacity = '1';
+  });
+
+  document.querySelectorAll('a,button,.chain-node,.outcome-card,.vst,.index-item').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cursor.classList.add('hover'));
+    el.addEventListener('mouseleave',()=>cursor.classList.remove('hover'));
+  });
+} else {
+  // Hide cursor blob on touch devices
+  cursor.style.display = 'none';
+}
+
+// Stage reveal
+const stages = document.querySelectorAll('.stage');
+const sObs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('visible','focus'); }
+    else{ e.target.classList.remove('focus'); }
+  });
+},{threshold:0.08});
+stages.forEach(s=>sObs.observe(s));
+
+// Typewrite for stage h2
+function typewrite(el, speed){
+  const txt = el.textContent;
+  el.textContent = '';
+  el.classList.add('typewrite-cursor');
+  let i = 0;
+  const iv = setInterval(()=>{
+    el.textContent += txt[i];
+    i++;
+    if(i>=txt.length){
+      clearInterval(iv);
+      el.classList.remove('typewrite-cursor');
+    }
+  }, speed || 22);
+}
+const h2obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting && !e.target.dataset.typed){
+      e.target.dataset.typed='1';
+      typewrite(e.target, 22);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.stage-h2').forEach(h=>h2obs.observe(h));
+
+// Touch feedback (keep light)
+document.querySelectorAll('.chain-node,.outcome-card,.vst,.index-item').forEach(el=>{
+  el.addEventListener('touchstart',()=>{el.style.background='var(--ivory)';el.style.color='var(--bg)';},{passive:true});
+  el.addEventListener('touchend',()=>{setTimeout(()=>{el.style.background='';el.style.color='';},180);},{passive:true});
+});
+</script>
+
+</body>
+</html>
