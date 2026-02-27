@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CEYO — Software Bill of Materials</title>
+<meta name="description" content="CEYO SBOM: machine-readable component inventory in SPDX and CycloneDX formats. Supply chain transparency for institutional review."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,400;0,700;0,900;1,900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0D0E0B;--bg2:#111410;--ivory:#FFFFF0;--green:#4A5D3B;--green2:#6B8F50;--text:rgba(255,255,240,.88);--muted:rgba(255,255,240,.55);--muted2:rgba(255,255,240,.32);--muted3:rgba(255,255,240,.16);--stroke:rgba(255,255,240,.10);--stroke2:rgba(255,255,240,.055);--max:1100px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;overflow-x:hidden;cursor:none;}
+a{color:inherit;text-decoration:none;}
+#grain{position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E");background-size:200px 200px;}
+#spotlight{position:fixed;inset:0;z-index:1;pointer-events:none;}
+#cursor{position:fixed;z-index:9999;width:8px;height:8px;background:var(--ivory);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .15s,height .15s;mix-blend-mode:exclusion;}
+#cursor.large{width:40px;height:40px;opacity:.5;}
+#topnav{position:fixed;top:0;left:0;right:0;z-index:800;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(13,14,11,.97);border-bottom:1px solid var(--stroke2);}
+.nav-brand{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:24px;letter-spacing:-.03em;text-transform:uppercase;color:var(--ivory);}
+.nav-brand .yo{color:var(--green2);}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2);padding:7px 12px;transition:color .12s;}
+.nav-links a:hover{color:var(--ivory);}
+.nav-cta{margin-left:12px;color:var(--green2)!important;padding:8px 16px!important;border:1px solid rgba(107,143,80,.45);background:rgba(74,93,59,.08);transition:background .15s!important;}
+.nav-cta:hover{background:rgba(74,93,59,.2)!important;}
+#indexbar{position:fixed;bottom:0;left:0;right:0;z-index:800;display:flex;height:48px;background:#080908;border-top:1px solid var(--stroke);}
+.ib-item{flex:1;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted2);border-right:1px solid var(--stroke2);transition:color .12s,background .12s;}
+.ib-item:last-child{border-right:none;}
+.ib-item:hover{color:var(--ivory);background:rgba(255,255,240,.04);}
+.ib-item.active{color:var(--ivory);border-top:1px solid var(--ivory);}
+
+/* SBOM — technical inventory layout */
+#sbom-hero{
+  padding:100px 48px 64px;
+  border-bottom:1px solid var(--stroke2);
+  max-width:var(--max);margin:0 auto;
+  display:grid;grid-template-columns:1fr 300px;gap:48px;align-items:end;
+}
+.sh-left{}
+.sh-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--green2);margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.sh-eyebrow::before{content:'';width:36px;height:1px;background:var(--green2);}
+#sbom-h1{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:clamp(36px,5.5vw,68px);letter-spacing:-.05em;line-height:.9;text-transform:uppercase;color:var(--ivory);margin-bottom:18px;}
+#sbom-h1 .g{color:var(--green2);}
+.sh-lead{font-size:15px;line-height:1.78;color:var(--muted);max-width:52ch;}
+
+/* Format badges */
+.format-stack{display:flex;flex-direction:column;gap:8px;}
+.fmt-badge{
+  border:1px solid var(--stroke);padding:14px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,240,.016);
+  transition:border-color .15s;
+}
+.fmt-badge:hover{border-color:var(--green2);}
+.fmt-name{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ivory);}
+.fmt-desc{font-size:11px;color:var(--muted2);}
+.fmt-access{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--green2);}
+
+/* MAIN */
+#sbom-main{max-width:var(--max);margin:0 auto;padding:0 48px 100px;}
+
+.sbom-sect{
+  padding:56px 0;border-bottom:1px solid var(--stroke2);
+  opacity:0;transform:translateY(16px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.sbom-sect.vis{opacity:1;transform:translateY(0);}
+.ss-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--green2);margin-bottom:16px;display:flex;align-items:center;gap:14px;}
+.ss-tag::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(107,143,80,.6),transparent);max-width:100px;}
+.ss-h{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:clamp(22px,3vw,36px);letter-spacing:-.04em;line-height:.96;text-transform:uppercase;color:var(--ivory);margin-bottom:16px;}
+.ss-p{font-size:15px;line-height:1.8;color:var(--muted);max-width:66ch;margin-bottom:14px;}
+
+/* Component inventory table */
+.comp-table{width:100%;border-collapse:collapse;margin:24px 0;font-family:'IBM Plex Mono',monospace;}
+.comp-table th{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2);padding:10px 14px;text-align:left;border-bottom:1px solid var(--stroke);}
+.comp-table td{font-size:12px;color:var(--muted);padding:12px 14px;border-bottom:1px solid var(--stroke2);line-height:1.55;vertical-align:top;}
+.comp-table tr:last-child td{border-bottom:none;}
+.comp-table tr:hover td{background:rgba(255,255,240,.015);}
+.comp-name{color:var(--ivory);font-weight:500;}
+.lic-badge{display:inline-block;font-size:9px;letter-spacing:.10em;text-transform:uppercase;padding:2px 7px;border:1px solid var(--stroke);color:var(--muted2);}
+.lic-badge.oss{border-color:rgba(74,93,59,.5);color:var(--green2);}
+.lic-badge.prop{border-color:rgba(255,255,240,.15);color:var(--muted);}
+
+/* Supply chain policy */
+.sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--stroke);border:1px solid var(--stroke);margin-top:24px;}
+.sc-cell{background:var(--bg);padding:20px 18px;transition:background .15s;}
+.sc-cell:hover{background:rgba(255,255,240,.02);}
+.scc-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--green2);margin-bottom:6px;}
+.scc-h{font-size:13px;font-weight:500;color:var(--ivory);margin-bottom:5px;}
+.scc-body{font-size:12px;color:var(--muted2);line-height:1.65;}
+
+/* Access instructions */
+.access-instructions{border:1px solid rgba(107,143,80,.4);background:rgba(74,93,59,.06);padding:24px 26px;margin-top:24px;}
+.ai-title{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.20em;text-transform:uppercase;color:var(--green2);margin-bottom:12px;}
+.ai-steps{display:flex;flex-direction:column;gap:10px;}
+.ai-step{display:flex;align-items:flex-start;gap:14px;font-size:14px;color:var(--muted);}
+.ai-step-n{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--green2);flex-shrink:0;margin-top:2px;}
+
+/* Boundary */
+.sbom-bdry{padding-top:56px;}
+.bdry-inner{border:1px solid var(--stroke);padding:22px 26px;background:rgba(255,255,240,.016);}
+.bdry-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted2);margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+.bdry-tag::before{content:'';width:18px;height:1px;background:var(--muted2);}
+.bdry-body{font-size:12px;color:var(--muted2);line-height:1.72;}
+
+@media(max-width:900px){
+  #sbom-hero{grid-template-columns:1fr;padding:90px 28px 48px;}.format-stack{flex-direction:row;flex-wrap:wrap;}
+  #sbom-main{padding-left:28px;padding-right:28px;}
+  .sc-grid{grid-template-columns:1fr;}
+  .comp-table th:nth-child(4),.comp-table td:nth-child(4){display:none;}
+}
+@media(max-width:600px){
+  #sbom-hero{padding:80px 20px 40px;}
+  #sbom-main{padding-left:20px;padding-right:20px;}
+  .comp-table th:nth-child(3),.comp-table td:nth-child(3){display:none;}
+  .nav-links{display:none;}#topnav{padding:0 20px;}
+}
+</style>
+</head>
+<body>
+<div id="grain" aria-hidden="true"></div>
+<div id="spotlight" aria-hidden="true"></div>
+<div id="cursor" aria-hidden="true"></div>
+
+<nav id="topnav" aria-label="Primary navigation">
+  <a href="index.html" class="nav-brand">CE<span class="yo">YO</span></a>
+  <div class="nav-links">
+    <a href="index.html">Overview</a>
+    <a href="platform.html">Architecture</a>
+    <a href="trust.html">Trust</a>
+    <a href="governance.html">Governance</a>
+    <a href="resources.html">Resources</a>
+    <a href="contact.html" class="nav-cta">Request Review</a>
+  </div>
+</nav>
+
+<header id="sbom-hero">
+  <div class="sh-left">
+    <div class="sh-eyebrow">Software Bill of Materials &nbsp;·&nbsp; V2026.02</div>
+    <h1 id="sbom-h1">Supply Chain<br><span class="g">Transparency</span></h1>
+    <p class="sh-lead">CEYO publishes machine-readable component inventories in SPDX and CycloneDX formats under controlled disclosure. SBOM access requires an executed Controlled Review Agreement.</p>
+  </div>
+  <div class="format-stack" aria-label="SBOM formats">
+    <div class="fmt-badge">
+      <div><div class="fmt-name">SPDX 2.3</div><div class="fmt-desc">Linux Foundation standard</div></div>
+      <div class="fmt-access">Available</div>
+    </div>
+    <div class="fmt-badge">
+      <div><div class="fmt-name">CycloneDX 1.5</div><div class="fmt-desc">OWASP standard</div></div>
+      <div class="fmt-access">Available</div>
+    </div>
+    <div class="fmt-badge">
+      <div><div class="fmt-name">JSON / XML</div><div class="fmt-desc">Both formats supported</div></div>
+      <div class="fmt-access">Available</div>
+    </div>
+  </div>
+</header>
+
+<main id="sbom-main">
+
+  <!-- Why SBOM -->
+  <div class="sbom-sect" id="why">
+    <div class="ss-tag">[01] Purpose</div>
+    <h2 class="ss-h">Why SBOM Matters for CEYO</h2>
+    <p class="ss-p">CEYO is evidentiary infrastructure. Institutions trusting CEYO to produce integrity-sealed artifacts need assurance that CEYO's own software supply chain is transparent and reviewable. The SBOM provides exactly this: a machine-readable inventory of every software component in the CEYO verification chain, its version, its license, and its provenance.</p>
+    <p class="ss-p">For defense and regulated contexts, SBOM review is increasingly a procurement requirement. CEYO's SBOM is designed to satisfy NTIA Minimum Elements for a Software Bill of Materials and align with Executive Order 14028 software supply chain security requirements.</p>
+  </div>
+
+  <!-- Component Categories -->
+  <div class="sbom-sect" id="components">
+    <div class="ss-tag">[02] Component Inventory Overview</div>
+    <h2 class="ss-h">Component Categories</h2>
+    <p class="ss-p">The following table provides a non-sensitive overview of CEYO's component categories. Full machine-readable SBOM files with version pinning, hash digests, and dependency graphs are available under controlled disclosure.</p>
+    <table class="comp-table" aria-label="Component inventory overview">
+      <thead><tr><th>Category</th><th>Function</th><th>License Type</th><th>Supply Chain Note</th></tr></thead>
+      <tbody>
+        <tr><td class="comp-name">Canonicalization Engine</td><td>RFC 8785 JSON Canonicalization Scheme implementation</td><td><span class="lic-badge oss">Open Source</span></td><td>Pinned version. Hash verified.</td></tr>
+        <tr><td class="comp-name">Cryptographic Primitives</td><td>SHA-256 hashing, ECDSA P-256 signing and verification</td><td><span class="lic-badge oss">Open Source</span></td><td>FIPS-validated implementations preferred. Auditable.</td></tr>
+        <tr><td class="comp-name">Artifact Schema Validator</td><td>JSON schema validation for canonical artifact structure</td><td><span class="lic-badge oss">Open Source</span></td><td>Pinned version. No external network calls.</td></tr>
+        <tr><td class="comp-name">Key Interface Layer</td><td>HSM / KMS / TEE interface abstraction</td><td><span class="lic-badge prop">Proprietary</span></td><td>No key material handled by CEYO. Interface only.</td></tr>
+        <tr><td class="comp-name">Policy Engine</td><td>Capture policy parsing, validation, versioning</td><td><span class="lic-badge prop">Proprietary</span></td><td>Full source available under controlled review.</td></tr>
+        <tr><td class="comp-name">Disclosure Tier Engine</td><td>Artifact field filtering per tier configuration</td><td><span class="lic-badge prop">Proprietary</span></td><td>Full source available under controlled review.</td></tr>
+        <tr><td class="comp-name">Verification Client</td><td>Independent verification procedure implementation</td><td><span class="lic-badge oss">Open Source</span></td><td>Designed for standalone deployment. No CEYO dependency.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Supply Chain Policy -->
+  <div class="sbom-sect" id="policy">
+    <div class="ss-tag">[03] Supply Chain Policy</div>
+    <h2 class="ss-h">Supply Chain Security Posture</h2>
+    <p class="ss-p">CEYO applies the following supply chain security practices to all components in the verification chain.</p>
+    <div class="sc-grid" role="list">
+      <div class="sc-cell" role="listitem">
+        <div class="scc-tag">Dependency Pinning</div>
+        <div class="scc-h">Version-Pinned Dependencies</div>
+        <div class="scc-body">All dependencies are pinned to specific versions with hash verification. No floating version specifiers in production components.</div>
+      </div>
+      <div class="sc-cell" role="listitem">
+        <div class="scc-tag">Provenance Verification</div>
+        <div class="scc-h">Signed Release Verification</div>
+        <div class="scc-body">Open source components are verified against published release signatures where available. Verification checksums documented in SBOM.</div>
+      </div>
+      <div class="sc-cell" role="listitem">
+        <div class="scc-tag">Vulnerability Monitoring</div>
+        <div class="scc-h">Continuous CVE Monitoring</div>
+        <div class="scc-body">All SBOM components are monitored against known vulnerability databases. Critical CVEs trigger priority remediation within 72 hours.</div>
+      </div>
+      <div class="sc-cell" role="listitem">
+        <div class="scc-tag">Update Cadence</div>
+        <div class="scc-h">Versioned Update Process</div>
+        <div class="scc-body">SBOM updated at each release and upon any dependency change. Each SBOM version is signed and archived. Prior versions available under controlled disclosure.</div>
+      </div>
+    </div>
+
+    <div class="access-instructions">
+      <div class="ai-title">Accessing the Full SBOM</div>
+      <div class="ai-steps">
+        <div class="ai-step"><div class="ai-step-n">01</div>Request Controlled Review access at contact@ceyo-ai.com</div>
+        <div class="ai-step"><div class="ai-step-n">02</div>Execute Controlled Review Agreement with applicable scope for SBOM review</div>
+        <div class="ai-step"><div class="ai-step-n">03</div>Receive machine-readable SBOM files in SPDX 2.3 and CycloneDX 1.5 formats, signed and hash-verified</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sbom-bdry">
+    <div class="bdry-inner" role="region" aria-label="SBOM boundary declaration">
+      <div class="bdry-tag">Boundary Declaration &nbsp;·&nbsp; SBOM &nbsp;·&nbsp; V2026.02</div>
+      <div class="bdry-body">The component overview table on this page is non-exhaustive and informational only. It does not constitute the complete SBOM. Full machine-readable SBOM files are available under controlled disclosure. Component license information is provided in good faith based on upstream declarations; CEYO makes no warranty as to license accuracy. Supply chain posture descriptions reflect current practice and are subject to change. NTIA Minimum Elements compliance and EO 14028 alignment are aspirational — formal compliance determination is the procuring institution's responsibility. CEYO provides the record. Institutions provide the oversight.</div>
+    </div>
+  </div>
+
+</main>
+
+<nav id="indexbar" aria-label="Site index">
+  <a class="ib-item" href="index.html">Index</a>
+  <a class="ib-item" href="platform.html">Arch</a>
+  <a class="ib-item active" href="trust.html">Trust</a>
+  <a class="ib-item" href="governance.html">Gov</a>
+  <a class="ib-item" href="contact.html">Contact</a>
+</nav>
+
+<script>
+const cursor=document.getElementById('cursor');
+const spotlight=document.getElementById('spotlight');
+document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';spotlight.style.background=`radial-gradient(circle 300px at ${e.clientX}px ${e.clientY}px,rgba(255,255,240,.055) 0%,transparent 70%)`;});
+document.addEventListener('mouseleave',()=>{cursor.style.opacity='0';spotlight.style.background='none';});
+document.addEventListener('mouseenter',()=>{cursor.style.opacity='1';});
+document.querySelectorAll('a,button,.fmt-badge,.sc-cell').forEach(el=>{el.addEventListener('mouseenter',()=>cursor.classList.add('large'));el.addEventListener('mouseleave',()=>cursor.classList.remove('large'));});
+const sects=document.querySelectorAll('.sbom-sect');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.07});
+sects.forEach(s=>obs.observe(s));
+const h2obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&!e.target.dataset.typed){e.target.dataset.typed='1';const t=e.target.textContent;e.target.textContent='';let i=0;const iv=setInterval(()=>{e.target.textContent+=t[i];i++;if(i>=t.length)clearInterval(iv);},22);}});},{threshold:0.5});
+document.querySelectorAll('.ss-h').forEach(h=>h2obs.observe(h));
+document.querySelectorAll('.ib-item,.fmt-badge,.sc-cell').forEach(el=>{el.addEventListener('touchstart',()=>{el.style.background='var(--ivory)';el.style.color='var(--bg)';},{passive:true});el.addEventListener('touchend',()=>{setTimeout(()=>{el.style.background='';el.style.color='';},200);},{passive:true});});
+</script>
+</body>
+</html>
