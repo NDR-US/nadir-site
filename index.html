@@ -7,80 +7,93 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #030303; --signal: #0057FF; --dim: #111; }
-        body { background-color: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+        :root { 
+            --navy-deep: #020408; 
+            --navy-core: #050A15;
+            --signal: #0057FF; 
+        }
+        
+        body { 
+            background-color: var(--navy-deep); 
+            color: #fff; 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+            scroll-behavior: smooth;
+        }
+
         .mono { font-family: 'IBM Plex Mono', monospace; }
 
-        /* THE ERASE PHYSICS */
-        #hero-layer { will-change: transform, opacity; transition: transform 0.1s linear; }
-
-        /* ILLUMINATED SUBTITLES */
-        .illuminate {
-            color: var(--signal);
-            text-shadow: 0 0 25px rgba(0, 87, 255, 0.6);
-            letter-spacing: 0.6em;
-            font-weight: 700;
-            text-transform: uppercase;
+        /* KINETIC BACKGROUND */
+        .ambient-glow {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 87, 255, 0.05) 0%, transparent 70%);
+            pointer-events: none; z-index: 0;
         }
 
-        /* DATA CROSSHAIR (The Engineering Movement) */
-        .crosshair {
-            position: absolute; width: 20px; height: 20px;
-            border: 1px solid rgba(0, 87, 255, 0.3);
-            pointer-events: none; animation: pulse-slow 4s infinite;
+        /* PALANTIR-STYLE SECTION FOCUS */
+        .reveal-node {
+            opacity: 0.3;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: blur(4px);
+        }
+        .reveal-node.active {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
         }
 
-        @keyframes pulse-slow { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.8; } }
+        /* ERASE PHYSICS */
+        #hero-layer { will-change: transform, opacity; }
 
-        /* THE CONTROL HUB */
+        /* FLOATING NAVIGATION */
         .control-hub {
             position: fixed; bottom: 3rem; left: 50%; transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.9); border: 1px solid #1a1a1a;
-            backdrop-filter: blur(30px); padding: 0.8rem 2.5rem; border-radius: 2px;
+            background: rgba(2, 4, 8, 0.95); border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(30px); padding: 0.8rem 2.5rem; border-radius: 4px;
             display: flex; gap: 4rem; z-index: 1000;
         }
 
         .nav-link {
             font-family: 'IBM Plex Mono'; font-size: 10px; letter-spacing: 0.3em;
-            text-transform: uppercase; color: #444; transition: 0.3s ease;
+            text-transform: uppercase; color: #444; transition: 0.3s;
         }
-        .nav-link:hover, .nav-link.active { color: #fff; text-shadow: 0 0 10px #fff; }
+        .nav-link:hover, .nav-link.active { color: #fff; }
 
-        /* SCANLINE TEXTURE */
-        .scanline {
-            position: fixed; inset: 0; pointer-events: none; z-index: 100;
-            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.1) 51%);
-            background-size: 100% 4px; opacity: 0.2;
+        .illuminate {
+            color: var(--signal);
+            text-shadow: 0 0 30px rgba(0, 87, 255, 0.5);
+            letter-spacing: 0.6em;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <div class="scanline"></div>
+    <div class="ambient-glow"></div>
 
-    <nav class="fixed top-0 left-0 w-full p-8 flex justify-between items-start z-[500] mix-blend-difference">
+    <nav class="fixed top-0 left-0 w-full p-10 flex justify-between items-start z-[500]">
         <div>
             <span class="text-3xl font-black italic tracking-tighter uppercase leading-none">Nadir</span>
-            <div class="mono text-[8px] text-blue-600 tracking-[0.4em] mt-1 font-bold">SYST_DSTR_01</div>
+            <div class="mono text-[8px] text-blue-600 tracking-[0.5em] mt-1 font-bold">CORE_STRATUM_2026</div>
         </div>
         <div class="mono text-[9px] text-gray-500 text-right uppercase tracking-widest leading-relaxed">
-            All Rights Reserved // 2026<br>
-            <span class="text-blue-900">Encrypted_Path: 0x992..AF</span>
+            All Rights Reserved © 2026<br>
+            <span class="text-blue-900 font-bold">INSTITUTIONAL_READY</span>
         </div>
     </nav>
 
     <main class="relative z-10">
         
-        <section class="h-screen flex flex-col justify-center px-8 lg:px-24 overflow-hidden" id="hero-layer">
-            <div class="crosshair top-1/4 left-1/4"></div>
+        <section class="h-screen flex flex-col justify-center px-8 lg:px-24" id="hero-layer">
             <div class="illuminate mono text-[10px] mb-12">[ Evidentiary_Substrate ]</div>
             
-            <h1 class="text-[12vw] font-black italic leading-[0.8] tracking-tighter uppercase mb-12">
+            <h1 class="text-[10vw] font-black italic leading-[0.8] tracking-tighter uppercase mb-16">
                 Go Beyond<br><span class="text-blue-600">Telemetry.</span>
             </h1>
 
             <div class="max-w-6xl">
-                <p class="text-5xl lg:text-7xl font-black uppercase italic mb-16 leading-[0.9] tracking-tight text-white">
+                <p class="text-5xl lg:text-7xl font-black uppercase italic mb-16 leading-[0.9] text-white">
                     With Verifiable<br>Decision Records.
                 </p>
                 <p class="text-2xl lg:text-4xl font-light text-gray-400 leading-tight border-l-2 border-blue-600 pl-10 max-w-4xl">
@@ -91,59 +104,63 @@
 
         
 
-        <section class="px-8 lg:px-24 py-60 space-y-60 bg-[#050505] relative shadow-[0_-50px_100px_rgba(0,0,0,1)]">
+        <section class="px-8 lg:px-24 py-60 space-y-96">
             
-            <div class="grid grid-cols-12 gap-12">
+            <div class="reveal-node grid grid-cols-12 gap-12">
                 <div class="col-span-12 lg:col-span-5">
                     <h2 class="illuminate mono text-[11px] mb-12">01_Functional_Overview</h2>
-                    <h3 class="text-6xl font-black uppercase italic leading-none mb-8">Structural Independence.</h3>
+                    <h3 class="text-7xl font-black uppercase italic leading-none mb-8">Structural Independence.</h3>
                 </div>
                 <div class="col-span-12 lg:col-span-7">
-                    <p class="text-2xl text-gray-400 font-light leading-relaxed mb-12">
-                        NADIR captures the scope of interaction at the inference boundary. Unlike standard telemetry, our artifacts enable <span class="text-white">independent verification</span> of integrity without disclosing proprietary architecture.
+                    <p class="text-3xl text-gray-400 font-light leading-snug mb-12">
+                        NADIR captures the scope of interaction at the inference boundary. Unlike standard telemetry, our artifacts enable <span class="text-white font-bold italic">independent verification</span> of integrity.
                     </p>
-                    <div class="grid grid-cols-2 gap-12 pt-12 border-t border-white/5">
-                        <div class="mono text-[10px]">
+                    <div class="grid grid-cols-2 gap-12 pt-12 border-t border-white/10">
+                        <div class="mono">
                             <span class="text-blue-500 block mb-4 uppercase font-bold tracking-widest">// Capture</span>
-                            <p class="text-gray-500">Deterministic audit tails attached to every session. Zero-latency context capture.</p>
+                            <p class="text-gray-500 text-xs">Deterministic audit tails attached to every session. Zero-latency context capture.</p>
                         </div>
-                        <div class="mono text-[10px]">
+                        <div class="mono">
                             <span class="text-blue-500 block mb-4 uppercase font-bold tracking-widest">// Seal</span>
-                            <p class="text-gray-500">Cryptographic permanence via RFC 8785. Non-custodial institutional sovereignty.</p>
+                            <p class="text-gray-500 text-xs">Cryptographic permanence via RFC 8785. Non-custodial institutional sovereignty.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 gap-12 items-center">
+            <div class="reveal-node grid grid-cols-12 gap-12 items-center">
                 <div class="col-span-12 lg:col-span-7 order-2 lg:order-1">
-                    <h3 class="text-6xl font-black uppercase italic leading-none mb-8">Non-<br>Adjudication.</h3>
-                    <p class="text-2xl text-gray-400 font-light leading-relaxed">
-                        NADIR does not determine legality, fairness, or correctness. It provides <span class="text-blue-500 font-bold">integrity-sealed records</span> to the institutions that make those final determinations. Integrity must be proven before it is scaled.
+                    <h3 class="text-7xl font-black uppercase italic leading-none mb-10">Non-<br>Adjudication.</h3>
+                    <p class="text-3xl text-gray-400 font-light leading-relaxed">
+                        NADIR does not determine legality, fairness, or correctness. It provides <span class="text-blue-500 font-bold">integrity-sealed records</span> to the institutions that make those final determinations. 
                     </p>
+                    <p class="mt-8 text-xl text-gray-600 italic">Integrity must be proven before it is scaled.</p>
                 </div>
                 <div class="col-span-12 lg:col-span-5 order-1 lg:order-2">
-                    <div class="p-12 border border-white/5 bg-white/[0.01] mono text-[10px] text-gray-600">
-                        <p class="mb-4">NOTICE: System remains intentionally narrow in scope.</p>
-                        <p class="text-blue-900">SCOPE_EXCLUSION: [FAIRNESS_ENGINES, REG_CERT]</p>
+                    <div class="p-16 border border-white/5 bg-white/[0.02] shadow-2xl">
+                        <span class="mono text-[10px] text-blue-900 block mb-4 uppercase font-bold tracking-widest">Scope_Exclusion_Protocol</span>
+                        <div class="h-1 w-full bg-blue-900/20 mb-8"></div>
+                        <p class="mono text-[10px] text-gray-500 leading-loose">
+                            [SYSTEM_ALERT]: THE SUBSTRATE REMAINS INTENTIONALLY NARROW. AGNOSTIC TO SECONDARY POLICY LAYERS.
+                        </p>
                     </div>
                 </div>
             </div>
 
         </section>
 
-        <footer class="px-8 lg:px-24 py-40 border-t border-white/5 bg-black">
+        <footer class="px-8 lg:px-24 py-40 border-t border-white/5 bg-[#010204]">
             <div class="flex flex-col lg:flex-row justify-between items-end">
                 <div>
                     <h2 class="text-4xl font-black italic uppercase mb-12">Institutional Reality.</h2>
-                    <p class="mono text-[11px] text-gray-600 uppercase tracking-widest leading-relaxed">
-                        © 2026 NADIR SYSTEMS. ALL RIGHTS RESERVED.<br>
+                    <p class="mono text-[11px] text-gray-700 uppercase tracking-widest leading-relaxed">
+                        All Rights Reserved © 2026 NADIR SYSTEMS.<br>
                         ESTABLISHED FOR INSTITUTIONAL OVERSIGHT.
                     </p>
                 </div>
-                <div class="mono text-[9px] text-gray-800 text-right uppercase tracking-[0.4em] mt-12 lg:mt-0">
+                <div class="mono text-[10px] text-gray-800 text-right uppercase tracking-[0.4em] mt-12 lg:mt-0">
                     STATUS: PRODUCTION_READY<br>
-                    REF_ID: NADIR_OS_V1.0
+                    REF_ID: NADIR_STRATUM_V1.0
                 </div>
             </div>
         </footer>
@@ -158,22 +175,30 @@
     </nav>
 
     <script>
-        // THE ERASE & COMPRESS EFFECT
+        // THE ERASE PHYSICS
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const hero = document.getElementById('hero-layer');
-            
-            // Movement: Header moves slower than scroll (parallax) and fades
             if (scrolled < 1000) {
                 const opacity = 1 - (scrolled / 800);
-                const scale = 1 - (scrolled / 3000);
-                const blur = scrolled / 100;
-                
+                const scale = 1 - (scrolled / 4000);
                 hero.style.opacity = opacity;
                 hero.style.transform = `scale(${scale}) translateY(${scrolled * 0.4}px)`;
-                hero.style.filter = `blur(${blur}px)`;
             }
         });
+
+        // FOCUS REVEAL LOGIC
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.reveal-node').forEach(node => observer.observe(node));
     </script>
 
 </body>
