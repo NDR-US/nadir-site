@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CEYO // Substrate</title>
+<title>CEYO</title>
 
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Outfit:wght@900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-    --dark-olive: #14150f; 
+    --dark-olive: #12130e; 
     --ivory-wash: #FFFFF0;
     --tactical: #4A5D3B;
-    --interface-line: rgba(255, 255, 240, 0.1);
+    --line: rgba(255, 255, 240, 0.1);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
@@ -22,97 +22,97 @@ body {
     color: var(--ivory-wash);
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
-    /* Atmospheric Background Interaction */
-    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(74, 93, 59, 0.15) 0%, transparent 50%),
-                var(--dark-olive);
+    /* Spotlight interaction */
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(74, 93, 59, 0.12) 0%, transparent 60%), var(--dark-olive);
 }
 
-/* Noise/Texture Overlay */
+/* Texture Overlay */
 body::before {
     content: "";
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     background: url('https://grainy-gradients.vercel.app/noise.svg');
-    opacity: 0.04;
+    opacity: 0.05;
     pointer-events: none;
-    z-index: 9999;
+    z-index: 999;
 }
 
 .candela { font-family: 'Outfit', sans-serif; font-weight: 900; text-transform: uppercase; }
 .mono { font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: 0.1em; }
 
-/* Navigation Top */
-nav.top-nav {
+nav.top {
     position: fixed;
     top: 0; left: 0; width: 100%;
-    padding: 30px 50px;
+    padding: 40px 60px;
     z-index: 1000;
 }
 
-.brand { font-size: 2.5rem; letter-spacing: -0.05em; }
+.brand { font-size: 2.8rem; letter-spacing: -0.05em; }
 
-/* Content Layout */
+/* Sections */
 .hero-wrap { height: 140vh; position: relative; }
 #hero {
     position: sticky; top: 0; height: 100vh;
     display: flex; flex-direction: column; justify-content: center; padding: 0 10%;
 }
 
-h1 { font-size: clamp(3rem, 10vw, 8rem); line-height: 0.8; margin-bottom: 20px; font-style: italic; }
-.hero-sub { font-size: clamp(1.5rem, 4vw, 3rem); font-style: italic; margin-bottom: 30px; }
-.hero-text { font-size: 1.2rem; max-width: 800px; opacity: 0.4; }
+h1 { font-size: clamp(3.5rem, 11vw, 9rem); line-height: 0.8; margin-bottom: 20px; font-style: italic; }
+.hero-sub { font-size: clamp(1.5rem, 4.5vw, 3.5rem); font-style: italic; margin-bottom: 30px; }
+.hero-text { font-size: 1.25rem; max-width: 850px; opacity: 0.5; }
 
-.section { padding: 120px 10%; border-top: 1px solid var(--interface-line); }
-.section h2 { font-size: 3rem; margin-bottom: 40px; font-style: italic; }
-.section p { font-size: 1.25rem; line-height: 1.6; opacity: 0.6; margin-bottom: 24px; max-width: 1000px; }
+.section { padding: 140px 10%; border-top: 1px solid var(--line); }
+.section h2 { font-size: 3.2rem; margin-bottom: 40px; font-style: italic; }
+.section p { font-size: 1.3rem; line-height: 1.6; opacity: 0.7; margin-bottom: 30px; max-width: 950px; }
 
-/* Grid & Interaction */
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+/* Interaction Highlights */
+.interactive-text { transition: 0.3s; }
+.interactive-text:active { background: var(--tactical); color: var(--dark-olive) !important; opacity: 1; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 50px; }
 .card {
-    border: 1px solid var(--interface-line);
-    padding: 30px;
-    background: rgba(0,0,0,0.1);
-    transition: 0.3s;
-}
-.card:active { background: var(--tactical); color: var(--dark-olive); }
-
-/* Bottom Nav - The Index Bar */
-.index-bar {
-    position: fixed;
-    bottom: 20px; left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    background: rgba(0,0,0,0.8);
-    border: 1px solid var(--interface-line);
-    backdrop-filter: blur(10px);
-    z-index: 1001;
-}
-.index-item {
-    padding: 12px 24px;
-    font-size: 10px;
-    color: var(--ivory-wash);
-    text-decoration: none;
-    border-right: 1px solid var(--interface-line);
+    border: 1px solid var(--line);
+    padding: 35px;
+    background: rgba(255, 255, 240, 0.02);
     transition: 0.2s;
 }
-.index-item:hover { background: var(--ivory-wash); color: var(--dark-olive); }
-.index-item:last-child { border-right: none; }
+.card:active { background: var(--ivory-wash); color: var(--dark-olive); }
+
+/* Bottom Menu */
+.bottom-nav {
+    position: fixed;
+    bottom: 30px; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    background: rgba(18, 19, 14, 0.9);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(12px);
+    z-index: 1001;
+}
+.nav-link {
+    padding: 14px 28px;
+    font-size: 11px;
+    color: var(--ivory-wash);
+    text-decoration: none;
+    border-right: 1px solid var(--line);
+    transition: 0.2s;
+}
+.nav-link:hover { background: var(--tactical); }
+.nav-link:last-child { border-right: none; }
 
 .typewriter { visibility: hidden; }
 
-footer { padding: 120px 10% 180px; border-top: 1px solid var(--interface-line); }
+footer { padding: 120px 10% 200px; border-top: 1px solid var(--line); }
 </style>
 </head>
 
 <body>
 
-<nav class="top-nav">
+<nav class="top">
     <div class="brand candela">CEYO</div>
 </nav>
 
 <div class="hero-wrap">
 <section id="hero">
-    <div class="mono" style="color:var(--tactical); margin-bottom:20px;">VERIFICATION_LAYER</div>
     <h1 class="candela">Go Beyond<br>Telemetry.</h1>
     <div class="hero-sub candela">Verifiable Decision Records.</div>
     <div class="hero-text">
@@ -123,62 +123,62 @@ footer { padding: 120px 10% 180px; border-top: 1px solid var(--interface-line); 
 
 <section class="section">
     <h2 class="candela typewriter" data-text="Evidentiary Infrastructure"></h2>
-    <p class="typewriter" data-text="AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces that were never designed to function as durable evidence."></p>
+    <p class="typewriter interactive-text" data-text="AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces that were never designed to function as durable evidence."></p>
     
-    <div style="height:1px; background:var(--interface-line); margin:60px 0;"></div>
+    <div style="height:1px; background:var(--line); margin:60px 0;"></div>
     
-    <p class="candela" style="font-size:2rem; font-style:italic;">
+    <p class="candela interactive-text" style="font-size:2.2rem; font-style:italic;">
         Telemetry describes activity.<br>
-        It does not preserve proof.
+        <span style="opacity:0.4">It does not preserve proof.</span>
     </p>
 
-    <p class="typewriter" data-text="CEYO is a decoupled evidentiary layer that attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined inference-time decision-state context. These artifacts are deterministically structured and cryptographically sealed to support later institutional verification without default disclosure of proprietary internals."></p>
+    <p class="typewriter interactive-text" data-text="CEYO is a decoupled evidentiary layer that attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined inference-time decision-state context. These artifacts are deterministically structured and cryptographically sealed to support later institutional verification without default disclosure of proprietary internals."></p>
 
     <div class="grid">
         <div class="card">
-            <div class="mono">// BOUNDARY</div>
-            <p>CEYO does not evaluate outputs.<br>CEYO does not adjudicate compliance.<br>CEYO produces records.</p>
+            <div class="mono" style="color:var(--tactical); margin-bottom:15px;">// BOUNDARY</div>
+            <p style="font-size: 1rem;">CEYO does not evaluate outputs. CEYO does not adjudicate compliance. CEYO produces records.</p>
         </div>
         <div class="card">
-            <div class="mono">// DISCLOSURE</div>
-            <p>Tiered disclosure enables validation without exposure of proprietary internals.</p>
+            <div class="mono" style="color:var(--tactical); margin-bottom:15px;">// DISCLOSURE</div>
+            <p style="font-size: 1rem;">Tiered disclosure enables validation without exposure of proprietary internals.</p>
         </div>
         <div class="card">
-            <div class="mono">// AVAILABILITY</div>
-            <p>Fail-open posture preserves inference continuity unless configured otherwise.</p>
+            <div class="mono" style="color:var(--tactical); margin-bottom:15px;">// AVAILABILITY</div>
+            <p style="font-size: 1rem;">Fail-open posture preserves inference continuity unless configured otherwise.</p>
         </div>
     </div>
 </section>
 
 <section class="section">
     <h2 class="candela typewriter" data-text="The Accountability Gap"></h2>
-    <p class="typewriter" data-text="Modern AI deployments optimize for throughput. Accountability is frequently secondary. When a decision is questioned, organizations reconstruct events from partial logs. Reconstruction is interpretive. It is not deterministic."></p>
+    <p class="typewriter interactive-text" data-text="Modern AI deployments optimize for throughput. Accountability is frequently secondary. When a decision is questioned through regulatory inquiry, audit, incident review, or litigation, organizations reconstruct events from partial logs. Reconstruction is interpretive. It is not deterministic."></p>
 </section>
 
 <footer>
-    <div class="candela" style="font-size:2rem; margin-bottom:20px;">Institutional Reality.</div>
-    <div class="mono" style="font-size:10px; opacity:0.3;">ALL RIGHTS RESERVED © 2026 CEYO SYSTEMS.</div>
+    <div class="candela" style="font-size:2.2rem; margin-bottom:20px;">Institutional Reality.</div>
+    <div class="mono" style="font-size:11px; opacity:0.3;">ALL RIGHTS RESERVED © 2026 CEYO SYSTEMS.</div>
 </footer>
 
-<div class="index-bar mono">
-    <a href="#" class="index-item">INDEX</a>
-    <a href="#" class="index-item">ARCH</a>
-    <a href="#" class="index-item">TRUST</a>
-    <a href="#" class="index-item">GOV</a>
+<div class="bottom-nav mono">
+    <a href="#" class="nav-link">INDEX</a>
+    <a href="#" class="nav-link">ARCH</a>
+    <a href="#" class="nav-link">TRUST</a>
+    <a href="#" class="nav-link">GOV</a>
 </div>
 
 <script>
-// Interactive Spotlight Background
+// Spotlight Follow
 window.addEventListener('mousemove', e => {
     document.body.style.setProperty('--x', e.clientX + 'px');
     document.body.style.setProperty('--y', e.clientY + 'px');
 });
 
-// Typewriter Logic
-function typeWriter(element, text, i = 0) {
+// Typing Engine
+function typeWriter(el, text, i = 0) {
     if (i < text.length) {
-        element.innerHTML += text.charAt(i);
-        setTimeout(() => typeWriter(element, text, i + 1), 15);
+        el.innerHTML += text.charAt(i);
+        setTimeout(() => typeWriter(el, text, i + 1), 12);
     }
 }
 
@@ -189,17 +189,17 @@ const observer = new IntersectionObserver((entries) => {
             typeWriter(entry.target, entry.target.getAttribute('data-text'));
         }
     });
-}, { threshold: 0.2 });
+}, { threshold: 0.1 });
 
 document.querySelectorAll('.typewriter').forEach(el => observer.observe(el));
 
-// Hero Blur on Scroll
+// Hero Blur
 window.addEventListener("scroll", () => {
     const s = window.scrollY;
     const hero = document.getElementById("hero");
     if(s < 1000) {
-        hero.style.filter = `blur(${s/60}px)`;
-        hero.style.opacity = 1 - (s/800);
+        hero.style.filter = `blur(${s/70}px)`;
+        hero.style.opacity = 1 - (s/900);
     }
 });
 </script>
