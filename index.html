@@ -2,180 +2,176 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>CEYO — Evidentiary Infrastructure</title>
-  <meta name="description" content="CEYO is a decoupled evidentiary layer producing policy-scoped, canonical artifacts for AI inference systems. Deterministic. Non-custodial. Independently verifiable."/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="app/css/global.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>NADIR — Overview</title>
+  <link rel="stylesheet" href="app/css/global.css">
+  <script src="app/js/nav.js" defer></script>
 </head>
+<body>
+  <main>
 
-<body data-motif="index">
-  <div class="bg" aria-hidden="true"></div>
-  <div id="spotlight" aria-hidden="true"></div>
-  <div id="cursor" aria-hidden="true"></div>
+    <p class="kicker reveal">EVIDENTIARY INFRASTRUCTURE</p>
+    <h1 class="reveal">For <span class="thin">Autonomous Systems</span></h1>
 
-  <nav class="topnav" aria-label="Primary navigation">
-    <a class="brand" href="index.html">CE<span class="mark">YO</span></a>
-    <div class="navlinks">
-      <a href="architecture.html">Architecture</a>
-      <a href="trust.html">Trust</a>
-      <a href="governance.html">Governance</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </nav>
-
-  <div class="wrap page">
-    <header class="hero">
-      <div class="container">
-        <div class="kicker">Evidentiary Infrastructure · For Autonomous Systems · V2026.02.19</div>
-
-        <h1 class="h1">
-          Go Beyond <span class="telemetry"><span class="t">Telemetry</span><span class="dot" aria-hidden="true"></span></span>
-        </h1>
-
-        <p class="lead">
-          AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments.
-          When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces
-          that were never designed to function as durable evidence.
+    <section class="section reveal">
+      <div class="focusable">
+        <p>
+          AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those
+          decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces that were never designed
+          to function as durable evidence.
         </p>
 
-        <p class="lead" style="max-width:72ch">
-          <span style="color:rgba(255,255,240,.78)">Telemetry describes activity.</span>
-          <span style="color:rgba(255,255,240,.78)">It does not preserve proof.</span>
-          <br>
-          CEYO exists to address that structural gap.
+        <p><strong>Telemetry describes activity.<br>It does not preserve proof.</strong></p>
+
+        <p>NADIR exists to address that structural gap.</p>
+
+        <p>
+          NADIR is a decoupled evidentiary layer that attaches beside inference systems and produces policy-scoped, canonical artifacts
+          representing defined inference-time decision-state context. These artifacts are deterministically structured and cryptographically
+          sealed to support later institutional verification without default disclosure of proprietary internals.
+        </p>
+
+        <p><strong>NADIR does not evaluate outputs.<br>NADIR does not adjudicate compliance.<br>NADIR produces records.</strong></p>
+      </div>
+    </section>
+
+    <div class="hr reveal">⸻</div>
+
+    <section class="section reveal">
+      <div class="title">
+        <h2 class="glowline">The Accountability Gap</h2>
+        <div class="hint">Structural deficit</div>
+      </div>
+
+      <div class="focusable">
+        <p>
+          Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is frequently secondary.
+        </p>
+
+        <p>
+          When a decision is later questioned—through regulatory inquiry, internal audit, incident review, or litigation—organizations often
+          reconstruct events from partial logs and distributed traces. Reconstruction is interpretive. It is not deterministic.
+        </p>
+
+        <p>Institutions require more than reconstructed context. They require artifacts that are:</p>
+
+        <ul>
+          <li>Canonical in structure</li>
+          <li>Explicit in capture scope</li>
+          <li>Cryptographically sealed</li>
+          <li>Independently verifiable</li>
+        </ul>
+
+        <p>
+          Without those properties, oversight depends on operator assertions rather than verifiable integrity.
+        </p>
+
+        <p><strong>This is an architectural deficit, not an operational oversight.</strong></p>
+      </div>
+    </section>
+
+    <div class="hr reveal">⸻</div>
+
+    <section class="section reveal">
+      <div class="title">
+        <h2 class="glowline">A Decoupled Verification Layer</h2>
+        <div class="hint">Beside inference</div>
+      </div>
+
+      <div class="focusable">
+        <p>NADIR introduces an evidentiary substrate that operates beside inference engines.</p>
+
+        <p>
+          It does not modify model weights.<br>
+          It does not intervene in decision logic.<br>
+          It does not replace governance frameworks.
+        </p>
+
+        <p>
+          It captures only what policy defines, normalizes that context into a stable artifact schema, applies deterministic
+          canonicalization, and seals the artifact for tamper-evidence.
+        </p>
+
+        <p>
+          Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of output.
+        </p>
+
+        <p>
+          This separation is deliberate. Evidence infrastructure must remain structurally independent from decision authority.
         </p>
       </div>
-    </header>
+    </section>
 
-    <div class="rule"></div>
+    <div class="hr reveal">⸻</div>
 
-    <main>
-      <section class="section reveal focus">
-        <div class="container rail">
-          <div class="rail-label">Position</div>
-          <div class="rail-body">
-            <h2 data-type data-speed="18"><span class="subhl">A Decoupled Evidentiary Layer</span></h2>
-            <p class="p">
-              CEYO attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined
-              inference-time decision-state context. These artifacts are deterministically structured and cryptographically sealed
-              to support later institutional verification without default disclosure of proprietary internals.
-            </p>
-
-            <div class="rows" role="list" aria-label="Boundary statements">
-              <div class="row" role="listitem">
-                <div class="k">CEYO</div>
-                <div class="v">does not evaluate outputs or intervene in decision logic.</div>
-              </div>
-              <div class="row" role="listitem">
-                <div class="k">CEYO</div>
-                <div class="v">does not adjudicate compliance, legality, or correctness.</div>
-              </div>
-              <div class="row" role="listitem">
-                <div class="k">CEYO</div>
-                <div class="v">produces records. Institutions provide oversight.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="rule"></div>
-
-      <section class="section reveal focus">
-        <div class="container rail">
-          <div class="rail-label">The Gap</div>
-          <div class="rail-body">
-            <h2 data-type data-speed="18"><span class="subhl">The Accountability Deficit</span></h2>
-            <p class="p">
-              Modern deployments optimize for throughput, latency, and availability. Accountability infrastructure is frequently secondary.
-              When a decision is later questioned—through regulatory inquiry, internal audit, incident review, or litigation—organizations
-              often reconstruct events from partial logs and distributed traces. Reconstruction is interpretive. It is not deterministic.
-            </p>
-            <div class="rows">
-              <div class="row">
-                <div class="k">Required</div>
-                <div class="v">Canonical structure · Explicit capture scope · Cryptographic sealing · Independent verification</div>
-              </div>
-              <div class="row">
-                <div class="k">Without</div>
-                <div class="v">Oversight depends on operator assertions rather than verifiable integrity.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="rule"></div>
-
-      <section class="section reveal focus">
-        <div class="container rail">
-          <div class="rail-label">Disclosure</div>
-          <div class="rail-body">
-            <h2 data-type data-speed="18"><span class="subhl">Constrained Verification</span></h2>
-            <p class="p">
-              Oversight frequently requires validation without exposure of proprietary architecture, confidential weights, or trade-secret implementation.
-              CEYO artifacts support tiered disclosure. Policy defines inclusion, exclusion, and masking rules before generation. Disclosure boundaries are explicit rather than implied.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <div class="rule"></div>
-
-      <section class="section reveal focus">
-        <div class="container rail">
-          <div class="rail-label">Continuity</div>
-          <div class="rail-body">
-            <h2 data-type data-speed="18"><span class="subhl">Availability by Design</span></h2>
-            <p class="p">
-              CEYO does not introduce a default operational dependency that halts inference. Sealing failures may be logged and flagged without interrupting inference unless explicitly configured otherwise.
-              Availability remains an institutional decision.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <div class="rule"></div>
-
-      <section class="section reveal focus">
-        <div class="container rail">
-          <div class="rail-label">Position</div>
-          <div class="rail-body">
-            <h2 data-type data-speed="18"><span class="subhl">Institutional Boundaries</span></h2>
-            <p class="p">
-              CEYO is infrastructure. It is not adjudication. It does not certify regulatory compliance, guarantee admissibility, or determine fairness or legality.
-              Authorized institutions and regulated operators retain responsibility for determinations.
-            </p>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <div class="container">
-        <div class="line">
-          <div>© CEYO · All rights reserved</div>
-          <div style="display:flex;gap:14px;flex-wrap:wrap">
-            <a href="privacy.html">Privacy</a>
-            <a href="terms.html">Terms</a>
-            <a href="sitemap.html">Sitemap</a>
-          </div>
-        </div>
+    <section class="section reveal">
+      <div class="title">
+        <h2 class="glowline">Constrained Disclosure</h2>
+        <div class="hint">Tiered review</div>
       </div>
-    </footer>
-  </div>
 
-  <nav class="bottombar" aria-label="Site index">
-    <a href="index.html" aria-current="page">Index</a>
-    <a href="architecture.html">Arch</a>
-    <a href="trust.html">Trust</a>
-    <a href="governance.html">Gov</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+      <div class="focusable">
+        <p>
+          Oversight frequently requires validation without exposure of proprietary architecture, confidential model weights,
+          or trade-secret implementation.
+        </p>
 
-  <script src="app/js/site.js"></script>
+        <p>
+          NADIR artifacts are structured to enable tiered disclosure. Integrity may be validated without revealing internal mechanics
+          beyond policy scope.
+        </p>
+
+        <p>
+          Policy defines inclusion, exclusion, and masking rules before artifact generation. Disclosure boundaries are explicit rather than implied.
+        </p>
+      </div>
+    </section>
+
+    <div class="hr reveal">⸻</div>
+
+    <section class="section reveal">
+      <div class="title">
+        <h2 class="glowline">Availability by Design</h2>
+        <div class="hint">Fail-open</div>
+      </div>
+
+      <div class="focusable">
+        <p>
+          NADIR does not introduce a default operational dependency that halts inference.
+        </p>
+
+        <p>
+          Artifact sealing failures may be logged and flagged without interrupting inference unless explicitly configured otherwise.
+          Availability remains an institutional decision.
+        </p>
+      </div>
+    </section>
+
+    <div class="hr reveal">⸻</div>
+
+    <section class="section reveal">
+      <div class="title">
+        <h2 class="glowline">Institutional Position</h2>
+        <div class="hint">Not adjudication</div>
+      </div>
+
+      <div class="focusable">
+        <p><strong>NADIR is infrastructure. It is not adjudication.</strong></p>
+
+        <p>
+          It does not certify regulatory compliance.<br>
+          It does not guarantee admissibility.<br>
+          It does not determine fairness or legality.
+        </p>
+
+        <p>
+          Authorized institutions and regulated operators retain responsibility for determinations.
+        </p>
+
+        <p><strong>NADIR provides the record.<br>Institutions provide the oversight.</strong></p>
+      </div>
+    </section>
+
+  </main>
 </body>
 </html>
