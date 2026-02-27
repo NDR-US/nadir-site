@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CEYO // Institutional Substrate</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:ital,wght@1,900&family=Archivo+Black&display=swap" rel="stylesheet">
     <style>
         :root { 
             --deep-olive: #0D0E0B; 
@@ -16,19 +16,17 @@
         body { 
             background-color: var(--deep-olive); 
             color: var(--ivory); 
-            font-family: 'Inter', sans-serif; 
-            line-height: 1.5;
-            font-size: 18px;
+            font-family: 'Archivo Black', sans-serif; /* Heavy Institutional Font */
             margin: 0;
             overflow-x: hidden;
         }
 
-        .mono { font-family: 'IBM Plex Mono', monospace; }
+        .mono { font-family: 'IBM Plex Mono', monospace; font-weight: 400; }
 
-        /* HEADER ALIGNMENT */
+        /* HEADER */
         nav.header-nav {
             position: fixed; top: 0; left: 0; width: 100%;
-            padding: 40px 8%; display: flex;
+            padding: 50px 8%; display: flex;
             justify-content: space-between; align-items: center;
             z-index: 10000;
         }
@@ -36,11 +34,12 @@
         .brand-ceyo {
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 0.5em;
-            font-size: 1.5rem;
+            letter-spacing: 0.2em;
+            font-size: 2.5rem;
+            font-style: italic;
         }
 
-        /* HERO: THE ATTENTION GRABBER */
+        /* HERO: THE ATTENTION GRABBER (MATCHING IMAGE 2) */
         .hero-wrap { 
             height: 100vh; 
             display: flex; 
@@ -50,89 +49,90 @@
         }
         
         h1 {
-            /* Massive impact for desktop dominance */
-            font-size: clamp(4rem, 16vw, 22rem); 
+            font-size: clamp(4rem, 15vw, 18rem); 
             font-weight: 900;
-            line-height: 0.8;
-            letter-spacing: -0.06em;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
             text-transform: uppercase;
+            font-style: italic; /* Matches the aggressive lean in image 2 */
             margin: 0;
         }
 
-        /* Cohesive Tactical Green Light Effect */
+        /* Tactical Green Spectral Light (T to y) */
         .telemetry-glow {
-            background: linear-gradient(90deg, var(--ivory) 0%, var(--tactical-green) 50%, var(--ivory) 100%);
+            color: var(--tactical-green);
+            background: linear-gradient(90deg, var(--tactical-green) 0%, var(--glow-green) 50%, var(--tactical-green) 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 5s linear infinite;
+            background-clip: text;
+            animation: sweep 4s linear infinite;
         }
 
-        @keyframes shine {
+        @keyframes sweep {
             to { background-position: 200% center; }
         }
 
-        /* SECTIONS: UNIFIED ALIGNMENT */
+        .hero-statement {
+            font-size: clamp(2rem, 8vw, 10rem);
+            font-weight: 900;
+            line-height: 0.9;
+            text-transform: uppercase;
+            font-style: italic;
+            margin-top: 2rem;
+            opacity: 0.95;
+        }
+
+        /* CONTENT SECTIONS */
         .content-section {
             padding: 15vh 8%;
-            max-width: 1600px;
-            margin: 0 auto;
+            max-width: 1400px;
+            font-family: 'Inter', sans-serif; /* Readability for body */
+            font-weight: 400;
         }
 
         .section-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 900;
-            margin-bottom: 2rem;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(2rem, 5vw, 4rem);
             text-transform: uppercase;
-            letter-spacing: -0.02em;
+            font-style: italic;
+            margin-bottom: 2rem;
         }
 
-        .divider { 
-            height: 1px; 
-            background: rgba(255,255,240,0.1); 
-            margin: 40px 0; 
-        }
+        .divider { height: 2px; background: var(--tactical-green); margin: 40px 0; width: 100px; }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
         }
 
         .card {
             border: 1px solid rgba(255,255,240,0.1);
-            padding: 30px;
+            padding: 40px;
             background: rgba(255,255,240,0.02);
         }
 
-        /* NAVIGATION PILL */
+        /* NAV HUB */
         .control-hub {
             position: fixed; bottom: 3rem; left: 50%; transform: translateX(-50%);
             background: rgba(13, 14, 11, 0.98); 
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 240, 0.1);
-            border-radius: 100px;
-            padding: 15px 40px; display: flex; gap: 30px; z-index: 9999;
+            border: 1px solid rgba(255, 255, 240, 0.2);
+            padding: 20px 50px; display: flex; gap: 40px; z-index: 9999;
         }
-        .nav-link { font-family: 'IBM Plex Mono'; font-size: 12px; color: rgba(255,255,240,0.4); text-transform: uppercase; letter-spacing: 0.2em; }
-        .nav-link.active, .nav-link:hover { color: var(--ivory); }
+        .nav-link { font-family: 'IBM Plex Mono'; font-size: 14px; text-transform: uppercase; letter-spacing: 0.3em; color: rgba(255,255,240,0.4); }
+        .nav-link.active { color: var(--ivory); border-bottom: 2px solid var(--tactical-green); }
 
-        /* SCROLL REVEAL (CLEAN HIDE/SHOW) */
         .scroll-reveal {
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
         }
-        .scroll-reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 768px) {
-            h1 { font-size: 14vw; }
-            .content-section { padding: 10vh 8%; }
-            .grid { grid-template-columns: 1fr; }
+            h1 { font-size: 18vw; }
+            .hero-statement { font-size: 12vw; }
         }
     </style>
 </head>
@@ -140,18 +140,19 @@
 
     <nav class="header-nav">
         <div class="brand-ceyo">CEYO</div>
+        <div class="mono text-[12px] opacity-40 tracking-[0.4em] hidden lg:block">VERIFICATION_LAYER</div>
     </nav>
 
     <main>
         <div class="hero-wrap">
-            <h1>Go Beyond<br><span class="telemetry-glow">Telemetry.</span></h1>
+            <div class="mono text-[#4A5D3B] mb-4 tracking-[0.6em] font-bold">VERIFICATION_LAYER</div>
+            <h1>GO BEYOND<br><span class="telemetry-glow">TELEMETRY.</span></h1>
+            <div class="hero-statement">VERIFIABLE<br>DECISION RECORDS.</div>
         </div>
-
-        
 
         <section class="content-section scroll-reveal">
             <h2 class="section-title">Evidentiary Infrastructure</h2>
-            <p>
+            <p class="text-xl lg:text-3xl leading-snug opacity-80">
                 AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments.
                 When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces
                 that were never designed to function as durable evidence.
@@ -159,175 +160,65 @@
 
             <div class="divider"></div>
 
-            <p style="font-size:2rem; font-style:italic; color: var(--tactical-green); line-height: 1.2;">
-                Telemetry describes activity.<br>
-                It does not preserve proof.
+            <p style="font-size:3rem; font-style:italic; font-weight:900; line-height: 1; color: var(--tactical-green);">
+                TELEMETRY DESCRIBES ACTIVITY.<br>
+                IT DOES NOT PRESERVE PROOF.
             </p>
 
-            <p style="margin-top:18px;">
+            <p class="mt-12 text-2xl">
                 CEYO exists to address that structural gap.
             </p>
 
-            <p>
+            <p class="mt-6 text-xl opacity-70">
                 CEYO is a decoupled evidentiary layer that attaches beside inference systems and produces policy-scoped,
                 canonical artifacts representing defined inference-time decision-state context. These artifacts are
-                deterministically structured and cryptographically sealed to support later institutional verification
-                without default disclosure of proprietary internals.
+                deterministically structured and cryptographically sealed.
             </p>
-
-            <div class="divider"></div>
 
             <div class="grid">
                 <div class="card">
-                    <div class="mono" style="font-size:12px;letter-spacing:.2em;color:rgba(255,255,240,.6);margin-bottom:10px;">
-                        // DISCLOSURE
-                    </div>
-                    <p style="margin:0;">
-                        Tiered disclosure enables validation without exposure of proprietary internals.
-                    </p>
+                    <div class="mono text-[12px] text-white/40 mb-4 uppercase">// DISCLOSURE</div>
+                    <p>Tiered disclosure enables validation without exposure of proprietary internals.</p>
                 </div>
-
                 <div class="card">
-                    <div class="mono" style="font-size:12px;letter-spacing:.2em;color:rgba(255,255,240,.6);margin-bottom:10px;">
-                        // AVAILABILITY
-                    </div>
-                    <p style="margin:0;">
-                        Fail-open posture preserves inference continuity unless configured otherwise.
-                    </p>
+                    <div class="mono text-[12px] text-white/40 mb-4 uppercase">// AVAILABILITY</div>
+                    <p>Fail-open posture preserves inference continuity unless configured otherwise.</p>
                 </div>
             </div>
         </section>
 
-        
+        <section class="content-section scroll-reveal" style="background: rgba(74, 93, 59, 0.05); max-width: 100%;">
+            <div style="max-width: 1400px; margin: 0 auto;">
+                <h2 class="section-title">Institutional Position</h2>
+                <p class="text-2xl opacity-80">
+                    CEYO is infrastructure. It is not adjudication. It does not certify regulatory compliance. It does not determine fairness or legality.
+                </p>
 
-        <section class="content-section scroll-reveal">
-            <h2 class="section-title">The Accountability Gap</h2>
+                <div class="divider"></div>
 
-            <p>
-                Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is
-                frequently secondary.
-            </p>
-
-            <p>
-                When a decision is later questioned—through regulatory inquiry, internal audit, incident review, or
-                litigation—organizations often reconstruct events from partial logs and distributed traces.
-                Reconstruction is interpretive. It is not deterministic.
-            </p>
-
-            <p style="margin-top:30px;">
-                Institutions require more than reconstructed context. They require artifacts that are:
-            </p>
-
-            <div style="margin-top:18px; color: var(--tactical-green); font-weight: bold;">
-                <p style="margin:0 0 10px 0;">• Canonical in structure</p>
-                <p style="margin:0 0 10px 0;">• Explicit in capture scope</p>
-                <p style="margin:0 0 10px 0;">• Cryptographically sealed</p>
-                <p style="margin:0;">• Independently verifiable</p>
-            </div>
-
-            <p style="margin-top:24px;">
-                Without those properties, oversight depends on operator assertions rather than verifiable integrity.
-            </p>
-
-            <p style="font-size:1.8rem; font-style:italic; margin-top:18px; opacity: 0.8;">
-                This is an architectural deficit, not an operational oversight.
-            </p>
-        </section>
-
-        
-
-        <section class="content-section scroll-reveal">
-            <h2 class="section-title">A Decoupled Verification Layer</h2>
-
-            <p>
-                CEYO introduces an evidentiary substrate that operates beside inference engines. It does not modify model
-                weights. It does not intervene in decision logic. It does not replace governance frameworks.
-            </p>
-
-            <p>
-                It captures only what policy defines, normalizes that context into a stable artifact schema, applies
-                deterministic canonicalization, and seals the artifact for tamper-evidence.
-            </p>
-
-            <p>
-                Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness
-                of output.
-            </p>
-
-            <p>
-                This separation is deliberate. Evidence infrastructure must remain structurally independent from decision
-                authority.
-            </p>
-
-            <div class="divider"></div>
-
-            <h2 class="section-title" style="font-size:2rem;">Constrained Disclosure</h2>
-
-            <p>
-                Oversight frequently requires validation without exposure of proprietary architecture, confidential model
-                weights, or trade-secret implementation.
-            </p>
-
-            <p>
-                CEYO artifacts are structured to enable tiered disclosure. Integrity may be validated without revealing
-                internal mechanics beyond policy scope.
-            </p>
-
-            <p>
-                Policy defines inclusion, exclusion, and masking rules before artifact generation. Disclosure boundaries are
-                explicit rather than implied.
-            </p>
-
-            <div class="divider"></div>
-
-            <h2 class="section-title" style="font-size:2rem;">Availability by Design</h2>
-
-            <p>
-                CEYO does not introduce a default operational dependency that halts inference. Artifact sealing failures
-                may be logged and flagged without interrupting inference unless explicitly configured otherwise.
-                Availability remains an institutional decision.
-            </p>
-        </section>
-
-        <section class="content-section scroll-reveal" style="background: rgba(74, 93, 59, 0.05);">
-            <h2 class="section-title">Institutional Position</h2>
-
-            <p>
-                CEYO is infrastructure. It is not adjudication. It does not certify regulatory compliance. It does not
-                guarantee admissibility. It does not determine fairness or legality.
-            </p>
-
-            <p>
-                Authorized institutions and regulated operators retain responsibility for determinations.
-            </p>
-
-            <div class="card" style="margin-top: 30px; border-color: var(--tactical-green);">
-                <div class="mono" style="font-size:12px;letter-spacing:.2em;color:var(--tactical-green);margin-bottom:10px;">
-                    // BOUNDARY
+                <div style="font-size: clamp(2rem, 5vw, 5rem); font-weight: 900; font-style: italic; line-height: 0.9;">
+                    CEYO DOES NOT EVALUATE OUTPUTS.<br>
+                    CEYO DOES NOT ADJUDICATE COMPLIANCE.<br>
+                    <span style="color:var(--tactical-green);">CEYO PRODUCES RECORDS.</span>
                 </div>
-                <p style="font-size: 1.5rem; line-height: 1.3;">
-                    CEYO does not evaluate outputs.<br>
-                    CEYO does not adjudicate compliance.<br>
-                    <span style="color:var(--tactical-green); font-weight: bold;">CEYO produces records.</span>
+
+                <p class="mt-12 text-3xl italic opacity-60">
+                    CEYO provides the record. Institutions provide oversight.
                 </p>
             </div>
-
-            <p style="font-size:1.8rem; font-style:italic; margin-top:22px; color: var(--ivory);">
-                CEYO provides the record. Institutions provide oversight.
-            </p>
         </section>
 
-        <footer class="content-section" style="padding: 5vh 8%; opacity: 0.3;">
-            <div class="brand-ceyo">CEYO</div>
-            <p class="mono" style="font-size: 10px; margin-top: 10px;">ALL RIGHTS RESERVED © 2026</p>
+        <footer class="content-section opacity-20" style="padding: 5vh 8%;">
+            <div class="brand-ceyo" style="font-size: 1.5rem;">CEYO</div>
+            <p class="mono text-[10px] mt-4">INSTITUTIONAL_REL_1.0</p>
         </footer>
     </main>
 
     <nav class="control-hub">
-        <a href="#" class="nav-link active">Index</a>
-        <a href="#" class="nav-link">Arch</a>
-        <a href="#" class="nav-link">Trust</a>
-        <a href="#" class="nav-link">Gov</a>
+        <a href="#" class="nav-link active">INDEX</a>
+        <a href="#" class="nav-link">ARCH</a>
+        <a href="#" class="nav-link">TRUST</a>
+        <a href="#" class="nav-link">GOV</a>
     </nav>
 
     <script>
