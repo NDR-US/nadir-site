@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NADIR | Evidentiary Infrastructure for Autonomous Systems</title>
+    <meta property="og:title" content="NADIR | Evidentiary Infrastructure for Autonomous Systems">
+    <meta property="og:description" content="Bridging the gap between raw telemetry and durable proof through decoupled, cryptographically sealed inference artifacts.">
+    <meta property="og:type" content="website">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F9F9F9; color: #1A1A1A; }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+        .grid-bg { background-image: radial-gradient(#D1D1D1 1px, transparent 1px); background-size: 40px 40px; }
+    </style>
+</head>
+<body class="grid-bg min-h-screen">
+    <nav class="border-b border-black p-6 bg-white sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <span class="text-2xl font-bold tracking-tighter">NADIR</span>
+            <div class="space-x-8 text-sm uppercase tracking-widest font-semibold">
+                <a href="index.html" class="border-b-2 border-black">Overview</a>
+                <a href="architecture.html">Architecture</a>
+                <a href="portal.html">Oversight</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto py-20 px-6">
+        <header class="mb-20">
+            <h1 class="text-6xl font-bold tracking-tighter mb-4 italic">EVIDENTIARY INFRASTRUCTURE</h1>
+            <p class="text-xl mono uppercase tracking-wider text-gray-500">For Autonomous Systems</p>
+        </header>
+
+        <section class="mb-16 space-y-6 text-lg leading-relaxed">
+            <p>AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces that were never designed to function as durable evidence.</p>
+            
+            <div class="bg-black text-white p-8 my-8">
+                <p class="text-2xl font-light">Telemetry describes activity.<br><span class="font-bold underline italic text-blue-400">It does not preserve proof.</span></p>
+            </div>
+
+            <p>NADIR exists to address this structural gap. As a decoupled evidentiary layer, NADIR attaches to the inference boundary to produce policy-scoped, canonical artifacts representing defined inference-time decision-state context. These artifacts are deterministically structured and cryptographically sealed to support institutional verification without default disclosure of proprietary internals.</p>
+        </section>
+
+        
+
+        <section class="border-t-2 border-black pt-12">
+            <h2 class="text-3xl font-bold mb-8 uppercase">The Accountability Gap</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <p class="mb-4">Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is frequently secondary. When a decision is questioned—through regulatory inquiry, internal audit, or litigation—organizations often reconstruct events from partial logs.</p>
+                </div>
+                <div>
+                    <p class="font-semibold mb-2 italic underline">Institutions require artifacts that are:</p>
+                    <ul class="mono text-sm space-y-2">
+                        <li>• CANONICAL IN STRUCTURE</li>
+                        <li>• EXPLICIT IN CAPTURE SCOPE</li>
+                        <li>• CRYPTOGRAPHICALLY SEALED</li>
+                        <li>• INDEPENDENTLY VERIFIABLE</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-20 p-8 border border-blue-600 bg-blue-50">
+            <p class="text-xs mono uppercase text-blue-700 font-bold mb-2">Institutional Position</p>
+            <p class="text-sm text-blue-900 leading-snug italic">
+                NADIR is infrastructure. It is not adjudication. It does not evaluate outputs or certify compliance. Authorized institutions and regulated operators retain responsibility for determinations. NADIR provides the record; institutions provide the oversight.
+            </p>
+        </footer>
+    </main>
+</body>
+</html>
