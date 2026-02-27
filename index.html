@@ -7,147 +7,192 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;900&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-start: #050505;
+            --bg-end: #0A1128;
+            --accent: #0057FF;
+        }
+
+        /* SCROLL-DRIVEN BACKGROUND GRADIENT */
         body { 
-            background-color: #000; 
+            background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            background-attachment: fixed;
             color: #fff; 
             font-family: 'Inter', sans-serif; 
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
+
         .mono { font-family: 'IBM Plex Mono', monospace; }
-        
-        /* THE INFINITE CANVAS */
-        .content-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 4rem;
-        }
 
-        /* GLOBAL CONTROL STRIP (The Navigation Fix) */
-        .control-strip {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #000;
-            border-top: 1px solid #111;
-            padding: 1.5rem 4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .nav-link {
-            font-family: 'IBM Plex Mono';
-            font-size: 10px;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: #555;
-            transition: all 0.4s ease;
-        }
-        .nav-link:hover, .nav-link.active { 
-            color: #fff; 
-            text-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-
-        /* KINETIC HEADER */
+        /* KINETIC TYPOGRAPHY */
         .hero-title {
-            font-size: 14vw;
+            font-size: clamp(4rem, 15vw, 18rem);
             font-weight: 900;
             line-height: 0.8;
             letter-spacing: -0.06em;
             text-transform: uppercase;
             font-style: italic;
+            transition: transform 0.1s ease-out;
         }
 
-        .pillar-line {
-            height: 1px;
-            background: #111;
-            width: 100%;
+        /* THE CONTROL HUB (The Navigation Fix) */
+        .control-hub {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 0.75rem 2rem;
+            border-radius: 100px;
+            display: flex;
+            gap: 2.5rem;
+            z-index: 1000;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .nav-link {
+            font-family: 'IBM Plex Mono';
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #666;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-link:hover, .nav-link.active { 
+            color: var(--accent);
+            text-shadow: 0 0 15px rgba(0, 87, 255, 0.6);
+        }
+
+        /* SECTION REVEAL ANIMATION */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease-out;
+        }
+
+        .reveal-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* BRUTALIST GRID TEXTURE */
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .pillar-header {
+            border-bottom: 2px solid #fff;
+            padding-bottom: 1rem;
             margin-bottom: 2rem;
         }
     </style>
 </head>
-<body class="pb-48">
+<body class="pb-64">
 
-    <nav class="p-12 flex justify-between items-start border-b border-white/5">
-        <div>
-            <span class="text-2xl font-black italic tracking-tighter uppercase">Nadir</span>
-            <p class="mono text-[8px] text-blue-600 mt-2 tracking-[0.5em] uppercase">Ref: Operational_Overview_2026</p>
+    <div class="grid-overlay"></div>
+
+    <nav class="fixed top-0 left-0 w-full p-12 flex justify-between items-start z-[500] pointer-events-none">
+        <div class="pointer-events-auto">
+            <span class="text-3xl font-black italic tracking-tighter uppercase">Nadir</span>
+            <div class="h-[1px] w-24 bg-blue-600 mt-2"></div>
         </div>
-        <div class="mono text-[9px] text-gray-700 text-right uppercase tracking-widest">
-            Substrate: Active<br>
-            Classification: Public
+        <div class="mono text-[10px] text-gray-500 text-right uppercase tracking-[0.4em] opacity-50">
+            System_Live: Feb_2026<br>
+            Auth_Node: 09-X
         </div>
     </nav>
 
-    <main class="content-container pt-32">
+    <main class="relative z-10">
         
-        <header class="mb-60">
+        <section class="min-h-screen flex flex-col justify-center px-12 lg:px-24">
+            <div class="mono text-xs text-blue-500 font-bold mb-8 tracking-[0.6em] uppercase animate-pulse">
+                [ Decentralized_Integrity_Layer ]
+            </div>
             <h1 class="hero-title mb-16">
                 Truth<br><span class="text-blue-600">Infrastructure.</span>
             </h1>
-            <div class="grid grid-cols-12 gap-8 items-start">
-                <p class="col-span-12 lg:col-span-8 text-4xl font-light text-gray-400 leading-tight">
-                    NADIR is the <span class="text-white italic">decoupled integrity layer</span> for autonomous systems. We provide the cryptographic proof required for institutional trust in machine decisions.
-                </p>
-            </div>
-        </header>
+            <p class="text-4xl lg:text-5xl font-light text-gray-400 max-w-5xl leading-[1.1]">
+                NADIR is the decoupled integrity layer for autonomous systems—providing the <span class="text-white italic">forensic substrate</span> required for institutional machine trust.
+            </p>
+        </section>
 
         
 
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-20 mb-60">
-            <div>
-                <div class="pillar-line"></div>
-                <span class="mono text-[10px] text-blue-600 font-bold mb-8 block uppercase tracking-widest">01 // Decoupled</span>
-                <h3 class="text-3xl font-black uppercase italic mb-6">Structural Independence.</h3>
-                <p class="text-gray-500 leading-relaxed">
-                    Evidence is created at the boundary, surviving even if the core model is compromised or decommissioned.
-                </p>
+        <section class="reveal-section px-12 lg:px-24 py-40 grid grid-cols-1 md:grid-cols-12 gap-16" id="overview">
+            <div class="md:col-span-4">
+                <h2 class="mono text-[11px] font-black text-blue-500 uppercase tracking-[0.5em] mb-12 italic underline decoration-blue-900 underline-offset-8">I. Functional_Core</h2>
             </div>
-
-            <div>
-                <div class="pillar-line"></div>
-                <span class="mono text-[10px] text-blue-600 font-bold mb-8 block uppercase tracking-widest">02 // Forensic</span>
-                <h3 class="text-3xl font-black uppercase italic mb-6">Immutable Proof.</h3>
-                <p class="text-gray-500 leading-relaxed">
-                    Utilizing non-custodial signing to ensure artifacts are tamper-proof and regulatory-ready by default.
-                </p>
-            </div>
-
-            <div>
-                <div class="pillar-line"></div>
-                <span class="mono text-[10px] text-blue-600 font-bold mb-8 block uppercase tracking-widest">03 // Verifiable</span>
-                <h3 class="text-3xl font-black uppercase italic mb-6">Open Validation.</h3>
-                <p class="text-gray-500 leading-relaxed">
-                    Empower auditors with standalone tools to verify system integrity without requiring proprietary access.
-                </p>
+            <div class="md:col-span-8 space-y-24">
+                <div>
+                    <h3 class="text-5xl font-black uppercase italic mb-8">Interpretive logging is a liability.</h3>
+                    <p class="text-xl text-gray-400 leading-relaxed font-light">
+                        Current observability tools are interpretive and mutable. NADIR utilizes **cryptographic sealing** and **RFC 8785 canonicalization** to create non-repudiable records of decision-state. We don't just log; we provide proof.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="border-l border-white/10 pl-8">
+                        <span class="mono text-[10px] text-gray-600 uppercase mb-4 block tracking-widest">Phase_01 // Capture</span>
+                        <p class="text-sm text-gray-400">Attach a deterministic audit tail to every inference session without sacrificing execution speed.</p>
+                    </div>
+                    <div class="border-l border-white/10 pl-8">
+                        <span class="mono text-[10px] text-gray-600 uppercase mb-4 block tracking-widest">Phase_02 // Seal</span>
+                        <p class="text-sm text-gray-400">Non-custodial signing via institutional HSM integration ensures the substrate remains neutral.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section class="py-40 border-t border-white/5">
-            <h2 class="text-xs mono uppercase text-gray-700 mb-12 tracking-[0.5em] font-bold">// Institutional_Mandate</h2>
-            <p class="text-[5vw] font-black leading-[1.1] italic uppercase text-gray-200">
-                Inference requires <span class="text-white underline decoration-blue-600 decoration-8 underline-offset-8">verification</span>. Accountability requires <span class="text-white">proof</span>.
+        <section class="reveal-section py-60 px-12 lg:px-24 bg-white/5 border-y border-white/5">
+            <h2 class="mono text-xs text-center text-gray-500 mb-20 tracking-[1em] uppercase">Institutional_Mandate</h2>
+            <p class="text-[7vw] font-black leading-[0.9] italic uppercase text-center tracking-tighter">
+                Infrastructure <br>must reflect <br><span class="text-blue-600">Reality.</span>
             </p>
         </section>
 
     </main>
 
-    <footer class="control-strip">
-        <div class="flex gap-16">
-            <a href="index.html" class="nav-link active">Overview</a>
-            <a href="architecture.html" class="nav-link">Architecture</a>
-            <a href="trust.html" class="nav-link">Trust</a>
-            <a href="compliance.html" class="nav-link">Compliance</a>
-            <a href="sitemap.html" class="nav-link">Index</a>
-        </div>
-        <div class="flex items-center gap-6">
-            <span class="w-2 h-2 bg-blue-600 rounded-full animate-pulse shadow-[0_0_10px_#0057FF]"></span>
-            <span class="mono text-[10px] text-gray-500 font-bold uppercase tracking-widest">Secure_Layer_Online</span>
-        </div>
-    </footer>
+    <nav class="control-hub">
+        <a href="index.html" class="nav-link active">Index</a>
+        <a href="architecture.html" class="nav-link">Arch</a>
+        <a href="trust.html" class="nav-link">Trust</a>
+        <a href="compliance.html" class="nav-link">Gov</a>
+        <a href="sitemap.html" class="nav-link">Docs</a>
+    </nav>
+
+    <script>
+        // REVEAL ANIMATION LOGIC
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // PARALLAX HERO
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-title');
+            hero.style.transform = `translateY(${scrolled * 0.15}px)`;
+        });
+    </script>
 
 </body>
 </html>
