@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCL Engineering | NADIR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Inter:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --defense-blue: #0033FF; --slate-900: #0A0A0B; }
+        body { font-family: 'Inter', sans-serif; background-color: white; color: var(--slate-900); }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+        .legal-header { border-bottom: 3px solid var(--slate-900); }
+        .redaction-bar { height: 12px; background: var(--slate-900); display: inline-block; }
+    </style>
+</head>
+<body class="p-0 m-0">
+    <nav class="bg-black text-white p-4 mono text-[10px] tracking-widest uppercase flex justify-between">
+        <a href="index.html" class="hover:text-blue-400">NADIR_SYSTEMS</a>
+        <div class="space-x-6">
+            <a href="compliance.html">07_Compliance</a>
+            <a href="trust.html">08_Trust</a>
+            <a href="pcl.html" class="text-blue-500">09_PCL_ENG</a>
+            <a href="ethics.html">10_Ethics</a>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto py-20 px-8">
+        <header class="legal-header pb-4 mb-16">
+            <h1 class="text-5xl font-bold tracking-tighter italic uppercase">Privacy & Civil Liberties Engineering</h1>
+            <p class="mono text-xs mt-2 text-gray-500 uppercase tracking-[0.3em]">Protocol Specification: PCL-2026-REV1</p>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-12">
+            <div class="md:col-span-4 italic text-sm text-gray-500 leading-relaxed">
+                "Infrastructure that records decision-state must be engineered to prevent function creep and unauthorized surveillance."
+            </div>
+            
+            <div class="md:col-span-8 space-y-12">
+                <div>
+                    <h2 class="text-xl font-bold mb-4 uppercase tracking-tight">Structural Decoupling</h2>
+                    <p class="text-gray-700 leading-relaxed">NADIR artifacts are architecturally isolated from identity-providing systems. By decoupling the <span class="font-bold underline">inference record</span> from the <span class="font-bold underline">identity record</span>, institutions can verify the logic of a decision without exposing the personal data of the subject by default.</p>
+                </div>
+
+                <div class="p-8 border border-gray-200 bg-gray-50">
+                    <h3 class="mono text-xs font-bold mb-4 text-blue-700 underline">PCL CONTROL MECHANISMS</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3">
+                            <span class="mono font-bold text-blue-600">[01]</span>
+                            <span><strong>Ephemeral Capture:</strong> Buffering is limited to the sealing window; no long-term persistence of unsealed telemetry.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="mono font-bold text-blue-600">[02]</span>
+                            <span><strong>Policy-Based Masking:</strong> Sensitive fields are hashed or omitted at the boundary before canonicalization.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="mono font-bold text-blue-600">[03]</span>
+                            <span><strong>Non-Reversibility:</strong> Deterministic hashes ensure integrity without allowing data reconstruction.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                
+
+                <div>
+                    <h2 class="text-xl font-bold mb-4 uppercase tracking-tight">Access Tiers</h2>
+                    <p class="text-gray-700 text-sm leading-relaxed mb-6">Disclosure is governed by pre-defined cryptographic tiers. Only authorized keys can unlock full context; public keys only verify the signature.</p>
+                    <div class="mono text-[11px] border-t border-b py-4 space-y-2">
+                        <div class="flex justify-between"><span>TIER_1: INTEGRITY_ONLY</span><span class="text-green-600">PUBLIC_ACCESS</span></div>
+                        <div class="flex justify-between"><span>TIER_2: SCOPED_CONTEXT</span><span class="text-yellow-600">AUTHORIZED_AUDIT</span></div>
+                        <div class="flex justify-between"><span>TIER_3: FULL_RECONSTRUCT</span><span class="text-red-600">INTERNAL_ONLY</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-32 pt-8 border-t border-black text-[10px] mono uppercase text-gray-400">
+            Institutional Position: PCL protection is a design requirement, not a policy layer.
+        </footer>
+    </main>
+</body>
+</html>
