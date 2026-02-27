@@ -3,80 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operational Integration | NADIR</title>
-    <meta property="og:title" content="Operational Integration | NADIR">
-    <meta property="og:description" content="Integration posture and deployment models for NADIR integrity layers.">
+    <title>Integration | NADIR Substrate</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F9F9F9; color: #1A1A1A; }
+        :root {
+            --signal-blue: #0070FF;
+            --carbon: #080808;
+        }
+
+        body {
+            background-color: var(--carbon);
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            letter-spacing: -0.01em;
+        }
+
+        /* 1. THE "A to Z" GRADIENT REVEAL */
+        .text-gradient-move {
+            background: linear-gradient(
+                to right, 
+                var(--signal-blue) 20%, 
+                #4facfe 40%, 
+                #00f2fe 60%, 
+                var(--signal-blue) 80%
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 4s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* 2. PRECISION SCROLL FADE */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px) scale(0.98);
+            transition: all 1.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* 3. HERO TYPOGRAPHY */
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 8.5rem);
+            line-height: 0.85;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
+        }
+
+        /* 4. BACKGROUND GRID */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(to right, #111 1px, transparent 1px),
+                              linear-gradient(to bottom, #111 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(circle at center, black, transparent 80%);
+            z-index: -1;
+        }
+
         .mono { font-family: 'IBM Plex Mono', monospace; }
-        .integration-card { background: white; border: 1px solid #000; padding: 1.5rem; transition: all 0.2s; }
-        .integration-card:hover { border-width: 2px; box-shadow: 4px 4px 0px #000; }
+
+        .integration-module {
+            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.02);
+            transition: all 0.4s ease;
+        }
+
+        .integration-module:hover {
+            border-color: var(--signal-blue);
+            background: rgba(0, 112, 255, 0.03);
+        }
     </style>
 </head>
-<body>
-    <nav class="border-b border-black p-6 bg-white sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto flex justify-between items-center text-sm uppercase font-semibold">
-            <a href="index.html">NADIR</a>
-            <div class="space-x-8">
-                <a href="index.html">Overview</a>
-                <a href="architecture.html">Architecture</a>
-                <a href="integration.html" class="border-b-2 border-black">Integration</a>
-                <a href="portal.html">Oversight</a>
-            </div>
-        </div>
-    </nav>
+<body class="min-h-screen">
 
-    <main class="max-w-5xl mx-auto py-20 px-6">
-        <header class="mb-16">
-            <h1 class="text-5xl font-bold tracking-tighter mb-4 italic">OPERATIONAL INTEGRATION</h1>
-            <p class="text-lg text-gray-600 max-w-2xl">NADIR is designed to integrate without requiring modification of core model weights or inference logic. It operates as an attachable integrity layer.</p>
+    <div class="bg-grid"></div>
+    <nav id="institutional-nav"></nav>
+
+    <main class="relative z-10 max-w-7xl mx-auto pt-56 pb-60 px-8">
+        
+        <header class="mb-48 max-w-6xl">
+            <div class="mono text-[10px] text-blue-500 tracking-[0.5em] mb-12 font-bold uppercase opacity-60">
+                [ DEPLOYMENT_MODELS // v1.0 ]
+            </div>
+            <h1 class="hero-title mb-12 italic">
+                Operational<br>
+                <span class="text-gradient-move">Integration.</span>
+            </h1>
+            <p class="text-2xl font-light text-gray-500 max-w-3xl leading-relaxed scroll-reveal">
+                NADIR integrates as an attachable integrity layer, ensuring cryptographic durability without modification of core model weights or inference logic.
+            </p>
         </header>
 
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-            <div class="integration-card">
-                <p class="mono text-xs font-bold mb-4 uppercase text-blue-600">Model A</p>
-                <h3 class="text-xl font-bold mb-2">Sidecar</h3>
-                <p class="text-sm">Operates as a parallel process alongside the inference service, observing events via local IPC or network tap.</p>
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-60 scroll-reveal">
+            <div class="integration-module p-12">
+                <p class="mono text-[10px] font-black text-blue-500 mb-8 tracking-[0.3em] uppercase italic">Model_A // Sidecar</p>
+                <h3 class="text-2xl font-black italic uppercase mb-4">Sidecar</h3>
+                <p class="text-gray-400 font-light leading-relaxed">Operates as a parallel process alongside the inference service, observing events via local IPC or network tap for zero-latency impact.</p>
             </div>
-            <div class="integration-card">
-                <p class="mono text-xs font-bold mb-4 uppercase text-blue-600">Model B</p>
-                <h3 class="text-xl font-bold mb-2">Gateway</h3>
-                <p class="text-sm">Integrates as a transparent proxy layer intercepting and sealing inference requests and responses.</p>
+            <div class="integration-module p-12">
+                <p class="mono text-[10px] font-black text-blue-500 mb-8 tracking-[0.3em] uppercase italic">Model_B // Gateway</p>
+                <h3 class="text-2xl font-black italic uppercase mb-4">Gateway</h3>
+                <p class="text-gray-400 font-light leading-relaxed">Integrates as a transparent proxy layer, intercepting and sealing inference requests and responses at the network boundary.</p>
             </div>
-            <div class="integration-card">
-                <p class="mono text-xs font-bold mb-4 uppercase text-blue-600">Model C</p>
-                <h3 class="text-xl font-bold mb-2">API Wrapper</h3>
-                <p class="text-sm">Encloses inference calls within a hardened wrapper to ensure sealing occurs at the execution boundary.</p>
+            <div class="integration-module p-12">
+                <p class="mono text-[10px] font-black text-blue-500 mb-8 tracking-[0.3em] uppercase italic">Model_C // API_Wrap</p>
+                <h3 class="text-2xl font-black italic uppercase mb-4">API Wrapper</h3>
+                <p class="text-gray-400 font-light leading-relaxed">Encloses inference calls within a hardened library wrapper to ensure sealing occurs directly at the execution boundary.</p>
             </div>
         </section>
 
         
 
-        <section class="space-y-12">
-            <div>
-                <h2 class="text-2xl font-bold border-b border-black pb-2 mb-6">Policy-Scoped Capture</h2>
-                <p class="mb-4">Artifact generation is governed by explicit policy. The deploying institution defines included fields, exclusion rules, and masking behavior. NADIR does not ingest model weights or training datasets by default.</p>
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-24 mb-60 scroll-reveal">
+            <div class="lg:col-span-7 space-y-12">
+                <h2 class="text-5xl font-black tracking-tighter uppercase italic leading-none">Policy-Scoped<br><span class="text-blue-600">Capture.</span></h2>
+                <p class="text-2xl font-light text-gray-400 leading-relaxed">
+                    Artifact generation is governed by explicit institutional policy. NADIR does not ingest proprietary model weights by default; instead, it captures only the defined <span class="text-white italic">decision-state context</span> required for verification.
+                </p>
             </div>
 
-            <div class="bg-white border border-black p-8">
-                <h3 class="mono text-sm font-bold uppercase mb-4 italic underline">The Artifact Lifecycle</h3>
-                <ol class="list-decimal list-inside space-y-4 text-sm leading-relaxed">
-                    <li><span class="font-bold">Capture:</span> Policy-scoped fields are isolated during the inference event.</li>
-                    <li><span class="font-bold">Normalization:</span> Context is structured into a stable, canonical schema.</li>
-                    <li><span class="font-bold">Sealing:</span> Deterministic hashing and signing are applied via HSM.</li>
-                    <li><span class="font-bold">Persistence:</span> Artifact is stored according to institutional retention posture.</li>
+            <div class="lg:col-span-5 bg-white/5 border border-white/10 p-12">
+                <h3 class="mono text-[10px] font-black text-blue-500 mb-12 tracking-[0.5em] uppercase italic border-b border-blue-900 pb-4">Artifact_Lifecycle</h3>
+                <ol class="space-y-8 mono text-[11px] font-bold uppercase tracking-widest">
+                    <li class="flex gap-6"><span class="text-blue-600">01</span> <span class="text-white">Capture:</span> <span class="text-gray-500 font-normal">Policy-scoped isolation.</span></li>
+                    <li class="flex gap-6"><span class="text-blue-600">02</span> <span class="text-white">Normalization:</span> <span class="text-gray-500 font-normal">Canonical schema structure.</span></li>
+                    <li class="flex gap-6"><span class="text-blue-600">03</span> <span class="text-white">Sealing:</span> <span class="text-gray-500 font-normal">Deterministic HSM signing.</span></li>
+                    <li class="flex gap-6"><span class="text-blue-600">04</span> <span class="text-white">Persistence:</span> <span class="text-gray-500 font-normal">Institutional retention logic.</span></li>
                 </ol>
             </div>
         </section>
 
-        <footer class="mt-20 p-8 border border-blue-600 bg-blue-50">
-            <p class="text-xs mono uppercase text-blue-700 font-bold mb-2">Integration Position</p>
-            <p class="text-sm text-blue-900 leading-snug">
-                NADIR is infrastructure that enables structured review. It does not intervene in decision-making or govern operational authority. Integration is incremental; oversight remains institutional.
-            </p>
+        <footer class="max-w-7xl mx-auto px-8 py-24 border-t border-white/5 scroll-reveal">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                <div class="space-y-4">
+                    <div class="mono text-[10px] text-blue-500 font-black tracking-[0.3em] uppercase">© 2026 NADIR SYSTEMS</div>
+                    <p class="text-[10px] mono text-gray-600 leading-relaxed uppercase tracking-widest">All rights reserved. Unauthorized duplication or redistribution is strictly prohibited.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="mono text-[10px] text-gray-400 font-black tracking-[0.3em] uppercase">LEGAL_DISCLAIMER</div>
+                    <p class="text-[10px] mono text-gray-600 leading-relaxed uppercase tracking-widest">NADIR enables structured review; it does not substitute for lawful authority.</p>
+                </div>
+                <div class="flex flex-col items-start md:items-end space-y-4">
+                    <div class="mono text-[10px] text-blue-600 font-black tracking-[0.3em] uppercase">SYSTEM_INTEGRITY</div>
+                    <div class="flex gap-4 items-center">
+                        <span class="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+                        <span class="text-[9px] mono text-gray-400 font-bold tracking-widest uppercase">STAL: OPS_READY // INT_v1.0</span>
+                    </div>
+                </div>
+            </div>
         </footer>
+
     </main>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
