@@ -19,106 +19,103 @@
             font-family: 'Inter', sans-serif; 
             overflow-x: hidden;
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
+            font-size: 18px; 
+            user-select: none;
         }
 
         .mono { font-family: 'IBM Plex Mono', monospace; }
         
-        /* LOGO: FIXED TOP LEFT */
         .brand-ceyo {
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 0.2em;
-            font-size: 1.5rem;
-            color: var(--ivory);
-            pointer-events: auto;
+            letter-spacing: 0.3em;
+            font-size: 1.8rem;
+            transition: opacity 0.5s;
         }
 
         nav.header-nav {
             position: fixed; top: 0; left: 0; width: 100%;
-            padding: 30px 5%; display: flex;
+            padding: 50px 8%; display: flex;
             justify-content: space-between; align-items: center;
             z-index: 10000;
+            mix-blend-difference: difference;
         }
 
-        /* HERO: MASSIVE IMPACT & SCROLL ERASE */
-        .hero-wrap { height: 200vh; position: relative; }
+        /* DYNAMIC ERASE ENGINE */
+        .hero-wrap { height: 220vh; position: relative; }
         #hero {
             position: sticky; top: 0; height: 100vh;
             display: flex; flex-direction: column; justify-content: center;
             padding: 0 8%; z-index: 10;
-            will-change: transform, opacity, filter;
+            transition: filter 0.2s linear, opacity 0.2s linear;
         }
 
         h1 {
-            font-size: clamp(3.5rem, 12vw, 11rem);
+            font-size: 14vw; 
             font-weight: 900;
-            line-height: 0.85;
-            letter-spacing: -0.05em;
+            line-height: 0.8;
+            letter-spacing: -0.06em;
             text-transform: uppercase;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
 
-        .hero-sub {
-            font-size: clamp(1.2rem, 3vw, 2.5rem);
-            font-weight: 400;
-            color: rgba(255,255,240,0.5);
-            max-width: 900px;
-            margin-bottom: 2rem;
+        /* TEXT DISAPPEARANCE STATE */
+        .scroll-erase {
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
         }
 
-        /* CONTENT SPACING */
+        .interactive-text:active, .interactive-text:hover {
+            opacity: 1 !important;
+            filter: blur(0) !important;
+            color: white;
+        }
+
         .content-section {
-            padding: 15vh 8%;
-            max-width: 1600px;
+            padding: 25vh 8%;
+            max-width: 1800px;
             margin: 0 auto;
         }
 
         .section-title {
-            font-size: clamp(2rem, 5vw, 4.5rem);
-            font-weight: 700;
-            margin-bottom: 3rem;
-            letter-spacing: -0.02em;
+            font-size: clamp(2.5rem, 6vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 4rem;
+            text-transform: uppercase;
         }
 
-        /* RESPONSIVE GRID */
+        /* GRID: REORDERED BOUNDARY TO END */
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 4rem;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 6rem;
         }
-
-        .divider { height: 1px; background: rgba(255,255,240,0.1); margin: 4rem 0; }
 
         .card {
-            border-left: 1px solid var(--tactical-green);
-            padding-left: 2rem;
+            border-left: 2px solid var(--tactical-green);
+            padding-left: 2.5rem;
+            transition: transform 0.4s;
         }
+        .card:hover { transform: translateX(10px); }
 
-        /* NAVIGATION HUB */
+        /* NAVIGATION PILL */
         .control-hub {
-            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
-            background: rgba(13, 14, 11, 0.9); 
-            backdrop-filter: blur(15px);
+            position: fixed; bottom: 3rem; left: 50%; transform: translateX(-50%);
+            background: rgba(13, 14, 11, 0.95); 
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 240, 0.1);
-            border-radius: 50px;
-            padding: 10px 30px; display: flex; gap: 25px; z-index: 9999;
-            white-space: nowrap;
+            border-radius: 100px;
+            padding: 15px 45px; display: flex; gap: 40px; z-index: 9999;
         }
-        .nav-link { font-family: 'IBM Plex Mono'; font-size: 10px; color: rgba(255,255,240,0.4); text-transform: uppercase; letter-spacing: 0.2em; transition: 0.3s; }
+        .nav-link { font-family: 'IBM Plex Mono'; font-size: 12px; color: rgba(255,255,240,0.4); text-transform: uppercase; letter-spacing: 0.25em; transition: 0.3s; }
         .nav-link.active, .nav-link:hover { color: var(--ivory); }
 
-        /* TYPEWRITER */
-        .cursor { border-left: 2px solid var(--tactical-green); margin-left: 4px; animation: blink 0.8s infinite; }
+        .cursor { border-left: 3px solid var(--tactical-green); margin-left: 6px; animation: blink 0.8s infinite; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        .fade { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
-        .fade.show { opacity: 1; transform: translateY(0); }
-
         @media (max-width: 768px) {
-            h1 { line-height: 1.0; }
-            .header-nav { padding: 20px 5%; }
-            .control-hub { gap: 15px; padding: 10px 20px; bottom: 1.5rem; }
+            h1 { font-size: 5rem; }
+            .content-section { padding: 15vh 8%; }
+            .info-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -126,16 +123,16 @@
 
     <nav class="header-nav">
         <div class="brand-ceyo">CEYO</div>
-        <div class="mono text-[10px] text-white/20 tracking-[0.4em] hidden md:block">SYS_STRATUM_1.0</div>
+        <div class="mono text-[11px] text-white/20 tracking-[0.5em] hidden lg:block">INSTITUTIONAL_STRATUM_01</div>
     </nav>
 
     <main>
         <div class="hero-wrap">
-            <section id="hero">
-                <div class="mono text-[11px] text-[#4A5D3B] mb-6 tracking-[0.5em] font-bold">VERIFICATION_LAYER</div>
+            <section id="hero" class="scroll-erase">
+                <div class="mono text-[12px] text-[#4A5D3B] mb-8 tracking-[0.6em] font-bold">PROTOCOL_LAYER</div>
                 <h1>Go Beyond<br>Telemetry.</h1>
-                <p class="hero-sub">Verifiable Decision Records for the Institutional Era.</p>
-                <div class="max-w-3xl text-lg lg:text-2xl font-light text-white/40 leading-relaxed">
+                <p class="text-3xl font-light text-white/60 mb-8 interactive-text">Verifiable Decision Records for the Institutional Era.</p>
+                <div class="text-2xl font-light text-white/30 interactive-text">
                     <span class="typewriter" data-text="A decoupled evidentiary substrate producing cryptographically sealed inference artifacts without modifying core model logic."></span><span class="cursor"></span>
                 </div>
             </section>
@@ -143,47 +140,47 @@
 
         
 
-        <section class="content-section fade">
+        <section class="content-section scroll-erase">
             <h2 class="section-title">Evidentiary Infrastructure</h2>
             <div class="info-grid">
-                <div>
-                    <p class="text-xl lg:text-3xl text-white/60 font-light leading-snug">
-                        AI systems influence decisions in high-stakes environments. Infrastructure often produces logs never designed to function as <span class="text-white font-bold">durable evidence.</span>
+                <div class="interactive-text">
+                    <p class="text-2xl lg:text-4xl text-white/70 font-light leading-tight">
+                        AI systems influence decisions in high-stakes environments. Infrastructure produces logs never designed to function as <span class="text-white font-bold italic">durable evidence.</span>
                     </p>
                 </div>
-                <div>
-                    <p class="text-xl lg:text-2xl text-white/30 italic font-light">
+                <div class="interactive-text">
+                    <p class="text-2xl lg:text-3xl text-white/20 italic font-light leading-relaxed">
                         "Telemetry describes activity. It does not preserve proof."
                     </p>
                 </div>
             </div>
 
-            <div class="divider"></div>
+            <div style="height: 1px; background: rgba(255,255,240,0.1); margin: 6rem 0;"></div>
 
             <div class="info-grid">
-                <div class="card">
-                    <div class="mono text-[10px] text-[#4A5D3B] mb-3 tracking-widest font-bold">// BOUNDARY</div>
-                    <p class="text-white/50 text-sm md:text-base">CEYO captures interaction without evaluation. We produce the record; you provide the oversight.</p>
+                <div class="card interactive-text">
+                    <div class="mono text-[11px] text-[#4A5D3B] mb-4 tracking-widest font-bold uppercase">// SEAL</div>
+                    <p>Every artifact is deterministically structured and cryptographically sealed for absolute provenance.</p>
                 </div>
-                <div class="card">
-                    <div class="mono text-[10px] text-[#4A5D3B] mb-3 tracking-widest font-bold">// SEAL</div>
-                    <p class="text-white/50 text-sm md:text-base">Every artifact is deterministically structured and cryptographically sealed for absolute provenance.</p>
+                <div class="card interactive-text">
+                    <div class="mono text-[11px] text-[#4A5D3B] mb-4 tracking-widest font-bold uppercase">// DISCLOSURE</div>
+                    <p>Tiered disclosure ensures integrity can be proven without revealing proprietary model internals.</p>
                 </div>
-                <div class="card">
-                    <div class="mono text-[10px] text-[#4A5D3B] mb-3 tracking-widest font-bold">// DISCLOSURE</div>
-                    <p class="text-white/50 text-sm md:text-base">Tiered disclosure ensures integrity can be proven without revealing proprietary model internals.</p>
+                <div class="card interactive-text">
+                    <div class="mono text-[11px] text-[#4A5D3B] mb-4 tracking-widest font-bold uppercase">// BOUNDARY</div>
+                    <p>CEYO captures interaction without evaluation. We produce the record; you provide the oversight.</p>
                 </div>
             </div>
         </section>
 
         
 
-        <section class="content-section fade">
+        <section class="content-section scroll-erase">
             <h2 class="section-title">The Accountability Gap</h2>
-            <p class="text-2xl lg:text-5xl font-light text-white/50 mb-12 leading-tight max-w-5xl">
+            <p class="text-3xl lg:text-6xl font-light text-white/50 mb-16 leading-tight max-w-6xl interactive-text">
                 Log reconstruction is <span class="text-white">interpretive.</span> CEYO artifacts are <span class="text-white">deterministic.</span>
             </p>
-            <div class="flex flex-wrap gap-8 mono text-[10px] text-white/20 uppercase tracking-[0.3em]">
+            <div class="flex flex-wrap gap-12 mono text-[12px] text-white/20 uppercase tracking-[0.4em]">
                 <span>• Canonical Structure</span>
                 <span>• Explicit Scope</span>
                 <span>• Secure Provenance</span>
@@ -191,9 +188,9 @@
             </div>
         </section>
 
-        <footer class="content-section border-t border-white/5 opacity-40">
-            <div class="brand-ceyo mb-6">CEYO</div>
-            <p class="mono text-[10px] tracking-[0.4em]">ALL RIGHTS RESERVED © 2026 CEYO SYSTEMS.</p>
+        <footer class="content-section border-t border-white/5 opacity-50">
+            <div class="brand-ceyo mb-8">CEYO</div>
+            <p class="mono text-[11px] tracking-[0.5em]">ALL RIGHTS RESERVED © 2026 CEYO SYSTEMS.</p>
         </footer>
     </main>
 
@@ -205,35 +202,46 @@
     </nav>
 
     <script>
-        // TYPEWRITER SCRIPT
         function typeWriter(el) {
             const text = el.getAttribute('data-text');
             el.innerHTML = ''; let i = 0;
             const timer = setInterval(() => {
                 if (i < text.length) { el.innerHTML += text.charAt(i); i++; }
                 else { clearInterval(timer); if(el.nextElementSibling) el.nextElementSibling.style.display = 'none'; }
-            }, 20);
+            }, 22);
         }
 
-        // SCROLL EFFECTS
+        // IMPROVED SCROLL ERASE PHYSICS
         window.addEventListener("scroll", function() {
             const s = window.scrollY;
+            const windowHeight = window.innerHeight;
+            
+            // Hero Specific Erase
             const hero = document.getElementById("hero");
-            if (s < 1200) {
-                const blurVal = s/60;
+            if (s < 1500) {
+                const blurVal = s/40;
                 const opacityVal = 1 - (s/1000);
-                const scaleVal = 1 - (s/8000);
                 hero.style.filter = `blur(${blurVal}px)`;
                 hero.style.opacity = opacityVal;
-                hero.style.transform = `scale(${scaleVal}) translateY(${s*0.2}px)`;
+                hero.style.transform = `translateY(${s*0.3}px)`;
             }
+
+            // General Content Erase
+            document.querySelectorAll('.scroll-erase').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const centerOffset = Math.abs(rect.top - (windowHeight / 2));
+                const fadeVal = Math.max(0, 1 - (centerOffset / (windowHeight * 0.8)));
+                const blurAmt = (1 - fadeVal) * 20;
+                
+                // This makes text disappear as it moves away from the center of the screen
+                el.style.opacity = fadeVal;
+                el.style.filter = `blur(${blurAmt}px)`;
+            });
         });
 
-        // REVEAL OBSERVER
         const observer = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
-                    e.target.classList.add("show");
                     e.target.querySelectorAll('.typewriter').forEach(w => {
                         if (!w.classList.contains('typed')) { typeWriter(w); w.classList.add('typed'); }
                     });
@@ -241,7 +249,7 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll(".fade, #hero").forEach(el => observer.observe(el));
+        document.querySelectorAll(".scroll-erase").forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
