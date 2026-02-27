@@ -1,107 +1,67 @@
-/* =========================================================
-   CEYO / NADIR — Shared motion + spotlight + UX
-   ========================================================= */
+// app/js/nav.js
 
-(function(){
-  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+(function () {
+  const root = document.documentElement;
 
-  // Enable custom cursor only on fine pointers (desktop)
-  const isFinePointer = window.matchMedia && window.matchMedia('(pointer:fine)').matches;
-  const cursor = document.getElementById('cursorDot');
-  const spotlight = document.getElementById('spotlight');
+  // ---------- Spotlight tracking ----------
+  const onMove = (e) => {
+    const x = (e.clientX / window.innerWidth) * 100;
+    const y = (e.clientY / window.innerHeight) * 100;
+    root.style.setProperty("--mx", `${x}%`);
+    root.style.setProperty("--my", `${y}%`);
+  };
+  window.addEventListener("mousemove", onMove, { passive: true });
 
-  if (isFinePointer && cursor && spotlight){
-    document.body.classList.add('has-cursor');
+  // Touch: set spotlight to touch point once
+  window.addEventListener("touchstart", (e) => {
+    const t = e.touches && e.touches[0];
+    if (!t) return;
+    const x = (t.clientX / window.innerWidth) * 100;
+    const y = (t.clientY / window.innerHeight) * 100;
+    root.style.setProperty("--mx", `${x}%`);
+    root.style.setProperty("--my", `${y}%`);
+  }, { passive: true });
 
-    document.addEventListener('mousemove', (e) => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-      spotlight.style.background =
-        `radial-gradient(circle 280px at ${e.clientX}px ${e.clientY}px, rgba(255,255,240,.06) 0%, transparent 70%)`;
+  // ---------- Reveal on scroll ----------
+  const reveals = Array.from(document.querySelectorAll(".reveal"));
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) en.target.classList.add("is-in");
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -10% 0px" }
+  );
+  reveals.forEach((el) => io.observe(el));
+
+  // ---------- “Active” section glow (hover + tap) ----------
+  const sections = Array.from(document.querySelectorAll(".section"));
+  sections.forEach((sec) => {
+    sec.addEventListener("click", () => {
+      sections.forEach((s) => s.classList.remove("is-active"));
+      sec.classList.add("is-active");
     });
-
-    document.addEventListener('mouseleave', () => {
-      cursor.style.opacity = '0';
-      spotlight.style.background = 'none';
-    });
-
-    document.addEventListener('mouseenter', () => {
-      cursor.style.opacity = '1';
-    });
-
-    // Hover enlarge
-    const hoverables = document.querySelectorAll('a, button, .card, .pill, [data-hover]');
-    hoverables.forEach(el => {
-      el.addEventListener('mouseenter', ()=> cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', ()=> cursor.classList.remove('hover'));
-    });
-  }
-
-  // Active nav highlighting based on current file
-  const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  document.querySelectorAll('.navlinks a, .indexbar a').forEach(a => {
-    const href = (a.getAttribute('href') || '').toLowerCase();
-    if (href === path) a.classList.add('active');
   });
 
-  // Reveal/focus on scroll
-  const revealEls = document.querySelectorAll('.reveal');
-  if (!prefersReduced && revealEls.length){
-    const obs = new IntersectionObserver((entries)=>{
-      entries.forEach(ent=>{
-        if(ent.isIntersecting){
-          ent.target.classList.add('visible');
-          // focus while intersecting
-          ent.target.classList.add('focus');
-        } else {
-          ent.target.classList.remove('focus');
-        }
+  // ---------- Type-on for explicit lines only ----------
+  const typeTargets = Array.from(document.querySelectorAll("[data-type]"));
+  typeTargets.forEach((el) => {
+    // Expect a single line element inside with class type-line
+    const line = el.querySelector(".type-line");
+    if (!line) return;
+
+    // Configure duration/steps from attributes
+    const dur = el.getAttribute("data-type-dur") || "1.6s";
+    const steps = el.getAttribute("data-type-steps") || "42";
+    line.style.setProperty("--tDur", dur);
+    line.style.setProperty("--tSteps", steps);
+
+    const typeIO = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) line.classList.add("is-typed");
       });
-    }, { threshold: 0.10 });
+    }, { threshold: 0.6 });
 
-    revealEls.forEach(el => obs.observe(el));
-  } else {
-    revealEls.forEach(el => el.classList.add('visible'));
-  }
-
-  // Typewriter for marked titles
-  const tw = document.querySelectorAll('[data-typewrite="1"]');
-  if (!prefersReduced && tw.length){
-    const twObs = new IntersectionObserver((entries)=>{
-      entries.forEach(ent=>{
-        if(ent.isIntersecting && !ent.target.dataset.typed){
-          ent.target.dataset.typed = '1';
-          const txt = ent.target.textContent;
-          ent.target.textContent = '';
-          ent.target.classList.add('typewrite');
-
-          let i = 0;
-          const iv = setInterval(()=>{
-            ent.target.textContent += txt[i] || '';
-            i++;
-            if(i >= txt.length){
-              clearInterval(iv);
-              ent.target.classList.remove('typewrite');
-            }
-          }, 18);
-        }
-      });
-    }, { threshold: 0.55 });
-
-    tw.forEach(el => twObs.observe(el));
-  }
-
-  // Touch highlight for cards (mobile)
-  document.querySelectorAll('.card, .pill').forEach(el=>{
-    el.addEventListener('touchstart', ()=>{
-      el.style.background = 'rgba(255,255,240,.06)';
-      el.style.borderColor = 'rgba(255,255,240,.18)';
-    }, {passive:true});
-    el.addEventListener('touchend', ()=>{
-      setTimeout(()=>{
-        el.style.background = '';
-        el.style.borderColor = '';
-      }, 160);
-    }, {passive:true});
+    typeIO.observe(el);
   });
 })();
