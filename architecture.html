@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <style>
 :root{
   --bg:#0D0E0B;
@@ -96,7 +97,7 @@ a{color:inherit;text-decoration:none;}
 .index-item:last-child{border-right:none;}
 .index-item:hover,.index-item.active{color:var(--ivory);background:rgba(255,255,240,.04);}
 
-/* ARCH PAGE — unique layout */
+/* ARCH PAGE layout */
 .arch-hero{
   min-height:100vh;
   display:flex;
@@ -343,7 +344,7 @@ a{color:inherit;text-decoration:none;}
 <nav class="topnav" aria-label="Primary navigation">
   <a href="index.html" class="brand">CE<span>YO</span></a>
   <div class="topnav-right">
-    <a href="platform.html" class="active">Architecture</a>
+    <a href="architecture.html" class="active">Architecture</a>
     <a href="trust.html">Trust</a>
     <a href="governance.html">Governance</a>
     <a href="contact.html">Contact</a>
@@ -527,17 +528,62 @@ a{color:inherit;text-decoration:none;}
     <div class="stage-body">
       <h2 class="stage-h2" id="s5-h">Independent Verification Workflow</h2>
       <p class="stage-p">Verification is designed to be executable by independent parties using deterministic procedures, without requiring access to CEYO infrastructure.</p>
+
       <div class="verify-steps" role="list">
-        <div class="vst" role="listitem"><div class="vst-num">01</div><div class="vst-body"><div class="vst-title">Deterministic canonicalization</div><div class="vst-detail">RFC 8785 applied to JSON artifact byte representation</div></div></div>
-        <div class="vst" role="listitem"><div class="vst-num">02</div><div class="vst-body"><div class="vst-title">Hash recomputation</div><div class="vst-detail">Over canonicalized byte representation</div></div></div>
-        <div class="vst" role="listitem"><div class="vst-num">03</div><div class="vst-body"><div class="vst-title">Digital signature validation</div><div class="vst-detail">Against operator-published public key</div></div></div>
-        <div class="vst" role="listitem"><div class="vst-num">04</div><div class="vst-body"><div class="vst-title">Policy alignment check</div><div class="vst-detail">Policy identifier and version confirmed</div></div></div>
+        <div class="vst" role="listitem">
+          <div class="vst-num">01</div>
+          <div class="vst-body">
+            <div class="vst-title">Deterministic canonicalization</div>
+            <div class="vst-detail">RFC 8785 applied to JSON artifact byte representation</div>
+          </div>
+        </div>
+        <div class="vst" role="listitem">
+          <div class="vst-num">02</div>
+          <div class="vst-body">
+            <div class="vst-title">Hash recomputation</div>
+            <div class="vst-detail">Over canonicalized byte representation</div>
+          </div>
+        </div>
+        <div class="vst" role="listitem">
+          <div class="vst-num">03</div>
+          <div class="vst-body">
+            <div class="vst-title">Digital signature validation</div>
+            <div class="vst-detail">Against operator-published public key</div>
+          </div>
+        </div>
+        <div class="vst" role="listitem">
+          <div class="vst-num">04</div>
+          <div class="vst-body">
+            <div class="vst-title">Policy alignment check</div>
+            <div class="vst-detail">Policy identifier and version confirmed</div>
+          </div>
+        </div>
       </div>
+
       <div class="outcome-row" role="list" aria-label="Verification outcomes">
-        <div class="outcome-card confirmed" role="listitem"><div class="outcome-icon">✓</div><div><div class="outcome-title">Integrity Confirmed</div><div class="outcome-desc">Artifact unmodified since sealing; policy aligned</div></div></div>
-        <div class="outcome-card failed" role="listitem"><div class="outcome-icon">✗</div><div><div class="outcome-title">Integrity Failed</div><div class="outcome-desc">Hash mismatch detected; artifact may have been altered</div></div></div>
-        <div class="outcome-card mismatch" role="listitem"><div class="outcome-icon">⚠</div><div><div class="outcome-title">Policy Scope Mismatch</div><div class="outcome-desc">Policy identifier or version discrepancy</div></div></div>
+        <div class="outcome-card confirmed" role="listitem">
+          <div class="outcome-icon">✓</div>
+          <div>
+            <div class="outcome-title">Integrity Confirmed</div>
+            <div class="outcome-desc">Artifact unmodified since sealing; policy aligned</div>
+          </div>
+        </div>
+        <div class="outcome-card failed" role="listitem">
+          <div class="outcome-icon">✗</div>
+          <div>
+            <div class="outcome-title">Integrity Failed</div>
+            <div class="outcome-desc">Hash mismatch detected; artifact may have been altered</div>
+          </div>
+        </div>
+        <div class="outcome-card mismatch" role="listitem">
+          <div class="outcome-icon">⚠</div>
+          <div>
+            <div class="outcome-title">Policy Scope Mismatch</div>
+            <div class="outcome-desc">Policy identifier or version discrepancy</div>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 
@@ -558,7 +604,7 @@ a{color:inherit;text-decoration:none;}
 
 <nav class="index-bar" aria-label="Site index">
   <a class="index-item" href="index.html">Index</a>
-  <a class="index-item active" href="platform.html">Arch</a>
+  <a class="index-item active" href="architecture.html">Arch</a>
   <a class="index-item" href="trust.html">Trust</a>
   <a class="index-item" href="governance.html">Gov</a>
   <a class="index-item" href="contact.html">Contact</a>
@@ -572,7 +618,6 @@ function isPointerFine(){
   return window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 }
 
-// Cursor + spotlight: only meaningful on pointer devices
 if (isPointerFine()){
   document.addEventListener('mousemove', (e) => {
     cursor.style.left = e.clientX + 'px';
@@ -598,7 +643,6 @@ if (isPointerFine()){
     el.addEventListener('mouseleave',()=>cursor.classList.remove('hover'));
   });
 } else {
-  // Hide cursor blob on touch devices
   cursor.style.display = 'none';
 }
 
@@ -637,7 +681,7 @@ const h2obs = new IntersectionObserver((entries)=>{
 },{threshold:0.5});
 document.querySelectorAll('.stage-h2').forEach(h=>h2obs.observe(h));
 
-// Touch feedback (keep light)
+// Touch feedback
 document.querySelectorAll('.chain-node,.outcome-card,.vst,.index-item').forEach(el=>{
   el.addEventListener('touchstart',()=>{el.style.background='var(--ivory)';el.style.color='var(--bg)';},{passive:true});
   el.addEventListener('touchend',()=>{setTimeout(()=>{el.style.background='';el.style.color='';},180);},{passive:true});
