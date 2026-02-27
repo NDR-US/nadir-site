@@ -4,76 +4,177 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Institutional Index | NADIR</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F4F4F7; color: #1A1A1A; }
+        :root {
+            --paper-white: #F4F4F7;
+            --ink-black: #1A1A1A;
+            --signal-blue: #0057FF;
+        }
+
+        body {
+            background-color: var(--paper-white);
+            color: var(--ink-black);
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.01em;
+        }
+
         .mono { font-family: 'IBM Plex Mono', monospace; }
-        .index-category { border-top: 2px solid #000; padding-top: 1rem; margin-bottom: 4rem; }
-        .page-link { border-bottom: 1px solid #CCC; padding: 0.75rem 0; display: flex; justify-content: space-between; transition: all 0.2s; }
-        .page-link:hover { border-bottom-color: #0057FF; color: #0057FF; padding-left: 0.5rem; }
+
+        /* BRUTALIST CATEGORY BORDERS */
+        .index-category {
+            border-top: 4px solid var(--ink-black);
+            transition: all 0.3s ease;
+        }
+
+        .index-category:hover {
+            border-top-color: var(--signal-blue);
+        }
+
+        /* DIRECTORY LINKS */
+        .page-link {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+        }
+
+        .page-link:hover {
+            color: var(--signal-blue);
+            border-bottom-color: var(--signal-blue);
+            transform: translateX(8px);
+        }
+
+        /* WATERMARK */
+        .watermark {
+            position: fixed;
+            bottom: -50px;
+            right: -50px;
+            font-size: 20vw;
+            font-weight: 900;
+            color: rgba(0,0,0,0.03);
+            pointer-events: none;
+            z-index: -1;
+            text-transform: uppercase;
+            font-style: italic;
+        }
     </style>
 </head>
-<body class="p-0">
-    <nav class="bg-black text-white p-6 mono text-[10px] tracking-[0.3em] uppercase flex justify-between sticky top-0 z-50">
-        <span>NADIR_SYSTEMS // INDEX_V.01</span>
-        <a href="index.html" class="hover:text-blue-500">Back_to_Home</a>
+<body class="min-h-screen">
+
+    <div class="watermark">INDEX</div>
+
+    <nav class="bg-black text-white p-6 mono text-[10px] tracking-[0.4em] uppercase flex justify-between sticky top-0 z-50">
+        <div class="flex items-center gap-4">
+            <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+            <span>NADIR_SYSTEMS // DIRECTORY_v.01</span>
+        </div>
+        <a href="index.html" class="hover:text-blue-400 transition-colors">Return_to_Core</a>
     </nav>
 
-    <main class="max-w-6xl mx-auto py-24 px-8">
-        <header class="mb-20">
-            <h1 class="text-7xl font-black tracking-tighter uppercase italic italic italic">Institutional Index</h1>
-            <p class="mono text-sm text-gray-500 mt-4 tracking-widest">Complete Directory of Evidentiary Infrastructure Documentation</p>
+    <main class="max-w-7xl mx-auto py-24 px-8">
+        
+        <header class="mb-32 border-b-2 border-black pb-12">
+            <div class="mono text-[11px] text-blue-600 font-bold tracking-[0.4em] mb-6 uppercase">
+                [ ACCESS_LEVEL: PUBLIC_INSTITUTIONAL ]
+            </div>
+            <h1 class="text-8xl font-black tracking-tighter uppercase italic leading-none mb-6">
+                Institutional<br>Index.
+            </h1>
+            <p class="mono text-sm text-gray-500 max-w-xl tracking-tight leading-relaxed uppercase">
+                A complete manifest of the NADIR evidentiary substrate documentation. All entries are cryptographically cross-referenced.
+            </p>
         </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-16">
-            <div class="index-category">
-                <h2 class="mono text-xs font-bold uppercase mb-6 text-blue-600">[ 01-06: Core Infrastructure ]</h2>
-                <div class="space-y-1">
-                    <a href="index.html" class="page-link text-sm"><span>01. Overview</span><span class="mono opacity-30">/HOME</span></a>
-                    <a href="architecture.html" class="page-link text-sm"><span>02. Architecture</span><span class="mono opacity-30">/SPEC</span></a>
-                    <a href="integration.html" class="page-link text-sm"><span>03. Integration</span><span class="mono opacity-30">/OP_ENV</span></a>
-                    <a href="portal.html" class="page-link text-sm"><span>04. Oversight Portal</span><span class="mono opacity-30">/ROLES</span></a>
-                    <a href="roadmap.html" class="page-link text-sm"><span>05. Roadmap</span><span class="mono opacity-30">/PHASES</span></a>
-                    <a href="governance.html" class="page-link text-sm"><span>06. Governance Posture</span><span class="mono opacity-30">/POLICY</span></a>
-                </div>
-            </div>
-
-            <div class="index-category">
-                <h2 class="mono text-xs font-bold uppercase mb-6 text-blue-600">[ 07-12: Trust & Strategy ]</h2>
-                <div class="space-y-1">
-                    <a href="compliance.html" class="page-link text-sm"><span>07. Compliance Center</span><span class="mono opacity-30">/REGS</span></a>
-                    <a href="trust.html" class="page-link text-sm"><span>08. Trust Infrastructure</span><span class="mono opacity-30">/SECURITY</span></a>
-                    <a href="pcl.html" class="page-link text-sm"><span>09. PCL Engineering</span><span class="mono opacity-30">/PRIVACY</span></a>
-                    <a href="ethics.html" class="page-link text-sm"><span>10. Ethics & Responsibility</span><span class="mono opacity-30">/MANIFESTO</span></a>
-                    <a href="capability.html" class="page-link text-sm"><span>11. Capability Statement</span><span class="mono opacity-30">/GOV_PROC</span></a>
-                    <a href="trd.html" class="page-link text-sm"><span>12. TRD Outline</span><span class="mono opacity-30">/TECH_REQS</span></a>
-                </div>
-            </div>
-
-            <div class="index-category">
-                <h2 class="mono text-xs font-bold uppercase mb-6 text-blue-600">[ 13-18: Implementation ]</h2>
-                <div class="space-y-1">
-                    <a href="whitepaper.html" class="page-link text-sm"><span>13. Technical Whitepaper</span><span class="mono opacity-30">/RESEARCH</span></a>
-                    <a href="implementation.html" class="page-link text-sm"><span>14. Implementation Guide</span><span class="mono opacity-30">/DEV_OPS</span></a>
-                    <a href="sitemap.html" class="page-link text-sm font-bold border-blue-500"><span>15. Institutional Index</span><span class="mono opacity-30">/MAP</span></a>
-                    <a href="controlled.html" class="page-link text-sm"><span>16. Controlled Review Access</span><span class="mono opacity-30">/PORTAL</span></a>
-                    <a href="pcla.html" class="page-link text-sm"><span>17. PCLA Template</span><span class="mono opacity-30">/LEGAL</span></a>
-                    <a href="incident.html" class="page-link text-sm"><span>18. Incident Playbook</span><span class="mono opacity-30">/SOP</span></a>
-                </div>
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-20 gap-y-16">
             
-            <div class="index-category">
-                <h2 class="mono text-xs font-bold uppercase mb-6 text-blue-600">[ 19-27: Support & Terms ]</h2>
-                <p class="text-[10px] mono text-gray-400 italic italic">Pages 19-27 including Privacy, Contact, and Legal Policies are located in the Supplemental Index.</p>
+            <div class="index-category pt-8">
+                <h2 class="mono text-[10px] font-black uppercase mb-10 text-blue-600 tracking-[0.3em]">
+                    01-06 // CORE_INFRASTRUCTURE
+                </h2>
+                <nav class="flex flex-col">
+                    <a href="index.html" class="page-link py-4 flex justify-between items-baseline group">
+                        <span class="text-lg font-bold uppercase italic group-hover:not-italic">Overview</span>
+                        <span class="mono text-[9px] opacity-40">/HOME</span>
+                    </a>
+                    <a href="architecture.html" class="page-link py-4 flex justify-between items-baseline group">
+                        <span class="text-lg font-bold uppercase italic group-hover:not-italic">Architecture</span>
+                        <span class="mono text-[9px] opacity-40">/SPEC</span>
+                    </a>
+                    <a href="integration.html" class="page-link py-4 flex justify-between items-baseline group">
+                        <span class="text-lg font-bold uppercase italic group-hover:not-italic">Integration</span>
+                        <span class="mono text-[9px] opacity-40">/OP_ENV</span>
+                    </a>
+                    <a href="portal.html" class="page-link py-4 flex justify-between items-baseline group">
+                        <span class="text-lg font-bold uppercase italic group-hover:not-italic">Oversight Portal</span>
+                        <span class="mono text-[9px] opacity-40">/ROLES</span>
+                    </a>
+                    <a href="#" class="page-link py-4 flex justify-between items-baseline group">
+                        <span class="text-lg font-bold uppercase italic group-hover:not-italic">Roadmap</span>
+                        <span class="mono text-[9px] opacity-40">/PHASES</span>
+                    </a>
+                </nav>
             </div>
+
+            <div class="index-category pt-8">
+                <h2 class="mono text-[10px] font-black uppercase mb-10 text-blue-600 tracking-[0.3em]">
+                    07-12 // TRUST_&_STRATEGY
+                </h2>
+                <nav class="flex flex-col">
+                    <a href="#" class="page-link py-4 flex justify-between items-baseline group">
+                        <span class="text-lg font-bold uppercase italic group-hover:not-italic">Compliance Center</span>
+                        <span class="mono text-[9px] opacity-40">/REGS</span>
+                    </a>
+                    <a href="#" class="page-link py-4 flex justify-between items-baseline group">
+                        <span class="text-lg font-bold uppercase italic group-hover:not-italic">Trust Infrastructure</span>
+                        <span class="mono text-[9px] opacity-40">/SECURITY</span>
+                    </a>
+                    <a href="#" class="page-link py-4 flex justify-between items-baseline group">
+                        <span class="text-lg font-bold uppercase italic group-hover:not-italic">PCL Engineering</span>
+                        <span class="mono text-[9px] opacity-40">/PRIVACY</span>
+                    </a>
+                    <a href="#" class="page-link py-4 flex justify-between items-baseline group">
+                        <span class="text-lg font-bold uppercase italic group-hover:not-italic">Ethics Statement</span>
+                        <span class="mono text-[9px] opacity-40">/MANIFESTO</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="index-category pt-8">
+                <h2 class="mono text-[10px] font-black uppercase mb-10 text-blue-600 tracking-[0.3em]">
+                    13-18 // IMPLEMENTATION
+                </h2>
+                <nav class="flex flex-col">
+                    <a href="#" class="page-link py-4 flex justify-between items-baseline group">
+                        <span class="text-lg font-bold uppercase italic group-hover:not-italic">Whitepaper</span>
+                        <span class="mono text-[9px] opacity-40">/RESEARCH</span>
+                    </a>
+                    <a href="sitemap.html" class="page-link py-4 flex justify-between items-baseline group text-blue-600">
+                        <span class="text-lg font-bold uppercase italic">Institutional Index</span>
+                        <span class="mono text-[9px] opacity-40">/MAP</span>
+                    </a>
+                    <a href="incident.html" class="page-link py-4 flex justify-between items-baseline group">
+                        <span class="text-lg font-bold uppercase italic group-hover:not-italic">Incident Playbook</span>
+                        <span class="mono text-[9px] opacity-40">/SOP</span>
+                    </a>
+                </nav>
+            </div>
+
         </div>
 
-        
-
-        <footer class="mt-40 pt-12 border-t border-black/10 text-center opacity-40">
-            <p class="mono text-[10px] uppercase tracking-[0.3em]">Documentation_Managed_by_NADIR_Governance_Desk</p>
+        <footer class="mt-60 pt-16 border-t border-black/10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                <p class="mono text-[10px] uppercase text-gray-400 tracking-widest max-w-sm">
+                    All documentation is subject to institutional review. Unauthorized distribution is prohibited under Protocol Alpha.
+                </p>
+                <div class="mono text-[10px] font-black uppercase">
+                    System_Status: <span class="text-blue-600">Sync_Complete</span>
+                </div>
+            </div>
         </footer>
     </main>
+
 </body>
 </html>
