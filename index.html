@@ -4,23 +4,21 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>CEYO — Evidentiary Infrastructure</title>
-  <meta name="description" content="Decoupled evidentiary infrastructure producing policy-scoped, canonical, cryptographically sealed artifacts for AI inference systems."/>
+  <meta name="description" content="CEYO is a decoupled evidentiary layer producing policy-scoped, canonical artifacts for AI inference systems. Deterministic. Non-custodial. Independently verifiable."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <!-- Canela: keep the name in CSS; add your licensed Canela files later via @font-face if you have them -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="app/css/global.css"/>
-  <script src="app/js/nav.js" defer></script>
 </head>
 
-<body data-theme="overview">
-  <div id="cursorDot" aria-hidden="true"></div>
+<body data-motif="index">
+  <div class="bg" aria-hidden="true"></div>
   <div id="spotlight" aria-hidden="true"></div>
+  <div id="cursor" aria-hidden="true"></div>
 
   <nav class="topnav" aria-label="Primary navigation">
-    <a href="index.html" class="brand"><span class="mark">CE</span><span class="accent">YO</span></a>
-    <div class="navlinks" aria-label="Sections">
-      <a href="index.html">Overview</a>
+    <a class="brand" href="index.html">CE<span class="mark">YO</span></a>
+    <div class="navlinks">
       <a href="architecture.html">Architecture</a>
       <a href="trust.html">Trust</a>
       <a href="governance.html">Governance</a>
@@ -28,21 +26,13 @@
     </div>
   </nav>
 
-  <div class="page">
+  <div class="wrap page">
     <header class="hero">
-      <div class="hero-bg" aria-hidden="true">
-        <div class="hero-grid"></div>
-        <div class="hero-lines"></div>
-      </div>
-
-      <div class="container hero-content">
-        <div class="eyebrow">Evidentiary Infrastructure · For Autonomous Systems · V2026.02.19</div>
+      <div class="container">
+        <div class="kicker">Evidentiary Infrastructure · For Autonomous Systems · V2026.02.19</div>
 
         <h1 class="h1">
-          <span class="telemetry">
-            Go Beyond <span class="accent">Telemetry</span>
-            <span class="telemetryDot" aria-hidden="true"></span>
-          </span>
+          Go Beyond <span class="telemetry"><span class="t">Telemetry</span><span class="dot" aria-hidden="true"></span></span>
         </h1>
 
         <p class="lead">
@@ -51,150 +41,141 @@
           that were never designed to function as durable evidence.
         </p>
 
-        <div class="pillrow" aria-label="Core attributes">
-          <div class="pill">Decoupled</div>
-          <div class="pill">Policy-scoped</div>
-          <div class="pill">Deterministic</div>
-          <div class="pill">Canonical</div>
-          <div class="pill">Cryptographically sealed</div>
-          <div class="pill">Independently verifiable</div>
-        </div>
+        <p class="lead" style="max-width:72ch">
+          <span style="color:rgba(255,255,240,.78)">Telemetry describes activity.</span>
+          <span style="color:rgba(255,255,240,.78)">It does not preserve proof.</span>
+          <br>
+          CEYO exists to address that structural gap.
+        </p>
       </div>
     </header>
 
-    <main>
-      <section class="section">
-        <div class="container grid-2">
-          <div class="reveal card">
-            <div class="kicker">Structural gap</div>
-            <h3 data-typewrite="1">Telemetry describes activity. It does not preserve proof.</h3>
-            <p>
-              When a decision is later questioned—through regulatory inquiry, internal audit, incident review, or litigation—
-              organizations often reconstruct events from partial logs and distributed traces. Reconstruction is interpretive.
-              It is not deterministic.
-            </p>
-          </div>
+    <div class="rule"></div>
 
-          <div class="reveal card">
-            <div class="kicker">Narrow purpose</div>
-            <h3 data-typewrite="1">CEYO produces records. Institutions provide oversight.</h3>
-            <p>
+    <main>
+      <section class="section reveal focus">
+        <div class="container rail">
+          <div class="rail-label">Position</div>
+          <div class="rail-body">
+            <h2 data-type data-speed="18"><span class="subhl">A Decoupled Evidentiary Layer</span></h2>
+            <p class="p">
               CEYO attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined
               inference-time decision-state context. These artifacts are deterministically structured and cryptographically sealed
-              for later institutional verification under constrained disclosure.
+              to support later institutional verification without default disclosure of proprietary internals.
             </p>
-          </div>
-        </div>
-      </section>
 
-      <section class="section">
-        <div class="container">
-          <div class="section-sub">The Accountability Gap</div>
-          <h2 class="section-title highlight reveal" data-typewrite="1">Determinism replaces reconstruction.</h2>
-
-          <div class="grid-3" style="margin-top:22px;">
-            <div class="reveal card">
-              <div class="kicker">Canonical</div>
-              <h3>Stable structure</h3>
-              <p>Artifacts are normalized into a review-ready schema, not free-form logs.</p>
-            </div>
-            <div class="reveal card">
-              <div class="kicker">Explicit scope</div>
-              <h3>Policy-defined capture</h3>
-              <p>Inclusion, exclusion, masking, and tiers are declared before generation.</p>
-            </div>
-            <div class="reveal card">
-              <div class="kicker">Verifiable</div>
-              <h3>Integrity sealing</h3>
-              <p>Deterministic canonicalization + cryptographic sealing supports independent validation.</p>
+            <div class="rows" role="list" aria-label="Boundary statements">
+              <div class="row" role="listitem">
+                <div class="k">CEYO</div>
+                <div class="v">does not evaluate outputs or intervene in decision logic.</div>
+              </div>
+              <div class="row" role="listitem">
+                <div class="k">CEYO</div>
+                <div class="v">does not adjudicate compliance, legality, or correctness.</div>
+              </div>
+              <div class="row" role="listitem">
+                <div class="k">CEYO</div>
+                <div class="v">produces records. Institutions provide oversight.</div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container grid-2">
-          <div class="reveal">
-            <div class="section-sub">A Decoupled Verification Layer</div>
-            <h2 class="section-title" data-typewrite="1">Architectural neutrality by design.</h2>
-            <p class="lead" style="margin-bottom:0;">
-              CEYO operates beside inference engines. It does not modify model weights. It does not intervene in decision logic.
-              It captures only what policy defines, normalizes that context into a stable artifact schema, applies deterministic
-              canonicalization, and seals the artifact for tamper-evidence.
-            </p>
-          </div>
+      <div class="rule"></div>
 
-          <div class="reveal card">
-            <div class="kicker">Boundary</div>
-            <h3>What CEYO does not do</h3>
-            <ul class="list">
-              <li>Does not evaluate outputs</li>
-              <li>Does not adjudicate compliance</li>
-              <li>Does not guarantee admissibility</li>
-              <li>Does not certify legality or correctness</li>
-            </ul>
+      <section class="section reveal focus">
+        <div class="container rail">
+          <div class="rail-label">The Gap</div>
+          <div class="rail-body">
+            <h2 data-type data-speed="18"><span class="subhl">The Accountability Deficit</span></h2>
+            <p class="p">
+              Modern deployments optimize for throughput, latency, and availability. Accountability infrastructure is frequently secondary.
+              When a decision is later questioned—through regulatory inquiry, internal audit, incident review, or litigation—organizations
+              often reconstruct events from partial logs and distributed traces. Reconstruction is interpretive. It is not deterministic.
+            </p>
+            <div class="rows">
+              <div class="row">
+                <div class="k">Required</div>
+                <div class="v">Canonical structure · Explicit capture scope · Cryptographic sealing · Independent verification</div>
+              </div>
+              <div class="row">
+                <div class="k">Without</div>
+                <div class="v">Oversight depends on operator assertions rather than verifiable integrity.</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container grid-2">
-          <div class="reveal card">
-            <div class="kicker">Constrained disclosure</div>
-            <h3 data-typewrite="1">Verification without default exposure.</h3>
-            <p>
-              Oversight frequently requires validation without exposure of proprietary architecture, confidential model weights,
-              or trade-secret implementation. Artifacts support tiered disclosure. Integrity may be validated within declared scope.
+      <div class="rule"></div>
+
+      <section class="section reveal focus">
+        <div class="container rail">
+          <div class="rail-label">Disclosure</div>
+          <div class="rail-body">
+            <h2 data-type data-speed="18"><span class="subhl">Constrained Verification</span></h2>
+            <p class="p">
+              Oversight frequently requires validation without exposure of proprietary architecture, confidential weights, or trade-secret implementation.
+              CEYO artifacts support tiered disclosure. Policy defines inclusion, exclusion, and masking rules before generation. Disclosure boundaries are explicit rather than implied.
             </p>
           </div>
+        </div>
+      </section>
 
-          <div class="reveal card">
-            <div class="kicker">Availability discipline</div>
-            <h3 data-typewrite="1">Fail-open by default.</h3>
-            <p>
-              Artifact sealing failures may be logged and flagged without interrupting inference unless explicitly configured otherwise.
+      <div class="rule"></div>
+
+      <section class="section reveal focus">
+        <div class="container rail">
+          <div class="rail-label">Continuity</div>
+          <div class="rail-body">
+            <h2 data-type data-speed="18"><span class="subhl">Availability by Design</span></h2>
+            <p class="p">
+              CEYO does not introduce a default operational dependency that halts inference. Sealing failures may be logged and flagged without interrupting inference unless explicitly configured otherwise.
               Availability remains an institutional decision.
             </p>
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container">
-          <div class="section-sub">Institutional Position</div>
-          <h2 class="section-title highlight reveal" data-typewrite="1">Infrastructure, not adjudication.</h2>
+      <div class="rule"></div>
 
-          <div class="reveal card" style="margin-top:18px;">
-            <p style="margin:0; color:var(--muted); line-height:1.85; font-size:14px;">
-              CEYO provides deterministic artifacts representing defined inference-time context under policy scope.
-              Institutions determine their meaning. Oversight authority remains institutional.
+      <section class="section reveal focus">
+        <div class="container rail">
+          <div class="rail-label">Position</div>
+          <div class="rail-body">
+            <h2 data-type data-speed="18"><span class="subhl">Institutional Boundaries</span></h2>
+            <p class="p">
+              CEYO is infrastructure. It is not adjudication. It does not certify regulatory compliance, guarantee admissibility, or determine fairness or legality.
+              Authorized institutions and regulated operators retain responsibility for determinations.
             </p>
           </div>
         </div>
       </section>
+    </main>
 
-      <footer class="footer">
-        <div class="container">
-          <div class="row">
-            <div>© 2026 CEYO. All rights reserved.</div>
-            <div class="links">
-              <a href="privacy.html">Privacy</a>
-              <a href="terms.html">Terms</a>
-              <a href="sitemap.html">Sitemap</a>
-              <a href="contact.html">Contact</a>
-            </div>
+    <footer class="footer">
+      <div class="container">
+        <div class="line">
+          <div>© CEYO · All rights reserved</div>
+          <div style="display:flex;gap:14px;flex-wrap:wrap">
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="sitemap.html">Sitemap</a>
           </div>
         </div>
-      </footer>
-    </main>
+      </div>
+    </footer>
   </div>
 
-  <nav class="indexbar" aria-label="Site index">
-    <a href="index.html">Overview</a>
+  <nav class="bottombar" aria-label="Site index">
+    <a href="index.html" aria-current="page">Index</a>
     <a href="architecture.html">Arch</a>
     <a href="trust.html">Trust</a>
     <a href="governance.html">Gov</a>
     <a href="contact.html">Contact</a>
   </nav>
+
+  <script src="app/js/site.js"></script>
 </body>
 </html>
