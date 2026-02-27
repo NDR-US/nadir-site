@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NADIR // Institutional Substrate</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Outfit:wght@900&family=Inter:wght@400;900&display=swap" rel="stylesheet">
     <style>
         :root { 
             --deep-olive: #0D0E0B; 
@@ -13,83 +13,93 @@
             --tactical-green: #4A5D3B;
         }
         
+        /* Simulating Candela with Outfit 900 for that ultra-thick, sharp geometric look */
+        .candela { font-family: 'Outfit', sans-serif; font-weight: 900; }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+
         body { 
             background-color: var(--deep-olive); 
             color: var(--ivory); 
             font-family: 'Inter', sans-serif; 
             overflow-x: hidden;
-            line-height: 1.1;
+            line-height: 1.05;
         }
 
-        .mono { font-family: 'IBM Plex Mono', monospace; }
-        
-        /* THE "PALANTIR" LOGO: HEAVY, TIGHT, INDUSTRIAL */
+        /* INITIAL SCROLL "ERASE" CONTAINER */
+        #hero-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 10;
+            will-change: transform, opacity, filter;
+        }
+
+        /* BRANDING: CANDELA STYLE */
         .brand-nadir {
+            font-family: 'Outfit', sans-serif;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: -0.06em;
-            font-size: clamp(2rem, 6vw, 4rem);
+            letter-spacing: -0.07em;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
             color: var(--ivory);
-            position: relative;
-            display: inline-block;
         }
 
-        /* SHARP IVORY SHIMMER (NOT COLORFUL) */
-        .shimmer {
-            background: linear-gradient(90deg, var(--ivory) 0%, #888 50%, var(--ivory) 100%);
+        /* THE TRACE EFFECTS */
+        .ivory-trace {
+            background: linear-gradient(90deg, #444 0%, var(--ivory) 50%, #444 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shimmer-fast 8s linear infinite;
+            animation: trace-anim 7s linear infinite;
         }
 
-        @keyframes shimmer-fast {
-            0% { background-position: 200% center; }
-            100% { background-position: -200% center; }
-        }
-
-        /* DARK GREEN TELEMETRY PULSE */
         .telemetry-trace {
             background: linear-gradient(90deg, #1a2312 0%, var(--tactical-green) 50%, #1a2312 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shimmer-fast 4s linear infinite;
+            animation: trace-anim 4s linear infinite;
         }
 
-        /* 3D TACTICAL GRID (STAYS IN BACKGROUND) */
+        @keyframes trace-anim {
+            0% { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+
+        /* 3D BACKGROUND GRID */
         .horizon-grid {
             position: fixed; inset: 0;
             background-image: linear-gradient(rgba(255,255,240,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,240,0.02) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 90%);
-            transform: perspective(1000px) rotateX(60deg);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 95%);
+            transform: perspective(1000px) rotateX(65deg);
             z-index: 0; pointer-events: none;
         }
 
-        /* MOBILE RESPONSIVE TWEAKS */
-        .hero-text { font-size: clamp(2.5rem, 12vw, 10rem); }
-        .sub-hero { font-size: clamp(1.5rem, 5vw, 4rem); }
-
+        /* KINETIC REVEAL FOR CONTENT */
         .data-node {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .data-node.active { opacity: 1; transform: translateY(0); }
 
+        /* TYPEWRITER CURSOR */
+        .cursor { border-left: 3px solid var(--tactical-green); animation: blink 0.8s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* NAV HUB */
         .control-hub {
-            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-            background: rgba(13, 14, 11, 0.98); 
+            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            background: rgba(13, 14, 11, 0.95); 
             border: 1px solid rgba(255, 255, 240, 0.1);
-            padding: 0.8rem 1.5rem; display: flex; gap: 1.5rem; z-index: 1000;
-            width: 90%; max-width: 500px; justify-content: center;
+            padding: 1rem 2rem; display: flex; gap: 2.5rem; z-index: 1000;
         }
-
-        .nav-link { font-family: 'IBM Plex Mono'; font-size: 9px; color: #444; text-transform: uppercase; letter-spacing: 0.2em; }
-        .nav-link.active { color: var(--ivory); border-bottom: 1px solid var(--ivory); }
-
-        .typewriter { border-left: 2px solid var(--tactical-green); padding-left: 5px; }
+        .nav-link { font-family: 'IBM Plex Mono'; font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.3em; transition: 0.3s; }
+        .nav-link.active { color: var(--ivory); }
 
     </style>
 </head>
@@ -97,82 +107,83 @@
 
     <div class="horizon-grid" id="grid"></div>
 
-    <nav class="fixed top-0 left-0 w-full p-6 lg:p-12 flex justify-between items-center z-[500]">
-        <span class="brand-nadir shimmer">Nadir</span>
-        <div class="mono text-[8px] text-white/20 tracking-widest font-bold uppercase">Auth: Institutional_Ready</div>
+    <nav class="fixed top-0 left-0 w-full p-8 lg:p-12 flex justify-between items-center z-[500]">
+        <span class="brand-nadir ivory-trace">Nadir</span>
+        <div class="mono text-[10px] text-white/20 tracking-widest font-bold uppercase">Institutional_Rel_1.0</div>
     </nav>
 
-    <main class="relative z-10">
+    <main class="relative">
         
-        <section class="min-h-screen flex flex-col justify-center px-6 lg:px-32 pt-20" id="hero">
-            <div class="mono text-[10px] text-[#4A5D3B] mb-8 tracking-[0.6em] font-bold uppercase underline underline-offset-8">Stratum_01</div>
-            
-            <h1 class="hero-text font-black uppercase italic tracking-tighter mb-12">
-                Go Beyond<br><span class="telemetry-trace">Telemetry.</span>
-            </h1>
+        <div class="h-[200vh] relative"> <section id="hero-container" class="px-6 lg:px-40">
+                <div class="mono text-[11px] text-[#4A5D3B] mb-12 tracking-[0.6em] font-bold uppercase">Verification_Layer</div>
+                
+                <h1 class="candela text-[12vw] uppercase italic leading-[0.8] mb-12 tracking-tighter">
+                    Go Beyond<br><span class="telemetry-trace">Telemetry.</span>
+                </h1>
 
-            <div class="max-w-5xl">
-                <p class="sub-hero font-black uppercase italic mb-12 opacity-90">
-                    Verifiable Decision Records.
-                </p>
-                <div class="h-[1px] w-full bg-white/10 mb-12"></div>
-                <p class="text-lg lg:text-3xl font-light text-white/50 leading-relaxed max-w-3xl">
-                    <span class="typewriter" data-text="A decoupled evidentiary substrate producing cryptographically sealed inference artifacts without modifying core model logic."></span>
-                </p>
-            </div>
-        </section>
-
-        
-
-        <section class="px-6 lg:px-32 py-32 space-y-[30vh]">
-            
-            <div class="data-node grid grid-cols-1 lg:grid-cols-12 gap-10">
-                <div class="lg:col-span-5">
-                    <h2 class="mono text-[10px] text-[#4A5D3B] mb-6 tracking-widest uppercase font-bold">// 01_Functionality</h2>
-                    <h3 class="text-4xl lg:text-7xl font-black uppercase italic tracking-tighter">Structural<br>Independence.</h3>
-                </div>
-                <div class="lg:col-span-7">
-                    <p class="text-xl lg:text-3xl text-white/50 font-light mb-8 italic">
-                        NADIR captures the scope of interaction at the inference boundary. Artifacts enable <span class="text-white font-bold">independent verification</span>.
+                <div class="max-w-6xl">
+                    <p class="candela text-4xl lg:text-8xl uppercase italic mb-12 opacity-90 tracking-tighter">
+                        Verifiable Decision Records.
                     </p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 border-t border-white/5 pt-10">
+                    <div class="h-[2px] w-32 bg-white/10 mb-12"></div>
+                    <p class="text-xl lg:text-4xl font-light text-white/40 leading-snug max-w-4xl">
+                        <span class="typewriter" data-text="A decoupled evidentiary substrate producing cryptographically sealed inference artifacts without modifying core model logic."></span><span class="cursor"></span>
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        
+
+        <section class="px-6 lg:px-40 space-y-[40vh] pb-60">
+            
+            <div class="data-node grid grid-cols-1 lg:grid-cols-12 gap-16">
+                <div class="lg:col-span-6">
+                    <h2 class="mono text-[11px] text-[#4A5D3B] mb-8 tracking-widest uppercase">// FUNCTIONALITY_A1</h2>
+                    <h3 class="candela text-5xl lg:text-8xl uppercase italic tracking-tighter">Structural Independence.</h3>
+                </div>
+                <div class="lg:col-span-6">
+                    <p class="text-2xl lg:text-4xl text-white/50 font-light mb-12 leading-tight">
+                        NADIR captures interaction at the inference boundary. Artifacts enable <span class="text-white font-bold underline decoration-[#4A5D3B] underline-offset-[12px]">independent verification</span>.
+                    </p>
+                    <div class="grid grid-cols-2 gap-10 pt-12 border-t border-white/5">
                         <div class="mono">
-                            <span class="text-white block mb-2 font-bold text-xs">// CAPTURE</span>
-                            <p class="text-white/30 text-[10px] leading-relaxed">Deterministic audit tails attached to every session.</p>
+                            <span class="text-white block mb-4 font-bold text-xs">// CAPTURE</span>
+                            <p class="text-white/30 text-[10px]">Deterministic audit tails attached to every session.</p>
                         </div>
                         <div class="mono">
-                            <span class="text-white block mb-2 font-bold text-xs">// SEAL</span>
-                            <p class="text-white/30 text-[10px] leading-relaxed">Cryptographic permanence via RFC 8785.</p>
+                            <span class="block text-white mb-4 font-bold text-xs">// SEAL</span>
+                            <p class="text-white/30 text-[10px]">Cryptographic permanence via RFC 8785.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="data-node grid grid-cols-1 lg:grid-cols-12 gap-10">
-                <div class="lg:col-span-7">
-                    <h3 class="text-4xl lg:text-7xl font-black uppercase italic tracking-tighter mb-8">Non-Adjudication.</h3>
-                    <p class="text-xl lg:text-3xl text-white/50 font-light leading-relaxed">
-                        <span class="typewriter" data-text="The substrate remains agnostic to secondary policy layers. Integrity must be proven before it is scaled to institutional levels."></span>
+            <div class="data-node grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                <div class="lg:col-span-8">
+                    <h3 class="candela text-5xl lg:text-8xl uppercase italic tracking-tighter mb-12">Non-Adjudication.</h3>
+                    <p class="text-2xl lg:text-5xl text-white/50 font-light italic leading-tight">
+                        <span class="typewriter" data-text="The substrate remains agnostic to secondary policy layers. Integrity must be proven before it is scaled."></span><span class="cursor"></span>
                     </p>
                 </div>
-                <div class="lg:col-span-5 flex items-center">
-                    <div class="w-full h-[1px] bg-white/10 hidden lg:block"></div>
+                <div class="lg:col-span-4 flex justify-end">
+                    <div class="h-64 w-[1px] bg-white/10 hidden lg:block"></div>
                 </div>
             </div>
 
         </section>
 
-        <footer class="px-6 lg:px-32 py-32 border-t border-white/5 bg-[#0A0B09]">
-            <div class="flex flex-col lg:flex-row justify-between gap-10">
+        <footer class="px-6 lg:px-40 py-40 border-t border-white/5 bg-black/20">
+            <div class="flex flex-col lg:flex-row justify-between items-end gap-12">
                 <div>
-                    <h2 class="text-3xl lg:text-5xl font-black italic uppercase mb-6">Institutional Reality.</h2>
-                    <p class="mono text-[10px] text-white/20 uppercase tracking-widest font-bold">
+                    <h2 class="candela text-4xl lg:text-6xl uppercase italic mb-8">Institutional Reality.</h2>
+                    <p class="mono text-[11px] text-white/20 uppercase tracking-[0.5em] leading-relaxed font-bold">
                         All Rights Reserved © 2026 NADIR SYSTEMS.<br>
-                        INTERNAL_PROTOCOL // SECURE_DISTRIBUTION.
+                        ESTABLISHED FOR INSTITUTIONAL OVERSIGHT.
                     </p>
                 </div>
-                <div class="mono text-[9px] text-white/10 text-right">
-                    STABLE_REL // 0x992..AF
+                <div class="mono text-[10px] text-white/10 tracking-widest font-bold">
+                    REL_STABLE // 0x992..AF
                 </div>
             </div>
         </footer>
@@ -182,7 +193,7 @@
         <a href="index.html" class="nav-link active">Index</a>
         <a href="architecture.html" class="nav-link">Arch</a>
         <a href="trust.html" class="nav-link">Trust</a>
-        <a href="compliance.html" class="nav-link">Gov</a>
+        <a href="governance.html" class="nav-link">Gov</a>
     </nav>
 
     <script>
@@ -197,10 +208,31 @@
                     i++;
                 } else {
                     clearInterval(timer);
-                    el.style.borderLeft = 'none';
+                    el.nextElementSibling.style.display = 'none'; // Hide cursor
                 }
             }, 25);
         }
+
+        // SCROLL ERASE PHYSICS
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.getElementById('hero-container');
+            const grid = document.getElementById('grid');
+            
+            // Initial Section Erase: Blur and shrink into the distance
+            if (scrolled < 1000) {
+                const blurValue = scrolled / 50;
+                const scaleValue = 1 - (scrolled / 5000);
+                const opacityValue = 1 - (scrolled / 800);
+                
+                hero.style.filter = `blur(${blurValue}px)`;
+                hero.style.transform = `scale(${scaleValue}) translateY(${scrolled * 0.2}px)`;
+                hero.style.opacity = opacityValue;
+            }
+            
+            // Grid Skew
+            grid.style.transform = `perspective(1000px) rotateX(${65 + scrolled * 0.005}deg) translateY(${scrolled * 0.05}px)`;
+        });
 
         // REVEAL OBSERVER
         const observer = new IntersectionObserver((entries) => {
@@ -218,13 +250,7 @@
             });
         }, { threshold: 0.2 });
 
-        document.querySelectorAll('.data-node, #hero').forEach(node => observer.observe(node));
-
-        // GRID TILT
-        window.addEventListener('scroll', () => {
-            const grid = document.getElementById('grid');
-            grid.style.transform = `perspective(1000px) rotateX(${60 + window.pageYOffset * 0.005}deg) translateY(${window.pageYOffset * 0.05}px)`;
-        });
+        document.querySelectorAll('.data-node').forEach(node => observer.observe(node));
     </script>
 </body>
 </html>
