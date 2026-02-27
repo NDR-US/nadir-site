@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CEYO // Institutional Substrate</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Outfit:wght@900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { 
             --deep-olive: #0D0E0B; 
             --ivory: #FFFFF0;
             --tactical-green: #4A5D3B;
+            --soft-gray: rgba(255, 255, 240, 0.4);
         }
         
         body { 
@@ -18,82 +19,112 @@
             color: var(--ivory); 
             font-family: 'Inter', sans-serif; 
             overflow-x: hidden;
-            line-height: 1.1;
+            line-height: 1.6; /* Increased for breathing room */
         }
 
-        .candela { font-family: 'Outfit', sans-serif; font-weight: 900; }
-        .mono { font-family: 'IBM Plex Mono', monospace; }
+        .mono { font-family: 'IBM Plex Mono', monospace; font-weight: 500; }
+        
+        /* REFINED LOGO: CLEANER, WIDER TRACKING */
+        .brand-ceyo {
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em; /* Significant breathing room */
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--ivory);
+            opacity: 0.9;
+        }
 
-        /* HEADER BRANDING */
+        /* HEADER */
         nav.header-nav {
             position: fixed; top: 0; left: 0; width: 100%;
-            padding: 40px 10%; display: flex;
+            padding: 50px 8%; display: flex;
             justify-content: space-between; align-items: center;
             z-index: 9999;
-            pointer-events: none;
-        }
-        .brand-ceyo {
-            font-family: 'Outfit', sans-serif; font-weight: 900;
-            text-transform: uppercase; letter-spacing: -0.05em;
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            pointer-events: auto;
-            background: linear-gradient(90deg, #444 0%, var(--ivory) 50%, #444 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: pulse-kf 6s linear infinite;
         }
 
-        .green-pulse {
-            background: linear-gradient(90deg, #1a2312 0%, var(--tactical-green) 50%, #1a2312 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: pulse-kf 4s linear infinite;
-        }
-
-        @keyframes pulse-kf {
-            0% { background-position: 200% center; }
-            100% { background-position: -200% center; }
-        }
-
-        /* ERASE PHYSICS */
-        .hero-wrap { height: 200vh; position: relative; }
+        /* HERO: MORE NEGATIVE SPACE */
+        .hero-wrap { height: 250vh; position: relative; }
         #hero {
             position: sticky; top: 0; height: 100vh;
             display: flex; flex-direction: column; justify-content: center;
-            padding: 0 10%; z-index: 10;
+            padding: 0 12%; z-index: 10;
         }
 
-        /* TACTICAL GRID */
+        h1 {
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .hero-sub {
+            font-size: clamp(1.25rem, 3vw, 2.5rem);
+            font-weight: 300;
+            color: var(--soft-gray);
+            margin-bottom: 3rem;
+            max-width: 800px;
+        }
+
+        /* SECTIONS: MORE VERTICAL PADDING */
+        .section-block {
+            padding: 20vh 12%;
+            max-width: 1400px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            letter-spacing: -0.02em;
+        }
+
+        .divider { height: 1px; background: rgba(255,255,240,0.08); margin: 80px 0; }
+
+        /* CARDS: CLEANER, LESS BOXED IN */
+        .card { 
+            border-left: 1px solid var(--tactical-green); 
+            padding: 20px 0 20px 30px; 
+            background: transparent;
+            margin-bottom: 2rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+            margin-top: 60px;
+        }
+
+        /* TYPEWRITER CURSOR */
+        .cursor { border-left: 2px solid var(--tactical-green); margin-left: 5px; animation: blink 0.8s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* NAVIGATION HUB: FLOATING PILL */
+        .control-hub {
+            position: fixed; bottom: 3rem; left: 50%; transform: translateX(-50%);
+            background: rgba(13, 14, 11, 0.8); 
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 240, 0.1);
+            border-radius: 100px;
+            padding: 12px 40px; display: flex; gap: 40px; z-index: 9999;
+        }
+        .nav-link { font-family: 'IBM Plex Mono'; font-size: 11px; color: rgba(255,255,240,0.4); text-transform: uppercase; letter-spacing: 0.2em; transition: 0.3s; }
+        .nav-link.active, .nav-link:hover { color: var(--ivory); }
+
         .horizon-grid {
             position: fixed; inset: 0;
-            background-image: linear-gradient(rgba(255,255,240,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,240,0.02) 1px, transparent 1px);
-            background-size: 80px 80px;
-            mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 95%);
-            transform: perspective(1000px) rotateX(65deg);
+            background-image: linear-gradient(rgba(255,255,240,0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,240,0.01) 1px, transparent 1px);
+            background-size: 100px 100px;
+            mask-image: radial-gradient(circle at 50% 50%, black 10%, transparent 80%);
+            transform: perspective(1200px) rotateX(70deg);
             z-index: 0; pointer-events: none;
         }
 
-        .fade { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .fade { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
         .fade.show { opacity: 1; transform: translateY(0); }
-
-        .divider { height: 1px; background: rgba(255,255,240,0.1); margin: 60px 0; }
-        .card { border: 1px solid rgba(255,255,240,0.08); padding: 40px; background: rgba(0,0,0,0.2); }
-
-        /* TYPEWRITER CURSOR */
-        .cursor { border-left: 3px solid var(--tactical-green); margin-left: 5px; animation: blink 0.8s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        /* NAVIGATION HUB */
-        .control-hub {
-            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
-            background: rgba(13, 14, 11, 0.98); border: 1px solid rgba(255, 255, 240, 0.1);
-            padding: 1rem 2.5rem; display: flex; gap: 3rem; z-index: 9999;
-            width: max-content; max-width: 90vw;
-        }
-        .nav-link { font-family: 'IBM Plex Mono'; font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.3em; transition: 0.3s; }
-        .nav-link.active, .nav-link:hover { color: var(--ivory); }
     </style>
 </head>
 <body>
@@ -102,19 +133,17 @@
 
     <nav class="header-nav">
         <div class="brand-ceyo">CEYO</div>
-        <div class="mono text-[10px] text-white/20 tracking-[0.4em] font-bold uppercase pointer-events-auto">CEYO_STRATUM_REL_1.0</div>
+        <div class="mono text-[10px] text-white/20 tracking-[0.4em] uppercase">SYSTEM_REL_1.0</div>
     </nav>
 
-    <main class="relative">
+    <main>
         
         <div class="hero-wrap">
             <section id="hero">
-                <div class="mono text-[11px] text-[#4A5D3B] mb-12 tracking-[0.6em] font-bold uppercase">Verification_Layer</div>
-                <h1 class="candela text-[12vw] uppercase italic leading-[0.8] mb-12 tracking-tighter">
-                    Go Beyond<br><span class="green-pulse">Telemetry.</span>
-                </h1>
-                <div class="candela text-4xl lg:text-7xl uppercase italic opacity-90 tracking-tighter mb-12">Verifiable Decision Records.</div>
-                <div class="max-w-4xl text-xl lg:text-3xl font-light text-white/40 leading-snug">
+                <div class="mono text-[11px] text-[#4A5D3B] mb-8 tracking-[0.5em] font-bold uppercase">STRATUM_01 // CORE</div>
+                <h1>Go Beyond<br>Telemetry.</h1>
+                <div class="hero-sub">Verifiable Decision Records for the Institutional Era.</div>
+                <div class="max-w-3xl text-lg lg:text-2xl font-light text-white/40 leading-relaxed">
                     <span class="typewriter" data-text="A decoupled evidentiary substrate producing cryptographically sealed inference artifacts without modifying core model logic."></span><span class="cursor"></span>
                 </div>
             </section>
@@ -122,72 +151,65 @@
 
         
 
-        <section class="fade px-[10%] py-40">
-            <h2 class="candela text-5xl lg:text-8xl uppercase italic tracking-tighter mb-16">Evidentiary Infrastructure</h2>
-            <p class="text-xl lg:text-4xl font-light text-white/60 mb-12 max-w-5xl">
-                AI systems increasingly influence decisions in institutional environments. When reviewed, infrastructure often produces telemetry <span class="text-white italic">not designed to function as durable evidence.</span>
-            </p>
-            <div class="divider"></div>
-            <p class="candela text-3xl lg:text-6xl uppercase italic tracking-tighter mb-12">
-                Telemetry describes activity.<br><span class="text-white/20">It does not preserve proof.</span>
-            </p>
-            <p class="text-xl lg:text-3xl font-light text-white/50 mb-16 max-w-4xl">
-                <span class="typewriter" data-text="CEYO is a decoupled evidentiary layer that attaches beside inference systems to produce policy-scoped, canonical artifacts."></span><span class="cursor"></span>
-            </p>
+        <section class="section-block fade">
+            <h2 class="section-title">Evidentiary Infrastructure</h2>
+            <div class="grid-container">
+                <div class="col-span-1">
+                    <p class="text-xl text-white/60 mb-8">
+                        AI systems increasingly influence decisions in safety-critical environments. When those decisions are reviewed, infrastructure often produces logs never designed to function as <span class="text-white font-semibold">durable evidence.</span>
+                    </p>
+                </div>
+                <div class="col-span-1">
+                    <p class="text-xl text-white/40 italic">
+                        "Telemetry describes activity. It does not preserve proof."
+                    </p>
+                </div>
+            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
+            <div class="divider"></div>
+
+            <div class="grid-container">
                 <div class="card">
-                    <div class="mono text-[10px] text-[#4A5D3B] mb-4 font-bold">// BOUNDARY</div>
-                    <p class="text-sm text-white/40 uppercase mono leading-relaxed">CEYO does not evaluate outputs. CEYO produces records.</p>
+                    <div class="mono text-[10px] text-[#4A5D3B] mb-4 font-bold tracking-widest">// BOUNDARY</div>
+                    <p class="text-white/60">CEYO does not evaluate outputs. CEYO produces records.</p>
                 </div>
                 <div class="card">
-                    <div class="mono text-[10px] text-[#4A5D3B] mb-4 font-bold">// DISCLOSURE</div>
-                    <p class="text-sm text-white/40 uppercase mono leading-relaxed">Tiered disclosure enables validation without internal exposure.</p>
+                    <div class="mono text-[10px] text-[#4A5D3B] mb-4 font-bold tracking-widest">// SEAL</div>
+                    <p class="text-white/60">Cryptographic permanence ensures artifacts cannot be reconstructed or altered.</p>
                 </div>
                 <div class="card">
-                    <div class="mono text-[10px] text-[#4A5D3B] mb-4 font-bold">// AVAILABILITY</div>
-                    <p class="text-sm text-white/40 uppercase mono leading-relaxed">Fail-open posture preserves inference continuity.</p>
+                    <div class="mono text-[10px] text-[#4A5D3B] mb-4 font-bold tracking-widest">// AVAILABILITY</div>
+                    <p class="text-white/60">Fail-open design ensures CEYO never interrupts inference continuity.</p>
                 </div>
             </div>
         </section>
 
-        <section class="fade px-[10%] py-40">
-            <h2 class="candela text-5xl lg:text-8xl uppercase italic tracking-tighter mb-16">The Accountability Gap</h2>
-            <p class="text-xl lg:text-4xl font-light text-white/60 mb-12 max-w-5xl">
-                When a decision is questioned, organizations <span class="text-white">reconstruct events</span> from partial logs. This is interpretive.
-            </p>
-            <p class="candela text-3xl lg:text-5xl uppercase italic tracking-tighter opacity-80 mb-12">
-                CEYO artifacts are canonical, explicit, and independently verifiable.
-            </p>
-            <p class="text-xl lg:text-3xl font-light text-white/40 italic">
-                This is an architectural deficit, not an operational oversight.
-            </p>
-        </section>
-
         
 
-        <section class="fade px-[10%] py-40">
-            <h2 class="candela text-5xl lg:text-8xl uppercase italic tracking-tighter mb-16">Institutional Position</h2>
-            <p class="text-xl lg:text-4xl font-light text-white/60 mb-12 max-w-5xl">
-                Evidence infrastructure must remain structurally independent from decision authority. CEYO introduces that substrate.
+        <section class="section-block fade">
+            <h2 class="section-title">The Accountability Gap</h2>
+            <p class="text-2xl lg:text-4xl font-light text-white/60 leading-relaxed mb-16">
+                Reconstruction from logs is interpretive. <span class="text-white">CEYO artifacts are deterministic.</span>
             </p>
-            <div class="divider"></div>
-            <p class="candela text-3xl lg:text-6xl uppercase italic tracking-tighter text-[#4A5D3B]">
-                CEYO provides the record.<br>Institutions provide oversight.
-            </p>
+            <div class="grid-container text-white/30 mono text-xs uppercase tracking-[0.3em]">
+                <div>• Canonical structure</div>
+                <div>• Explicit capture scope</div>
+                <div>• Independently verifiable</div>
+                <div>• Secure provenance</div>
+            </div>
         </section>
 
-        <footer class="px-[10%] py-60 border-t border-white/5 bg-black/40 relative z-30">
-            <div class="candela text-4xl lg:text-7xl uppercase italic mb-8">Institutional Reality.</div>
-            <p class="mono text-[11px] text-white/20 uppercase tracking-[0.5em] font-bold">ALL RIGHTS RESERVED © 2026 CEYO SYSTEMS.</p>
+        <footer class="section-block border-t border-white/5 bg-black/20">
+            <div class="brand-ceyo mb-8">CEYO</div>
+            <p class="mono text-[10px] text-white/20 tracking-[0.5em] font-bold">ALL RIGHTS RESERVED © 2026 CEYO SYSTEMS.</p>
         </footer>
     </main>
 
     <nav class="control-hub">
-        <a href="index.html" class="nav-link active">Index</a>
-        <a href="architecture.html" class="nav-link">Arch</a>
-        <a href="trust.html" class="nav-link">Trust</a>
-        <a href="governance.html" class="nav-link">Gov</a>
+        <a href="#" class="nav-link active">Index</a>
+        <a href="#" class="nav-link">Arch</a>
+        <a href="#" class="nav-link">Trust</a>
+        <a href="#" class="nav-link">Gov</a>
     </nav>
 
     <script>
@@ -196,20 +218,19 @@
             el.innerHTML = ''; let i = 0;
             const timer = setInterval(() => {
                 if (i < text.length) { el.innerHTML += text.charAt(i); i++; }
-                else { clearInterval(timer); if(el.nextElementSibling) el.nextElementSibling.style.opacity = '0'; }
-            }, 18);
+                else { clearInterval(timer); if(el.nextElementSibling) el.nextElementSibling.style.display = 'none'; }
+            }, 20);
         }
 
         window.addEventListener("scroll", function() {
             const s = window.scrollY;
             const hero = document.getElementById("hero");
             const grid = document.getElementById("grid");
-            if (s < 1200) {
-                hero.style.filter = `blur(${s/60}px)`;
-                hero.style.opacity = 1 - (s/900);
-                hero.style.transform = `scale(${1-(s/6000)}) translateY(${s*0.2}px)`;
+            if (s < 1000) {
+                hero.style.opacity = 1 - (s/800);
+                hero.style.transform = `translateY(${s*0.1}px)`;
             }
-            grid.style.transform = `perspective(1000px) rotateX(${65 + s*0.005}deg) translateY(${s*0.05}px)`;
+            grid.style.transform = `perspective(1200px) rotateX(${70 + s*0.005}deg) translateY(${s*0.05}px)`;
         });
 
         const observer = new IntersectionObserver(entries => {
@@ -221,7 +242,7 @@
                     });
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.1 });
 
         document.querySelectorAll(".fade, #hero").forEach(el => observer.observe(el));
     </script>
