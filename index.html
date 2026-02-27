@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NADIR // Institutional Substrate</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Playfair+Display:ital,wght@1,900&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { 
             --deep-olive: #0D0E0B; 
@@ -17,21 +17,35 @@
             background-color: var(--deep-olive); 
             color: var(--ivory); 
             font-family: 'Inter', sans-serif; 
-            overflow-x: hidden; 
+            overflow-x: hidden;
+            line-height: 1.1;
         }
 
         .mono { font-family: 'IBM Plex Mono', monospace; }
         
-        /* PALANTIR STYLE BRAND: HYBRID SERIF */
+        /* THE "PALANTIR" LOGO: HEAVY, TIGHT, INDUSTRIAL */
         .brand-nadir {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            letter-spacing: -0.05em;
-            background: linear-gradient(90deg, #444 0%, var(--ivory) 50%, #444 100%);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.06em;
+            font-size: clamp(2rem, 6vw, 4rem);
+            color: var(--ivory);
+            position: relative;
+            display: inline-block;
+        }
+
+        /* SHARP IVORY SHIMMER (NOT COLORFUL) */
+        .shimmer {
+            background: linear-gradient(90deg, var(--ivory) 0%, #888 50%, var(--ivory) 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: trace 6s linear infinite;
+            animation: shimmer-fast 8s linear infinite;
+        }
+
+        @keyframes shimmer-fast {
+            0% { background-position: 200% center; }
+            100% { background-position: -200% center; }
         }
 
         /* DARK GREEN TELEMETRY PULSE */
@@ -40,52 +54,42 @@
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: trace 4s linear infinite;
+            animation: shimmer-fast 4s linear infinite;
         }
 
-        @keyframes trace {
-            0% { background-position: 200% center; }
-            100% { background-position: -200% center; }
-        }
-
-        /* 3D TACTICAL GRID */
+        /* 3D TACTICAL GRID (STAYS IN BACKGROUND) */
         .horizon-grid {
             position: fixed; inset: 0;
-            background-image: linear-gradient(rgba(255,255,240,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,240,0.03) 1px, transparent 1px);
-            background-size: 80px 80px;
+            background-image: linear-gradient(rgba(255,255,240,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,240,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
             mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 90%);
             transform: perspective(1000px) rotateX(60deg);
-            z-index: 0;
+            z-index: 0; pointer-events: none;
         }
 
-        /* TYPEWRITER INJECTION CLASS */
-        .self-write {
-            display: inline;
-            border-right: 2px solid var(--tactical-green);
-            animation: blink 0.8s step-end infinite;
-        }
-        @keyframes blink { 50% { border-color: transparent; } }
+        /* MOBILE RESPONSIVE TWEAKS */
+        .hero-text { font-size: clamp(2.5rem, 12vw, 10rem); }
+        .sub-hero { font-size: clamp(1.5rem, 5vw, 4rem); }
 
-        /* KINETIC SCROLL REVEAL */
         .data-node {
             opacity: 0;
-            transform: translateY(50px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .data-node.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .data-node.active { opacity: 1; transform: translateY(0); }
 
         .control-hub {
-            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
             background: rgba(13, 14, 11, 0.98); 
             border: 1px solid rgba(255, 255, 240, 0.1);
-            padding: 1rem 3rem; display: flex; gap: 3rem; z-index: 1000;
+            padding: 0.8rem 1.5rem; display: flex; gap: 1.5rem; z-index: 1000;
+            width: 90%; max-width: 500px; justify-content: center;
         }
 
-        .nav-link { font-family: 'IBM Plex Mono'; font-size: 10px; color: #444; text-transform: uppercase; letter-spacing: 0.3em; }
-        .nav-link.active { color: var(--ivory); }
+        .nav-link { font-family: 'IBM Plex Mono'; font-size: 9px; color: #444; text-transform: uppercase; letter-spacing: 0.2em; }
+        .nav-link.active { color: var(--ivory); border-bottom: 1px solid var(--ivory); }
+
+        .typewriter { border-left: 2px solid var(--tactical-green); padding-left: 5px; }
 
     </style>
 </head>
@@ -93,26 +97,26 @@
 
     <div class="horizon-grid" id="grid"></div>
 
-    <nav class="fixed top-0 left-0 w-full p-8 lg:p-16 flex justify-between items-center z-[500] mix-blend-difference">
-        <span class="brand-nadir">Nadir</span>
-        <div class="mono text-[9px] text-white/30 tracking-[0.5em] font-bold">SYST_LOG_A9</div>
+    <nav class="fixed top-0 left-0 w-full p-6 lg:p-12 flex justify-between items-center z-[500]">
+        <span class="brand-nadir shimmer">Nadir</span>
+        <div class="mono text-[8px] text-white/20 tracking-widest font-bold uppercase">Auth: Institutional_Ready</div>
     </nav>
 
     <main class="relative z-10">
         
-        <section class="min-h-screen flex flex-col justify-center px-8 lg:px-40" id="hero">
-            <div class="mono text-xs text-[#4A5D3B] mb-12 tracking-[0.8em] font-bold uppercase">[ Phase_01: Initiation ]</div>
+        <section class="min-h-screen flex flex-col justify-center px-6 lg:px-32 pt-20" id="hero">
+            <div class="mono text-[10px] text-[#4A5D3B] mb-8 tracking-[0.6em] font-bold uppercase underline underline-offset-8">Stratum_01</div>
             
-            <h1 class="text-[10vw] font-black italic uppercase leading-[0.8] mb-16">
+            <h1 class="hero-text font-black uppercase italic tracking-tighter mb-12">
                 Go Beyond<br><span class="telemetry-trace">Telemetry.</span>
             </h1>
 
-            <div class="max-w-6xl">
-                <p class="text-4xl lg:text-7xl font-black italic uppercase mb-16 opacity-80">
-                    With Verifiable<br>Decision Records.
+            <div class="max-w-5xl">
+                <p class="sub-hero font-black uppercase italic mb-12 opacity-90">
+                    Verifiable Decision Records.
                 </p>
-                <div class="h-[1px] w-full bg-white/10 mb-16"></div>
-                <p class="text-2xl lg:text-4xl font-light text-white/40 leading-snug">
+                <div class="h-[1px] w-full bg-white/10 mb-12"></div>
+                <p class="text-lg lg:text-3xl font-light text-white/50 leading-relaxed max-w-3xl">
                     <span class="typewriter" data-text="A decoupled evidentiary substrate producing cryptographically sealed inference artifacts without modifying core model logic."></span>
                 </p>
             </div>
@@ -120,56 +124,54 @@
 
         
 
-        <section class="px-8 lg:px-40 py-60 space-y-[40vh]">
+        <section class="px-6 lg:px-32 py-32 space-y-[30vh]">
             
-            <div class="data-node grid grid-cols-1 lg:grid-cols-12 gap-20">
+            <div class="data-node grid grid-cols-1 lg:grid-cols-12 gap-10">
                 <div class="lg:col-span-5">
-                    <h2 class="mono text-[10px] text-[#4A5D3B] mb-8 uppercase tracking-widest">// 01_Function</h2>
-                    <h3 class="text-5xl lg:text-8xl font-black uppercase italic leading-none tracking-tighter">Structural Independence.</h3>
+                    <h2 class="mono text-[10px] text-[#4A5D3B] mb-6 tracking-widest uppercase font-bold">// 01_Functionality</h2>
+                    <h3 class="text-4xl lg:text-7xl font-black uppercase italic tracking-tighter">Structural<br>Independence.</h3>
                 </div>
                 <div class="lg:col-span-7">
-                    <p class="text-2xl lg:text-4xl text-white/50 font-light mb-12 leading-tight italic">
-                        NADIR captures the scope of interaction at the inference boundary. Artifacts enable <span class="text-white font-bold underline decoration-[#4A5D3B] underline-offset-8">independent verification</span>.
+                    <p class="text-xl lg:text-3xl text-white/50 font-light mb-8 italic">
+                        NADIR captures the scope of interaction at the inference boundary. Artifacts enable <span class="text-white font-bold">independent verification</span>.
                     </p>
-                    <div class="grid grid-cols-2 gap-12 pt-16 border-t border-white/5">
-                        <div class="mono group">
-                            <span class="text-white block mb-4 font-bold tracking-widest">// CAPTURE</span>
-                            <p class="text-white/30 text-xs">Deterministic audit tails attached to every session.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 border-t border-white/5 pt-10">
+                        <div class="mono">
+                            <span class="text-white block mb-2 font-bold text-xs">// CAPTURE</span>
+                            <p class="text-white/30 text-[10px] leading-relaxed">Deterministic audit tails attached to every session.</p>
                         </div>
-                        <div class="mono group">
-                            <span class="text-white block mb-4 font-bold tracking-widest">// SEAL</span>
-                            <p class="text-white/30 text-xs">Cryptographic permanence via RFC 8785.</p>
+                        <div class="mono">
+                            <span class="text-white block mb-2 font-bold text-xs">// SEAL</span>
+                            <p class="text-white/30 text-[10px] leading-relaxed">Cryptographic permanence via RFC 8785.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="data-node grid grid-cols-1 lg:grid-cols-12 gap-20">
+            <div class="data-node grid grid-cols-1 lg:grid-cols-12 gap-10">
                 <div class="lg:col-span-7">
-                    <h3 class="text-5xl lg:text-8xl font-black uppercase italic leading-none mb-12">Non-Adjudication.</h3>
-                    <p class="text-2xl lg:text-4xl text-white/50 font-light italic">
-                        <span class="typewriter" data-text="NADIR provides integrity-sealed records to the institutions that make determinations. Integrity must be proven before it is scaled."></span>
+                    <h3 class="text-4xl lg:text-7xl font-black uppercase italic tracking-tighter mb-8">Non-Adjudication.</h3>
+                    <p class="text-xl lg:text-3xl text-white/50 font-light leading-relaxed">
+                        <span class="typewriter" data-text="The substrate remains agnostic to secondary policy layers. Integrity must be proven before it is scaled to institutional levels."></span>
                     </p>
                 </div>
                 <div class="lg:col-span-5 flex items-center">
-                    <div class="p-12 border border-white/5 bg-white/[0.02] mono text-[11px] text-[#4A5D3B]">
-                        SYSTEM_AGNOSTIC_PROTOCOL_TRUE
-                    </div>
+                    <div class="w-full h-[1px] bg-white/10 hidden lg:block"></div>
                 </div>
             </div>
 
         </section>
 
-        <footer class="px-8 lg:px-40 py-60 border-t border-white/5">
-            <div class="flex flex-col lg:flex-row justify-between items-end gap-16">
+        <footer class="px-6 lg:px-32 py-32 border-t border-white/5 bg-[#0A0B09]">
+            <div class="flex flex-col lg:flex-row justify-between gap-10">
                 <div>
-                    <h2 class="text-5xl font-black italic uppercase mb-8">Institutional Reality.</h2>
-                    <p class="mono text-[10px] text-white/20 uppercase tracking-[0.5em] leading-relaxed">
+                    <h2 class="text-3xl lg:text-5xl font-black italic uppercase mb-6">Institutional Reality.</h2>
+                    <p class="mono text-[10px] text-white/20 uppercase tracking-widest font-bold">
                         All Rights Reserved © 2026 NADIR SYSTEMS.<br>
-                        ESTABLISHED FOR INSTITUTIONAL OVERSIGHT.
+                        INTERNAL_PROTOCOL // SECURE_DISTRIBUTION.
                     </p>
                 </div>
-                <div class="mono text-[10px] text-white/10 tracking-widest">
+                <div class="mono text-[9px] text-white/10 text-right">
                     STABLE_REL // 0x992..AF
                 </div>
             </div>
@@ -184,7 +186,7 @@
     </nav>
 
     <script>
-        // TYPEWRITER INJECTION LOGIC
+        // TYPEWRITER ENGINE
         function typeWriter(el) {
             const text = el.getAttribute('data-text');
             el.innerHTML = '';
@@ -195,30 +197,33 @@
                     i++;
                 } else {
                     clearInterval(timer);
+                    el.style.borderLeft = 'none';
                 }
-            }, 30);
+            }, 25);
         }
 
-        // SCROLL REVEAL OBSERVER
+        // REVEAL OBSERVER
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    const writer = entry.target.querySelector('.typewriter');
-                    if (writer && !writer.classList.contains('typed')) {
-                        typeWriter(writer);
-                        writer.classList.add('typed');
-                    }
+                    const writers = entry.target.querySelectorAll('.typewriter');
+                    writers.forEach(w => {
+                        if (!w.classList.contains('typed')) {
+                            typeWriter(w);
+                            w.classList.add('typed');
+                        }
+                    });
                 }
             });
-        }, { threshold: 0.3 });
+        }, { threshold: 0.2 });
 
         document.querySelectorAll('.data-node, #hero').forEach(node => observer.observe(node));
 
-        // GRID MOVEMENT
+        // GRID TILT
         window.addEventListener('scroll', () => {
             const grid = document.getElementById('grid');
-            grid.style.transform = `perspective(1000px) rotateX(${60 + window.pageYOffset * 0.01}deg) translateY(${window.pageYOffset * 0.1}px)`;
+            grid.style.transform = `perspective(1000px) rotateX(${60 + window.pageYOffset * 0.005}deg) translateY(${window.pageYOffset * 0.05}px)`;
         });
     </script>
 </body>
