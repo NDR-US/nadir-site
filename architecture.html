@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
@@ -10,129 +9,333 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-:root{--bg:#0D0E0B;--ivory:#FFFFF0;--green:#4A5D3B;--green2:#5E7A4A;--text:rgba(255,255,240,.88);--muted:rgba(255,255,240,.52);--muted2:rgba(255,255,240,.30);--stroke:rgba(255,255,240,.12);--stroke2:rgba(255,255,240,.06);}
+:root{
+  --bg:#0D0E0B;
+  --ivory:#FFFFF0;
+  --green:#4A5D3B;
+  --green2:#5E7A4A;
+  --text:rgba(255,255,240,.88);
+  --muted:rgba(255,255,240,.52);
+  --muted2:rgba(255,255,240,.30);
+  --stroke:rgba(255,255,240,.12);
+  --stroke2:rgba(255,255,240,.06);
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;overflow-x:hidden;cursor:none;}
-body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.04;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',system-ui,sans-serif;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:9000;
+  pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:0.04;
+}
 a{color:inherit;text-decoration:none;}
-#cursor{position:fixed;top:0;left:0;z-index:9999;width:8px;height:8px;background:var(--ivory);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .12s,height .12s;mix-blend-mode:exclusion;}
+
+#cursor{
+  position:fixed;top:0;left:0;z-index:9999;
+  width:8px;height:8px;background:var(--ivory);
+  border-radius:50%;
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  transition:width .12s,height .12s,opacity .12s;
+  mix-blend-mode:exclusion;
+}
 #cursor.hover{width:32px;height:32px;opacity:.5;}
 #spotlight{position:fixed;inset:0;z-index:1;pointer-events:none;}
-.topnav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;background:linear-gradient(to bottom,rgba(13,14,11,.95) 0%,transparent 100%);}
-.brand{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:22px;letter-spacing:-.03em;color:var(--ivory);text-transform:uppercase;}
+
+.topnav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 40px;
+  background:linear-gradient(to bottom,rgba(13,14,11,.95) 0%,transparent 100%);
+}
+.brand{
+  font-family:'Outfit',sans-serif;
+  font-weight:900;
+  font-style:italic;
+  font-size:22px;
+  letter-spacing:-.03em;
+  color:var(--ivory);
+  text-transform:uppercase;
+}
 .brand span{color:var(--green2);}
-.topnav-right{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted2);display:flex;gap:28px;}
+.topnav-right{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  letter-spacing:.20em;
+  text-transform:uppercase;
+  color:var(--muted2);
+  display:flex;
+  gap:28px;
+}
 .topnav-right a{color:var(--muted2);transition:color .12s;}
 .topnav-right a:hover,.topnav-right a.active{color:var(--ivory);}
-.index-bar{position:fixed;bottom:0;left:0;right:0;z-index:500;display:flex;align-items:stretch;height:44px;background:#000;border-top:1px solid var(--stroke);}
-.index-item{flex:1;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted2);border-right:1px solid var(--stroke);transition:color .12s,background .12s;}
+
+.index-bar{
+  position:fixed;bottom:0;left:0;right:0;z-index:500;
+  display:flex;align-items:stretch;height:44px;
+  background:#000;border-top:1px solid var(--stroke);
+}
+.index-item{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.20em;text-transform:uppercase;
+  color:var(--muted2);
+  border-right:1px solid var(--stroke);
+  transition:color .12s,background .12s;
+}
 .index-item:last-child{border-right:none;}
 .index-item:hover,.index-item.active{color:var(--ivory);background:rgba(255,255,240,.04);}
 
-/* ARCH PAGE — unique layout: full-width schematic hero then vertical stage layout */
-.arch-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:100px 40px 80px;position:relative;overflow:hidden;}
+/* ARCH PAGE — unique layout */
+.arch-hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:100px 40px 80px;
+  position:relative;
+  overflow:hidden;
+}
 .arch-hero-bg{position:absolute;inset:0;z-index:0;}
 .arch-hero-bg svg{width:100%;height:100%;opacity:.18;}
 .arch-hero-content{position:relative;z-index:2;}
-.arch-eyebrow{font-family:‘IBM Plex Mono’,monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(–green);margin-bottom:24px;display:flex;align-items:center;gap:12px;}
-.arch-eyebrow::before{content:’’;width:28px;height:1px;background:var(–green);}
-.arch-h1{font-family:‘Outfit’,sans-serif;font-weight:900;font-style:italic;font-size:clamp(44px,7vw,96px);letter-spacing:-.05em;line-height:.92;text-transform:uppercase;color:var(–ivory);margin-bottom:32px;}
-.arch-h1 .accent{color:var(–green2);}
-.arch-lead{font-size:15px;line-height:1.75;color:var(–muted);max-width:52ch;margin-bottom:32px;}
+
+.arch-eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--green);
+  margin-bottom:24px;
+  display:flex;align-items:center;gap:12px;
+}
+.arch-eyebrow::before{content:'';width:28px;height:1px;background:var(--green);}
+
+.arch-h1{
+  font-family:'Outfit',sans-serif;
+  font-weight:900;
+  font-style:italic;
+  font-size:clamp(44px,7vw,96px);
+  letter-spacing:-.05em;
+  line-height:.92;
+  text-transform:uppercase;
+  color:var(--ivory);
+  margin-bottom:32px;
+}
+.arch-h1 .accent{color:var(--green2);}
+.arch-lead{
+  font-size:15px;
+  line-height:1.75;
+  color:var(--muted);
+  max-width:52ch;
+  margin-bottom:32px;
+}
 
 /* Chain bar */
-.chain-bar{display:flex;align-items:stretch;border:1px solid var(–stroke);overflow-x:auto;margin-bottom:40px;}
-.chain-node{flex:1;min-width:110px;padding:16px 14px;border-right:1px solid var(–stroke2);position:relative;cursor:default;transition:background .15s;}
+.chain-bar{
+  display:flex;
+  align-items:stretch;
+  border:1px solid var(--stroke);
+  overflow-x:auto;
+  margin-bottom:40px;
+  background:rgba(0,0,0,.10);
+}
+.chain-node{
+  flex:1;
+  min-width:110px;
+  padding:16px 14px;
+  border-right:1px solid var(--stroke2);
+  position:relative;
+  cursor:default;
+  transition:background .15s;
+}
 .chain-node:last-child{border-right:none;}
 .chain-node:hover{background:rgba(255,255,240,.04);}
-.chain-node::after{content:‘→’;position:absolute;right:-7px;top:50%;transform:translateY(-50%);font-size:10px;color:var(–muted2);z-index:1;}
+.chain-node::after{
+  content:'→';
+  position:absolute;
+  right:-7px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:10px;
+  color:var(--muted2);
+  z-index:1;
+}
 .chain-node:last-child::after{display:none;}
-.cn-num{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:.18em;color:var(–green);margin-bottom:6px;}
-.cn-label{font-size:11px;font-weight:600;color:var(–ivory);}
-.cn-sub{font-size:10px;color:var(–muted2);margin-top:3px;line-height:1.4;}
+.cn-num{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;
+  letter-spacing:.18em;
+  color:var(--green);
+  margin-bottom:6px;
+}
+.cn-label{font-size:11px;font-weight:600;color:var(--ivory);}
+.cn-sub{font-size:10px;color:var(--muted2);margin-top:3px;line-height:1.4;}
 
-/* Stages — alternating layout */
-.stages{background:var(–bg);padding-bottom:80px;}
-.stage{display:grid;align-items:start;padding:64px 40px;border-top:1px solid var(–stroke2);max-width:1160px;margin:0 auto;opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease,border-top-color .4s,background .4s;}
+/* Stages */
+.stages{background:var(--bg);padding-bottom:80px;}
+.stage{
+  display:grid;
+  align-items:start;
+  padding:64px 40px;
+  border-top:1px solid var(--stroke2);
+  max-width:1160px;
+  margin:0 auto;
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .55s ease,transform .55s ease,border-top-color .4s,background .4s;
+}
 .stage.visible{opacity:1;transform:translateY(0);}
-.stage.focus{border-top-color:var(–ivory);background:rgba(255,255,240,.012);}
+.stage.focus{border-top-color:var(--ivory);background:rgba(255,255,240,.012);}
 .stage.layout-left{grid-template-columns:180px 1fr;gap:48px;}
 .stage.layout-right{grid-template-columns:1fr 320px;gap:48px;}
 .stage.layout-wide{grid-template-columns:1fr;gap:0;}
-.stage-sidebar{}
-.stage-num-big{font-family:‘Outfit’,sans-serif;font-weight:900;font-style:italic;font-size:80px;letter-spacing:-.05em;line-height:1;color:rgba(90,120,70,.18);margin-bottom:4px;}
-.stage-label{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(–green);}
-.stage-body{}
-.stage-h2{font-family:‘Outfit’,sans-serif;font-weight:900;font-style:italic;font-size:clamp(24px,3.5vw,40px);letter-spacing:-.04em;line-height:1.0;text-transform:uppercase;color:var(–ivory);margin-bottom:18px;}
-.stage-p{font-size:15px;line-height:1.8;color:var(–muted);max-width:58ch;margin-bottom:14px;}
+
+.stage-num-big{
+  font-family:'Outfit',sans-serif;
+  font-weight:900;
+  font-style:italic;
+  font-size:80px;
+  letter-spacing:-.05em;
+  line-height:1;
+  color:rgba(90,120,70,.18);
+  margin-bottom:4px;
+}
+.stage-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--green);
+}
+.stage-h2{
+  font-family:'Outfit',sans-serif;
+  font-weight:900;
+  font-style:italic;
+  font-size:clamp(24px,3.5vw,40px);
+  letter-spacing:-.04em;
+  line-height:1.0;
+  text-transform:uppercase;
+  color:var(--ivory);
+  margin-bottom:18px;
+}
+.stage-p{font-size:15px;line-height:1.8;color:var(--muted);max-width:58ch;margin-bottom:14px;}
 .stage-list{list-style:none;display:flex;flex-direction:column;gap:9px;margin:16px 0;}
-.stage-list li{font-size:13px;color:var(–muted);padding-left:20px;position:relative;line-height:1.6;}
-.stage-list li::before{content:’·’;position:absolute;left:0;color:var(–green2);font-size:16px;line-height:1.3;}
+.stage-list li{font-size:13px;color:var(--muted);padding-left:20px;position:relative;line-height:1.6;}
+.stage-list li::before{content:'·';position:absolute;left:0;color:var(--green2);font-size:16px;line-height:1.3;}
 
 /* Exclusion block */
 .excl-block{margin-top:20px;padding:18px 20px;border:1px solid rgba(255,80,80,.12);background:rgba(255,80,80,.025);}
-.excl-label{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,100,100,.5);margin-bottom:10px;}
+.excl-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,100,100,.5);margin-bottom:10px;}
 .excl-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
-.excl-list li{font-size:12px;color:var(–muted2);padding-left:18px;position:relative;}
-.excl-list li::before{content:‘×’;position:absolute;left:0;color:rgba(255,90,90,.35);font-size:11px;line-height:1.6;}
+.excl-list li{font-size:12px;color:var(--muted2);padding-left:18px;position:relative;line-height:1.55;}
+.excl-list li::before{content:'×';position:absolute;left:0;color:rgba(255,90,90,.35);font-size:11px;line-height:1.6;}
 
 /* Schema panel */
-.schema-panel{border:1px solid var(–stroke);background:rgba(0,0,0,.3);padding:0;font-family:‘IBM Plex Mono’,monospace;}
-.schema-header{padding:10px 16px;border-bottom:1px solid var(–stroke2);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(–muted2);}
-.schema-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(–stroke2);}
+.schema-panel{border:1px solid var(--stroke);background:rgba(0,0,0,.3);padding:0;font-family:'IBM Plex Mono',monospace;}
+.schema-header{padding:10px 16px;border-bottom:1px solid var(--stroke2);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2);}
+.schema-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--stroke2);}
 .schema-row:last-child{border-bottom:none;}
-.schema-key{padding:9px 16px;font-size:11px;color:rgba(94,122,74,.9);border-right:1px solid var(–stroke2);}
-.schema-val{padding:9px 16px;font-size:11px;color:var(–muted2);}
+.schema-key{padding:9px 16px;font-size:11px;color:rgba(94,122,74,.9);border-right:1px solid var(--stroke2);}
+.schema-val{padding:9px 16px;font-size:11px;color:var(--muted2);}
 
 /* Callout */
-.callout{margin:20px 0;padding:18px 22px;border-left:3px solid var(–green);background:rgba(74,93,59,.06);}
-.callout p{font-size:14px;color:var(–muted);line-height:1.65;margin:0;}
+.callout{margin:20px 0;padding:18px 22px;border-left:3px solid var(--green);background:rgba(74,93,59,.06);}
+.callout p{font-size:14px;color:var(--muted);line-height:1.65;margin:0;}
 
 /* Outcome cards */
 .outcome-row{display:flex;flex-direction:column;gap:8px;margin-top:20px;}
-.outcome-card{display:flex;align-items:flex-start;gap:16px;padding:14px 18px;border:1px solid var(–stroke2);background:rgba(255,255,240,.02);}
+.outcome-card{display:flex;align-items:flex-start;gap:16px;padding:14px 18px;border:1px solid var(--stroke2);background:rgba(255,255,240,.02);}
 .outcome-card.confirmed{border-color:rgba(62,200,122,.15);background:rgba(62,200,122,.03);}
 .outcome-card.failed{border-color:rgba(255,90,90,.15);background:rgba(255,90,90,.03);}
 .outcome-card.mismatch{border-color:rgba(234,180,12,.15);background:rgba(234,180,12,.03);}
 .outcome-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
-.outcome-title{font-size:13px;font-weight:600;color:var(–text);margin-bottom:2px;}
-.outcome-desc{font-size:12px;color:var(–muted2);line-height:1.5;}
+.outcome-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.outcome-desc{font-size:12px;color:var(--muted2);line-height:1.5;}
 
 /* Verification step list */
-.verify-steps{display:flex;flex-direction:column;gap:0;border:1px solid var(–stroke);margin-top:20px;}
-.vst{display:grid;grid-template-columns:44px 1fr;border-bottom:1px solid var(–stroke2);}
+.verify-steps{display:flex;flex-direction:column;gap:0;border:1px solid var(--stroke);margin-top:20px;}
+.vst{display:grid;grid-template-columns:44px 1fr;border-bottom:1px solid var(--stroke2);}
 .vst:last-child{border-bottom:none;}
-.vst-num{display:flex;align-items:center;justify-content:center;font-family:‘IBM Plex Mono’,monospace;font-size:11px;color:var(–green);border-right:1px solid var(–stroke2);background:rgba(255,255,240,.02);}
+.vst-num{
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);
+  border-right:1px solid var(--stroke2);
+  background:rgba(255,255,240,.02);
+}
 .vst-body{padding:14px 18px;}
-.vst-title{font-size:13px;font-weight:500;color:var(–text);margin-bottom:2px;}
-.vst-detail{font-size:12px;color:var(–muted2);line-height:1.5;}
+.vst-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px;}
+.vst-detail{font-size:12px;color:var(--muted2);line-height:1.5;}
 
 /* Fail-open box */
 .failopen{border:1px solid rgba(100,180,255,.12);background:rgba(100,180,255,.025);padding:22px 24px;margin-top:20px;}
-.failopen-label{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(100,180,255,.5);margin-bottom:14px;}
+.failopen-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(100,180,255,.5);margin-bottom:14px;}
 .failopen-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
-.failopen-list li{font-size:13px;color:var(–muted);padding-left:20px;position:relative;line-height:1.55;}
-.failopen-list li::before{content:‘→’;position:absolute;left:0;color:rgba(100,180,255,.45);font-size:11px;line-height:1.7;}
-.failopen-note{margin-top:14px;padding-top:14px;border-top:1px solid var(–stroke2);font-size:12px;color:var(–muted2);font-style:italic;}
+.failopen-list li{font-size:13px;color:var(--muted);padding-left:20px;position:relative;line-height:1.55;}
+.failopen-list li::before{content:'→';position:absolute;left:0;color:rgba(100,180,255,.45);font-size:11px;line-height:1.7;}
+.failopen-note{margin-top:14px;padding-top:14px;border-top:1px solid var(--stroke2);font-size:12px;color:var(--muted2);font-style:italic;}
 
 /* Boundary */
 .boundary-section{max-width:1160px;margin:0 auto;padding:0 40px 80px;}
-.boundary-wrap{border:1px solid var(–stroke);padding:28px 32px;background:rgba(255,255,240,.015);}
-.boundary-lbl{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(–muted2);margin-bottom:20px;display:flex;align-items:center;gap:12px;}
-.boundary-lbl::before{content:’’;width:20px;height:1px;background:var(–muted2);}
+.boundary-wrap{border:1px solid var(--stroke);padding:28px 32px;background:rgba(255,255,240,.015);}
+.boundary-lbl{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--muted2);
+  margin-bottom:20px;
+  display:flex;align-items:center;gap:12px;
+}
+.boundary-lbl::before{content:'';width:20px;height:1px;background:var(--muted2);}
 .boundary-items{display:grid;grid-template-columns:1fr 1fr;gap:10px 40px;}
-.bi{font-size:12px;color:var(–muted2);line-height:1.65;padding-left:16px;position:relative;}
-.bi::before{content:’·’;position:absolute;left:0;}
-.boundary-close{margin-top:20px;padding-top:20px;border-top:1px solid var(–stroke2);font-family:‘IBM Plex Mono’,monospace;font-size:11px;letter-spacing:.08em;color:var(–muted2);}
-@keyframes cursor-blink{0%,100%{opacity:1}50%{opacity:0}}
-.typewrite-cursor::after{content:’|’;animation:cursor-blink .7s ease-in-out infinite;color:var(–green);}
-@media(max-width:900px){.stage.layout-left,.stage.layout-right{grid-template-columns:1fr;}.stage-num-big{font-size:48px;display:inline;margin-right:10px;}.schema-panel{margin-top:24px;}.chain-node{min-width:90px;}.topnav,.stage,.boundary-section{padding-left:20px;padding-right:20px;}.arch-hero{padding:90px 20px 70px;}.boundary-items{grid-template-columns:1fr;}}
-@media(max-width:500px){.topnav-right{display:none;}}
-@media print{body{background:#fff;color:#000;cursor:auto;}#cursor,#spotlight,.topnav,.index-bar,body::before{display:none;}.stage{opacity:1;transform:none;}}
-</style>
+.bi{font-size:12px;color:var(--muted2);line-height:1.65;padding-left:16px;position:relative;}
+.bi::before{content:'·';position:absolute;left:0;}
+.boundary-close{margin-top:20px;padding-top:20px;border-top:1px solid var(--stroke2);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--muted2);}
 
+@keyframes cursor-blink{0%,100%{opacity:1}50%{opacity:0}}
+.typewrite-cursor::after{content:'|';animation:cursor-blink .7s ease-in-out infinite;color:var(--green);}
+
+@media (max-width:900px){
+  .stage.layout-left,.stage.layout-right{grid-template-columns:1fr;}
+  .stage-num-big{font-size:48px;display:inline;margin-right:10px;}
+  .schema-panel{margin-top:24px;}
+  .chain-node{min-width:90px;}
+  .topnav,.stage,.boundary-section{padding-left:20px;padding-right:20px;}
+  .arch-hero{padding:90px 20px 70px;}
+  .boundary-items{grid-template-columns:1fr;}
+}
+@media (max-width:500px){.topnav-right{display:none;}}
+
+/* Readability upgrades on mobile */
+@media (max-width:600px){
+  :root{
+    --muted: rgba(255,255,240,.72);
+    --muted2: rgba(255,255,240,.45);
+  }
+  .arch-lead,.stage-p{font-weight:400;}
+}
+
+/* Custom cursor only on real pointer devices */
+@media (hover:hover) and (pointer:fine){
+  body{cursor:none;}
+}
+@media print{
+  body{background:#fff;color:#000;cursor:auto;}
+  #cursor,#spotlight,.topnav,.index-bar,body::before{display:none;}
+  .stage{opacity:1;transform:none;}
+}
+  </style>
 </head>
+
 <body>
 <div id="cursor" aria-hidden="true"></div>
 <div id="spotlight" aria-hidden="true"></div>
@@ -147,46 +350,41 @@ a{color:inherit;text-decoration:none;}
   </div>
 </nav>
 
-<!-- Hero with SVG schematic background -->
-
 <header class="arch-hero">
   <div class="arch-hero-bg" aria-hidden="true">
     <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-      <!-- Grid lines -->
       <defs>
         <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
           <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,240,.08)" stroke-width="0.5"/>
         </pattern>
       </defs>
       <rect width="100%" height="100%" fill="url(#grid)"/>
-      <!-- Flow diagram lines -->
       <g stroke="rgba(74,93,59,.6)" stroke-width="1" fill="none">
         <line x1="100" y1="350" x2="220" y2="350"/>
         <line x1="320" y1="350" x2="440" y2="350"/>
         <line x1="540" y1="350" x2="660" y2="350"/>
         <line x1="760" y1="350" x2="880" y2="350"/>
         <line x1="980" y1="350" x2="1100" y2="350"/>
-        <!-- Arrows -->
         <path d="M 218 346 L 222 350 L 218 354" stroke="rgba(74,93,59,.8)" fill="none"/>
         <path d="M 438 346 L 442 350 L 438 354" stroke="rgba(74,93,59,.8)" fill="none"/>
         <path d="M 658 346 L 662 350 L 658 354" stroke="rgba(74,93,59,.8)" fill="none"/>
         <path d="M 878 346 L 882 350 L 878 354" stroke="rgba(74,93,59,.8)" fill="none"/>
         <path d="M 1098 346 L 1102 350 L 1098 354" stroke="rgba(74,93,59,.8)" fill="none"/>
-        <!-- Nodes -->
+
         <rect x="60" y="326" width="80" height="48" rx="0" stroke="rgba(74,93,59,.7)" fill="rgba(13,14,11,.9)"/>
         <rect x="260" y="326" width="80" height="48" rx="0" stroke="rgba(74,93,59,.7)" fill="rgba(13,14,11,.9)"/>
         <rect x="460" y="326" width="80" height="48" rx="0" stroke="rgba(74,93,59,.7)" fill="rgba(13,14,11,.9)"/>
         <rect x="660" y="326" width="80" height="48" rx="0" stroke="rgba(74,93,59,.7)" fill="rgba(13,14,11,.9)"/>
         <rect x="860" y="326" width="80" height="48" rx="0" stroke="rgba(74,93,59,.7)" fill="rgba(13,14,11,.9)"/>
         <rect x="1060" y="326" width="80" height="48" rx="0" stroke="rgba(94,122,74,.9)" fill="rgba(74,93,59,.15)"/>
-        <!-- Node labels -->
+
         <text x="100" y="354" text-anchor="middle" fill="rgba(255,255,240,.5)" font-family="IBM Plex Mono" font-size="9" letter-spacing="1">ATTACH</text>
         <text x="300" y="354" text-anchor="middle" fill="rgba(255,255,240,.5)" font-family="IBM Plex Mono" font-size="9" letter-spacing="1">CAPTURE</text>
         <text x="500" y="354" text-anchor="middle" fill="rgba(255,255,240,.5)" font-family="IBM Plex Mono" font-size="9" letter-spacing="1">NORMALIZE</text>
         <text x="700" y="354" text-anchor="middle" fill="rgba(255,255,240,.5)" font-family="IBM Plex Mono" font-size="9" letter-spacing="1">SEAL</text>
         <text x="900" y="354" text-anchor="middle" fill="rgba(255,255,240,.5)" font-family="IBM Plex Mono" font-size="9" letter-spacing="1">TIER</text>
         <text x="1100" y="351" text-anchor="middle" fill="rgba(94,122,74,.9)" font-family="IBM Plex Mono" font-size="9" letter-spacing="1">VERIFY</text>
-        <!-- Vertical lines from nodes -->
+
         <line x1="100" y1="280" x2="100" y2="326" stroke="rgba(74,93,59,.3)" stroke-dasharray="3,3"/>
         <line x1="300" y1="280" x2="300" y2="326" stroke="rgba(74,93,59,.3)" stroke-dasharray="3,3"/>
         <line x1="500" y1="280" x2="500" y2="326" stroke="rgba(74,93,59,.3)" stroke-dasharray="3,3"/>
@@ -195,224 +393,16 @@ a{color:inherit;text-decoration:none;}
       </g>
     </svg>
   </div>
+
   <div class="arch-hero-content">
     <div class="arch-eyebrow">Architecture &nbsp;·&nbsp; V2026.02.19</div>
     <h1 class="arch-h1">Decoupled<br><span class="accent">Verification</span><br>Architecture</h1>
     <p class="arch-lead">CEYO is designed as a verification substrate that operates beside AI inference systems without modifying model weights or core decision logic. Its purpose is narrow and explicit: to generate deterministic, integrity-sealed artifacts representing defined inference-time context under policy scope.</p>
+
     <div class="chain-bar" role="list" aria-label="Seven-step mechanics chain">
       <div class="chain-node" role="listitem"><div class="cn-num">01</div><div class="cn-label">Attach</div><div class="cn-sub">Inference boundary</div></div>
       <div class="chain-node" role="listitem"><div class="cn-num">02</div><div class="cn-label">Capture</div><div class="cn-sub">Policy-scoped fields</div></div>
       <div class="chain-node" role="listitem"><div class="cn-num">03</div><div class="cn-label">Normalize</div><div class="cn-sub">Canonical schema</div></div>
       <div class="chain-node" role="listitem"><div class="cn-num">04</div><div class="cn-label">Canonicalize</div><div class="cn-sub">RFC 8785</div></div>
       <div class="chain-node" role="listitem"><div class="cn-num">05</div><div class="cn-label">Seal</div><div class="cn-sub">Hash + signature</div></div>
-      <div class="chain-node" role="listitem"><div class="cn-num">06</div><div class="cn-label">Tier</div><div class="cn-sub">Disclosure scope</div></div>
-      <div class="chain-node" role="listitem"><div class="cn-num">07</div><div class="cn-label">Verify</div><div class="cn-sub">Independent</div></div>
-    </div>
-  </div>
-</header>
-
-<main class="stages">
-
-  <!-- Stage 1: Attachment — left sidebar layout -->
-
-  <div class="stage layout-left" id="s1" aria-labelledby="s1-h">
-    <div class="stage-sidebar">
-      <div class="stage-num-big">01</div>
-      <div class="stage-label">Attachment</div>
-    </div>
-    <div class="stage-body">
-      <h2 class="stage-h2" id="s1-h">Inference Boundary Attachment</h2>
-      <p class="stage-p">CEYO integrates at the inference boundary through a sidecar, gateway, or API wrapper configuration. This posture is intentional. Evidence infrastructure should not require mutation of model weights, training pipelines, or core inference engines.</p>
-      <p class="stage-p">Attachment at the boundary allows CEYO to:</p>
-      <ul class="stage-list">
-        <li>Observe defined inference events</li>
-        <li>Capture policy-scoped context</li>
-        <li>Normalize event structure</li>
-        <li>Produce deterministic artifacts</li>
-        <li>Seal artifacts without interfering with decision flow</li>
-      </ul>
-      <div class="excl-block">
-        <div class="excl-label">Excluded by default</div>
-        <ul class="excl-list">
-          <li>Model weights</li>
-          <li>Training datasets</li>
-          <li>Proprietary architecture internals</li>
-          <li>Unrelated system telemetry</li>
-          <li>Full conversational transcripts unless explicitly configured</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Stage 2: Capture — right sidebar layout (schema panel) -->
-
-  <div class="stage layout-right" id="s2" aria-labelledby="s2-h">
-    <div class="stage-body">
-      <h2 class="stage-h2" id="s2-h">Policy-Scoped Capture</h2>
-      <p class="stage-p">Artifact generation begins with explicit policy definition. The deploying institution defines capture scope before any data is collected.</p>
-      <ul class="stage-list">
-        <li>Which fields are included</li>
-        <li>Which fields are excluded</li>
-        <li>Which fields are masked</li>
-        <li>Disclosure tier configuration</li>
-        <li>Policy version identifiers</li>
-      </ul>
-      <p class="stage-p">Capture scope is versioned and recorded within the artifact itself. Reviewers can verify not only integrity, but the declared capture boundary under which the artifact was produced.</p>
-    </div>
-    <div class="schema-panel" aria-label="Artifact schema fields">
-      <div class="schema-header">Artifact schema — fields</div>
-      <div class="schema-row"><div class="schema-key">timestamp</div><div class="schema-val">Inference event time</div></div>
-      <div class="schema-row"><div class="schema-key">policy_id</div><div class="schema-val">Capture policy identifier</div></div>
-      <div class="schema-row"><div class="schema-key">policy_version</div><div class="schema-val">Versioned policy reference</div></div>
-      <div class="schema-row"><div class="schema-key">policy_hash</div><div class="schema-val">Policy document integrity</div></div>
-      <div class="schema-row"><div class="schema-key">provenance</div><div class="schema-val">Origin and deployment context</div></div>
-      <div class="schema-row"><div class="schema-key">input_ref_hash</div><div class="schema-val">Where configured by policy</div></div>
-      <div class="schema-row"><div class="schema-key">env_fingerprint</div><div class="schema-val">Capture environment identifier</div></div>
-      <div class="schema-row"><div class="schema-key">canon_version</div><div class="schema-val">RFC 8785 implementation version</div></div>
-      <div class="schema-row"><div class="schema-key">disclosure_tier</div><div class="schema-val">Applied visibility level</div></div>
-      <div class="schema-row"><div class="schema-key">integrity</div><div class="schema-val">Hash digest + signature</div></div>
-      <div class="schema-row"><div class="schema-key">verification</div><div class="schema-val">Verification parameters</div></div>
-    </div>
-  </div>
-
-  <!-- Stage 3: Sealing — left sidebar -->
-
-  <div class="stage layout-left" id="s3" aria-labelledby="s3-h">
-    <div class="stage-sidebar">
-      <div class="stage-num-big">03</div>
-      <div class="stage-label">Sealing</div>
-    </div>
-    <div class="stage-body">
-      <h2 class="stage-h2" id="s3-h">Deterministic Canonicalization & Cryptographic Sealing</h2>
-      <p class="stage-p">Before hashing, JSON artifacts are canonicalized using RFC 8785 (JSON Canonicalization Scheme). Canonicalization ensures that logically equivalent data structures produce identical byte representations across environments.</p>
-      <div class="callout"><p>CEYO treats canonicalization as a structural requirement, not an optimization. Without deterministic canonicalization, verification becomes environment-dependent.</p></div>
-      <p class="stage-p">After canonicalization, artifacts are sealed using cryptographic hashing and digital signatures. Reference implementations: SHA-256 hashing · ECDSA P-256 signatures. Suite selection is configurable based on regulatory and operational requirements.</p>
-      <p class="stage-p">Signing keys are generated and retained within the client-controlled environment — HSM, KMS, or TEE. CEYO does not possess, transmit, or store private signing keys. This non-custodial architecture preserves a clear separation between infrastructure provider and cryptographic authority.</p>
-    </div>
-  </div>
-
-  <!-- Stage 4: Availability — wide layout with fail-open block -->
-
-  <div class="stage layout-wide" id="s4" aria-labelledby="s4-h">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;">
-      <div>
-        <h2 class="stage-h2" id="s4-h">Integrity–Availability Balance</h2>
-        <p class="stage-p">Integrity infrastructure must not compromise operational continuity by default. CEYO's fail-open design ensures that inference remains available even when sealing encounters a failure condition.</p>
-        <div class="failopen">
-          <div class="failopen-label">Fail-open behavior</div>
-          <ul class="failopen-list">
-            <li>Inference may continue uninterrupted</li>
-            <li>The failure event is logged</li>
-            <li>The artifact is marked as unsealed</li>
-            <li>The condition becomes reviewable</li>
-          </ul>
-          <p class="failopen-note">Fail-open behavior preserves availability unless the operator explicitly configures a stricter posture. Operational control remains with the deploying institution.</p>
-        </div>
-      </div>
-      <div>
-        <h2 class="stage-h2">Disclosure Tier Enforcement</h2>
-        <p class="stage-p">Artifacts support tiered disclosure. Disclosure boundaries are policy-defined before artifact generation. Reviewers verify within declared scope rather than relying on post hoc redaction.</p>
-        <div class="schema-panel" style="margin-top:16px;">
-          <div class="schema-header">Disclosure tiers</div>
-          <div class="schema-row" style="grid-template-columns:130px 1fr;">
-            <div class="schema-key" style="color:var(--muted2);">Public / Redacted</div>
-            <div class="schema-val">Artifact summary · Policy ID · Non-sensitive metadata · Available without agreement</div>
-          </div>
-          <div class="schema-row" style="grid-template-columns:130px 1fr;">
-            <div class="schema-key" style="color:rgba(94,122,74,.9);">Controlled Review</div>
-            <div class="schema-val">Expanded fields · Integrity data · Policy-aligned elements · Requires executed agreement</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Stage 5: Verification -->
-
-  <div class="stage layout-left" id="s5" aria-labelledby="s5-h">
-    <div class="stage-sidebar">
-      <div class="stage-num-big">07</div>
-      <div class="stage-label">Verification</div>
-    </div>
-    <div class="stage-body">
-      <h2 class="stage-h2" id="s5-h">Independent Verification Workflow</h2>
-      <p class="stage-p">Verification is designed to be executable by independent parties using deterministic procedures, without requiring access to CEYO infrastructure.</p>
-      <div class="verify-steps" role="list">
-        <div class="vst" role="listitem"><div class="vst-num">01</div><div class="vst-body"><div class="vst-title">Deterministic canonicalization</div><div class="vst-detail">RFC 8785 applied to JSON artifact byte representation</div></div></div>
-        <div class="vst" role="listitem"><div class="vst-num">02</div><div class="vst-body"><div class="vst-title">Hash recomputation</div><div class="vst-detail">Over canonicalized byte representation</div></div></div>
-        <div class="vst" role="listitem"><div class="vst-num">03</div><div class="vst-body"><div class="vst-title">Digital signature validation</div><div class="vst-detail">Against operator-published public key</div></div></div>
-        <div class="vst" role="listitem"><div class="vst-num">04</div><div class="vst-body"><div class="vst-title">Policy alignment check</div><div class="vst-detail">Policy identifier and version confirmed</div></div></div>
-      </div>
-      <div class="outcome-row" role="list" aria-label="Verification outcomes">
-        <div class="outcome-card confirmed" role="listitem"><div class="outcome-icon">✓</div><div><div class="outcome-title">Integrity Confirmed</div><div class="outcome-desc">Artifact unmodified since sealing; policy aligned</div></div></div>
-        <div class="outcome-card failed" role="listitem"><div class="outcome-icon">✗</div><div><div class="outcome-title">Integrity Failed</div><div class="outcome-desc">Hash mismatch detected; artifact may have been altered</div></div></div>
-        <div class="outcome-card mismatch" role="listitem"><div class="outcome-icon">⚠</div><div><div class="outcome-title">Policy Scope Mismatch</div><div class="outcome-desc">Policy identifier or version discrepancy</div></div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="boundary-section">
-    <div class="boundary-wrap" role="region" aria-label="Boundary declaration">
-      <div class="boundary-lbl">Boundary Declaration &nbsp;·&nbsp; V2026.02.19</div>
-      <div class="boundary-items">
-        <p class="bi">CEYO verifies integrity and provenance under defined policy; it does not certify compliance, legality, or correctness.</p>
-        <p class="bi">CEYO does not guarantee inference reproducibility or semantic equivalence of outputs.</p>
-        <p class="bi">Admissibility of artifacts is determined by the relevant authority, not by CEYO.</p>
-        <p class="bi">Cryptographic suite references are illustrative; deployments select suites appropriate to their regulatory context.</p>
-      </div>
-      <p class="boundary-close">It provides deterministic artifacts. Institutions determine their meaning.</p>
-    </div>
-  </div>
-
-</main>
-
-<nav class="index-bar" aria-label="Site index">
-  <a class="index-item" href="index.html">Index</a>
-  <a class="index-item active" href="platform.html">Arch</a>
-  <a class="index-item" href="trust.html">Trust</a>
-  <a class="index-item" href="governance.html">Gov</a>
-  <a class="index-item" href="contact.html">Contact</a>
-</nav>
-
-<script>
-const cursor=document.getElementById('cursor');
-const spotlight=document.getElementById('spotlight');
-document.addEventListener('mousemove',e=>{
-  cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';
-  spotlight.style.background=`radial-gradient(circle 280px at ${e.clientX}px ${e.clientY}px,rgba(255,255,240,.06) 0%,transparent 70%)`;
-});
-document.addEventListener('mouseleave',()=>{cursor.style.opacity='0';spotlight.style.background='none';});
-document.addEventListener('mouseenter',()=>{cursor.style.opacity='1';});
-document.querySelectorAll('a,button,.chain-node,.deficit-cell').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cursor.classList.add('hover'));
-  el.addEventListener('mouseleave',()=>cursor.classList.remove('hover'));
-});
-const stages=document.querySelectorAll('.stage');
-const sObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){e.target.classList.add('visible','focus');}
-    else{e.target.classList.remove('focus');}
-  });
-},{threshold:0.08});
-stages.forEach(s=>sObs.observe(s));
-const h2obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting&&!e.target.dataset.typed){
-      e.target.dataset.typed='1';
-      const txt=e.target.textContent;
-      e.target.textContent='';
-      e.target.classList.add('typewrite-cursor');
-      let i=0;
-      const iv=setInterval(()=>{e.target.textContent+=txt[i];i++;if(i>=txt.length){clearInterval(iv);e.target.classList.remove('typewrite-cursor');}},22);
-    }
-  });
-},{threshold:0.5});
-document.querySelectorAll('.stage-h2').forEach(h=>h2obs.observe(h));
-document.querySelectorAll('.chain-node,.outcome-card,.vst').forEach(el=>{
-  el.addEventListener('touchstart',()=>{el.style.background='var(--ivory)';el.style.color='var(--bg)';},{passive:true});
-  el.addEventListener('touchend',()=>{setTimeout(()=>{el.style.background='';el.style.color='';},180);},{passive:true});
-});
-</script>
-
-</body>
-</html>
+      <div class="chain-node" role="listitem"><div class="cn-num">06</div><div class="cn-label">Tier</div><div class="
