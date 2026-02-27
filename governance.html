@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Governance Posture | NADIR</title>
+    <meta property="og:title" content="Governance Posture | NADIR">
+    <meta property="og:description" content="Architectural design principles for structural minimization, controlled disclosure, and deterministic auditability.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #1A1A1A; }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+        .principle-card { border: 1px solid #E5E5E5; padding: 2rem; position: relative; transition: border-color 0.3s; }
+        .principle-card:hover { border-color: #000; }
+        .number-box { position: absolute; top: -15px; left: 20px; background: white; padding: 0 10px; font-weight: 800; font-family: 'IBM Plex Mono'; }
+    </style>
+</head>
+<body>
+    <nav class="border-b border-black p-6 bg-white sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center text-sm uppercase font-semibold">
+            <a href="index.html" class="tracking-tighter">NADIR</a>
+            <div class="space-x-8">
+                <a href="index.html">Overview</a>
+                <a href="architecture.html">Architecture</a>
+                <a href="roadmap.html">Roadmap</a>
+                <a href="governance.html" class="border-b-2 border-black">Governance</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto py-20 px-6">
+        <header class="max-w-3xl mb-20">
+            <h1 class="text-6xl font-bold tracking-tighter mb-8 italic">GOVERNANCE POSTURE</h1>
+            <p class="text-xl text-gray-600 leading-relaxed">
+                Governance in this context refers to structural design principles embedded in the integrity layer itself—not external regulatory authority. 
+            </p>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
+            <div class="principle-card">
+                <div class="number-box text-blue-600">01</div>
+                <h3 class="text-xl font-bold mb-4 uppercase italic">Minimization by Design</h3>
+                <p class="text-sm leading-relaxed text-gray-600">Capture scope is explicitly defined prior to generation. Only declared fields are recorded; unrelated telemetry is excluded by default configuration. Minimization is structural, not aspirational.</p>
+            </div>
+
+            <div class="principle-card">
+                <div class="number-box text-blue-600">02</div>
+                <h3 class="text-xl font-bold mb-4 uppercase italic">Controlled Disclosure</h3>
+                <p class="text-sm leading-relaxed text-gray-600">Artifacts enable verification of integrity without disclosing proprietary architecture, model weights, or source code. Disclosure tiers are defined before artifact generation.</p>
+            </div>
+
+            <div class="principle-card">
+                <div class="number-box text-blue-600">03</div>
+                <h3 class="text-xl font-bold mb-4 uppercase italic">Deterministic Auditability</h3>
+                <p class="text-sm leading-relaxed text-gray-600">Verification is mechanical and reproducible across heterogeneous environments. Interpretation remains an institutional function; integrity remains an architectural one.</p>
+            </div>
+
+            <div class="principle-card">
+                <div class="number-box text-blue-600">04</div>
+                <h3 class="text-xl font-bold mb-4 uppercase italic">Non-Adjudication</h3>
+                <p class="text-sm leading-relaxed text-gray-600">NADIR does not determine legality, fairness, or correctness. It provides integrity-sealed records to the institutions that make those determinations.</p>
+            </div>
+        </section>
+
+        
+
+        <section class="border-t border-black pt-12">
+            <h2 class="text-sm mono font-bold uppercase mb-6 tracking-widest italic underline">Alignment Posture</h2>
+            <p class="text-gray-500 text-sm leading-relaxed italic max-w-2xl">
+                NADIR’s architecture reflects principles consistent with contemporary integrity frameworks, including structured record-keeping and purpose limitation. NADIR does not claim formal endorsement by regulatory bodies; it provides the infrastructure required to support their mandates.
+            </p>
+        </section>
+
+        <footer class="mt-24 p-8 border-t-4 border-black">
+            <p class="text-sm font-bold uppercase mono">Governance Position</p>
+            <p class="text-lg font-light leading-snug mt-2">
+                Autonomous systems increasingly operate in environments where oversight matters. Infrastructure must reflect that reality.
+            </p>
+        </footer>
+    </main>
+</body>
+</html>
