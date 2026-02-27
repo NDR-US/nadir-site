@@ -1,34 +1,107 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // 1. INJECT GLOBAL CSS (So you don't have to edit the <head>)
-    const styleLink = document.createElement('link');
-    styleLink.rel = 'stylesheet';
-    styleLink.href = 'app/css/global.css'; // Path to your CSS file
-    document.head.appendChild(styleLink);
+/* =========================================================
+   CEYO / NADIR — Shared motion + spotlight + UX
+   ========================================================= */
 
-    // 2. INJECT THE NAVIGATION MENU
-    const navHTML = `
-        <div class="max-w-screen-2xl mx-auto flex justify-between items-center px-6 py-4">
-            <div class="flex items-center gap-8">
-                <a href="index.html" class="text-white font-black italic text-xl tracking-tighter">NADIR</a>
-                <span class="mono text-[10px] text-gray-600 hidden md:block uppercase tracking-widest">// SECURE_INFRASTRUCTURE</span>
-            </div>
-            <div class="flex items-center gap-6 mono text-[10px] uppercase font-bold tracking-widest text-gray-400">
-                <a href="architecture.html">02. Architecture</a>
-                <a href="compliance.html">07. Compliance</a>
-                <a href="capability.html">11. Capability</a>
-                <a href="sitemap.html" class="text-blue-500 border border-blue-500/30 px-3 py-1 bg-blue-500/5">15. Index</a>
-            </div>
-        </div>
-    `;
+(function(){
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const navContainer = document.getElementById('institutional-nav');
-    if (navContainer) {
-        navContainer.innerHTML = navHTML;
-        navContainer.className = "w-full border-b border-[#262626] bg-black/90 backdrop-blur-md sticky top-0 z-[1000]";
-    }
+  // Enable custom cursor only on fine pointers (desktop)
+  const isFinePointer = window.matchMedia && window.matchMedia('(pointer:fine)').matches;
+  const cursor = document.getElementById('cursorDot');
+  const spotlight = document.getElementById('spotlight');
 
-    // 3. INJECT THE DEFENSE-GRADE GRID BACKGROUND
-    const grid = document.createElement('div');
-    grid.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; opacity:0.05; background-image: linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px); background-size: 50px 50px;";
-    document.body.appendChild(grid);
-});
+  if (isFinePointer && cursor && spotlight){
+    document.body.classList.add('has-cursor');
+
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      spotlight.style.background =
+        `radial-gradient(circle 280px at ${e.clientX}px ${e.clientY}px, rgba(255,255,240,.06) 0%, transparent 70%)`;
+    });
+
+    document.addEventListener('mouseleave', () => {
+      cursor.style.opacity = '0';
+      spotlight.style.background = 'none';
+    });
+
+    document.addEventListener('mouseenter', () => {
+      cursor.style.opacity = '1';
+    });
+
+    // Hover enlarge
+    const hoverables = document.querySelectorAll('a, button, .card, .pill, [data-hover]');
+    hoverables.forEach(el => {
+      el.addEventListener('mouseenter', ()=> cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', ()=> cursor.classList.remove('hover'));
+    });
+  }
+
+  // Active nav highlighting based on current file
+  const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  document.querySelectorAll('.navlinks a, .indexbar a').forEach(a => {
+    const href = (a.getAttribute('href') || '').toLowerCase();
+    if (href === path) a.classList.add('active');
+  });
+
+  // Reveal/focus on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  if (!prefersReduced && revealEls.length){
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(ent=>{
+        if(ent.isIntersecting){
+          ent.target.classList.add('visible');
+          // focus while intersecting
+          ent.target.classList.add('focus');
+        } else {
+          ent.target.classList.remove('focus');
+        }
+      });
+    }, { threshold: 0.10 });
+
+    revealEls.forEach(el => obs.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('visible'));
+  }
+
+  // Typewriter for marked titles
+  const tw = document.querySelectorAll('[data-typewrite="1"]');
+  if (!prefersReduced && tw.length){
+    const twObs = new IntersectionObserver((entries)=>{
+      entries.forEach(ent=>{
+        if(ent.isIntersecting && !ent.target.dataset.typed){
+          ent.target.dataset.typed = '1';
+          const txt = ent.target.textContent;
+          ent.target.textContent = '';
+          ent.target.classList.add('typewrite');
+
+          let i = 0;
+          const iv = setInterval(()=>{
+            ent.target.textContent += txt[i] || '';
+            i++;
+            if(i >= txt.length){
+              clearInterval(iv);
+              ent.target.classList.remove('typewrite');
+            }
+          }, 18);
+        }
+      });
+    }, { threshold: 0.55 });
+
+    tw.forEach(el => twObs.observe(el));
+  }
+
+  // Touch highlight for cards (mobile)
+  document.querySelectorAll('.card, .pill').forEach(el=>{
+    el.addEventListener('touchstart', ()=>{
+      el.style.background = 'rgba(255,255,240,.06)';
+      el.style.borderColor = 'rgba(255,255,240,.18)';
+    }, {passive:true});
+    el.addEventListener('touchend', ()=>{
+      setTimeout(()=>{
+        el.style.background = '';
+        el.style.borderColor = '';
+      }, 160);
+    }, {passive:true});
+  });
+})();
