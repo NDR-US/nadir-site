@@ -1,440 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NADIR // Institutional Substrate</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Outfit:wght@900&family=Inter:wght@400;900&display=swap" rel="stylesheet">
-    <style>
-        :root { 
-            --deep-olive: #0D0E0B; 
-            --ivory: #FFFFF0;
-            --tactical-green: #4A5D3B;
-        }
-        
-        .candela { font-family: 'Outfit', sans-serif; font-weight: 900; }
-        .mono { font-family: 'IBM Plex Mono', monospace; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NADIR // Institutional Substrate</title>
 
-        body { 
-            background-color: var(--deep-olive); 
-            color: var(--ivory); 
-            font-family: 'Inter', sans-serif; 
-            overflow-x: hidden;
-            line-height: 1.05;
-        }
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Outfit:wght@900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
-        #hero-container {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            z-index: 10;
-            will-change: transform, opacity, filter;
-        }
+<style>
+:root{
+    --deep-olive:#0D0E0B;
+    --ivory:#FFFFF0;
+    --tactical:#4A5D3B;
+}
 
-        .brand-nadir {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -0.07em;
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            color: var(--ivory);
-        }
+*{box-sizing:border-box;margin:0;padding:0}
 
-        .ivory-trace {
-            background: linear-gradient(90deg, #444 0%, var(--ivory) 50%, #444 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: trace-anim 7s linear infinite;
-        }
+body{
+    background:var(--deep-olive);
+    color:var(--ivory);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+}
 
-        .telemetry-trace {
-            background: linear-gradient(90deg, #1a2312 0%, var(--tactical-green) 50%, #1a2312 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: trace-anim 4s linear infinite;
-        }
+.candela{font-family:'Outfit',sans-serif;font-weight:900}
+.mono{font-family:'IBM Plex Mono',monospace}
 
-        @keyframes trace-anim {
-            0% { background-position: 200% center; }
-            100% { background-position: -200% center; }
-        }
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    padding:40px 60px;
+    display:flex;
+    justify-content:space-between;
+    z-index:1000;
+}
 
-        .horizon-grid {
-            position: fixed; inset: 0;
-            background-image: linear-gradient(rgba(255,255,240,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,240,0.02) 1px, transparent 1px);
-            background-size: 80px 80px;
-            mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 95%);
-            transform: perspective(1000px) rotateX(65deg);
-            z-index: 0; pointer-events: none;
-        }
+.brand{
+    font-size:3rem;
+    letter-spacing:-0.07em;
+    text-transform:uppercase;
+}
 
-        .data-node {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .data-node.active { opacity: 1; transform: translateY(0); }
+.hero-wrap{
+    height:200vh;
+    position:relative;
+}
 
-        .cursor { border-left: 3px solid var(--tactical-green); animation: blink 0.8s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
+#hero{
+    position:sticky;
+    top:0;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:0 10%;
+    transition:all .3s ease;
+}
 
-        .control-hub {
-            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
-            background: rgba(13, 14, 11, 0.95); 
-            border: 1px solid rgba(255, 255, 240, 0.1);
-            padding: 1rem 2rem; display: flex; gap: 2.5rem; z-index: 1000;
-        }
-        .nav-link { font-family: 'IBM Plex Mono'; font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.3em; transition: 0.3s; }
-        .nav-link.active { color: var(--ivory); }
+h1{
+    font-size:12vw;
+    line-height:.8;
+    font-style:italic;
+}
 
-        /* NEW: HOME PAGE DOCTRINE SECTION */
-        .doctrine-block {
-            background: rgba(0,0,0,0.18);
-            border: 1px solid rgba(255,255,240,0.08);
-            box-shadow: 0 0 0 1px rgba(255,255,240,0.02) inset;
-            backdrop-filter: blur(6px);
-        }
-        .doctrine-rule {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,240,0.14), transparent);
-        }
-        .bullet {
-            display: grid;
-            grid-template-columns: 10px 1fr;
-            gap: 14px;
-            align-items: start;
-        }
-        .bullet .dot {
-            margin-top: 10px;
-            height: 6px;
-            width: 6px;
-            border-radius: 999px;
-            background: rgba(255,255,240,0.35);
-            box-shadow: 0 0 0 2px rgba(74,93,59,0.25);
-        }
-        .kicker {
-            letter-spacing: 0.6em;
-        }
-        .lead {
-            line-height: 1.25;
-        }
-        .muted { color: rgba(255,255,240,0.55); }
-        .dim { color: rgba(255,255,240,0.35); }
-        .tight { letter-spacing: -0.03em; }
-    </style>
+.hero-sub{
+    font-size:5vw;
+    font-style:italic;
+    margin-top:40px;
+}
+
+.hero-text{
+    font-size:1.5rem;
+    margin-top:40px;
+    max-width:900px;
+    color:rgba(255,255,240,.4);
+}
+
+.section{
+    padding:160px 10%;
+}
+
+.section h2{
+    font-size:3rem;
+    margin-bottom:40px;
+    font-style:italic;
+}
+
+.section p{
+    font-size:1.25rem;
+    line-height:1.6;
+    color:rgba(255,255,240,.6);
+    margin-bottom:24px;
+    max-width:1000px;
+}
+
+.divider{
+    height:1px;
+    background:rgba(255,255,240,.1);
+    margin:60px 0;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:40px;
+}
+
+.card{
+    border:1px solid rgba(255,255,240,.1);
+    padding:30px;
+    background:rgba(0,0,0,.2);
+}
+
+footer{
+    padding:120px 10%;
+    border-top:1px solid rgba(255,255,240,.1);
+}
+
+.fade{
+    opacity:0;
+    transform:translateY(40px);
+    transition:all 1s ease;
+}
+.fade.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+</style>
 </head>
-<body class="antialiased">
 
-    <div class="horizon-grid" id="grid"></div>
+<body>
 
-    <nav class="fixed top-0 left-0 w-full p-8 lg:p-12 flex justify-between items-center z-[500]">
-        <span class="brand-nadir ivory-trace">Nadir</span>
-        <div class="mono text-[10px] text-white/20 tracking-widest font-bold uppercase">Institutional_Rel_1.0</div>
-    </nav>
+<nav>
+    <div class="brand candela">NADIR</div>
+    <div class="mono" style="font-size:10px;color:rgba(255,255,240,.3);letter-spacing:.3em;">
+        INSTITUTIONAL_REL_1.0
+    </div>
+</nav>
 
-    <main class="relative">
-        
-        <div class="h-[200vh] relative">
-            <section id="hero-container" class="px-6 lg:px-40">
-                <div class="mono text-[11px] text-[#4A5D3B] mb-12 tracking-[0.6em] font-bold uppercase">Verification_Layer</div>
-                
-                <h1 class="candela text-[12vw] uppercase italic leading-[0.8] mb-12 tracking-tighter">
-                    Go Beyond<br><span class="telemetry-trace">Telemetry.</span>
-                </h1>
+<div class="hero-wrap">
+<section id="hero">
+    <div class="mono" style="color:var(--tactical);letter-spacing:.6em;margin-bottom:40px;">
+        VERIFICATION_LAYER
+    </div>
 
-                <div class="max-w-6xl">
-                    <p class="candela text-4xl lg:text-8xl uppercase italic mb-12 opacity-90 tracking-tighter">
-                        Verifiable Decision Records.
-                    </p>
-                    <div class="h-[2px] w-32 bg-white/10 mb-12"></div>
-                    <p class="text-xl lg:text-4xl font-light text-white/40 leading-snug max-w-4xl">
-                        <span class="typewriter" data-text="A decoupled evidentiary substrate producing cryptographically sealed inference artifacts without modifying core model logic."></span><span class="cursor"></span>
-                    </p>
-                </div>
-            </section>
+    <h1 class="candela">Go Beyond<br>Telemetry.</h1>
+
+    <div class="hero-sub candela">Verifiable Decision Records.</div>
+
+    <div class="hero-text">
+        A decoupled evidentiary substrate producing cryptographically sealed inference artifacts without modifying core model logic.
+    </div>
+</section>
+</div>
+
+<section class="section fade">
+    <h2 class="candela">Evidentiary Infrastructure</h2>
+
+    <p>
+    AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces that were never designed to function as durable evidence.
+    </p>
+
+    <div class="divider"></div>
+
+    <p class="candela" style="font-size:2rem;font-style:italic;">
+        Telemetry describes activity.<br>
+        It does not preserve proof.
+    </p>
+
+    <p>
+    NADIR is a decoupled evidentiary layer that attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined inference-time decision-state context. These artifacts are deterministically structured and cryptographically sealed to support later institutional verification without default disclosure of proprietary internals.
+    </p>
+
+    <div class="divider"></div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="mono">// BOUNDARY</div>
+            <p>NADIR does not evaluate outputs.<br>
+            NADIR does not adjudicate compliance.<br>
+            NADIR produces records.</p>
         </div>
+        <div class="card">
+            <div class="mono">// DISCLOSURE</div>
+            <p>Tiered disclosure enables validation without exposure of proprietary internals.</p>
+        </div>
+        <div class="card">
+            <div class="mono">// AVAILABILITY</div>
+            <p>Fail-open posture preserves inference continuity unless configured otherwise.</p>
+        </div>
+    </div>
+</section>
 
-        <!-- NEW: HOME PAGE CONTENT (YOUR TEXT) -->
-        <section class="px-6 lg:px-40 pb-40 -mt-[10vh]">
-            <div class="data-node doctrine-block rounded-2xl p-8 lg:p-14 max-w-6xl">
-                <div class="mono text-[11px] text-[#4A5D3B] mb-8 font-bold uppercase kicker">Evidentiary_Infrastructure</div>
+<section class="section fade">
+    <h2 class="candela">The Accountability Gap</h2>
 
-                <h2 class="candela text-4xl lg:text-6xl uppercase italic tracking-tighter mb-6">
-                    For Autonomous Systems
-                </h2>
+    <p>
+    Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is frequently secondary.
+    </p>
 
-                <p class="text-lg lg:text-2xl font-light muted lead max-w-5xl">
-                    AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces that were never designed to function as durable evidence.
-                </p>
+    <p>
+    When a decision is questioned through regulatory inquiry, audit, incident review, or litigation, organizations reconstruct events from partial logs. Reconstruction is interpretive. It is not deterministic.
+    </p>
 
-                <div class="doctrine-rule my-10"></div>
+    <p class="candela" style="font-size:1.8rem;font-style:italic;">
+        This is an architectural deficit, not an operational oversight.
+    </p>
+</section>
 
-                <p class="candela text-2xl lg:text-4xl uppercase italic tracking-tighter">
-                    Telemetry describes activity.<br>
-                    <span class="telemetry-trace">It does not preserve proof.</span>
-                </p>
+<section class="section fade">
+    <h2 class="candela">A Decoupled Verification Layer</h2>
 
-                <p class="text-lg lg:text-2xl font-light muted lead mt-8">
-                    NADIR exists to address that structural gap.
-                </p>
+    <p>
+    NADIR operates beside inference engines without modifying model weights or decision logic. It captures only what policy defines, normalizes that context into canonical structure, applies deterministic canonicalization, and cryptographically seals the artifact.
+    </p>
 
-                <p class="text-lg lg:text-2xl font-light muted lead mt-6 max-w-5xl">
-                    NADIR is a decoupled evidentiary layer that attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined inference-time decision-state context. These artifacts are deterministically structured and cryptographically sealed to support later institutional verification without default disclosure of proprietary internals.
-                </p>
+    <p>
+    Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of output.
+    </p>
 
-                <div class="doctrine-rule my-10"></div>
+    <p class="candela" style="font-size:1.8rem;font-style:italic;">
+        NADIR provides the record. Institutions provide oversight.
+    </p>
+</section>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 text-sm lg:text-base mono">
-                    <div class="p-5 rounded-xl border border-white/10 bg-black/10">
-                        <div class="text-white/70 font-bold mb-2">// BOUNDARY</div>
-                        <div class="text-white/35 leading-relaxed">
-                            NADIR does not evaluate outputs.<br>
-                            NADIR does not adjudicate compliance.<br>
-                            <span class="text-white/70">NADIR produces records.</span>
-                        </div>
-                    </div>
-                    <div class="p-5 rounded-xl border border-white/10 bg-black/10">
-                        <div class="text-white/70 font-bold mb-2">// DISCLOSURE</div>
-                        <div class="text-white/35 leading-relaxed">
-                            Tiered disclosure enables validation without default exposure of proprietary internals.
-                        </div>
-                    </div>
-                    <div class="p-5 rounded-xl border border-white/10 bg-black/10">
-                        <div class="text-white/70 font-bold mb-2">// AVAILABILITY</div>
-                        <div class="text-white/35 leading-relaxed">
-                            Fail-open posture: seal failures can be logged without halting inference unless configured otherwise.
-                        </div>
-                    </div>
-                </div>
+<footer>
+    <div class="candela" style="font-size:2rem;margin-bottom:20px;">
+        Institutional Reality.
+    </div>
+    <div class="mono" style="font-size:10px;color:rgba(255,255,240,.3);letter-spacing:.4em;">
+        ALL RIGHTS RESERVED © 2026 NADIR SYSTEMS.
+    </div>
+</footer>
 
-                <div class="doctrine-rule my-10"></div>
+<script>
+// Scroll blur hero
+window.addEventListener("scroll",function(){
+    const s=window.scrollY;
+    const hero=document.getElementById("hero");
+    if(s<1000){
+        hero.style.filter=`blur(${s/60}px)`;
+        hero.style.opacity=1-(s/900);
+        hero.style.transform=`scale(${1-(s/5000)})`;
+    }
+});
 
-                <h3 class="candela text-3xl lg:text-5xl uppercase italic tracking-tighter mb-6">
-                    The Accountability Gap
-                </h3>
-
-                <p class="text-lg lg:text-2xl font-light muted lead max-w-5xl">
-                    Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is frequently secondary.
-                </p>
-                <p class="text-lg lg:text-2xl font-light muted lead mt-6 max-w-5xl">
-                    When a decision is later questioned—through regulatory inquiry, internal audit, incident review, or litigation—organizations often reconstruct events from partial logs and distributed traces. Reconstruction is interpretive. It is not deterministic.
-                </p>
-
-                <div class="mt-10 space-y-4">
-                    <div class="bullet">
-                        <div class="dot"></div>
-                        <div class="text-lg lg:text-2xl font-light muted lead">Canonical in structure</div>
-                    </div>
-                    <div class="bullet">
-                        <div class="dot"></div>
-                        <div class="text-lg lg:text-2xl font-light muted lead">Explicit in capture scope</div>
-                    </div>
-                    <div class="bullet">
-                        <div class="dot"></div>
-                        <div class="text-lg lg:text-2xl font-light muted lead">Cryptographically sealed</div>
-                    </div>
-                    <div class="bullet">
-                        <div class="dot"></div>
-                        <div class="text-lg lg:text-2xl font-light muted lead">Independently verifiable</div>
-                    </div>
-                </div>
-
-                <p class="text-lg lg:text-2xl font-light muted lead mt-10 max-w-5xl">
-                    Without those properties, oversight depends on operator assertions rather than verifiable integrity.
-                </p>
-                <p class="candela text-2xl lg:text-4xl uppercase italic tracking-tighter mt-6">
-                    This is an architectural deficit, not an operational oversight.
-                </p>
-
-                <div class="doctrine-rule my-10"></div>
-
-                <h3 class="candela text-3xl lg:text-5xl uppercase italic tracking-tighter mb-6">
-                    A Decoupled Verification Layer
-                </h3>
-
-                <p class="text-lg lg:text-2xl font-light muted lead max-w-5xl">
-                    NADIR introduces an evidentiary substrate that operates beside inference engines. It does not modify model weights. It does not intervene in decision logic. It does not replace governance frameworks.
-                </p>
-
-                <p class="text-lg lg:text-2xl font-light muted lead mt-6 max-w-5xl">
-                    It captures only what policy defines, normalizes that context into a stable artifact schema, applies deterministic canonicalization, and seals the artifact for tamper-evidence.
-                </p>
-
-                <p class="text-lg lg:text-2xl font-light muted lead mt-6 max-w-5xl">
-                    Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of output.
-                </p>
-
-                <p class="text-lg lg:text-2xl font-light muted lead mt-6 max-w-5xl">
-                    This separation is deliberate. Evidence infrastructure must remain structurally independent from decision authority.
-                </p>
-
-                <div class="doctrine-rule my-10"></div>
-
-                <h3 class="candela text-3xl lg:text-5xl uppercase italic tracking-tighter mb-6">
-                    Constrained Disclosure
-                </h3>
-
-                <p class="text-lg lg:text-2xl font-light muted lead max-w-5xl">
-                    Oversight frequently requires validation without exposure of proprietary architecture, confidential model weights, or trade-secret implementation.
-                </p>
-                <p class="text-lg lg:text-2xl font-light muted lead mt-6 max-w-5xl">
-                    NADIR artifacts are structured to enable tiered disclosure. Integrity may be validated without revealing internal mechanics beyond policy scope.
-                </p>
-                <p class="text-lg lg:text-2xl font-light muted lead mt-6 max-w-5xl">
-                    Policy defines inclusion, exclusion, and masking rules before artifact generation. Disclosure boundaries are explicit rather than implied.
-                </p>
-
-                <div class="doctrine-rule my-10"></div>
-
-                <h3 class="candela text-3xl lg:text-5xl uppercase italic tracking-tighter mb-6">
-                    Availability by Design
-                </h3>
-
-                <p class="text-lg lg:text-2xl font-light muted lead max-w-5xl">
-                    NADIR does not introduce a default operational dependency that halts inference. Artifact sealing failures may be logged and flagged without interrupting inference unless explicitly configured otherwise. Availability remains an institutional decision.
-                </p>
-
-                <div class="doctrine-rule my-10"></div>
-
-                <h3 class="candela text-3xl lg:text-5xl uppercase italic tracking-tighter mb-6">
-                    Institutional Position
-                </h3>
-
-                <p class="text-lg lg:text-2xl font-light muted lead max-w-5xl">
-                    NADIR is infrastructure. It is not adjudication. It does not certify regulatory compliance. It does not guarantee admissibility. It does not determine fairness or legality.
-                </p>
-                <p class="text-lg lg:text-2xl font-light muted lead mt-6 max-w-5xl">
-                    Authorized institutions and regulated operators retain responsibility for determinations.
-                </p>
-
-                <p class="candela text-2xl lg:text-4xl uppercase italic tracking-tighter mt-8">
-                    NADIR provides the record.<br>
-                    <span class="telemetry-trace">Institutions provide the oversight.</span>
-                </p>
-            </div>
-        </section>
-
-        <section class="px-6 lg:px-40 space-y-[40vh] pb-60">
-            
-            <div class="data-node grid grid-cols-1 lg:grid-cols-12 gap-16">
-                <div class="lg:col-span-6">
-                    <h2 class="mono text-[11px] text-[#4A5D3B] mb-8 tracking-widest uppercase">// FUNCTIONALITY_A1</h2>
-                    <h3 class="candela text-5xl lg:text-8xl uppercase italic tracking-tighter">Structural Independence.</h3>
-                </div>
-                <div class="lg:col-span-6">
-                    <p class="text-2xl lg:text-4xl text-white/50 font-light mb-12 leading-tight">
-                        NADIR captures interaction at the inference boundary. Artifacts enable <span class="text-white font-bold underline decoration-[#4A5D3B] underline-offset-[12px]">independent verification</span>.
-                    </p>
-                    <div class="grid grid-cols-2 gap-10 pt-12 border-t border-white/5">
-                        <div class="mono">
-                            <span class="text-white block mb-4 font-bold text-xs">// CAPTURE</span>
-                            <p class="text-white/30 text-[10px]">Deterministic audit tails attached to every session.</p>
-                        </div>
-                        <div class="mono">
-                            <span class="block text-white mb-4 font-bold text-xs">// SEAL</span>
-                            <p class="text-white/30 text-[10px]">Cryptographic permanence via RFC 8785.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="data-node grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-                <div class="lg:col-span-8">
-                    <h3 class="candela text-5xl lg:text-8xl uppercase italic tracking-tighter mb-12">Non-Adjudication.</h3>
-                    <p class="text-2xl lg:text-5xl text-white/50 font-light italic leading-tight">
-                        <span class="typewriter" data-text="The substrate remains agnostic to secondary policy layers. Integrity must be proven before it is scaled."></span><span class="cursor"></span>
-                    </p>
-                </div>
-                <div class="lg:col-span-4 flex justify-end">
-                    <div class="h-64 w-[1px] bg-white/10 hidden lg:block"></div>
-                </div>
-            </div>
-
-        </section>
-
-        <footer class="px-6 lg:px-40 py-40 border-t border-white/5 bg-black/20">
-            <div class="flex flex-col lg:flex-row justify-between items-end gap-12">
-                <div>
-                    <h2 class="candela text-4xl lg:text-6xl uppercase italic mb-8">Institutional Reality.</h2>
-                    <p class="mono text-[11px] text-white/20 uppercase tracking-[0.5em] leading-relaxed font-bold">
-                        All Rights Reserved © 2026 NADIR SYSTEMS.<br>
-                        ESTABLISHED FOR INSTITUTIONAL OVERSIGHT.
-                    </p>
-                </div>
-                <div class="mono text-[10px] text-white/10 tracking-widest font-bold">
-                    REL_STABLE // 0x992..AF
-                </div>
-            </div>
-        </footer>
-    </main>
-
-    <nav class="control-hub">
-        <a href="index.html" class="nav-link active">Index</a>
-        <a href="architecture.html" class="nav-link">Arch</a>
-        <a href="trust.html" class="nav-link">Trust</a>
-        <a href="governance.html" class="nav-link">Gov</a>
-    </nav>
-
-    <script>
-        // TYPEWRITER ENGINE
-        function typeWriter(el) {
-            const text = el.getAttribute('data-text');
-            el.innerHTML = '';
-            let i = 0;
-            const timer = setInterval(() => {
-                if (i < text.length) {
-                    el.innerHTML += text.charAt(i);
-                    i++;
-                } else {
-                    clearInterval(timer);
-                    const cursor = el.nextElementSibling;
-                    if (cursor && cursor.classList.contains('cursor')) cursor.style.display = 'none';
-                }
-            }, 18);
+// Fade reveal
+const observer=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+        if(e.isIntersecting){
+            e.target.classList.add("show");
         }
+    });
+},{threshold:.2});
 
-        // SCROLL ERASE PHYSICS
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const hero = document.getElementById('hero-container');
-            const grid = document.getElementById('grid');
-            
-            if (scrolled < 1000) {
-                const blurValue = scrolled / 60;
-                const scaleValue = 1 - (scrolled / 5200);
-                const opacityValue = 1 - (scrolled / 850);
-                
-                hero.style.filter = `blur(${blurValue}px)`;
-                hero.style.transform = `scale(${scaleValue}) translateY(${scrolled * 0.2}px)`;
-                hero.style.opacity = opacityValue;
-            }
-            
-            grid.style.transform = `perspective(1000px) rotateX(${65 + scrolled * 0.005}deg) translateY(${scrolled * 0.05}px)`;
-        });
+document.querySelectorAll(".fade").forEach(el=>observer.observe(el));
+</script>
 
-        // REVEAL OBSERVER
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    const writers = entry.target.querySelectorAll('.typewriter');
-                    writers.forEach(w => {
-                        if (!w.classList.contains('typed')) {
-                            typeWriter(w);
-                            w.classList.add('typed');
-                        }
-                    });
-                }
-            });
-        }, { threshold: 0.2 });
-
-        document.querySelectorAll('.data-node').forEach(node => observer.observe(node));
-    </script>
 </body>
 </html>
