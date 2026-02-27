@@ -3,27 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CEYO</title>
+<title>CEYO // Substrate</title>
 
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Outfit:wght@900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-    --dark-olive: #12130e; 
+    --dark-olive: #0D0E0B; 
     --ivory-wash: #FFFFF0;
     --tactical: #4A5D3B;
-    --line: rgba(255, 255, 240, 0.1);
+    --interface-line: rgba(255, 255, 240, 0.1);
+    --glow: rgba(255, 255, 240, 0.05);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
+* { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
 
 body {
     background-color: var(--dark-olive);
     color: var(--ivory-wash);
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
-    /* Spotlight interaction */
-    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(74, 93, 59, 0.12) 0%, transparent 60%), var(--dark-olive);
+    /* Brighter, tighter interactive spotlight */
+    background: radial-gradient(circle 300px at var(--x, 50%) var(--y, 50%), rgba(255, 255, 240, 0.08) 0%, transparent 100%),
+                var(--dark-olive);
+    background-attachment: fixed;
 }
 
 /* Texture Overlay */
@@ -34,172 +37,217 @@ body::before {
     background: url('https://grainy-gradients.vercel.app/noise.svg');
     opacity: 0.05;
     pointer-events: none;
-    z-index: 999;
+    z-index: 9999;
+}
+
+/* Custom Mouse Follower (The Brighter Light) */
+#cursor-light {
+    position: fixed;
+    top: 0; left: 0;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 255, 240, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    mix-blend-mode: screen;
 }
 
 .candela { font-family: 'Outfit', sans-serif; font-weight: 900; text-transform: uppercase; }
-.mono { font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+.mono { font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: 0.2em; }
 
-nav.top {
+nav.top-nav {
     position: fixed;
     top: 0; left: 0; width: 100%;
-    padding: 40px 60px;
+    padding: 40px;
     z-index: 1000;
 }
+.brand { font-size: 2.5rem; letter-spacing: -0.05em; }
 
-.brand { font-size: 2.8rem; letter-spacing: -0.05em; }
-
-/* Sections */
-.hero-wrap { height: 140vh; position: relative; }
+.hero-wrap { height: 150vh; position: relative; }
 #hero {
     position: sticky; top: 0; height: 100vh;
     display: flex; flex-direction: column; justify-content: center; padding: 0 10%;
 }
 
-h1 { font-size: clamp(3.5rem, 11vw, 9rem); line-height: 0.8; margin-bottom: 20px; font-style: italic; }
-.hero-sub { font-size: clamp(1.5rem, 4.5vw, 3.5rem); font-style: italic; margin-bottom: 30px; }
-.hero-text { font-size: 1.25rem; max-width: 850px; opacity: 0.5; }
+h1 { font-size: clamp(3rem, 10vw, 8rem); line-height: 0.8; margin-bottom: 20px; font-style: italic; }
+.hero-sub { font-size: clamp(1.5rem, 4vw, 3rem); font-style: italic; margin-bottom: 30px; }
 
-.section { padding: 140px 10%; border-top: 1px solid var(--line); }
-.section h2 { font-size: 3.2rem; margin-bottom: 40px; font-style: italic; }
-.section p { font-size: 1.3rem; line-height: 1.6; opacity: 0.7; margin-bottom: 30px; max-width: 950px; }
-
-/* Interaction Highlights */
-.interactive-text { transition: 0.3s; }
-.interactive-text:active { background: var(--tactical); color: var(--dark-olive) !important; opacity: 1; }
-
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 50px; }
-.card {
-    border: 1px solid var(--line);
-    padding: 35px;
-    background: rgba(255, 255, 240, 0.02);
-    transition: 0.2s;
+/* Active Section Highlighting */
+.section { 
+    padding: 120px 10%; 
+    border-top: 1px solid var(--interface-line); 
+    transition: background 0.5s ease, border-color 0.5s ease;
+    position: relative;
+    z-index: 2;
 }
-.card:active { background: var(--ivory-wash); color: var(--dark-olive); }
+.section.active-focus {
+    background: rgba(255, 255, 240, 0.02);
+    border-top-color: var(--ivory-wash);
+}
 
-/* Bottom Menu */
-.bottom-nav {
+.section h2 { font-size: 3rem; margin-bottom: 40px; font-style: italic; }
+.section p { font-size: 1.25rem; line-height: 1.6; opacity: 0.6; margin-bottom: 24px; max-width: 1000px; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.card {
+    border: 1px solid var(--interface-line);
+    padding: 30px;
+    background: rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+.card:active, .card.touched { 
+    background: var(--ivory-wash); 
+    color: var(--dark-olive); 
+}
+
+/* Bottom Index Bar */
+.index-bar {
     position: fixed;
     bottom: 30px; left: 50%;
     transform: translateX(-50%);
     display: flex;
-    background: rgba(18, 19, 14, 0.9);
-    border: 1px solid var(--line);
-    backdrop-filter: blur(12px);
+    background: #000;
+    border: 1px solid var(--interface-line);
     z-index: 1001;
 }
-.nav-link {
-    padding: 14px 28px;
+.index-item {
+    padding: 15px 30px;
     font-size: 11px;
     color: var(--ivory-wash);
     text-decoration: none;
-    border-right: 1px solid var(--line);
-    transition: 0.2s;
+    border-right: 1px solid var(--interface-line);
 }
-.nav-link:hover { background: var(--tactical); }
-.nav-link:last-child { border-right: none; }
+.index-item:hover { background: var(--tactical); }
 
 .typewriter { visibility: hidden; }
 
-footer { padding: 120px 10% 200px; border-top: 1px solid var(--line); }
+footer { padding: 120px 10% 200px; border-top: 1px solid var(--interface-line); }
 </style>
 </head>
 
 <body>
 
-<nav class="top">
+<div id="cursor-light"></div>
+
+<nav class="top-nav">
     <div class="brand candela">CEYO</div>
 </nav>
 
 <div class="hero-wrap">
 <section id="hero">
+    <div class="mono" style="color:var(--tactical); margin-bottom:20px; font-size: 12px;">VERIFICATION_LAYER</div>
     <h1 class="candela">Go Beyond<br>Telemetry.</h1>
     <div class="hero-sub candela">Verifiable Decision Records.</div>
-    <div class="hero-text">
+    <div class="hero-text mono" style="font-size: 14px; opacity: 0.5; max-width: 600px;">
         A decoupled evidentiary substrate producing cryptographically sealed inference artifacts without modifying core model logic.
     </div>
 </section>
 </div>
 
-<section class="section">
+<section class="section" id="s1">
     <h2 class="candela typewriter" data-text="Evidentiary Infrastructure"></h2>
-    <p class="typewriter interactive-text" data-text="AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces that were never designed to function as durable evidence."></p>
+    <p class="typewriter" data-text="AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those decisions are reviewed, the underlying infrastructure often produces telemetry, logs, and traces that were never designed to function as durable evidence."></p>
     
-    <div style="height:1px; background:var(--line); margin:60px 0;"></div>
+    <div style="height:1px; background:var(--interface-line); margin:60px 0;"></div>
     
-    <p class="candela interactive-text" style="font-size:2.2rem; font-style:italic;">
+    <p class="candela" style="font-size:2.5rem; font-style:italic; margin-bottom: 40px;">
         Telemetry describes activity.<br>
-        <span style="opacity:0.4">It does not preserve proof.</span>
+        <span style="opacity: 0.3">It does not preserve proof.</span>
     </p>
 
-    <p class="typewriter interactive-text" data-text="CEYO is a decoupled evidentiary layer that attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined inference-time decision-state context. These artifacts are deterministically structured and cryptographically sealed to support later institutional verification without default disclosure of proprietary internals."></p>
+    <p class="typewriter" data-text="CEYO is a decoupled evidentiary layer that attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined inference-time decision-state context. These artifacts are deterministically structured and cryptographically sealed to support later institutional verification without default disclosure of proprietary internals."></p>
 
     <div class="grid">
-        <div class="card">
-            <div class="mono" style="color:var(--tactical); margin-bottom:15px;">// BOUNDARY</div>
-            <p style="font-size: 1rem;">CEYO does not evaluate outputs. CEYO does not adjudicate compliance. CEYO produces records.</p>
+        <div class="card" onmousedown="this.classList.add('touched')" onmouseup="this.classList.remove('touched')">
+            <div class="mono" style="color: var(--tactical); margin-bottom: 10px;">// BOUNDARY</div>
+            <p style="font-size: 0.9rem;">CEYO does not evaluate outputs. CEYO does not adjudicate compliance. CEYO produces records.</p>
         </div>
-        <div class="card">
-            <div class="mono" style="color:var(--tactical); margin-bottom:15px;">// DISCLOSURE</div>
-            <p style="font-size: 1rem;">Tiered disclosure enables validation without exposure of proprietary internals.</p>
+        <div class="card" onmousedown="this.classList.add('touched')" onmouseup="this.classList.remove('touched')">
+            <div class="mono" style="color: var(--tactical); margin-bottom: 10px;">// DISCLOSURE</div>
+            <p style="font-size: 0.9rem;">Tiered disclosure enables validation without exposure of proprietary internals.</p>
         </div>
-        <div class="card">
-            <div class="mono" style="color:var(--tactical); margin-bottom:15px;">// AVAILABILITY</div>
-            <p style="font-size: 1rem;">Fail-open posture preserves inference continuity unless configured otherwise.</p>
+        <div class="card" onmousedown="this.classList.add('touched')" onmouseup="this.classList.remove('touched')">
+            <div class="mono" style="color: var(--tactical); margin-bottom: 10px;">// AVAILABILITY</div>
+            <p style="font-size: 0.9rem;">Fail-open posture preserves inference continuity unless configured otherwise.</p>
         </div>
     </div>
 </section>
 
-<section class="section">
+<section class="section" id="s2">
     <h2 class="candela typewriter" data-text="The Accountability Gap"></h2>
-    <p class="typewriter interactive-text" data-text="Modern AI deployments optimize for throughput. Accountability is frequently secondary. When a decision is questioned through regulatory inquiry, audit, incident review, or litigation, organizations reconstruct events from partial logs. Reconstruction is interpretive. It is not deterministic."></p>
+    <p class="typewriter" data-text="Modern AI deployments optimize for throughput. Accountability is frequently secondary. When a decision is questioned through regulatory inquiry, audit, incident review, or litigation, organizations reconstruct events from partial logs. Reconstruction is interpretive. It is not deterministic."></p>
+    <p class="candela" style="font-size: 1.8rem; opacity: 0.5;">This is an architectural deficit, not an operational oversight.</p>
+</section>
+
+<section class="section" id="s3">
+    <h2 class="candela typewriter" data-text="A Decoupled Layer"></h2>
+    <p class="typewriter" data-text="CEYO operates beside inference engines without modifying model weights. It captures only what policy defines, normalizes context into canonical structure, and seals the artifact for tamper-evidence. Verification confirms integrity and provenance. It does not confirm correctness of output."></p>
+    <p class="candela" style="font-size: 1.8rem; color: var(--tactical);">CEYO PROVIDES THE RECORD. INSTITUTIONS PROVIDE OVERSIGHT.</p>
 </section>
 
 <footer>
-    <div class="candela" style="font-size:2.2rem; margin-bottom:20px;">Institutional Reality.</div>
-    <div class="mono" style="font-size:11px; opacity:0.3;">ALL RIGHTS RESERVED © 2026 CEYO SYSTEMS.</div>
+    <div class="candela" style="font-size:2.5rem; margin-bottom:20px;">Institutional Reality.</div>
+    <div class="mono" style="font-size:10px; opacity:0.3; letter-spacing: 0.5em;">
+        ALL RIGHTS RESERVED © 2026 CEYO SYSTEMS.
+    </div>
 </footer>
 
-<div class="bottom-nav mono">
-    <a href="#" class="nav-link">INDEX</a>
-    <a href="#" class="nav-link">ARCH</a>
-    <a href="#" class="nav-link">TRUST</a>
-    <a href="#" class="nav-link">GOV</a>
+<div class="index-bar mono">
+    <a href="#s1" class="index-item">INDEX</a>
+    <a href="#s2" class="index-item">ARCH</a>
+    <a href="#s3" class="index-item">TRUST</a>
+    <a href="#" class="index-item">GOV</a>
 </div>
 
 <script>
-// Spotlight Follow
+const cursorLight = document.getElementById('cursor-light');
+
 window.addEventListener('mousemove', e => {
+    // Spotlight Logic
     document.body.style.setProperty('--x', e.clientX + 'px');
     document.body.style.setProperty('--y', e.clientY + 'px');
+    
+    // Smooth Cursor Follower
+    cursorLight.style.left = e.clientX + 'px';
+    cursorLight.style.top = e.clientY + 'px';
 });
 
-// Typing Engine
-function typeWriter(el, text, i = 0) {
+// Typewriter
+function typeWriter(element, text, i = 0) {
     if (i < text.length) {
-        el.innerHTML += text.charAt(i);
-        setTimeout(() => typeWriter(el, text, i + 1), 12);
+        element.innerHTML += text.charAt(i);
+        setTimeout(() => typeWriter(element, text, i + 1), 15);
     }
 }
 
+// Intersection Observer for Typing AND Section Highlighting
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting && entry.target.style.visibility !== 'visible') {
-            entry.target.style.visibility = 'visible';
-            typeWriter(entry.target, entry.target.getAttribute('data-text'));
+        if (entry.isIntersecting) {
+            // Typing Trigger
+            if (entry.target.classList.contains('typewriter') && entry.target.style.visibility !== 'visible') {
+                entry.target.style.visibility = 'visible';
+                typeWriter(entry.target, entry.target.getAttribute('data-text'));
+            }
+            // Section Highlight Trigger
+            if (entry.target.classList.contains('section')) {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active-focus'));
+                entry.target.classList.add('active-focus');
+            }
         }
     });
-}, { threshold: 0.1 });
+}, { threshold: 0.3 });
 
-document.querySelectorAll('.typewriter').forEach(el => observer.observe(el));
+document.querySelectorAll('.typewriter, .section').forEach(el => observer.observe(el));
 
 // Hero Blur
 window.addEventListener("scroll", () => {
     const s = window.scrollY;
     const hero = document.getElementById("hero");
     if(s < 1000) {
-        hero.style.filter = `blur(${s/70}px)`;
-        hero.style.opacity = 1 - (s/900);
+        hero.style.filter = `blur(${s/50}px)`;
+        hero.style.opacity = 1 - (s/800);
     }
 });
 </script>
