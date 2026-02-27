@@ -3,150 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NADIR // Operational Overview</title>
+    <title>NADIR // Institutional Index</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;900&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #050505; --accent: #0057FF; --indium: #1E222A; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: #FFF; overflow-x: hidden; }
+        body { 
+            background-color: #000; 
+            color: #fff; 
+            font-family: 'Inter', sans-serif; 
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
         .mono { font-family: 'IBM Plex Mono', monospace; }
         
-        /* 1. KINETIC SCAN LINE */
-        .scan-line {
-            position: fixed; top: 0; left: 280px; width: 2px; height: 100vh;
-            background: linear-gradient(to bottom, transparent, var(--accent), transparent);
-            opacity: 0.1; z-index: 10; animation: scan 10s linear infinite;
-        }
-        @keyframes scan { 0% { transform: translateX(0); } 100% { transform: translateX(calc(100vw - 280px)); } }
-
-        /* 2. COMMAND SIDEBAR */
-        .command-sidebar {
-            width: 280px; border-right: 1px solid #1a1a1a; height: 100vh;
-            position: fixed; left: 0; top: 0; background: #080808; z-index: 100;
+        /* THE INFINITE CANVAS */
+        .content-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 4rem;
         }
 
-        /* 3. CONTENT AREA */
-        .content-deck { margin-left: 280px; width: calc(100% - 280px); }
-
-        .nav-item {
-            padding: 1.25rem 1.5rem; border-bottom: 1px solid #111;
-            transition: all 0.2s ease; color: #555; font-size: 10px; display: flex; justify-content: space-between;
+        /* GLOBAL CONTROL STRIP (The Navigation Fix) */
+        .control-strip {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #000;
+            border-top: 1px solid #111;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
         }
-        .nav-item:hover { color: #FFF; background: #0c0c0c; border-left: 4px solid var(--accent); }
-        .nav-active { color: #FFF; border-left: 4px solid var(--accent); background: #111; }
 
-        /* 4. HIGH-END TEXTURE */
-        .blueprint-dots {
-            background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 0);
-            background-size: 30px 30px;
+        .nav-link {
+            font-family: 'IBM Plex Mono';
+            font-size: 10px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #555;
+            transition: all 0.4s ease;
+        }
+        .nav-link:hover, .nav-link.active { 
+            color: #fff; 
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        /* KINETIC HEADER */
+        .hero-title {
+            font-size: 14vw;
+            font-weight: 900;
+            line-height: 0.8;
+            letter-spacing: -0.06em;
+            text-transform: uppercase;
+            font-style: italic;
+        }
+
+        .pillar-line {
+            height: 1px;
+            background: #111;
+            width: 100%;
+            margin-bottom: 2rem;
         }
     </style>
 </head>
-<body class="blueprint-dots">
+<body class="pb-48">
 
-    <div class="scan-line"></div>
-
-    <aside class="command-sidebar flex flex-col">
-        <div class="p-8 border-b border-white/5">
-            <h1 class="text-2xl font-black italic tracking-tighter">NADIR</h1>
-            <p class="mono text-[8px] text-blue-500 mt-2 tracking-[0.4em] font-bold">V.2026_CORE_STAL</p>
+    <nav class="p-12 flex justify-between items-start border-b border-white/5">
+        <div>
+            <span class="text-2xl font-black italic tracking-tighter uppercase">Nadir</span>
+            <p class="mono text-[8px] text-blue-600 mt-2 tracking-[0.5em] uppercase">Ref: Operational_Overview_2026</p>
         </div>
-
-        <nav class="flex-grow overflow-y-auto mono uppercase tracking-[0.2em] font-bold">
-            <div class="p-6 text-[8px] text-gray-700 tracking-[0.5em]">01_CORE_INFRA</div>
-            <a href="index.html" class="nav-item nav-active"><span>Overview</span><span class="opacity-20">01</span></a>
-            <a href="architecture.html" class="nav-item"><span>Architecture</span><span class="opacity-20">02</span></a>
-            <a href="integration.html" class="nav-item"><span>Integration</span><span class="opacity-20">03</span></a>
-            
-            <div class="p-6 text-[8px] text-gray-700 tracking-[0.5em]">02_EVIDENTIARY_TRUST</div>
-            <a href="compliance.html" class="nav-item"><span>Compliance</span><span class="opacity-20">07</span></a>
-            <a href="trust.html" class="nav-item"><span>Trust_Infra</span><span class="opacity-20">08</span></a>
-            <a href="incident.html" class="nav-item"><span>Incident_SOP</span><span class="opacity-20">18</span></a>
-            
-            <div class="p-6 text-[8px] text-gray-700 tracking-[0.5em]">03_SYSTEM_DOCS</div>
-            <a href="whitepaper.html" class="nav-item"><span>Whitepaper</span><span class="opacity-20">13</span></a>
-            <a href="sitemap.html" class="nav-item"><span>Master_Index</span><span class="opacity-20">15</span></a>
-        </nav>
-
-        <div class="p-8 border-t border-white/5 mono text-[8px] text-gray-600 flex flex-col gap-3">
-            <div class="flex items-center gap-2">
-                <span class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
-                <span class="text-white">ENCLAVE_SYNC: ACTIVE</span>
-            </div>
-            <span>© 2026 NADIR SYSTEMS</span>
+        <div class="mono text-[9px] text-gray-700 text-right uppercase tracking-widest">
+            Substrate: Active<br>
+            Classification: Public
         </div>
-    </aside>
+    </nav>
 
-    <main class="content-deck">
+    <main class="content-container pt-32">
         
-        <header class="sticky top-0 z-50 p-6 border-b border-white/5 bg-black/80 backdrop-blur-md flex justify-between items-center">
-            <div class="mono text-[9px] text-gray-500 tracking-widest font-bold">/ CORE / OVERVIEW_STRATUM</div>
-            <div class="flex gap-6 items-center">
-                <span class="mono text-[9px] text-blue-500 hidden lg:block">LATENCY: 14MS</span>
-                <button class="px-5 py-2 bg-blue-600 text-white mono text-[10px] font-black uppercase tracking-widest hover:bg-blue-500 transition">Download_Spec</button>
+        <header class="mb-60">
+            <h1 class="hero-title mb-16">
+                Truth<br><span class="text-blue-600">Infrastructure.</span>
+            </h1>
+            <div class="grid grid-cols-12 gap-8 items-start">
+                <p class="col-span-12 lg:col-span-8 text-4xl font-light text-gray-400 leading-tight">
+                    NADIR is the <span class="text-white italic">decoupled integrity layer</span> for autonomous systems. We provide the cryptographic proof required for institutional trust in machine decisions.
+                </p>
             </div>
         </header>
 
-        <div class="max-w-6xl mx-auto py-32 px-12">
-            
-            <section class="mb-40">
-                <div class="mono text-xs text-blue-500 font-black mb-8 tracking-[0.6em] uppercase">
-                    [ Evidentiary_Substrate_For_Agentic_AI ]
-                </div>
-                <h1 class="text-[120px] font-black tracking-tighter leading-[0.85] italic uppercase mb-12">
-                    Truth<br><span class="text-blue-600">Infrastructure.</span>
-                </h1>
-                <p class="text-3xl font-light text-gray-400 max-w-3xl leading-tight">
-                    NADIR is the <span class="text-white italic">decoupled integrity layer</span> for autonomous systems. We provide the cryptographic proof required for institutional trust in machine decisions.
+        
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-20 mb-60">
+            <div>
+                <div class="pillar-line"></div>
+                <span class="mono text-[10px] text-blue-600 font-bold mb-8 block uppercase tracking-widest">01 // Decoupled</span>
+                <h3 class="text-3xl font-black uppercase italic mb-6">Structural Independence.</h3>
+                <p class="text-gray-500 leading-relaxed">
+                    Evidence is created at the boundary, surviving even if the core model is compromised or decommissioned.
                 </p>
-            </section>
+            </div>
 
-            
+            <div>
+                <div class="pillar-line"></div>
+                <span class="mono text-[10px] text-blue-600 font-bold mb-8 block uppercase tracking-widest">02 // Forensic</span>
+                <h3 class="text-3xl font-black uppercase italic mb-6">Immutable Proof.</h3>
+                <p class="text-gray-500 leading-relaxed">
+                    Utilizing non-custodial signing to ensure artifacts are tamper-proof and regulatory-ready by default.
+                </p>
+            </div>
 
-            <section class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-60">
-                <div class="p-10 border border-white/5 bg-white/[0.02] hover:border-blue-600 transition duration-500">
-                    <span class="mono text-blue-500 text-[10px] font-black mb-6 block uppercase tracking-[0.3em]">Phase_01 // Capture</span>
-                    <h3 class="text-2xl font-black uppercase italic mb-4">Real-Time<br>Provenance</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed italic">
-                        Attach a deterministic audit tail to every inference session. Capture context without sacrificing execution speed.
-                    </p>
-                </div>
-                <div class="p-10 border border-white/5 bg-white/[0.02] hover:border-blue-600 transition duration-500">
-                    <span class="mono text-blue-500 text-[10px] font-black mb-6 block uppercase tracking-[0.3em]">Phase_02 // Seal</span>
-                    <h3 class="text-2xl font-black uppercase italic mb-4">Cryptographic<br>Permanence</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed italic">
-                        Utilize non-custodial signing and RFC 8785 canonicalization to ensure artifacts are tamper-proof and forensic-ready.
-                    </p>
-                </div>
-                <div class="p-10 border border-white/5 bg-white/[0.02] hover:border-blue-600 transition duration-500">
-                    <span class="mono text-blue-500 text-[10px] font-black mb-6 block uppercase tracking-[0.3em]">Phase_03 // Verify</span>
-                    <h3 class="text-2xl font-black uppercase italic mb-4">Institutional<br>Audit</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed italic">
-                        Empower third-party auditors to verify system integrity independently using standalone CLI verification tools.
-                    </p>
-                </div>
-            </section>
+            <div>
+                <div class="pillar-line"></div>
+                <span class="mono text-[10px] text-blue-600 font-bold mb-8 block uppercase tracking-widest">03 // Verifiable</span>
+                <h3 class="text-3xl font-black uppercase italic mb-6">Open Validation.</h3>
+                <p class="text-gray-500 leading-relaxed">
+                    Empower auditors with standalone tools to verify system integrity without requiring proprietary access.
+                </p>
+            </div>
+        </section>
 
-            <section class="py-32 border-y border-white/10 flex flex-col items-center text-center">
-                <h2 class="text-5xl font-black uppercase italic italic mb-12">Ready for Institutional Review?</h2>
-                <div class="flex gap-8">
-                    <a href="architecture.html" class="px-12 py-5 bg-white text-black mono text-xs font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all">Explore_Architecture</a>
-                    <a href="sitemap.html" class="px-12 py-5 border border-white/20 mono text-xs font-black uppercase tracking-widest hover:border-white transition-all">View_Directory</a>
-                </div>
-            </section>
+        <section class="py-40 border-t border-white/5">
+            <h2 class="text-xs mono uppercase text-gray-700 mb-12 tracking-[0.5em] font-bold">// Institutional_Mandate</h2>
+            <p class="text-[5vw] font-black leading-[1.1] italic uppercase text-gray-200">
+                Inference requires <span class="text-white underline decoration-blue-600 decoration-8 underline-offset-8">verification</span>. Accountability requires <span class="text-white">proof</span>.
+            </p>
+        </section>
 
-            <footer class="mt-40 pt-16 flex justify-between items-start opacity-30">
-                <div class="mono text-[9px] uppercase tracking-widest space-y-2">
-                    <p>SYSTEM: NADIR_OS_v1.0</p>
-                    <p>STRATUM: CORE_OVERVIEW</p>
-                </div>
-                <div class="text-right mono text-[9px] uppercase tracking-widest space-y-2">
-                    <p>AUTHENTICATED_ACCESS_ONLY</p>
-                    <p>REF: 2026_INDEX_ALPHA</p>
-                </div>
-            </footer>
-
-        </div>
     </main>
+
+    <footer class="control-strip">
+        <div class="flex gap-16">
+            <a href="index.html" class="nav-link active">Overview</a>
+            <a href="architecture.html" class="nav-link">Architecture</a>
+            <a href="trust.html" class="nav-link">Trust</a>
+            <a href="compliance.html" class="nav-link">Compliance</a>
+            <a href="sitemap.html" class="nav-link">Index</a>
+        </div>
+        <div class="flex items-center gap-6">
+            <span class="w-2 h-2 bg-blue-600 rounded-full animate-pulse shadow-[0_0_10px_#0057FF]"></span>
+            <span class="mono text-[10px] text-gray-500 font-bold uppercase tracking-widest">Secure_Layer_Online</span>
+        </div>
+    </footer>
+
 </body>
 </html>
