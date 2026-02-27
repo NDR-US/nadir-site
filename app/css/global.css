@@ -1,67 +1,59 @@
-/* ---------------------------
-   GLOBAL DESIGN TOKENS
----------------------------- */
+/* ===========================================
+   NADIR — PREMIUM SYSTEM (NON-DESTRUCTIVE)
+   Global styles + ambient effects + reveals
+   =========================================== */
+
 :root{
-  --bg: #070A10;
-  --fg: rgba(255,255,255,.86);
-  --muted: rgba(255,255,255,.62);
-  --hair: rgba(255,255,255,.10);
+  --mx: 50%;
+  --my: 30%;
 
-  /* Accent is subtle. Not rainbow. */
-  --accent: 120, 255, 210; /* mint-cyan (RGB only) */
-  --accent2: 160, 140, 255; /* secondary for gradients (RGB only) */
+  /* Text tones (do NOT set page background here) */
+  --fg: rgba(255,255,255,.92);
+  --fg-dim: rgba(255,255,255,.70);
+  --fg-muted: rgba(255,255,255,.55);
+  --line: rgba(255,255,255,.10);
 
-  --max: 1080px;
-  --pad: clamp(18px, 4vw, 42px);
+  /* Readability */
+  --content-w: 900px;
+  --gutter: clamp(18px, 4vw, 44px);
 
-  --radius: 18px;
+  /* Motion */
   --ease: cubic-bezier(.2,.9,.2,1);
 }
 
-/* Per-page theme hooks (optional) */
-html[data-theme="trust"] { --accent: 140, 190, 255; }
-html[data-theme="gov"]   { --accent: 160, 255, 210; }
-html[data-theme="intel"] { --accent: 255, 200, 160; }
-
-*{ box-sizing:border-box; }
-html,body{ height:100%; }
+*{ box-sizing: border-box; }
+html, body{ height: 100%; }
 body{
-  margin:0;
-  background: var(--bg);
+  margin: 0;
   color: var(--fg);
-  font-family: system-ui, -apple-system, Segoe UI, Inter, Arial, sans-serif;
+
+  /* IMPORTANT: Do NOT set background-color here.
+     Your existing palette/background stays intact. */
+
+  font-family: Canela, "Canela Text", "Canela Deck",
+               ui-serif, Georgia, "Times New Roman", Times, serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: geometricPrecision;
-  overflow-x:hidden;
 }
 
-/* Typography (use your current font if it already looks perfect) */
-h1,h2,h3{
-  margin:0 0 .6rem 0;
-  letter-spacing: -0.02em;
-}
-p{
-  margin:0 0 1rem 0;
-  color: var(--muted);
-  line-height: 1.65;
-}
-
-/* Layout shell */
-.wrap{
-  width:100%;
-  max-width: var(--max);
-  margin:0 auto;
-  padding: 0 var(--pad);
-}
-main{
-  padding: clamp(22px, 5vw, 64px) 0 80px;
+a{ color: inherit; text-decoration: none; }
+a:hover{ opacity: .92; }
+p{ margin: 0 0 1rem 0; line-height: 1.65; color: var(--fg-dim); }
+ul{ margin: 0; padding-left: 1.1rem; color: var(--fg-dim); }
+li{ margin: .35rem 0; }
+hr{
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 28px 0;
 }
 
-/* ---------------------------
-   EFFECT SYSTEM (THE FIX)
----------------------------- */
+::selection{ background: rgba(255,255,255,.14); }
 
-/* Ambient layers: grid + noise + vignette + spotlight */
+/* =========================
+   AMBIENT BACKGROUND LAYER
+   (depth without recoloring)
+   ========================= */
+
 .fx-stage{
   position: fixed;
   inset: 0;
@@ -70,64 +62,216 @@ main{
 }
 
 .fx-grid{
-  position:absolute; inset:-2px;
+  position:absolute;
+  inset:-2px;
   background:
     linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
-  background-size: 56px 56px;
-  opacity: .08;
-  mask-image: radial-gradient(circle at 50% 30%, black 0%, black 45%, transparent 72%);
+  background-size: 72px 72px;
+  opacity: .10;
+  mask-image: radial-gradient(circle at 50% 20%, black 0%, black 46%, transparent 76%);
 }
 
 .fx-noise{
-  position:absolute; inset:-20%;
-  opacity: .06;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+  position:absolute;
+  inset:-18%;
+  opacity: .055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
   transform: translateZ(0);
 }
 
 .fx-vignette{
-  position:absolute; inset:0;
-  background: radial-gradient(circle at 50% 20%, transparent 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.75) 100%);
-  opacity:.9;
+  position:absolute;
+  inset:0;
+  background: radial-gradient(circle at 50% 10%,
+    transparent 0%,
+    rgba(0,0,0,.28) 55%,
+    rgba(0,0,0,.70) 100%);
+  opacity: .95;
 }
 
 .fx-spotlight{
-  position:absolute; inset:-40%;
-  background: radial-gradient(circle at var(--mx, 50%) var(--my, 35%),
-    rgba(var(--accent), .16) 0%,
-    rgba(var(--accent2), .10) 18%,
-    rgba(255,255,255,.03) 32%,
-    transparent 55%);
-  filter: blur(10px);
-  opacity: .9;
+  position:absolute;
+  inset:-40%;
+  background: radial-gradient(circle at var(--mx) var(--my),
+    rgba(255,255,255,.10) 0%,
+    rgba(255,255,255,.06) 18%,
+    transparent 56%);
+  filter: blur(12px);
+  opacity: .80;
 }
 
-/* Content above effects */
-.site{
+/* Keep page content above effects */
+.site, header, main, footer{
   position: relative;
   z-index: 1;
 }
 
-/* Section styling without “boxes” */
-.section{
-  padding: clamp(18px, 3vw, 28px) 0;
-  border-top: 1px solid var(--hair);
+/* =========================
+   HEADER / NAV
+   ========================= */
+
+header{
+  padding: 18px var(--gutter);
+}
+
+.navbar{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  font-size: 14px;
+  letter-spacing: .20em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.88);
+  user-select:none;
+}
+
+.brand-mark{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.72);
+  box-shadow: 0 0 22px rgba(255,255,255,.18);
   position: relative;
 }
 
-.section:first-child{ border-top: 0; }
+.navlinks{
+  display:flex;
+  gap: 18px;
+  align-items:center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.navlinks a{
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.66);
+  padding: 10px 8px;
+  border-radius: 12px;
+  transition: background .25s var(--ease), color .25s var(--ease);
+}
+
+.navlinks a:hover{
+  color: rgba(255,255,255,.90);
+  background: rgba(255,255,255,.06);
+}
+
+/* Mobile: wrap nicely */
+@media (max-width: 820px){
+  .navbar{ align-items:flex-start; }
+  .navlinks{ gap: 8px; }
+}
+
+/* =========================
+   LAYOUT
+   ========================= */
+
+main{
+  padding: 22px var(--gutter) 52px var(--gutter);
+}
+
+.container{
+  max-width: var(--content-w);
+  margin: 0 auto;
+}
+
+.hero{
+  padding: 34px 0 12px 0;
+}
+
+.h-eyebrow{
+  font-size: 12px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.62);
+  margin-bottom: 14px;
+}
+
+h1{
+  margin: 0 0 10px 0;
+  font-weight: 500;
+  letter-spacing: .02em;
+  font-size: clamp(34px, 4.3vw, 56px);
+  line-height: 1.05;
+  color: rgba(255,255,255,.96);
+}
+
+.h-sub{
+  font-size: clamp(16px, 2vw, 20px);
+  line-height: 1.6;
+  color: rgba(255,255,255,.72);
+  max-width: 72ch;
+}
+
+/* =========================
+   TELEMETRY LINE + DOT
+   ========================= */
+
+.telemetry{
+  display:inline-flex;
+  align-items:center;
+  gap: 10px;
+  margin-top: 18px;
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.66);
+}
+
+.telemetry-dot{
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.78);
+  box-shadow: 0 0 16px rgba(255,255,255,.22);
+  position: relative;
+}
+
+.telemetry-dot::after{
+  content:"";
+  position:absolute;
+  inset:-12px;
+  border-radius:999px;
+  background: radial-gradient(circle, rgba(255,255,255,.18), transparent 60%);
+  filter: blur(7px);
+  animation: telePulse 2.6s var(--ease) infinite;
+}
+
+@keyframes telePulse{
+  0%,100%{ transform: scale(.85); opacity:.55; }
+  50%{ transform: scale(1.12); opacity:1; }
+}
+
+/* =========================
+   SECTIONS (NO BOX CARDS)
+   “inked” separators + glow
+   ========================= */
+
+.section{
+  padding: clamp(18px, 3vw, 30px) 0;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
 
 .section::before{
   content:"";
   position:absolute;
-  inset:-10px calc(-1 * var(--pad)) -10px calc(-1 * var(--pad));
-  border-radius: 28px;
+  inset:-12px -12px -12px -12px;
   opacity: 0;
-  background: radial-gradient(circle at 20% 20%,
-    rgba(var(--accent), .14),
-    transparent 55%);
-  transition: opacity .35s var(--ease);
+  background: radial-gradient(circle at 18% 18%,
+    rgba(255,255,255,.13),
+    transparent 62%);
+  transition: opacity .28s var(--ease);
+  border-radius: 26px;
 }
 
 .section:hover::before,
@@ -136,42 +280,35 @@ main{
   opacity: 1;
 }
 
-/* Subtitle highlight treatment */
 .kicker{
   display:inline-flex;
-  gap:.65rem;
   align-items:center;
-  font-size: .85rem;
-  letter-spacing:.14em;
+  gap:.65rem;
+  font-size: 12px;
+  letter-spacing: .20em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.70);
-  margin-bottom: .8rem;
+  color: rgba(255,255,255,.74);
+  margin: 0 0 14px 0;
 }
+
 .kicker::before{
   content:"";
   width: 18px;
   height: 1px;
-  background: rgba(var(--accent), .8);
-  box-shadow: 0 0 18px rgba(var(--accent), .35);
+  background: rgba(255,255,255,.60);
+  box-shadow: 0 0 18px rgba(255,255,255,.14);
 }
 
-/* Headline treatment */
-.hero-title{
-  font-size: clamp(36px, 5vw, 54px);
-  line-height: 1.03;
-  color: rgba(255,255,255,.92);
-}
-.hero-sub{
-  font-size: clamp(16px, 2vw, 18px);
-  max-width: 70ch;
-  margin-top: 1.1rem;
-}
+/* =========================
+   REVEAL ANIMATION
+   ========================= */
 
-/* Scroll reveal */
 .reveal{
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity .8s var(--ease), transform .8s var(--ease);
+  transform: translateY(10px);
+  transition:
+    opacity .85s var(--ease),
+    transform .85s var(--ease);
   will-change: opacity, transform;
 }
 .reveal.is-in{
@@ -179,42 +316,57 @@ main{
   transform: translateY(0);
 }
 
-/* “Typed” line (optional) */
-.type-line{
-  display:block;
-  white-space: nowrap;
-  overflow:hidden;
-  border-right: 1px solid rgba(255,255,255,.28);
-  width: 0;
-}
-.type-line.is-typed{
-  animation: typing var(--tDur, 1.6s) steps(var(--tSteps, 40), end) forwards,
-             caret 900ms steps(1,end) infinite;
-}
-@keyframes typing{ to{ width: 100%; } }
-@keyframes caret{ 50%{ border-color: transparent; } }
+/* =========================
+   FOOTER
+   ========================= */
 
-/* Footer / nav bar can stay minimal (not overtake space) */
-.footer{
-  margin-top: 64px;
-  padding-top: 18px;
-  border-top: 1px solid var(--hair);
+footer{
+  padding: 24px var(--gutter) 34px var(--gutter);
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.footer-inner{
+  max-width: var(--content-w);
+  margin: 0 auto;
   display:flex;
-  justify-content: space-between;
   align-items:center;
-  gap: 18px;
+  justify-content: space-between;
+  gap: 14px;
   flex-wrap: wrap;
-  color: rgba(255,255,255,.55);
-  font-size: .9rem;
 }
 
-a{ color: rgba(255,255,255,.78); text-decoration:none; }
-a:hover{ color: rgba(255,255,255,.92); }
+.legal{
+  font-size: 12px;
+  letter-spacing: .12em;
+  color: rgba(255,255,255,.55);
+  text-transform: uppercase;
+}
 
-/* Reduced motion */
+.footer-links{
+  display:flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.footer-links a{
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.58);
+  padding: 8px 10px;
+  border-radius: 12px;
+  transition: background .25s var(--ease), color .25s var(--ease);
+}
+.footer-links a:hover{
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.86);
+}
+
+/* =========================
+   ACCESSIBILITY / REDUCED MOTION
+   ========================= */
+
 @media (prefers-reduced-motion: reduce){
-  .reveal{ opacity:1; transform:none; }
-  .type-line{ border-right:0; width:auto; }
-  .type-line.is-typed{ animation:none; }
+  .reveal{ opacity:1; transform:none; transition:none; }
   .fx-spotlight{ display:none; }
+  .telemetry-dot::after{ animation:none; }
 }
