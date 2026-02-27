@@ -8,50 +8,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;900&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-start: #050505;
-            --bg-end: #0A1128;
-            --accent: #0057FF;
+            --bg: #050505;
+            --signal: #0057FF;
         }
 
-        /* SCROLL-DRIVEN BACKGROUND GRADIENT */
         body { 
-            background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
-            background-attachment: fixed;
+            background-color: var(--bg);
             color: #fff; 
             font-family: 'Inter', sans-serif; 
-            -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
         .mono { font-family: 'IBM Plex Mono', monospace; }
 
-        /* KINETIC TYPOGRAPHY */
-        .hero-title {
-            font-size: clamp(4rem, 15vw, 18rem);
-            font-weight: 900;
-            line-height: 0.8;
-            letter-spacing: -0.06em;
-            text-transform: uppercase;
-            font-style: italic;
-            transition: transform 0.1s ease-out;
+        /* THE ERASE EFFECT: Header scales and fades based on scroll */
+        #hero-container {
+            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+            will-change: transform, opacity;
         }
 
-        /* THE CONTROL HUB (The Navigation Fix) */
+        /* ILLUMINATED SUBTITLES */
+        .illuminate {
+            position: relative;
+            color: var(--signal);
+            text-shadow: 0 0 20px rgba(0, 87, 255, 0.4);
+            letter-spacing: 0.5em;
+        }
+
+        /* FLOATING CONTROL HUB (Navigation Fix) */
         .control-hub {
             position: fixed;
-            bottom: 2rem;
+            bottom: 2.5rem;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(10, 10, 10, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            padding: 0.75rem 2rem;
+            background: rgba(10, 10, 10, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(25px);
+            padding: 0.8rem 2.5rem;
             border-radius: 100px;
             display: flex;
-            gap: 2.5rem;
+            gap: 3rem;
             z-index: 1000;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
         }
 
         .nav-link {
@@ -59,138 +58,145 @@
             font-size: 10px;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: #666;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #555;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .nav-link:hover, .nav-link.active { 
-            color: var(--accent);
-            text-shadow: 0 0 15px rgba(0, 87, 255, 0.6);
+            color: #fff;
+            text-shadow: 0 0 10px #fff;
         }
 
-        /* SECTION REVEAL ANIMATION */
-        .reveal-section {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 1s ease-out;
-        }
-
-        .reveal-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* BRUTALIST GRID TEXTURE */
-        .grid-overlay {
+        /* ENGINEERING GRID */
+        .grid-bg {
             position: fixed;
             inset: 0;
-            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 0);
+            background-size: 40px 40px;
             pointer-events: none;
-            z-index: 1;
+            z-index: 0;
         }
 
-        .pillar-header {
-            border-bottom: 2px solid #fff;
-            padding-bottom: 1rem;
-            margin-bottom: 2rem;
+        .hero-title {
+            font-size: clamp(3rem, 12vw, 15rem);
+            font-weight: 900;
+            line-height: 0.85;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            font-style: italic;
         }
     </style>
 </head>
-<body class="pb-64">
+<body class="antialiased">
 
-    <div class="grid-overlay"></div>
+    <div class="grid-bg"></div>
 
-    <nav class="fixed top-0 left-0 w-full p-12 flex justify-between items-start z-[500] pointer-events-none">
+    <nav class="fixed top-0 left-0 w-full p-10 flex justify-between items-start z-[500] pointer-events-none">
         <div class="pointer-events-auto">
-            <span class="text-3xl font-black italic tracking-tighter uppercase">Nadir</span>
-            <div class="h-[1px] w-24 bg-blue-600 mt-2"></div>
+            <span class="text-2xl font-black italic tracking-tighter uppercase">Nadir</span>
+            <div class="h-1 w-12 bg-blue-600 mt-2"></div>
         </div>
-        <div class="mono text-[10px] text-gray-500 text-right uppercase tracking-[0.4em] opacity-50">
-            System_Live: Feb_2026<br>
-            Auth_Node: 09-X
+        <div class="mono text-[10px] text-gray-600 text-right uppercase tracking-[0.4em] opacity-50">
+            System_Status: Secure<br>
+            Rel: 2026.02.19
         </div>
     </nav>
 
-    <main class="relative z-10">
+    <main class="relative z-10 px-8 lg:px-24">
         
-        <section class="min-h-screen flex flex-col justify-center px-12 lg:px-24">
-            <div class="mono text-xs text-blue-500 font-bold mb-8 tracking-[0.6em] uppercase animate-pulse">
+        <section class="min-h-screen flex flex-col justify-center" id="hero-container">
+            <div class="illuminate mono text-[10px] font-black mb-12 uppercase">
                 [ Decentralized_Integrity_Layer ]
             </div>
+            
             <h1 class="hero-title mb-16">
-                Truth<br><span class="text-blue-600">Infrastructure.</span>
+                Go Beyond<br><span class="text-blue-600">Telemetry.</span>
             </h1>
-            <p class="text-4xl lg:text-5xl font-light text-gray-400 max-w-5xl leading-[1.1]">
-                NADIR is the decoupled integrity layer for autonomous systems—providing the <span class="text-white italic">forensic substrate</span> required for institutional machine trust.
-            </p>
+
+            <div class="max-w-5xl">
+                <p class="text-4xl lg:text-6xl font-black uppercase italic mb-12 leading-none">
+                    With Verifiable<br>Decision Records.
+                </p>
+                <p class="text-2xl lg:text-3xl font-light text-gray-400 leading-tight border-l-4 border-blue-600 pl-8">
+                    A decoupled evidentiary substrate producing cryptographically sealed inference artifacts <span class="text-white font-bold italic">without modifying core model logic.</span>
+                </p>
+            </div>
         </section>
 
         
 
-        <section class="reveal-section px-12 lg:px-24 py-40 grid grid-cols-1 md:grid-cols-12 gap-16" id="overview">
-            <div class="md:col-span-4">
-                <h2 class="mono text-[11px] font-black text-blue-500 uppercase tracking-[0.5em] mb-12 italic underline decoration-blue-900 underline-offset-8">I. Functional_Core</h2>
+        <section class="py-60 grid grid-cols-12 gap-12 border-t border-white/5">
+            <div class="col-span-12 lg:col-span-4">
+                <h2 class="illuminate mono text-[11px] font-black uppercase mb-12 italic">01_Functional_Overview</h2>
             </div>
-            <div class="md:col-span-8 space-y-24">
+            <div class="col-span-12 lg:col-span-8 space-y-32">
                 <div>
-                    <h3 class="text-5xl font-black uppercase italic mb-8">Interpretive logging is a liability.</h3>
-                    <p class="text-xl text-gray-400 leading-relaxed font-light">
-                        Current observability tools are interpretive and mutable. NADIR utilizes **cryptographic sealing** and **RFC 8785 canonicalization** to create non-repudiable records of decision-state. We don't just log; we provide proof.
+                    <h3 class="text-5xl font-black uppercase italic mb-8">Structural Independence.</h3>
+                    <p class="text-xl text-gray-400 font-light leading-relaxed">
+                        NADIR captures the scope of interaction at the inference boundary. Unlike standard logging, our artifacts enable **independent verification** of integrity without disclosing proprietary architecture or weights.
                     </p>
                 </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div class="border-l border-white/10 pl-8">
-                        <span class="mono text-[10px] text-gray-600 uppercase mb-4 block tracking-widest">Phase_01 // Capture</span>
-                        <p class="text-sm text-gray-400">Attach a deterministic audit tail to every inference session without sacrificing execution speed.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                    <div class="space-y-6">
+                        <span class="mono text-blue-500 text-[10px] font-black uppercase tracking-widest">// Phase_01: Capture</span>
+                        <p class="text-sm text-gray-500 leading-relaxed">Deterministic audit tails attached to every session. Capture context without latency or execution overhead.</p>
                     </div>
-                    <div class="border-l border-white/10 pl-8">
-                        <span class="mono text-[10px] text-gray-600 uppercase mb-4 block tracking-widest">Phase_02 // Seal</span>
-                        <p class="text-sm text-gray-400">Non-custodial signing via institutional HSM integration ensures the substrate remains neutral.</p>
+                    <div class="space-y-6">
+                        <span class="mono text-blue-500 text-[10px] font-black uppercase tracking-widest">// Phase_02: Seal</span>
+                        <p class="text-sm text-gray-500 leading-relaxed">Cryptographic permanence via RFC 8785 canonicalization. Non-custodial signing ensures institutional sovereignty.</p>
                     </div>
+                </div>
+
+                <div>
+                    <h3 class="text-5xl font-black uppercase italic mb-8">Non-Adjudication.</h3>
+                    <p class="text-xl text-gray-400 font-light leading-relaxed">
+                        NADIR does not determine legality, fairness, or correctness. It provides **integrity-sealed records** to the institutions that make those final determinations.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <section class="reveal-section py-60 px-12 lg:px-24 bg-white/5 border-y border-white/5">
-            <h2 class="mono text-xs text-center text-gray-500 mb-20 tracking-[1em] uppercase">Institutional_Mandate</h2>
-            <p class="text-[7vw] font-black leading-[0.9] italic uppercase text-center tracking-tighter">
-                Infrastructure <br>must reflect <br><span class="text-blue-600">Reality.</span>
-            </p>
-        </section>
-
+        <footer class="py-40 border-t border-white/5">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-12">
+                <div class="max-w-2xl">
+                    <p class="text-3xl font-black italic uppercase mb-8">Infrastructure must reflect reality.</p>
+                    <p class="mono text-[10px] text-gray-600 uppercase tracking-widest">
+                        © 2026 NADIR SYSTEMS. ALL RIGHTS RESERVED. <br>
+                        INTERNAL AUDIT STAL_04 // SECURE_DISTRIBUTION
+                    </p>
+                </div>
+                <div class="mono text-[9px] text-gray-800 text-right uppercase tracking-[0.4em]">
+                    Institutional_Position: Stable<br>
+                    Verification_Active
+                </div>
+            </div>
+        </footer>
     </main>
 
     <nav class="control-hub">
         <a href="index.html" class="nav-link active">Index</a>
-        <a href="architecture.html" class="nav-link">Arch</a>
+        <a href="architecture.html" class="nav-link">Architecture</a>
         <a href="trust.html" class="nav-link">Trust</a>
-        <a href="compliance.html" class="nav-link">Gov</a>
-        <a href="sitemap.html" class="nav-link">Docs</a>
+        <a href="compliance.html" class="nav-link">Compliance</a>
+        <a href="sitemap.html" class="nav-link">Directory</a>
     </nav>
 
     <script>
-        // REVEAL ANIMATION LOGIC
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal-section').forEach(section => {
-            observer.observe(section);
-        });
-
-        // PARALLAX HERO
+        // HEADER ERASE EFFECT
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero-title');
-            hero.style.transform = `translateY(${scrolled * 0.15}px)`;
+            const hero = document.getElementById('hero-container');
+            
+            // Calculate opacity: starts at 1, goes to 0 over 600px
+            const opacity = 1 - (scrolled / 600);
+            // Calculate scale: slightly shrinks as you scroll
+            const scale = 1 - (scrolled / 2000);
+            
+            if (scrolled <= 700) {
+                hero.style.opacity = opacity;
+                hero.style.transform = `scale(${scale}) translateY(${scrolled * 0.3}px)`;
+            }
         });
     </script>
 
