@@ -18,14 +18,12 @@
             color: var(--ivory); 
             font-family: 'Inter', sans-serif; 
             overflow-x: hidden;
-            line-height: 1.2;
-            /* Base font size for desktop readability */
+            line-height: 1.1; /* High-impact compression */
             font-size: 22px;
         }
 
         .mono { font-family: 'IBM Plex Mono', monospace; }
         
-        /* BRAND LOGO - STAYS FIXED AND CRISP */
         .brand-ceyo {
             font-weight: 900;
             text-transform: uppercase;
@@ -40,7 +38,7 @@
             z-index: 10000;
         }
 
-        /* HERO: THE MONUMENTAL STATEMENT */
+        /* HERO: MONUMENTAL SCALE */
         .hero-wrap { 
             min-height: 100vh; 
             display: flex; 
@@ -50,7 +48,6 @@
         }
         
         h1 {
-            /* This ensures it dominates desktop screens */
             font-size: clamp(4.5rem, 18vw, 22rem); 
             font-weight: 900;
             line-height: 0.75;
@@ -64,14 +61,14 @@
             font-weight: 300;
             color: rgba(255,255,240,0.5);
             max-width: 1400px;
-            margin-bottom: 2rem;
+            line-height: 1.1;
         }
 
-        /* DYNAMIC REVEAL (NO BLUR, SHARP TEXT) */
+        /* READABLE REVEAL: FADE ONLY */
         .scroll-reveal {
-            transition: opacity 1s ease-out, transform 1s ease-out;
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
             opacity: 0;
-            transform: translateY(60px);
+            transform: translateY(40px);
             will-change: opacity, transform;
         }
         .scroll-reveal.visible {
@@ -81,7 +78,7 @@
 
         .content-section {
             padding: 20vh 6%;
-            max-width: 2200px; /* Expands for Desktop */
+            max-width: 2200px;
             margin: 0 auto;
         }
 
@@ -93,11 +90,19 @@
             letter-spacing: -0.05em;
         }
 
-        /* GRID: SCALES FROM 1 TO 3 COLUMNS BASED ON DEVICE */
+        .body-text {
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            font-weight: 300;
+            line-height: 1.2;
+            color: rgba(255,255,240,0.7);
+            max-width: 1800px;
+            margin-bottom: 4rem;
+        }
+
         .info-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 8rem;
+            gap: 6rem;
         }
 
         .card {
@@ -105,6 +110,8 @@
             padding: 1rem 0 1rem 3.5rem;
         }
         .card p { font-size: 1.5rem; color: rgba(255,255,240,0.6); line-height: 1.4; }
+
+        .divider { height: 1px; background: rgba(255,255,240,0.1); margin: 6rem 0; }
 
         /* NAVIGATION PILL */
         .control-hub {
@@ -115,18 +122,13 @@
             border-radius: 100px;
             padding: 18px 50px; display: flex; gap: 40px; z-index: 9999;
         }
-        .nav-link { font-family: 'IBM Plex Mono'; font-size: 14px; color: rgba(255,255,240,0.4); text-transform: uppercase; letter-spacing: 0.3em; }
+        .nav-link { font-family: 'IBM Plex Mono'; font-size: 14px; color: rgba(255,255,240,0.4); text-transform: uppercase; letter-spacing: 0.3em; transition: 0.3s; }
         .nav-link.active, .nav-link:hover { color: var(--ivory); }
 
-        .cursor { border-left: 4px solid var(--tactical-green); margin-left: 8px; animation: blink 0.8s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        /* MOBILE ADJUSTMENTS */
         @media (max-width: 1024px) {
             .info-grid { grid-template-columns: 1fr; gap: 4rem; }
             h1 { font-size: 18vw; }
             .content-section { padding: 10vh 6%; }
-            .card { padding-left: 2rem; }
         }
     </style>
 </head>
@@ -140,12 +142,9 @@
     <main>
         <div class="hero-wrap">
             <section>
-                <div class="mono text-[14px] text-[#4A5D3B] mb-10 tracking-[0.8em] font-bold">PROTOCOL_LAYER</div>
+                <div class="mono text-[14px] text-[#4A5D3B] mb-10 tracking-[0.8em] font-bold uppercase">Institutional Substrate</div>
                 <h1>Go Beyond<br>Telemetry.</h1>
-                <p class="hero-sub">Verifiable Decision Records for the Institutional Era.</p>
-                <div class="text-2xl lg:text-4xl font-light text-white/30 max-w-5xl leading-snug">
-                    <span class="typewriter" data-text="A decoupled evidentiary substrate producing cryptographically sealed inference artifacts without modifying core model weights."></span><span class="cursor"></span>
-                </div>
+                <p class="hero-sub">CEYO is a decoupled evidentiary layer that produces policy-scoped decision context.</p>
             </section>
         </div>
 
@@ -153,23 +152,22 @@
 
         <section class="content-section scroll-reveal">
             <h2 class="section-title">Evidentiary Infrastructure</h2>
-            <div class="info-grid mb-32">
-                <p class="text-3xl lg:text-6xl text-white/80 font-light leading-tight">
-                    Infrastructure produces logs never designed to function as <span class="text-white font-bold italic underline decoration-[#4A5D3B]">durable evidence.</span>
-                </p>
-                <p class="text-2xl lg:text-4xl text-white/20 italic font-light flex items-end">
-                    "Telemetry describes activity. It does not preserve proof."
-                </p>
+            <div class="body-text">
+                AI systems influence decisions in regulated, safety-critical environments. Infrastructure produces logs never designed to function as <span class="text-white font-bold italic">durable evidence.</span>
             </div>
+            
+            <p class="text-3xl lg:text-6xl text-[#4A5D3B] font-bold italic mb-20">
+                Telemetry describes activity. It does not preserve proof.
+            </p>
 
             <div class="info-grid">
                 <div class="card">
-                    <div class="mono text-[12px] text-[#4A5D3B] mb-6 tracking-widest font-bold uppercase">// 01_DETERMINISTIC_SEAL</div>
-                    <p>Artifacts are cryptographically sealed at the moment of inference, ensuring absolute tamper-evidence.</p>
+                    <div class="mono text-[12px] text-white/40 mb-6 tracking-widest uppercase">// 01_DISCLOSURE</div>
+                    <p>Tiered disclosure enables validation without exposure of proprietary internal model weights or implementation details.</p>
                 </div>
                 <div class="card">
-                    <div class="mono text-[12px] text-[#4A5D3B] mb-6 tracking-widest font-bold uppercase">// 02_TIERED_DISCLOSURE</div>
-                    <p>Prove integrity to regulators without exposing proprietary internal model logic or weights.</p>
+                    <div class="mono text-[12px] text-white/40 mb-6 tracking-widest uppercase">// 02_AVAILABILITY</div>
+                    <p>Fail-open posture preserves inference continuity unless configured otherwise. Availability remains an institutional decision.</p>
                 </div>
             </div>
         </section>
@@ -178,24 +176,51 @@
 
         <section class="content-section scroll-reveal">
             <h2 class="section-title">The Accountability Gap</h2>
-            <p class="text-4xl lg:text-8xl font-light text-white/40 mb-20 leading-tight max-w-full">
-                Log reconstruction is <span class="text-white">interpretive.</span><br>
-                CEYO artifacts are <span class="text-white font-bold">deterministic.</span>
-            </p>
-            <div class="flex flex-wrap gap-20 mono text-[16px] text-white/20 uppercase tracking-[0.6em]">
-                <span>• Canonical Structure</span>
-                <span>• Explicit Scope</span>
-                <span>• Verifiable Provenance</span>
+            <div class="body-text">
+                When a decision is questioned, organizations reconstruct events from partial logs. <span class="text-white">Reconstruction is interpretive. It is not deterministic.</span>
+            </div>
+            
+            <div class="info-grid mt-20">
+                <div class="text-2xl lg:text-4xl text-white/40 leading-tight">
+                    Institutions require artifacts that are:<br>
+                    <span class="text-white">• Canonical in structure</span><br>
+                    <span class="text-white">• Explicit in capture scope</span><br>
+                    <span class="text-white">• Cryptographically sealed</span>
+                </div>
+                <p class="text-2xl lg:text-4xl text-[#4A5D3B] font-bold italic flex items-end">
+                    This is an architectural deficit, not an operational oversight.
+                </p>
             </div>
         </section>
 
+        
+
+        <section class="content-section scroll-reveal">
+            <h2 class="section-title">A Decoupled Layer</h2>
+            <div class="body-text">
+                CEYO operates beside inference engines. It does not modify weights. It does not intervene in logic. It captures only what policy defines and normalizes it into a stable, tamper-evident schema.
+            </div>
+            <div class="divider"></div>
+            <h3 class="text-3xl lg:text-5xl font-bold uppercase mb-10">Constrained Disclosure</h3>
+            <p class="text-2xl lg:text-4xl text-white/50 max-w-5xl leading-tight">
+                Policy defines inclusion, exclusion, and masking rules before artifact generation. Disclosure boundaries are explicit rather than implied.
+            </p>
+        </section>
+
         <section class="content-section scroll-reveal" style="background: rgba(255,255,240,0.03); border-top: 1px solid rgba(255,255,240,0.1);">
-            <div class="mono text-[14px] text-[#4A5D3B] mb-12 tracking-[0.8em] font-bold uppercase">// INSTITUTIONAL_BOUNDARY</div>
-            <h2 class="section-title">The Final Record</h2>
-            <div class="max-w-7xl">
-                <p class="text-3xl lg:text-6xl text-white font-light leading-tight">
-                    CEYO does not evaluate outputs. We produce the <span class="italic text-[#4A5D3B] font-bold">record.</span> Authorized institutions provide the oversight.
-                </p>
+            <h2 class="section-title" style="color: var(--tactical-green);">Institutional Position</h2>
+            
+            <div class="info-grid">
+                <div class="card" style="border-color: var(--ivory);">
+                    <div class="mono text-[12px] text-white/40 mb-6 tracking-widest font-bold uppercase">// 03_BOUNDARY</div>
+                    <p class="text-2xl lg:text-5xl text-white font-light leading-tight">
+                        CEYO does not evaluate outputs. CEYO does not adjudicate compliance. <span class="italic font-bold text-white">CEYO produces records.</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="body-text mt-20" style="color: var(--ivory);">
+                Authorized institutions retain responsibility for determinations. CEYO provides the record; institutions provide oversight.
             </div>
         </section>
 
@@ -213,25 +238,11 @@
     </nav>
 
     <script>
-        function typeWriter(el) {
-            const text = el.getAttribute('data-text');
-            el.innerHTML = ''; let i = 0;
-            const timer = setInterval(() => {
-                if (i < text.length) { el.innerHTML += text.charAt(i); i++; }
-                else { clearInterval(timer); }
-            }, 30);
-        }
-
-        // SMOOTH INTERSECTION REVEAL
         const observer = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
                     e.target.classList.add("visible");
-                    e.target.querySelectorAll('.typewriter').forEach(w => {
-                        if (!w.classList.contains('typed')) { typeWriter(w); w.classList.add('typed'); }
-                    });
                 } else {
-                    // This creates the "hide as I scroll away" effect
                     e.target.classList.remove("visible");
                 }
             });
