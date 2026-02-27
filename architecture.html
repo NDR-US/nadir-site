@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture | NADIR</title>
+    <meta property="og:title" content="Architecture | NADIR">
+    <meta property="og:description" content="Technical specifications for NADIR’s decoupled verification substrate and non-custodial key architecture.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #1A1A1A; }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+        .tech-box { background-color: #050505; color: #00FF41; padding: 2rem; border-left: 4px solid #00FF41; }
+    </style>
+</head>
+<body>
+    <nav class="border-b border-black p-6 bg-white sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center text-sm uppercase font-semibold">
+            <a href="index.html">NADIR</a>
+            <div class="space-x-8">
+                <a href="index.html">Overview</a>
+                <a href="architecture.html" class="border-b-2 border-black">Architecture</a>
+                <a href="portal.html">Oversight</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto py-20 px-6">
+        <h1 class="text-5xl font-bold tracking-tighter mb-12">DECOUPLED VERIFICATION ARCHITECTURE</h1>
+
+        <section class="space-y-8 text-lg">
+            <p class="italic text-gray-600">NADIR is designed as a verification substrate that operates beside AI inference systems without modifying model weights or core decision logic.</p>
+            
+            <h2 class="text-2xl font-bold border-b border-black pb-2">Attachment at the Boundary</h2>
+            <p>Integration occurs at the inference boundary via sidecar, gateway, or API wrapper. This posture allows NADIR to observe defined events and produce deterministic artifacts without modifying model internals or mutating training pipelines.</p>
+
+            <div class="tech-box mono text-sm leading-relaxed">
+                <p class="mb-4 text-white font-bold tracking-widest uppercase underline">// Technical Verification Protocol</p>
+                <p>1. CAPTURE: Policy-scoped context normalized into stable schema.</p>
+                <p>2. CANONICALIZE: RFC 8785 (JSON Canonicalization Scheme) applied.</p>
+                <p>3. HASH: SHA-256 integrity digest computed.</p>
+                <p>4. SEAL: ECDSA (P-256) digital signature applied via HSM/KMS.</p>
+            </div>
+
+            <h2 class="text-2xl font-bold border-b border-black pb-2 mt-12">Non-Custodial Key Architecture</h2>
+            <p>Signing keys are generated and retained within client-controlled environments (HSM, KMS, or TEE). NADIR does not possess, transmit, or store private signing keys. Artifact authenticity remains anchored to the deploying institution.</p>
+        </section>
+
+        
+
+        <footer class="mt-20 p-8 border border-gray-400 bg-gray-50">
+            <p class="text-xs mono uppercase text-gray-500 font-bold mb-2">Architectural Position</p>
+            <p class="text-sm text-gray-700 leading-snug">
+                NADIR is a verification substrate. It does not validate output correctness or certify compliance. Verification confirms integrity and provenance under declared policy. It provides deterministic artifacts; institutions determine their meaning.
+            </p>
+        </footer>
+    </main>
+</body>
+</html>
