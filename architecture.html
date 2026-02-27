@@ -3,59 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Architecture | NADIR</title>
-    <meta property="og:title" content="Architecture | NADIR">
-    <meta property="og:description" content="Technical specifications for NADIR’s decoupled verification substrate and non-custodial key architecture.">
+    <title>Architecture | NADIR Substrate</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="app/css/global.css">
+    
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #1A1A1A; }
+        :root {
+            /* AIP Palette: Slate, Steel, and Indium Blue */
+            --steel-950: #0f172a;
+            --steel-800: #1e293b;
+            --indium-blue: #6366f1;
+        }
+
+        body {
+            background-color: #0f1115; /* Steel-wash background */
+            color: #f1f5f9;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Staggered Reveal */
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal { animation: reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+
         .mono { font-family: 'IBM Plex Mono', monospace; }
-        .tech-box { background-color: #050505; color: #00FF41; padding: 2rem; border-left: 4px solid #00FF41; }
+        
+        /* High-Density Grid Lines */
+        .tech-grid {
+            background-image: linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .indium-border {
+            border-left: 1px solid var(--indium-blue);
+        }
     </style>
 </head>
-<body>
-    <nav class="border-b border-black p-6 bg-white sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto flex justify-between items-center text-sm uppercase font-semibold">
-            <a href="index.html">NADIR</a>
-            <div class="space-x-8">
-                <a href="index.html">Overview</a>
-                <a href="architecture.html" class="border-b-2 border-black">Architecture</a>
-                <a href="portal.html">Oversight</a>
-                <a href="contact.html">Contact</a>
+<body class="min-h-screen">
+
+    <nav id="institutional-nav"></nav>
+
+    <main class="max-w-7xl mx-auto py-32 px-8">
+        
+        <header class="mb-40 max-w-5xl">
+            <div class="reveal mono text-[11px] text-indigo-400 tracking-[0.3em] mb-8 uppercase">
+                [ ARCHITECTURAL SPECIFICATION // REV_02.26 ]
             </div>
-        </div>
-    </nav>
+            <h1 class="reveal delay-1 text-7xl font-extrabold tracking-tighter mb-12 uppercase leading-[0.9]">
+                Decoupled<br>
+                <span class="text-indigo-500">Verification Substrate.</span>
+            </h1>
+            <p class="reveal delay-2 text-2xl font-light text-slate-400 max-w-3xl leading-relaxed">
+                A non-intrusive evidentiary layer that operates alongside inference cycles, producing immutable decision-state records without mutating the core model logic.
+            </p>
+        </header>
 
-    <main class="max-w-4xl mx-auto py-20 px-6">
-        <h1 class="text-5xl font-bold tracking-tighter mb-12">DECOUPLED VERIFICATION ARCHITECTURE</h1>
-
-        <section class="space-y-8 text-lg">
-            <p class="italic text-gray-600">NADIR is designed as a verification substrate that operates beside AI inference systems without modifying model weights or core decision logic.</p>
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-24 mb-40">
             
-            <h2 class="text-2xl font-bold border-b border-black pb-2">Attachment at the Boundary</h2>
-            <p>Integration occurs at the inference boundary via sidecar, gateway, or API wrapper. This posture allows NADIR to observe defined events and produce deterministic artifacts without modifying model internals or mutating training pipelines.</p>
+            <div class="lg:col-span-7 space-y-16">
+                <div class="indium-border pl-8">
+                    <h2 class="text-sm mono uppercase tracking-widest text-white mb-6">01. Boundary Attachment</h2>
+                    <p class="text-xl font-light leading-relaxed text-slate-300">
+                        Integration occurs at the inference boundary via <span class="text-white font-medium">sidecar, gateway, or API wrapper</span>. This ensures NADIR observes events without modifying weights or training pipelines.
+                    </p>
+                </div>
 
-            <div class="tech-box mono text-sm leading-relaxed">
-                <p class="mb-4 text-white font-bold tracking-widest uppercase underline">// Technical Verification Protocol</p>
-                <p>1. CAPTURE: Policy-scoped context normalized into stable schema.</p>
-                <p>2. CANONICALIZE: RFC 8785 (JSON Canonicalization Scheme) applied.</p>
-                <p>3. HASH: SHA-256 integrity digest computed.</p>
-                <p>4. SEAL: ECDSA (P-256) digital signature applied via HSM/KMS.</p>
+                <div class="indium-border pl-8">
+                    <h2 class="text-sm mono uppercase tracking-widest text-white mb-6">02. Non-Custodial Security</h2>
+                    <p class="text-xl font-light leading-relaxed text-slate-300">
+                        Signing keys are generated and retained within <span class="text-white font-medium">client-controlled environments</span> (HSM or TEE). NADIR never possesses or transmits private keys.
+                    </p>
+                </div>
             </div>
 
-            <h2 class="text-2xl font-bold border-b border-black pb-2 mt-12">Non-Custodial Key Architecture</h2>
-            <p>Signing keys are generated and retained within client-controlled environments (HSM, KMS, or TEE). NADIR does not possess, transmit, or store private signing keys. Artifact authenticity remains anchored to the deploying institution.</p>
+            <div class="lg:col-span-5 bg-slate-900/40 border border-white/5 p-12 backdrop-blur-xl relative overflow-hidden">
+                <div class="tech-grid absolute inset-0 opacity-20"></div>
+                <div class="relative z-10">
+                    <h3 class="mono text-[10px] font-bold text-indigo-400 mb-12 tracking-widest uppercase italic">// Protocol_Execution_Stack</h3>
+                    
+                    <div class="space-y-10">
+                        <div class="group">
+                            <span class="mono text-[10px] text-slate-500 block mb-2">PHASE_01</span>
+                            <span class="text-sm font-bold text-white uppercase tracking-wider group-hover:text-indigo-400 transition-colors">Capture & Normalize</span>
+                        </div>
+                        <div class="group">
+                            <span class="mono text-[10px] text-slate-500 block mb-2">PHASE_02</span>
+                            <span class="text-sm font-bold text-white uppercase tracking-wider">Canonicalize (RFC 8785)</span>
+                        </div>
+                        <div class="group">
+                            <span class="mono text-[10px] text-slate-500 block mb-2">PHASE_03</span>
+                            <span class="text-sm font-bold text-white uppercase tracking-wider">Hash (SHA-256)</span>
+                        </div>
+                        <div class="group">
+                            <span class="mono text-[10px] text-slate-500 block mb-2">PHASE_04</span>
+                            <span class="text-sm font-bold text-white uppercase tracking-wider">Seal (ECDSA P-256)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         
 
-        <footer class="mt-20 p-8 border border-gray-400 bg-gray-50">
-            <p class="text-xs mono uppercase text-gray-500 font-bold mb-2">Architectural Position</p>
-            <p class="text-sm text-gray-700 leading-snug">
-                NADIR is a verification substrate. It does not validate output correctness or certify compliance. Verification confirms integrity and provenance under declared policy. It provides deterministic artifacts; institutions determine their meaning.
+        <section class="max-w-4xl py-24 border-t border-white/10">
+            <h2 class="text-xs mono font-black text-indigo-500 uppercase mb-8 tracking-[0.4em]">Architectural Position</h2>
+            <p class="text-3xl font-light leading-tight text-slate-200 italic">
+                Verification confirms integrity and provenance under declared policy. It provides deterministic artifacts; <span class="text-white font-bold">institutions determine their meaning.</span>
             </p>
-        </footer>
+        </section>
+
     </main>
+
+    <footer class="py-12 border-t border-white/5 bg-black/20">
+        <div class="max-w-7xl mx-auto px-8 flex justify-between items-center mono text-[9px] text-slate-600 uppercase tracking-widest">
+            <span>Substrate_Auth_Active</span>
+            <span>NADIR_SYSTEMS // 2026</span>
+        </div>
+    </footer>
+
+    <script src="app/js/nav.js"></script>
 </body>
 </html>
