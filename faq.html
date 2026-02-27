@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | NADIR Technical Defense</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;900&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #fff; }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+        .faq-card { border-left: 1px solid #333; padding-left: 2rem; margin-bottom: 5rem; }
+        .question { font-size: 1.5rem; font-weight: 900; text-transform: uppercase; font-style: italic; margin-bottom: 1.5rem; }
+    </style>
+</head>
+<body>
+    <nav class="p-8 mono text-[10px] text-gray-500 uppercase tracking-widest flex justify-between">
+        <span>Substrate_QA // 2026</span>
+        <a href="sitemap.html" class="text-white border-b border-white">Return_to_Index</a>
+    </nav>
+
+    <main class="max-w-4xl mx-auto py-24 px-8">
+        <header class="mb-32">
+            <h1 class="text-8xl font-black tracking-tighter uppercase italic italic italic">FAQ.</h1>
+            <p class="text-blue-500 mono text-sm mt-4 font-bold tracking-[0.2em] uppercase italic underline underline-offset-8 decoration-blue-800">Addressing Architectural Skepticism</p>
+        </header>
+
+        <section>
+            <div class="faq-card">
+                <h2 class="question text-blue-500">How does NADIR differ from standard observability logging?</h2>
+                <p class="text-gray-400 leading-relaxed italic">
+                    Standard logging is interpretive and mutable. NADIR is <span class="text-white font-bold">forensic</span>. By applying RFC 8785 canonicalization and cryptographic sealing at the moment of inference, we produce an immutable artifact that cannot be altered retroactively. We do not monitor performance; we prove intent.
+                </p>
+            </div>
+
+            <div class="faq-card">
+                <h2 class="question text-blue-500">Does NADIR introduce significant latency to the model?</h2>
+                <p class="text-gray-400 leading-relaxed italic">
+                    No. The NADIR sidecar is designed for high-concurrency environments. Performance benchmarks confirm a latency overhead of <span class="text-white font-bold">&lt;1.5%</span>. In "fail-open" configurations, the inference service proceeds regardless of the integrity layer's status to ensure zero downtime.
+                </p>
+            </div>
+
+            
+
+            <div class="faq-card">
+                <h2 class="question text-blue-500">Can NADIR "fix" biased or incorrect AI outputs?</h2>
+                <p class="text-gray-400 leading-relaxed italic">
+                    No. Our posture is one of <span class="text-white font-bold">Non-Adjudication</span>. NADIR does not intervene in model logic or correct outputs. Our ethical duty is to provide an honest, unalterable record so that human institutions can perform the necessary adjudication.
+                </p>
+            </div>
+
+            <div class="faq-card">
+                <h2 class="question text-blue-500">What happens if we lose our private keys?</h2>
+                <p class="text-gray-400 leading-relaxed italic">
+                    Because NADIR is non-custodial, we do not store or manage your private keys. Loss of keys results in the permanent inability to verify artifacts or unlock tiered content. We recommend integration with institutional HSMs.
+                </p>
+            </div>
+        </section>
+
+        <footer class="mt-40 p-12 border border-white/10 bg-white/5 text-center">
+            <p class="mono text-xs uppercase tracking-widest text-gray-500 italic">Technical Desk Contact</p>
+            <p class="text-xl font-black mt-2 italic italic">engineering@nadir.systems</p>
+        </footer>
+    </main>
+</body>
+</html>
