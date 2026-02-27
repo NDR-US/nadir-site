@@ -1,167 +1,369 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NADIR // Trust Infrastructure</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
-    <style>
-        :root { --bg: #050505; --accent: #0057FF; --dim: #111; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: #FFF; overflow-x: hidden; }
-        .mono { font-family: 'IBM Plex Mono', monospace; }
-        
-        /* 1. THE GRID SYSTEM (Adds "Expensive" Texture) */
-        .substrate-grid {
-            background-image: radial-gradient(circle at 2px 2px, #1a1a1a 1px, transparent 0);
-            background-size: 40px 40px;
-        }
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>CEYO — Trust Infrastructure & Legal Admissibility</title>
+  <meta name="description" content="CEYO trust infrastructure: cryptographic sealing, non-custodial keys, legal admissibility primer, regulatory crosswalk, and vulnerability disclosure posture."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+:root{--bg:#0D0E0B;--ivory:#FFFFF0;--green:#4A5D3B;--green2:#5E7A4A;--text:rgba(255,255,240,.88);--muted:rgba(255,255,240,.52);--muted2:rgba(255,255,240,.30);--stroke:rgba(255,255,240,.12);--stroke2:rgba(255,255,240,.06);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;overflow-x:hidden;cursor:none;}
+body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.04;}
+a{color:inherit;text-decoration:none;}
+#cursor{position:fixed;top:0;left:0;z-index:9999;width:8px;height:8px;background:var(--ivory);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .12s,height .12s;mix-blend-mode:exclusion;}
+#cursor.hover{width:32px;height:32px;opacity:.5;}
+#spotlight{position:fixed;inset:0;z-index:1;pointer-events:none;}
+.topnav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;background:linear-gradient(to bottom,rgba(13,14,11,.95) 0%,transparent 100%);}
+.brand{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:22px;letter-spacing:-.03em;color:var(--ivory);text-transform:uppercase;}
+.brand span{color:var(--green2);}
+.topnav-right{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted2);display:flex;gap:28px;}
+.topnav-right a{color:var(--muted2);transition:color .12s;}
+.topnav-right a:hover,.topnav-right a.active{color:var(--ivory);}
+.index-bar{position:fixed;bottom:0;left:0;right:0;z-index:500;display:flex;height:44px;background:#000;border-top:1px solid var(--stroke);}
+.index-item{flex:1;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted2);border-right:1px solid var(--stroke);transition:color .12s,background .12s;}
+.index-item:last-child{border-right:none;}
+.index-item:hover,.index-item.active{color:var(--ivory);background:rgba(255,255,240,.04);}
 
-        /* 2. PERSISTENT SIDEBAR */
-        .command-sidebar {
-            width: 280px;
-            border-right: 1px solid #1a1a1a;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background: rgba(5,5,5,0.8);
-            backdrop-filter: blur(20px);
-            z-index: 100;
-        }
+/* TRUST PAGE — unique: split-screen hero, then accordion + table layout */
+.trust-hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;}
+.trust-hero-left{background:var(–bg);display:flex;flex-direction:column;justify-content:flex-end;padding:100px 40px 80px;border-right:1px solid var(–stroke);}
+.trust-hero-right{background:rgba(74,93,59,.04);display:flex;flex-direction:column;justify-content:center;padding:100px 40px 80px;position:relative;overflow:hidden;}
+.trust-hero-right::before{content:’’;position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(255,255,240,.03) 59px,rgba(255,255,240,.03) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(255,255,240,.03) 59px,rgba(255,255,240,.03) 60px);}
+.trust-eyebrow{font-family:‘IBM Plex Mono’,monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(–green);margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.trust-eyebrow::before{content:’’;width:28px;height:1px;background:var(–green);}
+.trust-h1{font-family:‘Outfit’,sans-serif;font-weight:900;font-style:italic;font-size:clamp(40px,6.5vw,84px);letter-spacing:-.05em;line-height:.92;text-transform:uppercase;color:var(–ivory);margin-bottom:28px;}
+.trust-h1 .accent{color:var(–green2);}
+.trust-lead{font-size:15px;line-height:1.75;color:var(–muted);max-width:44ch;}
+.trust-index{position:relative;z-index:1;}
+.trust-index-title{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(–muted2);margin-bottom:20px;}
+.trust-index-list{display:flex;flex-direction:column;gap:2px;}
+.til{display:flex;align-items:center;gap:14px;padding:12px 16px;border:1px solid var(–stroke2);background:rgba(255,255,240,.02);cursor:pointer;transition:all .15s;text-decoration:none;}
+.til:hover{border-color:var(–stroke);background:rgba(255,255,240,.04);}
+.til-num{font-family:‘IBM Plex Mono’,monospace;font-size:9px;color:var(–green);flex-shrink:0;}
+.til-label{font-size:12px;color:var(–muted);transition:color .12s;}
+.til:hover .til-label{color:var(–ivory);}
+.til-arrow{margin-left:auto;font-size:10px;color:var(–muted2);}
 
-        /* 3. SCROLLABLE CONTENT AREA */
-        .content-deck { margin-left: 280px; width: calc(100% - 280px); }
+/* Trust content sections */
+.trust-content{background:var(–bg);padding-bottom:80px;}
+.tsec{padding:64px 40px;border-top:1px solid var(–stroke2);max-width:1160px;margin:0 auto;opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease,border-top-color .4s ease,background .4s ease;}
+.tsec.visible{opacity:1;transform:translateY(0);}
+.tsec.focus{border-top-color:var(–ivory);background:rgba(255,255,240,.012);}
+.tsec-label{font-family:‘IBM Plex Mono’,monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(–green);margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.tsec-label::after{content:’’;flex:1;height:1px;background:linear-gradient(to right,var(–green),transparent);max-width:100px;}
+.tsec-h2{font-family:‘Outfit’,sans-serif;font-weight:900;font-style:italic;font-size:clamp(26px,4vw,48px);letter-spacing:-.04em;line-height:1.0;text-transform:uppercase;color:var(–ivory);margin-bottom:20px;}
+.tsec-body{font-size:15px;line-height:1.8;color:var(–muted);max-width:64ch;margin-bottom:14px;}
 
-        /* 4. ACTIVE GLOW SQUARES */
-        .status-pulse {
-            width: 8px; height: 8px; background: var(--accent);
-            box-shadow: 0 0 15px var(--accent);
-            border-radius: 50%; display: inline-block;
-        }
+/* Key custody — 3-column */
+.custody-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(–stroke);background:var(–stroke);margin-top:32px;}
+.custody-col{background:var(–bg);padding:24px 20px;position:relative;overflow:hidden;transition:background .15s;}
+.custody-col:hover{background:rgba(255,255,240,.02);}
+.custody-col::before{content:’’;position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(–green),transparent);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.custody-col:hover::before{transform:scaleX(1);}
+.custody-col-label{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:.20em;text-transform:uppercase;color:var(–green);margin-bottom:10px;}
+.custody-col-title{font-size:14px;font-weight:600;color:var(–ivory);margin-bottom:8px;}
+.custody-col-body{font-size:12px;color:var(–muted2);line-height:1.65;}
 
-        .nav-item {
-            padding: 1rem 1.5rem; border-bottom: 1px solid #111;
-            transition: all 0.3s; color: #555; font-size: 11px;
-        }
-        .nav-item:hover { background: #0A0A0A; color: #FFF; border-left: 3px solid var(--accent); }
-        .nav-active { color: #FFF; border-left: 3px solid var(--accent); background: #0A0A0A; }
-    </style>
+/* Admissibility pillars */
+.admiss-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-top:0;}
+.admiss-body{max-width:54ch;}
+.admiss-pillars{display:flex;flex-direction:column;gap:0;border:1px solid var(–stroke);}
+.pillar{padding:18px 20px;border-bottom:1px solid var(–stroke2);transition:background .15s;}
+.pillar:last-child{border-bottom:none;}
+.pillar:hover{background:rgba(255,255,240,.025);}
+.pillar-label{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(–green);margin-bottom:6px;}
+.pillar-title{font-size:13px;font-weight:600;color:var(–ivory);margin-bottom:4px;}
+.pillar-desc{font-size:12px;color:var(–muted2);line-height:1.6;}
+
+/* Regulatory crosswalk table */
+.reg-table{width:100%;border-collapse:collapse;margin-top:28px;}
+.reg-table th{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(–muted2);padding:10px 16px;text-align:left;border-bottom:1px solid var(–stroke);}
+.reg-table td{font-size:13px;color:var(–muted);padding:14px 16px;vertical-align:top;border-bottom:1px solid var(–stroke2);line-height:1.6;}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table tr:hover td{background:rgba(255,255,240,.018);}
+.reg-badge{display:inline-block;font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border:1px solid var(–stroke);color:var(–muted2);}
+.reg-badge.green{border-color:rgba(74,93,59,.5);color:var(–green2);background:rgba(74,93,59,.08);}
+
+/* Trust cards row */
+.trust-card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(–stroke);background:var(–stroke);margin-top:28px;}
+.trust-card{background:var(–bg);padding:22px 20px;transition:background .15s;}
+.trust-card:hover{background:rgba(255,255,240,.025);}
+.tc-label{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:.20em;text-transform:uppercase;color:var(–green);margin-bottom:8px;}
+.tc-title{font-size:13px;font-weight:600;color:var(–ivory);margin-bottom:6px;}
+.tc-body{font-size:12px;color:var(–muted2);line-height:1.6;}
+.tc-link{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(–green);border-bottom:1px solid rgba(74,93,59,.4);}
+
+/* Boundary */
+.boundary-section{max-width:1160px;margin:0 auto;padding:0 40px 80px;}
+.boundary-wrap{border:1px solid var(–stroke);padding:28px 32px;background:rgba(255,255,240,.015);}
+.boundary-lbl{font-family:‘IBM Plex Mono’,monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(–muted2);margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+.boundary-lbl::before{content:’’;width:20px;height:1px;background:var(–muted2);}
+.boundary-items{display:grid;grid-template-columns:1fr 1fr;gap:10px 40px;}
+.bi{font-size:12px;color:var(–muted2);line-height:1.65;padding-left:16px;position:relative;}
+.bi::before{content:’·’;position:absolute;left:0;}
+.boundary-close{margin-top:20px;padding-top:20px;border-top:1px solid var(–stroke2);font-family:‘IBM Plex Mono’,monospace;font-size:11px;letter-spacing:.08em;color:var(–muted2);}
+@keyframes cursor-blink{0%,100%{opacity:1}50%{opacity:0}}
+.typewrite-cursor::after{content:’|’;animation:cursor-blink .7s ease-in-out infinite;color:var(–green);}
+@media print{body{background:#fff;color:#000;cursor:auto;}#cursor,#spotlight,.topnav,.index-bar,body::before{display:none;}.tsec{opacity:1;transform:none;}.trust-hero{grid-template-columns:1fr;}.trust-hero-right{display:none;}.boundary-items,.custody-cols,.trust-card-row{grid-template-columns:1fr;}.admiss-layout{grid-template-columns:1fr;}}
+@media(max-width:900px){.trust-hero{grid-template-columns:1fr;min-height:auto;}.trust-hero-right{display:none;}.custody-cols,.trust-card-row{grid-template-columns:1fr 1fr;}.admiss-layout{grid-template-columns:1fr;}.boundary-items{grid-template-columns:1fr;}.topnav,.tsec,.boundary-section{padding-left:20px;padding-right:20px;}.trust-hero-left{padding:90px 20px 60px;}}
+@media(max-width:500px){.topnav-right{display:none;}.custody-cols,.trust-card-row{grid-template-columns:1fr;}}
+</style>
+
 </head>
-<body class="substrate-grid">
+<body>
+<div id="cursor" aria-hidden="true"></div>
+<div id="spotlight" aria-hidden="true"></div>
 
-    <aside class="command-sidebar flex flex-col">
-        <div class="p-8 border-b border-white/5">
-            <h1 class="text-2xl font-black italic tracking-tighter">NADIR</h1>
-            <p class="mono text-[8px] text-blue-500 mt-2 tracking-[0.3em]">v.2026.04.12 // SUBSTRATE</p>
+<nav class="topnav" aria-label="Primary navigation">
+  <a href="index.html" class="brand">CE<span>YO</span></a>
+  <div class="topnav-right">
+    <a href="platform.html">Architecture</a>
+    <a href="trust.html" class="active">Trust</a>
+    <a href="governance.html">Governance</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<!-- Split-screen hero -->
+
+<header class="trust-hero">
+  <div class="trust-hero-left">
+    <div class="trust-eyebrow">Trust Infrastructure &nbsp;·&nbsp; V2026.02.19</div>
+    <h1 class="trust-h1">Trust is<br>Verifiable,<br><span class="accent">Not Asserted</span></h1>
+    <p class="trust-lead">CEYO's trust posture is grounded in deterministic mechanics, non-custodial key architecture, and transparent boundary declarations. Every trust claim is reducible to a verifiable procedure.</p>
+  </div>
+  <div class="trust-hero-right">
+    <div class="trust-index" aria-label="Trust infrastructure index">
+      <div class="trust-index-title">Trust infrastructure index</div>
+      <div class="trust-index-list">
+        <a class="til" href="#integrity"><div class="til-num">01</div><div class="til-label">Integrity Architecture</div><div class="til-arrow">↓</div></a>
+        <a class="til" href="#custody"><div class="til-num">02</div><div class="til-label">Non-Custodial Key Architecture</div><div class="til-arrow">↓</div></a>
+        <a class="til" href="#admissibility"><div class="til-num">03</div><div class="til-label">Legal Admissibility Primer</div><div class="til-arrow">↓</div></a>
+        <a class="til" href="#compliance"><div class="til-num">04</div><div class="til-label">Regulatory Crosswalk</div><div class="til-arrow">↓</div></a>
+        <a class="til" href="#components"><div class="til-num">05</div><div class="til-label">Trust Component Index</div><div class="til-arrow">↓</div></a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="trust-content">
+
+  <!-- 01: Integrity Architecture -->
+
+  <section class="tsec" id="integrity" aria-labelledby="int-h">
+    <div class="tsec-label">[01] Integrity Architecture</div>
+    <h2 class="tsec-h2" id="int-h">Integrity Architecture</h2>
+    <p class="tsec-body">CEYO's integrity posture is anchored in determinism, non-custodial key management, and transparent boundary declarations. Every trust claim is reducible to a verifiable procedure.</p>
+    <div class="custody-cols" role="list">
+      <div class="custody-col" role="listitem">
+        <div class="custody-col-label">Canonicalization</div>
+        <div class="custody-col-title">RFC 8785 Determinism</div>
+        <div class="custody-col-body">JSON artifacts canonicalized before hashing. Identical byte representations across heterogeneous environments. Verification requires no CEYO infrastructure.</div>
+      </div>
+      <div class="custody-col" role="listitem">
+        <div class="custody-col-label">Sealing</div>
+        <div class="custody-col-title">Hash + Digital Signature</div>
+        <div class="custody-col-body">SHA-256 hashing (reference). ECDSA P-256 signatures (reference). Suite configurable per regulatory context. Tamper-evidence and origin authenticity established independently.</div>
+      </div>
+      <div class="custody-col" role="listitem">
+        <div class="custody-col-label">Availability</div>
+        <div class="custody-col-title">Fail-Open by Default</div>
+        <div class="custody-col-body">Sealing failures log and flag without interrupting inference unless operator configures stricter posture. Operational control remains with the deploying institution.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02: Key Custody -->
+
+  <section class="tsec" id="custody" aria-labelledby="cust-h">
+    <div class="tsec-label">[02] Key Custody Declaration</div>
+    <h2 class="tsec-h2" id="cust-h">Non-Custodial Key Architecture</h2>
+    <p class="tsec-body">Signing keys are generated and retained within the client-controlled environment. CEYO does not possess, transmit, or store private signing keys. This non-custodial architecture preserves a clear separation between infrastructure provider and cryptographic authority.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:28px;">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.20em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Supported custody environments</div>
+        <div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--stroke);">
+          <div style="padding:14px 18px;border-bottom:1px solid var(--stroke2);font-size:13px;color:var(--muted);">Hardware Security Modules (HSM)</div>
+          <div style="padding:14px 18px;border-bottom:1px solid var(--stroke2);font-size:13px;color:var(--muted);">Key Management Services (KMS)</div>
+          <div style="padding:14px 18px;font-size:13px;color:var(--muted);">Trusted Execution Environments (TEE)</div>
         </div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.20em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Separation consequence</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:12px;">Because CEYO does not hold signing keys, artifact authenticity remains anchored to the operator-controlled environment. CEYO infrastructure cannot independently alter or forge signatures.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Independent verifiers may validate artifact signatures against public keys published by the operator. Signature validation confirms the artifact was sealed within the operator's controlled environment and has not been altered since.</p>
+      </div>
+    </div>
+  </section>
 
-        <nav class="flex-grow overflow-y-auto mono uppercase tracking-widest font-bold">
-            <div class="p-4 text-[9px] text-gray-600">01_Core</div>
-            <a href="index.html" class="nav-item flex justify-between"><span>Overview</span><span class="opacity-20">01</span></a>
-            <a href="architecture.html" class="nav-item flex justify-between"><span>Architecture</span><span class="opacity-20">02</span></a>
-            <a href="integration.html" class="nav-item flex justify-between"><span>Integration</span><span class="opacity-20">03</span></a>
-            
-            <div class="p-4 text-[9px] text-gray-600">02_Trust</div>
-            <a href="compliance.html" class="nav-item flex justify-between"><span>Compliance</span><span class="opacity-20">07</span></a>
-            <a href="trust.html" class="nav-item nav-active flex justify-between"><span>Trust_Infra</span><span class="opacity-20">08</span></a>
-            <a href="incident.html" class="nav-item flex justify-between"><span>Incident_SOP</span><span class="opacity-20">18</span></a>
-            
-            <div class="p-4 text-[9px] text-gray-600">03_Strategy</div>
-            <a href="whitepaper.html" class="nav-item flex justify-between"><span>Whitepaper</span><span class="opacity-20">13</span></a>
-            <a href="sitemap.html" class="nav-item flex justify-between"><span>Master_Index</span><span class="opacity-20">15</span></a>
-        </nav>
+  <!-- 03: Admissibility -->
 
-        <div class="p-6 border-t border-white/5 mono text-[8px] text-gray-600">
-            <div class="flex items-center gap-2 mb-2">
-                <span class="status-pulse"></span>
-                <span class="text-white">SYSTEM_STATE: SECURE</span>
-            </div>
-            <span>© 2026 NADIR INFRASTRUCTURE</span>
+  <section class="tsec" id="admissibility" aria-labelledby="adm-h">
+    <div class="tsec-label">[03] Legal Admissibility Primer</div>
+    <div class="admiss-layout">
+      <div class="admiss-body">
+        <h2 class="tsec-h2" id="adm-h">Admissibility Primer</h2>
+        <p class="tsec-body">This information describes how integrity-sealed artifacts may support admissibility arguments under applicable evidentiary standards. It is informational only and does not constitute legal advice. Admissibility is determined by the relevant authority.</p>
+        <p style="font-size:13px;color:var(--muted2);font-style:italic;margin-top:16px;">Not legal advice. Operators and reviewers should consult appropriate counsel.</p>
+      </div>
+      <div class="admiss-pillars" role="list" aria-label="Admissibility pillars">
+        <div class="pillar" role="listitem">
+          <div class="pillar-label">Authenticity</div>
+          <div class="pillar-title">Cryptographic Chain</div>
+          <div class="pillar-desc">Digital signatures and deterministic canonicalization support validation that an artifact has not been altered since sealing.</div>
         </div>
-    </aside>
-
-    <main class="content-deck min-h-screen relative">
-        
-        <header class="sticky top-0 z-50 p-6 border-b border-white/5 bg-black/50 backdrop-blur-xl flex justify-between items-center">
-            <div class="mono text-[10px] text-gray-500 uppercase">/ Root / Trust_Infrastructure</div>
-            <div class="flex gap-4">
-                <button class="px-4 py-2 bg-white/5 border border-white/10 mono text-[9px] hover:bg-white/10 transition">SEARCH_FS</button>
-                <button class="px-4 py-2 bg-blue-600 text-white mono text-[9px] font-bold">CONNECT_AUDIT</button>
-            </div>
-        </header>
-
-        <div class="max-w-5xl mx-auto py-24 px-12">
-            
-            <div class="flex justify-between items-end mb-20 border-b-4 border-white pb-8">
-                <h1 class="text-8xl font-black tracking-tighter italic uppercase leading-none">Trust<br>Infra.</h1>
-                <div class="text-right mono text-[10px] text-blue-500 font-bold mb-2 uppercase tracking-[0.4em]">
-                    [ Security_Posture: V2026.B ]
-                </div>
-            </div>
-
-            <div class="grid grid-cols-12 gap-16">
-                <div class="col-span-8 space-y-24">
-                    <section>
-                        <div class="mono text-xs text-blue-500 font-black mb-6 uppercase tracking-[0.5em]">// 01_Integrity_Architecture</div>
-                        <p class="text-4xl font-light leading-[1.1] mb-10">
-                            Trust in evidentiary systems is established through <span class="italic font-black text-white underline underline-offset-8 decoration-blue-600">verifiable mechanics</span>, not administrative assertions.
-                        </p>
-                        <p class="text-gray-400 text-lg leading-relaxed mb-12">
-                            NADIR's trust posture is anchored in determinism, non-custodial cryptographic architecture, and structural transparency. Every artifact is a standalone proof.
-                        </p>
-                        
-                        <div class="grid grid-cols-2 gap-8 mt-12">
-                            <div class="p-6 bg-white/5 border border-white/10 group hover:border-blue-600 transition">
-                                <span class="mono text-[10px] text-gray-500">REF_SPEC</span>
-                                <h4 class="font-bold mt-2 uppercase">RFC 8785</h4>
-                                <p class="text-xs text-gray-500 mt-2">JSON Canonicalization Scheme for deterministic hashing.</p>
-                            </div>
-                            <div class="p-6 bg-white/5 border border-white/10 group hover:border-blue-600 transition">
-                                <span class="mono text-[10px] text-gray-500">KEY_MODEL</span>
-                                <h4 class="font-bold mt-2 uppercase">Non-Custodial</h4>
-                                <p class="text-xs text-gray-500 mt-2">Entities retain full private key ownership; NADIR never sees the secret.</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="pt-20 border-t border-white/5">
-                        <div class="mono text-xs text-blue-500 font-black mb-6 uppercase tracking-[0.5em]">// 02_Transparency</div>
-                        <p class="text-gray-400 mb-10 leading-relaxed">
-                            We maintain a Software Bill of Materials (SBOM) for reference builds to support institutional supply chain governance and third-party audit capability.
-                        </p>
-                        <div class="flex gap-4">
-                            <button class="px-8 py-4 border border-white/10 mono text-[10px] uppercase hover:bg-white hover:text-black transition">Download_SBOM.spdx</button>
-                            <button class="px-8 py-4 border border-white/10 mono text-[10px] uppercase hover:bg-white hover:text-black transition">CycloneDX_Export</button>
-                        </div>
-                    </section>
-                </div>
-
-                <div class="col-span-4 space-y-8">
-                    <div class="p-8 border-l-2 border-blue-600 bg-white/5">
-                        <h3 class="mono text-[10px] font-black uppercase mb-4 tracking-widest">Vulnerability_Disclosure</h3>
-                        <p class="text-xs text-gray-500 leading-relaxed mb-6">NADIR maintains a structured VDP to support responsible reporting of integrity findings.</p>
-                        <a href="#" class="mono text-[10px] text-blue-500 font-bold uppercase underline">Review_Policy</a>
-                    </div>
-
-                    <div class="p-8 border border-white/10 opacity-50">
-                        <h3 class="mono text-[10px] font-black uppercase mb-4 tracking-widest">Sustainability_Log</h3>
-                        <p class="text-xs text-gray-400 leading-relaxed">Inference workloads represent the dominant energy profile. NADIR artifact generation constitutes <span class="text-white italic">incremental, policy-scoped overhead.</span></p>
-                    </div>
-
-                    <div class="pt-12 text-center">
-                        <img src="https://api.placeholder.com/200x200" alt="Security Schematic" class="opacity-20 grayscale hover:grayscale-0 transition duration-1000">
-                        <p class="mono text-[8px] text-gray-700 mt-4 uppercase">Fig 08.1: Sealing Logic Circuit</p>
-                    </div>
-                </div>
-            </div>
-
-            <footer class="mt-48 pt-12 border-t border-white/5 flex justify-between items-center mono text-[10px] text-gray-600">
-                <span>[ NADIR INFRASTRUCTURE DECLARATION ]</span>
-                <span class="text-white font-bold italic">PROVENANCE_ASSURED</span>
-                <span>SEC_REF_2026.02.19</span>
-            </footer>
+        <div class="pillar" role="listitem">
+          <div class="pillar-label">Timeliness</div>
+          <div class="pillar-title">Inference-Time Generation</div>
+          <div class="pillar-desc">Artifacts generated at inference-time under defined policy. Optional RFC 3161 TSA or HSM-based time anchoring may support temporal claims.</div>
         </div>
-    </main>
+        <div class="pillar" role="listitem">
+          <div class="pillar-label">Systemic Process</div>
+          <div class="pillar-title">Versioned Mechanisms</div>
+          <div class="pillar-desc">Policy IDs, version identifiers, and canonicalization version fields document generation as systematic and consistent rather than ad hoc.</div>
+        </div>
+        <div class="pillar" role="listitem">
+          <div class="pillar-label">Evidentiary Context</div>
+          <div class="pillar-title">FRE 803(6) Reference</div>
+          <div class="pillar-desc">Systematic, integrity-protected records may be considered under business records exceptions in certain jurisdictions. Determinations remain with the court or relevant authority.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04: Regulatory Crosswalk -->
+
+  <section class="tsec" id="compliance" aria-labelledby="comp-h">
+    <div class="tsec-label">[04] Regulatory Crosswalk</div>
+    <h2 class="tsec-h2" id="comp-h">Regulatory Interoperability</h2>
+    <p class="tsec-body">The mappings below describe functional correspondence to regulatory expectations. They do not constitute certification, endorsement, or legal sufficiency. Regulatory sufficiency is the deploying institution's responsibility.</p>
+    <table class="reg-table" aria-label="EU AI Act mapping">
+      <thead><tr><th>Provision</th><th>CEYO Functional Correspondence</th><th>Posture</th></tr></thead>
+      <tbody>
+        <tr><td>EU AI Act · Article 12 — Record-Keeping</td><td>Canonical artifacts representing defined inference-time context. Integrity-sealed and versioned.</td><td><span class="reg-badge green">Descriptive</span></td></tr>
+        <tr><td>EU AI Act · Article 13 — Transparency</td><td>Deployers access structured artifacts reflecting captured decision-state context under configured disclosure tiers.</td><td><span class="reg-badge green">Descriptive</span></td></tr>
+        <tr><td>EU AI Act · Annex IV — Technical Docs</td><td>Canonical schema, capture policy identifiers, and integrity metadata may support structured documentation processes.</td><td><span class="reg-badge green">Descriptive</span></td></tr>
+        <tr><td>NIST AI RMF · Govern</td><td>Artifact versioning, policy identifiers, and integrity controls support accountability workflows.</td><td><span class="reg-badge green">Aligned</span></td></tr>
+        <tr><td>NIST AI RMF · Measure</td><td>Deterministic canonicalization and signature validation enable reproducible integrity verification.</td><td><span class="reg-badge green">Aligned</span></td></tr>
+        <tr><td>NIST AI RMF · Manage</td><td>Artifacts may support incident reconstruction and oversight review under institutional governance.</td><td><span class="reg-badge green">Aligned</span></td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:16px;font-size:11px;color:var(--muted2);font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;">Mappings are descriptive and informational only. Neither NIST nor the EU endorses CEYO.</p>
+  </section>
+
+  <!-- 05: Trust component index -->
+
+  <section class="tsec" id="components" aria-labelledby="comp2-h">
+    <div class="tsec-label">[05] Trust Component Index</div>
+    <h2 class="tsec-h2" id="comp2-h">Trust Infrastructure Index</h2>
+    <div class="trust-card-row" role="list">
+      <div class="trust-card" role="listitem">
+        <div class="tc-label">Privacy & Civil Liberties</div>
+        <div class="tc-title">PCL Framework V2026.02</div>
+        <div class="tc-body">Versioned minimization, purpose limitation, and redaction framework. Capture scope is policy-defined and reviewable.</div>
+        <a class="tc-link" href="pcl.html">PCL Framework →</a>
+      </div>
+      <div class="trust-card" role="listitem">
+        <div class="tc-label">Vulnerability Disclosure</div>
+        <div class="tc-title">VDP — Responsible Disclosure</div>
+        <div class="tc-body">Good-faith research reporting channel with safe harbor. contact@ceyo-ai.com · Subject: VDP Report</div>
+        <a class="tc-link" href="vdp.html">VDP Policy →</a>
+      </div>
+      <div class="trust-card" role="listitem">
+        <div class="tc-label">Software Bill of Materials</div>
+        <div class="tc-title">SBOM — SPDX / CycloneDX</div>
+        <div class="tc-body">Machine-readable component inventory for supply chain review. Available under controlled disclosure agreement.</div>
+        <a class="tc-link" href="sbom.html">SBOM →</a>
+      </div>
+      <div class="trust-card" role="listitem">
+        <div class="tc-label">Governance</div>
+        <div class="tc-title">Four-Principle Framework</div>
+        <div class="tc-body">Privacy-by-design · Controlled disclosure · Auditability · Non-adjudication. Informed by NIST IR 8596.</div>
+        <a class="tc-link" href="governance.html">Governance →</a>
+      </div>
+      <div class="trust-card" role="listitem">
+        <div class="tc-label">Sustainability</div>
+        <div class="tc-title">Compute-to-Integrity Efficiency</div>
+        <div class="tc-body">CEYO measures overhead per artifact event. Infrastructure footprint is deployment-dependent.</div>
+        <a class="tc-link" href="sustainability.html">Disclosure →</a>
+      </div>
+      <div class="trust-card" role="listitem">
+        <div class="tc-label">72-Hour Playbook</div>
+        <div class="tc-title">Incident Reconstruction Reference</div>
+        <div class="tc-body">Procedural reference for operators using CEYO artifacts during incident reconstruction. Informational only.</div>
+        <a class="tc-link" href="incident-72h.html">Playbook →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="boundary-section">
+    <div class="boundary-wrap" role="region" aria-label="Boundary declaration">
+      <div class="boundary-lbl">Boundary Declaration &nbsp;·&nbsp; V2026.02.19</div>
+      <div class="boundary-items">
+        <p class="bi">This page is informational only. It does not constitute legal advice.</p>
+        <p class="bi">Admissibility is determined by the relevant authority, not by CEYO.</p>
+        <p class="bi">Regulatory crosswalk mappings are descriptive; sufficiency is operator's responsibility.</p>
+        <p class="bi">Security posture is deployment-dependent. No invulnerability is claimed.</p>
+      </div>
+      <p class="boundary-close">CEYO provides the record. Institutions provide the oversight.</p>
+    </div>
+  </div>
+
+</main>
+
+<nav class="index-bar" aria-label="Site index">
+  <a class="index-item" href="index.html">Index</a>
+  <a class="index-item" href="platform.html">Arch</a>
+  <a class="index-item active" href="trust.html">Trust</a>
+  <a class="index-item" href="governance.html">Gov</a>
+  <a class="index-item" href="contact.html">Contact</a>
+</nav>
+
+<script>
+const cursor=document.getElementById('cursor');
+const spotlight=document.getElementById('spotlight');
+document.addEventListener('mousemove',e=>{
+  cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';
+  spotlight.style.background=`radial-gradient(circle 300px at ${e.clientX}px ${e.clientY}px,rgba(255,255,240,.06) 0%,transparent 70%)`;
+});
+document.addEventListener('mouseleave',()=>{cursor.style.opacity='0';spotlight.style.background='none';});
+document.addEventListener('mouseenter',()=>{cursor.style.opacity='1';});
+document.querySelectorAll('a,button,.custody-col,.pillar,.trust-card,.til').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cursor.classList.add('hover'));
+  el.addEventListener('mouseleave',()=>cursor.classList.remove('hover'));
+});
+const tsecs=document.querySelectorAll('.tsec');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible','focus');}
+    else{e.target.classList.remove('focus');}
+  });
+},{threshold:0.08});
+tsecs.forEach(s=>obs.observe(s));
+const h2obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting&&!e.target.dataset.typed){
+      e.target.dataset.typed='1';
+      const txt=e.target.textContent;
+      e.target.textContent='';
+      e.target.classList.add('typewrite-cursor');
+      let i=0;
+      const iv=setInterval(()=>{e.target.textContent+=txt[i];i++;if(i>=txt.length){clearInterval(iv);e.target.classList.remove('typewrite-cursor');}},22);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.tsec-h2').forEach(h=>h2obs.observe(h));
+document.querySelectorAll('.trust-card,.custody-col,.pillar,.til,.index-item').forEach(el=>{
+  el.addEventListener('touchstart',()=>{el.style.background='var(--ivory)';el.style.color='var(--bg)';},{passive:true});
+  el.addEventListener('touchend',()=>{setTimeout(()=>{el.style.background='';el.style.color='';},180);},{passive:true});
+});
+</script>
+
 </body>
 </html>
