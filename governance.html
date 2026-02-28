@@ -1,157 +1,194 @@
-<!DOCTYPE html>
+<!-- ===========================
+ CEYO — governance.html
+ Governance Posture
+ V2026.02.19
+=========================== -->
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Governance Posture | NADIR Systems</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --steel: #0A0C10;
-            --indium: #1E222A;
-            --signal-blue: #0070FF;
-        }
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>CEYO — Governance Posture</title>
+  <meta name="description" content="Governance posture: minimization by design, controlled disclosure, deterministic auditability, non-adjudication, institutional boundaries."/>
+  <meta name="theme-color" content="#071227"/>
 
-        body {
-            background-color: var(--steel);
-            color: #f8fafc;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: -0.01em;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,500;0,700;0,900;1,900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-        .mono { font-family: 'IBM Plex Mono', monospace; }
+  <style>
+    :root{
+      --navy:#071227; --wash:#F6F4EE; --ink:#0A1430;
+      --ivory:rgba(246,244,238,.94);
+      --muted:rgba(246,244,238,.70);
+      --muted2:rgba(246,244,238,.46);
+      --stroke:rgba(246,244,238,.14);
 
-        /* POLICY GRID LINES */
-        .policy-grid {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            border-left: 1px solid rgba(255,255,255,0.1);
-        }
+      --blue:rgba(74,132,255,.85);
+      --max:1180px;
+      --radius:14px; --radius2:18px;
 
-        .policy-cell {
-            border-right: 1px solid rgba(255,255,255,0.1);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 3rem;
-            transition: background 0.4s ease;
-        }
+      --fontDisplay:"Styrene A","Outfit",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      --fontText:"Tiempos","Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      --fontMono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+    }
 
-        .policy-cell:hover {
-            background: rgba(255,255,255,0.02);
-        }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--navy);color:var(--ivory);font-family:var(--fontText);overflow-x:hidden;min-height:100vh;cursor:none}
+    a{color:inherit;text-decoration:none}
+    ::selection{background:rgba(74,132,255,.25)}
+    h1,h2,h3{word-break:normal;overflow-wrap:break-word}
+    .br{display:block}
 
-        /* NUMBER ACCENTS */
-        .policy-num {
-            font-size: 0.7rem;
-            color: var(--signal-blue);
-            font-weight: 900;
-            display: block;
-            margin-bottom: 2rem;
-            letter-spacing: 0.3em;
-        }
+    #grain{position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.04;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E");
+      background-size:220px 220px;mix-blend-mode:soft-light}
+    #spotlight{position:fixed;inset:0;z-index:1;pointer-events:none;transition:background .05s linear}
+    #cursor{position:fixed;z-index:9999;width:8px;height:8px;border-radius:999px;background:rgba(246,244,238,.95);pointer-events:none;
+      transform:translate(-50%,-50%);mix-blend-mode:exclusion;transition:width .15s,height .15s,opacity .15s}
+    #cursor.large{width:40px;height:40px;opacity:.45}
 
-        .heading-italic {
-            font-style: italic;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -0.04em;
-        }
-    </style>
+    #topnav{position:fixed;top:0;left:0;right:0;z-index:800;display:flex;align-items:center;justify-content:space-between;
+      padding:0 44px;height:68px;background:rgba(7,18,39,.86);border-bottom:1px solid rgba(246,244,238,.08);backdrop-filter:blur(10px)}
+    .nav-brand{font-family:var(--fontDisplay);font-weight:900;font-style:italic;font-size:28px;letter-spacing:-0.03em;text-transform:uppercase;color:rgba(246,244,238,.96)}
+    .nav-links{display:flex;align-items:center;gap:6px}
+    .nav-links a{font-family:var(--fontMono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,244,238,.52);padding:8px 12px;border-radius:999px;transition:color .12s,background .12s}
+    .nav-links a:hover{color:rgba(246,244,238,.92);background:rgba(246,244,238,.05)}
+    .nav-links a.active{color:rgba(246,244,238,.92)}
+    .nav-cta{margin-left:10px;border:1px solid rgba(74,132,255,.35);background:rgba(74,132,255,.08);color:rgba(246,244,238,.92)!important}
+
+    #indexbar{position:fixed;bottom:0;left:0;right:0;z-index:800;display:flex;height:50px;background:rgba(5,12,26,.92);border-top:1px solid rgba(246,244,238,.10);backdrop-filter:blur(10px)}
+    .ib-item{flex:1;display:flex;align-items:center;justify-content:center;font-family:var(--fontMono);font-size:10px;letter-spacing:.20em;text-transform:uppercase;color:rgba(246,244,238,.50);border-right:1px solid rgba(246,244,238,.07);transition:color .12s,background .12s,border-top-color .12s}
+    .ib-item:last-child{border-right:none}
+    .ib-item:hover{color:rgba(246,244,238,.92);background:rgba(246,244,238,.05)}
+    .ib-item.active{color:rgba(246,244,238,.92);border-top:1px solid rgba(246,244,238,.92)}
+
+    header{position:relative;z-index:5;padding:96px 44px 26px;max-width:var(--max);margin:0 auto}
+    .kicker{font-family:var(--fontMono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(74,132,255,.82);display:flex;align-items:center;gap:14px;margin-bottom:14px}
+    .kicker::before{content:"";width:38px;height:1px;background:rgba(74,132,255,.78)}
+    h1{font-family:var(--fontDisplay);font-weight:900;font-style:italic;font-size:clamp(36px,6vw,64px);letter-spacing:-0.05em;text-transform:uppercase;line-height:1.02;margin-bottom:10px}
+    .lead{max-width:82ch;color:rgba(246,244,238,.72);line-height:1.85;font-size:15px}
+
+    main{position:relative;z-index:5;max-width:var(--max);margin:0 auto;padding:0 44px 104px}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding-top:18px;border-top:1px solid rgba(246,244,238,.10)}
+    .tile{border:1px solid rgba(246,244,238,.14);border-radius:var(--radius2);background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));padding:18px}
+    .tag{font-family:var(--fontMono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:rgba(74,132,255,.82);margin-bottom:10px}
+    h2{font-family:var(--fontDisplay);font-weight:900;font-style:italic;font-size:22px;letter-spacing:-0.03em;text-transform:uppercase;line-height:1.1;margin-bottom:10px}
+    .p{font-size:13px;line-height:1.85;color:rgba(246,244,238,.70);max-width:80ch}
+    .mono{margin-top:12px;font-family:var(--fontMono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(246,244,238,.46);line-height:1.7}
+    .boundary{margin-top:18px;padding-top:18px;border-top:1px solid rgba(246,244,238,.10);font-family:var(--fontMono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(246,244,238,.40);line-height:1.9}
+
+    @media (max-width:980px){
+      #topnav{padding:0 22px}
+      header{padding:92px 22px 26px}
+      main{padding:0 22px 104px}
+      .split{grid-template-columns:1fr}
+    }
+    @media (max-width:600px){
+      .nav-links{display:none}
+      header{padding:86px 20px 24px}
+      main{padding:0 20px 104px}
+      .nav-brand{font-size:30px}
+    }
+  </style>
 </head>
-<body class="min-h-screen">
 
-    <nav id="institutional-nav" class="border-b border-white/5 p-6 bg-black/50 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto flex justify-between items-center mono text-[10px] tracking-[0.4em] uppercase">
-            <a href="index.html" class="text-white font-black">NADIR // GOV_POSTURE</a>
-            <div class="space-x-12 hidden md:flex">
-                <a href="architecture.html" class="hover:text-blue-500">Architecture</a>
-                <a href="roadmap.html" class="hover:text-blue-500">Roadmap</a>
-                <a href="sitemap.html" class="hover:text-blue-500 text-blue-500">Index</a>
-            </div>
-        </div>
-    </nav>
+<body>
+  <div id="grain" aria-hidden="true"></div>
+  <div id="spotlight" aria-hidden="true"></div>
+  <div id="cursor" aria-hidden="true"></div>
 
-    <main class="max-w-7xl mx-auto py-32 px-8">
-        
-        <header class="max-w-4xl mb-32">
-            <div class="mono text-[10px] text-blue-500 tracking-[0.5em] mb-12 font-bold uppercase opacity-60">
-                [ GOVERNANCE_SUBSTRATE // DESIGN_PRINCIPLES ]
-            </div>
-            <h1 class="text-7xl heading-italic mb-12 leading-[0.9]">
-                Structural<br>Governance.
-            </h1>
-            <p class="text-2xl font-light text-gray-400 leading-relaxed max-w-2xl">
-                Governance is embedded in the integrity layer itself—not dictated by external authority. We build constraints directly into the substrate.
-            </p>
-        </header>
+  <nav id="topnav" aria-label="Primary navigation">
+    <a href="index.html" class="nav-brand" aria-label="CEYO Home">CEYO</a>
+    <div class="nav-links">
+      <a href="index.html">Overview</a>
+      <a href="platform.html">Architecture</a>
+      <a href="trust.html">Trust</a>
+      <a href="governance.html" class="active">Governance</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html" class="nav-cta">Request Review</a>
+    </div>
+  </nav>
 
-        <section class="policy-grid grid grid-cols-1 md:grid-cols-2">
-            
-            <div class="policy-cell">
-                <span class="policy-num mono">PROTOCOL_01</span>
-                <h3 class="text-2xl heading-italic mb-6 text-white">Minimization by Design</h3>
-                <p class="text-gray-400 font-light leading-relaxed">
-                    Capture scope is explicitly defined prior to generation. Only declared fields are recorded; unrelated telemetry is excluded by default configuration. Minimization is structural, not aspirational.
-                </p>
-            </div>
+  <header>
+    <div class="kicker">Governance Posture</div>
+    <h1>Architectural Boundaries</h1>
+    <p class="lead">
+      Governance here refers to structural design principles embedded in the integrity layer itself — explicit capture scope, deterministic artifact generation, and controlled disclosure — not external regulatory authority. CEYO produces records. Institutions make determinations.
+    </p>
+  </header>
 
-            <div class="policy-cell">
-                <span class="policy-num mono">PROTOCOL_02</span>
-                <h3 class="text-2xl heading-italic mb-6 text-white">Controlled Disclosure</h3>
-                <p class="text-gray-400 font-light leading-relaxed">
-                    Artifacts enable verification of integrity without disclosing proprietary architecture, model weights, or source code. Disclosure tiers are defined before artifact generation.
-                </p>
-            </div>
+  <main>
+    <section class="split" aria-label="Governance principles">
+      <div class="tile">
+        <div class="tag">[01] Minimization by Design</div>
+        <h2>Policy Before Collection</h2>
+        <p class="p">
+          Capture scope is explicitly defined prior to artifact generation. Only fields declared within policy are recorded; unrelated telemetry is excluded by default configuration. Policy identifiers and versions are embedded within artifacts so boundaries remain reviewable.
+        </p>
+        <div class="mono">Structural minimization · Explicit boundaries</div>
+      </div>
 
-            <div class="policy-cell">
-                <span class="policy-num mono">PROTOCOL_03</span>
-                <h3 class="text-2xl heading-italic mb-6 text-white">Deterministic Auditability</h3>
-                <p class="text-gray-400 font-light leading-relaxed">
-                    Verification is mechanical and reproducible across heterogeneous environments. Interpretation remains an institutional function; integrity remains an architectural one.
-                </p>
-            </div>
+      <div class="tile">
+        <div class="tag">[02] Controlled Disclosure</div>
+        <h2>Verification Without Exposure</h2>
+        <p class="p">
+          Oversight may require validation without forced exposure of proprietary weights, confidential internals, or trade-secret implementations. Disclosure tiers are defined before artifact generation. Redaction is policy-defined, not improvised post hoc.
+        </p>
+        <div class="mono">Tiered access · Policy-defined masking</div>
+      </div>
 
-            <div class="policy-cell">
-                <span class="policy-num mono">PROTOCOL_04</span>
-                <h3 class="text-2xl heading-italic mb-6 text-white">Non-Adjudication</h3>
-                <p class="text-gray-400 font-light leading-relaxed">
-                    NADIR does not determine legality, fairness, or correctness. It provides integrity-sealed records to the institutions that make those final determinations.
-                </p>
-            </div>
+      <div class="tile">
+        <div class="tag">[03] Deterministic Auditability</div>
+        <h2>Reproducible Integrity</h2>
+        <p class="p">
+          Artifacts are canonicalized and sealed deterministically so independent parties can validate integrity across heterogeneous environments. Verification is mechanical. Interpretation remains institutional.
+        </p>
+        <div class="mono">RFC 8785 · Hash + signature · Independent verification</div>
+      </div>
 
-        </section>
+      <div class="tile">
+        <div class="tag">[04] Non-Adjudication</div>
+        <h2>Infrastructure, Not Authority</h2>
+        <p class="p">
+          CEYO does not determine correctness, fairness, legality, compliance, or admissibility. It does not replace institutional review mechanisms, compliance teams, legal advisory processes, or regulatory authority. It provides integrity-sealed records.
+        </p>
+        <div class="mono">Evidence substrate · Institutional oversight</div>
+      </div>
+    </section>
 
-        
+    <div class="boundary">
+      Boundary: References to external frameworks are descriptive only. CEYO does not claim endorsement, certification, or formal alignment by any regulatory body or standards institution.
+    </div>
+  </main>
 
-        <section class="py-40 border-t border-white/5 mt-40">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-24 items-start">
-                <div class="lg:col-span-4">
-                    <h2 class="mono text-[11px] font-black text-blue-500 uppercase tracking-[0.4em] italic mb-8 border-b border-blue-900 pb-4">Alignment_Posture</h2>
-                </div>
-                <div class="lg:col-span-8">
-                    <p class="text-3xl font-light italic text-gray-300 leading-tight">
-                        Our architecture reflects principles consistent with contemporary integrity frameworks. We do not claim external endorsement; <span class="text-white font-black underline underline-offset-8 decoration-blue-600">we provide the infrastructure required to support it.</span>
-                    </p>
-                </div>
-            </div>
-        </section>
+  <nav id="indexbar" aria-label="Site index">
+    <a class="ib-item" href="index.html">Index</a>
+    <a class="ib-item" href="platform.html">Arch</a>
+    <a class="ib-item" href="trust.html">Trust</a>
+    <a class="ib-item active" href="governance.html">Gov</a>
+    <a class="ib-item" href="contact.html">Contact</a>
+  </nav>
 
-        <footer class="mt-40 pt-16 border-t-4 border-white">
-            <div class="flex flex-col md:flex-row justify-between items-start gap-12">
-                <div class="max-w-md">
-                    <p class="mono text-[10px] uppercase font-black mb-4">Governance Position // 2026</p>
-                    <p class="text-2xl font-light leading-tight italic text-gray-400">
-                        Autonomous systems increasingly operate in environments where oversight matters. Infrastructure must reflect that reality.
-                    </p>
-                </div>
-                <div class="text-[9px] mono text-gray-600 uppercase tracking-widest text-right">
-                    NADIR SYSTEMS // INTERNAL_AUDIT_STAL_04
-                </div>
-            </div>
-        </footer>
-
-    </main>
-
+  <script>
+    const cursor = document.getElementById('cursor');
+    const spotlight = document.getElementById('spotlight');
+    function setSpotlight(x,y){
+      spotlight.style.background =
+        `radial-gradient(circle 360px at ${x}px ${y}px, rgba(74,132,255,.16) 0%, rgba(74,132,255,.06) 34%, transparent 70%)`;
+    }
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+      setSpotlight(e.clientX, e.clientY);
+    }, { passive:true });
+    document.addEventListener('mouseleave', () => { cursor.style.opacity='0'; spotlight.style.background='none'; });
+    document.addEventListener('mouseenter', () => { cursor.style.opacity='1'; });
+    document.querySelectorAll('a, .tile').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('large'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('large'));
+    });
+  </script>
 </body>
 </html>
