@@ -8,15 +8,14 @@
   <meta name="description" content="CEYO is a decoupled evidentiary layer that produces policy-scoped, canonical artifacts — cryptographically sealed for independent verification under constrained disclosure."/>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Crect width='96' height='96' rx='20' fill='%230B1630'/%3E%3Cpath d='M28 56c0-12 8-20 20-20h20v8H48c-7 0-12 5-12 12s5 12 12 12h20v8H48c-12 0-20-8-20-20Z' fill='%23F5F1E6'/%3E%3C/svg%3E"/>
 
-  <!-- FONT: Use a licensed Anthropic-like family (Styrene A) self-host if available.
-       Fallbacks are close enough for dev. -->
+  <!-- Font stack (Anthropic-like feel). For exact match, self-host your licensed font. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      /* Dark mode (hero + some sections) */
+      /* Core palette (requested): navy + wash/off-white + dark olive */
       --navy-950:#050C1E;
       --navy-900:#06102A;
       --navy-850:#081633;
@@ -30,13 +29,14 @@
       --olive:#2F3A22;
       --olive-2:#3B4A2B;
 
+      /* Accent blue glow (requested) */
+      --blue-glow: rgba(45,120,255,.18);
+      --blue-glow-2: rgba(45,120,255,.10);
+      --blue-glow-3: rgba(45,120,255,.06);
+      --blue-ink: rgba(6,16,42,.92);
+
       --text:rgba(247,244,236,.92);
       --muted:rgba(247,244,236,.72);
-      --muted2:rgba(247,244,236,.52);
-      --muted3:rgba(247,244,236,.30);
-
-      --stroke:rgba(247,244,236,.12);
-      --stroke2:rgba(247,244,236,.075);
 
       --max:1180px;
 
@@ -58,8 +58,8 @@
     body{
       min-height:100vh;
       background:
-        radial-gradient(1000px 700px at 18% 10%, rgba(59,74,43,.18), transparent 60%),
-        radial-gradient(900px 650px at 90% 22%, rgba(247,244,236,.08), transparent 62%),
+        radial-gradient(1000px 700px at 18% 10%, rgba(59,74,43,.14), transparent 60%),
+        radial-gradient(900px 650px at 90% 22%, rgba(247,244,236,.06), transparent 62%),
         linear-gradient(180deg, var(--navy-800), var(--navy-950));
       color:var(--text);
       font-family:var(--body);
@@ -69,7 +69,7 @@
       cursor:none;
     }
     a{ color:inherit; text-decoration:none; }
-    ::selection{ background: rgba(59,74,43,.35); color: var(--paper); }
+    ::selection{ background: rgba(45,120,255,.22); color: var(--paper); }
 
     @media (prefers-reduced-motion: reduce){
       html{ scroll-behavior:auto; }
@@ -85,7 +85,7 @@
       padding:10px 14px; border-radius:10px;
       font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
     }
-    .skip:focus{ left:12px; outline:2px solid rgba(59,74,43,.85); outline-offset:3px; }
+    .skip:focus{ left:12px; outline:2px solid rgba(45,120,255,.85); outline-offset:3px; }
 
     /* Grain */
     #grain{
@@ -96,7 +96,7 @@
       mix-blend-mode:overlay;
     }
 
-    /* Spotlight (brighter per request) */
+    /* Spotlight (changed to blue highlight, requested) */
     #spotlight{
       position:fixed; inset:0; z-index:1; pointer-events:none;
       transition: background 30ms linear;
@@ -118,7 +118,7 @@
     #cursor.hidden{ opacity:0; }
 
     :focus-visible{
-      outline:2px solid rgba(59,74,43,.9);
+      outline:2px solid rgba(45,120,255,.85);
       outline-offset:4px;
       border-radius:10px;
     }
@@ -181,13 +181,13 @@
     .nav-cta{
       margin-left:10px;
       padding:10px 14px !important;
-      border:1px solid rgba(59,74,43,.45) !important;
-      background: rgba(59,74,43,.16) !important;
+      border:1px solid rgba(45,120,255,.35) !important;
+      background: rgba(45,120,255,.10) !important;
       color: rgba(247,244,236,.92) !important;
     }
     .nav-cta:hover{
-      border-color: rgba(59,74,43,.75) !important;
-      background: rgba(59,74,43,.22) !important;
+      border-color: rgba(45,120,255,.55) !important;
+      background: rgba(45,120,255,.14) !important;
     }
 
     /* Bottom index bar */
@@ -262,7 +262,7 @@
     }
     .kicker .line{
       width:40px; height:1px;
-      background: linear-gradient(to right, rgba(59,74,43,.9), transparent);
+      background: linear-gradient(to right, rgba(45,120,255,.75), transparent);
     }
 
     .hero-h1{
@@ -277,7 +277,7 @@
       will-change: transform, filter, opacity;
     }
 
-    /* TELEMETRY sweep */
+    /* TELEMETRY sweep (changed to dark blue light, requested) */
     .telemetry-sweep{
       position:relative;
       display:inline-block;
@@ -286,18 +286,17 @@
     .telemetry-sweep::after{
       content: attr(data-text);
       position:absolute; inset:0;
-      color: var(--paper);
       background: linear-gradient(105deg,
         transparent 0%,
-        rgba(247,248,241,.12) 35%,
-        rgba(247,248,241,.98) 50%,
-        rgba(247,248,241,.12) 65%,
+        rgba(45,120,255,.10) 32%,
+        rgba(145,195,255,.95) 50%,
+        rgba(45,120,255,.10) 68%,
         transparent 100%);
       -webkit-background-clip:text;
       background-clip:text;
       -webkit-text-fill-color: transparent;
       mix-blend-mode: screen;
-      filter: drop-shadow(0 0 18px rgba(247,248,241,.32));
+      filter: drop-shadow(0 0 18px rgba(45,120,255,.28));
       animation: sweep 2.4s var(--ease) infinite;
       transform: translateZ(0);
       pointer-events:none;
@@ -329,7 +328,7 @@
       content:"";
       position:absolute; left:0; right:0; bottom:-2px;
       height:1px;
-      background: linear-gradient(90deg, transparent, rgba(59,74,43,.70), transparent);
+      background: linear-gradient(90deg, transparent, rgba(45,120,255,.55), transparent);
       opacity:0;
       transform: scaleX(.6);
       transform-origin:center;
@@ -360,7 +359,7 @@
     }
     .denial::before{ content:"×"; position:absolute; left:0; top:0; color: rgba(247,244,236,.45); }
     .affirm{ margin-top: 8px; color: rgba(247,244,236,.88); }
-    .affirm::before{ content:"→"; position:absolute; left:0; top:0; color: rgba(59,74,43,.95); }
+    .affirm::before{ content:"→"; position:absolute; left:0; top:0; color: rgba(45,120,255,.85); }
 
     .cta-row{ margin-top: 22px; display:flex; gap: 12px; flex-wrap:wrap; }
     .btn{
@@ -390,13 +389,13 @@
       border-color: var(--wash);
     }
     .btn.primary{
-      border-color: rgba(59,74,43,.55);
-      background: rgba(59,74,43,.20);
+      border-color: rgba(45,120,255,.42);
+      background: rgba(45,120,255,.10);
       color: rgba(247,244,236,.92);
     }
     .btn.primary:hover{
-      border-color: rgba(59,74,43,.85);
-      background: rgba(59,74,43,.26);
+      border-color: rgba(45,120,255,.60);
+      background: rgba(45,120,255,.14);
     }
 
     /* Scroll indicator */
@@ -427,15 +426,11 @@
     /* MAIN */
     #content{ position:relative; z-index:10; padding-bottom: 84px; }
 
-    /* PAGE-LIKE SECTIONS:
-       Each section becomes a "page" with its own full-bleed background and palette mode.
-       Dark hero -> Light page -> Dark page -> Light page ... (distinct like separate pages).
-    */
+    /* PAGE-LIKE SECTIONS */
     .page{
       position:relative;
       min-height: 92vh;
       padding: 104px 0;
-      border-top:1px solid transparent;
       opacity:0;
       transform: translateY(18px);
       transition: opacity 640ms var(--ease), transform 640ms var(--ease);
@@ -443,46 +438,41 @@
     }
     .page.vis{ opacity:1; transform: translateY(0); }
 
-    /* Full-bleed background for each page */
     .page::before{
       content:"";
       position:absolute;
       left:50%; transform:translateX(-50%);
       top:0; bottom:0;
       width: min(1600px, 100vw);
-      border-radius: 0;
       z-index:-1;
     }
 
-    /* Dark page variant */
     .page[data-mode="dark"]{
       color: var(--text);
       background: transparent;
     }
     .page[data-mode="dark"]::before{
       background:
-        radial-gradient(900px 460px at 16% 18%, rgba(59,74,43,.14), transparent 62%),
-        radial-gradient(780px 420px at 86% 26%, rgba(247,244,236,.07), transparent 62%),
+        radial-gradient(900px 460px at 16% 18%, rgba(59,74,43,.12), transparent 62%),
+        radial-gradient(760px 420px at 86% 26%, var(--blue-glow-3), transparent 62%),
         linear-gradient(180deg, rgba(8,22,51,.60), rgba(6,16,42,1));
       border-top: 1px solid rgba(247,244,236,.06);
       border-bottom: 1px solid rgba(247,244,236,.06);
     }
 
-    /* Light page variant (reverse colors) */
     .page[data-mode="light"]{
-      color: rgba(6,16,42,.92);
+      color: var(--blue-ink);
       background: transparent;
     }
     .page[data-mode="light"]::before{
       background:
-        radial-gradient(900px 460px at 18% 14%, rgba(59,74,43,.10), transparent 62%),
-        radial-gradient(820px 420px at 86% 26%, rgba(11,28,60,.08), transparent 62%),
+        radial-gradient(900px 460px at 18% 14%, rgba(59,74,43,.08), transparent 62%),
+        radial-gradient(820px 420px at 86% 26%, var(--blue-glow-2), transparent 62%),
         linear-gradient(180deg, var(--paper), var(--ivory));
       border-top: 1px solid rgba(6,16,42,.08);
       border-bottom: 1px solid rgba(6,16,42,.08);
     }
 
-    /* Typography blocks */
     .tag{
       display:flex; align-items:center; gap:14px;
       font-family:var(--mono);
@@ -497,7 +487,7 @@
       content:"";
       height:1px;
       width: 150px;
-      background: linear-gradient(to right, rgba(59,74,43,.95), transparent);
+      background: linear-gradient(to right, rgba(45,120,255,.65), transparent);
       opacity: .9;
     }
 
@@ -515,19 +505,15 @@
 
     .p{ margin-bottom: 16px; max-width: 76ch; }
 
-    /* Light mode paragraph + word hover adjustments */
     .page[data-mode="light"] .fx{
       color: rgba(6,16,42,.74);
     }
     .page[data-mode="light"] .fx .w{ opacity:.92; }
-    .page[data-mode="light"] .fx .w:hover{
-      color: rgba(6,16,42,.95);
-    }
+    .page[data-mode="light"] .fx .w:hover{ color: rgba(6,16,42,.95); }
     .page[data-mode="light"] .fx .w::after{
-      background: linear-gradient(90deg, transparent, rgba(59,74,43,.85), transparent);
+      background: linear-gradient(90deg, transparent, rgba(45,120,255,.55), transparent);
     }
 
-    /* Rail */
     .rail{
       margin: 22px 0 16px;
       padding: 18px 0;
@@ -554,7 +540,6 @@
     .rail .item::before{ content:"—"; position:absolute; left:0; top:0; color: rgba(0,0,0,.25); }
     .page[data-mode="dark"] .rail .item::before{ color: rgba(247,244,236,.28); }
 
-    /* Cards */
     .grid{
       margin-top: 38px;
       display:grid;
@@ -571,15 +556,14 @@
       cursor:pointer;
     }
 
-    /* Dark cards */
     .page[data-mode="dark"] .card{
       border:1px solid rgba(247,244,236,.075);
       background: linear-gradient(180deg, rgba(247,244,236,.03), rgba(247,244,236,.015));
     }
     .page[data-mode="dark"] .card::before{
       content:""; position:absolute; inset:0;
-      background: radial-gradient(700px 240px at 20% 0%, rgba(59,74,43,.16), transparent 62%);
-      opacity:.6;
+      background: radial-gradient(700px 240px at 20% 0%, rgba(45,120,255,.12), transparent 62%);
+      opacity:.55;
       pointer-events:none;
     }
     .page[data-mode="dark"] .card:hover{
@@ -591,7 +575,6 @@
     .page[data-mode="dark"] .title{ color: var(--wash); }
     .page[data-mode="dark"] .body{ color: rgba(247,244,236,.52); }
 
-    /* Light cards */
     .page[data-mode="light"] .card{
       border:1px solid rgba(6,16,42,.10);
       background: linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.40));
@@ -599,8 +582,8 @@
     }
     .page[data-mode="light"] .card::before{
       content:""; position:absolute; inset:0;
-      background: radial-gradient(700px 240px at 20% 0%, rgba(59,74,43,.12), transparent 62%);
-      opacity:.8;
+      background: radial-gradient(700px 240px at 20% 0%, rgba(45,120,255,.10), transparent 62%);
+      opacity:.85;
       pointer-events:none;
     }
     .page[data-mode="light"] .card:hover{
@@ -635,7 +618,6 @@
     .page[data-mode="light"] .title{ color: rgba(6,16,42,.94); }
     .page[data-mode="light"] .body{ color: rgba(6,16,42,.72); }
 
-    /* Requirement panel */
     .panel{
       margin-top: 28px;
       border-radius: var(--r2);
@@ -658,7 +640,7 @@
     }
     .dot{
       width: 6px; height: 6px; border-radius: 50%;
-      background: rgba(59,74,43,.95);
+      background: rgba(45,120,255,.75);
       margin-top: 6px;
       flex:0 0 auto;
     }
@@ -719,8 +701,9 @@
       top:0; bottom:0; width:min(1600px, 100vw);
       z-index:-1;
       background:
-        radial-gradient(ellipse 55% 36% at 50% 42%, rgba(239,233,219,.12), transparent 62%),
-        linear-gradient(180deg, rgba(59,74,43,.06), rgba(6,16,42,0));
+        radial-gradient(ellipse 55% 36% at 50% 42%, rgba(239,233,219,.10), transparent 62%),
+        radial-gradient(900px 420px at 86% 26%, var(--blue-glow-2), transparent 62%),
+        linear-gradient(180deg, rgba(59,74,43,.05), rgba(6,16,42,0));
       border-top:1px solid rgba(247,244,236,.06);
       border-bottom:1px solid rgba(247,244,236,.06);
     }
@@ -753,7 +736,7 @@
     .quote em{
       font-style: normal;
       color: rgba(239,233,219,.94);
-      border-bottom: 1px solid rgba(59,74,43,.55);
+      border-bottom: 1px solid rgba(45,120,255,.45);
       padding-bottom: 2px;
     }
     .attr{
@@ -795,8 +778,8 @@
     .tn:hover{ color: rgba(247,244,236,.72); background: rgba(247,244,236,.02); }
     .tn.active{
       color: rgba(247,244,236,.92);
-      border-left-color: rgba(59,74,43,.85);
-      background: rgba(59,74,43,.16);
+      border-left-color: rgba(45,120,255,.65);
+      background: rgba(45,120,255,.10);
     }
     .panels{ border-top:1px solid rgba(247,244,236,.075); }
     .tp{
@@ -821,7 +804,6 @@
       letter-spacing:-0.02em;
       color: var(--wash);
       margin-bottom: 10px;
-      /* typewriter target */
       display:inline-block;
     }
     .tp-b{
@@ -841,7 +823,14 @@
       transform: translateY(2px);
       animation: caretBlink 1s step-end infinite;
     }
+    .tw-caret.dark{ border-left-color: rgba(6,16,42,.55); }
     @keyframes caretBlink{ 50%{ opacity:0; } }
+
+    /* Full-page typewriter target styling */
+    [data-type]{
+      position:relative;
+    }
+    .type-done{ }
 
     /* CTA strip */
     .cta{
@@ -857,8 +846,9 @@
       top:0; bottom:0; width:min(1600px, 100vw);
       z-index:-1;
       background:
-        radial-gradient(900px 420px at 16% 30%, rgba(59,74,43,.12), transparent 62%),
-        linear-gradient(180deg, rgba(239,233,219,.06), rgba(6,16,42,0));
+        radial-gradient(900px 420px at 16% 30%, rgba(59,74,43,.10), transparent 62%),
+        radial-gradient(820px 420px at 86% 26%, var(--blue-glow-2), transparent 62%),
+        linear-gradient(180deg, rgba(239,233,219,.05), rgba(6,16,42,0));
       border-top:1px solid rgba(247,244,236,.06);
     }
     .cta strong{
@@ -892,7 +882,7 @@
       position:absolute; inset:0;
       z-index:-1;
       background:
-        radial-gradient(900px 420px at 80% 10%, rgba(59,74,43,.10), transparent 60%),
+        radial-gradient(900px 420px at 80% 10%, var(--blue-glow-2), transparent 60%),
         rgba(247,244,236,.015);
       border:1px solid rgba(247,244,236,.075);
       border-radius: var(--r2);
@@ -907,7 +897,7 @@
       color: rgba(247,244,236,.52);
       margin-bottom: 14px;
     }
-    .btag::before{ content:""; width:20px; height:1px; background: rgba(59,74,43,.85); }
+    .btag::before{ content:""; width:20px; height:1px; background: rgba(45,120,255,.65); }
     .bgrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -953,7 +943,7 @@
     }
     .site-footer a:hover{
       color: var(--wash);
-      border-bottom-color: rgba(59,74,43,.75);
+      border-bottom-color: rgba(45,120,255,.60);
     }
 
     /* Responsive */
@@ -1057,67 +1047,79 @@
     <!-- PAGE 01 (LIGHT) Accountability Gap -->
     <section class="page pad" id="deficit" data-mode="light" aria-labelledby="deficit-h">
       <div class="wrap">
-        <div class="tag">[01] The Accountability Gap</div>
-        <h2 class="h2" id="deficit-h">The Accountability<br>Gap</h2>
+        <div class="tag" data-type data-type-speed="10">[01] The Accountability Gap</div>
+        <h2 class="h2" id="deficit-h" data-type data-type-speed="12">The Accountability<br>Gap</h2>
 
-        <p class="fx p" data-fx>
+        <p class="fx p" data-fx data-type data-type-speed="9">
           Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is often secondary. When a decision is later questioned—through regulatory inquiry, internal audit, incident review, or litigation—organizations reconstruct events from partial logs and traces that were never designed to function as durable evidence.
         </p>
 
         <div class="rail" aria-label="Telemetry is not proof">
-          <div class="item">Telemetry describes activity.</div>
-          <div class="item">It does not preserve proof.</div>
-          <div class="item">Reconstruction is interpretive, not deterministic.</div>
+          <div class="item" data-type data-type-speed="10">Telemetry describes activity.</div>
+          <div class="item" data-type data-type-speed="10">It does not preserve proof.</div>
+          <div class="item" data-type data-type-speed="10">Reconstruction is interpretive, not deterministic.</div>
         </div>
 
-        <p class="fx p" data-fx>
+        <p class="fx p" data-fx data-type data-type-speed="9">
           Institutions require artifacts that are canonical in structure, explicit in capture scope, cryptographically sealed, and independently verifiable. Without those properties, oversight depends on operator assertions rather than verifiable integrity.
         </p>
 
         <div class="grid" role="list" aria-label="Dimensions">
           <article class="card" role="listitem" tabindex="0" data-jump="#deficit">
-            <div class="meta">01 · Evidence Deficit</div>
-            <div class="title">Activity ≠ Evidence</div>
-            <div class="body">Logs describe what happened. They are not integrity-sealed records designed for institutional verification.</div>
+            <div class="meta" data-type data-type-speed="10">01 · Evidence Deficit</div>
+            <div class="title" data-type data-type-speed="11">Activity ≠ Evidence</div>
+            <div class="body" data-type data-type-speed="8">Logs describe what happened. They are not integrity-sealed records designed for institutional verification.</div>
           </article>
 
           <article class="card" role="listitem" tabindex="0" data-jump="#how">
-            <div class="meta">02 · Verification Constraint</div>
-            <div class="title">Verify Without Exposure</div>
-            <div class="body">Oversight often requires validation without disclosing proprietary architecture, weights, or trade-secret internals.</div>
+            <div class="meta" data-type data-type-speed="10">02 · Verification Constraint</div>
+            <div class="title" data-type data-type-speed="11">Verify Without Exposure</div>
+            <div class="body" data-type data-type-speed="8">Oversight often requires validation without disclosing proprietary architecture, weights, or trade-secret internals.</div>
           </article>
 
           <article class="card" role="listitem" tabindex="0" data-jump="#is">
-            <div class="meta">03 · Architectural Fix</div>
-            <div class="title">Decoupled Evidentiary Layer</div>
-            <div class="body">Evidence infrastructure should remain structurally independent from decision authority and model internals.</div>
+            <div class="meta" data-type data-type-speed="10">03 · Architectural Fix</div>
+            <div class="title" data-type data-type-speed="11">Decoupled Evidentiary Layer</div>
+            <div class="body" data-type data-type-speed="8">Evidence infrastructure should remain structurally independent from decision authority and model internals.</div>
           </article>
 
           <article class="card" role="listitem" tabindex="0" data-jump="#isnot">
-            <div class="meta">04 · Boundary Discipline</div>
-            <div class="title">Records, Not Judgments</div>
-            <div class="body">Verification confirms integrity and provenance under policy scope—not correctness, fairness, or compliance outcomes.</div>
+            <div class="meta" data-type data-type-speed="10">04 · Boundary Discipline</div>
+            <div class="title" data-type data-type-speed="11">Records, Not Judgments</div>
+            <div class="body" data-type data-type-speed="8">Verification confirms integrity and provenance under policy scope—not correctness, fairness, or compliance outcomes.</div>
           </article>
         </div>
 
         <div class="panel" role="region" aria-label="Institutional requirements">
-          <div class="panel-h">Institutional requirements for durable evidence</div>
+          <div class="panel-h" data-type data-type-speed="10">Institutional requirements for durable evidence</div>
           <div class="panel-grid">
             <div class="req">
               <div class="dot"></div>
-              <div><strong>Canonical structure</strong><span>Stable schema producible by any conforming implementation</span></div>
+              <div>
+                <strong data-type data-type-speed="12">Canonical structure</strong>
+                <span data-type data-type-speed="9">Stable schema producible by any conforming implementation</span>
+              </div>
             </div>
             <div class="req">
               <div class="dot"></div>
-              <div><strong>Policy-scoped capture</strong><span>Explicit inclusion, exclusion, and masking defined before generation</span></div>
+              <div>
+                <strong data-type data-type-speed="12">Policy-scoped capture</strong>
+                <span data-type data-type-speed="9">Explicit inclusion, exclusion, and masking defined before generation</span>
+              </div>
             </div>
             <div class="req">
               <div class="dot"></div>
-              <div><strong>Cryptographic sealing</strong><span>Tamper-evidence and origin authenticity via hash + signature</span></div>
+              <div>
+                <strong data-type data-type-speed="12">Cryptographic sealing</strong>
+                <span data-type data-type-speed="9">Tamper-evidence and origin authenticity via hash + signature</span>
+              </div>
             </div>
             <div class="req">
               <div class="dot"></div>
-              <div><strong>Independent verification</strong><span>Reproducible validation without access to proprietary internals</span></div>
+              <div>
+                <strong data-type data-type-speed="12">Independent verification</strong>
+                <span data-type data-type-speed="9">Reproducible validation without access to proprietary internals</span>
+              </div>
             </div>
           </div>
         </div>
@@ -1345,7 +1347,7 @@
     // Footer year
     document.getElementById('yr').textContent = new Date().getFullYear();
 
-    // Cursor + brighter spotlight
+    // Cursor + BLUE spotlight
     const cursor = document.getElementById('cursor');
     const spotlight = document.getElementById('spotlight');
 
@@ -1357,13 +1359,13 @@
         cursor.style.left = mx + 'px';
         cursor.style.top  = my + 'px';
 
-        // Brighter + larger cone per request (still institutional)
+        // Blue highlight across all backgrounds (requested)
         spotlight.style.background =
-          `radial-gradient(circle 460px at ${mx}px ${my}px,
-            rgba(247,244,236,.09) 0%,
-            rgba(59,74,43,.12) 18%,
-            rgba(59,74,43,.06) 34%,
-            transparent 72%)`;
+          `radial-gradient(circle 520px at ${mx}px ${my}px,
+            rgba(45,120,255,.14) 0%,
+            rgba(45,120,255,.08) 24%,
+            rgba(45,120,255,.04) 40%,
+            transparent 74%)`;
       };
 
       document.addEventListener('mousemove', (e) => {
@@ -1479,7 +1481,6 @@
     document.querySelectorAll('[data-fx]').forEach(wrapWords);
 
     // Typewriter effect for technical headings (tp-h) when each panel scrolls into view.
-    // Runs once per panel.
     const typeHeading = (el) => {
       const full = el.getAttribute('data-tw-text') || el.textContent.trim();
       el.textContent = '';
@@ -1491,9 +1492,8 @@
         i++;
         el.textContent = full.slice(0, i);
         if (i < full.length) {
-          requestAnimationFrame(() => setTimeout(tick, 18)); // stable, not jittery
+          requestAnimationFrame(() => setTimeout(tick, 18));
         } else {
-          // keep caret for a beat then remove
           el.appendChild(caret);
           setTimeout(() => caret.remove(), 900);
         }
@@ -1501,7 +1501,45 @@
       tick();
     };
 
+    // NEW: Full-page typewriter for Accountability Gap page (requested)
+    // Types every element marked with [data-type] in a clean sequence (top-to-bottom), once.
+    const getText = (el) => el.getAttribute('data-text') || el.textContent;
+    const setText = (el, t) => { el.textContent = t; };
+
+    const typeElement = (el, speed) => new Promise((resolve) => {
+      const original = getText(el).trimEnd();
+      el.setAttribute('data-text', original);
+      setText(el, '');
+
+      const isLight = el.closest('[data-mode="light"]');
+      const caret = document.createElement('span');
+      caret.className = 'tw-caret' + (isLight ? ' dark' : '');
+
+      let i = 0;
+      const step = () => {
+        i++;
+        setText(el, original.slice(0, i));
+        if (i < original.length) {
+          setTimeout(step, speed);
+        } else {
+          el.appendChild(caret);
+          setTimeout(() => { caret.remove(); resolve(); }, 420);
+        }
+      };
+      step();
+    });
+
+    const typeSequence = async (root) => {
+      const nodes = [...root.querySelectorAll('[data-type]')];
+      for (const el of nodes) {
+        const sp = Math.max(6, Math.min(22, parseInt(el.getAttribute('data-type-speed') || '10', 10)));
+        await typeElement(el, sp);
+      }
+      root.classList.add('type-done');
+    };
+
     if (!prefersReduced) {
+      // Technical headings (existing)
       const twPanels = document.querySelectorAll('.tp[data-tw]');
       const twObs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
@@ -1512,8 +1550,19 @@
           }
         });
       }, { threshold: 0.62 });
-
       twPanels.forEach(p => twObs.observe(p));
+
+      // Accountability Gap full-page typing
+      const deficit = document.getElementById('deficit');
+      const deficitObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && !deficit.dataset.typed) {
+            deficit.dataset.typed = "1";
+            typeSequence(deficit);
+          }
+        });
+      }, { threshold: 0.28 });
+      deficitObs.observe(deficit);
     }
   </script>
 </body>
