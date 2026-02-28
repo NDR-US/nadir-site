@@ -4,47 +4,50 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>CEYO — Evidentiary Infrastructure for Autonomous Systems</title>
-  <meta name="description" content="CEYO is a weight-neutral, policy-scoped integrity layer. Canonical artifacts. Cryptographic sealing. Independent verification under constrained disclosure."/>
+  <meta name="description" content="CEYO is a decoupled evidentiary layer producing policy-scoped, canonical artifacts for independent verification under constrained disclosure."/>
   <meta name="theme-color" content="#071227"/>
 
-  <!-- Fonts -->
+  <!-- Fonts (keep your established feel; you can swap later if you provide the exact Anthropic font name/file) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;650&display=swap" rel="stylesheet">
 
   <style>
     :root{
+      /* palette: navy + washed off-white + olive accents (no drift) */
       --navy:#071227;
       --navy2:#0A1730;
-      --wash:#F6F4EE;
-      --wash2:#EEEADF;
+      --ink:#071227;
 
-      --text: rgba(246,244,238,.92);
-      --muted: rgba(246,244,238,.66);
-      --muted2: rgba(246,244,238,.44);
+      --wash:#F3ECD3;      /* your washed off-white / ivory */
+      --wash2:#EFE6C9;     /* subtle variant only (kept close) */
 
-      --ink: rgba(7,18,39,.94);
-      --ink2: rgba(7,18,39,.74);
+      --olive:#2E3A16;
+      --olive2:#3A4A1C;
 
-      --stroke: rgba(246,244,238,.14);
-      --stroke2: rgba(246,244,238,.08);
+      --blue:#3E76FF;
+      --blue2:#7FA8FF;
 
-      --blue:#4A84FF;
-      --blue2:#88B0FF;
+      --text: rgba(243,236,211,.92);
+      --muted: rgba(243,236,211,.70);
+      --muted2: rgba(243,236,211,.48);
 
-      --max:1240px;
+      --stroke: rgba(243,236,211,.14);
+      --stroke2: rgba(243,236,211,.08);
+
       --radius:18px;
+      --max:1240px;
     }
 
     *{ box-sizing:border-box; }
-    html{ scroll-behavior:smooth; font-size:16px; }
+    html{ scroll-behavior:smooth; }
     body{
       margin:0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(1200px 800px at 20% 10%, rgba(74,132,255,.12), transparent 55%),
-        radial-gradient(900px 600px at 80% 30%, rgba(74,132,255,.08), transparent 55%),
+        radial-gradient(1200px 800px at 20% 10%, rgba(62,118,255,.14), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(62,118,255,.10), transparent 55%),
         linear-gradient(180deg, var(--navy) 0%, #050C1A 100%);
       min-height:100vh;
       overflow-x:hidden;
@@ -54,7 +57,7 @@
     /* grain */
     #grain{
       position:fixed; inset:0; z-index:9998; pointer-events:none;
-      opacity:.035;
+      opacity:.032;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='420' height='420' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size:220px 220px;
     }
@@ -72,7 +75,7 @@
       transform: translate(-50%,-50%);
       transition: width .14s ease, height .14s ease, opacity .14s ease;
     }
-    #cursor.large{ width:42px; height:42px; opacity:.55; }
+    #cursor.large{ width:44px; height:44px; opacity:.55; }
     @media (hover:none){ #cursor{ display:none; } }
 
     /* top nav */
@@ -90,34 +93,25 @@
       border-bottom-color: var(--stroke2);
       backdrop-filter: blur(8px);
     }
+
+    /* IMPORTANT: do not change the CEYO logo treatment (no split, no new mark) */
     .brand{
-      font-weight:600;
-      letter-spacing:.02em;
-      font-size:22px;
+      font-weight:650;
+      letter-spacing:.06em;
+      font-size:26px;
+      text-transform:uppercase;
       color: var(--wash);
       display:flex; align-items:center; gap:10px;
     }
-    .brandMark{
-      width:20px; height:20px;
-      border:1px solid rgba(246,244,238,.25);
-      border-radius:6px;
-      background: rgba(246,244,238,.06);
-      position:relative;
-      overflow:hidden;
-    }
-    .brandMark::after{
-      content:"";
-      position:absolute; inset:-40%;
-      background: radial-gradient(circle at 30% 30%, rgba(74,132,255,.55), transparent 60%);
-      opacity:.75;
-      transform: rotate(18deg);
-    }
-    .brandName{
-      font-weight:650;
-      font-size:24px;
-      letter-spacing:.06em;
+    .brand .sub{
+      font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size:9px;
+      letter-spacing:.22em;
       text-transform:uppercase;
+      color: var(--muted2);
+      margin-left:10px;
     }
+
     .navLinks{ display:flex; align-items:center; gap:6px; }
     .navLinks a{
       font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -127,23 +121,23 @@
       color: var(--muted2);
       padding:8px 12px;
       border-radius:999px;
-      transition: color .12s ease, background .12s ease;
+      transition: color .12s ease, background .12s ease, border-color .12s ease;
     }
-    .navLinks a:hover{ color: var(--wash); background: rgba(246,244,238,.05); }
-    .navLinks a.active{ color: var(--wash); background: rgba(246,244,238,.04); }
+    .navLinks a:hover{ color: var(--wash); background: rgba(243,236,211,.05); }
+    .navLinks a.active{ color: var(--wash); background: rgba(243,236,211,.04); }
     .navLinks .cta{
       margin-left:10px;
-      color: rgba(74,132,255,.95);
-      border:1px solid rgba(74,132,255,.35);
-      background: rgba(74,132,255,.10);
+      color: rgba(62,118,255,.95);
+      border:1px solid rgba(62,118,255,.38);
+      background: rgba(62,118,255,.10);
       padding:9px 14px;
     }
     .navLinks .cta:hover{
-      background: rgba(74,132,255,.18);
-      border-color: rgba(74,132,255,.55);
+      background: rgba(62,118,255,.18);
+      border-color: rgba(62,118,255,.58);
     }
 
-    /* bottom bar */
+    /* bottom index */
     #indexbar{
       position:fixed; bottom:0; left:0; right:0; z-index:900;
       height:50px;
@@ -153,19 +147,18 @@
       backdrop-filter: blur(8px);
     }
     .ib{
-      flex:1;
-      display:flex; align-items:center; justify-content:center;
+      flex:1; display:flex; align-items:center; justify-content:center;
       font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size:10px; letter-spacing:.22em; text-transform:uppercase;
       color: var(--muted2);
-      border-right: 1px solid rgba(246,244,238,.06);
+      border-right: 1px solid rgba(243,236,211,.06);
       transition: color .12s ease, background .12s ease, border-top-color .12s ease;
     }
     .ib:last-child{ border-right:none; }
-    .ib:hover{ color: var(--wash); background: rgba(246,244,238,.05); }
-    .ib.active{ color: var(--wash); border-top: 1px solid rgba(74,132,255,.9); }
+    .ib:hover{ color: var(--wash); background: rgba(243,236,211,.05); }
+    .ib.active{ color: var(--wash); border-top: 1px solid rgba(62,118,255,.9); }
 
-    /* hero sticky */
+    /* HERO */
     #heroWrap{ position:relative; height: 220vh; }
     #hero{
       position:sticky; top:0; height:100vh;
@@ -177,8 +170,8 @@
       content:"";
       position:absolute; inset:0;
       background-image:
-        linear-gradient(rgba(246,244,238,.030) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(246,244,238,.030) 1px, transparent 1px);
+        linear-gradient(rgba(243,236,211,.030) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(243,236,211,.030) 1px, transparent 1px);
       background-size: 88px 88px;
       mask-image: radial-gradient(ellipse 85% 70% at 55% 35%, black 0%, transparent 78%);
       opacity:.85;
@@ -196,10 +189,10 @@
       display:flex; align-items:center; gap:14px;
       font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size:10px; letter-spacing:.24em; text-transform:uppercase;
-      color: rgba(74,132,255,.92);
+      color: rgba(62,118,255,.92);
       margin-bottom: 24px;
     }
-    .kLine{ width:36px; height:1px; background: rgba(74,132,255,.85); }
+    .kLine{ width:36px; height:1px; background: rgba(62,118,255,.85); }
 
     #heroH1{
       margin:0;
@@ -212,48 +205,46 @@
       max-width: 980px;
       will-change: opacity, filter, transform;
     }
-    .line2{ display:block; color: rgba(74,132,255,.95); }
+    .line2{ display:block; color: rgba(62,118,255,.95); }
 
-    /* Telemetry shimmer (works on mobile too) */
+    /* Telemetry shimmer (blue highlight) */
     .telemetryWord{
       position:relative;
       display:inline-block;
-      color: rgba(74,132,255,.95);
+      color: rgba(62,118,255,.95);
     }
     .telemetryWord::after{
       content:"";
-      position:absolute; inset:-6px -10px;
+      position:absolute; inset:-8px -12px;
       background: linear-gradient(110deg,
         transparent 0%,
-        rgba(74,132,255,.0) 18%,
-        rgba(74,132,255,.75) 35%,
-        rgba(136,176,255,.95) 45%,
-        rgba(74,132,255,.65) 55%,
-        rgba(74,132,255,.0) 72%,
+        rgba(62,118,255,.0) 18%,
+        rgba(62,118,255,.78) 35%,
+        rgba(127,168,255,.95) 45%,
+        rgba(62,118,255,.70) 55%,
+        rgba(62,118,255,.0) 72%,
         transparent 100%);
       transform: translateX(-120%);
-      opacity:.85;
-      filter: blur(.2px);
+      opacity:.90;
       pointer-events:none;
       animation: shimmer 3.2s ease-in-out infinite;
-      border-radius: 10px;
+      border-radius: 12px;
     }
     @keyframes shimmer{
       0%{ transform: translateX(-125%); opacity:0; }
-      12%{ opacity:.9; }
-      45%{ opacity:.85; }
-      70%{ opacity:0; }
+      10%{ opacity:.95; }
+      55%{ opacity:.90; }
+      72%{ opacity:0; }
       100%{ transform: translateX(125%); opacity:0; }
     }
 
-    /* IMPORTANT: ensure H1 always shows on mobile */
+    /* mobile: ensure hero title is visible */
     @media (max-width: 620px){
-      #heroH1{ font-size: 52px; letter-spacing:-0.03em; line-height: .95; }
-      .line2{ margin-top: 6px; }
-      .telemetryWord::after{ inset:-8px -10px; } /* slightly larger mask */
+      #heroH1{ font-size: 52px; letter-spacing:-0.03em; line-height:.95; }
+      .telemetryWord::after{ inset:-10px -12px; }
     }
 
-    .heroBelow{ margin-top: 28px; max-width: 720px; will-change: opacity, transform; }
+    .heroBelow{ margin-top: 28px; max-width: 760px; will-change: opacity, transform; }
 
     .lead{
       font-size: 15px;
@@ -271,6 +262,32 @@
       transition: opacity .55s ease, transform .55s ease;
     }
     .revealWords.on .w{ opacity:1; transform: translateY(0); }
+
+    /* buttons */
+    .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      padding: 13px 22px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      color: var(--muted);
+      background: rgba(243,236,211,.02);
+      transition: background .15s ease, color .15s ease, border-color .15s ease, transform .08s ease;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{ color: var(--wash); border-color: rgba(62,118,255,.35); background: rgba(62,118,255,.10); }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{
+      border-color: rgba(62,118,255,.55);
+      background: rgba(62,118,255,.14);
+      color: rgba(127,168,255,.95);
+    }
+    .btn.primary:hover{ background: rgba(62,118,255,.22); border-color: rgba(62,118,255,.75); }
 
     .denials{
       margin: 18px 0 18px;
@@ -290,38 +307,13 @@
       line-height:1.5;
     }
     .denial::before{ content:"×"; position:absolute; left:0; top:0; color: rgba(184,60,60,.55); font-size: 13px; }
-    .affirm{ color: rgba(74,132,255,.95); margin-top: 6px; }
-    .affirm::before{ content:"→"; position:absolute; left:0; color: rgba(74,132,255,.95); font-size: 13px; }
-
-    .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; }
-    .btn{
-      display:inline-flex; align-items:center; gap:10px;
-      font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 10px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      padding: 13px 22px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      color: var(--muted);
-      background: rgba(246,244,238,.02);
-      transition: background .15s ease, color .15s ease, border-color .15s ease, transform .08s ease;
-      cursor:pointer;
-      user-select:none;
-    }
-    .btn:hover{ color: var(--wash); border-color: rgba(74,132,255,.35); background: rgba(74,132,255,.10); }
-    .btn:active{ transform: translateY(1px); }
-    .btn.primary{
-      border-color: rgba(74,132,255,.55);
-      background: rgba(74,132,255,.14);
-      color: rgba(136,176,255,.95);
-    }
-    .btn.primary:hover{ background: rgba(74,132,255,.22); border-color: rgba(74,132,255,.75); }
+    .affirm{ color: rgba(62,118,255,.95); margin-top: 6px; }
+    .affirm::before{ content:"→"; position:absolute; left:0; color: rgba(62,118,255,.95); font-size: 13px; }
 
     .scrollHint{
       position:absolute; right: 48px; bottom: 76px; z-index:3;
       display:flex; flex-direction:column; align-items:center; gap:8px;
-      opacity:.55;
+      opacity:.62;
     }
     .scrollHint span{
       font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -331,7 +323,7 @@
     }
     .scrollLine{
       width:1px; height:52px;
-      background: linear-gradient(to bottom, rgba(74,132,255,.0), rgba(74,132,255,.55), rgba(74,132,255,.0));
+      background: linear-gradient(to bottom, rgba(62,118,255,.0), rgba(62,118,255,.65), rgba(62,118,255,.0));
       animation: scrollPulse 1.9s ease-in-out infinite;
     }
     @keyframes scrollPulse{
@@ -339,7 +331,7 @@
       50%{ transform: scaleY(1); opacity:1; transform-origin: top; }
     }
 
-    /* main content */
+    /* CONTENT */
     #content{ position:relative; z-index:10; background:#050C1A; padding-bottom: 120px; }
 
     .sect{
@@ -352,15 +344,16 @@
       transition: opacity .65s ease, transform .65s ease, background .35s ease, border-top-color .35s ease;
     }
     .sect.vis{ opacity:1; transform: translateY(0); }
-    .sect.focus{ border-top-color: rgba(74,132,255,.65); background: rgba(74,132,255,.03); }
+    .sect.focus{ border-top-color: rgba(62,118,255,.65); background: rgba(62,118,255,.03); }
 
+    /* light section uses your wash directly (no drift) */
     .sect.light{
       background: linear-gradient(180deg, var(--wash) 0%, var(--wash2) 100%);
-      color: var(--ink);
-      border-top: 1px solid rgba(7,18,39,.12);
+      color: rgba(7,18,39,.94);
+      border-top: 1px solid rgba(7,18,39,.14);
       box-shadow: 0 -1px 0 rgba(7,18,39,.05) inset;
     }
-    .sect.light.focus{ background: linear-gradient(180deg, #FBFAF5 0%, var(--wash2) 100%); border-top-color: rgba(7,18,39,.22); }
+    .sect.light.focus{ border-top-color: rgba(7,18,39,.24); }
     .sect.light .tag{ color: rgba(7,18,39,.78); }
     .sect.light .tag::after{ background: linear-gradient(to right, rgba(7,18,39,.45), transparent); }
     .sect.light .h2{ color: rgba(7,18,39,.94); }
@@ -370,14 +363,14 @@
       display:flex; align-items:center; gap:14px;
       font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size:10px; letter-spacing:.22em; text-transform:uppercase;
-      color: rgba(74,132,255,.92);
+      color: rgba(62,118,255,.92);
       margin-bottom: 18px;
     }
     .tag::after{
       content:"";
       height:1px;
       width: 140px;
-      background: linear-gradient(to right, rgba(74,132,255,.6), transparent);
+      background: linear-gradient(to right, rgba(62,118,255,.6), transparent);
     }
 
     .h2{
@@ -392,25 +385,24 @@
     }
 
     .p{
-      margin:0 0 18px; /* more breathing room */
+      margin:0 0 18px;
       font-size: 15px;
-      line-height: 1.92; /* more readability */
+      line-height: 1.95;
       color: var(--muted);
       max-width: 76ch;
     }
-    .p + .p{ margin-top: 10px; } /* ensure paragraph spacing */
+    .p + .p{ margin-top: 10px; }
 
-    /* DEFICIT cells */
+    /* deficit cards - visible */
     .cells{
       margin-top: 34px;
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px; /* not compact */
-      background: transparent;
+      gap: 14px;
     }
     .cell{
-      border: 1px solid rgba(7,18,39,.14);
-      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(7,18,39,.16);
+      background: rgba(255,255,255,.58);
       border-radius: var(--radius);
       padding: 22px 22px;
       position:relative;
@@ -420,14 +412,14 @@
     .cell::before{
       content:"";
       position:absolute; inset:0;
-      background: radial-gradient(520px 240px at 30% 20%, rgba(74,132,255,.16), transparent 60%);
+      background: radial-gradient(520px 240px at 30% 20%, rgba(62,118,255,.18), transparent 60%);
       opacity:.85;
       pointer-events:none;
     }
     .cell:hover{
       transform: translateY(-1px);
       box-shadow: 0 18px 40px rgba(7,18,39,.12);
-      border-color: rgba(74,132,255,.35);
+      border-color: rgba(62,118,255,.38);
     }
     .cNum{
       font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -453,221 +445,49 @@
       position:relative; z-index:1;
     }
 
-    /* Requirements panel (make visible) */
-    .req{
-      margin-top: 28px;
-      border: 1px solid rgba(7,18,39,.14);
-      border-radius: var(--radius);
-      overflow:hidden;
-      background: rgba(255,255,255,.62);
-    }
-    .reqHead{
-      padding: 12px 18px;
-      border-bottom: 1px solid rgba(7,18,39,.12);
-      font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 9px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(7,18,39,.62);
-      background: rgba(255,255,255,.55);
-    }
-    .reqGrid{ display:grid; grid-template-columns: 1fr 1fr; }
-    .reqItem{
-      padding: 16px 18px;
-      border-bottom: 1px solid rgba(7,18,39,.10);
-      display:flex; gap:12px; align-items:flex-start;
-      color: rgba(7,18,39,.78);
-      font-size: 13px;
-      background: rgba(255,255,255,.30);
-    }
-    .reqItem:nth-child(odd){ border-right: 1px solid rgba(7,18,39,.10); }
-    .reqItem:nth-last-child(-n+2){ border-bottom:none; }
-    .dot{
-      width:7px; height:7px; border-radius:50%;
-      background: rgba(74,132,255,.95);
-      margin-top: 7px;
-      flex:0 0 auto;
-      box-shadow: 0 0 0 6px rgba(74,132,255,.10);
-    }
-    .reqItem strong{ display:block; color: rgba(7,18,39,.94); font-weight: 650; margin-bottom: 2px; }
-    .reqItem small{ display:block; color: rgba(7,18,39,.68); line-height:1.55; font-size: 12px; }
-
-    /* CEYO graph (no "Seal Map" label) */
-    .graphWrap{
-      margin-top: 26px;
-      padding: 10px 0 6px;
-    }
-    .graphSvg{
-      width:100%;
-      height:auto;
-      display:block;
-      border-radius: 16px;
-    }
-    .graphSvg text{
+    /* --- CEYO MAP (SVG) --- */
+    .mapWrap{ margin-top: 24px; }
+    .mapSvg{ width:100%; height:auto; display:block; border-radius:16px; }
+    .mapSvg text{
       font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       letter-spacing:.10em;
       text-transform: uppercase;
     }
-    .graphSvg .edge{ opacity:0; stroke-dasharray: 6 10; }
-    .graphSvg .node circle{ opacity:0; transform: scale(.95); transform-origin:center; }
-    .graphSvg .label{ opacity:0; transform: translateY(6px); fill: rgba(246,244,238,.66); font-size: 10px; }
-    .graphSvg .centerText{ fill: rgba(246,244,238,.92); font-size: 16px; letter-spacing:.22em; }
-    .graphSvg .halo{ opacity:0; }
 
-    .graphRun .edge{ animation: edgeIn .6s ease forwards; }
-    @keyframes edgeIn{ from{ opacity:0; stroke-dashoffset:220; } to{ opacity:.95; stroke-dashoffset:0; } }
-    .graphRun .node circle{ animation: nodeIn .55s ease forwards; }
+    .edge{ opacity:0; stroke-dasharray: 7 10; }
+    .node circle{ opacity:0; transform: scale(.95); transform-origin:center; }
+    .label{ opacity:0; transform: translateY(6px); fill: rgba(243,236,211,.68); font-size: 10px; }
+    .bubble{ opacity:0; transform: translateY(8px); }
+    .bubble rect{ fill: rgba(7,18,39,.88); stroke: rgba(243,236,211,.14); }
+    .bubble tspan{ fill: rgba(243,236,211,.78); font-size: 10px; letter-spacing:.02em; text-transform:none; }
+    .centerText{ fill: rgba(243,236,211,.92); font-size: 16px; letter-spacing:.22em; }
+    .halo{ opacity:0; }
+
+    .mapRun .edge{ animation: edgeIn .6s ease forwards; }
+    @keyframes edgeIn{ from{ opacity:0; stroke-dashoffset:240; } to{ opacity:.95; stroke-dashoffset:0; } }
+    .mapRun .node circle{ animation: nodeIn .55s ease forwards; }
     @keyframes nodeIn{ from{ opacity:0; transform: scale(.92);} to{ opacity:1; transform: scale(1);} }
-    .graphRun .label{ animation: labelIn .55s ease forwards; }
+    .mapRun .label{ animation: labelIn .55s ease forwards; }
     @keyframes labelIn{ from{ opacity:0; transform: translateY(6px);} to{ opacity:1; transform: translateY(0);} }
-    .graphRun .halo{ animation: haloPulse 1.15s ease forwards; }
+    .mapRun .halo{ animation: haloPulse 1.1s ease forwards; }
     @keyframes haloPulse{
-      0%{ opacity:0; stroke: rgba(74,132,255,0); }
-      30%{ opacity:1; stroke: rgba(74,132,255,.9); }
-      100%{ opacity:0; stroke: rgba(74,132,255,0); }
+      0%{ opacity:0; stroke: rgba(62,118,255,0); }
+      35%{ opacity:1; stroke: rgba(62,118,255,.95); }
+      100%{ opacity:0; stroke: rgba(62,118,255,0); }
     }
+    .mapRun .bubble{ animation: bubbleIn .55s ease forwards; }
+    @keyframes bubbleIn{ from{ opacity:0; transform: translateY(8px);} to{ opacity:1; transform: translateY(0);} }
 
-    /* Mini links row BELOW the graph (as requested) */
-    .miniRow{
-      display:flex; flex-wrap:wrap; gap: 10px;
-      padding: 12px 0 0;
-    }
-    .pill{
-      font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 9px;
-      letter-spacing:.22em;
-      text-transform: uppercase;
-      color: rgba(246,244,238,.62);
-      border: 1px solid rgba(246,244,238,.12);
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(246,244,238,.02);
-      transition: background .12s ease, border-color .12s ease, color .12s ease;
-    }
-    .pill:hover{
-      color: rgba(74,132,255,.95);
-      border-color: rgba(74,132,255,.35);
-      background: rgba(74,132,255,.08);
-    }
+    /* clickable map nodes */
+    .nodeBtn{ cursor:pointer; }
+    .nodeBtn:focus{ outline:none; }
+    .nodeBtn:focus-visible circle{ stroke: rgba(62,118,255,.9); stroke-width: 2; }
 
-    /* Other sections (kept from prior build, with spacing) */
-    .props{
-      margin-top: 30px;
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--stroke);
-      border: 1px solid var(--stroke);
-      border-radius: var(--radius);
-      overflow:hidden;
-    }
-    .prop{
-      background: rgba(246,244,238,.02);
-      padding: 22px 18px;
-      position:relative;
-      transition: background .16s ease;
-      min-height: 124px;
-    }
-    .prop:hover{ background: rgba(74,132,255,.06); }
-    .prop::after{
-      content:"";
-      position:absolute; left:0; right:0; bottom:0; height:2px;
-      background: linear-gradient(to right, rgba(74,132,255,.95), transparent);
-      transform: scaleX(0);
-      transform-origin:left;
-      transition: transform .3s ease;
-    }
-    .prop:hover::after{ transform: scaleX(1); }
-    .pl{
-      font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 9px;
-      letter-spacing: .20em;
-      text-transform: uppercase;
-      color: rgba(74,132,255,.95);
-      margin-bottom: 10px;
-    }
-    .pt{ font-weight: 650; font-size: 13px; color: var(--wash); margin-bottom: 6px; }
-    .pb{ font-size: 12px; line-height:1.65; color: var(--muted2); }
-
-    .notLayout{ margin-top: 10px; display:grid; grid-template-columns: 1fr 1fr; gap: 54px; align-items:start; }
-    .notBox{ border:1px solid var(--stroke); border-radius: var(--radius); overflow:hidden; background: rgba(246,244,238,.02); }
-    .notItem{
-      padding: 15px 18px;
-      border-bottom: 1px solid var(--stroke2);
-      display:flex; gap: 12px; align-items:center;
-      font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 11px;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--muted2);
-      transition: background .12s ease;
-    }
-    .notItem:last-child{ border-bottom:none; }
-    .notItem:hover{ background: rgba(74,132,255,.05); }
-    .x{ color: rgba(184,60,60,.55); font-size: 14px; }
-    .notCallout{
-      margin-top: 18px;
-      padding: 18px 18px;
-      border: 1px solid rgba(74,132,255,.25);
-      border-radius: var(--radius);
-      background: rgba(74,132,255,.08);
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.75;
-    }
-
-    .principle{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 104px 48px;
-      border-top: 1px solid var(--stroke2);
-      text-align:center;
-      position:relative;
-      overflow:hidden;
-      opacity:0;
-      transform: translateY(22px);
-      transition: opacity .65s ease, transform .65s ease;
-    }
-    .principle.vis{ opacity:1; transform: translateY(0); }
-    .principle::before{
-      content:"";
-      position:absolute; inset:0;
-      background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(74,132,255,.14), transparent 70%);
-      pointer-events:none;
-    }
-    .pHr{ display:flex; align-items:center; justify-content:center; gap: 22px; margin-bottom: 34px; }
-    .pHr::before,.pHr::after{ content:""; width: 90px; height:1px; background: rgba(246,244,238,.14); }
-    .pHr span{
-      font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 9px; letter-spacing:.24em; text-transform: uppercase;
-      color: var(--muted2);
-    }
-    .quote{
-      margin:0 auto;
-      max-width: 780px;
-      font-weight: 650;
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-      font-size: clamp(20px, 3.6vw, 42px);
-      line-height: 1.14;
-      color: var(--wash);
-      position:relative; z-index:1;
-    }
-    .quote em{ font-style: normal; color: rgba(74,132,255,.95); }
-    .attr{
-      margin-top: 22px;
-      font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 10px;
-      letter-spacing:.20em;
-      text-transform: uppercase;
-      color: var(--muted2);
-      position:relative; z-index:1;
-    }
-
-    .techLayout{ display:grid; grid-template-columns: 240px 1fr; gap: 54px; }
+    /* Technical properties nav */
+    .techLayout{ display:grid; grid-template-columns: 240px 1fr; gap: 54px; margin-top: 18px; }
     .techNav{
       position: sticky; top: 92px;
-      display:flex; flex-direction:column; gap:4px;
+      display:flex; flex-direction:column; gap:6px;
       padding-right:10px;
     }
     .tn{
@@ -683,8 +503,8 @@
       transition: color .12s ease, background .12s ease, border-left-color .12s ease;
       user-select:none;
     }
-    .tn:hover{ background: rgba(246,244,238,.04); color: var(--muted); border-left-color: rgba(74,132,255,.25); }
-    .tn.active{ color: rgba(74,132,255,.95); border-left-color: rgba(74,132,255,.85); background: rgba(74,132,255,.06); }
+    .tn:hover{ background: rgba(243,236,211,.04); color: var(--muted); border-left-color: rgba(62,118,255,.25); }
+    .tn.active{ color: rgba(62,118,255,.95); border-left-color: rgba(62,118,255,.85); background: rgba(62,118,255,.06); }
     .panel{ padding: 26px 0; border-bottom: 1px solid var(--stroke2); scroll-margin-top: 92px; }
     .panel:last-child{ border-bottom:none; }
     .pn{
@@ -692,16 +512,18 @@
       font-size: 9px;
       letter-spacing:.22em;
       text-transform: uppercase;
-      color: rgba(74,132,255,.95);
+      color: rgba(62,118,255,.95);
       margin-bottom: 8px;
     }
     .ph{ margin:0 0 10px; font-weight:650; font-size:20px; letter-spacing:-0.01em; color: var(--wash); }
-    .pbod{ margin:0; font-size:14px; line-height: 1.92; color: var(--muted); max-width: 72ch; }
+    .pbod{ margin:0; font-size:14px; line-height: 1.95; color: var(--muted); max-width: 72ch; }
 
+    /* typewriter caret for key headings */
     .tw{ display:inline-block; white-space: nowrap; overflow:hidden; border-right: 1px solid transparent; }
-    .twActive{ border-right-color: rgba(74,132,255,.55); animation: caret .9s steps(1) infinite; }
+    .twActive{ border-right-color: rgba(62,118,255,.55); animation: caret .9s steps(1) infinite; }
     @keyframes caret{ 50%{ border-right-color: transparent; } }
 
+    /* CTA + boundary */
     .ctaStrip{
       max-width: var(--max);
       margin: 0 auto;
@@ -727,7 +549,7 @@
     .boundary{
       border: 1px solid var(--stroke);
       border-radius: var(--radius);
-      background: rgba(246,244,238,.02);
+      background: rgba(243,236,211,.02);
       padding: 26px 26px;
     }
     .bTag{
@@ -739,7 +561,7 @@
       color: var(--muted2);
       margin-bottom: 16px;
     }
-    .bTag::before{ content:""; width:22px; height:1px; background: rgba(246,244,238,.22); }
+    .bTag::before{ content:""; width:22px; height:1px; background: rgba(243,236,211,.22); }
     .bGrid{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px 42px; }
     .bItem{
       margin:0;
@@ -749,7 +571,7 @@
       padding-left: 14px;
       position:relative;
     }
-    .bItem::before{ content:"·"; position:absolute; left:0; color: rgba(246,244,238,.26); }
+    .bItem::before{ content:"·"; position:absolute; left:0; color: rgba(243,236,211,.26); }
     .bClose{
       margin-top: 16px;
       padding-top: 16px;
@@ -759,6 +581,7 @@
       letter-spacing:.08em;
       color: var(--muted2);
     }
+
     .rights{
       max-width: var(--max);
       margin: 0 auto;
@@ -773,8 +596,8 @@
       justify-content: space-between;
       gap: 16px;
     }
-    .rights a{ color: rgba(74,132,255,.8); }
-    .rights a:hover{ color: rgba(74,132,255,.95); }
+    .rights a{ color: rgba(62,118,255,.8); }
+    .rights a:hover{ color: rgba(62,118,255,.95); }
 
     /* responsive */
     @media (max-width: 980px){
@@ -784,12 +607,7 @@
       .ctaStrip{ padding: 44px 22px; }
       .boundaryWrap{ padding: 0 22px 32px; }
       .rights{ padding: 0 22px 88px; }
-      .cells, .reqGrid{ grid-template-columns: 1fr; }
-      .reqItem:nth-child(odd){ border-right:none; }
-      .reqItem:nth-last-child(-n+2){ border-bottom: 1px solid rgba(7,18,39,.10); }
-      .reqItem:last-child{ border-bottom:none; }
-      .props{ grid-template-columns: 1fr 1fr; }
-      .notLayout{ grid-template-columns: 1fr; gap: 28px; }
+      .cells{ grid-template-columns: 1fr; }
       .techLayout{ grid-template-columns: 1fr; gap: 18px; }
       .techNav{ position: static; flex-direction: row; flex-wrap: wrap; }
       .tn{ border-left:none; border:1px solid var(--stroke2); }
@@ -798,10 +616,7 @@
     }
     @media (max-width: 620px){
       .navLinks{ display:none; }
-      .brandName{ font-size: 22px; }
       #heroWrap{ height: 200vh; }
-      #hero{ padding-bottom: 110px; }
-      .props{ grid-template-columns: 1fr; }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -817,9 +632,8 @@
   <div id="cursor" aria-hidden="true"></div>
 
   <nav id="topnav" aria-label="Primary navigation">
-    <a href="index.html" class="brand">
-      <span class="brandMark" aria-hidden="true"></span>
-      <span class="brandName">CEYO</span>
+    <a href="index.html" class="brand" aria-label="CEYO Home">
+      CEYO <span class="sub">Evidentiary Infrastructure</span>
     </a>
     <div class="navLinks">
       <a href="index.html" class="active">Overview</a>
@@ -845,100 +659,141 @@
         </h1>
 
         <div class="heroBelow" id="heroBelow">
-          <p class="lead revealWords" data-reveal>
-            CEYO is a weight-neutral, policy-scoped integrity layer that attaches beside AI inference systems and produces canonical artifacts representing defined inference-time decision-state context — cryptographically sealed for institutional verification under constrained disclosure conditions.
+          <p class="lead" data-reveal>
+            CEYO is a decoupled evidentiary layer that attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined inference-time decision-state context. These artifacts are deterministically structured and cryptographically sealed to support later institutional verification without default disclosure of proprietary internals.
           </p>
 
-          <!-- CEYO GRAPH (no title block, no "seal map" label) -->
-          <div class="graphWrap" id="graphBlock" aria-label="CEYO verification alignment map">
-            <svg class="graphSvg" id="graphSvg" viewBox="0 0 980 520" role="img" aria-label="CEYO alignment map">
+          <!-- CEYO MAP: ordered flow + labeled nodes + click targets + bubbles -->
+          <div class="mapWrap" id="ceyoMap" aria-label="CEYO verification map">
+            <svg class="mapSvg" id="mapSvg" viewBox="0 0 980 560" role="img" aria-label="CEYO map with capture, structure, sealing, keys, disclosure, availability">
               <defs>
                 <filter id="glow">
-                  <feGaussianBlur stdDeviation="3.5" result="b"/>
+                  <feGaussianBlur stdDeviation="3.3" result="b"/>
                   <feMerge>
                     <feMergeNode in="b"/>
                     <feMergeNode in="SourceGraphic"/>
                   </feMerge>
                 </filter>
 
-                <linearGradient id="lineGrad" x1="0" x2="1">
-                  <stop offset="0" stop-color="rgba(74,132,255,.10)"/>
-                  <stop offset="0.5" stop-color="rgba(74,132,255,.92)"/>
-                  <stop offset="1" stop-color="rgba(74,132,255,.10)"/>
+                <linearGradient id="edgeGrad" x1="0" x2="1">
+                  <stop offset="0" stop-color="rgba(62,118,255,.10)"/>
+                  <stop offset="0.5" stop-color="rgba(62,118,255,.92)"/>
+                  <stop offset="1" stop-color="rgba(62,118,255,.10)"/>
                 </linearGradient>
               </defs>
 
-              <!-- edges -->
-              <g fill="none" stroke="url(#lineGrad)" stroke-width="1.7" stroke-linecap="round" opacity="0.92">
-                <path class="edge" data-step="1" d="M490 250 L300 150"/>
-                <path class="edge" data-step="2" d="M490 250 L680 150"/>
-                <path class="edge" data-step="3" d="M490 250 L240 290"/>
-                <path class="edge" data-step="4" d="M490 250 L740 290"/>
-                <path class="edge" data-step="5" d="M490 250 L360 390"/>
-                <path class="edge" data-step="6" d="M490 250 L620 390"/>
+              <!-- FLOW: Capture -> Structure -> Sealing -> Keys -> Disclosure -> Availability -->
+              <g fill="none" stroke="url(#edgeGrad)" stroke-width="1.8" stroke-linecap="round" opacity="0.92">
+                <path class="edge" data-step="1" d="M170 190 L320 190"/>
+                <path class="edge" data-step="2" d="M370 190 L520 190"/>
+                <path class="edge" data-step="3" d="M570 190 L720 190"/>
+                <path class="edge" data-step="4" d="M770 190 L770 330"/>
+                <path class="edge" data-step="5" d="M770 380 L570 380"/>
+                <path class="edge" data-step="6" d="M520 380 L320 380"/>
+                <path class="edge" data-step="7" d="M270 380 L270 240"/>
+                <path class="edge" data-step="8" d="M270 240 L420 240"/>
               </g>
 
-              <!-- nodes -->
-              <g class="nodes">
-                <g class="node" data-step="1" transform="translate(300 150)">
-                  <circle r="22" fill="rgba(7,18,39,.92)" stroke="rgba(246,244,238,.18)" stroke-width="1.1"/>
-                  <circle class="halo" r="22" fill="none" stroke="rgba(74,132,255,0)" stroke-width="2" filter="url(#glow)"/>
-                  <text y="48" text-anchor="middle" class="label">Capture</text>
-                </g>
+              <!-- nodes (clickable): data-go points to sections -->
+              <g class="node nodeBtn" tabindex="0" role="link" aria-label="Capture" data-step="1" data-go="#cap" transform="translate(120 190)">
+                <circle r="26" fill="rgba(7,18,39,.92)" stroke="rgba(243,236,211,.18)" stroke-width="1.1"/>
+                <circle class="halo" r="26" fill="none" stroke="rgba(62,118,255,0)" stroke-width="2" filter="url(#glow)"/>
+                <text y="52" text-anchor="middle" class="label">Capture</text>
+              </g>
 
-                <g class="node" data-step="2" transform="translate(680 150)">
-                  <circle r="22" fill="rgba(7,18,39,.92)" stroke="rgba(246,244,238,.18)" stroke-width="1.1"/>
-                  <circle class="halo" r="22" fill="none" stroke="rgba(74,132,255,0)" stroke-width="2" filter="url(#glow)"/>
-                  <text y="48" text-anchor="middle" class="label">Structure</text>
-                </g>
+              <g class="node nodeBtn" tabindex="0" role="link" aria-label="Structure" data-step="2" data-go="#str" transform="translate(370 190)">
+                <circle r="26" fill="rgba(7,18,39,.92)" stroke="rgba(243,236,211,.18)" stroke-width="1.1"/>
+                <circle class="halo" r="26" fill="none" stroke="rgba(62,118,255,0)" stroke-width="2" filter="url(#glow)"/>
+                <text y="52" text-anchor="middle" class="label">Structure</text>
+              </g>
 
-                <g class="node" data-step="3" transform="translate(240 290)">
-                  <circle r="22" fill="rgba(7,18,39,.92)" stroke="rgba(246,244,238,.18)" stroke-width="1.1"/>
-                  <circle class="halo" r="22" fill="none" stroke="rgba(74,132,255,0)" stroke-width="2" filter="url(#glow)"/>
-                  <text y="48" text-anchor="middle" class="label">Sealing</text>
-                </g>
+              <g class="node nodeBtn" tabindex="0" role="link" aria-label="Sealing" data-step="3" data-go="#seal" transform="translate(620 190)">
+                <circle r="26" fill="rgba(7,18,39,.92)" stroke="rgba(243,236,211,.18)" stroke-width="1.1"/>
+                <circle class="halo" r="26" fill="none" stroke="rgba(62,118,255,0)" stroke-width="2" filter="url(#glow)"/>
+                <text y="52" text-anchor="middle" class="label">Sealing</text>
+              </g>
 
-                <g class="node" data-step="4" transform="translate(740 290)">
-                  <circle r="22" fill="rgba(7,18,39,.92)" stroke="rgba(246,244,238,.18)" stroke-width="1.1"/>
-                  <circle class="halo" r="22" fill="none" stroke="rgba(74,132,255,0)" stroke-width="2" filter="url(#glow)"/>
-                  <text y="48" text-anchor="middle" class="label">Keys</text>
-                </g>
+              <g class="node nodeBtn" tabindex="0" role="link" aria-label="Keys" data-step="4" data-go="#keys" transform="translate(870 190)">
+                <circle r="26" fill="rgba(7,18,39,.92)" stroke="rgba(243,236,211,.18)" stroke-width="1.1"/>
+                <circle class="halo" r="26" fill="none" stroke="rgba(62,118,255,0)" stroke-width="2" filter="url(#glow)"/>
+                <text y="52" text-anchor="middle" class="label">Keys</text>
+              </g>
 
-                <g class="node" data-step="5" transform="translate(360 390)">
-                  <circle r="22" fill="rgba(7,18,39,.92)" stroke="rgba(246,244,238,.18)" stroke-width="1.1"/>
-                  <circle class="halo" r="22" fill="none" stroke="rgba(74,132,255,0)" stroke-width="2" filter="url(#glow)"/>
-                  <text y="48" text-anchor="middle" class="label">Disclosure</text>
-                </g>
+              <g class="node nodeBtn" tabindex="0" role="link" aria-label="Disclosure" data-step="5" data-go="#disc" transform="translate(770 380)">
+                <circle r="26" fill="rgba(7,18,39,.92)" stroke="rgba(243,236,211,.18)" stroke-width="1.1"/>
+                <circle class="halo" r="26" fill="none" stroke="rgba(62,118,255,0)" stroke-width="2" filter="url(#glow)"/>
+                <text y="52" text-anchor="middle" class="label">Disclosure</text>
+              </g>
 
-                <g class="node" data-step="6" transform="translate(620 390)">
-                  <circle r="22" fill="rgba(7,18,39,.92)" stroke="rgba(246,244,238,.18)" stroke-width="1.1"/>
-                  <circle class="halo" r="22" fill="none" stroke="rgba(74,132,255,0)" stroke-width="2" filter="url(#glow)"/>
-                  <text y="48" text-anchor="middle" class="label">Availability</text>
-                </g>
+              <g class="node nodeBtn" tabindex="0" role="link" aria-label="Availability" data-step="6" data-go="#avail" transform="translate(270 380)">
+                <circle r="26" fill="rgba(7,18,39,.92)" stroke="rgba(243,236,211,.18)" stroke-width="1.1"/>
+                <circle class="halo" r="26" fill="none" stroke="rgba(62,118,255,0)" stroke-width="2" filter="url(#glow)"/>
+                <text y="52" text-anchor="middle" class="label">Availability</text>
+              </g>
 
-                <!-- center last -->
-                <g class="node center" data-step="7" transform="translate(490 250)">
-                  <circle r="50" fill="rgba(7,18,39,.94)" stroke="rgba(246,244,238,.24)" stroke-width="1.2"/>
-                  <circle class="halo" r="50" fill="none" stroke="rgba(74,132,255,0)" stroke-width="2" filter="url(#glow)"/>
-                  <text y="7" text-anchor="middle" class="centerText">CEYO</text>
-                </g>
+              <!-- center CEYO -->
+              <g class="node" data-step="9" transform="translate(490 240)">
+                <circle r="54" fill="rgba(7,18,39,.94)" stroke="rgba(243,236,211,.24)" stroke-width="1.2"/>
+                <circle class="halo" r="54" fill="none" stroke="rgba(62,118,255,0)" stroke-width="2" filter="url(#glow)"/>
+                <text y="8" text-anchor="middle" class="centerText">CEYO</text>
+              </g>
+
+              <!-- bubbles (appear as each node completes) -->
+              <g class="bubble" data-step="1" transform="translate(52 78)">
+                <rect x="0" y="0" width="250" height="62" rx="12"/>
+                <text x="14" y="22">
+                  <tspan>Policy-defined inclusion/exclusion</tspan>
+                  <tspan x="14" dy="18">Masking rules fixed pre-generation</tspan>
+                </text>
+              </g>
+
+              <g class="bubble" data-step="2" transform="translate(300 78)">
+                <rect x="0" y="0" width="280" height="62" rx="12"/>
+                <text x="14" y="22">
+                  <tspan>Canonical schema normalization</tspan>
+                  <tspan x="14" dy="18">RFC 8785 reproducible bytes</tspan>
+                </text>
+              </g>
+
+              <g class="bubble" data-step="3" transform="translate(560 78)">
+                <rect x="0" y="0" width="280" height="62" rx="12"/>
+                <text x="14" y="22">
+                  <tspan>SHA-256 hash (illustrative)</tspan>
+                  <tspan x="14" dy="18">ECDSA P-256 signatures (illustrative)</tspan>
+                </text>
+              </g>
+
+              <g class="bubble" data-step="4" transform="translate(660 248)">
+                <rect x="0" y="0" width="270" height="62" rx="12"/>
+                <text x="14" y="22">
+                  <tspan>Non-custodial: HSM / KMS / TEE</tspan>
+                  <tspan x="14" dy="18">Private keys never leave operator</tspan>
+                </text>
+              </g>
+
+              <g class="bubble" data-step="5" transform="translate(560 424)">
+                <rect x="0" y="0" width="300" height="62" rx="12"/>
+                <text x="14" y="22">
+                  <tspan>Tiered disclosure boundaries</tspan>
+                  <tspan x="14" dy="18">Verification without forced exposure</tspan>
+                </text>
+              </g>
+
+              <g class="bubble" data-step="6" transform="translate(52 424)">
+                <rect x="0" y="0" width="300" height="62" rx="12"/>
+                <text x="14" y="22">
+                  <tspan>Fail-open by default (configurable)</tspan>
+                  <tspan x="14" dy="18">Sealing failure logged, inference continues</tspan>
+                </text>
               </g>
             </svg>
-
-            <!-- mini links row at bottom (requested) -->
-            <div class="miniRow" aria-label="Quick jumps">
-              <a class="pill" href="#deficit">Accountability gap</a>
-              <a class="pill" href="#is">What CEYO is</a>
-              <a class="pill" href="#isnot">What CEYO is not</a>
-              <a class="pill" href="#how">Technical properties</a>
-            </div>
           </div>
 
           <div class="denials" aria-label="What CEYO does not do">
-            <span class="denial">CEYO does not replace models</span>
-            <span class="denial">CEYO does not modify inference outputs</span>
-            <span class="denial">CEYO does not evaluate correctness</span>
-            <span class="affirm">CEYO produces verifiable records</span>
+            <span class="denial">CEYO does not evaluate outputs</span>
+            <span class="denial">CEYO does not adjudicate compliance</span>
+            <span class="denial">CEYO does not intervene in decision logic</span>
+            <span class="affirm">CEYO produces records</span>
           </div>
 
           <div class="ctaRow">
@@ -956,164 +811,50 @@
   </div>
 
   <main id="content">
-    <!-- [01] Structural Deficit (light / readability fixed) -->
+    <!-- Accountability gap (readability fixed; not compacted) -->
     <section class="sect light" id="deficit" aria-labelledby="deficit-h">
       <div class="tag">[01] The Accountability Gap</div>
       <h2 class="h2" id="deficit-h">The Accountability Gap</h2>
 
-      <p class="p revealWords" data-reveal>
+      <p class="p" data-reveal>
         Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is frequently secondary.
       </p>
 
-      <p class="p revealWords" data-reveal>
-        When a decision is later questioned — through regulatory inquiry, internal audit, incident review, or litigation — organizations often reconstruct events from partial logs and distributed traces. Reconstruction is interpretive. It is not deterministic proof.
+      <p class="p" data-reveal>
+        When a decision is later questioned — through regulatory inquiry, internal audit, incident review, or litigation — organizations often reconstruct events from partial logs and distributed traces. Reconstruction is interpretive. It is not deterministic.
       </p>
 
-      <p class="p revealWords" data-reveal>
-        Institutions require artifacts that are canonical in structure, explicit in capture scope, cryptographically sealed, and independently verifiable. Without those properties, oversight depends on operator assertions rather than verifiable integrity.
+      <p class="p" data-reveal>
+        Institutions require more than reconstructed context. They require artifacts that are canonical in structure, explicit in capture scope, cryptographically sealed, and independently verifiable. Without those properties, oversight depends on operator assertions rather than verifiable integrity.
       </p>
 
-      <!-- deficit cells (visible + legible) -->
       <div class="cells" role="list" aria-label="Institutional requirements">
         <div class="cell" role="listitem">
           <div class="cNum">01 · Canonical</div>
-          <div class="cTitle">Deterministic structure</div>
-          <div class="cBody">Stable schema and stable byte representation, suitable for reproducible verification across environments.</div>
+          <div class="cTitle">Canonical in structure</div>
+          <div class="cBody">Stable schema and deterministic byte representation suitable for independent verification.</div>
         </div>
         <div class="cell" role="listitem">
           <div class="cNum">02 · Explicit</div>
-          <div class="cTitle">Capture scope</div>
-          <div class="cBody">Policy defines inclusion, exclusion, and masking prior to generation. Scope is versioned and reviewable.</div>
+          <div class="cTitle">Explicit in capture scope</div>
+          <div class="cBody">Policy defines what is included, excluded, and masked before artifacts are generated.</div>
         </div>
         <div class="cell" role="listitem">
           <div class="cNum">03 · Sealed</div>
-          <div class="cTitle">Cryptographic integrity</div>
-          <div class="cBody">Hashing establishes tamper-evidence. Signatures establish origin authenticity under declared key custody.</div>
+          <div class="cTitle">Cryptographically sealed</div>
+          <div class="cBody">Hashing establishes tamper-evidence; signatures establish provenance under operator custody.</div>
         </div>
         <div class="cell" role="listitem">
           <div class="cNum">04 · Verifiable</div>
-          <div class="cTitle">Independent validation</div>
-          <div class="cBody">Third parties can validate integrity and policy alignment without relying on internal CEYO infrastructure.</div>
-        </div>
-      </div>
-
-      <!-- requirements panel (high contrast) -->
-      <div class="req" role="region" aria-label="Oversight requirements summary">
-        <div class="reqHead">Oversight requires more than reconstructed telemetry</div>
-        <div class="reqGrid">
-          <div class="reqItem">
-            <div class="dot"></div>
-            <div>
-              <strong>Deterministic auditability</strong>
-              <small>Reproducible verification across heterogeneous deployments</small>
-            </div>
-          </div>
-          <div class="reqItem">
-            <div class="dot"></div>
-            <div>
-              <strong>Integrity sealing</strong>
-              <small>Hash + signature validation, not interpretive reconstruction</small>
-            </div>
-          </div>
-          <div class="reqItem">
-            <div class="dot"></div>
-            <div>
-              <strong>Explicit disclosure scope</strong>
-              <small>Tiered disclosure boundaries defined before generation</small>
-            </div>
-          </div>
-          <div class="reqItem">
-            <div class="dot"></div>
-            <div>
-              <strong>Separation of roles</strong>
-              <small>Verification is mechanical; oversight remains institutional</small>
-            </div>
-          </div>
+          <div class="cTitle">Independently verifiable</div>
+          <div class="cBody">Verification is a deterministic procedure that does not rely on CEYO’s internal infrastructure.</div>
         </div>
       </div>
     </section>
 
-    <!-- [02] What CEYO is -->
-    <section class="sect" id="is" aria-labelledby="is-h">
-      <div class="tag">[02] What CEYO Is</div>
-      <h2 class="h2" id="is-h">A Decoupled Evidentiary Substrate</h2>
-
-      <p class="p revealWords" data-reveal>
-        CEYO is a decoupled evidentiary layer that attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined inference-time decision-state context.
-      </p>
-
-      <p class="p revealWords" data-reveal>
-        These artifacts are deterministically structured and cryptographically sealed to support later institutional verification without default disclosure of proprietary internals.
-      </p>
-
-      <div class="props" role="list" aria-label="Artifact properties">
-        <div class="prop" role="listitem">
-          <div class="pl">01 · Canonical</div>
-          <div class="pt">Deterministic structure</div>
-          <div class="pb">Stable schema + RFC 8785 canonicalization for reproducible bytes.</div>
-        </div>
-        <div class="prop" role="listitem">
-          <div class="pl">02 · Policy-scoped</div>
-          <div class="pt">Explicit capture boundary</div>
-          <div class="pb">Predefined inclusion, exclusion, masking, and disclosure tiers.</div>
-        </div>
-        <div class="prop" role="listitem">
-          <div class="pl">03 · Sealed</div>
-          <div class="pt">Tamper-evident</div>
-          <div class="pb">Hash and signature establish integrity and provenance.</div>
-        </div>
-        <div class="prop" role="listitem">
-          <div class="pl">04 · Verifiable</div>
-          <div class="pt">Independent verification</div>
-          <div class="pb">Deterministic procedure executable by authorized third parties.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- [03] What CEYO is not -->
-    <section class="sect" id="isnot" aria-labelledby="isnot-h">
-      <div class="tag">[03] What CEYO Is Not</div>
-      <h2 class="h2" id="isnot-h">Records, Not Judgments</h2>
-
-      <div class="notLayout">
-        <div>
-          <div class="notBox" role="list" aria-label="What CEYO is not">
-            <div class="notItem" role="listitem"><span class="x">×</span> A model evaluation system</div>
-            <div class="notItem" role="listitem"><span class="x">×</span> A fairness certification system</div>
-            <div class="notItem" role="listitem"><span class="x">×</span> A compliance automation tool</div>
-            <div class="notItem" role="listitem"><span class="x">×</span> A legal adjudication engine</div>
-            <div class="notItem" role="listitem"><span class="x">×</span> A regulatory certification authority</div>
-          </div>
-
-          <div class="notCallout">
-            CEYO does not determine whether a decision was lawful, ethical, or fair. CEYO produces integrity-sealed artifacts under declared policy scope. Authorized institutions retain responsibility for determinations.
-          </div>
-        </div>
-
-        <div>
-          <p class="p revealWords" data-reveal>
-            The separation is deliberate. Evidence infrastructure must remain structurally independent from decision authority. Verification confirms integrity and provenance under policy scope — not correctness of output.
-          </p>
-          <p class="p revealWords" data-reveal>
-            CEYO provides the record. Institutions provide the oversight.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Principle -->
-    <div class="principle" aria-label="Core principle">
-      <div class="pHr"><span>Core Principle</span></div>
-      <blockquote class="quote">
-        Evidence infrastructure must remain<br>
-        <em>separate from decision authority</em>
-      </blockquote>
-      <div class="attr">CEYO provides the artifact &nbsp;·&nbsp; Institutions provide the oversight</div>
-    </div>
-
-    <!-- [04] Technical Properties -->
+    <!-- Technical properties (anchors MUST exist because map clicks point here) -->
     <section class="sect" id="how" aria-labelledby="how-h">
-      <div class="tag">[04] How It Works</div>
+      <div class="tag">[02] Technical Properties</div>
       <h2 class="h2" id="how-h">Technical Properties</h2>
 
       <div class="techLayout">
@@ -1130,64 +871,62 @@
           <article class="panel" id="cap">
             <div class="pn">01 · Policy-scoped capture</div>
             <h3 class="ph">Define before you collect</h3>
-            <p class="pbod revealWords" data-reveal>
-              Operators define included, excluded, and masked fields before artifact generation begins. Policy is versioned and embedded within artifacts, making capture boundaries independently reviewable.
+            <p class="pbod" data-reveal>
+              Artifact generation begins with explicit policy definition. Policy defines which fields are included, excluded, and masked, and records policy identifier and version inside the artifact.
             </p>
           </article>
 
           <article class="panel" id="str">
             <div class="pn">02 · Canonical structure</div>
             <h3 class="ph">Deterministic normalization</h3>
-            <p class="pbod revealWords" data-reveal>
-              Captured context is normalized into a deterministic JSON schema. Canonicalization per RFC 8785 produces stable bytes to support reproducible hashing across environments.
+            <p class="pbod" data-reveal>
+              Captured context is normalized into a canonical artifact schema. JSON canonicalization under RFC 8785 produces stable bytes for reproducible hashing and verification.
             </p>
           </article>
 
           <article class="panel" id="seal">
-            <div class="pn">03 · Integrity sealing</div>
+            <div class="pn">03 · Cryptographic sealing</div>
             <h3 class="ph">Hash and signature</h3>
-            <p class="pbod revealWords" data-reveal>
-              After canonicalization, hashing and signatures are applied under a deployment-defined suite. Hashing establishes tamper-evidence; signatures establish origin authenticity.
+            <p class="pbod" data-reveal>
+              After canonicalization, artifacts are hashed and digitally signed under a deployment-defined suite. Hashing establishes tamper-evidence. Signatures establish origin authenticity.
             </p>
           </article>
 
           <article class="panel" id="keys">
-            <div class="pn">04 · Non-custodial keys</div>
-            <h3 class="ph">You control the signing</h3>
-            <p class="pbod revealWords" data-reveal>
-              Signing keys remain inside the operator-controlled environment (HSM, KMS, or TEE). CEYO does not possess or store private signing keys.
+            <div class="pn">04 · Non-custodial key architecture</div>
+            <h3 class="ph">Operator-controlled custody</h3>
+            <p class="pbod" data-reveal>
+              Signing keys are generated and retained within the operator-controlled environment (HSM, KMS, or TEE). CEYO does not possess, transmit, or store private signing keys.
             </p>
           </article>
 
           <article class="panel" id="disc">
             <div class="pn">05 · Constrained disclosure</div>
-            <h3 class="ph">Tiered verification access</h3>
-            <p class="pbod revealWords" data-reveal>
-              Artifacts support public/redacted and controlled review tiers. Verification can be performed within declared disclosure boundaries without default exposure of proprietary internals.
+            <h3 class="ph">Tiered access by design</h3>
+            <p class="pbod" data-reveal>
+              Artifacts support tiered disclosure models. Integrity may be verified without exposing proprietary internals beyond declared policy scope. Boundaries are defined pre-generation.
             </p>
           </article>
 
           <article class="panel" id="avail">
-            <div class="pn">06 · Fail-open architecture</div>
-            <h3 class="ph">Inference continuity first</h3>
-            <p class="pbod revealWords" data-reveal>
-              In fail-open posture, inference continues even if sealing fails. Failures are logged and artifacts are marked as unsealed unless configured otherwise.
+            <div class="pn">06 · Integrity–availability balance</div>
+            <h3 class="ph">Fail-open posture</h3>
+            <p class="pbod" data-reveal>
+              CEYO does not introduce a default dependency that halts inference. In fail-open configuration, inference continues if sealing fails; failures are logged and artifacts are marked accordingly.
             </p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
     <div class="ctaStrip">
       <div class="ctaText">
         <strong>Controlled Review</strong>
-        <p>Technical requirements, policy schemas, verification contracts, and benchmark methodology are available under controlled disclosure.</p>
+        <p>Technical documentation, policy schemas, verification contracts, and benchmark methodology are available under controlled disclosure.</p>
       </div>
       <a href="contact.html" class="btn primary">Request Controlled Review</a>
     </div>
 
-    <!-- Boundary -->
     <div class="boundaryWrap">
       <div class="boundary" role="region" aria-label="Boundary declaration">
         <div class="bTag">Boundary Declaration &nbsp;·&nbsp; V2026.02.19</div>
@@ -1196,10 +935,10 @@
           <p class="bItem">CEYO does not certify regulatory compliance.</p>
           <p class="bItem">CEYO does not guarantee legal admissibility.</p>
           <p class="bItem">CEYO does not guarantee inference reproducibility.</p>
-          <p class="bItem">Authorized institutions and operators retain responsibility for decisions and determinations.</p>
-          <p class="bItem">Cryptographic suite references are illustrative; deployments select suites appropriate to their context.</p>
+          <p class="bItem">Authorized institutions and operators retain responsibility for determinations.</p>
+          <p class="bItem">Cryptographic suite references are illustrative; deployments select suites appropriate to context.</p>
         </div>
-        <div class="bClose">Verification confirms integrity and provenance under policy scope — not correctness of model output.</div>
+        <div class="bClose">Verification confirms integrity and provenance under policy scope — not semantic correctness of output.</div>
       </div>
     </div>
 
@@ -1233,9 +972,9 @@
         cursor.style.left = mx + 'px';
         cursor.style.top  = my + 'px';
         spotlight.style.background =
-          `radial-gradient(circle 340px at ${mx}px ${my}px,
-            rgba(74,132,255,.22) 0%,
-            rgba(74,132,255,.10) 28%,
+          `radial-gradient(circle 360px at ${mx}px ${my}px,
+            rgba(62,118,255,.24) 0%,
+            rgba(62,118,255,.10) 28%,
             transparent 70%)`;
       });
 
@@ -1245,7 +984,7 @@
       });
       document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
 
-      document.querySelectorAll('a, button, .cell, .prop, .notItem, .tn, .pill, .btn')
+      document.querySelectorAll('a, button, .cell, .tn, .btn')
         .forEach(el => {
           el.addEventListener('mouseenter', () => cursor.classList.add('large'));
           el.addEventListener('mouseleave', () => cursor.classList.remove('large'));
@@ -1258,21 +997,21 @@
       topnav.classList.toggle('scrolled', window.scrollY > 40);
     }, { passive:true });
 
-    // hero parallax blur (keep modest so mobile doesn't "lose" H1)
+    // hero parallax blur (keep modest so mobile stays visible)
     const heroWrap = document.getElementById('heroWrap');
     const heroH1 = document.getElementById('heroH1');
     const heroBelow = document.getElementById('heroBelow');
 
     window.addEventListener('scroll', () => {
       const pct = Math.min(window.scrollY / (heroWrap.offsetHeight * 0.34), 1);
-      heroH1.style.opacity = Math.max(0.15, 1 - pct * 0.95); // never fully disappears
-      heroH1.style.filter = `blur(${pct * 8}px)`;
-      heroH1.style.transform = `translateY(${pct * -22}px)`;
+      heroH1.style.opacity = Math.max(0.25, 1 - pct * 0.9);
+      heroH1.style.filter = `blur(${pct * 7}px)`;
+      heroH1.style.transform = `translateY(${pct * -18}px)`;
       heroBelow.style.opacity = Math.max(0, 1 - pct * 1.55);
-      heroBelow.style.transform = `translateY(${pct * -12}px)`;
+      heroBelow.style.transform = `translateY(${pct * -10}px)`;
     }, { passive:true });
 
-    // Wrap words for reveal
+    // Wrap words for reveal (keeps initial layout effects)
     function wrapWords(el){
       if (el.dataset.wrapped) return;
       el.dataset.wrapped = "1";
@@ -1293,7 +1032,7 @@
     document.querySelectorAll('[data-reveal]').forEach(wrapWords);
 
     // Section observer + reveal
-    const allSects = document.querySelectorAll('.sect, .principle');
+    const allSects = document.querySelectorAll('.sect');
     const sectObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting){
@@ -1303,46 +1042,73 @@
           e.target.classList.remove('focus');
         }
       });
-    }, { threshold: 0.10 });
+    }, { threshold: 0.12 });
     allSects.forEach(s => sectObs.observe(s));
 
-    // Graph build animation
-    const graphBlock = document.getElementById('graphBlock');
-    const graphSvg = document.getElementById('graphSvg');
+    // Map build animation + bubbles
+    const ceyoMap = document.getElementById('ceyoMap');
+    const mapSvg = document.getElementById('mapSvg');
 
-    function resetGraph(){
-      graphSvg.classList.remove('graphRun');
-      void graphSvg.offsetWidth;
+    function resetMap(){
+      mapSvg.classList.remove('mapRun');
+      void mapSvg.offsetWidth;
     }
-    function runGraph(){
-      resetGraph();
-      const edges = [...graphSvg.querySelectorAll('.edge')].sort((a,b)=> (+a.dataset.step) - (+b.dataset.step));
-      const nodes = [...graphSvg.querySelectorAll('.node')].sort((a,b)=> (+a.dataset.step) - (+b.dataset.step));
+
+    function runMap(){
+      resetMap();
+
+      const edges = [...mapSvg.querySelectorAll('.edge')].sort((a,b)=> (+a.dataset.step) - (+b.dataset.step));
+      const nodes = [...mapSvg.querySelectorAll('.node')].sort((a,b)=> (+a.dataset.step) - (+b.dataset.step));
+      const bubbles = [...mapSvg.querySelectorAll('.bubble')].sort((a,b)=> (+a.dataset.step) - (+b.dataset.step));
 
       edges.forEach((el, i) => el.style.animationDelay = (i * 120) + 'ms');
 
-      nodes.forEach((el) => {
-        const step = +el.dataset.step;
-        const delay = (step === 7) ? (edges.length * 120 + 220) : ((step - 1) * 120 + 140);
-        el.querySelectorAll('circle').forEach(c => c.style.animationDelay = delay + 'ms');
+      // nodes: steps 1..6 + center 9 last
+      nodes.forEach(el => {
+        const step = +el.dataset.step || 9;
+        const base = (step === 9) ? (edges.length * 120 + 220) : ((step - 1) * 160 + 160);
+        el.querySelectorAll('circle').forEach(c => c.style.animationDelay = base + 'ms');
         const label = el.querySelector('.label');
-        if (label) label.style.animationDelay = (delay + 120) + 'ms';
+        if (label) label.style.animationDelay = (base + 120) + 'ms';
         const halo = el.querySelector('.halo');
-        if (halo) halo.style.animationDelay = (delay + 80) + 'ms';
+        if (halo) halo.style.animationDelay = (base + 90) + 'ms';
       });
 
-      graphSvg.classList.add('graphRun');
+      bubbles.forEach(b => {
+        const step = +b.dataset.step;
+        const delay = ((step - 1) * 160 + 360);
+        b.style.animationDelay = delay + 'ms';
+      });
+
+      mapSvg.classList.add('mapRun');
     }
 
-    const graphObs = new IntersectionObserver(entries => {
+    const mapObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting){
-          runGraph();
-          graphObs.disconnect();
+          runMap();
+          mapObs.disconnect();
         }
       });
     }, { threshold: 0.55 });
-    graphObs.observe(graphBlock);
+    mapObs.observe(ceyoMap);
+
+    // Map node click -> scroll to matching section (FIX: every tap must work)
+    function goTo(hash){
+      const el = document.querySelector(hash);
+      if (!el) return;
+      el.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+
+    mapSvg.querySelectorAll('.nodeBtn').forEach(node => {
+      node.addEventListener('click', () => goTo(node.dataset.go));
+      node.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          goTo(node.dataset.go);
+        }
+      });
+    });
 
     // Tech nav click/scroll sync
     const panels = [...document.querySelectorAll('.panel')];
@@ -1366,7 +1132,7 @@
     }, { threshold: 0.55 });
     panels.forEach(p => panelObs.observe(p));
 
-    // Typewriter only for tech nav words
+    // Typewriter for nav words (kept from initial layout effect)
     function typeIt(el, speed=28){
       if (el.dataset.typed) return;
       el.dataset.typed = "1";
@@ -1383,11 +1149,9 @@
         }
       }, speed);
     }
-
     const twObs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) typeIt(e.target); });
-    }, { threshold: 0.85 });
-
+    }, { threshold: 0.9 });
     document.querySelectorAll('[data-tw]').forEach(t => twObs.observe(t));
   </script>
 </body>
