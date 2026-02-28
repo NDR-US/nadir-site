@@ -1,192 +1,313 @@
+<!-- ===========================
+ CEYO — trust.html
+ Trust Center
+ V2026.02.19
+=========================== -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>CEYO — Trust Infrastructure</title>
-  <meta name="description" content="Trust posture anchored in determinism, non-custodial cryptographic architecture, and explicit boundaries."/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>CEYO — Trust Center</title>
+  <meta name="description" content="Trust posture: determinism, non-custodial keys, independent verification, SBOM, VDP, sustainability disclosure, privacy & civil liberties engineering, legal admissibility primer."/>
+  <meta name="theme-color" content="#071227"/>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="app/css/global.css"/>
-  <script src="app/js/nav.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,500;0,700;0,900;1,900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --navy:#071227; --navy2:#0A1731; --navy3:#0E2040;
+      --wash:#F6F4EE; --ink:#0A1430;
+      --ivory:rgba(246,244,238,.94);
+      --muted:rgba(246,244,238,.70);
+      --muted2:rgba(246,244,238,.46);
+      --stroke:rgba(246,244,238,.14);
+      --stroke2:rgba(246,244,238,.075);
+      --blue:rgba(74,132,255,.85);
+
+      --max:1180px;
+      --radius:14px; --radius2:18px;
+
+      --fontDisplay:"Styrene A","Outfit",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      --fontText:"Tiempos","Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      --fontMono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--navy);
+      color:var(--ivory);
+      font-family:var(--fontText);
+      overflow-x:hidden;min-height:100vh;
+      cursor:none;
+    }
+    a{color:inherit;text-decoration:none}
+    ::selection{background:rgba(74,132,255,.25)}
+    h1,h2,h3{word-break:normal;overflow-wrap:break-word}
+    .br{display:block}
+
+    #grain{position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.04;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E");
+      background-size:220px 220px;mix-blend-mode:soft-light;}
+    #spotlight{position:fixed;inset:0;z-index:1;pointer-events:none;transition:background .05s linear}
+    #cursor{position:fixed;z-index:9999;width:8px;height:8px;border-radius:999px;
+      background:rgba(246,244,238,.95);pointer-events:none;transform:translate(-50%,-50%);
+      mix-blend-mode:exclusion;transition:width .15s,height .15s,opacity .15s;}
+    #cursor.large{width:40px;height:40px;opacity:.45}
+
+    #topnav{
+      position:fixed;top:0;left:0;right:0;z-index:800;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 44px;height:68px;
+      background:rgba(7,18,39,.86);
+      border-bottom:1px solid rgba(246,244,238,.08);
+      backdrop-filter:blur(10px);
+    }
+    .nav-brand{font-family:var(--fontDisplay);font-weight:900;font-style:italic;
+      font-size:28px;letter-spacing:-0.03em;text-transform:uppercase;color:rgba(246,244,238,.96)}
+    .nav-links{display:flex;align-items:center;gap:6px}
+    .nav-links a{
+      font-family:var(--fontMono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(246,244,238,.52);padding:8px 12px;border-radius:999px;transition:color .12s,background .12s}
+    .nav-links a:hover{color:rgba(246,244,238,.92);background:rgba(246,244,238,.05)}
+    .nav-links a.active{color:rgba(246,244,238,.92)}
+    .nav-cta{margin-left:10px;border:1px solid rgba(74,132,255,.35);background:rgba(74,132,255,.08);color:rgba(246,244,238,.92)!important}
+
+    #indexbar{position:fixed;bottom:0;left:0;right:0;z-index:800;display:flex;height:50px;
+      background:rgba(5,12,26,.92);border-top:1px solid rgba(246,244,238,.10);backdrop-filter:blur(10px)}
+    .ib-item{flex:1;display:flex;align-items:center;justify-content:center;
+      font-family:var(--fontMono);font-size:10px;letter-spacing:.20em;text-transform:uppercase;
+      color:rgba(246,244,238,.50);border-right:1px solid rgba(246,244,238,.07);
+      transition:color .12s,background .12s,border-top-color .12s}
+    .ib-item:last-child{border-right:none}
+    .ib-item:hover{color:rgba(246,244,238,.92);background:rgba(246,244,238,.05)}
+    .ib-item.active{color:rgba(246,244,238,.92);border-top:1px solid rgba(246,244,238,.92)}
+
+    header{
+      position:relative;z-index:5;
+      padding:96px 44px 26px;
+      max-width:var(--max);margin:0 auto;
+    }
+    .kicker{font-family:var(--fontMono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+      color:rgba(74,132,255,.82);display:flex;align-items:center;gap:14px;margin-bottom:14px}
+    .kicker::before{content:"";width:38px;height:1px;background:rgba(74,132,255,.78)}
+    h1{font-family:var(--fontDisplay);font-weight:900;font-style:italic;
+      font-size:clamp(36px,6vw,64px);letter-spacing:-0.05em;text-transform:uppercase;line-height:1.02;margin-bottom:10px}
+    .lead{max-width:82ch;color:rgba(246,244,238,.72);line-height:1.85;font-size:15px}
+
+    main{position:relative;z-index:5;max-width:var(--max);margin:0 auto;padding:0 44px 104px}
+    .cards{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      padding-top:18px;
+      border-top:1px solid rgba(246,244,238,.10);
+    }
+    .card{
+      border:1px solid rgba(246,244,238,.14);
+      border-radius:var(--radius2);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      padding:18px 18px;
+      transition:transform .15s ease,border-color .15s ease,background .15s ease;
+    }
+    .card:hover{transform:translateY(-1px);border-color:rgba(246,244,238,.28);background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015))}
+    .tag{font-family:var(--fontMono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:rgba(74,132,255,.82);margin-bottom:10px}
+    h2{font-family:var(--fontDisplay);font-weight:900;font-style:italic;font-size:22px;letter-spacing:-0.03em;text-transform:uppercase;line-height:1.1;margin-bottom:10px}
+    .p{font-size:13px;line-height:1.85;color:rgba(246,244,238,.70);max-width:80ch}
+    .mono{
+      margin-top:12px;
+      font-family:var(--fontMono);
+      font-size:10px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:rgba(246,244,238,.46);
+      line-height:1.7;
+    }
+    .cta{
+      margin-top:18px;
+      display:flex;gap:10px;flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      font-family:var(--fontMono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+      padding:13px 18px;border-radius:999px;
+      border:1px solid rgba(246,244,238,.14);
+      color:rgba(246,244,238,.70);
+      background:transparent;
+      transition:background .15s,border-color .15s,color .15s,transform .15s;
+    }
+    .btn:hover{border-color:rgba(246,244,238,.38);color:rgba(246,244,238,.92);background:rgba(246,244,238,.06);transform:translateY(-1px)}
+    .btn-primary{
+      border-color:rgba(74,132,255,.40);
+      background:rgba(74,132,255,.12);
+      color:rgba(246,244,238,.92);
+    }
+    .btn-primary:hover{border-color:rgba(74,132,255,.62);background:rgba(74,132,255,.18)}
+
+    .boundary{
+      margin-top:18px;
+      padding-top:18px;
+      border-top:1px solid rgba(246,244,238,.10);
+      font-family:var(--fontMono);
+      font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+      color:rgba(246,244,238,.40);
+      line-height:1.9;
+    }
+
+    @media (max-width:980px){
+      #topnav{padding:0 22px}
+      header{padding:92px 22px 26px}
+      main{padding:0 22px 104px}
+      .cards{grid-template-columns:1fr}
+    }
+    @media (max-width:600px){
+      .nav-links{display:none}
+      header{padding:86px 20px 24px}
+      main{padding:0 20px 104px}
+      .nav-brand{font-size:30px}
+    }
+  </style>
 </head>
 
-<body data-theme="trust">
-  <div id="cursorDot" aria-hidden="true"></div>
+<body>
+  <div id="grain" aria-hidden="true"></div>
   <div id="spotlight" aria-hidden="true"></div>
+  <div id="cursor" aria-hidden="true"></div>
 
-  <nav class="topnav" aria-label="Primary navigation">
-    <a href="index.html" class="brand"><span class="mark">CE</span><span class="accent">YO</span></a>
-    <div class="navlinks" aria-label="Sections">
+  <nav id="topnav" aria-label="Primary navigation">
+    <a href="index.html" class="nav-brand" aria-label="CEYO Home">CEYO</a>
+    <div class="nav-links">
       <a href="index.html">Overview</a>
-      <a href="architecture.html">Architecture</a>
-      <a href="trust.html">Trust</a>
+      <a href="platform.html">Architecture</a>
+      <a href="trust.html" class="active">Trust</a>
       <a href="governance.html">Governance</a>
-      <a href="contact.html">Contact</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html" class="nav-cta">Request Review</a>
     </div>
   </nav>
 
-  <div class="page">
-    <header class="hero">
-      <div class="hero-bg" aria-hidden="true">
-        <div class="hero-grid"></div>
-        <div class="hero-lines" style="opacity:.18;"></div>
-      </div>
+  <header>
+    <div class="kicker">Trust Center</div>
+    <h1>Verifiable Mechanics</h1>
+    <p class="lead">
+      Trust in evidentiary systems is established through reproducible integrity mechanics — determinism, non-custodial cryptographic authority, and independent verification — with explicit boundaries around what is and is not claimed.
+    </p>
+  </header>
 
-      <div class="container hero-content">
-        <div class="eyebrow">Trust Infrastructure · Deterministic mechanics · V2026.02.19</div>
-        <h1 class="h1">Trust is <span class="accent">verifiable</span>.</h1>
-        <p class="lead">
-          Trust in evidentiary systems is not established through statements. It is established through reproducible mechanics.
-          CEYO’s trust posture is anchored in determinism, non-custodial cryptography, and explicit boundaries.
+  <main>
+    <section class="cards" aria-label="Trust Center modules">
+      <div class="card">
+        <div class="tag">[01] Integrity Architecture</div>
+        <h2>Deterministic Artifacts</h2>
+        <p class="p">
+          Artifacts are generated through deterministic canonicalization (RFC 8785), cryptographic hashing, and digital signatures. Verification is reproducible across environments and does not depend on proprietary internals.
         </p>
-
-        <div class="pillrow">
-          <div class="pill">RFC 8785 canonicalization</div>
-          <div class="pill">Hash + signature</div>
-          <div class="pill">Non-custodial keys</div>
-          <div class="pill">Tiered disclosure</div>
-          <div class="pill">Fail-open availability</div>
-        </div>
+        <div class="mono">Determinism · Tamper-evidence · Origin authenticity</div>
       </div>
-    </header>
 
-    <main>
-      <section class="section">
-        <div class="container grid-2">
-          <div class="reveal">
-            <div class="section-sub">Integrity Architecture</div>
-            <h2 class="section-title highlight" data-typewrite="1">Deterministic, sealed, reviewable.</h2>
-            <ul class="list">
-              <li>Deterministic JSON canonicalization (RFC 8785)</li>
-              <li>Cryptographic hashing over canonical byte representation</li>
-              <li>Digital signatures under deployment-defined suite</li>
-              <li>Policy identifier + version embedded in every artifact</li>
-              <li>Explicit disclosure tier recorded at generation time</li>
-            </ul>
-          </div>
+      <div class="card">
+        <div class="tag">[02] Key Custody</div>
+        <h2>Non-Custodial Signing</h2>
+        <p class="p">
+          Signing keys remain within the operator-controlled environment (HSM, KMS, TEE). CEYO does not possess, transmit, or store private signing keys. Authenticity remains anchored to the deploying institution.
+        </p>
+        <div class="mono">Operator authority · Clear liability boundaries</div>
+      </div>
 
-          <div class="reveal card">
-            <div class="kicker">Boundary</div>
-            <h3 data-typewrite="1">Trust refers to integrity—not correctness.</h3>
-            <p>
-              Verification confirms whether an artifact has been altered since sealing and whether its provenance aligns with the declared policy scope.
-              Verification does not confirm semantic equivalence, output correctness, legal sufficiency, or compliance.
-            </p>
-          </div>
-        </div>
-      </section>
+      <div class="card">
+        <div class="tag">[03] Verification</div>
+        <h2>Independent Procedure</h2>
+        <p class="p">
+          Verification consists of deterministic canonicalization, hash recomputation, signature validation, and policy alignment checks. Outcomes are explicit: Integrity Confirmed, Integrity Failed, Policy Scope Mismatch.
+        </p>
+        <div class="mono">Mechanical verification · Institutional interpretation</div>
+      </div>
 
-      <section class="section">
-        <div class="container grid-2">
-          <div class="reveal card">
-            <div class="kicker">Non-custodial key architecture</div>
-            <h3 data-typewrite="1">Cryptographic authority remains institutional.</h3>
-            <p>
-              Signing keys are generated and retained within the operator-controlled environment (HSM, KMS, or TEE).
-              CEYO does not possess, transmit, or store private signing keys. Authenticity remains anchored to the deploying institution.
-            </p>
-          </div>
+      <div class="card">
+        <div class="tag">[04] Supply Chain Transparency</div>
+        <h2>SBOM Posture</h2>
+        <p class="p">
+          Reference builds maintain an SBOM in standard formats (SPDX, CycloneDX) for controlled review. Deployment-specific SBOM varies by operator configuration and environment.
+        </p>
+        <div class="mono">Supply chain review support</div>
+      </div>
 
-          <div class="reveal card">
-            <div class="kicker">Deterministic verification</div>
-            <h3 data-typewrite="1">Executable without CEYO infrastructure.</h3>
-            <ul class="list">
-              <li>Canonicalize under RFC 8785</li>
-              <li>Recompute hash</li>
-              <li>Validate signature against operator public key</li>
-              <li>Confirm Policy ID + version alignment</li>
-            </ul>
-          </div>
-        </div>
-      </section>
+      <div class="card">
+        <div class="tag">[05] Vulnerability Disclosure</div>
+        <h2>VDP / Safe Harbor</h2>
+        <p class="p">
+          A structured Vulnerability Disclosure Program supports good-faith reporting within defined boundaries. Production deployments follow contractual security terms.
+        </p>
+        <div class="mono">Disclosure channel · Coordinated remediation</div>
+      </div>
 
-      <section class="section">
-        <div class="container">
-          <div class="section-sub">Availability Discipline</div>
-          <h2 class="section-title reveal" data-typewrite="1">Integrity should not halt operations by default.</h2>
+      <div class="card">
+        <div class="tag">[06] Sustainability</div>
+        <h2>Compute-to-Integrity</h2>
+        <p class="p">
+          Artifact generation introduces incremental workload: capture, canonicalization, hashing, signatures. Impact depends on capture scope, cryptographic suite, and infrastructure selected by the operator.
+        </p>
+        <div class="mono">No universal energy claims</div>
+      </div>
 
-          <div class="grid-3" style="margin-top:18px;">
-            <div class="reveal card">
-              <div class="kicker">Fail-open</div>
-              <h3>Continuity preserved</h3>
-              <p>Inference may continue uninterrupted if sealing fails (unless the operator configures a stricter posture).</p>
-            </div>
-            <div class="reveal card">
-              <div class="kicker">Reviewable</div>
-              <h3>Failures are explicit</h3>
-              <p>Seal failure events are logged and artifacts may be marked as unsealed for later institutional review.</p>
-            </div>
-            <div class="reveal card">
-              <div class="kicker">Institutional control</div>
-              <h3>Operator decides</h3>
-              <p>Availability is an institutional decision. CEYO provides mechanisms, not authority.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div class="card">
+        <div class="tag">[07] Privacy & Civil Liberties</div>
+        <h2>Minimization by Design</h2>
+        <p class="p">
+          Policy-scoped capture prevents uncontrolled surveillance expansion. Fields are included, excluded, and masked before generation; tiered disclosure boundaries are explicit.
+        </p>
+        <div class="mono">Purpose limitation · Explicit scope boundaries</div>
+      </div>
 
-      <section class="section">
-        <div class="container grid-2">
-          <div class="reveal">
-            <div class="section-sub">Supply Chain Transparency</div>
-            <h2 class="section-title highlight" data-typewrite="1">SBOM + disclosure discipline.</h2>
-            <p class="lead" style="margin-bottom:0;">
-              CEYO maintains a Software Bill of Materials (SBOM) for reference builds (e.g., SPDX, CycloneDX) and can share it under controlled review.
-              Transparency is balanced against proprietary boundaries by tiered disclosure.
-            </p>
-          </div>
+      <div class="card">
+        <div class="tag">[08] Legal Context</div>
+        <h2>Admissibility Primer</h2>
+        <p class="p">
+          Integrity-sealed artifacts may support authentication and reliability arguments depending on jurisdiction and institutional handling. CEYO does not guarantee admissibility.
+        </p>
+        <div class="mono">Informational only · Not legal advice</div>
+      </div>
+    </section>
 
-          <div class="reveal card">
-            <div class="kicker">Security reporting</div>
-            <h3>Vulnerability Disclosure Program</h3>
-            <p>
-              Responsible reporting is supported through a structured VDP for CEYO-controlled properties and reference components.
-              Production deployments are governed by separate contractual security provisions.
-            </p>
-          </div>
-        </div>
-      </section>
+    <div class="cta" aria-label="Trust Center actions">
+      <a class="btn btn-primary" href="resources.html">View Trust Materials</a>
+      <a class="btn" href="contact.html">Request Controlled Review</a>
+    </div>
 
-      <section class="section">
-        <div class="container">
-          <div class="section-sub">Trust Boundaries</div>
-          <h2 class="section-title reveal" data-typewrite="1">Explicit limitations are part of credibility.</h2>
+    <div class="boundary">
+      Boundary: CEYO does not guarantee immunity from attack, regulatory certification, legal sufficiency, or operational correctness. Trust posture is defined by verifiable mechanics and explicit limitations.
+    </div>
+  </main>
 
-          <div class="reveal card" style="margin-top:14px;">
-            <ul class="list" style="margin-top:0;">
-              <li>Does not guarantee immunity from attack</li>
-              <li>Does not certify regulatory compliance</li>
-              <li>Does not guarantee admissibility</li>
-              <li>Does not validate correctness of inference outcomes</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <footer class="footer">
-        <div class="container">
-          <div class="row">
-            <div>© 2026 CEYO. All rights reserved.</div>
-            <div class="links">
-              <a href="privacy.html">Privacy</a>
-              <a href="terms.html">Terms</a>
-              <a href="sitemap.html">Sitemap</a>
-              <a href="contact.html">Contact</a>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </main>
-  </div>
-
-  <nav class="indexbar" aria-label="Site index">
-    <a href="index.html">Overview</a>
-    <a href="architecture.html">Arch</a>
-    <a href="trust.html">Trust</a>
-    <a href="governance.html">Gov</a>
-    <a href="contact.html">Contact</a>
+  <nav id="indexbar" aria-label="Site index">
+    <a class="ib-item" href="index.html">Index</a>
+    <a class="ib-item" href="platform.html">Arch</a>
+    <a class="ib-item active" href="trust.html">Trust</a>
+    <a class="ib-item" href="governance.html">Gov</a>
+    <a class="ib-item" href="contact.html">Contact</a>
   </nav>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const spotlight = document.getElementById('spotlight');
+    function setSpotlight(x,y){
+      spotlight.style.background =
+        `radial-gradient(circle 360px at ${x}px ${y}px, rgba(74,132,255,.16) 0%, rgba(74,132,255,.06) 34%, transparent 70%)`;
+    }
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+      setSpotlight(e.clientX, e.clientY);
+    }, { passive:true });
+    document.addEventListener('mouseleave', () => { cursor.style.opacity='0'; spotlight.style.background='none'; });
+    document.addEventListener('mouseenter', () => { cursor.style.opacity='1'; });
+    document.querySelectorAll('a, .card').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('large'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('large'));
+    });
+  </script>
 </body>
 </html>
