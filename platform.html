@@ -1,600 +1,306 @@
+<!-- ===========================
+ CEYO — platform.html
+ Platform & Architecture
+ V2026.02.19
+=========================== -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="color-scheme" content="dark light"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <title>CEYO — Platform & Architecture</title>
-  <meta name="description" content="Decoupled verification substrate. Policy-scoped capture, canonicalization (RFC 8785), cryptographic sealing, non-custodial keys, tiered disclosure, and independent verification."/>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Crect width='96' height='96' rx='20' fill='%230B1630'/%3E%3Cpath d='M28 56c0-12 8-20 20-20h20v8H48c-7 0-12 5-12 12s5 12 12 12h20v8H48c-12 0-20-8-20-20Z' fill='%23F5F1E6'/%3E%3C/svg%3E"/>
+  <meta name="description" content="Decoupled verification architecture: policy-scoped capture, canonical artifacts, RFC 8785 canonicalization, cryptographic sealing, non-custodial keys, tiered disclosure, fail-open availability, independent verification workflow."/>
+  <meta name="theme-color" content="#071227"/>
 
-  <!-- Font stack. For exact match to a proprietary brand font, self-host it under license. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,500;0,700;0,900;1,900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --navy-950:#050C1E;
-      --navy-900:#06102A;
-      --navy-850:#081633;
-      --navy-800:#0B1C3C;
-      --navy-700:#10264D;
+      --navy:#071227; --navy2:#0A1731; --navy3:#0E2040;
+      --wash:#F6F4EE; --wash2:#F0EEE6; --ink:#0A1430;
+      --ivory:rgba(246,244,238,.94);
+      --muted:rgba(246,244,238,.70);
+      --muted2:rgba(246,244,238,.46);
+      --muted3:rgba(246,244,238,.26);
+      --stroke:rgba(246,244,238,.14);
+      --stroke2:rgba(246,244,238,.075);
 
-      --wash:#F7F4EC;
-      --ivory:#EFE9DB;
-      --paper:#FBF8F1;
+      --blue:rgba(74,132,255,.85);
+      --blue2:rgba(74,132,255,.18);
 
-      --olive:#2F3A22;
-      --olive-2:#3B4A2B;
-
-      --blue-glow: rgba(45,120,255,.18);
-      --blue-glow-2: rgba(45,120,255,.10);
-      --blue-glow-3: rgba(45,120,255,.06);
-      --blue-ink: rgba(6,16,42,.92);
-
-      --text:rgba(247,244,236,.92);
-      --muted:rgba(247,244,236,.72);
+      --olive:#4A5D3B;
 
       --max:1180px;
+      --radius:14px; --radius2:18px;
 
-      --display:"Styrene A","Poppins",system-ui,-apple-system,Segoe UI,Inter,sans-serif;
-      --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
-      --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
-
-      --r:14px;
-      --r2:18px;
-
-      --ease:cubic-bezier(.16,1,.3,1);
-      --t1:140ms;
-      --t2:320ms;
-      --t3:720ms;
+      --fontDisplay:"Styrene A","Outfit",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      --fontText:"Tiempos","Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      --fontMono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
     }
 
-    *{ box-sizing:border-box; margin:0; padding:0; }
-    html{ scroll-behavior:smooth; font-size:16px; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
     body{
-      min-height:100vh;
-      background:
-        radial-gradient(1000px 700px at 18% 10%, rgba(59,74,43,.14), transparent 60%),
-        radial-gradient(900px 650px at 90% 22%, rgba(247,244,236,.06), transparent 62%),
-        linear-gradient(180deg, var(--navy-800), var(--navy-950));
-      color:var(--text);
-      font-family:var(--body);
+      background:var(--navy);
+      color:var(--ivory);
+      font-family:var(--fontText);
       overflow-x:hidden;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+      min-height:100vh;
       cursor:none;
     }
-    a{ color:inherit; text-decoration:none; }
-    ::selection{ background: rgba(45,120,255,.22); color: var(--paper); }
-
-    @media (prefers-reduced-motion: reduce){
-      html{ scroll-behavior:auto; }
-      *{ animation:none !important; transition:none !important; }
-      body{ cursor:auto; }
-      #cursor,#spotlight{ display:none !important; }
-    }
-
-    .skip{
-      position:absolute; left:-999px; top:10px; z-index:99999;
-      background:var(--wash); color:#0C1220;
-      padding:10px 14px; border-radius:10px;
-      font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
-    }
-    .skip:focus{ left:12px; outline:2px solid rgba(45,120,255,.85); outline-offset:3px; }
+    a{color:inherit;text-decoration:none}
+    button,input,select,textarea{font:inherit}
+    ::selection{background:rgba(74,132,255,.25)}
+    h1,h2,h3{word-break:normal;overflow-wrap:break-word}
+    .br{display:block}
 
     #grain{
-      position:fixed; inset:0; z-index:9998; pointer-events:none;
-      opacity:.03;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
-      background-size:220px 220px;
-      mix-blend-mode:overlay;
+      position:fixed;inset:0;z-index:9998;pointer-events:none;
+      opacity:.04;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E");
+      background-size:220px 220px;mix-blend-mode:soft-light;
     }
-
-    #spotlight{ position:fixed; inset:0; z-index:1; pointer-events:none; transition: background 30ms linear; }
+    #spotlight{position:fixed;inset:0;z-index:1;pointer-events:none;transition:background .05s linear}
     #cursor{
-      position:fixed; z-index:9999;
-      width:8px; height:8px;
-      background:var(--wash);
-      border-radius:50%;
-      pointer-events:none;
-      transform:translate(-50%,-50%);
-      mix-blend-mode:exclusion;
-      transition: width var(--t1) var(--ease), height var(--t1) var(--ease), opacity var(--t1) var(--ease);
-      opacity:1;
+      position:fixed;z-index:9999;width:8px;height:8px;border-radius:999px;
+      background:rgba(246,244,238,.95);pointer-events:none;
+      transform:translate(-50%,-50%);mix-blend-mode:exclusion;
+      transition:width .15s,height .15s,opacity .15s;
     }
-    #cursor.large{ width:46px; height:46px; opacity:.55; }
-    #cursor.hidden{ opacity:0; }
-
-    :focus-visible{
-      outline:2px solid rgba(45,120,255,.85);
-      outline-offset:4px;
-      border-radius:10px;
-    }
+    #cursor.large{width:40px;height:40px;opacity:.45}
 
     #topnav{
-      position:fixed; top:0; left:0; right:0; z-index:900;
-      height:76px;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:0 44px;
-      background: linear-gradient(to bottom, rgba(8,22,51,.88) 60%, rgba(8,22,51,0));
-      border-bottom:1px solid transparent;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      transition: background var(--t2) var(--ease), border-color var(--t2) var(--ease);
+      position:fixed;top:0;left:0;right:0;z-index:800;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 44px;height:68px;
+      background:rgba(7,18,39,.86);
+      border-bottom:1px solid rgba(246,244,238,.08);
+      backdrop-filter:blur(10px);
     }
-    #topnav.scrolled{
-      background: rgba(8,22,51,.86);
-      border-bottom:1px solid rgba(247,244,236,.06);
+    .nav-brand{
+      font-family:var(--fontDisplay);
+      font-weight:900;font-style:italic;
+      font-size:28px;letter-spacing:-0.03em;text-transform:uppercase;
+      color:rgba(246,244,238,.96);
     }
-
-    .brand{ display:flex; align-items:center; gap:14px; min-width:220px; }
-    .brand-mark{
-      width:34px; height:34px; border-radius:12px;
-      border:1px solid rgba(247,244,236,.12);
-      background: rgba(247,244,236,.03);
-      display:grid; place-items:center;
-      box-shadow: 0 14px 40px rgba(0,0,0,.25);
-    }
-    .brand-mark svg{ width:20px; height:20px; opacity:.88; }
-    .brand-name{
-      font-family:var(--display);
-      font-weight:800;
-      font-size:22px;
-      letter-spacing:-0.02em;
-      text-transform:uppercase;
-      color:var(--wash);
-      line-height:1;
-    }
-
-    .nav-links{ display:flex; align-items:center; gap:2px; }
+    .nav-links{display:flex;align-items:center;gap:6px}
     .nav-links a{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:rgba(247,244,236,.52);
-      padding:10px 12px;
-      border-radius:12px;
-      transition: color var(--t1) var(--ease), background var(--t1) var(--ease), border-color var(--t1) var(--ease);
-      border:1px solid transparent;
+      font-family:var(--fontMono);
+      font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(246,244,238,.52);
+      padding:8px 12px;border-radius:999px;
+      transition:color .12s,background .12s;
     }
-    .nav-links a:hover{
-      color:var(--wash);
-      background: rgba(247,244,236,.04);
-      border-color: rgba(247,244,236,.06);
-    }
-    .nav-links a.active{ color:rgba(247,244,236,.92); }
-
+    .nav-links a:hover{color:rgba(246,244,238,.92);background:rgba(246,244,238,.05)}
+    .nav-links a.active{color:rgba(246,244,238,.92)}
     .nav-cta{
       margin-left:10px;
-      padding:10px 14px !important;
-      border:1px solid rgba(45,120,255,.35) !important;
-      background: rgba(45,120,255,.10) !important;
-      color: rgba(247,244,236,.92) !important;
-    }
-    .nav-cta:hover{
-      border-color: rgba(45,120,255,.55) !important;
-      background: rgba(45,120,255,.14) !important;
+      border:1px solid rgba(74,132,255,.35);
+      background:rgba(74,132,255,.08);
+      color:rgba(246,244,238,.92)!important;
     }
 
     #indexbar{
-      position:fixed; bottom:0; left:0; right:0; z-index:900;
-      height:52px;
-      display:flex;
-      background: rgba(6,16,42,.92);
-      border-top:1px solid rgba(247,244,236,.06);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      position:fixed;bottom:0;left:0;right:0;z-index:800;
+      display:flex;height:50px;
+      background:rgba(5,12,26,.92);
+      border-top:1px solid rgba(246,244,238,.10);
+      backdrop-filter:blur(10px);
     }
     .ib-item{
-      flex:1;
-      display:flex; align-items:center; justify-content:center;
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:rgba(247,244,236,.52);
-      border-right:1px solid rgba(247,244,236,.06);
-      transition: color var(--t1) var(--ease), background var(--t1) var(--ease);
+      flex:1;display:flex;align-items:center;justify-content:center;
+      font-family:var(--fontMono);
+      font-size:10px;letter-spacing:.20em;text-transform:uppercase;
+      color:rgba(246,244,238,.50);
+      border-right:1px solid rgba(246,244,238,.07);
+      transition:color .12s,background .12s,border-top-color .12s;
     }
-    .ib-item:last-child{ border-right:none; }
-    .ib-item:hover{ color:var(--wash); background: rgba(247,244,236,.035); }
-    .ib-item.active{
-      color:var(--wash);
-      box-shadow: inset 0 2px 0 0 rgba(247,244,236,.80);
-    }
+    .ib-item:last-child{border-right:none}
+    .ib-item:hover{color:rgba(246,244,238,.92);background:rgba(246,244,238,.05)}
+    .ib-item.active{color:rgba(246,244,238,.92);border-top:1px solid rgba(246,244,238,.92)}
 
-    .wrap{ max-width:var(--max); margin:0 auto; }
-    .pad{ padding-left:44px; padding-right:44px; }
-
-    /* Header band */
-    .head{
-      padding-top: 120px;
-      padding-bottom: 58px;
-      position:relative;
-      overflow:hidden;
-      isolation:isolate;
-    }
-    .head::before{
-      content:"";
-      position:absolute; inset:-1px;
-      z-index:-1;
-      background:
-        radial-gradient(900px 460px at 18% 18%, rgba(59,74,43,.12), transparent 62%),
-        radial-gradient(760px 420px at 86% 28%, var(--blue-glow-3), transparent 62%),
-        linear-gradient(180deg, rgba(8,22,51,.62), rgba(6,16,42,1));
-      border-bottom:1px solid rgba(247,244,236,.06);
+    /* Page hero */
+    header{
+      position:relative;z-index:5;
+      padding:96px 44px 28px;
+      max-width:var(--max);
+      margin:0 auto;
     }
     .kicker{
-      display:flex; align-items:center; gap:14px;
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.24em;
-      text-transform:uppercase;
-      color: rgba(247,244,236,.82);
-      margin-bottom: 18px;
+      font-family:var(--fontMono);
+      font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+      color:rgba(74,132,255,.82);
+      display:flex;align-items:center;gap:14px;margin-bottom:14px;
     }
-    .kicker .line{ width:40px; height:1px; background: linear-gradient(to right, rgba(45,120,255,.75), transparent); }
-    .h1{
-      font-family:var(--display);
-      font-weight:800;
-      letter-spacing:-0.06em;
-      line-height:.92;
-      text-transform:uppercase;
-      color:var(--wash);
-      font-size: clamp(44px, 7.2vw, 86px);
-      max-width: 980px;
-    }
-    .sub{
-      margin-top: 18px;
-      max-width: 78ch;
-      font-size: 15px;
-      line-height: 1.95;
-      color: rgba(247,244,236,.72);
-    }
-
-    /* Word fx */
-    .fx .w{
-      display:inline-block;
-      position:relative;
-      transition: transform var(--t2) var(--ease), color var(--t2) var(--ease), opacity var(--t2) var(--ease);
-      opacity: .90;
-    }
-    .fx .w::after{
-      content:"";
-      position:absolute; left:0; right:0; bottom:-2px;
-      height:1px;
-      background: linear-gradient(90deg, transparent, rgba(45,120,255,.55), transparent);
-      opacity:0;
-      transform: scaleX(.6);
-      transform-origin:center;
-      transition: opacity var(--t2) var(--ease), transform var(--t2) var(--ease);
-      pointer-events:none;
-    }
-    .fx:hover .w{ opacity:.98; }
-    .fx .w:hover{ color: rgba(247,244,236,.95); transform: translateY(-1px); }
-    .fx .w:hover::after{ opacity:1; transform: scaleX(1); }
-
-    /* Page-like sections */
-    #content{ position:relative; z-index:10; padding-bottom: 84px; }
-    .page{
-      position:relative;
-      min-height: 92vh;
-      padding: 96px 0;
-      opacity:0;
-      transform: translateY(18px);
-      transition: opacity 640ms var(--ease), transform 640ms var(--ease);
-      isolation:isolate;
-    }
-    .page.vis{ opacity:1; transform: translateY(0); }
-
-    .page::before{
-      content:"";
-      position:absolute; left:50%; transform:translateX(-50%);
-      top:0; bottom:0; width: min(1600px, 100vw);
-      z-index:-1;
-    }
-
-    .page[data-mode="dark"]::before{
-      background:
-        radial-gradient(900px 460px at 16% 18%, rgba(59,74,43,.12), transparent 62%),
-        radial-gradient(760px 420px at 86% 26%, var(--blue-glow-3), transparent 62%),
-        linear-gradient(180deg, rgba(8,22,51,.60), rgba(6,16,42,1));
-      border-top: 1px solid rgba(247,244,236,.06);
-      border-bottom: 1px solid rgba(247,244,236,.06);
-    }
-    .page[data-mode="light"]{
-      color: var(--blue-ink);
-    }
-    .page[data-mode="light"]::before{
-      background:
-        radial-gradient(900px 460px at 18% 14%, rgba(59,74,43,.08), transparent 62%),
-        radial-gradient(820px 420px at 86% 26%, var(--blue-glow-2), transparent 62%),
-        linear-gradient(180deg, var(--paper), var(--ivory));
-      border-top: 1px solid rgba(6,16,42,.08);
-      border-bottom: 1px solid rgba(6,16,42,.08);
-    }
-
-    .tag{
-      display:flex; align-items:center; gap:14px;
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      margin-bottom: 16px;
-    }
-    .page[data-mode="dark"] .tag{ color: rgba(247,244,236,.82); }
-    .page[data-mode="light"] .tag{ color: rgba(6,16,42,.62); }
-    .tag::after{
-      content:"";
-      height:1px;
-      width: 160px;
-      background: linear-gradient(to right, rgba(45,120,255,.65), transparent);
-      opacity: .9;
-    }
-
-    .h2{
-      font-family:var(--display);
-      font-weight:800;
+    .kicker::before{content:"";width:38px;height:1px;background:rgba(74,132,255,.78)}
+    h1{
+      font-family:var(--fontDisplay);
+      font-weight:900;font-style:italic;
+      font-size:clamp(36px,6vw,64px);
       letter-spacing:-0.05em;
-      line-height: .98;
       text-transform:uppercase;
-      font-size: clamp(30px, 4.8vw, 58px);
-      margin-bottom: 18px;
+      line-height:1.02;
+      margin-bottom:10px;
     }
-    .page[data-mode="dark"] .h2{ color: var(--wash); }
-    .page[data-mode="light"] .h2{ color: rgba(6,16,42,.94); }
+    .lead{max-width:78ch;color:rgba(246,244,238,.72);line-height:1.85;font-size:15px}
 
-    .p{
-      margin-bottom: 14px;
-      max-width: 78ch;
-      font-size: 14.5px;
-      line-height: 1.95;
-    }
-    .page[data-mode="dark"] .p{ color: rgba(247,244,236,.72); }
-    .page[data-mode="light"] .p{ color: rgba(6,16,42,.74); }
-
-    /* Tech nav */
-    .tech{
+    /* Layout */
+    main{position:relative;z-index:5;max-width:var(--max);margin:0 auto;padding:0 44px 104px}
+    .grid{
       display:grid;
       grid-template-columns: 280px 1fr;
-      gap: 44px;
+      gap:34px;
       align-items:start;
-      margin-top: 18px;
+      padding-top:18px;
+      border-top:1px solid rgba(246,244,238,.10);
     }
-    .technav{
-      position:sticky; top: 92px;
-      display:flex; flex-direction:column; gap: 6px;
-      padding-top: 6px;
+    .toc{
+      position:sticky;top:86px;
+      border:1px solid rgba(246,244,238,.14);
+      border-radius:var(--radius2);
+      background:rgba(255,255,255,.02);
+      overflow:hidden;
     }
-    .tn{
-      border-left: 1px solid rgba(247,244,236,.075);
-      padding: 10px 12px;
-      border-radius: 12px;
-      font-family:var(--mono);
+    .tocHead{
+      padding:14px 16px;
+      border-bottom:1px solid rgba(246,244,238,.10);
+      font-family:var(--fontMono);
+      font-size:9px;letter-spacing:.26em;text-transform:uppercase;
+      color:rgba(246,244,238,.55);
+    }
+    .toc a{
+      display:block;
+      padding:10px 16px;
+      font-family:var(--fontMono);
       font-size:10px;
       letter-spacing:.14em;
       text-transform:uppercase;
-      color: rgba(247,244,236,.52);
-      transition: background var(--t1) var(--ease), color var(--t1) var(--ease), border-left-color var(--t1) var(--ease);
-      cursor:pointer;
-      user-select:none;
+      color:rgba(246,244,238,.50);
+      border-left:2px solid transparent;
+      transition:background .12s,color .12s,border-color .12s;
     }
-    .tn:hover{ color: rgba(247,244,236,.72); background: rgba(247,244,236,.02); }
-    .tn.active{
-      color: rgba(247,244,236,.92);
-      border-left-color: rgba(45,120,255,.65);
-      background: rgba(45,120,255,.10);
+    .toc a:hover{background:rgba(246,244,238,.05);color:rgba(246,244,238,.84)}
+    .toc a.active{border-left-color:rgba(74,132,255,.82);background:rgba(74,132,255,.10);color:rgba(246,244,238,.92)}
+    .tocFoot{
+      padding:14px 16px;
+      border-top:1px solid rgba(246,244,238,.10);
+      color:rgba(246,244,238,.55);
+      font-size:12px;line-height:1.7;
     }
 
-    .panels{ border-top:1px solid rgba(247,244,236,.075); }
-    .tp{
-      padding: 28px 0;
-      border-bottom:1px solid rgba(247,244,236,.075);
-      scroll-margin-top: 104px;
+    .section{
+      padding:26px 0;
+      border-bottom:1px solid rgba(246,244,238,.10);
     }
-    .tp:last-child{ border-bottom:none; }
-
-    .tp-num{
-      font-family:var(--mono);
-      font-size:9px;
-      letter-spacing:.22em;
+    .section:last-child{border-bottom:none}
+    .tag{
+      font-family:var(--fontMono);
+      font-size:9px;letter-spacing:.24em;text-transform:uppercase;
+      color:rgba(74,132,255,.82);
+      margin-bottom:10px;
+    }
+    h2{
+      font-family:var(--fontDisplay);
+      font-weight:900;font-style:italic;
+      font-size:28px;
+      letter-spacing:-0.03em;
       text-transform:uppercase;
-      color: rgba(239,233,219,.88);
-      margin-bottom: 8px;
+      line-height:1.1;
+      margin-bottom:10px;
     }
-    .tp-h{
-      font-family:var(--display);
-      font-weight:700;
-      font-size:18px;
-      letter-spacing:-0.02em;
-      color: var(--wash);
-      margin-bottom: 10px;
-      display:inline-block;
+    .p{font-size:14px;line-height:1.88;color:rgba(246,244,238,.70);max-width:78ch;margin-bottom:12px}
+    .mono{
+      font-family:var(--fontMono);
+      font-size:11px;
+      letter-spacing:.08em;
+      color:rgba(246,244,238,.56);
+      line-height:1.8;
+      max-width:88ch;
+      padding:14px 16px;
+      border:1px solid rgba(246,244,238,.12);
+      border-radius:14px;
+      background:rgba(255,255,255,.02);
+      margin-top:14px;
     }
-    .tp-b{
-      font-size:14px;
-      line-height:1.95;
-      color: rgba(247,244,236,.72);
-      max-width: 72ch;
-    }
-    .tw-caret{
-      display:inline-block;
-      width: 10px;
-      height: 1em;
-      border-left: 2px solid rgba(247,244,236,.65);
-      margin-left: 6px;
-      transform: translateY(2px);
-      animation: caretBlink 1s step-end infinite;
-    }
-    @keyframes caretBlink{ 50%{ opacity:0; } }
 
-    /* Cards */
-    .grid{
-      margin-top: 28px;
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-    }
-    .card{
-      grid-column: span 6;
-      border-radius: var(--r2);
-      padding: 22px 22px 20px;
-      position:relative;
+    /* “Different page” light panel inside dark page */
+    .lightPanel{
+      margin-top:16px;
+      border-radius:var(--radius2);
       overflow:hidden;
-      cursor:pointer;
-      transition: transform var(--t1) var(--ease), border-color var(--t1) var(--ease), background var(--t1) var(--ease);
+      border:1px solid rgba(246,244,238,.10);
     }
-    .page[data-mode="light"] .card{
-      border:1px solid rgba(6,16,42,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.40));
-      box-shadow: 0 22px 60px rgba(6,16,42,.08);
+    .lpTop{
+      background:var(--wash);
+      color:var(--ink);
+      padding:18px 18px;
+      border-bottom:1px solid rgba(10,20,48,.12);
     }
-    .page[data-mode="light"] .card::before{
-      content:""; position:absolute; inset:0;
-      background: radial-gradient(700px 240px at 20% 0%, rgba(45,120,255,.10), transparent 62%);
-      opacity:.85;
-      pointer-events:none;
+    .lpTop .lpTag{
+      font-family:var(--fontMono);
+      font-size:9px;letter-spacing:.24em;text-transform:uppercase;
+      color:rgba(10,20,48,.60);
+      margin-bottom:10px;
     }
-    .page[data-mode="light"] .card:hover{
-      transform: translateY(-2px);
-      border-color: rgba(6,16,42,.18);
-      background: rgba(255,255,255,.78);
-      box-shadow: 0 28px 70px rgba(6,16,42,.10);
-    }
-    .meta{
-      font-family:var(--mono);
-      font-size:9px;
-      letter-spacing:.22em;
+    .lpTop .lpH{
+      font-family:var(--fontDisplay);
+      font-weight:900;font-style:italic;
+      font-size:22px;
+      letter-spacing:-0.03em;
       text-transform:uppercase;
-      margin-bottom: 10px;
-      position:relative; z-index:1;
-      color: rgba(6,16,42,.62);
+      margin-bottom:8px;
     }
-    .title{
-      position:relative; z-index:1;
-      font-size:14px; font-weight:600; margin-bottom: 9px;
-      letter-spacing: -0.01em;
-      color: rgba(6,16,42,.94);
+    .lpTop .lpP{font-size:13px;line-height:1.75;color:rgba(10,20,48,.76);max-width:80ch}
+    .lpBot{
+      background:rgba(7,18,39,.60);
+      padding:16px 18px;
+      color:rgba(246,244,238,.70);
     }
-    .body{
-      position:relative; z-index:1;
-      font-size:13px; line-height:1.9;
-      color: rgba(6,16,42,.72);
-      max-width: 62ch;
+    .lpBot strong{
+      font-family:var(--fontMono);
+      font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(74,132,255,.82);
+      display:block;margin-bottom:6px;
     }
 
-    /* Boundary footer */
-    .boundary{ padding: 0 0 96px; }
-    .bpanel{
-      border-radius: var(--r2);
-      padding: 22px 22px 18px;
-      position:relative;
-      overflow:hidden;
-      isolation:isolate;
-      margin-top: 22px;
-    }
-    .bpanel::before{
-      content:"";
-      position:absolute; inset:0;
-      z-index:-1;
-      background:
-        radial-gradient(900px 420px at 80% 10%, var(--blue-glow-2), transparent 60%),
-        rgba(247,244,236,.015);
-      border:1px solid rgba(247,244,236,.075);
-      border-radius: var(--r2);
-    }
-    .btag{
-      display:flex; align-items:center; gap: 12px;
-      font-family:var(--mono);
-      font-size:9px;
-      letter-spacing:.26em;
-      text-transform:uppercase;
-      color: rgba(247,244,236,.52);
-      margin-bottom: 14px;
-    }
-    .btag::before{ content:""; width:20px; height:1px; background: rgba(45,120,255,.65); }
-    .bgrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px 34px;
-      padding-top: 6px;
-    }
-    .bitem{
-      position:relative;
-      padding-left: 14px;
-      font-size: 12px;
-      line-height: 1.75;
-      color: rgba(247,244,236,.52);
-    }
-    .bitem::before{ content:"·"; position:absolute; left:0; top:0; color: rgba(247,244,236,.30); }
-    .site-footer{
-      margin-top: 14px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 14px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(247,244,236,.075);
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color: rgba(247,244,236,.30);
-    }
-    .site-footer a{
-      color: rgba(247,244,236,.52);
-      border-bottom: 1px solid transparent;
-      padding-bottom: 2px;
-      transition: border-color var(--t1) var(--ease), color var(--t1) var(--ease);
-    }
-    .site-footer a:hover{
-      color: var(--wash);
-      border-bottom-color: rgba(45,120,255,.60);
+    .boundary{
+      margin-top:18px;
+      border-top:1px solid rgba(246,244,238,.10);
+      padding-top:18px;
+      font-family:var(--fontMono);
+      font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+      color:rgba(246,244,238,.42);
+      line-height:1.8;
     }
 
-    @media (max-width: 980px){
-      .pad{ padding-left: 26px; padding-right: 26px; }
-      #topnav{ padding: 0 26px; }
-      .tech{ grid-template-columns: 1fr; }
-      .technav{ position:static; flex-direction: row; flex-wrap: wrap; }
-      .grid{ gap: 12px; }
-      .card{ grid-column: span 12; }
-      .bgrid{ grid-template-columns: 1fr; }
-      .site-footer{ flex-direction:column; align-items:flex-start; }
-      .page{ min-height:auto; }
+    @media (max-width:980px){
+      #topnav{padding:0 22px}
+      header{padding:92px 22px 28px}
+      main{padding:0 22px 104px}
+      .grid{grid-template-columns:1fr}
+      .toc{position:static}
     }
-    @media (max-width: 640px){
-      body{ cursor:auto; }
-      #cursor,#spotlight{ display:none; }
-      .nav-links{ display:none; }
+    @media (max-width:600px){
+      .nav-links{display:none}
+      header{padding:86px 20px 26px}
+      main{padding:0 20px 104px}
+      .nav-brand{font-size:30px}
     }
   </style>
 </head>
 
 <body>
-  <a class="skip" href="#content">Skip to content</a>
-
   <div id="grain" aria-hidden="true"></div>
   <div id="spotlight" aria-hidden="true"></div>
   <div id="cursor" aria-hidden="true"></div>
 
-  <!-- TOP NAV -->
   <nav id="topnav" aria-label="Primary navigation">
-    <div class="brand">
-      <div class="brand-mark" aria-hidden="true" title="Seal">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M7.2 14.4c0-3.6 2.4-6 6-6h6v2.4h-6c-2.28 0-3.6 1.32-3.6 3.6s1.32 3.6 3.6 3.6h6V24h-6c-3.6 0-6-2.4-6-6Z" fill="rgba(247,244,236,.88)"/>
-        </svg>
-      </div>
-      <a href="index.html" class="brand-name" aria-label="CEYO home">CEYO</a>
-    </div>
-
-    <div class="nav-links" role="navigation" aria-label="Top navigation links">
+    <a href="index.html" class="nav-brand" aria-label="CEYO Home">CEYO</a>
+    <div class="nav-links">
       <a href="index.html">Overview</a>
-      <a href="platform.html" class="active" aria-current="page">Architecture</a>
+      <a href="platform.html" class="active">Architecture</a>
       <a href="trust.html">Trust</a>
       <a href="governance.html">Governance</a>
       <a href="resources.html">Resources</a>
@@ -602,441 +308,193 @@
     </div>
   </nav>
 
-  <!-- HEADER -->
-  <header class="head pad" aria-label="Platform and architecture header">
-    <div class="wrap">
-      <div class="kicker"><span class="line"></span> Platform & Architecture</div>
-      <h1 class="h1">Decoupled Verification<br>Architecture</h1>
-      <p class="sub fx" data-fx>
-        CEYO is designed as a verification substrate that operates beside AI inference systems without modifying model weights or core decision logic. Its purpose is narrow: to generate deterministic, integrity-sealed artifacts representing defined inference-time context under policy scope.
-      </p>
-    </div>
+  <header>
+    <div class="kicker">Platform & Architecture</div>
+    <h1>Decoupled Verification Architecture</h1>
+    <p class="lead">
+      CEYO operates beside inference systems to generate deterministic, integrity-sealed artifacts representing defined inference-time context under explicit policy scope. It does not modify model weights or intervene in decision logic.
+    </p>
   </header>
 
-  <!-- MAIN -->
-  <main id="content">
-
-    <!-- PAGE 01 (LIGHT) Attachment Model -->
-    <section class="page pad" data-mode="light" id="attachment" aria-labelledby="attach-h">
-      <div class="wrap">
-        <div class="tag" data-type data-type-speed="10">[01] Attachment at the Inference Boundary</div>
-        <h2 class="h2" id="attach-h" data-type data-type-speed="12">Attach Beside<br>Inference</h2>
-
-        <p class="p fx" data-fx data-type data-type-speed="9">
-          CEYO integrates at the inference boundary through a sidecar, gateway, or API wrapper configuration. This posture is intentional. Evidence infrastructure should not require mutation of model weights, training pipelines, or core inference engines.
-        </p>
-
-        <p class="p fx" data-fx data-type data-type-speed="9">
-          Attachment at the boundary allows CEYO to observe defined inference events, capture policy-scoped context, normalize event structure, produce deterministic artifacts, and seal artifacts without interfering with decision flow.
-        </p>
-
-        <div class="grid" role="list" aria-label="Deployment configurations">
-          <article class="card" role="listitem" tabindex="0" data-jump="#integration">
-            <div class="meta" data-type data-type-speed="10">Mode</div>
-            <div class="title" data-type data-type-speed="11">Sidecar</div>
-            <div class="body" data-type data-type-speed="8">Runs alongside the inference service; observes defined events; isolates sealing workload.</div>
-          </article>
-          <article class="card" role="listitem" tabindex="0" data-jump="#integration">
-            <div class="meta" data-type data-type-speed="10">Mode</div>
-            <div class="title" data-type data-type-speed="11">Gateway</div>
-            <div class="body" data-type data-type-speed="8">Intercepts requests at an edge boundary; enforces policy scope and tier selection.</div>
-          </article>
-          <article class="card" role="listitem" tabindex="0" data-jump="#integration">
-            <div class="meta" data-type data-type-speed="10">Mode</div>
-            <div class="title" data-type data-type-speed="11">API Wrapper</div>
-            <div class="body" data-type data-type-speed="8">Wraps inference calls in application code; low friction for incremental adoption.</div>
-          </article>
-          <article class="card" role="listitem" tabindex="0" data-jump="#verification">
-            <div class="meta" data-type data-type-speed="10">Principle</div>
-            <div class="title" data-type data-type-speed="11">Non-mutating</div>
-            <div class="body" data-type data-type-speed="8">Inference engine remains unchanged; integrity layer operates externally.</div>
-          </article>
+  <main>
+    <div class="grid">
+      <aside class="toc" aria-label="Architecture index">
+        <div class="tocHead">Index</div>
+        <a href="#attach" class="active">Attachment</a>
+        <a href="#policy">Policy Scope</a>
+        <a href="#schema">Canonical Artifacts</a>
+        <a href="#canon">RFC 8785</a>
+        <a href="#seal">Sealing</a>
+        <a href="#keys">Key Custody</a>
+        <a href="#tiers">Disclosure</a>
+        <a href="#avail">Availability</a>
+        <a href="#verify">Verification</a>
+        <div class="tocFoot">
+          Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of output.
         </div>
-      </div>
-    </section>
+      </aside>
 
-    <!-- PAGE 02 (DARK) Technical Mechanics Rail -->
-    <section class="page pad" data-mode="dark" id="mechanics" aria-labelledby="mech-h">
-      <div class="wrap">
-        <div class="tag">[02] Deterministic Artifact Mechanics</div>
-        <h2 class="h2" id="mech-h">Capture · Structure · Sealing</h2>
-
-        <p class="p fx" data-fx>
-          Use the rail to jump between the mechanical steps. Each section is independently addressable and designed for review.
-        </p>
-
-        <div class="tech">
-          <nav class="technav" aria-label="Mechanics navigation">
-            <div class="tn active" role="button" tabindex="0" data-target="#m-policy">01 · Policy</div>
-            <div class="tn" role="button" tabindex="0" data-target="#m-schema">02 · Schema</div>
-            <div class="tn" role="button" tabindex="0" data-target="#m-canon">03 · Canon</div>
-            <div class="tn" role="button" tabindex="0" data-target="#m-seal">04 · Seal</div>
-            <div class="tn" role="button" tabindex="0" data-target="#m-keys">05 · Keys</div>
-            <div class="tn" role="button" tabindex="0" data-target="#m-time">06 · Time</div>
-            <div class="tn" role="button" tabindex="0" data-target="#m-disclose">07 · Disclosure</div>
-            <div class="tn" role="button" tabindex="0" data-target="#m-availability">08 · Availability</div>
-          </nav>
-
-          <div class="panels" id="mech-panels">
-            <article class="tp" id="m-policy" data-tw>
-              <div class="tp-num">01 · Policy-Scoped Capture</div>
-              <div class="tp-h" data-tw-text="Define Scope Before Generation">Define Scope Before Generation</div>
-              <div class="tp-b">
-                Artifact generation begins with explicit policy definition. The deploying institution defines inclusion, exclusion, masking rules, disclosure tier configuration, and policy version identifiers. Only fields declared within policy scope are captured.
-              </div>
-            </article>
-
-            <article class="tp" id="m-schema" data-tw>
-              <div class="tp-num">02 · Canonical Artifact Structure</div>
-              <div class="tp-h" data-tw-text="Normalize Into Stable Records">Normalize Into Stable Records</div>
-              <div class="tp-b">
-                Captured context is normalized into a canonical artifact schema. Artifacts include structured metadata such as timestamp, policy identifier and version, capture environment fingerprint, disclosure tier designation, canonicalization version, integrity fields, and verification metadata where applicable.
-              </div>
-            </article>
-
-            <article class="tp" id="m-canon" data-tw>
-              <div class="tp-num">03 · Deterministic Canonicalization</div>
-              <div class="tp-h" data-tw-text="RFC 8785 JSON Canonicalization">RFC 8785 JSON Canonicalization</div>
-              <div class="tp-b">
-                Before hashing, JSON artifacts are canonicalized using RFC 8785 to ensure logically equivalent structures produce identical byte representations across environments. This enables reproducible hashing and independent verification.
-              </div>
-            </article>
-
-            <article class="tp" id="m-seal" data-tw>
-              <div class="tp-num">04 · Cryptographic Sealing</div>
-              <div class="tp-h" data-tw-text="Hash + Digital Signature">Hash + Digital Signature</div>
-              <div class="tp-b">
-                After canonicalization, artifacts are sealed using hashing and digital signatures under a deployment-defined cryptographic suite. Hashing establishes tamper-evidence. Signatures establish origin authenticity. Reference implementations may include SHA-256 and ECDSA (P-256).
-              </div>
-            </article>
-
-            <article class="tp" id="m-keys" data-tw>
-              <div class="tp-num">05 · Non-Custodial Key Architecture</div>
-              <div class="tp-h" data-tw-text="Operator-Controlled Signing Keys">Operator-Controlled Signing Keys</div>
-              <div class="tp-b">
-                Signing keys are generated and retained within the client-controlled environment (HSM, KMS, or TEE). CEYO does not possess, transmit, or store private signing keys. Authenticity remains anchored to the deploying institution.
-              </div>
-            </article>
-
-            <article class="tp" id="m-time" data-tw>
-              <div class="tp-num">06 · Time Anchoring (Optional)</div>
-              <div class="tp-h" data-tw-text="Strengthen Contemporaneousness Claims">Strengthen Contemporaneousness Claims</div>
-              <div class="tp-b">
-                Deployments may optionally integrate trusted timestamp authorities (RFC 3161), secure time sources, or cryptographic time attestation. Time anchoring is deployment-defined and not mandatory for artifact generation.
-              </div>
-            </article>
-
-            <article class="tp" id="m-disclose" data-tw>
-              <div class="tp-num">07 · Disclosure Tier Enforcement</div>
-              <div class="tp-h" data-tw-text="Verify Without Forced Exposure">Verify Without Forced Exposure</div>
-              <div class="tp-b">
-                Artifacts support tiered disclosure. Public or redacted tiers may expose limited metadata. Controlled review tiers may expose expanded context aligned to authorized oversight requirements. Disclosure boundaries are policy-defined before generation.
-              </div>
-            </article>
-
-            <article class="tp" id="m-availability" data-tw>
-              <div class="tp-num">08 · Integrity–Availability Balance</div>
-              <div class="tp-h" data-tw-text="Fail-Open Availability Posture">Fail-Open Availability Posture</div>
-              <div class="tp-b">
-                If artifact sealing fails, inference may continue uninterrupted; failures are logged, artifacts are marked unsealed, and conditions remain reviewable. Operators may configure stricter posture when required by policy.
-              </div>
-            </article>
-          </div>
+      <section aria-label="Architecture content">
+        <div class="section" id="attach">
+          <div class="tag">[01] Attachment at the Inference Boundary</div>
+          <h2>Sidecar / Gateway / Wrapper</h2>
+          <p class="p">
+            CEYO integrates at the inference boundary through a sidecar, gateway, or API wrapper configuration. This posture is intentional: evidence infrastructure should not require mutation of model weights, training pipelines, or core inference engines.
+          </p>
+          <p class="p">
+            Attachment at the boundary allows CEYO to observe defined inference events, capture policy-scoped context, normalize event structure, and seal artifacts without interfering with decision flow.
+          </p>
         </div>
-      </div>
-    </section>
 
-    <!-- PAGE 03 (LIGHT) Verification Workflow -->
-    <section class="page pad" data-mode="light" id="verification" aria-labelledby="ver-h">
-      <div class="wrap">
-        <div class="tag" data-type data-type-speed="10">[03] Independent Verification Workflow</div>
-        <h2 class="h2" id="ver-h" data-type data-type-speed="12">Mechanical Verification<br>Outcomes</h2>
-
-        <p class="p fx" data-fx data-type data-type-speed="9">
-          Verification is designed to be executable by independent parties using deterministic procedures. Verification confirms integrity and provenance under declared policy scope. It does not confirm semantic correctness or decision validity.
-        </p>
-
-        <div class="grid" role="list" aria-label="Verification steps and outcomes">
-          <article class="card" role="listitem" tabindex="0" data-type data-type-speed="10">
-            <div class="meta">Step</div>
-            <div class="title">1. Canonicalize (RFC 8785)</div>
-            <div class="body">Deterministic canonicalization produces reproducible byte output for hashing.</div>
-          </article>
-          <article class="card" role="listitem" tabindex="0" data-type data-type-speed="10">
-            <div class="meta">Step</div>
-            <div class="title">2. Recompute Hash</div>
-            <div class="body">Hash mismatch indicates alteration since sealing.</div>
-          </article>
-          <article class="card" role="listitem" tabindex="0" data-type data-type-speed="10">
-            <div class="meta">Step</div>
-            <div class="title">3. Validate Signature</div>
-            <div class="body">Signature validation confirms origin authenticity against the operator public key.</div>
-          </article>
-          <article class="card" role="listitem" tabindex="0" data-type data-type-speed="10">
-            <div class="meta">Step</div>
-            <div class="title">4. Policy Alignment Check</div>
-            <div class="body">Confirms policy identifier and version alignment; detects scope mismatch.</div>
-          </article>
-          <article class="card" role="listitem" tabindex="0" data-type data-type-speed="10">
-            <div class="meta">Outcome</div>
-            <div class="title">Integrity Confirmed</div>
-            <div class="body">Hash and signature validate. No alteration detected under declared scope.</div>
-          </article>
-          <article class="card" role="listitem" tabindex="0" data-type data-type-speed="10">
-            <div class="meta">Outcome</div>
-            <div class="title">Integrity Failed</div>
-            <div class="body">Hash mismatch or signature failure detected.</div>
-          </article>
-          <article class="card" role="listitem" tabindex="0" data-type data-type-speed="10">
-            <div class="meta">Outcome</div>
-            <div class="title">Policy Scope Mismatch</div>
-            <div class="body">Artifact policy identifier/version does not match expected configuration.</div>
-          </article>
-          <article class="card" role="listitem" tabindex="0" data-type data-type-speed="10">
-            <div class="meta">Boundary</div>
-            <div class="title">Not Output Validation</div>
-            <div class="body">Verification is integrity and provenance only, not correctness, fairness, or legality.</div>
-          </article>
+        <div class="section" id="policy">
+          <div class="tag">[02] Policy-Scoped Capture</div>
+          <h2>Explicit Inclusion, Exclusion, Masking</h2>
+          <p class="p">
+            Artifact generation begins with explicit policy definition. Operators define which fields are included, excluded, or masked; disclosure tiers; and policy version identifiers. Only fields within policy scope are captured.
+          </p>
+          <p class="p">
+            By design, CEYO does not ingest model weights, training datasets, proprietary internals, unrelated telemetry, or full transcripts unless explicitly configured.
+          </p>
         </div>
-      </div>
-    </section>
 
-    <!-- PAGE 04 (DARK) Operational Integration Summary -->
-    <section class="page pad" data-mode="dark" id="integration" aria-labelledby="int-h">
-      <div class="wrap">
-        <div class="tag">[04] Operational Integration</div>
-        <h2 class="h2" id="int-h">Low-Friction Deployment<br>Posture</h2>
+        <div class="section" id="schema">
+          <div class="tag">[03] Canonical Artifact Structure</div>
+          <h2>Structured Records, Not Logs</h2>
+          <p class="p">
+            Captured context is normalized into a canonical artifact schema designed for deterministic integrity verification. Artifacts include versioned metadata such as timestamp, policy identifier/version, disclosure tier, canonicalization version, integrity fields, and verification metadata.
+          </p>
 
-        <p class="p fx" data-fx>
-          CEYO is designed to integrate without requiring modification of core model weights or inference logic. It operates as an attachable integrity layer at the inference boundary, enabling deterministic artifact generation while preserving system performance and autonomy.
-        </p>
-
-        <p class="p fx" data-fx>
-          Upon inference event: policy-scoped fields are captured, normalized into canonical schema, canonicalized, hashed, digitally signed, and stored according to operator-defined retention posture. Retention duration and chain-of-custody procedures remain institutional responsibilities.
-        </p>
-
-        <div class="bpanel" role="region" aria-label="Boundary declaration">
-          <div class="btag">Boundary Declaration</div>
-          <div class="bgrid">
-            <div class="bitem">CEYO does not modify model weights or intervene in decision logic.</div>
-            <div class="bitem">CEYO does not certify compliance or guarantee admissibility.</div>
-            <div class="bitem">Policy scope is explicit and versioned; capture is minimized by design.</div>
-            <div class="bitem">Fail-open availability preserves inference continuity unless configured otherwise.</div>
-          </div>
-
-          <div class="site-footer" aria-label="Footer">
-            <div>© <span id="yr"></span> CEYO · All Rights Reserved</div>
-            <div>
-              <a href="terms.html">Terms</a> ·
-              <a href="privacy.html">Privacy</a> ·
-              <a href="contact.html">Contact</a>
+          <div class="lightPanel" role="region" aria-label="Artifact schema posture">
+            <div class="lpTop">
+              <div class="lpTag">Schema posture</div>
+              <div class="lpH">Review-Ready Structure</div>
+              <div class="lpP">
+                Canonical artifacts are not free-form logs. They are structured records intended for review and independent integrity validation.
+              </div>
+            </div>
+            <div class="lpBot">
+              <strong>Key point</strong>
+              Capture scope is embedded in the artifact so reviewers can verify not only integrity, but the declared capture boundary under which the artifact was produced.
             </div>
           </div>
         </div>
 
-      </div>
-    </section>
+        <div class="section" id="canon">
+          <div class="tag">[04] Deterministic Canonicalization</div>
+          <h2>RFC 8785 JSON Canonicalization</h2>
+          <p class="p">
+            Before hashing, JSON artifacts are canonicalized using RFC 8785. Canonicalization ensures that logically equivalent data produces identical byte representations across environments.
+          </p>
+          <p class="p">
+            This step is critical for reproducible hashing and independent verification. Without deterministic canonicalization, verification becomes environment-dependent.
+          </p>
+          <div class="mono" aria-label="Determinism note">
+            Canonicalization is treated as a structural requirement, not an optimization.
+          </div>
+        </div>
 
-    <!-- Footer spacing buffer -->
-    <section class="boundary pad" aria-hidden="true"><div class="wrap"></div></section>
+        <div class="section" id="seal">
+          <div class="tag">[05] Cryptographic Sealing</div>
+          <h2>Hash + Signature</h2>
+          <p class="p">
+            After canonicalization, artifacts are sealed using cryptographic hashing and digital signatures under a deployment-defined suite. Reference implementations may include SHA-256 for hashing and ECDSA (P-256) for signatures.
+          </p>
+          <p class="p">
+            Hashing establishes tamper-evidence. Digital signatures establish origin authenticity. Cryptographic suites may evolve as standards evolve; integrity posture remains constant.
+          </p>
+        </div>
 
+        <div class="section" id="keys">
+          <div class="tag">[06] Non-Custodial Key Architecture</div>
+          <h2>Operator-Controlled Signing Authority</h2>
+          <p class="p">
+            Signing keys are generated and retained within the client environment, typically within HSM, KMS, or TEE. CEYO does not possess, transmit, or store private signing keys.
+          </p>
+          <p class="p">
+            This separation preserves clear liability boundaries between infrastructure provider and deploying institution. Artifact authenticity remains anchored to the operator.
+          </p>
+        </div>
+
+        <div class="section" id="tiers">
+          <div class="tag">[07] Disclosure Tier Enforcement</div>
+          <h2>Verification Without Forced Exposure</h2>
+          <p class="p">
+            Artifacts support tiered disclosure. Public or redacted tiers may expose summary metadata; controlled review tiers may expose expanded contextual fields aligned to authorized oversight requirements.
+          </p>
+          <p class="p">
+            Disclosure boundaries are policy-defined before artifact generation. Verification does not require exposure of proprietary internals beyond policy scope.
+          </p>
+        </div>
+
+        <div class="section" id="avail">
+          <div class="tag">[08] Integrity–Availability Balance</div>
+          <h2>Fail-Open by Default</h2>
+          <p class="p">
+            Integrity infrastructure must not compromise continuity by default. If artifact sealing fails, inference may continue uninterrupted; failures are logged; artifacts are marked unsealed; conditions remain reviewable.
+          </p>
+          <p class="p">
+            Availability posture is an institutional decision. Operators may configure stricter enforcement where appropriate.
+          </p>
+        </div>
+
+        <div class="section" id="verify">
+          <div class="tag">[09] Independent Verification Workflow</div>
+          <h2>Deterministic Procedure</h2>
+          <p class="p">
+            Verification is executable by independent parties using deterministic steps: canonicalize (RFC 8785), recompute hash, validate signature, and confirm policy identifier/version alignment.
+          </p>
+          <div class="mono" aria-label="Verification states">
+            Outcomes: Integrity Confirmed · Integrity Failed · Policy Scope Mismatch
+          </div>
+
+          <div class="boundary">
+            Boundary: Verification confirms integrity and provenance under policy scope. It does not confirm semantic correctness or decision validity.
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 
-  <!-- BOTTOM INDEX -->
   <nav id="indexbar" aria-label="Site index">
     <a class="ib-item" href="index.html">Index</a>
-    <a class="ib-item active" href="platform.html" aria-current="page">Arch</a>
+    <a class="ib-item active" href="platform.html">Arch</a>
     <a class="ib-item" href="trust.html">Trust</a>
     <a class="ib-item" href="governance.html">Gov</a>
     <a class="ib-item" href="contact.html">Contact</a>
   </nav>
 
   <script>
-    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-
-    // Cursor + BLUE spotlight
+    // cursor + spotlight
     const cursor = document.getElementById('cursor');
     const spotlight = document.getElementById('spotlight');
-
-    document.getElementById('yr').textContent = new Date().getFullYear();
-
-    if (!prefersReduced && !coarse) {
-      let mx = 0, my = 0, raf = 0;
-
-      const render = () => {
-        raf = 0;
-        cursor.style.left = mx + 'px';
-        cursor.style.top  = my + 'px';
-        spotlight.style.background =
-          `radial-gradient(circle 520px at ${mx}px ${my}px,
-            rgba(45,120,255,.14) 0%,
-            rgba(45,120,255,.08) 24%,
-            rgba(45,120,255,.04) 40%,
-            transparent 74%)`;
-      };
-
-      document.addEventListener('mousemove', (e) => {
-        mx = e.clientX; my = e.clientY;
-        if (!raf) raf = requestAnimationFrame(render);
-      }, { passive: true });
-
-      document.addEventListener('mouseleave', () => {
-        cursor.classList.add('hidden');
-        spotlight.style.background = 'none';
-      }, { passive: true });
-
-      document.addEventListener('mouseenter', () => {
-        cursor.classList.remove('hidden');
-      }, { passive: true });
-
-      const hoverables = 'a, .card, .ib-item, .tn';
-      document.querySelectorAll(hoverables).forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('large'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('large'));
-      });
+    function setSpotlight(x,y){
+      spotlight.style.background =
+        `radial-gradient(circle 360px at ${x}px ${y}px, rgba(74,132,255,.16) 0%, rgba(74,132,255,.06) 34%, transparent 70%)`;
     }
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+      setSpotlight(e.clientX, e.clientY);
+    }, { passive:true });
+    document.addEventListener('mouseleave', () => { cursor.style.opacity='0'; spotlight.style.background='none'; });
+    document.addEventListener('mouseenter', () => { cursor.style.opacity='1'; });
 
-    // Nav scrolled state
-    const topnav = document.getElementById('topnav');
-    window.addEventListener('scroll', () => {
-      topnav.classList.toggle('scrolled', window.scrollY > 30);
-    }, { passive: true });
-
-    // Reveal pages
-    const revealTargets = document.querySelectorAll('.page');
-    const revealObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
-    }, { threshold: 0.10 });
-    revealTargets.forEach(s => revealObs.observe(s));
-
-    // Paragraph word effects: wrap words once
-    const wrapWords = (el) => {
-      const text = el.textContent;
-      const parts = text.split(/(\s+)/);
-      el.textContent = '';
-      parts.forEach(part => {
-        if (part.trim() === '') el.appendChild(document.createTextNode(part));
-        else {
-          const s = document.createElement('span');
-          s.className = 'w';
-          s.textContent = part;
-          el.appendChild(s);
-        }
-      });
-    };
-    document.querySelectorAll('[data-fx]').forEach(wrapWords);
-
-    // Clickable cards jump (optional on this page)
-    const jump = (sel) => {
-      const el = document.querySelector(sel);
-      if (!el) return;
-      el.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
-    };
-    document.querySelectorAll('.card[data-jump]').forEach(card => {
-      const target = card.getAttribute('data-jump');
-      const go = () => jump(target);
-      card.addEventListener('click', go);
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
-      });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('large'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('large'));
     });
 
-    // Tech nav jump + active highlight
-    const navItems = document.querySelectorAll('.tn');
-    const panels = document.querySelectorAll('#mech-panels .tp');
-
-    const setActive = (idx) => navItems.forEach((n, i) => n.classList.toggle('active', i === idx));
-
-    navItems.forEach((n) => {
-      const target = n.getAttribute('data-target');
-      const go = () => jump(target);
-      n.addEventListener('click', go);
-      n.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
-      });
-    });
-
-    const panelObs = new IntersectionObserver((entries) => {
+    // TOC active sync
+    const tocLinks = [...document.querySelectorAll('.toc a')];
+    const sections = tocLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const obs = new IntersectionObserver(entries => {
       entries.forEach(e => {
-        if (e.isIntersecting) {
-          const idx = [...panels].indexOf(e.target);
-          if (idx >= 0) setActive(idx);
-        }
+        if (!e.isIntersecting) return;
+        const id = '#' + e.target.id;
+        tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
       });
-    }, { threshold: 0.55 });
-    panels.forEach(p => panelObs.observe(p));
-
-    // Typewriter heading effect for each mechanics panel
-    const typeHeading = (el) => {
-      const full = el.getAttribute('data-tw-text') || el.textContent.trim();
-      el.textContent = '';
-      const caret = document.createElement('span');
-      caret.className = 'tw-caret';
-      let i = 0;
-
-      const tick = () => {
-        i++;
-        el.textContent = full.slice(0, i);
-        if (i < full.length) setTimeout(tick, 18);
-        else {
-          el.appendChild(caret);
-          setTimeout(() => caret.remove(), 900);
-        }
-      };
-      tick();
-    };
-
-    if (!prefersReduced) {
-      const twPanels = document.querySelectorAll('.tp[data-tw]');
-      const twObs = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting && !e.target.dataset.twDone) {
-            e.target.dataset.twDone = "1";
-            const h = e.target.querySelector('.tp-h');
-            if (h) typeHeading(h);
-          }
-        });
-      }, { threshold: 0.62 });
-      twPanels.forEach(p => twObs.observe(p));
-    }
-
-    // Light-page sequential typewriter (for tagged elements only)
-    const typeElement = (el, speed) => new Promise((resolve) => {
-      const original = (el.getAttribute('data-text') || el.textContent).trimEnd();
-      el.setAttribute('data-text', original);
-      el.textContent = '';
-      let i = 0;
-      const step = () => {
-        i++;
-        el.textContent = original.slice(0, i);
-        if (i < original.length) setTimeout(step, speed);
-        else resolve();
-      };
-      step();
-    });
-
-    const typeSequence = async (root) => {
-      const nodes = [...root.querySelectorAll('[data-type]')];
-      for (const el of nodes) {
-        const sp = Math.max(6, Math.min(22, parseInt(el.getAttribute('data-type-speed') || '10', 10)));
-        await typeElement(el, sp);
-      }
-      root.classList.add('type-done');
-    };
-
-    if (!prefersReduced) {
-      const lightSections = document.querySelectorAll('.page[data-mode="light"]');
-      const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting && !e.target.dataset.typed) {
-            e.target.dataset.typed = "1";
-            typeSequence(e.target);
-          }
-        });
-      }, { threshold: 0.24 });
-      lightSections.forEach(s => obs.observe(s));
-    }
+    }, { threshold:0.55 });
+    sections.forEach(s => obs.observe(s));
   </script>
 </body>
 </html>
