@@ -1,88 +1,420 @@
+<!-- ===========================
+ CEYO — contact.html
+ Controlled Review / Deployment Inquiry
+ V2026.02.19
+=========================== -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>CEYO — Contact</title>
-  <meta name="description" content="Controlled review requests, deployment inquiries, institutional partnerships, and licensing discussions."/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>CEYO — Contact / Controlled Review</title>
+  <meta name="description" content="Request controlled review access, deployment discussion, or institutional partnership inquiry."/>
+  <meta name="theme-color" content="#071227"/>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,500;0,700;0,900;1,900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <style>
-/* --- CSS unchanged --- */
-:root{--bg:#0D0E0B;--ivory:#FFFFF0;--green:#4A5D3B;--green2:#5E7A4A;--text:rgba(255,255,240,.88);--muted:rgba(255,255,240,.52);--muted2:rgba(255,255,240,.30);--stroke:rgba(255,255,240,.12);--stroke2:rgba(255,255,240,.06);}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
-body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;overflow-x:hidden;min-height:100vh;cursor:none;}
-/* remaining CSS omitted for brevity — keep exactly as provided previously */
+    :root{
+      --navy:#071227; --navy2:#0A1731; --navy3:#0E2040;
+      --wash:#F6F4EE; --ink:#0A1430;
+
+      --ivory:rgba(246,244,238,.94);
+      --muted:rgba(246,244,238,.70);
+      --muted2:rgba(246,244,238,.46);
+      --stroke:rgba(246,244,238,.14);
+      --stroke2:rgba(246,244,238,.075);
+
+      --blue:rgba(74,132,255,.85);
+      --blue2:rgba(74,132,255,.18);
+
+      --max:1180px;
+      --radius:14px; --radius2:18px;
+
+      --fontDisplay:"Styrene A","Outfit",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      --fontText:"Tiempos","Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      --fontMono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--navy);
+      color:var(--ivory);
+      font-family:var(--fontText);
+      overflow-x:hidden;
+      min-height:100vh;
+      cursor:none;
+    }
+    a{color:inherit;text-decoration:none}
+    button,input,select,textarea{font:inherit}
+    ::selection{background:rgba(74,132,255,.25)}
+
+    #grain{
+      position:fixed;inset:0;z-index:9998;pointer-events:none;
+      opacity:.04;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E");
+      background-size:220px 220px;mix-blend-mode:soft-light;
+    }
+    #spotlight{position:fixed;inset:0;z-index:1;pointer-events:none;transition:background .05s linear}
+    #cursor{
+      position:fixed;z-index:9999;width:8px;height:8px;border-radius:999px;
+      background:rgba(246,244,238,.95);pointer-events:none;
+      transform:translate(-50%,-50%);mix-blend-mode:exclusion;
+      transition:width .15s,height .15s,opacity .15s;
+    }
+    #cursor.large{width:40px;height:40px;opacity:.45}
+
+    #topnav{
+      position:fixed;top:0;left:0;right:0;z-index:800;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 44px;height:68px;
+      background:rgba(7,18,39,.86);
+      border-bottom:1px solid rgba(246,244,238,.08);
+      backdrop-filter:blur(10px);
+    }
+    .nav-brand{
+      font-family:var(--fontDisplay);
+      font-weight:900;font-style:italic;
+      font-size:28px;letter-spacing:-0.03em;text-transform:uppercase;
+      color:rgba(246,244,238,.96);
+    }
+    .nav-links{display:flex;align-items:center;gap:6px}
+    .nav-links a{
+      font-family:var(--fontMono);
+      font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(246,244,238,.52);
+      padding:8px 12px;border-radius:999px;
+      transition:color .12s,background .12s;
+    }
+    .nav-links a:hover{color:rgba(246,244,238,.92);background:rgba(246,244,238,.05)}
+    .nav-links a.active{color:rgba(246,244,238,.92)}
+    .nav-cta{
+      margin-left:10px;
+      border:1px solid rgba(74,132,255,.35);
+      background:rgba(74,132,255,.08);
+      color:rgba(246,244,238,.92)!important;
+    }
+
+    #indexbar{
+      position:fixed;bottom:0;left:0;right:0;z-index:800;
+      display:flex;height:50px;
+      background:rgba(5,12,26,.92);
+      border-top:1px solid rgba(246,244,238,.10);
+      backdrop-filter:blur(10px);
+    }
+    .ib-item{
+      flex:1;display:flex;align-items:center;justify-content:center;
+      font-family:var(--fontMono);
+      font-size:10px;letter-spacing:.20em;text-transform:uppercase;
+      color:rgba(246,244,238,.50);
+      border-right:1px solid rgba(246,244,238,.07);
+      transition:color .12s,background .12s,border-top-color .12s;
+    }
+    .ib-item:last-child{border-right:none}
+    .ib-item:hover{color:rgba(246,244,238,.92);background:rgba(246,244,238,.05)}
+    .ib-item.active{color:rgba(246,244,238,.92);border-top:1px solid rgba(246,244,238,.92)}
+
+    main{position:relative;z-index:5;padding:96px 44px 104px;max-width:var(--max);margin:0 auto}
+    .hero{
+      padding:28px 0 18px;
+      border-bottom:1px solid rgba(246,244,238,.10);
+      margin-bottom:28px;
+    }
+    .kicker{
+      font-family:var(--fontMono);
+      font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+      color:rgba(74,132,255,.82);
+      display:flex;align-items:center;gap:14px;margin-bottom:14px;
+    }
+    .kicker::before{content:"";width:38px;height:1px;background:rgba(74,132,255,.78)}
+    h1{
+      font-family:var(--fontDisplay);
+      font-weight:900;font-style:italic;
+      font-size:clamp(34px,5.8vw,58px);
+      letter-spacing:-0.05em;
+      text-transform:uppercase;
+      line-height:1.05;
+      margin-bottom:10px;
+    }
+    .lead{max-width:78ch;color:rgba(246,244,238,.72);line-height:1.85;font-size:15px}
+
+    .layout{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:34px;
+      align-items:start;
+      margin-top:22px;
+    }
+    .panel{
+      border:1px solid rgba(246,244,238,.14);
+      border-radius:var(--radius2);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      overflow:hidden;
+    }
+    .panelHead{
+      padding:14px 18px;
+      border-bottom:1px solid rgba(246,244,238,.10);
+      font-family:var(--fontMono);
+      font-size:9px;letter-spacing:.24em;text-transform:uppercase;
+      color:rgba(246,244,238,.55);
+    }
+    form{padding:18px}
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    .field{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+    label{
+      font-family:var(--fontMono);
+      font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(246,244,238,.55);
+    }
+    input,select,textarea{
+      width:100%;
+      border-radius:12px;
+      border:1px solid rgba(246,244,238,.14);
+      background:rgba(7,18,39,.40);
+      color:rgba(246,244,238,.92);
+      padding:12px 12px;
+      outline:none;
+      transition:border-color .15s, background .15s;
+    }
+    textarea{min-height:150px;resize:vertical;line-height:1.7}
+    input:focus,select:focus,textarea:focus{
+      border-color:rgba(74,132,255,.48);
+      background:rgba(7,18,39,.54);
+    }
+    .hint{
+      font-size:12px;color:rgba(246,244,238,.52);line-height:1.6;margin-top:-4px
+    }
+    .row{
+      display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px
+    }
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      font-family:var(--fontMono);
+      font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+      padding:13px 18px;border-radius:999px;
+      border:1px solid rgba(246,244,238,.14);
+      color:rgba(246,244,238,.70);
+      background:transparent;
+      cursor:pointer;
+      transition:background .15s,border-color .15s,color .15s,transform .15s;
+    }
+    .btn:hover{border-color:rgba(246,244,238,.38);color:rgba(246,244,238,.92);background:rgba(246,244,238,.06);transform:translateY(-1px)}
+    .btn-primary{
+      border-color:rgba(74,132,255,.40);
+      background:rgba(74,132,255,.12);
+      color:rgba(246,244,238,.92);
+    }
+    .btn-primary:hover{border-color:rgba(74,132,255,.62);background:rgba(74,132,255,.18)}
+    .check{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:10px 12px;border-radius:12px;
+      border:1px solid rgba(246,244,238,.10);
+      background:rgba(255,255,255,.02);
+      margin-top:6px;
+    }
+    .check input{width:16px;height:16px;margin-top:2px}
+    .check p{font-size:12px;line-height:1.6;color:rgba(246,244,238,.62)}
+    .side{padding:18px}
+    .sideBlock{padding:16px 0;border-bottom:1px solid rgba(246,244,238,.10)}
+    .sideBlock:last-child{border-bottom:none}
+    .sideTitle{
+      font-family:var(--fontMono);
+      font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(246,244,238,.55);
+      margin-bottom:8px;
+    }
+    .sideText{font-size:13px;line-height:1.72;color:rgba(246,244,238,.70);max-width:52ch}
+    .pill{
+      display:inline-flex;align-items:center;gap:10px;
+      font-family:var(--fontMono);
+      font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+      padding:10px 12px;border-radius:999px;
+      border:1px solid rgba(246,244,238,.14);
+      background:rgba(255,255,255,.02);
+      color:rgba(246,244,238,.70);
+      margin-top:10px;
+    }
+    .pill::before{content:"";width:8px;height:8px;border-radius:999px;background:rgba(74,132,255,.72);box-shadow:0 0 0 3px rgba(74,132,255,.12)}
+    .fine{
+      margin-top:18px;
+      font-family:var(--fontMono);
+      font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+      color:rgba(246,244,238,.38);
+    }
+
+    @media (max-width:980px){
+      #topnav{padding:0 22px}
+      main{padding:92px 22px 104px}
+      .layout{grid-template-columns:1fr}
+    }
+    @media (max-width:600px){
+      .nav-links{display:none}
+      main{padding:86px 20px 104px}
+      .grid{grid-template-columns:1fr}
+      .nav-brand{font-size:30px}
+    }
   </style>
 </head>
+
 <body>
+  <div id="grain" aria-hidden="true"></div>
+  <div id="spotlight" aria-hidden="true"></div>
+  <div id="cursor" aria-hidden="true"></div>
 
-<!-- NAV unchanged -->
-
-<main class="page-wrap">
-  <header class="page-head">
-    <div class="page-kicker">Controlled engagement</div>
-    <h1 class="page-title visible">Contact</h1>
-    <p class="page-lead visible">
-      CEYO engages with regulated operators, institutional oversight bodies, and organizations conducting structured review of AI inference systems.
-      Public materials remain intentionally high-level. Operational specifics, technical documentation, and deployment discussions occur under controlled review.
-    </p>
-  </header>
-
-  <section class="grid">
-
-    <!-- LEFT PANEL unchanged except content tightening -->
-    <div class="panel visible">
-      <div class="panel-h">Inquiry</div>
-      <div class="panel-b">
-
-        <p class="p"><strong>Engagement occurs under controlled disclosure.</strong> Use this form to route a request appropriately. No authorization is implied by submission.</p>
-
-        <!-- form unchanged -->
-
-      </div>
+  <nav id="topnav" aria-label="Primary navigation">
+    <a href="index.html" class="nav-brand" aria-label="CEYO Home">CEYO</a>
+    <div class="nav-links">
+      <a href="index.html">Overview</a>
+      <a href="platform.html">Architecture</a>
+      <a href="trust.html">Trust</a>
+      <a href="governance.html">Governance</a>
+      <a href="resources.html">Resources</a>
+      <a href="contact.html" class="nav-cta active">Request Review</a>
     </div>
+  </nav>
 
-    <!-- RIGHT PANEL -->
-    <aside class="panel visible">
-      <div class="panel-h">Primary contact</div>
-      <div class="panel-b">
+  <main>
+    <header class="hero" aria-label="Controlled review request">
+      <div class="kicker">Controlled Review</div>
+      <h1>Request Access / Submit Inquiry</h1>
+      <p class="lead">
+        Public materials remain intentionally high-level. Operational specifics, technical documentation, and deployment discussions occur under controlled review.
+      </p>
+    </header>
 
-        <p class="p"><strong>Email</strong><br>
-        <span style="font-family:'IBM Plex Mono',monospace;letter-spacing:.14em;color:var(--ivory);">
-        contact@nadir-ai.com</span></p>
+    <div class="layout">
+      <section class="panel" aria-label="Inquiry form">
+        <div class="panelHead">Submission</div>
 
-        <p class="p"><strong>Controlled Review may include</strong></p>
-        <ul class="list">
-          <li class="li">Technical Requirements access</li>
-          <li class="li">Policy schema review</li>
-          <li class="li">Verification contract review</li>
-          <li class="li">Benchmark discussion</li>
-          <li class="li">Architecture Q&amp;A</li>
-        </ul>
+        <!-- NOTE: action is placeholder; wire to your backend later -->
+        <form action="#" method="post">
+          <div class="grid">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="org">Institution / Organization</label>
+              <input id="org" name="org" autocomplete="organization" required>
+            </div>
+          </div>
 
-        <div style="height:18px;"></div>
+          <div class="grid">
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="type">Inquiry Type</label>
+              <select id="type" name="type" required>
+                <option value="" selected disabled>Select</option>
+                <option>Controlled Review Request</option>
+                <option>Deployment Inquiry</option>
+                <option>Institutional Partnership</option>
+                <option>Licensing Discussion</option>
+                <option>Security / Vulnerability Report</option>
+              </select>
+            </div>
+          </div>
 
-        <p class="p"><strong>Boundary position</strong></p>
+          <div class="field">
+            <label for="msg">Message</label>
+            <textarea id="msg" name="msg" required></textarea>
+            <div class="hint">Include scope, intended environment, and any disclosure constraints (public/redacted/controlled review).</div>
+          </div>
 
-        <p class="p">
-          Public pages are descriptive only. Technical specifics and operational materials are shared under controlled conditions.
-        </p>
+          <div class="check">
+            <input id="nda" type="checkbox" name="nda">
+            <p>
+              NDA requested prior to exchange of controlled technical materials.
+              (Where appropriate, formal agreements may be executed upon mutual agreement.)
+            </p>
+          </div>
 
-        <p class="p">
-          Engagement does not imply certification, compliance endorsement, or regulatory authority.
-        </p>
+          <div class="row">
+            <button class="btn btn-primary" type="submit">Submit Request</button>
+            <a class="btn" href="resources.html">View Resources</a>
+          </div>
 
-      </div>
-    </aside>
+          <div class="fine">Submissions do not constitute license or deployment authorization.</div>
+        </form>
+      </section>
 
-  </section>
+      <aside class="panel" aria-label="Contact details">
+        <div class="panelHead">Channel</div>
+        <div class="side">
+          <div class="sideBlock">
+            <div class="sideTitle">Primary Contact</div>
+            <div class="sideText">Email: contact@nadir-ai.com</div>
+            <div class="pill">Controlled Review</div>
+          </div>
 
-</main>
+          <div class="sideBlock">
+            <div class="sideTitle">Subject Line Guidance</div>
+            <div class="sideText">
+              Controlled Review Request<br>
+              Deployment Inquiry<br>
+              Institutional Partnership<br>
+              Licensing Discussion<br>
+              Security / Vulnerability Report
+            </div>
+          </div>
 
-<!-- FOOTER + SCRIPT unchanged -->
+          <div class="sideBlock">
+            <div class="sideTitle">Boundary</div>
+            <div class="sideText">
+              CEYO provides integrity-sealed records. It does not certify compliance, guarantee admissibility, or adjudicate outcomes. Authorized institutions retain responsibility for determinations.
+            </div>
+          </div>
 
+          <div class="fine">© <span id="year"></span> CEYO. All rights reserved.</div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <nav id="indexbar" aria-label="Site index">
+    <a class="ib-item" href="index.html">Index</a>
+    <a class="ib-item" href="platform.html">Arch</a>
+    <a class="ib-item" href="trust.html">Trust</a>
+    <a class="ib-item" href="governance.html">Gov</a>
+    <a class="ib-item active" href="contact.html">Contact</a>
+  </nav>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const cursor = document.getElementById('cursor');
+    const spotlight = document.getElementById('spotlight');
+
+    function setSpotlight(x,y){
+      spotlight.style.background =
+        `radial-gradient(circle 360px at ${x}px ${y}px, rgba(74,132,255,.16) 0%, rgba(74,132,255,.06) 34%, transparent 70%)`;
+    }
+
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+      setSpotlight(e.clientX, e.clientY);
+    }, { passive:true });
+
+    document.addEventListener('mouseleave', () => {
+      cursor.style.opacity = '0';
+      spotlight.style.background = 'none';
+    });
+    document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
+
+    document.querySelectorAll('a, button, input, textarea, select').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('large'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('large'));
+    });
+  </script>
 </body>
 </html>
