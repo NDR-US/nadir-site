@@ -3,102 +3,103 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="color-scheme" content="dark"/>
+  <meta name="color-scheme" content="dark light"/>
   <title>CEYO — Evidentiary Infrastructure for Autonomous Systems</title>
-  <meta name="description" content="CEYO is a weight-neutral, policy-scoped integrity layer. Canonical artifacts. Cryptographic sealing. Independent verification under constrained disclosure."/>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Crect width='96' height='96' rx='20' fill='%230B0C10'/%3E%3Cpath d='M28 56c0-12 8-20 20-20h20v8H48c-7 0-12 5-12 12s5 12 12 12h20v8H48c-12 0-20-8-20-20Z' fill='%23F4F1E8'/%3E%3C/svg%3E"/>
+  <meta name="description" content="CEYO is a decoupled evidentiary layer that produces policy-scoped, canonical artifacts — cryptographically sealed for independent verification under constrained disclosure."/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Crect width='96' height='96' rx='20' fill='%230B1630'/%3E%3Cpath d='M28 56c0-12 8-20 20-20h20v8H48c-7 0-12 5-12 12s5 12 12 12h20v8H48c-12 0-20-8-20-20Z' fill='%23F5F1E6'/%3E%3C/svg%3E"/>
 
   <!--
-    TYPOGRAPHY
-    - Primary (Anthropic-like): Styrene A (self-hosted / licensed)
-    - Fallback: Poppins (public), Body: Inter, Mono: IBM Plex Mono
-    Styrene references: commonly identified as Anthropic UI font.   [oai_citation:2‡Reddit](https://www.reddit.com/r/identifythisfont/comments/1hl1xfg/anthropic_3_uses_this_beautiful_font_which_is/?utm_source=chatgpt.com)
+    FONT (Anthropic-like):
+    - Primary: Styrene A (license + self-host recommended)
+    - Fallback: Poppins / Inter
   -->
-
-  <!-- OPTIONAL: Self-host your licensed Styrene files (recommended).
+  <!-- OPTIONAL: self-host licensed Styrene A
   <style>
-    @font-face {
-      font-family: "Styrene A";
-      src: url("/fonts/StyreneA-Display.woff2") format("woff2");
-      font-weight: 300 900;
-      font-style: normal;
-      font-display: swap;
+    @font-face{
+      font-family:"Styrene A";
+      src:url("/fonts/StyreneA-Display.woff2") format("woff2");
+      font-weight:300 900;
+      font-style:normal;
+      font-display:swap;
     }
-    @font-face {
-      font-family: "Styrene A";
-      src: url("/fonts/StyreneA-DisplayItalic.woff2") format("woff2");
-      font-weight: 300 900;
-      font-style: italic;
-      font-display: swap;
+    @font-face{
+      font-family:"Styrene A";
+      src:url("/fonts/StyreneA-DisplayItalic.woff2") format("woff2");
+      font-weight:300 900;
+      font-style:italic;
+      font-display:swap;
     }
   </style>
   -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ════════════════════════════════════════════════════════
-       CEYO — INSTITUTIONAL SUBSTRATE
-       INDEX — "Go Beyond Telemetry"
-       V2026.02.19 (site versioning is yours)
-    ════════════════════════════════════════════════════════ */
+    /* =========================================================
+       CEYO — INDEX
+       Palette: Navy + Wash Off-White + Ivory + Dark Olive
+       No purples/pinks. No split-color logo.
+    ========================================================= */
 
     :root{
-      /* Palette: carbon + parchment + regulatory blue + restrained slate */
-      --bg:        #07080B;
-      --bg2:       #0A0C11;
-      --bg3:       #0E1118;
-      --paper:     #F4F1E8;     /* primary text/lines */
-      --text:      rgba(244,241,232,.88);
-      --muted:     rgba(244,241,232,.62);
-      --muted2:    rgba(244,241,232,.40);
-      --muted3:    rgba(244,241,232,.22);
+      /* Core palette */
+      --navy-900:#06102A;
+      --navy-850:#081633;
+      --navy-800:#0B1C3C;     /* primary background */
+      --navy-700:#10264D;     /* section depth */
+      --ink:#0C1220;
 
-      --stroke:    rgba(244,241,232,.12);
-      --stroke2:   rgba(244,241,232,.07);
+      --wash:#F7F4EC;         /* wash off-white */
+      --ivory:#EFE9DB;        /* ivory */
+      --paper:#FBF8F1;        /* near-white highlight */
+      --text:rgba(247,244,236,.92);
+      --muted:rgba(247,244,236,.72);
+      --muted2:rgba(247,244,236,.52);
+      --muted3:rgba(247,244,236,.30);
 
-      --accent:    #6D7CFF;     /* institutional blue */
-      --accent2:   #AAB2FF;     /* soft highlight */
-      --danger:    rgba(190,70,70,.72);
+      --olive:#2F3A22;        /* dark olive */
+      --olive-2:#3B4A2B;
+      --olive-soft:rgba(59,74,43,.22);
+      --olive-line:rgba(59,74,43,.38);
 
-      --max:       1180px;
+      --stroke:rgba(247,244,236,.12);
+      --stroke2:rgba(247,244,236,.075);
 
-      /* Typography */
-      --display:   "Styrene A", "Poppins", system-ui, -apple-system, Segoe UI, Inter, sans-serif;
-      --body:      "Inter", system-ui, -apple-system, Segoe UI, sans-serif;
-      --mono:      "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --max:1180px;
 
-      /* Rhythm */
-      --r: 14px;
-      --r2: 18px;
+      --display:"Styrene A","Poppins",system-ui,-apple-system,Segoe UI,Inter,sans-serif;
+      --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+      --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
 
-      /* Motion */
-      --ease: cubic-bezier(.16, 1, .3, 1);
-      --t1: 140ms;
-      --t2: 320ms;
-      --t3: 720ms;
+      --r:14px;
+      --r2:18px;
+
+      --ease:cubic-bezier(.16,1,.3,1);
+      --t1:140ms;
+      --t2:320ms;
+      --t3:720ms;
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
     html{ scroll-behavior:smooth; font-size:16px; }
     body{
       min-height:100vh;
-      background: radial-gradient(1200px 800px at 20% 10%, rgba(109,124,255,.10), transparent 55%),
-                  radial-gradient(900px 600px at 90% 25%, rgba(170,178,255,.06), transparent 60%),
-                  var(--bg);
-      color: var(--text);
-      font-family: var(--body);
+      background:
+        radial-gradient(1000px 700px at 18% 10%, rgba(59,74,43,.18), transparent 60%),
+        radial-gradient(900px 650px at 90% 22%, rgba(247,244,236,.08), transparent 62%),
+        linear-gradient(180deg, var(--navy-800), var(--navy-900));
+      color:var(--text);
+      font-family:var(--body);
       overflow-x:hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
       cursor:none;
     }
     a{ color:inherit; text-decoration:none; }
-    ::selection{ background: rgba(109,124,255,.28); }
+    ::selection{ background: rgba(59,74,43,.35); color: var(--paper); }
 
-    /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
       html{ scroll-behavior:auto; }
       *{ animation:none !important; transition:none !important; }
@@ -106,22 +107,21 @@
       #cursor,#spotlight{ display:none !important; }
     }
 
-    /* Skip link */
     .skip{
       position:absolute; left:-999px; top:10px; z-index:99999;
-      background: var(--paper); color: var(--bg);
+      background:var(--wash); color:var(--ink);
       padding:10px 14px; border-radius:10px;
-      font-family: var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+      font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
     }
-    .skip:focus{ left:12px; outline: 2px solid var(--accent); outline-offset: 3px; }
+    .skip:focus{ left:12px; outline:2px solid rgba(59,74,43,.85); outline-offset:3px; }
 
-    /* Grain overlay (higher quality, lower opacity) */
+    /* Grain */
     #grain{
       position:fixed; inset:0; z-index:9998; pointer-events:none;
-      opacity:.035;
+      opacity:.03;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
-      background-size: 220px 220px;
-      mix-blend-mode: overlay;
+      background-size:220px 220px;
+      mix-blend-mode:overlay;
     }
 
     /* Spotlight */
@@ -134,94 +134,93 @@
     #cursor{
       position:fixed; z-index:9999;
       width:8px; height:8px;
-      background: var(--paper);
+      background:var(--wash);
       border-radius:50%;
       pointer-events:none;
-      transform: translate(-50%,-50%);
-      mix-blend-mode: exclusion;
-      transition: width var(--t1) var(--ease), height var(--t1) var(--ease), opacity var(--t1) var(--ease), transform var(--t1) var(--ease);
+      transform:translate(-50%,-50%);
+      mix-blend-mode:exclusion;
+      transition: width var(--t1) var(--ease), height var(--t1) var(--ease), opacity var(--t1) var(--ease);
       opacity:1;
     }
     #cursor.large{ width:46px; height:46px; opacity:.55; }
     #cursor.hidden{ opacity:0; }
 
-    /* Focus */
     :focus-visible{
-      outline: 2px solid rgba(109,124,255,.8);
-      outline-offset: 4px;
-      border-radius: 10px;
+      outline:2px solid rgba(59,74,43,.9);
+      outline-offset:4px;
+      border-radius:10px;
     }
 
     /* Top nav */
     #topnav{
       position:fixed; top:0; left:0; right:0; z-index:900;
+      height:76px;
       display:flex; align-items:center; justify-content:space-between;
-      height:72px;
-      padding: 0 44px;
-      background: linear-gradient(to bottom, rgba(7,8,11,.92) 55%, rgba(7,8,11,0));
-      transition: background var(--t2) var(--ease), border-color var(--t2) var(--ease);
-      border-bottom: 1px solid transparent;
+      padding:0 44px;
+      background: linear-gradient(to bottom, rgba(8,22,51,.88) 60%, rgba(8,22,51,0));
+      border-bottom:1px solid transparent;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+      transition: background var(--t2) var(--ease), border-color var(--t2) var(--ease);
     }
     #topnav.scrolled{
-      background: rgba(7,8,11,.86);
-      border-bottom: 1px solid var(--stroke2);
+      background: rgba(8,22,51,.86);
+      border-bottom:1px solid var(--stroke2);
     }
+
     .brand{
-      display:flex; align-items:baseline; gap:12px;
-      min-width: 180px;
+      display:flex; align-items:center; gap:14px;
+      min-width:220px;
     }
     .brand-mark{
-      width: 30px; height: 30px; border-radius: 10px;
-      border: 1px solid var(--stroke);
-      background: rgba(244,241,232,.02);
+      width:34px; height:34px; border-radius:12px;
+      border:1px solid var(--stroke);
+      background: rgba(247,244,236,.03);
       display:grid; place-items:center;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      box-shadow: 0 14px 40px rgba(0,0,0,.25);
     }
-    .brand-mark svg{ width:18px; height:18px; opacity:.92; }
+    /* keep "seal" mark consistent and transparent-ish */
+    .brand-mark svg{ width:20px; height:20px; opacity:.88; }
+
     .brand-name{
-      font-family: var(--display);
-      font-weight: 700;
-      font-size: 18px;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-      color: var(--paper);
+      font-family:var(--display);
+      font-weight:800;
+      font-size:22px;               /* bigger brand */
+      letter-spacing:-0.02em;
+      text-transform:uppercase;
+      color:var(--wash);
+      line-height:1;
     }
-    .brand-sub{
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--muted3);
-      display:none;
-    }
-    .nav-links{
-      display:flex; align-items:center; gap:2px;
-    }
+
+    .nav-links{ display:flex; align-items:center; gap:2px; }
     .nav-links a{
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--muted2);
-      padding: 10px 12px;
-      border-radius: 12px;
-      transition: color var(--t1) var(--ease), background var(--t1) var(--ease);
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted2);
+      padding:10px 12px;
+      border-radius:12px;
+      transition: color var(--t1) var(--ease), background var(--t1) var(--ease), border-color var(--t1) var(--ease);
+      border:1px solid transparent;
     }
-    .nav-links a:hover{ color: var(--paper); background: rgba(244,241,232,.04); }
-    .nav-links a.active{ color: var(--text); }
+    .nav-links a:hover{
+      color:var(--wash);
+      background: rgba(247,244,236,.04);
+      border-color: rgba(247,244,236,.06);
+    }
+    .nav-links a.active{ color:var(--text); }
 
     .nav-cta{
-      margin-left: 10px;
-      padding: 10px 14px !important;
-      border: 1px solid rgba(109,124,255,.40);
-      background: rgba(109,124,255,.10);
-      color: rgba(170,178,255,.95) !important;
+      margin-left:10px;
+      padding:10px 14px !important;
+      border:1px solid rgba(59,74,43,.45) !important;
+      background: rgba(59,74,43,.16) !important;
+      color: rgba(247,244,236,.92) !important;
     }
     .nav-cta:hover{
-      border-color: rgba(109,124,255,.70);
-      background: rgba(109,124,255,.18);
+      border-color: rgba(59,74,43,.75) !important;
+      background: rgba(59,74,43,.22) !important;
     }
 
     /* Bottom index bar */
@@ -229,191 +228,251 @@
       position:fixed; bottom:0; left:0; right:0; z-index:900;
       height:52px;
       display:flex;
-      background: rgba(6,7,10,.92);
-      border-top: 1px solid var(--stroke2);
+      background: rgba(6,16,42,.92);
+      border-top:1px solid var(--stroke2);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
     .ib-item{
       flex:1;
       display:flex; align-items:center; justify-content:center;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--muted2);
-      border-right: 1px solid var(--stroke2);
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:var(--muted2);
+      border-right:1px solid var(--stroke2);
       transition: color var(--t1) var(--ease), background var(--t1) var(--ease);
     }
     .ib-item:last-child{ border-right:none; }
-    .ib-item:hover{ color: var(--paper); background: rgba(244,241,232,.035); }
+    .ib-item:hover{ color:var(--wash); background: rgba(247,244,236,.035); }
     .ib-item.active{
-      color: var(--paper);
-      box-shadow: inset 0 2px 0 0 var(--paper);
+      color:var(--wash);
+      box-shadow: inset 0 2px 0 0 rgba(247,244,236,.80);
     }
 
-    /* Layout helpers */
-    .wrap{ max-width: var(--max); margin: 0 auto; }
+    /* Layout */
+    .wrap{ max-width:var(--max); margin:0 auto; }
     .pad{ padding-left:44px; padding-right:44px; }
 
     /* Hero */
-    #hero-wrap{ position:relative; height: 230vh; }
+    #hero-wrap{ position:relative; height: 220vh; }
     #hero{
-      position: sticky; top:0;
-      height: 100vh;
+      position:sticky; top:0;
+      height:100vh;
       display:flex;
       align-items:flex-end;
-      padding-bottom: 128px;
+      padding-bottom: 130px;
       overflow:hidden;
     }
     .hero-bg{
       position:absolute; inset:0; z-index:0;
       background-image:
-        linear-gradient(rgba(244,241,232,.020) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(244,241,232,.020) 1px, transparent 1px);
-      background-size: 84px 84px;
-      mask-image: radial-gradient(ellipse 85% 70% at 55% 40%, black 0%, transparent 72%);
+        linear-gradient(rgba(247,244,236,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(247,244,236,.018) 1px, transparent 1px);
+      background-size: 88px 88px;
+      mask-image: radial-gradient(ellipse 88% 70% at 56% 42%, black 0%, transparent 72%);
       opacity: .95;
     }
     #hero::after{
       content:"";
       position:absolute; left:0; right:0; bottom:0;
-      height: 52vh;
-      background: linear-gradient(to bottom, rgba(7,8,11,0), var(--bg) 82%);
-      z-index: 2;
+      height: 54vh;
+      background: linear-gradient(to bottom, rgba(6,16,42,0), rgba(6,16,42,1) 82%);
+      z-index:2;
       pointer-events:none;
     }
-
     .hero-inner{ position:relative; z-index:3; }
+
     .kicker{
-      display:flex; align-items:center; gap: 14px;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: .24em;
-      text-transform: uppercase;
-      color: rgba(170,178,255,.92);
+      display:flex; align-items:center; gap:14px;
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.24em;
+      text-transform:uppercase;
+      color: rgba(247,244,236,.82);
       margin-bottom: 22px;
     }
     .kicker .line{
-      width: 40px; height: 1px;
-      background: linear-gradient(to right, rgba(109,124,255,.95), transparent);
+      width:40px; height:1px;
+      background: linear-gradient(to right, rgba(59,74,43,.9), transparent);
     }
+
     .hero-h1{
-      font-family: var(--display);
-      font-weight: 700;
-      font-style: normal;
-      letter-spacing: -0.055em;
-      line-height: .90;
-      text-transform: uppercase;
-      color: var(--paper);
-      font-size: clamp(54px, 9.5vw, 120px);
+      font-family:var(--display);
+      font-weight:800;
+      letter-spacing:-0.06em;
+      line-height:.90;
+      text-transform:uppercase;
+      color:var(--wash);
+      font-size: clamp(54px, 9.2vw, 118px);
       max-width: 980px;
       will-change: transform, filter, opacity;
     }
-    .hero-h1 .em{
-      color: rgba(170,178,255,.96);
+
+    /* TELEMETRY light sweep: from T to Y */
+    .telemetry-sweep{
+      position:relative;
+      display:inline-block;
+      color: rgba(247,244,236,.92);
+      /* subtle olive tint in base */
+      text-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+    .telemetry-sweep::after{
+      content: attr(data-text);
+      position:absolute; inset:0;
+      color: var(--paper);
+      /* moving light */
+      background: linear-gradient(105deg,
+        transparent 0%,
+        rgba(247,248,241,.10) 35%,
+        rgba(247,248,241,.95) 50%,
+        rgba(247,248,241,.10) 65%,
+        transparent 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color: transparent;
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 0 18px rgba(247,248,241,.28));
+      animation: sweep 2.4s var(--ease) infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes sweep{
+      0%{ transform: translateX(-24%); opacity:.0; }
+      15%{ opacity:1; }
+      55%{ opacity:1; }
+      100%{ transform: translateX(24%); opacity:.0; }
     }
 
     .hero-below{
-      margin-top: 30px;
-      max-width: 620px;
+      margin-top: 34px;
+      max-width: 680px;
       will-change: transform, opacity;
     }
-    .lead{
+
+    /* Paragraph word effects: per-word lift + shimmer underline on hover, soft reveal on scroll */
+    .fx{
       font-size: 15px;
-      line-height: 1.85;
+      line-height: 1.9;
       color: var(--muted);
       font-weight: 400;
     }
+    .fx .w{
+      display:inline-block;
+      position:relative;
+      transition: transform var(--t2) var(--ease), color var(--t2) var(--ease), opacity var(--t2) var(--ease);
+      opacity: .88;
+      transform: translateY(0px);
+    }
+    .fx .w::after{
+      content:"";
+      position:absolute; left:0; right:0; bottom:-2px;
+      height:1px;
+      background: linear-gradient(90deg, transparent, rgba(59,74,43,.70), transparent);
+      opacity:0;
+      transform: scaleX(.6);
+      transform-origin:center;
+      transition: opacity var(--t2) var(--ease), transform var(--t2) var(--ease);
+      pointer-events:none;
+    }
+    .fx:hover .w{ opacity:.96; }
+    .fx .w:hover{
+      color: rgba(247,244,236,.95);
+      transform: translateY(-1px);
+    }
+    .fx .w:hover::after{
+      opacity:1;
+      transform: scaleX(1);
+    }
 
+    /* Key boundary statements */
     .denials{
       margin-top: 22px;
       padding: 18px 0;
-      border-top: 1px solid var(--stroke2);
-      border-bottom: 1px solid var(--stroke2);
-      display:flex; flex-direction:column; gap: 8px;
+      border-top:1px solid var(--stroke2);
+      border-bottom:1px solid var(--stroke2);
+      display:flex; flex-direction:column; gap: 9px;
     }
     .denial, .affirm{
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: .10em;
-      text-transform: uppercase;
-      padding-left: 22px;
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      padding-left:22px;
       position:relative;
-      line-height: 1.5;
+      line-height:1.55;
       color: var(--muted2);
     }
     .denial::before{
       content:"×";
       position:absolute; left:0; top:0;
-      color: rgba(190,70,70,.55);
-      font-size: 13px;
+      color: rgba(247,244,236,.45);
     }
     .affirm{
-      margin-top: 10px;
-      color: rgba(170,178,255,.92);
+      margin-top: 8px;
+      color: rgba(247,244,236,.88);
     }
     .affirm::before{
       content:"→";
       position:absolute; left:0; top:0;
-      color: rgba(109,124,255,.95);
-      font-size: 13px;
+      color: rgba(59,74,43,.95);
     }
 
     .cta-row{ margin-top: 22px; display:flex; gap: 12px; flex-wrap:wrap; }
-
     .btn{
       display:inline-flex; align-items:center; gap:10px;
       padding: 13px 18px;
       border-radius: 14px;
-      border: 1px solid var(--stroke);
-      background: rgba(244,241,232,.02);
+      border:1px solid var(--stroke);
+      background: rgba(247,244,236,.03);
       color: var(--muted);
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
       transition: transform var(--t1) var(--ease), background var(--t1) var(--ease), border-color var(--t1) var(--ease), color var(--t1) var(--ease);
       user-select:none;
     }
     .btn:hover{
       transform: translateY(-1px);
-      border-color: rgba(244,241,232,.28);
-      color: var(--paper);
-      background: rgba(244,241,232,.05);
+      border-color: rgba(247,244,236,.22);
+      color: var(--wash);
+      background: rgba(247,244,236,.06);
     }
     .btn:active{
       transform: translateY(0px);
-      background: var(--paper);
-      color: var(--bg);
-      border-color: var(--paper);
+      background: var(--wash);
+      color: var(--ink);
+      border-color: var(--wash);
     }
     .btn.primary{
-      border-color: rgba(109,124,255,.45);
-      background: rgba(109,124,255,.12);
-      color: rgba(170,178,255,.96);
+      border-color: rgba(59,74,43,.55);
+      background: rgba(59,74,43,.20);
+      color: rgba(247,244,236,.92);
     }
     .btn.primary:hover{
-      border-color: rgba(109,124,255,.75);
-      background: rgba(109,124,255,.18);
+      border-color: rgba(59,74,43,.85);
+      background: rgba(59,74,43,.26);
     }
 
+    /* Scroll indicator */
     .scroll-ind{
       position:absolute; right:44px; bottom: 78px; z-index:3;
       display:flex; flex-direction:column; align-items:center; gap: 10px;
-      opacity: .42;
+      opacity: .46;
     }
     .scroll-ind span{
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
+      font-family:var(--mono);
+      font-size:9px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
       color: var(--muted2);
       writing-mode: vertical-rl;
     }
     .scroll-line{
       width:1px; height:56px;
-      background: linear-gradient(to bottom, rgba(244,241,232,.26), rgba(244,241,232,0));
+      background: linear-gradient(to bottom, rgba(247,244,236,.26), rgba(247,244,236,0));
       animation: scrollPulse 2s var(--ease) infinite;
       transform-origin: top;
     }
@@ -423,72 +482,87 @@
     }
 
     /* Main content */
-    #content{ position:relative; z-index:10; background: var(--bg); padding-bottom: 84px; }
+    #content{ position:relative; z-index:10; background: rgba(6,16,42,1); padding-bottom: 84px; }
 
+    /* Sections with distinct looks (not same “sheet”) */
     .sect{
-      padding: 92px 0;
-      border-top: 1px solid var(--stroke2);
+      padding: 98px 0;
+      border-top:1px solid var(--stroke2);
       opacity:0;
-      transform: translateY(22px);
+      transform: translateY(18px);
       transition: opacity 640ms var(--ease), transform 640ms var(--ease), background var(--t2) var(--ease), border-top-color var(--t2) var(--ease);
     }
     .sect.vis{ opacity:1; transform: translateY(0); }
-    .sect.focus{
-      border-top-color: rgba(244,241,232,.22);
-      background: rgba(244,241,232,.012);
+    .sect.focus{ border-top-color: rgba(247,244,236,.18); }
+
+    /* Theme variants per section */
+    .sect[data-theme="ivory"]{
+      background:
+        radial-gradient(900px 420px at 12% 15%, rgba(59,74,43,.10), transparent 62%),
+        linear-gradient(180deg, rgba(239,233,219,.08), rgba(239,233,219,.04));
+    }
+    .sect[data-theme="depth"]{
+      background:
+        radial-gradient(980px 520px at 84% 20%, rgba(59,74,43,.10), transparent 60%),
+        linear-gradient(180deg, rgba(16,38,77,.18), rgba(6,16,42,.0));
+    }
+    .sect[data-theme="clean"]{
+      background:
+        radial-gradient(900px 460px at 50% 0%, rgba(247,244,236,.06), transparent 62%),
+        linear-gradient(180deg, rgba(8,22,51,.26), rgba(8,22,51,.08));
     }
 
     .tag{
-      display:flex; align-items:center; gap: 14px;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(170,178,255,.92);
+      display:flex; align-items:center; gap:14px;
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color: rgba(247,244,236,.82);
       margin-bottom: 18px;
     }
     .tag::after{
       content:"";
       height:1px;
-      width: 140px;
-      background: linear-gradient(to right, rgba(109,124,255,.85), transparent);
+      width: 150px;
+      background: linear-gradient(to right, rgba(59,74,43,.95), transparent);
       opacity: .9;
     }
 
     .h2{
-      font-family: var(--display);
-      font-weight: 700;
-      letter-spacing: -0.045em;
+      font-family:var(--display);
+      font-weight:800;
+      letter-spacing:-0.05em;
       line-height: .98;
-      text-transform: uppercase;
-      color: var(--paper);
+      text-transform:uppercase;
+      color: var(--wash);
       font-size: clamp(30px, 4.8vw, 58px);
       margin-bottom: 18px;
     }
+
+    /* Better spacing and clarity */
     .p{
-      font-size: 15px;
-      line-height: 1.86;
-      color: var(--muted);
-      max-width: 72ch;
-      margin-bottom: 14px;
+      margin-top: 0;
+      margin-bottom: 16px;
+      max-width: 76ch;
     }
 
-    /* Structural deficit: statement rail */
+    /* Rail */
     .rail{
-      margin: 22px 0 10px;
+      margin: 22px 0 16px;
       padding: 18px 0;
-      border-top: 1px solid var(--stroke2);
-      border-bottom: 1px solid var(--stroke2);
-      display:flex; flex-direction:column; gap: 8px;
+      border-top:1px solid var(--stroke2);
+      border-bottom:1px solid var(--stroke2);
+      display:flex; flex-direction:column; gap: 10px;
     }
     .rail .item{
       position:relative;
       padding-left: 18px;
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .06em;
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.06em;
       color: var(--muted2);
-      line-height: 1.55;
+      line-height:1.6;
     }
     .rail .item::before{
       content:"—";
@@ -496,79 +570,79 @@
       color: var(--muted3);
     }
 
-    /* Cards */
+    /* Cards (clickable) */
     .grid{
-      margin-top: 36px;
+      margin-top: 38px;
       display:grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
+      gap: 14px;
     }
     .card{
       grid-column: span 6;
-      border: 1px solid var(--stroke2);
-      background: linear-gradient(to bottom, rgba(244,241,232,.02), rgba(244,241,232,.012));
+      border:1px solid var(--stroke2);
+      background: linear-gradient(180deg, rgba(247,244,236,.03), rgba(247,244,236,.015));
       border-radius: var(--r2);
       padding: 22px 22px 20px;
       position:relative;
       overflow:hidden;
       transition: transform var(--t1) var(--ease), border-color var(--t1) var(--ease), background var(--t1) var(--ease);
+      cursor:pointer;
     }
     .card::before{
       content:"";
       position:absolute; inset:0;
-      background: radial-gradient(700px 220px at 20% 0%, rgba(109,124,255,.12), transparent 60%);
-      opacity:.55;
+      background: radial-gradient(700px 240px at 20% 0%, rgba(59,74,43,.16), transparent 62%);
+      opacity:.6;
       pointer-events:none;
     }
     .card:hover{
       transform: translateY(-2px);
-      border-color: rgba(244,241,232,.18);
-      background: rgba(244,241,232,.02);
+      border-color: rgba(247,244,236,.18);
+      background: rgba(247,244,236,.03);
     }
     .meta{
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(170,178,255,.92);
+      font-family:var(--mono);
+      font-size:9px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color: rgba(247,244,236,.78);
       margin-bottom: 10px;
       position:relative;
       z-index:1;
     }
     .title{
-      position:relative;
-      z-index:1;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--paper);
-      margin-bottom: 8px;
+      position:relative; z-index:1;
+      font-size:14px;
+      font-weight:600;
+      color: var(--wash);
+      margin-bottom: 9px;
+      letter-spacing: -0.01em;
     }
     .body{
-      position:relative;
-      z-index:1;
-      font-size: 13px;
-      line-height: 1.75;
+      position:relative; z-index:1;
+      font-size:13px;
+      line-height:1.8;
       color: var(--muted2);
-      max-width: 58ch;
+      max-width: 62ch;
     }
 
     /* Requirement panel */
     .panel{
-      margin-top: 26px;
-      border: 1px solid var(--stroke2);
+      margin-top: 28px;
+      border:1px solid var(--stroke2);
       border-radius: var(--r2);
       overflow:hidden;
-      background: rgba(244,241,232,.012);
+      background: rgba(247,244,236,.015);
     }
     .panel-h{
       padding: 12px 18px;
-      border-bottom: 1px solid var(--stroke2);
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
+      border-bottom:1px solid var(--stroke2);
+      font-family:var(--mono);
+      font-size:9px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
       color: var(--muted2);
-      background: rgba(0,0,0,.18);
+      background: rgba(0,0,0,.10);
     }
     .panel-grid{
       display:grid;
@@ -576,22 +650,22 @@
     }
     .req{
       padding: 16px 18px;
-      border-right: 1px solid var(--stroke2);
-      border-bottom: 1px solid var(--stroke2);
+      border-right:1px solid var(--stroke2);
+      border-bottom:1px solid var(--stroke2);
       display:flex; gap: 12px;
     }
     .req:nth-child(2n){ border-right:none; }
     .req:nth-last-child(-n+2){ border-bottom:none; }
     .dot{
       width: 6px; height: 6px; border-radius: 50%;
-      background: rgba(109,124,255,.85);
+      background: rgba(59,74,43,.95);
       margin-top: 6px;
       flex:0 0 auto;
     }
     .req strong{
       display:block;
-      color: var(--paper);
-      font-weight: 600;
+      color: var(--wash);
+      font-weight:600;
       margin-bottom: 3px;
       font-size: 12px;
     }
@@ -602,32 +676,29 @@
       line-height: 1.55;
     }
 
-    /* Principle section */
+    /* Principle */
     .principle{
-      padding: 104px 0;
-      border-top: 1px solid var(--stroke2);
+      padding: 108px 0;
+      border-top:1px solid var(--stroke2);
       text-align:center;
       opacity:0;
-      transform: translateY(22px);
+      transform: translateY(18px);
       transition: opacity 640ms var(--ease), transform 640ms var(--ease);
       position:relative;
       overflow:hidden;
+      background:
+        radial-gradient(ellipse 55% 36% at 50% 42%, rgba(239,233,219,.08), transparent 62%),
+        linear-gradient(180deg, rgba(59,74,43,.06), rgba(6,16,42,.0));
     }
     .principle.vis{ opacity:1; transform: translateY(0); }
-    .principle::before{
-      content:"";
-      position:absolute; inset:-20%;
-      background: radial-gradient(ellipse 48% 32% at 50% 45%, rgba(109,124,255,.10), transparent 60%);
-      pointer-events:none;
-    }
     .rule{
       display:flex; align-items:center; justify-content:center; gap: 18px;
       margin-bottom: 34px;
       color: var(--muted2);
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: .24em;
-      text-transform: uppercase;
+      font-family:var(--mono);
+      font-size:9px;
+      letter-spacing:.24em;
+      text-transform:uppercase;
       position:relative;
       z-index:1;
     }
@@ -636,34 +707,39 @@
     }
     .quote{
       position:relative; z-index:1;
-      font-family: var(--display);
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      text-transform: uppercase;
-      color: var(--paper);
-      line-height: 1.12;
+      font-family:var(--display);
+      font-weight:800;
+      letter-spacing:-0.04em;
+      text-transform:uppercase;
+      color: var(--wash);
+      line-height:1.12;
       font-size: clamp(22px, 3.6vw, 44px);
-      max-width: 860px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 0 20px;
     }
-    .quote em{ font-style: normal; color: rgba(170,178,255,.96); }
+    .quote em{
+      font-style: normal;
+      color: rgba(239,233,219,.94);
+      border-bottom: 1px solid rgba(59,74,43,.55);
+      padding-bottom: 2px;
+    }
     .attr{
       position:relative; z-index:1;
       margin-top: 22px;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: .20em;
-      text-transform: uppercase;
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.20em;
+      text-transform:uppercase;
       color: var(--muted2);
     }
 
-    /* Technical properties: left nav + panels */
+    /* Technical nav: click to jump to panels */
     .tech{
       display:grid;
-      grid-template-columns: 240px 1fr;
+      grid-template-columns: 260px 1fr;
       gap: 44px;
-      margin-top: 26px;
+      margin-top: 28px;
       align-items:start;
     }
     .technav{
@@ -674,94 +750,103 @@
     .tn{
       border-left: 1px solid var(--stroke2);
       padding: 10px 12px;
-      border-radius: 10px;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
+      border-radius: 12px;
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
       color: var(--muted2);
       transition: background var(--t1) var(--ease), color var(--t1) var(--ease), border-left-color var(--t1) var(--ease);
+      cursor:pointer;
+      user-select:none;
     }
-    .tn:hover{ color: var(--muted); background: rgba(244,241,232,.02); }
+    .tn:hover{ color: var(--muted); background: rgba(247,244,236,.02); }
     .tn.active{
-      color: rgba(170,178,255,.96);
-      border-left-color: rgba(109,124,255,.75);
-      background: rgba(109,124,255,.08);
+      color: rgba(247,244,236,.92);
+      border-left-color: rgba(59,74,43,.85);
+      background: rgba(59,74,43,.16);
     }
-    .panels{ border-top: 1px solid var(--stroke2); }
+
+    .panels{ border-top:1px solid var(--stroke2); }
     .tp{
-      padding: 26px 0;
-      border-bottom: 1px solid var(--stroke2);
+      padding: 28px 0;
+      border-bottom:1px solid var(--stroke2);
+      scroll-margin-top: 104px;
     }
     .tp:last-child{ border-bottom:none; }
+
     .tp-num{
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(170,178,255,.92);
+      font-family:var(--mono);
+      font-size:9px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color: rgba(239,233,219,.88);
       margin-bottom: 8px;
     }
     .tp-h{
-      font-family: var(--display);
-      font-weight: 600;
-      font-size: 18px;
-      letter-spacing: -0.02em;
-      color: var(--paper);
+      font-family:var(--display);
+      font-weight:700;
+      font-size:18px;
+      letter-spacing:-0.02em;
+      color: var(--wash);
       margin-bottom: 10px;
-      text-transform: none;
     }
     .tp-b{
-      font-size: 14px;
-      line-height: 1.85;
+      font-size:14px;
+      line-height:1.9;
       color: var(--muted);
-      max-width: 62ch;
+      max-width: 66ch;
     }
 
     /* CTA strip */
     .cta{
-      border-top: 1px solid var(--stroke2);
-      padding: 44px 0;
+      border-top:1px solid var(--stroke2);
+      padding: 48px 0;
       display:flex; align-items:center; justify-content:space-between;
       gap: 18px;
+      background:
+        radial-gradient(900px 420px at 16% 30%, rgba(59,74,43,.12), transparent 62%),
+        linear-gradient(180deg, rgba(239,233,219,.06), rgba(6,16,42,0));
     }
     .cta strong{
       display:block;
-      font-family: var(--display);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-      color: var(--paper);
-      font-size: 20px;
+      font-family:var(--display);
+      font-weight:800;
+      letter-spacing:-0.02em;
+      text-transform:uppercase;
+      color: var(--wash);
+      font-size:20px;
       margin-bottom: 6px;
     }
     .cta p{
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
-      max-width: 56ch;
+      font-size:13px;
+      line-height:1.8;
+      max-width: 62ch;
     }
 
-    /* Boundary panel */
+    /* Boundary + Footer */
     .boundary{
-      padding: 0 0 92px;
+      padding: 0 0 96px;
     }
     .bpanel{
-      border: 1px solid var(--stroke2);
-      background: rgba(244,241,232,.012);
+      border:1px solid var(--stroke2);
+      background:
+        radial-gradient(900px 420px at 80% 10%, rgba(59,74,43,.10), transparent 60%),
+        rgba(247,244,236,.015);
       border-radius: var(--r2);
       padding: 22px 22px 18px;
     }
     .btag{
       display:flex; align-items:center; gap: 12px;
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: .26em;
-      text-transform: uppercase;
+      font-family:var(--mono);
+      font-size:9px;
+      letter-spacing:.26em;
+      text-transform:uppercase;
       color: var(--muted2);
       margin-bottom: 14px;
     }
-    .btag::before{ content:""; width: 20px; height:1px; background: var(--stroke); }
+    .btag::before{ content:""; width:20px; height:1px; background: rgba(59,74,43,.85); }
     .bgrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -772,7 +857,7 @@
       position:relative;
       padding-left: 14px;
       font-size: 12px;
-      line-height: 1.7;
+      line-height: 1.75;
       color: var(--muted2);
     }
     .bitem::before{
@@ -783,18 +868,43 @@
     .bclose{
       margin-top: 14px;
       padding-top: 14px;
-      border-top: 1px solid var(--stroke2);
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: .08em;
+      border-top:1px solid var(--stroke2);
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.08em;
       color: var(--muted2);
+    }
+
+    .site-footer{
+      margin-top: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--stroke2);
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: var(--muted3);
+    }
+    .site-footer a{
+      color: var(--muted2);
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      transition: border-color var(--t1) var(--ease), color var(--t1) var(--ease);
+    }
+    .site-footer a:hover{
+      color: var(--wash);
+      border-bottom-color: rgba(59,74,43,.75);
     }
 
     /* Responsive */
     @media (max-width: 980px){
       .pad{ padding-left: 26px; padding-right: 26px; }
       #topnav{ padding: 0 26px; }
-      .grid{ gap: 10px; }
+      .grid{ gap: 12px; }
       .card{ grid-column: span 12; }
       .panel-grid{ grid-template-columns: 1fr; }
       .req{ border-right:none !important; }
@@ -802,24 +912,16 @@
       .req:last-child{ border-bottom:none; }
       .tech{ grid-template-columns: 1fr; }
       .technav{ position:static; flex-direction: row; flex-wrap: wrap; }
-      .tn{ border-left: 1px solid var(--stroke2); }
-      .bgrid{ grid-template-columns: 1fr; }
       .scroll-ind{ right: 26px; }
+      .bgrid{ grid-template-columns: 1fr; }
+      .site-footer{ flex-direction:column; align-items:flex-start; }
     }
     @media (max-width: 640px){
       body{ cursor:auto; }
       #cursor,#spotlight{ display:none; }
       .nav-links{ display:none; }
-      #hero{ padding-bottom: 118px; }
-      .cta{ flex-direction: column; align-items:flex-start; }
       .scroll-ind{ display:none; }
-    }
-
-    @media print{
-      body{ background:#fff; color:#000; cursor:auto; }
-      #grain,#spotlight,#cursor,#topnav,#indexbar,#hero-wrap,.scroll-ind{ display:none !important; }
-      .sect,.principle{ opacity:1 !important; transform:none !important; background:none !important; border-color:#ccc !important; }
-      a{ text-decoration: underline; }
+      .cta{ flex-direction: column; align-items:flex-start; }
     }
   </style>
 </head>
@@ -834,13 +936,12 @@
   <!-- TOP NAV -->
   <nav id="topnav" aria-label="Primary navigation">
     <div class="brand">
-      <div class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M7.2 14.4c0-3.6 2.4-6 6-6h6v2.4h-6c-2.28 0-3.6 1.32-3.6 3.6s1.32 3.6 3.6 3.6h6V24h-6c-3.6 0-6-2.4-6-6Z" fill="rgba(244,241,232,.92)"/>
+      <div class="brand-mark" aria-hidden="true" title="Seal">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M7.2 14.4c0-3.6 2.4-6 6-6h6v2.4h-6c-2.28 0-3.6 1.32-3.6 3.6s1.32 3.6 3.6 3.6h6V24h-6c-3.6 0-6-2.4-6-6Z" fill="rgba(247,244,236,.88)"/>
         </svg>
       </div>
       <a href="index.html" class="brand-name" aria-label="CEYO home">CEYO</a>
-      <span class="brand-sub">Evidentiary Infrastructure</span>
     </div>
 
     <div class="nav-links" role="navigation" aria-label="Top navigation links">
@@ -855,7 +956,7 @@
 
   <!-- HERO -->
   <div id="hero-wrap">
-    <section id="hero" class="pad" aria-label="Go Beyond Telemetry">
+    <section id="hero" class="pad" aria-label="Hero">
       <div class="hero-bg" aria-hidden="true"></div>
 
       <div class="wrap hero-inner">
@@ -866,19 +967,19 @@
 
         <h1 class="hero-h1" id="hero-h1">
           Go Beyond<br>
-          <span class="em">Telemetry</span>
+          <span class="telemetry-sweep" data-text="Telemetry">Telemetry</span>
         </h1>
 
         <div class="hero-below" id="hero-below">
-          <p class="lead">
-            CEYO is a weight-neutral, policy-scoped integrity layer that attaches beside AI inference systems and produces canonical artifacts representing defined inference-time decision-state context — cryptographically sealed for institutional verification under constrained disclosure conditions.
+          <p class="fx p" data-fx>
+            CEYO is a decoupled evidentiary layer that attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined inference-time decision-state context. These artifacts are deterministically structured and cryptographically sealed to support later institutional verification without default disclosure of proprietary internals.
           </p>
 
           <div class="denials" aria-label="Boundary statements">
-            <span class="denial">CEYO does not replace models</span>
-            <span class="denial">CEYO does not modify inference outputs</span>
-            <span class="denial">CEYO does not evaluate correctness</span>
-            <span class="affirm">CEYO produces verifiable records</span>
+            <span class="denial">CEYO does not evaluate outputs</span>
+            <span class="denial">CEYO does not adjudicate compliance</span>
+            <span class="denial">CEYO does not intervene in inference decisions</span>
+            <span class="affirm">CEYO produces records</span>
           </div>
 
           <div class="cta-row" role="group" aria-label="Primary actions">
@@ -898,70 +999,70 @@
   <!-- MAIN -->
   <main id="content">
 
-    <!-- Structural Deficit -->
-    <section class="sect pad" id="deficit" aria-labelledby="deficit-h">
+    <!-- Accountability Gap -->
+    <section class="sect pad" id="deficit" data-theme="ivory" aria-labelledby="deficit-h">
       <div class="wrap">
-        <div class="tag">[01] The Structural Deficit</div>
-        <h2 class="h2" id="deficit-h">The Structural<br>Deficit</h2>
+        <div class="tag">[01] The Accountability Gap</div>
+        <h2 class="h2" id="deficit-h">The Accountability<br>Gap</h2>
 
-        <p class="p">Modern AI systems generate logs, telemetry, and traces. These signals describe activity. They do not constitute evidence.</p>
-
-        <div class="rail" aria-label="Telemetry statements">
-          <div class="item">Telemetry may show that a model executed</div>
-          <div class="item">It may show input and output</div>
-          <div class="item">It may show timestamps and service states</div>
-        </div>
-
-        <p class="p">
-          What telemetry does not reliably preserve is a canonicalized, integrity-bound, policy-scoped artifact suitable for independent verification at a later date.
-          When decisions are disputed — in regulatory review, litigation, incident analysis, or institutional audit — partial logs and reconstructed traces are insufficient.
-          Reconstruction from telemetry is inherently interpretive. It is not deterministic proof. This is the structural deficit.
+        <p class="fx p" data-fx>
+          Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is often secondary. When a decision is later questioned—through regulatory inquiry, internal audit, incident review, or litigation—organizations reconstruct events from partial logs and traces that were never designed to function as durable evidence.
         </p>
 
-        <div class="grid" role="list" aria-label="Dimensions of the structural deficit">
-          <article class="card" role="listitem">
-            <div class="meta">01 · Telemetry Gap</div>
+        <div class="rail" aria-label="Telemetry is not proof">
+          <div class="item">Telemetry describes activity.</div>
+          <div class="item">It does not preserve proof.</div>
+          <div class="item">Reconstruction is interpretive, not deterministic.</div>
+        </div>
+
+        <p class="fx p" data-fx>
+          Institutions require artifacts that are canonical in structure, explicit in capture scope, cryptographically sealed, and independently verifiable. Without those properties, oversight depends on operator assertions rather than verifiable integrity.
+        </p>
+
+        <div class="grid" role="list" aria-label="Dimensions">
+          <article class="card" role="listitem" tabindex="0" data-jump="#deficit">
+            <div class="meta">01 · Evidence Deficit</div>
             <div class="title">Activity ≠ Evidence</div>
-            <div class="body">Logs describe what happened. They are not integrity-sealed records designed for institutional verification. That distinction matters in post-hoc review, litigation, and audit contexts.</div>
+            <div class="body">Logs describe what happened. They are not integrity-sealed records designed for institutional verification.</div>
           </article>
 
-          <article class="card" role="listitem">
-            <div class="meta">02 · Disclosure Tension</div>
-            <div class="title">Verification Without Exposure</div>
-            <div class="body">Institutions require verification without exposure of proprietary weights, confidential architecture, or trade-secret implementation. Telemetry-based systems do not resolve this structural tension.</div>
+          <article class="card" role="listitem" tabindex="0" data-jump="#how">
+            <div class="meta">02 · Verification Constraint</div>
+            <div class="title">Verify Without Exposure</div>
+            <div class="body">Oversight often requires validation without disclosing proprietary architecture, weights, or trade-secret internals.</div>
           </article>
 
-          <article class="card" role="listitem">
-            <div class="meta">03 · Reconstruction vs. Proof</div>
-            <div class="title">Interpretive ≠ Deterministic</div>
-            <div class="body">Reconstructed traces are inherently interpretive. They are not deterministic. Oversight that relies on reconstruction relies on operator assertions, not verifiable record integrity.</div>
+          <article class="card" role="listitem" tabindex="0" data-jump="#is">
+            <div class="meta">03 · Architectural Fix</div>
+            <div class="title">Decoupled Evidentiary Layer</div>
+            <div class="body">Evidence infrastructure should remain structurally independent from decision authority and model internals.</div>
           </article>
 
-          <article class="card" role="listitem">
-            <div class="meta">04 · Liability Architecture</div>
-            <div class="title">Architectural, Not Operational</div>
-            <div class="body">Absent integrity-bound artifacts, disputes resolve around partial evidence and non-reproducible context. This is an architectural deficit, not an operational oversight correctable by better logging.</div>
+          <article class="card" role="listitem" tabindex="0" data-jump="#isnot">
+            <div class="meta">04 · Boundary Discipline</div>
+            <div class="title">Records, Not Judgments</div>
+            <div class="body">Verification confirms integrity and provenance under policy scope—not correctness, fairness, or compliance outcomes.</div>
           </article>
         </div>
 
         <div class="panel" role="region" aria-label="Institutional requirements">
-          <div class="panel-h">Without these properties, accountability relies on operator trust — not verifiable record integrity</div>
+          <div class="panel-h">Institutional requirements for durable evidence</div>
           <div class="panel-grid">
             <div class="req">
               <div class="dot"></div>
-              <div><strong>Deterministic structure</strong><span>Consistent schema producible by any conforming implementation</span></div>
+              <div><strong>Canonical structure</strong><span>Stable schema producible by any conforming implementation</span></div>
             </div>
             <div class="req">
               <div class="dot"></div>
-              <div><strong>Integrity sealing</strong><span>Cryptographic hash and signature establishing tamper-evidence and origin</span></div>
+              <div><strong>Policy-scoped capture</strong><span>Explicit inclusion, exclusion, and masking defined before generation</span></div>
             </div>
             <div class="req">
               <div class="dot"></div>
-              <div><strong>Explicit disclosure scope</strong><span>Versioned policy capturing what is and is not included</span></div>
+              <div><strong>Cryptographic sealing</strong><span>Tamper-evidence and origin authenticity via hash + signature</span></div>
             </div>
             <div class="req">
               <div class="dot"></div>
-              <div><strong>Separation of internals and oversight</strong><span>Verification without requiring exposure of proprietary IP</span></div>
+              <div><strong>Independent verification</strong><span>Reproducible validation without access to proprietary internals</span></div>
             </div>
           </div>
         </div>
@@ -969,73 +1070,74 @@
     </section>
 
     <!-- What CEYO Is -->
-    <section class="sect pad" id="is" aria-labelledby="is-h">
+    <section class="sect pad" id="is" data-theme="depth" aria-labelledby="is-h">
       <div class="wrap">
         <div class="tag">[02] What CEYO Is</div>
-        <h2 class="h2" id="is-h">A Decoupled<br>Evidentiary Substrate</h2>
+        <h2 class="h2" id="is-h">A Decoupled<br>Verification Layer</h2>
 
-        <p class="p">
-          CEYO is a decoupled evidentiary substrate. It attaches at the inference boundary — as a sidecar, wrapper, or gateway — and captures only what operator policy explicitly defines.
-          It normalizes captured fields into a stable artifact schema, applies deterministic canonicalization per RFC 8785, and seals cryptographically under a non-custodial key architecture.
+        <p class="fx p" data-fx>
+          CEYO attaches at the inference boundary—sidecar, gateway, or API wrapper—and generates deterministic artifacts representing defined inference-time decision-state context under explicit policy scope. It does not modify model weights. It does not intervene in decision logic.
         </p>
-        <p class="p">Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of model output.</p>
+
+        <p class="fx p" data-fx>
+          Captured context is normalized into a canonical artifact schema, canonicalized deterministically, and sealed cryptographically for later verification. Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of output.
+        </p>
 
         <div class="grid" role="list" aria-label="Artifact properties">
-          <article class="card" role="listitem">
-            <div class="meta">01 · Canonical</div>
-            <div class="title">Deterministic Structure</div>
-            <div class="body">Normalized schema. Stable byte representation independent of serialization order or deployment environment.</div>
+          <article class="card" role="listitem" tabindex="0" data-jump="#how">
+            <div class="meta">01 · Deterministic</div>
+            <div class="title">Canonical Artifact Structure</div>
+            <div class="body">Structured records designed for review—consistent across heterogeneous deployments.</div>
           </article>
-          <article class="card" role="listitem">
-            <div class="meta">02 · Policy-Scoped</div>
+          <article class="card" role="listitem" tabindex="0" data-jump="#how">
+            <div class="meta">02 · Policy-Bound</div>
             <div class="title">Explicit Capture Boundary</div>
-            <div class="body">Content defined by operator before capture. No implicit expansion. Policy version recorded in artifact.</div>
+            <div class="body">Only fields declared within policy scope are recorded; policy identifiers and versions are embedded.</div>
           </article>
-          <article class="card" role="listitem">
-            <div class="meta">03 · Tamper-Evident</div>
-            <div class="title">Cryptographic Sealing</div>
-            <div class="body">Hash and digital signature establish that an artifact has not been altered since the sealing event.</div>
+          <article class="card" role="listitem" tabindex="0" data-jump="#how">
+            <div class="meta">03 · Integrity-Sealed</div>
+            <div class="title">Hash + Signature</div>
+            <div class="body">Tamper-evidence and authenticity using deployment-defined cryptographic suites.</div>
           </article>
-          <article class="card" role="listitem">
-            <div class="meta">04 · Independently Verifiable</div>
-            <div class="title">No IP Exposure Required</div>
-            <div class="body">Verification workflows require only public keys. Proprietary internals remain undisclosed by default.</div>
+          <article class="card" role="listitem" tabindex="0" data-jump="#how">
+            <div class="meta">04 · Constrained Disclosure</div>
+            <div class="title">Tiered Access</div>
+            <div class="body">Verification can occur without exposing proprietary internals beyond policy scope.</div>
           </article>
         </div>
       </div>
     </section>
 
     <!-- What CEYO Is Not -->
-    <section class="sect pad" id="isnot" aria-labelledby="isnot-h">
+    <section class="sect pad" id="isnot" data-theme="clean" aria-labelledby="isnot-h">
       <div class="wrap">
         <div class="tag">[03] What CEYO Is Not</div>
         <h2 class="h2" id="isnot-h">Records,<br>Not Judgments</h2>
 
-        <p class="p">
-          CEYO does not determine whether a decision was lawful, ethical, or fair. CEYO produces integrity-sealed artifacts that institutions may use as part of their oversight processes.
-          Authorized institutions retain responsibility for all determinations.
+        <p class="fx p" data-fx>
+          CEYO is infrastructure. It is not adjudication. It does not certify regulatory compliance, guarantee admissibility, or determine fairness or legality. Authorized institutions and regulated operators retain responsibility for determinations.
         </p>
 
         <div class="grid" role="list" aria-label="Non-goals">
-          <article class="card" role="listitem">
+          <article class="card" role="listitem" tabindex="0">
             <div class="meta">× Non-goal</div>
-            <div class="title">Model evaluation system</div>
-            <div class="body">CEYO is not a scoring or benchmarking layer for correctness.</div>
+            <div class="title">Model evaluation engine</div>
+            <div class="body">CEYO does not score correctness or validate semantic validity of outputs.</div>
           </article>
-          <article class="card" role="listitem">
+          <article class="card" role="listitem" tabindex="0">
             <div class="meta">× Non-goal</div>
-            <div class="title">Compliance automation tool</div>
+            <div class="title">Compliance automation</div>
             <div class="body">CEYO does not adjudicate compliance outcomes or certify regulatory sufficiency.</div>
           </article>
-          <article class="card" role="listitem">
+          <article class="card" role="listitem" tabindex="0">
             <div class="meta">× Non-goal</div>
             <div class="title">Regulatory authority</div>
-            <div class="body">CEYO provides records; institutions provide oversight and legal conclusions.</div>
+            <div class="body">CEYO provides the record; institutions provide the oversight.</div>
           </article>
-          <article class="card" role="listitem">
+          <article class="card" role="listitem" tabindex="0">
             <div class="meta">× Non-goal</div>
             <div class="title">Real-time intervention</div>
-            <div class="body">CEYO does not modify inference decisions unless an operator explicitly designs a stricter posture outside default behavior.</div>
+            <div class="body">Default posture preserves availability; inference does not halt on sealing failure unless configured.</div>
           </article>
         </div>
       </div>
@@ -1054,56 +1156,72 @@
     </section>
 
     <!-- How it works -->
-    <section class="sect pad" id="how" aria-labelledby="how-h">
+    <section class="sect pad" id="how" data-theme="depth" aria-labelledby="how-h">
       <div class="wrap">
         <div class="tag">[04] How It Works</div>
         <h2 class="h2" id="how-h">Technical<br>Properties</h2>
 
+        <p class="fx p" data-fx>
+          Use the left rail to jump between capture, structure, sealing, keys, disclosure, and availability. Each panel is independently addressable and review-ready.
+        </p>
+
         <div class="tech">
-          <nav class="technav" aria-label="Technical properties">
-            <div class="tn active">01 · Capture</div>
-            <div class="tn">02 · Structure</div>
-            <div class="tn">03 · Sealing</div>
-            <div class="tn">04 · Keys</div>
-            <div class="tn">05 · Disclosure</div>
-            <div class="tn">06 · Availability</div>
+          <nav class="technav" aria-label="Technical properties jump list">
+            <div class="tn active" role="button" tabindex="0" data-target="#tp-capture">01 · Capture</div>
+            <div class="tn" role="button" tabindex="0" data-target="#tp-structure">02 · Structure</div>
+            <div class="tn" role="button" tabindex="0" data-target="#tp-sealing">03 · Sealing</div>
+            <div class="tn" role="button" tabindex="0" data-target="#tp-keys">04 · Keys</div>
+            <div class="tn" role="button" tabindex="0" data-target="#tp-disclosure">05 · Disclosure</div>
+            <div class="tn" role="button" tabindex="0" data-target="#tp-availability">06 · Availability</div>
           </nav>
 
           <div class="panels" id="tech-panels">
-            <article class="tp">
+            <article class="tp" id="tp-capture">
               <div class="tp-num">01 · Policy-Scoped Capture</div>
               <div class="tp-h">Define Before You Collect</div>
-              <div class="tp-b">Operators define what fields are included, excluded, and masked before artifact generation begins. Capture policy is explicit and versioned; artifacts reflect declared policy scope without implicit expansion.</div>
+              <div class="tp-b">
+                Capture begins with explicit policy definition. Operators define included fields, excluded fields, masking rules, disclosure tier configuration, and policy version identifiers. Only policy-scoped fields are captured.
+              </div>
             </article>
 
-            <article class="tp">
-              <div class="tp-num">02 · Canonical Structure</div>
-              <div class="tp-h">Deterministic Normalization</div>
-              <div class="tp-b">Captured telemetry is normalized into a deterministic JSON artifact schema. Canonicalization per RFC 8785 produces a stable byte representation independent of serialization order and environment.</div>
+            <article class="tp" id="tp-structure">
+              <div class="tp-num">02 · Canonical Artifact Structure</div>
+              <div class="tp-h">Normalize Into Review-Ready Records</div>
+              <div class="tp-b">
+                Captured context is normalized into a canonical artifact schema with structured metadata (timestamp, policy identifiers, environment fingerprint, disclosure tier, integrity fields). Artifacts are structured records intended for review—not free-form logs.
+              </div>
             </article>
 
-            <article class="tp">
-              <div class="tp-num">03 · Integrity Sealing</div>
+            <article class="tp" id="tp-sealing">
+              <div class="tp-num">03 · Cryptographic Sealing</div>
               <div class="tp-h">Hash and Signature</div>
-              <div class="tp-b">After canonicalization, cryptographic hashing and digital signatures are applied under a deployment-defined suite. Hashing establishes tamper-evidence; signatures establish authenticity.</div>
+              <div class="tp-b">
+                Artifacts are deterministically canonicalized before hashing and signing. Hashing establishes tamper-evidence. Digital signatures establish origin authenticity under a deployment-defined cryptographic suite.
+              </div>
             </article>
 
-            <article class="tp">
+            <article class="tp" id="tp-keys">
               <div class="tp-num">04 · Non-Custodial Keys</div>
-              <div class="tp-h">You Control the Signing</div>
-              <div class="tp-b">Signing keys are generated and retained within the client-controlled environment — HSM, KMS, or TEE. CEYO does not possess, transmit, or store private signing keys.</div>
+              <div class="tp-h">Operator-Controlled Signing Authority</div>
+              <div class="tp-b">
+                Signing keys are generated and retained within operator-controlled environments (HSM, KMS, or TEE). CEYO does not possess, transmit, or store private signing keys. Authenticity remains anchored to the deploying institution.
+              </div>
             </article>
 
-            <article class="tp">
+            <article class="tp" id="tp-disclosure">
               <div class="tp-num">05 · Constrained Disclosure</div>
               <div class="tp-h">Tiered Verification Access</div>
-              <div class="tp-b">Artifacts may be disclosed under public/redacted or controlled-review tiers. Verification confirms integrity under declared policy scope without default exposure of proprietary internals.</div>
+              <div class="tp-b">
+                Artifacts support tiered disclosure models. Public or redacted tiers may expose limited metadata. Controlled review tiers expose expanded contextual fields under authorized access. Disclosure boundaries are policy-defined before generation.
+              </div>
             </article>
 
-            <article class="tp">
-              <div class="tp-num">06 · Fail-Open Architecture</div>
-              <div class="tp-h">Inference Continuity First</div>
-              <div class="tp-b">Inference continuity remains independent of sealing. If artifact generation fails, inference proceeds uninterrupted; failure events are logged and the condition becomes reviewable.</div>
+            <article class="tp" id="tp-availability">
+              <div class="tp-num">06 · Integrity–Availability Balance</div>
+              <div class="tp-h">Fail-Open by Default</div>
+              <div class="tp-b">
+                Integrity infrastructure must not compromise operational continuity by default. If sealing fails, inference can continue uninterrupted; the failure is logged and the artifact is marked accordingly. Operators may configure stricter posture when required.
+              </div>
             </article>
           </div>
         </div>
@@ -1115,26 +1233,41 @@
       <div class="wrap cta">
         <div>
           <strong>Controlled Review</strong>
-          <p>Detailed documentation, verification contracts, capture schema specifications, and benchmark methodology are available under controlled disclosure. Access is granted following review request evaluation.</p>
+          <p class="fx" data-fx>
+            Technical documentation, policy schemas, verification contracts, and benchmark methodology are available under controlled disclosure. Public materials remain intentionally high-level.
+          </p>
         </div>
         <a class="btn primary" href="contact.html">Request Controlled Review</a>
       </div>
     </section>
 
-    <!-- Boundary -->
+    <!-- Boundary + Rights -->
     <section class="pad boundary">
       <div class="wrap">
         <div class="bpanel" role="region" aria-label="Boundary declaration">
           <div class="btag">Boundary Declaration · V2026.02.19</div>
+
           <div class="bgrid">
             <div class="bitem">CEYO produces records. It does not validate correctness, fairness, legality, or compliance outcomes.</div>
             <div class="bitem">CEYO does not certify regulatory compliance.</div>
             <div class="bitem">CEYO does not guarantee legal admissibility.</div>
-            <div class="bitem">CEYO does not guarantee inference reproducibility.</div>
-            <div class="bitem">Authorized institutions and operators retain responsibility for decisions and determinations.</div>
-            <div class="bitem">Cryptographic suite references are illustrative; deployments select suites appropriate to their regulatory context.</div>
+            <div class="bitem">CEYO does not replace institutional oversight or human authorization controls.</div>
+            <div class="bitem">Verification confirms integrity and provenance under policy scope—not semantic correctness.</div>
+            <div class="bitem">Deployment responsibility remains with the implementing organization.</div>
           </div>
-          <div class="bclose">Verification confirms integrity and provenance under policy scope — not correctness of model output.</div>
+
+          <div class="bclose">
+            Verification is mechanical. Oversight is institutional.
+          </div>
+
+          <div class="site-footer" aria-label="Footer">
+            <div>© <span id="yr"></span> CEYO · All Rights Reserved</div>
+            <div>
+              <a href="terms.html">Terms</a> ·
+              <a href="privacy.html">Privacy</a> ·
+              <a href="contact.html">Contact</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1151,9 +1284,13 @@
   </nav>
 
   <script>
-    /* Cursor + spotlight (desktop only) */
     const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+
+    // Footer year
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // Cursor + spotlight
     const cursor = document.getElementById('cursor');
     const spotlight = document.getElementById('spotlight');
 
@@ -1165,7 +1302,7 @@
         cursor.style.left = mx + 'px';
         cursor.style.top  = my + 'px';
         spotlight.style.background =
-          `radial-gradient(circle 380px at ${mx}px ${my}px, rgba(109,124,255,.10) 0%, rgba(109,124,255,.04) 20%, transparent 70%)`;
+          `radial-gradient(circle 380px at ${mx}px ${my}px, rgba(59,74,43,.14) 0%, rgba(59,74,43,.06) 22%, transparent 70%)`;
       };
 
       document.addEventListener('mousemove', (e) => {
@@ -1182,20 +1319,20 @@
         cursor.classList.remove('hidden');
       }, { passive: true });
 
-      const hoverables = 'a, button, .card, .ib-item, .tn, .btn';
+      const hoverables = 'a, .card, .ib-item, .tn, .btn';
       document.querySelectorAll(hoverables).forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('large'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('large'));
       });
     }
 
-    /* Nav scrolled state */
+    // Nav scrolled state
     const topnav = document.getElementById('topnav');
     window.addEventListener('scroll', () => {
       topnav.classList.toggle('scrolled', window.scrollY > 30);
     }, { passive: true });
 
-    /* Hero parallax blur */
+    // Hero parallax blur
     const heroWrap = document.getElementById('hero-wrap');
     const heroH1 = document.getElementById('hero-h1');
     const heroBelow = document.getElementById('hero-below');
@@ -1203,16 +1340,16 @@
     if (!prefersReduced) {
       window.addEventListener('scroll', () => {
         const pct = Math.min(window.scrollY / (heroWrap.offsetHeight * 0.34), 1);
-        heroH1.style.opacity   = Math.max(0, 1 - pct * 1.25);
-        heroH1.style.filter    = `blur(${pct * 12}px)`;
-        heroH1.style.transform = `translateY(${pct * -26}px)`;
+        heroH1.style.opacity   = Math.max(0, 1 - pct * 1.2);
+        heroH1.style.filter    = `blur(${pct * 10}px)`;
+        heroH1.style.transform = `translateY(${pct * -22}px)`;
 
-        heroBelow.style.opacity   = Math.max(0, 1 - pct * 1.9);
-        heroBelow.style.transform = `translateY(${pct * -14}px)`;
+        heroBelow.style.opacity   = Math.max(0, 1 - pct * 1.6);
+        heroBelow.style.transform = `translateY(${pct * -12}px)`;
       }, { passive: true });
     }
 
-    /* Section reveal + focus */
+    // Section reveal + focus
     const revealTargets = document.querySelectorAll('.sect, .principle');
     const sectObs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
@@ -1226,31 +1363,66 @@
     }, { threshold: 0.10 });
     revealTargets.forEach(s => sectObs.observe(s));
 
-    /* Tech nav active */
-    const panels = document.querySelectorAll('#tech-panels .tp');
+    // Clickable cards jump
+    const jump = (sel) => {
+      const el = document.querySelector(sel);
+      if (!el) return;
+      el.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+    };
+    document.querySelectorAll('.card[data-jump]').forEach(card => {
+      const target = card.getAttribute('data-jump');
+      const go = () => jump(target);
+      card.addEventListener('click', go);
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
+      });
+    });
+
+    // Tech nav jump + active highlight
     const navItems = document.querySelectorAll('.tn');
+    const panels = document.querySelectorAll('#tech-panels .tp');
+
+    const setActive = (idx) => {
+      navItems.forEach((n, i) => n.classList.toggle('active', i === idx));
+    };
+
+    navItems.forEach((n, i) => {
+      const target = n.getAttribute('data-target');
+      const go = () => jump(target);
+      n.addEventListener('click', go);
+      n.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
+      });
+    });
+
     const panelObs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           const idx = [...panels].indexOf(e.target);
-          navItems.forEach((n, i) => n.classList.toggle('active', i === idx));
+          if (idx >= 0) setActive(idx);
         }
       });
     }, { threshold: 0.55 });
     panels.forEach(p => panelObs.observe(p));
 
-    /* Touch invert (coarse pointers) */
-    if (coarse) {
-      document.querySelectorAll('.btn, .card, .ib-item, .tn').forEach(el => {
-        el.addEventListener('touchstart', () => {
-          el.style.background = 'var(--paper)';
-          el.style.color = 'var(--bg)';
-        }, { passive: true });
-        el.addEventListener('touchend', () => {
-          setTimeout(() => { el.style.background = ''; el.style.color = ''; }, 180);
-        }, { passive: true });
+    // Paragraph word effects: wrap words once (keeps grammar intact)
+    // Applies only to elements marked data-fx.
+    const wrapWords = (el) => {
+      const text = el.textContent;
+      const parts = text.split(/(\s+)/); // preserve whitespace
+      el.textContent = '';
+      parts.forEach(part => {
+        if (part.trim() === '') {
+          el.appendChild(document.createTextNode(part));
+        } else {
+          const s = document.createElement('span');
+          s.className = 'w';
+          s.textContent = part;
+          el.appendChild(s);
+        }
       });
-    }
+    };
+    document.querySelectorAll('[data-fx]').forEach(wrapWords);
   </script>
 </body>
 </html>
