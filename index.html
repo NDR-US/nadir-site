@@ -15,16 +15,13 @@
   <style>
     :root{
       --navy:#060A13;
-      --navy-bright:#0B1220;
+      --navy2:#0B1220;
       --ivory:#F4F0E6;
       --royal:#2D67FF;
-      --royal2:#1E4BFF;
       --royal-glow: rgba(45,103,255,0.40);
-
       --text:rgba(244,240,230,.92);
       --muted:rgba(244,240,230,.56);
       --stroke:rgba(244,240,230,.10);
-
       --brandFont:'Outfit', system-ui, sans-serif;
       --monoFont:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --bodyFont:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -39,12 +36,6 @@
       body{ cursor:auto; }
       #cursor{ display:none; }
     }
-    @media (prefers-reduced-motion: reduce){
-      html{ scroll-behavior:auto; }
-      #cursor{ display:none; }
-      .shimmer-text, .twCaret{ animation:none !important; }
-      .data-block{ transition:none !important; }
-    }
 
     /* Scene Canvas */
     #stage{
@@ -52,17 +43,17 @@
       background:
         radial-gradient(1100px 650px at 50% 26%, rgba(45,103,255,.10), transparent 60%),
         radial-gradient(900px 520px at 20% 72%, rgba(45,103,255,.06), transparent 65%),
-        linear-gradient(180deg, var(--navy), var(--navy-bright));
+        linear-gradient(180deg, var(--navy), var(--navy2));
     }
     #gl{ width:100%; height:100%; display:block; }
 
-    /* Subtle grain */
+    /* Grain */
     #grain{
       position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.05;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    /* Custom Cursor */
+    /* Cursor */
     #cursor{
       position:fixed; z-index:9999; width:10px; height:10px; border-radius:50%;
       background:var(--ivory); mix-blend-mode:difference; pointer-events:none;
@@ -71,7 +62,7 @@
     }
     #cursor.big{ width:42px; height:42px; opacity:.55; background: var(--royal); }
 
-    /* Top Nav */
+    /* Nav */
     #topnav{
       position:fixed; top:0; left:0; right:0; z-index:50;
       padding: 22px 32px;
@@ -85,7 +76,7 @@
       border-bottom-color: rgba(244,240,230,.08);
     }
 
-    /* Telemetry light shimmer (T -> Y) */
+    /* Telemetry shimmer */
     .shimmer-text{
       background: linear-gradient(90deg, rgba(244,240,230,0) 0%, var(--royal) 50%, rgba(244,240,230,0) 100%);
       background-size: 200% auto;
@@ -121,7 +112,6 @@
       background: var(--royal);
       border-color: rgba(45,103,255,.85);
       color: #fff;
-      box-shadow: 0 0 0 rgba(0,0,0,0);
     }
     .btn:hover{
       transform: translateY(-1px);
@@ -130,7 +120,7 @@
     }
     .btn.ghost:hover{ background: rgba(244,240,230,.05); }
 
-    /* Data Block Interactions */
+    /* Data blocks (click-to-expand + deep-link) */
     .data-block{
       border: 1px solid var(--stroke);
       background: rgba(11,18,32,0.40);
@@ -160,13 +150,6 @@
       pointer-events: auto;
     }
 
-    /* Optional “typed” reveal per line */
-    .typeLine{
-      opacity:0;
-      transform: translateY(8px);
-      transition: opacity .45s ease, transform .45s ease;
-    }
-
     /* Bottom bar */
     #bottombar{
       position:fixed; bottom:0; left:0; right:0; z-index:50;
@@ -193,7 +176,6 @@
       box-shadow: inset 0 2px 0 rgba(45,103,255,.95);
     }
 
-    /* Spacing helpers */
     .section-pad{ padding-top: 11rem; padding-bottom: 11rem; }
     @media (max-width: 640px){
       .section-pad{ padding-top: 8rem; padding-bottom: 8rem; }
@@ -207,7 +189,7 @@
   <div id="grain" aria-hidden="true"></div>
   <div id="cursor" aria-hidden="true"></div>
 
-  <nav id="topnav" aria-label="Primary navigation" class="px-8 py-6">
+  <nav id="topnav" aria-label="Primary navigation">
     <div class="flex items-baseline gap-4">
       <a href="index.html" class="font-[var(--brandFont)] font-black text-2xl italic">CEYO</a>
       <span class="font-mono text-[9px] tracking-[0.30em] opacity-40 uppercase">Evidentiary Layer</span>
@@ -222,8 +204,6 @@
   </nav>
 
   <div class="relative z-10 max-w-7xl mx-auto px-6">
-
-    <!-- HERO -->
     <section id="hero" class="min-h-screen flex flex-col justify-center">
       <div class="max-w-4xl">
         <div class="font-mono text-[10px] tracking-[0.40em] text-[var(--royal)] mb-6 uppercase">Initializing Integrity Substrate</div>
@@ -237,13 +217,8 @@
         </p>
 
         <div class="flex gap-6 flex-wrap">
-          <button onclick="document.getElementById('tech').scrollIntoView({behavior:'smooth'})"
-            class="btn primary">
-            Enter Framework
-          </button>
-          <a href="contact.html" class="btn ghost">
-            Request Review
-          </a>
+          <button onclick="document.getElementById('tech').scrollIntoView({behavior:'smooth'})" class="btn primary">Enter Framework</button>
+          <a href="contact.html" class="btn ghost">Request Review</a>
         </div>
 
         <div class="mt-10 space-y-3 font-mono text-[11px] uppercase tracking-wider">
@@ -255,7 +230,6 @@
       </div>
     </section>
 
-    <!-- GAP -->
     <section id="gap" class="section-pad">
       <div class="grid lg:grid-cols-2 gap-20">
         <div>
@@ -281,7 +255,7 @@
         </div>
 
         <div class="space-y-4">
-          <div class="data-block p-6" onclick="this.classList.toggle('expanded')">
+          <div class="data-block p-6" data-open="canonical" onclick="toggleBlock(this)">
             <div class="flex justify-between items-center mb-4">
               <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">01 / Canonical</span>
               <span class="text-xs uppercase font-bold">Deterministic structure</span>
@@ -291,7 +265,7 @@
             </div>
           </div>
 
-          <div class="data-block p-6" onclick="this.classList.toggle('expanded')">
+          <div class="data-block p-6" data-open="integrity" onclick="toggleBlock(this)">
             <div class="flex justify-between items-center mb-4">
               <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">02 / Integrity</span>
               <span class="text-xs uppercase font-bold">Cryptographic sealing</span>
@@ -301,7 +275,7 @@
             </div>
           </div>
 
-          <div class="data-block p-6" onclick="this.classList.toggle('expanded')">
+          <div class="data-block p-6" data-open="scope" onclick="toggleBlock(this)">
             <div class="flex justify-between items-center mb-4">
               <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">03 / Scope</span>
               <span class="text-xs uppercase font-bold">Explicit disclosure boundary</span>
@@ -311,7 +285,7 @@
             </div>
           </div>
 
-          <div class="data-block p-6" onclick="this.classList.toggle('expanded')">
+          <div class="data-block p-6" data-open="separation" onclick="toggleBlock(this)">
             <div class="flex justify-between items-center mb-4">
               <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">04 / Separation</span>
               <span class="text-xs uppercase font-bold">Oversight without exposure</span>
@@ -324,7 +298,6 @@
       </div>
     </section>
 
-    <!-- SUBSTRATE -->
     <section id="substrate" class="section-pad">
       <div class="max-w-4xl">
         <div class="font-mono text-[10px] tracking-[0.40em] text-[var(--royal)] mb-4 uppercase">System Architecture</div>
@@ -336,32 +309,9 @@
         <p class="text-[var(--muted)] leading-loose text-lg mb-10">
           Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of model output.
         </p>
-
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="data-block p-6" onclick="this.classList.toggle('expanded')">
-            <div class="flex justify-between items-center mb-4">
-              <span class="font-mono text-[10px] text-red-400/80 tracking-[0.20em] uppercase">Not</span>
-              <span class="text-xs uppercase font-bold">Records are not judgments</span>
-            </div>
-            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-              CEYO does not determine whether a decision was lawful, ethical, or fair. It produces verifiable records under declared capture policy.
-            </div>
-          </div>
-
-          <div class="data-block p-6" onclick="this.classList.toggle('expanded')">
-            <div class="flex justify-between items-center mb-4">
-              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">Principle</span>
-              <span class="text-xs uppercase font-bold">Structural independence</span>
-            </div>
-            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-              Evidence infrastructure must remain separate from decision authority. CEYO provides the artifact; institutions provide oversight and determinations.
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
-    <!-- TECH -->
     <section id="tech" class="section-pad">
       <div class="text-center mb-20">
         <div class="font-mono text-[10px] tracking-[0.40em] text-[var(--royal)] mb-4 uppercase">Substrate Properties</div>
@@ -369,7 +319,7 @@
       </div>
 
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="data-block p-8" onclick="this.classList.toggle('expanded')">
+        <div class="data-block p-8" data-open="capture" onclick="toggleBlock(this)">
           <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">01 · Capture</div>
           <div class="font-bold text-lg mb-2 uppercase italic">Policy-scoped</div>
           <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
@@ -377,7 +327,7 @@
           </div>
         </div>
 
-        <div class="data-block p-8" onclick="this.classList.toggle('expanded')">
+        <div class="data-block p-8" data-open="structure" onclick="toggleBlock(this)">
           <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">02 · Structure</div>
           <div class="font-bold text-lg mb-2 uppercase italic">Canonical</div>
           <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
@@ -385,7 +335,7 @@
           </div>
         </div>
 
-        <div class="data-block p-8" onclick="this.classList.toggle('expanded')">
+        <div class="data-block p-8" data-open="sealing" onclick="toggleBlock(this)">
           <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">03 · Sealing</div>
           <div class="font-bold text-lg mb-2 uppercase italic">Integrity sealing</div>
           <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
@@ -393,7 +343,7 @@
           </div>
         </div>
 
-        <div class="data-block p-8" onclick="this.classList.toggle('expanded')">
+        <div class="data-block p-8" data-open="keys" onclick="toggleBlock(this)">
           <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">04 · Keys</div>
           <div class="font-bold text-lg mb-2 uppercase italic">Non-custodial</div>
           <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
@@ -401,7 +351,7 @@
           </div>
         </div>
 
-        <div class="data-block p-8" onclick="this.classList.toggle('expanded')">
+        <div class="data-block p-8" data-open="disclosure" onclick="toggleBlock(this)">
           <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">05 · Disclosure</div>
           <div class="font-bold text-lg mb-2 uppercase italic">Constrained</div>
           <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
@@ -409,7 +359,7 @@
           </div>
         </div>
 
-        <div class="data-block p-8" onclick="this.classList.toggle('expanded')">
+        <div class="data-block p-8" data-open="availability" onclick="toggleBlock(this)">
           <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">06 · Availability</div>
           <div class="font-bold text-lg mb-2 uppercase italic">Fail-open</div>
           <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
@@ -426,7 +376,6 @@
       </div>
     </section>
 
-    <!-- BOUNDARY -->
     <section id="boundary" class="section-pad opacity-60 hover:opacity-100 transition-opacity">
       <div class="border-t border-[var(--stroke)] pt-12">
         <div class="font-mono text-[10px] mb-8 uppercase tracking-widest">Boundary Declaration · V2026.02.19</div>
@@ -449,7 +398,6 @@
     <div style="height:72px"></div>
   </div>
 
-  <!-- Bottom Nav (page-style) -->
   <nav id="bottombar" aria-label="Site index">
     <a href="index.html" class="active">INDEX</a>
     <a href="platform.html">ARCH</a>
@@ -471,7 +419,6 @@
       document.addEventListener('mousemove', (e) => {
         gsap.to(cursor, {x: e.clientX, y: e.clientY, duration: 0.10, overwrite:true});
       }, {passive:true});
-
       document.querySelectorAll('a, button, .data-block').forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('big'), {passive:true});
         el.addEventListener('mouseleave', () => cursor.classList.remove('big'), {passive:true});
@@ -487,16 +434,34 @@
     /* Year */
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    /* Three.js Scene (your style, but more “neuron” and stable) */
+    /* Click-to-expand helper + hash deep link */
+    function toggleBlock(el){
+      const key = el.getAttribute('data-open');
+      el.classList.toggle('expanded');
+      if (key){
+        history.replaceState(null, "", "#" + key);
+        // Drive 3D cluster focus on click
+        focusCluster(key, true);
+      }
+    }
+    window.toggleBlock = toggleBlock;
+
+    /* ====== THREE.JS “NEURON” WITH CORE ATTRACT / DISPERSE + ZOOM ====== */
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 200);
-    const renderer = new THREE.WebGLRenderer({canvas: document.getElementById('gl'), alpha: true, antialias: true, powerPreference:"high-performance"});
+    const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 300);
+    const renderer = new THREE.WebGLRenderer({
+      canvas: document.getElementById('gl'),
+      alpha: true,
+      antialias: true,
+      powerPreference:"high-performance"
+    });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
-    // Node points via Points (lighter than 200 spheres)
-    const nodeCount = 220;
-    const bounds = 12;
+    // Node points (fast)
+    const nodeCount = 240;
+    const bounds = 14;
+
     const positions = new Float32Array(nodeCount * 3);
     const velocities = new Float32Array(nodeCount * 3);
 
@@ -525,8 +490,8 @@
     const points = new THREE.Points(pointsGeo, pointsMat);
     scene.add(points);
 
-    // Connection lines
-    const maxConnections = 1400;
+    // Connections
+    const maxConnections = 1600;
     const linePositions = new Float32Array(maxConnections * 2 * 3);
     const lineGeo = new THREE.BufferGeometry();
     lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
@@ -535,14 +500,57 @@
     const lineMat = new THREE.LineBasicMaterial({
       color: 0x2D67FF,
       transparent: true,
-      opacity: 0.20,
+      opacity: 0.22,
       depthWrite: false
     });
 
     const lines = new THREE.LineSegments(lineGeo, lineMat);
     scene.add(lines);
 
-    const maxDist = 2.2;
+    // Core “big ball” (wireframe)
+    const coreGeometry = new THREE.IcosahedronGeometry(2.4, 2);
+    const coreMaterial = new THREE.MeshBasicMaterial({
+      color: 0x2D67FF,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.0
+    });
+    const coreBall = new THREE.Mesh(coreGeometry, coreMaterial);
+    scene.add(coreBall);
+
+    // Core glow sprite (subtle)
+    const glowCanvas = document.createElement('canvas');
+    glowCanvas.width = glowCanvas.height = 128;
+    const gctx = glowCanvas.getContext('2d');
+    const grad = gctx.createRadialGradient(64,64,0,64,64,64);
+    grad.addColorStop(0, 'rgba(45,103,255,0.50)');
+    grad.addColorStop(1, 'rgba(45,103,255,0.0)');
+    gctx.fillStyle = grad; gctx.fillRect(0,0,128,128);
+    const glowTex = new THREE.CanvasTexture(glowCanvas);
+    const glowMat = new THREE.SpriteMaterial({ map: glowTex, transparent:true, opacity:0.0, depthWrite:false });
+    const glow = new THREE.Sprite(glowMat);
+    glow.scale.set(10,10,1);
+    scene.add(glow);
+
+    camera.position.z = 18;
+
+    // Attraction / disperse state (the missing “connect to big ball” behavior)
+    const state = {
+      attract: 0.0,        // 0 = free float, 1 = pulled into core orbit
+      zoom: 0.0,           // 0 = far, 1 = close
+      clusterBoost: 0.0,   // extra pull on click
+      orbitRadius: 5.8     // target shell radius around core
+    };
+
+    // Precompute a target direction for each node (for clean “pull-in”)
+    const targetDirs = [];
+    for (let i=0; i<nodeCount; i++){
+      const v = new THREE.Vector3((Math.random()-0.5), (Math.random()-0.5), (Math.random()-0.5)).normalize();
+      targetDirs.push(v);
+    }
+
+    // Build connection lines each frame
+    const maxDist = 2.3;
     const maxDist2 = maxDist * maxDist;
 
     function updateConnections(){
@@ -573,37 +581,76 @@
 
       lineGeo.setDrawRange(0, segCount * 2);
       lineGeo.attributes.position.needsUpdate = true;
+
+      // Dynamic line opacity with zoom (more visible when closer)
+      lineMat.opacity = 0.16 + 0.18 * state.zoom;
     }
 
-    // Core “CEYO” wireframe (subtle)
-    const coreGeometry = new THREE.IcosahedronGeometry(2.2, 2);
-    const coreMaterial = new THREE.MeshBasicMaterial({
-      color: 0x2D67FF,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.0
-    });
-    const coreBall = new THREE.Mesh(coreGeometry, coreMaterial);
-    scene.add(coreBall);
-
-    camera.position.z = 14;
-
-    // Scroll timeline (keeps your behavior: converge + core reveal)
+    // Scroll-driven zoom + attraction + core reveal
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: document.body,
         start: "top top",
         end: "bottom bottom",
-        scrub: 1.4
+        scrub: 1.25
       }
     });
 
-    tl.to(camera.position, { z: 12, duration: 2 })
-      .to(coreMaterial, { opacity: 0.35, duration: 2 }, 0.2)
-      .to(coreBall.scale, { x: 1.2, y: 1.2, z: 1.2, duration: 3 }, 0.4)
-      .to(camera.position, { z: 10.5, duration: 3 }, 3.0);
+    // Phase 1: begin subtle attract + reveal core
+    tl.to(state, { attract: 0.70, duration: 2.2, ease: "none" }, 0.0)
+      .to(coreMaterial, { opacity: 0.38, duration: 2.0, ease: "none" }, 0.15)
+      .to(glowMat, { opacity: 0.22, duration: 2.0, ease: "none" }, 0.15)
 
-    // Subtle parallax rotation
+    // Phase 2: zoom in (camera + zoom scalar) to get the “fly in” feel
+      .to(camera.position, { z: 12.5, duration: 2.5, ease: "none" }, 0.7)
+      .to(state, { zoom: 0.55, duration: 2.5, ease: "none" }, 0.7)
+
+    // Phase 3: a little deeper as you progress down page
+      .to(camera.position, { z: 10.6, duration: 3.8, ease: "none" }, 3.0)
+      .to(state, { zoom: 1.0, duration: 3.8, ease: "none" }, 3.0)
+      .to(state, { attract: 1.0, duration: 3.8, ease: "none" }, 3.0);
+
+    // Click-focus clusters (maps blocks to orbit offsets; NOT static)
+    const clusterMap = {
+      canonical:     { camZ: 11.6, boost: 0.35, orbit: 5.6 },
+      integrity:     { camZ: 11.2, boost: 0.42, orbit: 5.3 },
+      scope:         { camZ: 11.4, boost: 0.38, orbit: 5.5 },
+      separation:    { camZ: 11.8, boost: 0.30, orbit: 5.8 },
+      capture:       { camZ: 10.9, boost: 0.46, orbit: 5.1 },
+      structure:     { camZ: 11.2, boost: 0.40, orbit: 5.3 },
+      sealing:       { camZ: 10.8, boost: 0.50, orbit: 5.0 },
+      keys:          { camZ: 11.4, boost: 0.36, orbit: 5.4 },
+      disclosure:    { camZ: 11.1, boost: 0.44, orbit: 5.2 },
+      availability:  { camZ: 11.5, boost: 0.34, orbit: 5.6 }
+    };
+
+    function focusCluster(key, fromClick=false){
+      const c = clusterMap[key];
+      if (!c) return;
+      gsap.to(camera.position, { z: c.camZ, duration: fromClick ? 0.8 : 1.0, ease: "power2.out" });
+      gsap.to(state, {
+        clusterBoost: c.boost,
+        orbitRadius: c.orbit,
+        duration: fromClick ? 0.8 : 1.0,
+        ease: "power2.out"
+      });
+      // decay boost back to base attract over time (keeps it alive)
+      gsap.to(state, { clusterBoost: 0.0, duration: 1.4, ease: "power2.out", delay: 0.5 });
+    }
+    window.focusCluster = focusCluster;
+
+    // Deep-link open (if URL has #keys, etc.)
+    function openFromHash(){
+      const key = (location.hash || "").replace("#","").trim();
+      if (!key) return;
+      const el = document.querySelector(`[data-open="${key}"]`);
+      if (el){
+        el.classList.add('expanded');
+        focusCluster(key, false);
+      }
+    }
+
+    // Parallax rotation
     let targetRotX = 0, targetRotY = 0;
     if (window.matchMedia("(pointer: fine)").matches){
       window.addEventListener('mousemove', (e) => {
@@ -614,36 +661,66 @@
       }, {passive:true});
     }
 
+    const tmp = new THREE.Vector3();
+    const dir = new THREE.Vector3();
+    const desired = new THREE.Vector3();
+
     function animate(){
       requestAnimationFrame(animate);
 
       const pos = pointsGeo.attributes.position.array;
 
+      // Attraction strength increases with scroll zoom + click boosts
+      const attractStrength = Math.min(1.0, (state.attract * 0.70) + (state.clusterBoost * 0.80));
+      const shell = state.orbitRadius;
+
       for (let i=0; i<nodeCount; i++){
         const k = i*3;
-        pos[k+0] += velocities[k+0];
-        pos[k+1] += velocities[k+1];
-        pos[k+2] += velocities[k+2];
 
+        // baseline drift
+        pos[k+0] += velocities[k+0] * (1.0 - 0.55*attractStrength);
+        pos[k+1] += velocities[k+1] * (1.0 - 0.55*attractStrength);
+        pos[k+2] += velocities[k+2] * (1.0 - 0.55*attractStrength);
+
+        // bounds reflect (keeps it alive when not attracted)
         if (pos[k+0] > bounds || pos[k+0] < -bounds) velocities[k+0] *= -1;
         if (pos[k+1] > bounds || pos[k+1] < -bounds) velocities[k+1] *= -1;
         if (pos[k+2] > bounds || pos[k+2] < -bounds) velocities[k+2] *= -1;
+
+        // Pull nodes into an orbit shell around the core (the missing “connect to big ball” feel)
+        if (attractStrength > 0.001){
+          tmp.set(pos[k+0], pos[k+1], pos[k+2]);
+
+          // desired position is a stable direction on a shell radius, plus small breathing
+          dir.copy(targetDirs[i]);
+          const breathe = 0.35 * Math.sin((performance.now()*0.001) + i*0.17);
+          desired.copy(dir).multiplyScalar(shell + breathe);
+
+          // lerp into desired orbit
+          tmp.lerp(desired, 0.012 + 0.030*attractStrength);
+
+          pos[k+0] = tmp.x; pos[k+1] = tmp.y; pos[k+2] = tmp.z;
+        }
       }
 
       pointsGeo.attributes.position.needsUpdate = true;
-      updateConnections();
 
+      // Rotate field subtly with mouse
       points.rotation.y += (targetRotY - points.rotation.y) * 0.04;
       points.rotation.x += (targetRotX - points.rotation.x) * 0.04;
-
       lines.rotation.copy(points.rotation);
 
+      // Core rotation + glow sync
       coreBall.rotation.x += 0.002;
       coreBall.rotation.y += 0.003;
+      glow.position.copy(coreBall.position);
+      glow.material.opacity = glowMat.opacity;
+
+      // Update lines after node move
+      updateConnections();
 
       renderer.render(scene, camera);
     }
-    animate();
 
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -651,6 +728,11 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     }, {passive:true});
+
+    // init
+    openFromHash();
+    window.addEventListener('hashchange', openFromHash);
+
   </script>
 </body>
 </html>
