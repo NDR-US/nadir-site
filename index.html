@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <title>CEYO — Evidentiary Infrastructure for Autonomous Systems</title>
-  <meta name="description" content="CEYO is a weight-neutral, policy-scoped evidentiary layer. Canonical artifacts. Cryptographic sealing. Independent verification under constrained disclosure."/>
+  <meta name="description" content="CEYO is a decoupled evidentiary layer producing policy-scoped, canonical artifacts representing inference-time decision-state context—deterministically structured and cryptographically sealed for institutional verification under constrained disclosure."/>
   <meta name="theme-color" content="#060A13"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,10 +18,16 @@
       --navy2:#0B1220;
       --ivory:#F4F0E6;
       --royal:#2D67FF;
+
       --royal-glow: rgba(45,103,255,0.40);
       --text:rgba(244,240,230,.92);
-      --muted:rgba(244,240,230,.56);
+      --muted:rgba(244,240,230,.60);
       --stroke:rgba(244,240,230,.10);
+
+      --textD: rgba(11,18,32,.92);
+      --mutedD: rgba(11,18,32,.64);
+      --strokeD: rgba(11,18,32,.12);
+
       --brandFont:'Outfit', system-ui, sans-serif;
       --monoFont:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --bodyFont:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -37,11 +43,11 @@
       #cursor{ display:none; }
     }
 
-    /* Background */
+    /* Stage */
     #stage{
       position:fixed; inset:0; z-index:0; pointer-events:none;
       background:
-        radial-gradient(1100px 650px at 50% 26%, rgba(45,103,255,.10), transparent 60%),
+        radial-gradient(1100px 650px at 50% 24%, rgba(45,103,255,.10), transparent 60%),
         radial-gradient(900px 520px at 20% 72%, rgba(45,103,255,.06), transparent 65%),
         linear-gradient(180deg, var(--navy), var(--navy2));
     }
@@ -64,19 +70,43 @@
 
     /* Nav */
     #topnav{
-      position:fixed; top:0; left:0; right:0; z-index:50;
-      padding: 22px 32px;
+      position:fixed; top:0; left:0; right:0; z-index:60;
+      padding: 20px 28px;
       display:flex; justify-content:space-between; align-items:center;
       transition: background .25s ease, border-color .25s ease, backdrop-filter .25s ease;
       border-bottom:1px solid transparent;
     }
     #topnav.scrolled{
-      background: rgba(6,10,19,.70);
+      background: rgba(6,10,19,.72);
       backdrop-filter: blur(14px);
       border-bottom-color: rgba(244,240,230,.08);
     }
 
-    /* Telemetry shimmer */
+    /* Typography */
+    .h1{
+      font-family: var(--brandFont);
+      font-weight: 900;
+      font-size: clamp(50px, 9vw, 120px);
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+    }
+    .h2{
+      font-family: var(--brandFont);
+      font-weight: 900;
+      font-style: italic;
+      font-size: clamp(34px, 4.6vw, 68px);
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      line-height: 0.95;
+    }
+    .kicker{
+      font-family: var(--monoFont);
+      font-size: 10px;
+      letter-spacing: .40em;
+      text-transform: uppercase;
+      color: rgba(244,240,230,.70);
+    }
     .shimmer-text{
       background: linear-gradient(90deg, rgba(244,240,230,0) 0%, var(--royal) 50%, rgba(244,240,230,0) 100%);
       background-size: 200% auto;
@@ -86,15 +116,6 @@
     }
     @keyframes shimmerMove { 0%{background-position:0% center;} 60%{background-position:100% center;} 100%{background-position:100% center;} }
 
-    .h1{
-      font-family: var(--brandFont);
-      font-weight: 900;
-      font-size: clamp(50px, 9vw, 120px);
-      line-height: 0.9;
-      letter-spacing: -0.05em;
-      text-transform: uppercase;
-    }
-
     /* Buttons */
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
@@ -103,10 +124,11 @@
       letter-spacing:.20em;
       text-transform:uppercase;
       border-radius:999px;
-      padding: 16px 32px;
+      padding: 14px 26px;
       border:1px solid var(--stroke);
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
       user-select:none;
+      white-space:nowrap;
     }
     .btn.primary{
       background: var(--royal);
@@ -120,7 +142,29 @@
     }
     .btn.ghost:hover{ background: rgba(244,240,230,.05); }
 
-    /* Blocks */
+    /* “Page” system (single-file, multi-route) */
+    .route{
+      min-height: 100vh;
+      padding-top: 118px;
+      padding-bottom: 110px;
+      display:none;
+    }
+    .route.active{ display:block; }
+    .shell{ max-width: 1180px; margin: 0 auto; padding: 0 24px; position:relative; z-index:10; }
+
+    /* Panels + blocks */
+    .panel{
+      border: 1px solid var(--stroke);
+      background: rgba(11,18,32,0.45);
+      backdrop-filter: blur(12px);
+      border-radius: 22px;
+      box-shadow: 0 22px 60px rgba(0,0,0,.25);
+    }
+    .panel.pad{ padding: 28px; }
+    @media (min-width: 768px){
+      .panel.pad{ padding: 44px; }
+    }
+
     .data-block{
       border: 1px solid var(--stroke);
       background: rgba(11,18,32,0.40);
@@ -133,7 +177,7 @@
     }
     .data-block:hover{ border-color: rgba(45,103,255,.55); background: rgba(45,103,255,0.05); }
     .data-block.expanded{
-      max-height: 520px;
+      max-height: 720px;
       border-color: rgba(45,103,255,.85);
       background: rgba(45,103,255,0.06);
       box-shadow: 0 22px 60px rgba(0,0,0,.35);
@@ -150,9 +194,58 @@
       pointer-events: auto;
     }
 
+    /* Distinctive page accents */
+    .accent-lines{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(800px 420px at 18% 18%, rgba(45,103,255,.10), transparent 60%),
+        radial-gradient(800px 420px at 82% 68%, rgba(45,103,255,.07), transparent 62%);
+      pointer-events:none;
+      opacity:.85;
+      filter: blur(0.2px);
+      z-index:1;
+    }
+    .accent-grid{
+      position:absolute; inset:-40px;
+      background-image:
+        linear-gradient(to right, rgba(244,240,230,.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(244,240,230,.05) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: radial-gradient(400px 260px at 50% 22%, #000 20%, transparent 70%);
+      opacity:.22;
+      pointer-events:none;
+      z-index:1;
+    }
+
+    /* Reversed (ivory) pages */
+    .route.light{
+      color: var(--textD);
+    }
+    .route.light .kicker{ color: rgba(11,18,32,.62); }
+    .route.light .panel{
+      background: rgba(244,240,230,.78);
+      border-color: var(--strokeD);
+      box-shadow: 0 22px 60px rgba(0,0,0,.18);
+    }
+    .route.light .data-block{
+      background: rgba(244,240,230,.72);
+      border-color: var(--strokeD);
+    }
+    .route.light .data-block:hover{
+      border-color: rgba(45,103,255,.65);
+      background: rgba(45,103,255,0.06);
+    }
+    .route.light .btn.ghost:hover{ background: rgba(11,18,32,.06); }
+    .route.light .accent-grid{
+      background-image:
+        linear-gradient(to right, rgba(11,18,32,.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(11,18,32,.07) 1px, transparent 1px);
+      opacity:.12;
+    }
+
     /* Bottom bar */
     #bottombar{
-      position:fixed; bottom:0; left:0; right:0; z-index:50;
+      position:fixed; bottom:0; left:0; right:0; z-index:70;
       height:56px;
       background: rgba(6,10,19,.88);
       backdrop-filter: blur(12px);
@@ -168,6 +261,7 @@
       border-right: 1px solid var(--stroke);
       transition: background .16s ease, color .16s ease;
       color: rgba(244,240,230,.70);
+      user-select:none;
     }
     #bottombar a:last-child{ border-right:none; }
     #bottombar a:hover{ background: rgba(244,240,230,.05); color: rgba(244,240,230,.92); }
@@ -176,11 +270,32 @@
       box-shadow: inset 0 2px 0 rgba(45,103,255,.95);
     }
 
-    .section-pad{ padding-top: 11rem; padding-bottom: 11rem; }
-    @media (max-width: 640px){
-      .section-pad{ padding-top: 8rem; padding-bottom: 8rem; }
-      #topnav{ padding: 18px 18px; }
+    /* Route menu */
+    .routeMenu{
+      display:flex; gap:16px; align-items:center;
+      font-family: var(--monoFont);
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(244,240,230,.70);
     }
+    .routeMenu a{ opacity:.86; transition: opacity .14s ease, color .14s ease; }
+    .routeMenu a:hover{ opacity:1; color: rgba(244,240,230,.96); }
+    .routeMenu a.active{ opacity:1; color: var(--ivory); }
+
+    /* Fine print */
+    .fine{
+      font-family: var(--monoFont);
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(244,240,230,.60);
+    }
+    .route.light .fine{ color: rgba(11,18,32,.62); }
+
+    /* Lists */
+    .bullets{ margin: 10px 0 0 0; padding-left: 18px; }
+    .bullets li{ margin: 6px 0; }
   </style>
 </head>
 
@@ -189,244 +304,916 @@
   <div id="grain" aria-hidden="true"></div>
   <div id="cursor" aria-hidden="true"></div>
 
-  <nav id="topnav" aria-label="Primary navigation">
+  <nav id="topnav" aria-label="Primary">
     <div class="flex items-baseline gap-4">
-      <a href="index.html" class="font-[var(--brandFont)] font-black text-2xl italic">CEYO</a>
-      <span class="font-mono text-[9px] tracking-[0.30em] opacity-40 uppercase">Evidentiary Layer</span>
+      <a href="#/overview" class="font-[var(--brandFont)] font-black text-2xl italic">CEYO</a>
+      <span class="font-mono text-[9px] tracking-[0.30em] opacity-40 uppercase">Evidentiary Infrastructure</span>
     </div>
 
-    <div class="hidden md:flex gap-8 font-mono text-[10px] tracking-widest uppercase opacity-60">
-      <a href="#hero" class="hover:text-[var(--royal)] transition-colors">Index</a>
-      <a href="#gap" class="hover:text-[var(--royal)] transition-colors">Gap</a>
-      <a href="#substrate" class="hover:text-[var(--royal)] transition-colors">Substrate</a>
-      <a href="#tech" class="hover:text-[var(--royal)] transition-colors">Tech</a>
-      <a href="contact.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Contact</a>
+    <div class="hidden md:flex routeMenu">
+      <a href="#/overview" data-route-link="overview">Overview</a>
+      <a href="#/platform" data-route-link="platform">Platform</a>
+      <a href="#/integration" data-route-link="integration">Integration</a>
+      <a href="#/trust" data-route-link="trust">Trust</a>
+      <a href="#/governance" data-route-link="governance">Governance</a>
+      <a href="#/contact" data-route-link="contact" class="btn primary !py-2 !px-4 !text-[10px] !tracking-[.20em]">Request Review</a>
     </div>
   </nav>
 
-  <div class="relative z-10 max-w-7xl mx-auto px-6">
-    <section id="hero" class="min-h-screen flex flex-col justify-center">
-      <div class="max-w-4xl">
-        <div class="font-mono text-[10px] tracking-[0.40em] text-[var(--royal)] mb-6 uppercase">Initializing Integrity Substrate</div>
-        <h1 class="h1 mb-8">
-          Go Beyond<br/>
-          <span class="shimmer-text italic">Telemetry</span>
-        </h1>
+  <!-- ROUTES (each is a “page” with distinct treatment; same palette, some reversed) -->
 
-        <p class="text-xl text-[var(--muted)] leading-relaxed max-w-2xl mb-12">
-          CEYO is a weight-neutral, policy-scoped evidentiary layer that attaches beside AI inference systems and produces canonical artifacts representing defined inference-time decision-state context — cryptographically sealed for institutional verification under constrained disclosure conditions.
-        </p>
+  <!-- OVERVIEW (dark) -->
+  <section class="route active" data-route="overview">
+    <div class="accent-lines"></div>
+    <div class="accent-grid"></div>
 
-        <div class="flex gap-6 flex-wrap">
-          <button onclick="document.getElementById('tech').scrollIntoView({behavior:'smooth'})" class="btn primary">Enter Framework</button>
-          <a href="contact.html" class="btn ghost nav-exit">Request Review</a>
-        </div>
-
-        <div class="mt-10 space-y-3 font-mono text-[11px] uppercase tracking-wider">
-          <div class="text-red-400/70">× CEYO does not replace models</div>
-          <div class="text-red-400/70">× CEYO does not modify inference outputs</div>
-          <div class="text-red-400/70">× CEYO does not evaluate correctness</div>
-          <div class="text-[var(--royal)]">→ CEYO produces verifiable records</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="gap" class="section-pad">
-      <div class="grid lg:grid-cols-2 gap-20">
+    <div class="shell">
+      <div class="grid lg:grid-cols-2 gap-14 items-end">
         <div>
-          <h2 class="font-[var(--brandFont)] italic font-black text-5xl uppercase mb-8">The Accountability Gap</h2>
-          <p class="text-[var(--muted)] leading-loose text-lg mb-8">
-            Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is frequently secondary.
+          <div class="kicker mb-6">EVIDENTIARY INFRASTRUCTURE · FOR AUTONOMOUS SYSTEMS</div>
+          <h1 class="h1 mb-8">
+            Go Beyond<br/>
+            <span class="shimmer-text italic">Telemetry</span>
+          </h1>
+
+          <p class="text-[18px] leading-[1.9] text-[var(--muted)] max-w-xl">
+            AI systems increasingly influence decisions in regulated, safety-critical, and institutional environments. When those decisions are reviewed,
+            the underlying infrastructure often produces telemetry, logs, and traces that were never designed to function as durable evidence.
           </p>
-          <p class="text-[var(--muted)] leading-loose text-lg mb-8">
-            When a decision is later questioned — through regulatory inquiry, internal audit, incident review, or litigation — organizations often reconstruct events from partial logs and distributed traces.
-            Reconstruction is interpretive. It is not deterministic.
+
+          <div class="mt-7 text-[18px] leading-[1.9] text-[var(--muted)] max-w-xl">
+            <div>Telemetry describes activity.</div>
+            <div>It does not preserve proof.</div>
+            <div class="mt-4 text-[var(--ivory)] font-semibold">CEYO exists to address that structural gap.</div>
+          </div>
+
+          <div class="mt-10 flex gap-4 flex-wrap">
+            <a class="btn primary nav-exit" href="#/platform">Enter Framework</a>
+            <a class="btn ghost nav-exit" href="#/contact">Controlled Review</a>
+            <a class="btn ghost nav-exit" href="#/resources">Resources</a>
+          </div>
+
+          <div class="mt-10 space-y-3 font-mono text-[11px] uppercase tracking-wider">
+            <div class="text-red-400/70">× CEYO does not evaluate outputs</div>
+            <div class="text-red-400/70">× CEYO does not adjudicate compliance</div>
+            <div class="text-[var(--royal)]">→ CEYO produces records</div>
+          </div>
+        </div>
+
+        <div class="panel pad">
+          <div class="fine mb-5">Executive Summary</div>
+          <p class="text-[16px] leading-[1.9] text-[var(--muted)]">
+            CEYO is a decoupled evidentiary layer that attaches beside inference systems and produces policy-scoped, canonical artifacts representing defined inference-time decision-state context.
+            These artifacts are deterministically structured and cryptographically sealed to support later institutional verification without default disclosure of proprietary internals.
           </p>
-          <p class="text-[var(--muted)] leading-loose text-lg">
-            Institutions require artifacts that are canonical in structure, explicit in capture scope, cryptographically sealed, and independently verifiable. This is an architectural deficit, not an operational oversight.
-          </p>
+
+          <div class="mt-10 grid sm:grid-cols-2 gap-4">
+            <div class="data-block p-6" data-open="acc-gap" onclick="toggleBlock(this)">
+              <div class="flex justify-between items-center mb-3">
+                <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase">01 / Gap</span>
+                <span class="text-xs uppercase font-bold">Accountability deficit</span>
+              </div>
+              <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+                Reconstruction from partial logs is interpretive, not deterministic. Institutions require canonical, sealed, independently verifiable artifacts.
+              </div>
+            </div>
+
+            <div class="data-block p-6" data-open="decoupled" onclick="toggleBlock(this)">
+              <div class="flex justify-between items-center mb-3">
+                <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase">02 / Layer</span>
+                <span class="text-xs uppercase font-bold">Decoupled posture</span>
+              </div>
+              <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+                CEYO operates beside inference engines: no weight mutation, no intervention in decision logic, no replacement of governance frameworks.
+              </div>
+            </div>
+          </div>
 
           <div class="mt-10 border-t border-[var(--stroke)] pt-8">
-            <div class="font-mono text-[10px] tracking-[0.30em] text-[var(--royal)] uppercase mb-4">Core Principle</div>
-            <div class="text-[var(--text)] text-lg font-semibold leading-snug">
-              Evidence infrastructure must remain separate from decision authority.
-            </div>
-            <div class="text-[var(--muted)] mt-2">CEYO provides the artifact. Institutions provide the oversight.</div>
-          </div>
-        </div>
-
-        <div class="space-y-4">
-          <div class="data-block p-6" data-open="canonical" onclick="toggleBlock(this)">
-            <div class="flex justify-between items-center mb-4">
-              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">01 / Canonical</span>
-              <span class="text-xs uppercase font-bold">Deterministic structure</span>
-            </div>
-            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-              Consistent schema and stable byte representation across environments. Canonicalization produces deterministic output for independent recomputation.
-            </div>
-          </div>
-
-          <div class="data-block p-6" data-open="integrity" onclick="toggleBlock(this)">
-            <div class="flex justify-between items-center mb-4">
-              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">02 / Integrity</span>
-              <span class="text-xs uppercase font-bold">Cryptographic sealing</span>
-            </div>
-            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-              After canonicalization, hashing and digital signatures establish tamper-evidence and origin authenticity. Artifacts become independently verifiable records.
-            </div>
-          </div>
-
-          <div class="data-block p-6" data-open="scope" onclick="toggleBlock(this)">
-            <div class="flex justify-between items-center mb-4">
-              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">03 / Scope</span>
-              <span class="text-xs uppercase font-bold">Explicit disclosure boundary</span>
-            </div>
-            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-              Versioned policy defines inclusion, exclusion, masking, and tiered disclosure pre-generation. Artifacts reflect declared scope; they do not implicitly expand beyond it.
-            </div>
-          </div>
-
-          <div class="data-block p-6" data-open="separation" onclick="toggleBlock(this)">
-            <div class="flex justify-between items-center mb-4">
-              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">04 / Separation</span>
-              <span class="text-xs uppercase font-bold">Oversight without exposure</span>
-            </div>
-            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-              Verification without default disclosure of proprietary internals. Oversight can confirm integrity under policy scope without requiring model weight exposure.
+            <div class="fine mb-3">Boundary Position</div>
+            <div class="text-[var(--muted)] leading-relaxed">
+              CEYO is infrastructure. It is not adjudication. Authorized institutions and regulated operators retain responsibility for determinations.
+              CEYO provides the record. Institutions provide the oversight.
             </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <section id="substrate" class="section-pad">
-      <div class="max-w-4xl">
-        <div class="font-mono text-[10px] tracking-[0.40em] text-[var(--royal)] mb-4 uppercase">System Architecture</div>
-        <h2 class="font-[var(--brandFont)] italic font-black text-6xl uppercase mb-8">A Decoupled Evidentiary Substrate</h2>
-        <p class="text-[var(--muted)] leading-loose text-lg mb-8">
-          CEYO attaches at the inference boundary — as a sidecar, wrapper, or gateway — and captures only what operator policy explicitly defines.
-          It normalizes captured fields into a stable artifact schema, applies deterministic canonicalization, and seals cryptographically under a non-custodial key architecture.
-        </p>
-        <p class="text-[var(--muted)] leading-loose text-lg mb-10">
-          Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of model output.
-        </p>
+      <div class="mt-16 panel pad">
+        <div class="fine mb-6">The Accountability Gap</div>
+        <div class="grid lg:grid-cols-2 gap-12 text-[18px] leading-[1.9] text-[var(--muted)]">
+          <div>
+            <p>Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is frequently secondary.</p>
+            <p class="mt-5">When a decision is later questioned—through regulatory inquiry, internal audit, incident review, or litigation—organizations often reconstruct events from partial logs and distributed traces. Reconstruction is interpretive. It is not deterministic.</p>
+          </div>
+          <div>
+            <p>Institutions require more than reconstructed context. They require artifacts that are:</p>
+            <ul class="bullets">
+              <li>Canonical in structure</li>
+              <li>Explicit in capture scope</li>
+              <li>Cryptographically sealed</li>
+              <li>Independently verifiable</li>
+            </ul>
+            <p class="mt-5">Without those properties, oversight depends on operator assertions rather than verifiable integrity. This is an architectural deficit, not an operational oversight.</p>
+          </div>
+        </div>
+      </div>
 
-        <div class="grid md:grid-cols-2 gap-4 mt-10">
-          <div class="data-block p-6" data-open="not-judgment" onclick="toggleBlock(this)">
-            <div class="flex justify-between items-center mb-4">
-              <span class="font-mono text-[10px] text-red-400 tracking-[0.20em] uppercase">NOT</span>
-              <span class="text-xs uppercase font-bold">Records are not judgments</span>
+      <div class="mt-16 grid lg:grid-cols-3 gap-6">
+        <div class="data-block p-7" data-open="disclosure" onclick="toggleBlock(this)">
+          <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Constrained Disclosure</div>
+          <div class="font-semibold text-lg text-[var(--ivory)] mb-1">Validation without exposure</div>
+          <div class="content mt-4 pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+            Oversight frequently requires validation without exposure of proprietary architecture, confidential model weights, or trade-secret implementation.
+            Artifacts support tiered disclosure. Policy defines inclusion, exclusion, and masking rules before generation.
+          </div>
+        </div>
+
+        <div class="data-block p-7" data-open="availability" onclick="toggleBlock(this)">
+          <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Availability by Design</div>
+          <div class="font-semibold text-lg text-[var(--ivory)] mb-1">Fail-open posture</div>
+          <div class="content mt-4 pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+            Artifact sealing failures may be logged and flagged without interrupting inference unless explicitly configured otherwise. Availability remains an institutional decision.
+          </div>
+        </div>
+
+        <div class="data-block p-7" data-open="position" onclick="toggleBlock(this)">
+          <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Institutional Position</div>
+          <div class="font-semibold text-lg text-[var(--ivory)] mb-1">Infrastructure, not outcomes</div>
+          <div class="content mt-4 pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+            CEYO does not certify regulatory compliance. It does not guarantee admissibility. It does not determine fairness or legality.
+            It produces records. Institutions determine their meaning.
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 panel pad opacity-70 hover:opacity-100 transition-opacity">
+        <div class="fine mb-4">Boundary Declaration · V2026.02.19</div>
+        <div class="grid md:grid-cols-2 gap-8 text-[10px] font-mono leading-relaxed uppercase text-[rgba(244,240,230,.72)]">
+          <p>Public pages are descriptive only. Technical specifics, operational details, and implementation materials are shared under controlled conditions.</p>
+          <p>Engagement does not imply certification, compliance endorsement, or regulatory authority. Verification confirms integrity and provenance under policy scope — not correctness of output.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORM & ARCHITECTURE (light / reversed) -->
+  <section class="route light" data-route="platform">
+    <div class="accent-lines" style="opacity:.55"></div>
+    <div class="accent-grid" style="opacity:.14"></div>
+
+    <div class="shell">
+      <div class="panel pad">
+        <div class="kicker mb-4">DECOUPLED VERIFICATION ARCHITECTURE</div>
+        <h2 class="h2 mb-8">Verification Substrate<br/>At the Inference Boundary</h2>
+
+        <div class="grid lg:grid-cols-2 gap-12 text-[18px] leading-[1.9] text-[var(--mutedD)]">
+          <div>
+            <p><strong>CEYO</strong> is designed as a verification substrate that operates beside AI inference systems without modifying model weights or core decision logic.</p>
+            <p class="mt-5">Its purpose is narrow and explicit: to generate deterministic, integrity-sealed artifacts representing defined inference-time context under policy scope.</p>
+            <p class="mt-5">It does not evaluate model outputs. It does not intervene in inference decisions. It does not alter model behavior.</p>
+            <p class="mt-5">This separation preserves architectural neutrality while enabling institutional review.</p>
+          </div>
+          <div>
+            <div class="fine mb-3">Attachment at the Inference Boundary</div>
+            <p>CEYO integrates at the inference boundary through a sidecar, gateway, or API wrapper configuration.</p>
+            <p class="mt-5">Attachment at the boundary allows CEYO to observe defined inference events, capture policy-scoped context, normalize event structure, produce deterministic artifacts, and seal artifacts without interfering with decision flow.</p>
+            <p class="mt-5">By remaining external to model internals, CEYO reduces operational friction and preserves system integrity.</p>
+          </div>
+        </div>
+
+        <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="data-block p-7" data-open="policy" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Policy-Scoped Capture</div>
+            <div class="font-semibold text-lg mb-1">Define before you collect</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Artifact generation begins with explicit policy definition. Only fields defined within policy scope are captured.
+              Capture scope is versioned and recorded within the artifact itself.
             </div>
-            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-              CEYO does not determine whether a decision was lawful, ethical, or fair.
+          </div>
+
+          <div class="data-block p-7" data-open="canonical" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Canonical Structure</div>
+            <div class="font-semibold text-lg mb-1">Deterministic records</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Captured context is normalized into a canonical artifact schema designed for deterministic integrity verification.
+              Canonical artifacts are structured records intended for review—not free-form logs.
             </div>
           </div>
 
-          <div class="data-block p-6" data-open="principle" onclick="toggleBlock(this)">
-            <div class="flex justify-between items-center mb-4">
-              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">PRINCIPLE</span>
-              <span class="text-xs uppercase font-bold">Structural independence</span>
+          <div class="data-block p-7" data-open="rfc" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">RFC 8785</div>
+            <div class="font-semibold text-lg mb-1">Deterministic canonicalization</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Before hashing, JSON artifacts are canonicalized using RFC 8785 (JSON Canonicalization Scheme),
+              ensuring logically equivalent structures produce identical byte representations across environments.
             </div>
-            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-              Evidence infrastructure must remain separate from decision authority.
+          </div>
+
+          <div class="data-block p-7" data-open="crypto" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Cryptographic Sealing</div>
+            <div class="font-semibold text-lg mb-1">Hash + signature</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              After canonicalization, artifacts are sealed using hashing and digital signatures under a deployment-defined suite.
+              Reference: SHA-256 and ECDSA (P-256). Suite selection remains configurable.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="keys" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Non-Custodial Keys</div>
+            <div class="font-semibold text-lg mb-1">Authority stays institutional</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Signing keys are generated and retained within the client-controlled environment (HSM, KMS, TEE).
+              CEYO does not possess, transmit, or store private signing keys.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="verify" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Independent Verification</div>
+            <div class="font-semibold text-lg mb-1">Deterministic workflow</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Verification includes RFC 8785 canonicalization, hash recomputation, signature validation, and policy identifier/version alignment checks.
+              Outcomes: Integrity Confirmed, Integrity Failed, Policy Scope Mismatch.
             </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <section id="tech" class="section-pad">
-      <div class="text-center mb-20">
-        <div class="font-mono text-[10px] tracking-[0.40em] text-[var(--royal)] mb-4 uppercase">Substrate Properties</div>
-        <h2 class="font-[var(--brandFont)] italic font-black text-6xl uppercase">Technical Core</h2>
-      </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="data-block p-8" data-open="capture" onclick="toggleBlock(this)">
-          <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">01 · Capture</div>
-          <div class="font-bold text-lg mb-2 uppercase italic">Policy-scoped</div>
-          <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
-            Operators define what fields are included, excluded, and masked before artifact generation begins. Capture policy is explicit and versioned. The policy version is recorded within the artifact.
-          </div>
-        </div>
-
-        <div class="data-block p-8" data-open="structure" onclick="toggleBlock(this)">
-          <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">02 · Structure</div>
-          <div class="font-bold text-lg mb-2 uppercase italic">Canonical</div>
-          <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
-            Captured context is normalized into a deterministic JSON artifact schema. Canonicalization produces a stable byte representation independent of serialization order, enabling independent recomputation of integrity hashes without interpretive variance.
-          </div>
-        </div>
-
-        <div class="data-block p-8" data-open="sealing" onclick="toggleBlock(this)">
-          <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">03 · Sealing</div>
-          <div class="font-bold text-lg mb-2 uppercase italic">Integrity sealing</div>
-          <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
-            After canonicalization, hashing and digital signatures are applied as reference implementations. Suite selection is configurable based on regulatory and operational requirements. Hashing establishes tamper-evidence; signatures establish origin authenticity.
-          </div>
-        </div>
-
-        <div class="data-block p-8" data-open="keys" onclick="toggleBlock(this)">
-          <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">04 · Keys</div>
-          <div class="font-bold text-lg mb-2 uppercase italic">Non-custodial</div>
-          <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
-            Signing keys remain in the client-controlled environment — HSM, KMS, or TEE. CEYO does not possess, transmit, or store private signing keys, preserving institution-led cryptographic authority.
-          </div>
-        </div>
-
-        <div class="data-block p-8" data-open="disclosure" onclick="toggleBlock(this)">
-          <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">05 · Disclosure</div>
-          <div class="font-bold text-lg mb-2 uppercase italic">Constrained</div>
-          <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
-            Artifacts may be disclosed under Public / Redacted or Controlled Review tiers. Tiering allows verification of integrity without default exposure of model weights, proprietary architecture, or confidential internals.
-          </div>
-        </div>
-
-        <div class="data-block p-8" data-open="availability" onclick="toggleBlock(this)">
-          <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">06 · Availability</div>
-          <div class="font-bold text-lg mb-2 uppercase italic">Fail-open</div>
-          <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
-            Inference continuity remains independent of artifact sealing. If artifact generation fails, inference proceeds uninterrupted. Failure events are logged and flagged; the artifact is marked as unsealed and becomes reviewable.
-          </div>
+        <div class="mt-14 flex gap-4 flex-wrap">
+          <a class="btn primary nav-exit" href="#/integration">Operational Integration</a>
+          <a class="btn ghost nav-exit" href="#/trust">Trust Infrastructure</a>
+          <a class="btn ghost nav-exit" href="#/resources">Resources</a>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="mt-14 flex justify-center gap-6 flex-wrap">
-        <a href="platform.html" class="btn ghost nav-exit">View Architecture</a>
-        <a href="trust.html" class="btn ghost nav-exit">Trust & Verification</a>
-        <a href="governance.html" class="btn ghost nav-exit">Governance</a>
-        <a href="contact.html" class="btn primary nav-exit">Request Controlled Review</a>
-      </div>
-    </section>
+  <!-- INTEGRATION (dark, tighter “ops” feel) -->
+  <section class="route" data-route="integration">
+    <div class="accent-lines" style="opacity:.70"></div>
+    <div class="accent-grid" style="opacity:.18"></div>
 
-    <section id="boundary" class="section-pad opacity-60 hover:opacity-100 transition-opacity">
-      <div class="border-t border-[var(--stroke)] pt-12">
-        <div class="font-mono text-[10px] mb-8 uppercase tracking-widest">Boundary Declaration · V2026.02.19</div>
-        <div class="grid md:grid-cols-2 gap-8 text-[10px] font-mono leading-relaxed uppercase text-[rgba(244,240,230,.70)]">
-          <p>CEYO produces records. It does not validate correctness, fairness, legality, or compliance outcomes. Authorized institutions and operators retain responsibility for decisions and determinations.</p>
-          <p>Verification confirms integrity and provenance under policy scope — not correctness of model output. CEYO does not certify regulatory compliance and does not guarantee legal admissibility.</p>
-        </div>
+    <div class="shell">
+      <div class="panel pad">
+        <div class="kicker mb-4">OPERATIONAL INTEGRATION</div>
+        <h2 class="h2 mb-8">Attach. Configure. Seal.<br/>Preserve Autonomy.</h2>
 
-        <div class="mt-12 pt-10 border-t border-[var(--stroke)] flex flex-wrap justify-between gap-6 font-mono text-[10px] uppercase tracking-widest opacity-70">
-          <div>© <span id="year">2026</span> CEYO · All Rights Reserved</div>
-          <div class="flex gap-8">
-            <a href="terms.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Terms</a>
-            <a href="privacy.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Privacy</a>
-            <a href="contact.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Contact</a>
+        <div class="grid lg:grid-cols-2 gap-12 text-[18px] leading-[1.9] text-[var(--muted)]">
+          <div>
+            <p>CEYO integrates without requiring modification of model weights or inference logic. It operates as an attachable integrity layer at the inference boundary, enabling deterministic artifact generation while preserving system performance and autonomy.</p>
+
+            <div class="mt-8">
+              <div class="fine mb-3">Deployment Model</div>
+              <ul class="bullets text-[16px]">
+                <li>Sidecar process alongside inference service</li>
+                <li>Gateway layer intercepting inference requests</li>
+                <li>API wrapper around inference calls</li>
+              </ul>
+              <p class="mt-5">All deployment modes preserve the same principle: the inference engine remains unchanged. The integrity layer operates externally.</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="fine mb-3">Artifact Lifecycle</div>
+            <ol class="bullets text-[16px] list-decimal">
+              <li>Policy-scoped fields are captured</li>
+              <li>Context is normalized into canonical schema</li>
+              <li>JSON canonicalization is applied</li>
+              <li>Artifact is hashed</li>
+              <li>Artifact is digitally signed</li>
+              <li>Artifact is stored under retention posture</li>
+            </ol>
+
+            <div class="mt-8 data-block p-7" data-open="retention" onclick="toggleBlock(this)">
+              <div class="flex justify-between items-center mb-3">
+                <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase">Retention & Chain-of-Custody</span>
+                <span class="text-xs uppercase font-bold">Operator governed</span>
+              </div>
+              <div class="content pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+                Retention duration is not prescribed. Operators define retention policies consistent with privacy law, regulatory requirements, and governance frameworks.
+                CEYO supports retrieval logging, re-verification, disclosure tiers, and review-ready formatting. Institutional handling remains operator responsibility.
+              </div>
+            </div>
           </div>
         </div>
+
+        <div class="mt-12 grid md:grid-cols-2 gap-6">
+          <div class="data-block p-7" data-open="perf" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Performance Considerations</div>
+            <div class="font-semibold text-lg text-[var(--ivory)] mb-1">Minimal incremental overhead</div>
+            <div class="content mt-4 pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+              Overhead depends on capture scope size, crypto suite selection, hardware environment, and storage architecture.
+              Sealing operates independently of inference execution. In fail-open configuration, inference continuity is preserved even if sealing encounters failure.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="boundaries" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Boundaries of Responsibility</div>
+            <div class="font-semibold text-lg text-[var(--ivory)] mb-1">Infrastructure only</div>
+            <div class="content mt-4 pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+              CEYO does not replace safety engineering frameworks, human authorization controls, inference correctness validation, or regulatory sufficiency determinations.
+              Deployment responsibility remains with the implementing organization. Oversight determinations remain institutional.
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-14 flex gap-4 flex-wrap">
+          <a class="btn primary nav-exit" href="#/documents">Request Document Suite</a>
+          <a class="btn ghost nav-exit" href="#/roadmap">Roadmap</a>
+          <a class="btn ghost nav-exit" href="#/contact">Contact</a>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <div style="height:72px"></div>
-  </div>
+  <!-- DOCUMENT SUITE (light) -->
+  <section class="route light" data-route="documents">
+    <div class="accent-lines" style="opacity:.55"></div>
+    <div class="accent-grid" style="opacity:.13"></div>
 
+    <div class="shell">
+      <div class="panel pad">
+        <div class="kicker mb-4">DOCUMENT SUITE</div>
+        <h2 class="h2 mb-8">Tiered Documentation<br/>Under Controlled Disclosure</h2>
+
+        <div class="text-[18px] leading-[1.9] text-[var(--mutedD)]">
+          <p>Public materials describe CEYO at a high level. Technical implementation details, policy schemas, and verification contracts are available under controlled disclosure.</p>
+          <p class="mt-5">Documentation is structured to balance transparency sufficient for institutional evaluation with protection of proprietary implementation boundaries.</p>
+        </div>
+
+        <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-2 gap-6">
+          <div class="data-block p-7" data-open="trd" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Technical Requirements Document (TRD)</div>
+            <div class="font-semibold text-lg mb-1">Phase 1 mechanics</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Defines non-mutating inference boundary attachment, policy-scoped capture, deterministic canonicalization, cryptographic sealing workflow,
+              fail-open availability posture, and artifact schema versioning model. Does not disclose proprietary implementations unless contractually agreed.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="policy-schema" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Capture Policy & Masking Schema</div>
+            <div class="font-semibold text-lg mb-1">Explicit scope boundaries</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Defines field selection logic, inclusion/exclusion rules, masking behavior, disclosure tiers, policy identifier structure, and version control requirements.
+              Ensures capture boundaries are explicit before artifact generation.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="verif-contract" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Verification Contract & CLI Spec</div>
+            <div class="font-semibold text-lg mb-1">Independent validation</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Defines deterministic canonicalization (RFC 8785), hash recomputation, signature validation, policy alignment checks, and result states.
+              PASS / FAIL / POLICY MISMATCH outcomes are explicitly defined.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="bench" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Performance & Fail-Open Benchmarks</div>
+            <div class="font-semibold text-lg mb-1">Reference posture</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Describes reference benchmarks under controlled configurations, including latency, cryptographic overhead, resource isolation posture, and fail-open behavior.
+              Metrics are deployment-dependent; no universal latency claims are made.
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 panel pad" style="background:rgba(244,240,230,.62); border-color:rgba(11,18,32,.10)">
+          <div class="fine mb-4">Disclosure Model</div>
+          <div class="grid md:grid-cols-3 gap-6 text-[14px] leading-[1.9] text-[var(--mutedD)]">
+            <div><strong>Public Tier</strong><br/>High-level architecture descriptions and governance posture.</div>
+            <div><strong>Controlled Review Tier</strong><br/>Technical specs, schema definitions, benchmark data.</div>
+            <div><strong>Confidential Implementation Tier</strong><br/>Deployment-specific integration details under agreement.</div>
+          </div>
+          <div class="mt-6 text-[12px] uppercase font-mono tracking-wider opacity-70">
+            Access does not grant license or deployment authorization absent executed agreement.
+          </div>
+        </div>
+
+        <div class="mt-12 flex gap-4 flex-wrap">
+          <a class="btn primary nav-exit" href="#/contact">Request Controlled Review</a>
+          <a class="btn ghost nav-exit" href="#/resources">Resources</a>
+          <a class="btn ghost nav-exit" href="#/roadmap">Roadmap</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP (dark) -->
+  <section class="route" data-route="roadmap">
+    <div class="accent-lines" style="opacity:.75"></div>
+    <div class="accent-grid" style="opacity:.20"></div>
+
+    <div class="shell">
+      <div class="panel pad">
+        <div class="kicker mb-4">ROADMAP</div>
+        <h2 class="h2 mb-8">Determinism First.<br/>Expansion Later.</h2>
+
+        <div class="text-[18px] leading-[1.9] text-[var(--muted)]">
+          <p>CEYO is being developed deliberately. Integrity infrastructure must be deterministic before it can be expanded.</p>
+          <p class="mt-5">The roadmap prioritizes canonical artifact stability and verification correctness before feature expansion. Claims remain proportional to implemented functionality at each phase.</p>
+        </div>
+
+        <div class="mt-10 grid lg:grid-cols-2 gap-6">
+          <div class="data-block p-7 expanded" data-open="phase1" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-3">
+              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase">Phase 1</span>
+              <span class="text-xs uppercase font-bold">Canonical schema + prototype sealing</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+              Focus: policy-scoped capture definition, canonical schema stabilization, RFC 8785 canonicalization, cryptographic sealing,
+              non-custodial key integration, fail-open availability validation. Objective is determinism, not breadth.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="phase2" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-3">
+              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase">Phase 2</span>
+              <span class="text-xs uppercase font-bold">Independent verification harness</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+              Focus: standalone verification CLI, public-key validation workflow, policy alignment checks, automated integrity status reporting,
+              cross-environment verification consistency testing. Verification must be executable independently.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="phase3" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-3">
+              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase">Phase 3</span>
+              <span class="text-xs uppercase font-bold">Chain-of-custody workflow support</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+              Focus: artifact retrieval logging posture, structured retention metadata, review-ready verification summaries,
+              incident-scoped artifact bundling, disclosure tier enforcement validation. CEYO supports workflows; institutions define procedures.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="phase4" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-3">
+              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase">Phase 4</span>
+              <span class="text-xs uppercase font-bold">Operational hardening</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+              Potential: performance optimization, deployment automation tooling, broader crypto suite support,
+              extended regulatory crosswalk mappings, enhanced audit logging instrumentation—only after determinism remains stable across prior phases.
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 panel pad" style="background: rgba(11,18,32,.32);">
+          <div class="fine mb-4">What the Roadmap Does Not Include</div>
+          <div class="text-[16px] leading-[1.9] text-[var(--muted)]">
+            Fairness evaluation engines, model correctness validation, automated regulatory certification, real-time intervention systems, behavioral analytics modules.
+            CEYO remains intentionally narrow in scope.
+          </div>
+          <div class="mt-6 text-[12px] uppercase font-mono tracking-wider opacity-70">
+            No delivery dates are publicly committed. Each phase is validated before expansion.
+          </div>
+        </div>
+
+        <div class="mt-12 flex gap-4 flex-wrap">
+          <a class="btn primary nav-exit" href="#/contact">Discuss Evaluation</a>
+          <a class="btn ghost nav-exit" href="#/documents">Document Suite</a>
+          <a class="btn ghost nav-exit" href="#/trust">Trust Infrastructure</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERSIGHT PORTAL (light) -->
+  <section class="route light" data-route="oversight">
+    <div class="accent-lines" style="opacity:.55"></div>
+    <div class="accent-grid" style="opacity:.12"></div>
+
+    <div class="shell">
+      <div class="panel pad">
+        <div class="kicker mb-4">OVERSIGHT PORTAL</div>
+        <h2 class="h2 mb-8">Verification is Mechanical.<br/>Oversight is Institutional.</h2>
+
+        <div class="text-[18px] leading-[1.9] text-[var(--mutedD)]">
+          <p>CEYO artifacts are designed to support structured oversight workflows. This page describes how regulated operators, authorized institutions, and independent auditors interact with artifacts generated under defined policy scope.</p>
+          <p class="mt-5">CEYO does not conduct oversight. It produces records that may be reviewed. Oversight authority remains institutional.</p>
+        </div>
+
+        <div class="mt-10 grid lg:grid-cols-3 gap-6">
+          <div class="data-block p-7" data-open="role-operator" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Regulated Operator</div>
+            <div class="font-semibold text-lg mb-1">Deploys + defines policy</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Configures capture scope, manages policy IDs/versions, maintains retention posture, manages signing key custody,
+              and responds to authorized review requests. CEYO does not override operator authority.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="role-institution" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Authorized Institution</div>
+            <div class="font-semibold text-lg mb-1">Verifies + determines meaning</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Performs RFC 8785 canonicalization, hash recomputation, signature validation, and policy alignment verification.
+              Determines evidentiary sufficiency, regulatory implications, compliance conclusions, and admissibility posture. CEYO does not.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="role-auditor" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Independent Forensic Auditor</div>
+            <div class="font-semibold text-lg mb-1">Validates integrity</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Where authorized, auditors retrieve incident-scoped artifacts, execute independent verification, document chain-of-custody handling,
+              and produce institutional reports. Auditors validate integrity and provenance; they do not re-evaluate inference correctness via CEYO.
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 panel pad" style="background: rgba(244,240,230,.62); border-color:rgba(11,18,32,.10)">
+          <div class="fine mb-4">Verification Workflow</div>
+          <ol class="bullets list-decimal text-[14px] leading-[1.9] text-[var(--mutedD)]">
+            <li>Retrieve artifact under authorized access</li>
+            <li>Canonicalize using RFC 8785 (JSON Canonicalization Scheme)</li>
+            <li>Recompute cryptographic hash</li>
+            <li>Validate digital signature against operator public key</li>
+            <li>Confirm Policy ID and version alignment</li>
+          </ol>
+          <div class="mt-6 grid md:grid-cols-3 gap-4 text-[12px] uppercase font-mono tracking-wider opacity-70">
+            <div><strong>Integrity Confirmed</strong><br/>Hash + signature validate</div>
+            <div><strong>Integrity Failed</strong><br/>Mismatch or validation failure</div>
+            <div><strong>Policy Scope Mismatch</strong><br/>Unexpected policy ID/version</div>
+          </div>
+        </div>
+
+        <div class="mt-12 flex gap-4 flex-wrap">
+          <a class="btn primary nav-exit" href="#/contact">Request Review</a>
+          <a class="btn ghost nav-exit" href="#/governance">Governance Posture</a>
+          <a class="btn ghost nav-exit" href="#/trust">Trust Infrastructure</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOVERNANCE (dark) -->
+  <section class="route" data-route="governance">
+    <div class="accent-lines" style="opacity:.78"></div>
+    <div class="accent-grid" style="opacity:.20"></div>
+
+    <div class="shell">
+      <div class="panel pad">
+        <div class="kicker mb-4">GOVERNANCE POSTURE</div>
+        <h2 class="h2 mb-8">Boundaries First.<br/>Determinism Always.</h2>
+
+        <div class="text-[18px] leading-[1.9] text-[var(--muted)]">
+          <p>CEYO is designed to support accountable review while minimizing unnecessary collection and preserving institutional boundaries.</p>
+          <p class="mt-5">Governance here refers to structural design principles embedded in the integrity layer itself — not external regulatory authority.</p>
+          <p class="mt-5"><strong class="text-[var(--ivory)]">CEYO produces records. Institutions make determinations.</strong></p>
+        </div>
+
+        <div class="mt-10 grid lg:grid-cols-2 gap-6">
+          <div class="data-block p-7" data-open="min" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">1. Minimization by Design</div>
+            <div class="font-semibold text-lg text-[var(--ivory)] mb-1">Policy-defined capture</div>
+            <div class="content mt-4 pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+              Capture scope is explicitly defined by policy prior to generation. Only fields declared within policy are recorded.
+              Policy IDs and version numbers are embedded within artifacts to make boundaries reviewable. Minimization is structural, not aspirational.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="cd" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">2. Controlled Disclosure</div>
+            <div class="font-semibold text-lg text-[var(--ivory)] mb-1">Verification without forced exposure</div>
+            <div class="content mt-4 pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+              Artifacts enable integrity verification without disclosing model weights, training datasets, or source code.
+              Disclosure tiers are defined before generation. Redaction is policy-defined, not improvised post hoc.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="da" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">3. Deterministic Auditability</div>
+            <div class="font-semibold text-lg text-[var(--ivory)] mb-1">Reproducible verification</div>
+            <div class="content mt-4 pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+              Artifacts are canonicalized and sealed deterministically, enabling reproducible validation across heterogeneous environments.
+              Verification is mechanical. Interpretation remains institutional.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="na" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">4. Non-Adjudication</div>
+            <div class="font-semibold text-lg text-[var(--ivory)] mb-1">Infrastructure only</div>
+            <div class="content mt-4 pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+              CEYO does not determine correctness, compliance, lawfulness, or fairness. It provides integrity-sealed records.
+              Oversight conclusions remain with authorized institutions.
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 panel pad" style="background: rgba(11,18,32,.32);">
+          <div class="fine mb-4">Alignment Posture</div>
+          <div class="text-[16px] leading-[1.9] text-[var(--muted)]">
+            Governance design is informed by contemporary integrity-oriented principles consistent with structured record-keeping, version control discipline,
+            minimization, purpose limitation, and separation of verification from adjudication. References to external frameworks are descriptive only.
+          </div>
+          <div class="mt-6 text-[12px] uppercase font-mono tracking-wider opacity-70">
+            CEYO does not claim endorsement, certification, or formal alignment by any regulatory body or standards institution.
+          </div>
+        </div>
+
+        <div class="mt-12 flex gap-4 flex-wrap">
+          <a class="btn primary nav-exit" href="#/compliance">Compliance Center</a>
+          <a class="btn ghost nav-exit" href="#/trust">Trust Infrastructure</a>
+          <a class="btn ghost nav-exit" href="#/contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPLIANCE CENTER (light) -->
+  <section class="route light" data-route="compliance">
+    <div class="accent-lines" style="opacity:.52"></div>
+    <div class="accent-grid" style="opacity:.12"></div>
+
+    <div class="shell">
+      <div class="panel pad">
+        <div class="kicker mb-4">REGULATORY INTEROPERABILITY CROSSWALK</div>
+        <h2 class="h2 mb-8">Descriptive Mappings.<br/>No Certification Claims.</h2>
+
+        <div class="text-[18px] leading-[1.9] text-[var(--mutedD)]">
+          <p>CEYO provides integrity-sealed, policy-scoped artifacts designed to support structured oversight workflows.</p>
+          <p class="mt-5">Mappings below describe functional correspondence between CEYO’s architectural posture and selected regulatory expectations. These references are descriptive only and do not constitute certification, endorsement, or legal sufficiency.</p>
+        </div>
+
+        <div class="mt-10 grid lg:grid-cols-2 gap-6">
+          <div class="data-block p-7" data-open="euaiact" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">European Union AI Act</div>
+            <div class="font-semibold text-lg mb-1">Functional correspondence overview</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Article 12 (record-keeping): canonical, versioned, integrity-sealed artifacts may support structured record-keeping workflows.
+              Article 13/52 (transparency): deployers can access structured artifacts under disclosure tiers.
+              Annex IV (technical documentation): schema + integrity metadata may support documentation processes.
+              Sufficiency remains institutional responsibility.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="nist" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">NIST AI RMF</div>
+            <div class="font-semibold text-lg mb-1">Alignment posture (descriptive)</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Govern: policy IDs/versioning support accountability workflows.
+              Map: policy-scoped capture clarifies boundaries.
+              Measure: canonicalization + verification enable reproducible integrity validation.
+              Manage: artifacts may support incident reconstruction and oversight review under governance.
+              No formal endorsement is claimed.
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 panel pad" style="background: rgba(244,240,230,.62); border-color:rgba(11,18,32,.10)">
+          <div class="fine mb-3">Compliance Boundaries</div>
+          <div class="text-[14px] leading-[1.9] text-[var(--mutedD)]">
+            CEYO does not certify compliance, provide legal advice, guarantee admissibility, or replace institutional compliance programs.
+            Regulatory sufficiency is determined by deploying institutions, legal counsel, and applicable authorities.
+          </div>
+        </div>
+
+        <div class="mt-12 flex gap-4 flex-wrap">
+          <a class="btn primary nav-exit" href="#/trust">Trust Infrastructure</a>
+          <a class="btn ghost nav-exit" href="#/resources">Resources</a>
+          <a class="btn ghost nav-exit" href="#/contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST (dark) -->
+  <section class="route" data-route="trust">
+    <div class="accent-lines" style="opacity:.80"></div>
+    <div class="accent-grid" style="opacity:.22"></div>
+
+    <div class="shell">
+      <div class="panel pad">
+        <div class="kicker mb-4">TRUST INFRASTRUCTURE</div>
+        <h2 class="h2 mb-8">Trust is Mechanics.<br/>Not Statements.</h2>
+
+        <div class="text-[18px] leading-[1.9] text-[var(--muted)]">
+          <p>Trust in evidentiary systems is established through verifiable mechanics. CEYO’s trust posture is anchored in determinism, non-custodial cryptographic architecture, and explicit boundaries.</p>
+          <p class="mt-5">Trust here refers to integrity properties — not outcome validation.</p>
+        </div>
+
+        <div class="mt-10 grid lg:grid-cols-2 gap-6">
+          <div class="data-block p-7" data-open="integrity-arch" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Integrity Architecture</div>
+            <div class="font-semibold text-lg text-[var(--ivory)] mb-1">Deterministic sealing pipeline</div>
+            <div class="content mt-4 pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+              Controls include RFC 8785 canonicalization, cryptographic hashing, digital signatures under deployment-defined suite,
+              non-custodial key custody, policy ID/version embedding, and explicit disclosure tier designation.
+              Verification is reproducible and independent of proprietary internals.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="noncustodial" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Non-Custodial Keys</div>
+            <div class="font-semibold text-lg text-[var(--ivory)] mb-1">Authority remains institutional</div>
+            <div class="content mt-4 pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+              Signing keys remain under operator control. CEYO does not generate private keys by default, retain private keys, transmit private signing material,
+              or assume cryptographic authority. Liability boundaries remain clear.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="sbom" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Supply Chain Transparency</div>
+            <div class="font-semibold text-lg text-[var(--ivory)] mb-1">SBOM posture</div>
+            <div class="content mt-4 pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+              CEYO maintains SBOM for reference builds. Supported formats include SPDX and CycloneDX.
+              SBOM sharing occurs under controlled review and does not disclose proprietary architecture beyond agreed scope.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="vdp" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Vulnerability Disclosure</div>
+            <div class="font-semibold text-lg text-[var(--ivory)] mb-1">Responsible reporting channel</div>
+            <div class="content mt-4 pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+              Maintains a structured VDP to support responsible reporting. Good-faith research within defined boundaries is triaged.
+              Unauthorized access is not permitted. No bounty commitment is made.
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 panel pad" style="background: rgba(11,18,32,.32);">
+          <div class="fine mb-4">Trust Boundaries</div>
+          <div class="text-[16px] leading-[1.9] text-[var(--muted)]">
+            CEYO does not guarantee immunity from attack, regulatory certification, legal sufficiency, or operational correctness.
+            Trust posture is defined by deterministic architecture and explicit limitations.
+          </div>
+        </div>
+
+        <div class="mt-12 flex gap-4 flex-wrap">
+          <a class="btn primary nav-exit" href="#/resources">Resources</a>
+          <a class="btn ghost nav-exit" href="#/oversight">Oversight Portal</a>
+          <a class="btn ghost nav-exit" href="#/contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES (light) -->
+  <section class="route light" data-route="resources">
+    <div class="accent-lines" style="opacity:.52"></div>
+    <div class="accent-grid" style="opacity:.12"></div>
+
+    <div class="shell">
+      <div class="panel pad">
+        <div class="kicker mb-4">RESOURCES</div>
+        <h2 class="h2 mb-8">Institutional Review<br/>Reference Materials</h2>
+
+        <div class="text-[18px] leading-[1.9] text-[var(--mutedD)]">
+          <p>Public materials describe architecture and governance posture at a high level. Operational specifications are available under controlled disclosure.</p>
+          <p class="mt-5">Access to materials does not grant license or deployment rights absent written agreement.</p>
+        </div>
+
+        <div class="mt-10 grid lg:grid-cols-2 gap-6">
+          <div class="data-block p-7" data-open="refarch" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Reference Architecture</div>
+            <div class="font-semibold text-lg mb-1">Platform overview</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Provides structured overview of inference boundary attachment, policy-scoped capture, canonical normalization, RFC 8785 canonicalization,
+              cryptographic sealing workflow, disclosure tier enforcement, and independent verification process.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="docsuite" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Document Suite</div>
+            <div class="font-semibold text-lg mb-1">Controlled review materials</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Formal technical materials: TRD, Capture Policy & Masking Schema, Verification CLI Contract, reference performance benchmarks.
+              Detailed documents are available under controlled review agreement.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="legal" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">Legal Admissibility Primer</div>
+            <div class="font-semibold text-lg mb-1">Informational context</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Describes how integrity-sealed artifacts may support evidentiary arguments depending on jurisdiction and institutional process.
+              Informational only; not legal advice; no admissibility guarantees.
+            </div>
+          </div>
+
+          <div class="data-block p-7" data-open="incident" onclick="toggleBlock(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">72-Hour Incident Playbook</div>
+            <div class="font-semibold text-lg mb-1">Structured first-72 workflow</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Structured reference workflow for containment & preservation, verification, review preparation, and institutional engagement.
+              CEYO supports artifact retrieval and verification; it does not determine reporting obligations.
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 flex gap-4 flex-wrap">
+          <a class="btn primary nav-exit" href="#/contact">Submit Review Request</a>
+          <a class="btn ghost nav-exit" href="#/documents">Document Suite</a>
+          <a class="btn ghost nav-exit" href="#/trust">Trust Infrastructure</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT (dark) -->
+  <section class="route" data-route="contact">
+    <div class="accent-lines" style="opacity:.82"></div>
+    <div class="accent-grid" style="opacity:.22"></div>
+
+    <div class="shell">
+      <div class="panel pad">
+        <div class="kicker mb-4">CONTACT</div>
+        <h2 class="h2 mb-8">Controlled Review.<br/>Institutional Engagement.</h2>
+
+        <div class="grid lg:grid-cols-2 gap-12 text-[18px] leading-[1.9] text-[var(--muted)]">
+          <div>
+            <p>CEYO engages with regulated operators, institutional oversight bodies, and organizations conducting structured review of AI inference systems.</p>
+            <p class="mt-5">Public materials remain intentionally high-level. Operational specifics, technical documentation, and deployment discussions occur under controlled review.</p>
+
+            <div class="mt-8 data-block p-7" data-open="crr" onclick="toggleBlock(this)">
+              <div class="flex justify-between items-center mb-3">
+                <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase">Controlled Review Requests</span>
+                <span class="text-xs uppercase font-bold">Qualified institutions</span>
+              </div>
+              <div class="content pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+                Controlled review may include: Technical Requirements Document access, capture policy schema review, verification contract review,
+                reference benchmark discussion, and architecture Q&A session. Controlled review does not constitute license or deployment authorization.
+              </div>
+            </div>
+
+            <div class="mt-6 data-block p-7" data-open="deploy" onclick="toggleBlock(this)">
+              <div class="flex justify-between items-center mb-3">
+                <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase">Deployment Inquiries</span>
+                <span class="text-xs uppercase font-bold">Pilot posture</span>
+              </div>
+              <div class="content pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
+                Initial discussions typically address deployment architecture posture, capture policy configuration, infrastructure compatibility,
+                key custody integration, and disclosure tier requirements. Terms are defined through written agreement.
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="panel pad" style="background: rgba(11,18,32,.32);">
+              <div class="fine mb-4">Primary Contact</div>
+              <div class="text-[var(--ivory)] text-2xl font-semibold tracking-tight" style="font-family:var(--brandFont);">
+                contact@nadir-ai.com
+              </div>
+              <div class="mt-2 text-[12px] font-mono uppercase tracking-widest opacity-70">
+                (Update to your CEYO inbox when ready)
+              </div>
+
+              <div class="mt-8 fine mb-3">Subject Line Guidance</div>
+              <div class="grid grid-cols-2 gap-3 text-[12px] font-mono uppercase tracking-widest opacity-80">
+                <div>Controlled Review Request</div>
+                <div>Deployment Inquiry</div>
+                <div>Institutional Partnership</div>
+                <div>Licensing Discussion</div>
+                <div>Security / Vulnerability Report</div>
+                <div>Accessibility</div>
+              </div>
+
+              <div class="mt-10 border-t border-[var(--stroke)] pt-8">
+                <div class="fine mb-3">Confidentiality</div>
+                <div class="text-[14px] leading-[1.9] text-[var(--muted)]">
+                  Inquiries are intended to be treated as confidential. NDAs may be executed upon mutual agreement prior to exchange of technical materials.
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 panel pad opacity-75 hover:opacity-100 transition-opacity">
+              <div class="fine mb-4">Boundary Position</div>
+              <div class="text-[14px] leading-[1.9] text-[var(--muted)]">
+                Public pages are descriptive only. Technical specifics, operational details, and implementation materials are shared under controlled conditions.
+                Engagement does not imply certification, compliance endorsement, or regulatory authority.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 flex gap-4 flex-wrap">
+          <a class="btn primary nav-exit" href="#/documents">Request Document Suite</a>
+          <a class="btn ghost nav-exit" href="#/oversight">Oversight Portal</a>
+          <a class="btn ghost nav-exit" href="#/overview">Back to Overview</a>
+        </div>
+      </div>
+
+      <div class="mt-12 panel pad opacity-60 hover:opacity-100 transition-opacity">
+        <div class="fine mb-4">© <span id="year">2026</span> CEYO · All Rights Reserved · V2026.02.19</div>
+        <div class="grid md:grid-cols-2 gap-8 text-[10px] font-mono leading-relaxed uppercase text-[rgba(244,240,230,.72)]">
+          <p>CEYO produces records. It does not validate correctness, fairness, legality, or compliance outcomes. Authorized institutions and operators retain responsibility for determinations.</p>
+          <p>Verification confirms integrity and provenance under policy scope — not correctness of model output. CEYO does not certify regulatory compliance and does not guarantee admissibility.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom “Index Bar” (routes) -->
   <nav id="bottombar" aria-label="Site index">
-    <a href="index.html" class="active">INDEX</a>
-    <a href="platform.html" class="nav-exit">ARCH</a>
-    <a href="trust.html" class="nav-exit">TRUST</a>
-    <a href="governance.html" class="nav-exit">GOV</a>
-    <a href="contact.html" class="nav-exit">CONTACT</a>
+    <a href="#/overview" data-route-link="overview" class="active">OVERVIEW</a>
+    <a href="#/platform" data-route-link="platform">PLATFORM</a>
+    <a href="#/integration" data-route-link="integration">INTEGRATION</a>
+    <a href="#/trust" data-route-link="trust">TRUST</a>
+    <a href="#/governance" data-route-link="governance">GOV</a>
+    <a href="#/contact" data-route-link="contact">CONTACT</a>
   </nav>
 
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
@@ -448,27 +1235,45 @@
       });
     }
 
-    /* Top nav scroll */
+    /* Topnav scroll */
     const topnav = document.getElementById('topnav');
     window.addEventListener('scroll', () => {
-      topnav.classList.toggle('scrolled', window.scrollY > 24);
+      topnav.classList.toggle('scrolled', window.scrollY > 14);
     }, {passive:true});
 
     /* Year */
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    /* Expand blocks + focus */
+    /* Expand blocks + focus burst */
     function toggleBlock(el){
       const key = el.getAttribute('data-open');
       el.classList.toggle('expanded');
       if (key){
-        history.replaceState(null, "", "#" + key);
         focusCluster(key, true);
       }
     }
     window.toggleBlock = toggleBlock;
 
-    /* ===== THREE.JS: Neuron network + lines + core ball (zoom-in + explode) ===== */
+    /* ====== Route Router (single-file “pages”) ====== */
+    const routes = Array.from(document.querySelectorAll('.route'));
+    const routeLinks = Array.from(document.querySelectorAll('[data-route-link]'));
+
+    function setActiveRoute(name){
+      routes.forEach(r => r.classList.toggle('active', r.getAttribute('data-route') === name));
+      routeLinks.forEach(a => a.classList.toggle('active', a.getAttribute('data-route-link') === name));
+      // Update bottom bar active
+      document.querySelectorAll('#bottombar a').forEach(a => a.classList.toggle('active', a.getAttribute('data-route-link') === name));
+      // Scroll to top on route change (feels like page)
+      window.scrollTo({top: 0, behavior: "instant"});
+    }
+
+    function parseRoute(){
+      const h = location.hash || "#/overview";
+      const m = h.match(/^#\/([a-z0-9\-]+)/i);
+      return m ? m[1] : "overview";
+    }
+
+    /* ===== THREE.JS: neuron network + lines + core ball + explode on “page” change ===== */
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 400);
     const renderer = new THREE.WebGLRenderer({
@@ -480,10 +1285,9 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
-    // Nodes (points)
+    // Nodes
     const nodeCount = 260;
     const bounds = 16;
-
     const positions = new Float32Array(nodeCount * 3);
     const velocities = new Float32Array(nodeCount * 3);
 
@@ -512,7 +1316,7 @@
     const points = new THREE.Points(pointsGeo, pointsMat);
     scene.add(points);
 
-    // Lines (connections)
+    // Lines
     const maxConnections = 1900;
     const linePositions = new Float32Array(maxConnections * 2 * 3);
     const lineGeo = new THREE.BufferGeometry();
@@ -529,18 +1333,18 @@
     const lines = new THREE.LineSegments(lineGeo, lineMat);
     scene.add(lines);
 
-    // Core ball (wireframe)
+    // Core ball
     const coreGeometry = new THREE.IcosahedronGeometry(2.5, 2);
     const coreMaterial = new THREE.MeshBasicMaterial({
       color: 0x2D67FF,
       wireframe: true,
       transparent: true,
-      opacity: 0.0
+      opacity: 0.34
     });
     const coreBall = new THREE.Mesh(coreGeometry, coreMaterial);
     scene.add(coreBall);
 
-    // Subtle glow sprite
+    // Glow sprite
     const glowCanvas = document.createElement('canvas');
     glowCanvas.width = glowCanvas.height = 128;
     const gctx = glowCanvas.getContext('2d');
@@ -549,23 +1353,23 @@
     grad.addColorStop(1, 'rgba(45,103,255,0.0)');
     gctx.fillStyle = grad; gctx.fillRect(0,0,128,128);
     const glowTex = new THREE.CanvasTexture(glowCanvas);
-    const glowMat = new THREE.SpriteMaterial({ map: glowTex, transparent:true, opacity:0.0, depthWrite:false });
+    const glowMat = new THREE.SpriteMaterial({ map: glowTex, transparent:true, opacity:0.22, depthWrite:false });
     const glow = new THREE.Sprite(glowMat);
     glow.scale.set(11,11,1);
     scene.add(glow);
 
-    camera.position.z = 20;
+    camera.position.z = 14;
 
-    // State machine: disperse <-> converge
+    // State
     const state = {
-      converge: 0.0,      // 0 dispersed, 1 converged to core orbit
-      zoom: 0.0,          // 0 far, 1 close
-      burst: 0.0,         // 0 normal, 1 explode outward
+      converge: 0.65,     // 0 dispersed, 1 converged
+      zoom: 0.65,
+      burst: 0.0,
       clusterBoost: 0.0,
       orbitRadius: 5.8
     };
 
-    // Stable orbit directions (per node)
+    // Orbit directions
     const targetDirs = [];
     for (let i=0; i<nodeCount; i++){
       targetDirs.push(new THREE.Vector3((Math.random()-0.5), (Math.random()-0.5), (Math.random()-0.5)).normalize());
@@ -604,12 +1408,11 @@
       lineGeo.setDrawRange(0, segCount * 2);
       lineGeo.attributes.position.needsUpdate = true;
 
-      // Stronger lines when closer / converged
       const base = 0.14 + 0.10*state.zoom + 0.12*state.converge;
       lineMat.opacity = Math.min(0.42, base);
     }
 
-    // Mouse parallax rotate
+    // Mouse parallax
     let targetRotX = 0, targetRotY = 0;
     if (window.matchMedia("(pointer: fine)").matches){
       window.addEventListener('mousemove', (e) => {
@@ -620,69 +1423,36 @@
       }, {passive:true});
     }
 
-    // Scroll: zoom into core, then disperse again (your “explode” requirement)
-    // Converge when entering GAP/SUBSTRATE/TECH, then "explode" lightly at boundary.
-    const hero = document.getElementById('hero');
-    const tech = document.getElementById('tech');
-    const boundary = document.getElementById('boundary');
-
-    // Global progression (camera + core visibility)
-    const mainTL = gsap.timeline({
-      scrollTrigger: {
-        trigger: document.body,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.2
-      }
-    });
-
-    // Start dispersed
-    mainTL.to(state, { converge: 0.75, duration: 2.0, ease: "none" }, 0.15)
-          .to(coreMaterial, { opacity: 0.40, duration: 2.0, ease: "none" }, 0.20)
-          .to(glowMat, { opacity: 0.22, duration: 2.0, ease: "none" }, 0.20)
-          .to(camera.position, { z: 12.2, duration: 2.6, ease: "none" }, 0.65)
-          .to(state, { zoom: 0.65, duration: 2.6, ease: "none" }, 0.65)
-          .to(camera.position, { z: 10.8, duration: 4.2, ease: "none" }, 3.0)
-          .to(state, { zoom: 1.0, duration: 4.2, ease: "none" }, 3.0)
-          .to(state, { converge: 1.0, duration: 4.2, ease: "none" }, 3.0);
-
-    // Explode near Boundary section (disperse again)
-    ScrollTrigger.create({
-      trigger: boundary,
-      start: "top 70%",
-      end: "bottom bottom",
-      onEnter: () => explodeOut(0.9),
-      onLeaveBack: () => implodeIn(0.8)
-    });
-
-    function explodeOut(duration=0.9){
+    function explodeOut(duration=0.55){
       gsap.killTweensOf(state);
       gsap.to(state, { burst: 1.0, converge: 0.0, zoom: 0.35, duration, ease: "power2.out" });
-      gsap.to(camera.position, { z: 16.8, duration, ease: "power2.out" });
-      gsap.to(coreMaterial, { opacity: 0.22, duration, ease: "power2.out" });
-      gsap.to(glowMat, { opacity: 0.10, duration, ease: "power2.out" });
+      gsap.to(camera.position, { z: 18.0, duration, ease: "power2.out" });
+      gsap.to(coreMaterial, { opacity: 0.16, duration, ease: "power2.out" });
+      gsap.to(glowMat, { opacity: 0.08, duration, ease: "power2.out" });
     }
 
-    function implodeIn(duration=0.8){
+    function implodeIn(duration=0.65){
       gsap.killTweensOf(state);
-      gsap.to(state, { burst: 0.0, converge: 1.0, zoom: 1.0, duration, ease: "power2.out" });
-      gsap.to(camera.position, { z: 10.8, duration, ease: "power2.out" });
-      gsap.to(coreMaterial, { opacity: 0.40, duration, ease: "power2.out" });
+      gsap.to(state, { burst: 0.0, converge: 0.72, zoom: 0.70, duration, ease: "power2.out" });
+      gsap.to(camera.position, { z: 14.0, duration, ease: "power2.out" });
+      gsap.to(coreMaterial, { opacity: 0.34, duration, ease: "power2.out" });
       gsap.to(glowMat, { opacity: 0.22, duration, ease: "power2.out" });
     }
 
-    // Cluster focus on block click (still converged, just tighter orbit)
+    // Cluster focus (click-driven subtle tighten)
     const clusterMap = {
-      canonical:     { camZ: 11.8, boost: 0.35, orbit: 5.7 },
-      integrity:     { camZ: 11.4, boost: 0.42, orbit: 5.4 },
-      scope:         { camZ: 11.6, boost: 0.38, orbit: 5.6 },
-      separation:    { camZ: 12.0, boost: 0.30, orbit: 5.9 },
-      capture:       { camZ: 11.1, boost: 0.46, orbit: 5.2 },
-      structure:     { camZ: 11.4, boost: 0.40, orbit: 5.4 },
-      sealing:       { camZ: 11.0, boost: 0.50, orbit: 5.1 },
-      keys:          { camZ: 11.6, boost: 0.36, orbit: 5.5 },
-      disclosure:    { camZ: 11.3, boost: 0.44, orbit: 5.3 },
-      availability:  { camZ: 11.7, boost: 0.34, orbit: 5.7 }
+      "acc-gap":     { camZ: 13.0, boost: 0.30, orbit: 5.7 },
+      "decoupled":   { camZ: 12.6, boost: 0.34, orbit: 5.5 },
+      "disclosure":  { camZ: 12.8, boost: 0.30, orbit: 5.6 },
+      "availability":{ camZ: 13.2, boost: 0.26, orbit: 5.9 },
+      "position":    { camZ: 13.4, boost: 0.24, orbit: 6.0 },
+
+      "policy":      { camZ: 12.6, boost: 0.34, orbit: 5.4 },
+      "canonical":   { camZ: 12.8, boost: 0.30, orbit: 5.6 },
+      "rfc":         { camZ: 12.5, boost: 0.38, orbit: 5.3 },
+      "crypto":      { camZ: 12.4, boost: 0.40, orbit: 5.2 },
+      "keys":        { camZ: 12.7, boost: 0.32, orbit: 5.5 },
+      "verify":      { camZ: 12.6, boost: 0.34, orbit: 5.4 }
     };
 
     function focusCluster(key, fromClick=false){
@@ -699,19 +1469,6 @@
     }
     window.focusCluster = focusCluster;
 
-    // Deep-link open
-    function openFromHash(){
-      const key = (location.hash || "").replace("#","").trim();
-      if (!key) return;
-      const el = document.querySelector(`[data-open="${key}"]`);
-      if (el){
-        el.classList.add('expanded');
-        focusCluster(key, false);
-      }
-    }
-    openFromHash();
-    window.addEventListener('hashchange', openFromHash);
-
     // Animate loop
     const tmp = new THREE.Vector3();
     const desired = new THREE.Vector3();
@@ -722,27 +1479,22 @@
 
       const pos = pointsGeo.attributes.position.array;
 
-      // Smooth rotate
       points.rotation.y += (targetRotY - points.rotation.y) * 0.04;
       points.rotation.x += (targetRotX - points.rotation.x) * 0.04;
       lines.rotation.copy(points.rotation);
 
-      // Core motion
       coreBall.rotation.x += 0.002;
       coreBall.rotation.y += 0.003;
       glow.position.copy(coreBall.position);
 
-      // Compute “converge” + “burst”
       const conv = Math.min(1.0, (state.converge * 0.75) + (state.clusterBoost * 0.80));
       const shell = state.orbitRadius;
       const b = state.burst;
-
       const t = performance.now() * 0.001;
 
       for (let i=0; i<nodeCount; i++){
         const k = i*3;
 
-        // baseline drift (still alive)
         pos[k+0] += velocities[k+0] * (1.0 - 0.55*conv);
         pos[k+1] += velocities[k+1] * (1.0 - 0.55*conv);
         pos[k+2] += velocities[k+2] * (1.0 - 0.55*conv);
@@ -751,22 +1503,15 @@
         if (pos[k+1] > bounds || pos[k+1] < -bounds) velocities[k+1] *= -1;
         if (pos[k+2] > bounds || pos[k+2] < -bounds) velocities[k+2] *= -1;
 
-        // Converge into orbit around core
         if (conv > 0.001){
           tmp.set(pos[k+0], pos[k+1], pos[k+2]);
-
           const dir = targetDirs[i];
           const breathe = 0.35 * Math.sin(t + i*0.17);
-
           desired.copy(dir).multiplyScalar(shell + breathe);
-
-          // Lerp to orbit
           tmp.lerp(desired, 0.010 + 0.034*conv);
-
           pos[k+0] = tmp.x; pos[k+1] = tmp.y; pos[k+2] = tmp.z;
         }
 
-        // Burst/explode outward (push along radial direction)
         if (b > 0.001){
           out.set(pos[k+0], pos[k+1], pos[k+2]).normalize().multiplyScalar(0.065 * b);
           pos[k+0] += out.x * (1.0 + i%7 * 0.05);
@@ -776,10 +1521,7 @@
       }
 
       pointsGeo.attributes.position.needsUpdate = true;
-
-      // Lines opacity synced to zoom/converge
       updateConnections();
-
       renderer.render(scene, camera);
     }
     animate();
@@ -792,17 +1534,43 @@
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     }, {passive:true});
 
-    /* Page transition: explode then navigate (for “explode when going to a different page”) */
-    function navWithExplosion(url){
-      explodeOut(0.55);
-      setTimeout(() => { window.location.href = url; }, 520);
+    /* Route transitions = explode -> swap route -> implode */
+    function goRoute(name){
+      const current = document.querySelector('.route.active')?.getAttribute('data-route') || "overview";
+      if (name === current) return;
+
+      explodeOut(0.50);
+      setTimeout(() => {
+        setActiveRoute(name);
+        implodeIn(0.65);
+      }, 520);
     }
-    document.querySelectorAll('a.nav-exit').forEach(a => {
+
+    function handleHash(){
+      const name = parseRoute();
+      goRoute(name);
+    }
+
+    // Initial route
+    (function init(){
+      const initial = parseRoute();
+      setActiveRoute(initial);
+      // soft settle
+      gsap.fromTo(camera.position, {z: 18}, {z: 14, duration: 1.0, ease: "power2.out"});
+      gsap.fromTo(state, {converge: 0.0, burst: 0.6}, {converge: 0.72, burst: 0.0, duration: 1.1, ease:"power2.out"});
+    })();
+
+    window.addEventListener('hashchange', handleHash);
+
+    // Intercept nav clicks for controlled transition (still uses hash for shareable URLs)
+    document.querySelectorAll('a.nav-exit, [data-route-link]').forEach(a => {
       a.addEventListener('click', (e) => {
-        const href = a.getAttribute('href');
-        if (!href || href.startsWith('#')) return;
+        const href = a.getAttribute('href') || "";
+        if (!href.startsWith("#/")) return;
         e.preventDefault();
-        navWithExplosion(href);
+        const name = (href.match(/^#\/([a-z0-9\-]+)/i)||[])[1] || "overview";
+        history.replaceState(null, "", "#/" + name);
+        goRoute(name);
       });
     });
   </script>
