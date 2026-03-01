@@ -1,312 +1,618 @@
-<!-- ===========================
- CEYO — trust.html
- Trust Center
- V2026.02.19
-=========================== -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>CEYO — Trust Center</title>
-  <meta name="description" content="Trust posture: determinism, non-custodial keys, independent verification, SBOM, VDP, sustainability disclosure, privacy & civil liberties engineering, legal admissibility primer."/>
-  <meta name="theme-color" content="#071227"/>
+  <title>CEYO — Trust & Verification</title>
+  <meta name="description" content="Verification under constrained disclosure: canonicalization, hashing, signatures, tiered disclosure, and independent recomputation."/>
+  <meta name="theme-color" content="#060A13"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,500;0,700;0,900;1,900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&family=Outfit:ital,wght@0,700;0,900;1,900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     :root{
-      --navy:#071227; --navy2:#0A1731; --navy3:#0E2040;
-      --wash:#F6F4EE; --ink:#0A1430;
-      --ivory:rgba(246,244,238,.94);
-      --muted:rgba(246,244,238,.70);
-      --muted2:rgba(246,244,238,.46);
-      --stroke:rgba(246,244,238,.14);
-      --stroke2:rgba(246,244,238,.075);
-      --blue:rgba(74,132,255,.85);
-
-      --max:1180px;
-      --radius:14px; --radius2:18px;
-
-      --fontDisplay:"Styrene A","Outfit",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      --fontText:"Tiempos","Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      --fontMono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      --navy:#060A13;
+      --navy2:#0B1220;
+      --ivory:#F4F0E6;
+      --royal:#2D67FF;
+      --royal-glow: rgba(45,103,255,0.40);
+      --text:rgba(244,240,230,.92);
+      --muted:rgba(244,240,230,.56);
+      --stroke:rgba(244,240,230,.10);
+      --brandFont:'Outfit', system-ui, sans-serif;
+      --monoFont:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --bodyFont:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
+    html{scroll-behavior:smooth; background:var(--navy);}
     body{
-      background:var(--navy);
-      color:var(--ivory);
-      font-family:var(--fontText);
-      overflow-x:hidden;min-height:100vh;
-      cursor:none;
+      margin:0; background:var(--navy); color:var(--text);
+      font-family:var(--bodyFont); overflow-x:hidden; cursor:none;
     }
-    a{color:inherit;text-decoration:none}
-    ::selection{background:rgba(74,132,255,.25)}
-    h1,h2,h3{word-break:normal;overflow-wrap:break-word}
-    .br{display:block}
+    @media (pointer: coarse){
+      body{ cursor:auto; }
+      #cursor{ display:none; }
+    }
 
-    #grain{position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.04;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E");
-      background-size:220px 220px;mix-blend-mode:soft-light;}
-    #spotlight{position:fixed;inset:0;z-index:1;pointer-events:none;transition:background .05s linear}
-    #cursor{position:fixed;z-index:9999;width:8px;height:8px;border-radius:999px;
-      background:rgba(246,244,238,.95);pointer-events:none;transform:translate(-50%,-50%);
-      mix-blend-mode:exclusion;transition:width .15s,height .15s,opacity .15s;}
-    #cursor.large{width:40px;height:40px;opacity:.45}
+    /* Background */
+    #stage{
+      position:fixed; inset:0; z-index:0; pointer-events:none;
+      background:
+        radial-gradient(1100px 650px at 50% 26%, rgba(45,103,255,.10), transparent 60%),
+        radial-gradient(900px 520px at 20% 72%, rgba(45,103,255,.06), transparent 65%),
+        linear-gradient(180deg, var(--navy), var(--navy2));
+    }
+    #gl{ width:100%; height:100%; display:block; }
 
+    /* Grain */
+    #grain{
+      position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.05;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* Cursor */
+    #cursor{
+      position:fixed; z-index:9999; width:10px; height:10px; border-radius:50%;
+      background:var(--ivory); mix-blend-mode:difference; pointer-events:none;
+      transform:translate(-50%,-50%);
+      transition: width .16s ease, height .16s ease, opacity .16s ease;
+    }
+    #cursor.big{ width:42px; height:42px; opacity:.55; background: var(--royal); }
+
+    /* Nav */
     #topnav{
-      position:fixed;top:0;left:0;right:0;z-index:800;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:0 44px;height:68px;
-      background:rgba(7,18,39,.86);
-      border-bottom:1px solid rgba(246,244,238,.08);
-      backdrop-filter:blur(10px);
+      position:fixed; top:0; left:0; right:0; z-index:50;
+      padding: 22px 32px;
+      display:flex; justify-content:space-between; align-items:center;
+      transition: background .25s ease, border-color .25s ease, backdrop-filter .25s ease;
+      border-bottom:1px solid transparent;
     }
-    .nav-brand{font-family:var(--fontDisplay);font-weight:900;font-style:italic;
-      font-size:28px;letter-spacing:-0.03em;text-transform:uppercase;color:rgba(246,244,238,.96)}
-    .nav-links{display:flex;align-items:center;gap:6px}
-    .nav-links a{
-      font-family:var(--fontMono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-      color:rgba(246,244,238,.52);padding:8px 12px;border-radius:999px;transition:color .12s,background .12s}
-    .nav-links a:hover{color:rgba(246,244,238,.92);background:rgba(246,244,238,.05)}
-    .nav-links a.active{color:rgba(246,244,238,.92)}
-    .nav-cta{margin-left:10px;border:1px solid rgba(74,132,255,.35);background:rgba(74,132,255,.08);color:rgba(246,244,238,.92)!important}
+    #topnav.scrolled{
+      background: rgba(6,10,19,.70);
+      backdrop-filter: blur(14px);
+      border-bottom-color: rgba(244,240,230,.08);
+    }
 
-    #indexbar{position:fixed;bottom:0;left:0;right:0;z-index:800;display:flex;height:50px;
-      background:rgba(5,12,26,.92);border-top:1px solid rgba(246,244,238,.10);backdrop-filter:blur(10px)}
-    .ib-item{flex:1;display:flex;align-items:center;justify-content:center;
-      font-family:var(--fontMono);font-size:10px;letter-spacing:.20em;text-transform:uppercase;
-      color:rgba(246,244,238,.50);border-right:1px solid rgba(246,244,238,.07);
-      transition:color .12s,background .12s,border-top-color .12s}
-    .ib-item:last-child{border-right:none}
-    .ib-item:hover{color:rgba(246,244,238,.92);background:rgba(246,244,238,.05)}
-    .ib-item.active{color:rgba(246,244,238,.92);border-top:1px solid rgba(246,244,238,.92)}
+    .h1{
+      font-family: var(--brandFont);
+      font-weight: 900;
+      font-size: clamp(42px, 6.5vw, 86px);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+    }
+    .kicker{
+      font-family: var(--monoFont);
+      font-size: 10px;
+      letter-spacing: .40em;
+      text-transform: uppercase;
+      color: rgba(244,240,230,.70);
+    }
 
-    header{
-      position:relative;z-index:5;
-      padding:96px 44px 26px;
-      max-width:var(--max);margin:0 auto;
-    }
-    .kicker{font-family:var(--fontMono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;
-      color:rgba(74,132,255,.82);display:flex;align-items:center;gap:14px;margin-bottom:14px}
-    .kicker::before{content:"";width:38px;height:1px;background:rgba(74,132,255,.78)}
-    h1{font-family:var(--fontDisplay);font-weight:900;font-style:italic;
-      font-size:clamp(36px,6vw,64px);letter-spacing:-0.05em;text-transform:uppercase;line-height:1.02;margin-bottom:10px}
-    .lead{max-width:82ch;color:rgba(246,244,238,.72);line-height:1.85;font-size:15px}
-
-    main{position:relative;z-index:5;max-width:var(--max);margin:0 auto;padding:0 44px 104px}
-    .cards{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-      padding-top:18px;
-      border-top:1px solid rgba(246,244,238,.10);
-    }
-    .card{
-      border:1px solid rgba(246,244,238,.14);
-      border-radius:var(--radius2);
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-      padding:18px 18px;
-      transition:transform .15s ease,border-color .15s ease,background .15s ease;
-    }
-    .card:hover{transform:translateY(-1px);border-color:rgba(246,244,238,.28);background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015))}
-    .tag{font-family:var(--fontMono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:rgba(74,132,255,.82);margin-bottom:10px}
-    h2{font-family:var(--fontDisplay);font-weight:900;font-style:italic;font-size:22px;letter-spacing:-0.03em;text-transform:uppercase;line-height:1.1;margin-bottom:10px}
-    .p{font-size:13px;line-height:1.85;color:rgba(246,244,238,.70);max-width:80ch}
-    .mono{
-      margin-top:12px;
-      font-family:var(--fontMono);
-      font-size:10px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      color:rgba(246,244,238,.46);
-      line-height:1.7;
-    }
-    .cta{
-      margin-top:18px;
-      display:flex;gap:10px;flex-wrap:wrap;
-    }
+    /* Buttons */
     .btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      font-family:var(--fontMono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-      padding:13px 18px;border-radius:999px;
-      border:1px solid rgba(246,244,238,.14);
-      color:rgba(246,244,238,.70);
-      background:transparent;
-      transition:background .15s,border-color .15s,color .15s,transform .15s;
+      display:inline-flex; align-items:center; justify-content:center;
+      font-family:var(--monoFont);
+      font-size:10px;
+      letter-spacing:.20em;
+      text-transform:uppercase;
+      border-radius:999px;
+      padding: 16px 32px;
+      border:1px solid var(--stroke);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
+      user-select:none;
+      white-space:nowrap;
     }
-    .btn:hover{border-color:rgba(246,244,238,.38);color:rgba(246,244,238,.92);background:rgba(246,244,238,.06);transform:translateY(-1px)}
-    .btn-primary{
-      border-color:rgba(74,132,255,.40);
-      background:rgba(74,132,255,.12);
-      color:rgba(246,244,238,.92);
+    .btn.primary{
+      background: var(--royal);
+      border-color: rgba(45,103,255,.85);
+      color: #fff;
     }
-    .btn-primary:hover{border-color:rgba(74,132,255,.62);background:rgba(74,132,255,.18)}
+    .btn:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 0 26px var(--royal-glow);
+      border-color: rgba(45,103,255,.75);
+    }
+    .btn.ghost:hover{ background: rgba(244,240,230,.05); }
 
-    .boundary{
-      margin-top:18px;
-      padding-top:18px;
-      border-top:1px solid rgba(246,244,238,.10);
-      font-family:var(--fontMono);
-      font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-      color:rgba(246,244,238,.40);
-      line-height:1.9;
+    /* Blocks */
+    .data-block{
+      border: 1px solid var(--stroke);
+      background: rgba(11,18,32,0.40);
+      backdrop-filter: blur(10px);
+      transition: all 0.40s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      overflow: hidden;
+      max-height: 92px;
+      border-radius: 18px;
+    }
+    .data-block:hover{ border-color: rgba(45,103,255,.55); background: rgba(45,103,255,0.05); }
+    .data-block.expanded{
+      max-height: 920px;
+      border-color: rgba(45,103,255,.85);
+      background: rgba(45,103,255,0.06);
+      box-shadow: 0 22px 60px rgba(0,0,0,.35);
+    }
+    .data-block .content{
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+      pointer-events: none;
+    }
+    .data-block.expanded .content{
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
     }
 
-    @media (max-width:980px){
-      #topnav{padding:0 22px}
-      header{padding:92px 22px 26px}
-      main{padding:0 22px 104px}
-      .cards{grid-template-columns:1fr}
+    /* Bottom bar */
+    #bottombar{
+      position:fixed; bottom:0; left:0; right:0; z-index:50;
+      height:56px;
+      background: rgba(6,10,19,.88);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--stroke);
+      display:flex;
+      font-family: var(--monoFont);
+      font-size: 9px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
     }
-    @media (max-width:600px){
-      .nav-links{display:none}
-      header{padding:86px 20px 24px}
-      main{padding:0 20px 104px}
-      .nav-brand{font-size:30px}
+    #bottombar a{
+      flex:1; display:flex; align-items:center; justify-content:center;
+      border-right: 1px solid var(--stroke);
+      transition: background .16s ease, color .16s ease;
+      color: rgba(244,240,230,.70);
+      user-select:none;
+    }
+    #bottombar a:last-child{ border-right:none; }
+    #bottombar a:hover{ background: rgba(244,240,230,.05); color: rgba(244,240,230,.92); }
+    #bottombar a.active{
+      color: rgba(244,240,230,.92);
+      box-shadow: inset 0 2px 0 rgba(45,103,255,.95);
+    }
+
+    .section-pad{ padding-top: 10rem; padding-bottom: 10rem; }
+    @media (max-width: 640px){
+      .section-pad{ padding-top: 7rem; padding-bottom: 7rem; }
+      #topnav{ padding: 18px 18px; }
     }
   </style>
 </head>
 
 <body>
+  <div id="stage" aria-hidden="true"><canvas id="gl"></canvas></div>
   <div id="grain" aria-hidden="true"></div>
-  <div id="spotlight" aria-hidden="true"></div>
   <div id="cursor" aria-hidden="true"></div>
 
   <nav id="topnav" aria-label="Primary navigation">
-    <a href="index.html" class="nav-brand" aria-label="CEYO Home">CEYO</a>
-    <div class="nav-links">
-      <a href="index.html">Overview</a>
-      <a href="platform.html">Architecture</a>
-      <a href="trust.html" class="active">Trust</a>
-      <a href="governance.html">Governance</a>
-      <a href="resources.html">Resources</a>
-      <a href="contact.html" class="nav-cta">Request Review</a>
+    <div class="flex items-baseline gap-4">
+      <a href="index.html" class="nav-exit font-[var(--brandFont)] font-black text-2xl italic">CEYO</a>
+      <span class="font-mono text-[9px] tracking-[0.30em] opacity-40 uppercase">Evidentiary Layer</span>
+    </div>
+
+    <div class="hidden md:flex gap-8 font-mono text-[10px] tracking-widest uppercase opacity-60">
+      <a href="index.html#hero" class="nav-exit hover:text-[var(--royal)] transition-colors">Index</a>
+      <a href="#verification" class="hover:text-[var(--royal)] transition-colors">Verify</a>
+      <a href="#procedure" class="hover:text-[var(--royal)] transition-colors">Procedure</a>
+      <a href="#tiers" class="hover:text-[var(--royal)] transition-colors">Tiers</a>
+      <a href="contact.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Contact</a>
     </div>
   </nav>
 
-  <header>
-    <div class="kicker">Trust Center</div>
-    <h1>Verifiable Mechanics</h1>
-    <p class="lead">
-      Trust in evidentiary systems is established through reproducible integrity mechanics — determinism, non-custodial cryptographic authority, and independent verification — with explicit boundaries around what is and is not claimed.
-    </p>
-  </header>
+  <main class="relative z-10 max-w-7xl mx-auto px-6">
 
-  <main>
-    <section class="cards" aria-label="Trust Center modules">
-      <div class="card">
-        <div class="tag">[01] Integrity Architecture</div>
-        <h2>Deterministic Artifacts</h2>
-        <p class="p">
-          Artifacts are generated through deterministic canonicalization (RFC 8785), cryptographic hashing, and digital signatures. Verification is reproducible across environments and does not depend on proprietary internals.
-        </p>
-        <div class="mono">Determinism · Tamper-evidence · Origin authenticity</div>
-      </div>
+    <!-- HERO -->
+    <section class="min-h-screen flex flex-col justify-center" id="verification">
+      <div class="max-w-4xl">
+        <div class="kicker mb-6">TRUST & VERIFICATION · INDEPENDENT RECOMPUTATION</div>
+        <h1 class="h1 mb-8">Verify Integrity<br/>Without Exposure</h1>
 
-      <div class="card">
-        <div class="tag">[02] Key Custody</div>
-        <h2>Non-Custodial Signing</h2>
-        <p class="p">
-          Signing keys remain within the operator-controlled environment (HSM, KMS, TEE). CEYO does not possess, transmit, or store private signing keys. Authenticity remains anchored to the deploying institution.
+        <p class="text-xl text-[var(--muted)] leading-relaxed max-w-3xl">
+          CEYO verification is designed to be mechanical: a third party can recompute canonical bytes,
+          recompute hashes, and validate signatures under declared policy scope—without requiring default disclosure of
+          proprietary model weights or confidential internals.
         </p>
-        <div class="mono">Operator authority · Clear liability boundaries</div>
-      </div>
 
-      <div class="card">
-        <div class="tag">[03] Verification</div>
-        <h2>Independent Procedure</h2>
-        <p class="p">
-          Verification consists of deterministic canonicalization, hash recomputation, signature validation, and policy alignment checks. Outcomes are explicit: Integrity Confirmed, Integrity Failed, Policy Scope Mismatch.
-        </p>
-        <div class="mono">Mechanical verification · Institutional interpretation</div>
-      </div>
+        <div class="mt-10 flex gap-6 flex-wrap">
+          <a href="#procedure" class="btn primary">Verification Procedure</a>
+          <a href="governance.html" class="btn ghost nav-exit">Governance</a>
+          <a href="contact.html" class="btn ghost nav-exit">Request Review</a>
+        </div>
 
-      <div class="card">
-        <div class="tag">[04] Supply Chain Transparency</div>
-        <h2>SBOM Posture</h2>
-        <p class="p">
-          Reference builds maintain an SBOM in standard formats (SPDX, CycloneDX) for controlled review. Deployment-specific SBOM varies by operator configuration and environment.
-        </p>
-        <div class="mono">Supply chain review support</div>
-      </div>
-
-      <div class="card">
-        <div class="tag">[05] Vulnerability Disclosure</div>
-        <h2>VDP / Safe Harbor</h2>
-        <p class="p">
-          A structured Vulnerability Disclosure Program supports good-faith reporting within defined boundaries. Production deployments follow contractual security terms.
-        </p>
-        <div class="mono">Disclosure channel · Coordinated remediation</div>
-      </div>
-
-      <div class="card">
-        <div class="tag">[06] Sustainability</div>
-        <h2>Compute-to-Integrity</h2>
-        <p class="p">
-          Artifact generation introduces incremental workload: capture, canonicalization, hashing, signatures. Impact depends on capture scope, cryptographic suite, and infrastructure selected by the operator.
-        </p>
-        <div class="mono">No universal energy claims</div>
-      </div>
-
-      <div class="card">
-        <div class="tag">[07] Privacy & Civil Liberties</div>
-        <h2>Minimization by Design</h2>
-        <p class="p">
-          Policy-scoped capture prevents uncontrolled surveillance expansion. Fields are included, excluded, and masked before generation; tiered disclosure boundaries are explicit.
-        </p>
-        <div class="mono">Purpose limitation · Explicit scope boundaries</div>
-      </div>
-
-      <div class="card">
-        <div class="tag">[08] Legal Context</div>
-        <h2>Admissibility Primer</h2>
-        <p class="p">
-          Integrity-sealed artifacts may support authentication and reliability arguments depending on jurisdiction and institutional handling. CEYO does not guarantee admissibility.
-        </p>
-        <div class="mono">Informational only · Not legal advice</div>
+        <div class="mt-10 space-y-3 font-mono text-[11px] uppercase tracking-wider">
+          <div class="text-red-400/70">× Verification is not correctness</div>
+          <div class="text-red-400/70">× Verification is not compliance certification</div>
+          <div class="text-[var(--royal)]">→ Verification is integrity + provenance under declared scope</div>
+        </div>
       </div>
     </section>
 
-    <div class="cta" aria-label="Trust Center actions">
-      <a class="btn btn-primary" href="resources.html">View Trust Materials</a>
-      <a class="btn" href="contact.html">Request Controlled Review</a>
-    </div>
+    <!-- TRUST MODEL -->
+    <section class="section-pad" id="procedure">
+      <div class="grid lg:grid-cols-2 gap-20">
+        <div>
+          <div class="kicker mb-4">TRUST MODEL</div>
+          <h2 class="font-[var(--brandFont)] italic font-black text-5xl uppercase mb-8">What Can Be Proven</h2>
 
-    <div class="boundary">
-      Boundary: CEYO does not guarantee immunity from attack, regulatory certification, legal sufficiency, or operational correctness. Trust posture is defined by verifiable mechanics and explicit limitations.
-    </div>
+          <p class="text-[var(--muted)] leading-loose text-lg mb-8">
+            CEYO artifacts are built to answer: “Is this record authentic, untampered, and generated under the declared policy?”
+            This is achieved through deterministic canonicalization, hashing, and signatures, with non-custodial key control.
+          </p>
+
+          <div class="border-t border-[var(--stroke)] pt-8 space-y-6">
+            <div>
+              <div class="kicker mb-2">Proves</div>
+              <div class="text-[var(--text)] text-lg font-semibold leading-snug">Integrity and provenance</div>
+              <div class="text-[var(--muted)] mt-2">
+                The artifact has not been altered after sealing and was signed by the declared authority.
+              </div>
+            </div>
+
+            <div>
+              <div class="kicker mb-2">Does not prove</div>
+              <div class="text-[var(--text)] text-lg font-semibold leading-snug">Correctness, fairness, legality</div>
+              <div class="text-[var(--muted)] mt-2">
+                Those determinations remain institutional and procedural—not cryptographic.
+              </div>
+            </div>
+
+            <div>
+              <div class="kicker mb-2">Scope guarantee</div>
+              <div class="text-[var(--text)] text-lg font-semibold leading-snug">Policy-scoped capture</div>
+              <div class="text-[var(--muted)] mt-2">
+                The record reflects declared inclusion/exclusion/masking rules recorded by policy version at time of capture.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="data-block p-6" data-open="canonicalization" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">01 / Canonicalization</span>
+              <span class="text-xs uppercase font-bold">Deterministic bytes</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              A deterministic procedure transforms the artifact into a stable byte sequence independent of key order or environment.
+              The verifier repeats the same procedure to reproduce identical bytes prior to hashing.
+            </div>
+          </div>
+
+          <div class="data-block p-6" data-open="hashing" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">02 / Hashing</span>
+              <span class="text-xs uppercase font-bold">Tamper-evidence</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              The verifier recomputes the digest from canonical bytes and compares it to the recorded digest. Any alteration
+              yields a mismatch.
+            </div>
+          </div>
+
+          <div class="data-block p-6" data-open="signatures" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">03 / Signatures</span>
+              <span class="text-xs uppercase font-bold">Origin authenticity</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              Digital signatures bind the digest to an authority. Verification confirms the artifact was signed by the declared
+              key holder. Private keys remain client-controlled.
+            </div>
+          </div>
+
+          <div class="data-block p-6" data-open="noncustodial" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">04 / Non-custodial</span>
+              <span class="text-xs uppercase font-bold">Authority stays local</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              CEYO does not hold private keys. Key custody remains within operator HSM/KMS/TEE. This reduces conflicts of interest and
+              supports institution-led governance.
+            </div>
+          </div>
+
+          <div class="data-block p-6" data-open="replay" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">05 / Replay</span>
+              <span class="text-xs uppercase font-bold">Independent recomputation</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              A verifier can recompute canonical bytes and integrity proofs with reference tooling, producing the same results given
+              the same artifact and declared policy version.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIERS -->
+    <section class="section-pad" id="tiers">
+      <div class="text-center mb-16">
+        <div class="kicker mb-4">CONSTRAINED DISCLOSURE</div>
+        <h2 class="font-[var(--brandFont)] italic font-black text-6xl uppercase">Verification Tiers</h2>
+      </div>
+
+      <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
+        <div class="data-block p-8" data-open="tier-public" onclick="toggleBlock(this)">
+          <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">Tier 01</div>
+          <div class="font-bold text-lg mb-2 uppercase italic">Public</div>
+          <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
+            Minimal metadata with integrity fields suitable for broad disclosure. Verification remains possible if required cryptographic material is present.
+          </div>
+        </div>
+
+        <div class="data-block p-8" data-open="tier-redacted" onclick="toggleBlock(this)">
+          <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">Tier 02</div>
+          <div class="font-bold text-lg mb-2 uppercase italic">Redacted</div>
+          <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
+            Masked fields per policy (PII, sensitive prompts, trade secrets). Designed for internal audit and incident response under least-privilege access.
+          </div>
+        </div>
+
+        <div class="data-block p-8" data-open="tier-controlled" onclick="toggleBlock(this)">
+          <div class="font-mono text-[10px] text-[var(--royal)] mb-4 tracking-[0.20em] uppercase">Tier 03</div>
+          <div class="font-bold text-lg mb-2 uppercase italic">Controlled Review</div>
+          <div class="content mt-4 text-[var(--muted)] text-sm leading-relaxed">
+            Restricted disclosure under explicit authorization, contractual terms, and audit logging—supporting regulators, investigations, and litigation support without default weight exposure.
+          </div>
+        </div>
+      </div>
+
+      <div class="max-w-4xl mx-auto mt-12 border-t border-[var(--stroke)] pt-10">
+        <div class="kicker mb-3">Reference posture</div>
+        <p class="text-[var(--muted)] leading-loose text-lg">
+          Public pages are descriptive only. Technical specifics and operational materials are shared under controlled conditions.
+        </p>
+        <p class="text-[var(--muted)] leading-loose text-lg mt-3">
+          Engagement does not imply certification, compliance endorsement, or regulatory authority.
+        </p>
+
+        <div class="mt-10 flex justify-center gap-6 flex-wrap">
+          <a href="platform.html" class="btn ghost nav-exit">Architecture</a>
+          <a href="governance.html" class="btn ghost nav-exit">Governance</a>
+          <a href="contact.html" class="btn primary nav-exit">Request Controlled Review</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOT -->
+    <section class="section-pad opacity-60 hover:opacity-100 transition-opacity" id="boundary">
+      <div class="border-t border-[var(--stroke)] pt-12">
+        <div class="font-mono text-[10px] mb-8 uppercase tracking-widest">Boundary Declaration · V2026.02.19</div>
+        <div class="grid md:grid-cols-2 gap-8 text-[10px] font-mono leading-relaxed uppercase text-[rgba(244,240,230,.70)]">
+          <p>CEYO produces records. It does not validate correctness, fairness, legality, or compliance outcomes. Authorized institutions and operators retain responsibility for decisions and determinations.</p>
+          <p>Verification confirms integrity and provenance under policy scope — not correctness of model output. CEYO does not certify regulatory compliance and does not guarantee legal admissibility.</p>
+        </div>
+
+        <div class="mt-12 pt-10 border-t border-[var(--stroke)] flex flex-wrap justify-between gap-6 font-mono text-[10px] uppercase tracking-widest opacity-70">
+          <div>© <span id="year">2026</span> CEYO · All Rights Reserved</div>
+          <div class="flex gap-8">
+            <a href="terms.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Terms</a>
+            <a href="privacy.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Privacy</a>
+            <a href="contact.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div style="height:72px"></div>
   </main>
 
-  <nav id="indexbar" aria-label="Site index">
-    <a class="ib-item" href="index.html">Index</a>
-    <a class="ib-item" href="platform.html">Arch</a>
-    <a class="ib-item active" href="trust.html">Trust</a>
-    <a class="ib-item" href="governance.html">Gov</a>
-    <a class="ib-item" href="contact.html">Contact</a>
+  <nav id="bottombar" aria-label="Site index">
+    <a href="index.html" class="nav-exit">INDEX</a>
+    <a href="platform.html" class="nav-exit">ARCH</a>
+    <a href="trust.html" class="active">TRUST</a>
+    <a href="governance.html" class="nav-exit">GOV</a>
+    <a href="contact.html" class="nav-exit">CONTACT</a>
   </nav>
 
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
   <script>
+    /* Cursor */
     const cursor = document.getElementById('cursor');
-    const spotlight = document.getElementById('spotlight');
-    function setSpotlight(x,y){
-      spotlight.style.background =
-        `radial-gradient(circle 360px at ${x}px ${y}px, rgba(74,132,255,.16) 0%, rgba(74,132,255,.06) 34%, transparent 70%)`;
+    if (window.matchMedia("(pointer: fine)").matches){
+      document.addEventListener('mousemove', (e) => {
+        gsap.to(cursor, {x: e.clientX, y: e.clientY, duration: 0.10, overwrite:true});
+      }, {passive:true});
+      document.querySelectorAll('a, button, .data-block').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('big'), {passive:true});
+        el.addEventListener('mouseleave', () => cursor.classList.remove('big'), {passive:true});
+      });
     }
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top  = e.clientY + 'px';
-      setSpotlight(e.clientX, e.clientY);
-    }, { passive:true });
-    document.addEventListener('mouseleave', () => { cursor.style.opacity='0'; spotlight.style.background='none'; });
-    document.addEventListener('mouseenter', () => { cursor.style.opacity='1'; });
-    document.querySelectorAll('a, .card').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('large'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('large'));
+
+    /* Top nav scroll */
+    const topnav = document.getElementById('topnav');
+    window.addEventListener('scroll', () => {
+      topnav.classList.toggle('scrolled', window.scrollY > 24);
+    }, {passive:true});
+
+    /* Year */
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    /* Expand blocks */
+    function toggleBlock(el){
+      const key = el.getAttribute('data-open');
+      el.classList.toggle('expanded');
+      if (key){
+        history.replaceState(null, "", "#" + key);
+      }
+    }
+    window.toggleBlock = toggleBlock;
+
+    /* ===== THREE.JS BACKGROUND (match your index feel; lightweight) ===== */
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 400);
+    const renderer = new THREE.WebGLRenderer({
+      canvas: document.getElementById('gl'),
+      alpha: true,
+      antialias: true,
+      powerPreference:"high-performance"
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+    const nodeCount = 260;
+    const bounds = 16;
+    const positions = new Float32Array(nodeCount * 3);
+    const velocities = new Float32Array(nodeCount * 3);
+
+    for (let i=0; i<nodeCount; i++){
+      const k = i*3;
+      positions[k+0] = (Math.random()-0.5) * bounds*2;
+      positions[k+1] = (Math.random()-0.5) * bounds*2;
+      positions[k+2] = (Math.random()-0.5) * bounds*2;
+
+      velocities[k+0] = (Math.random()-0.5) * 0.022;
+      velocities[k+1] = (Math.random()-0.5) * 0.022;
+      velocities[k+2] = (Math.random()-0.5) * 0.022;
+    }
+
+    const pointsGeo = new THREE.BufferGeometry();
+    pointsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const pointsMat = new THREE.PointsMaterial({
+      color: 0x2D67FF,
+      size: 0.065,
+      transparent: true,
+      opacity: 0.95,
+      depthWrite: false
+    });
+
+    const points = new THREE.Points(pointsGeo, pointsMat);
+    scene.add(points);
+
+    const maxConnections = 1900;
+    const linePositions = new Float32Array(maxConnections * 2 * 3);
+    const lineGeo = new THREE.BufferGeometry();
+    lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+    lineGeo.setDrawRange(0, 0);
+
+    const lineMat = new THREE.LineBasicMaterial({
+      color: 0x2D67FF,
+      transparent: true,
+      opacity: 0.24,
+      depthWrite: false
+    });
+
+    const lines = new THREE.LineSegments(lineGeo, lineMat);
+    scene.add(lines);
+
+    const coreGeometry = new THREE.IcosahedronGeometry(2.5, 2);
+    const coreMaterial = new THREE.MeshBasicMaterial({
+      color: 0x2D67FF,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.30
+    });
+    const coreBall = new THREE.Mesh(coreGeometry, coreMaterial);
+    scene.add(coreBall);
+
+    camera.position.z = 14;
+
+    const maxDist = 2.35;
+    const maxDist2 = maxDist * maxDist;
+
+    function updateConnections(){
+      const pos = pointsGeo.attributes.position.array;
+      let segCount = 0;
+
+      for (let i=0; i<nodeCount; i++){
+        const ix = i*3;
+        const ax = pos[ix], ay = pos[ix+1], az = pos[ix+2];
+
+        for (let j=i+1; j<nodeCount; j++){
+          const jx = j*3;
+          const bx = pos[jx], by = pos[jx+1], bz = pos[jx+2];
+
+          const dx = ax-bx, dy = ay-by, dz = az-bz;
+          const d2 = dx*dx + dy*dy + dz*dz;
+
+          if (d2 < maxDist2){
+            const k = segCount * 6;
+            linePositions[k+0]=ax; linePositions[k+1]=ay; linePositions[k+2]=az;
+            linePositions[k+3]=bx; linePositions[k+4]=by; linePositions[k+5]=bz;
+            segCount++;
+            if (segCount >= maxConnections) break;
+          }
+        }
+        if (segCount >= maxConnections) break;
+      }
+
+      lineGeo.setDrawRange(0, segCount * 2);
+      lineGeo.attributes.position.needsUpdate = true;
+    }
+
+    let targetRotX = 0, targetRotY = 0;
+    if (window.matchMedia("(pointer: fine)").matches){
+      window.addEventListener('mousemove', (e) => {
+        const nx = (e.clientX / window.innerWidth) * 2 - 1;
+        const ny = (e.clientY / window.innerHeight) * 2 - 1;
+        targetRotY = nx * 0.18;
+        targetRotX = ny * 0.10;
+      }, {passive:true});
+    }
+
+    function animate(){
+      requestAnimationFrame(animate);
+
+      const pos = pointsGeo.attributes.position.array;
+
+      points.rotation.y += (targetRotY - points.rotation.y) * 0.04;
+      points.rotation.x += (targetRotX - points.rotation.x) * 0.04;
+      lines.rotation.copy(points.rotation);
+
+      coreBall.rotation.x += 0.002;
+      coreBall.rotation.y += 0.003;
+
+      for (let i=0; i<nodeCount; i++){
+        const k = i*3;
+        pos[k+0] += velocities[k+0];
+        pos[k+1] += velocities[k+1];
+        pos[k+2] += velocities[k+2];
+
+        if (pos[k+0] > bounds || pos[k+0] < -bounds) velocities[k+0] *= -1;
+        if (pos[k+1] > bounds || pos[k+1] < -bounds) velocities[k+1] *= -1;
+        if (pos[k+2] > bounds || pos[k+2] < -bounds) velocities[k+2] *= -1;
+      }
+
+      pointsGeo.attributes.position.needsUpdate = true;
+      updateConnections();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    }, {passive:true});
+
+    /* Page transition: explode then navigate */
+    function explodeOut(duration=0.55){
+      gsap.to(camera.position, { z: 18.0, duration, ease: "power2.out" });
+      gsap.to(coreMaterial, { opacity: 0.16, duration, ease: "power2.out" });
+      gsap.to(lineMat, { opacity: 0.16, duration, ease: "power2.out" });
+    }
+
+    function navWithExplosion(url){
+      explodeOut(0.55);
+      setTimeout(() => { window.location.href = url; }, 520);
+    }
+
+    document.querySelectorAll('a.nav-exit').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const href = a.getAttribute('href');
+        if (!href || href.startsWith('#')) return;
+        e.preventDefault();
+        navWithExplosion(href);
+      });
     });
   </script>
 </body>
