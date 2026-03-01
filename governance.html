@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>CEYO — Governance</title>
-  <meta name="description" content="CEYO Governance: policy ownership, versioning, disclosure tiers, audit roles, key custody, verifier independence, and change control."/>
-  <meta name="theme-color" content="#060A13"/>
+  <title>CEYO — Governance Posture</title>
+  <meta name="description" content="Governance posture for CEYO: minimization by design, controlled disclosure, deterministic auditability, and non-adjudication. Infrastructure, not outcomes."/>
+  <meta name="theme-color" content="#F4F0E6"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,19 +18,21 @@
       --navy2:#0B1220;
       --ivory:#F4F0E6;
       --royal:#2D67FF;
-      --royal-glow: rgba(45,103,255,0.40);
-      --text:rgba(244,240,230,.92);
-      --muted:rgba(244,240,230,.56);
-      --stroke:rgba(244,240,230,.10);
+
+      --royal-glow: rgba(45,103,255,0.34);
+
+      --textD: rgba(11,18,32,.92);
+      --mutedD: rgba(11,18,32,.62);
+      --strokeD: rgba(11,18,32,.12);
 
       --brandFont:'Outfit', system-ui, sans-serif;
       --monoFont:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --bodyFont:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
 
-    html{scroll-behavior:smooth; background:var(--navy);}
+    html{scroll-behavior:smooth; background:var(--ivory);}
     body{
-      margin:0; background:var(--navy); color:var(--text);
+      margin:0; background:var(--ivory); color:var(--textD);
       font-family:var(--bodyFont); overflow-x:hidden; cursor:none;
     }
     @media (pointer: coarse){
@@ -38,74 +40,142 @@
       #cursor{ display:none; }
     }
 
-    /* Distinct background: “governance chamber” (warmer ivory + grid) */
+    /* Stage (distinct: ivory paper + ink lattice) */
     #stage{
       position:fixed; inset:0; z-index:0; pointer-events:none;
       background:
-        radial-gradient(900px 520px at 50% 20%, rgba(244,240,230,.07), transparent 62%),
-        radial-gradient(900px 520px at 20% 80%, rgba(45,103,255,.07), transparent 65%),
-        radial-gradient(780px 420px at 84% 78%, rgba(244,240,230,.04), transparent 70%),
-        linear-gradient(180deg, var(--navy), var(--navy2));
+        radial-gradient(900px 520px at 20% 10%, rgba(45,103,255,.10), transparent 60%),
+        radial-gradient(1100px 680px at 90% 70%, rgba(11,18,32,.07), transparent 62%),
+        linear-gradient(180deg, rgba(244,240,230,1), rgba(244,240,230,.96));
     }
     #gl{ width:100%; height:100%; display:block; }
 
-    /* Unique overlay: “governance grid” */
-    #grid{
-      position:fixed; inset:0; z-index:1; pointer-events:none;
-      opacity:.12;
-      background:
-        linear-gradient(rgba(244,240,230,.10) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(244,240,230,.10) 1px, transparent 1px);
-      background-size: 72px 72px;
-      mask-image: radial-gradient(900px 520px at 50% 25%, #000 62%, transparent 86%);
-    }
-
     /* Grain */
     #grain{
-      position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.05;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
+      position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.06;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
     /* Cursor */
     #cursor{
       position:fixed; z-index:9999; width:10px; height:10px; border-radius:50%;
-      background:var(--ivory); mix-blend-mode:difference; pointer-events:none;
+      background:var(--navy); mix-blend-mode:multiply; pointer-events:none;
       transform:translate(-50%,-50%);
       transition: width .16s ease, height .16s ease, opacity .16s ease;
+      opacity:.85;
     }
-    #cursor.big{ width:42px; height:42px; opacity:.55; background: var(--royal); }
+    #cursor.big{ width:42px; height:42px; opacity:.22; background: var(--royal); mix-blend-mode:normal; }
 
-    /* Nav */
+    /* Top nav (distinct: light bar + ink border) */
     #topnav{
       position:fixed; top:0; left:0; right:0; z-index:60;
-      padding: 22px 32px;
+      padding: 18px 28px;
       display:flex; justify-content:space-between; align-items:center;
       transition: background .25s ease, border-color .25s ease, backdrop-filter .25s ease;
       border-bottom:1px solid transparent;
     }
     #topnav.scrolled{
-      background: rgba(6,10,19,.72);
+      background: rgba(244,240,230,.78);
       backdrop-filter: blur(14px);
-      border-bottom-color: rgba(244,240,230,.08);
+      border-bottom-color: rgba(11,18,32,.10);
     }
 
-    /* Type */
+    /* Distinctive accents */
+    .accent-slope{
+      position:absolute; inset:-180px -140px auto -140px; height:520px;
+      background:
+        linear-gradient(135deg, rgba(45,103,255,.10), transparent 62%),
+        radial-gradient(520px 220px at 28% 40%, rgba(11,18,32,.08), transparent 70%);
+      transform: rotate(-6deg);
+      pointer-events:none;
+      z-index:1;
+      opacity:.95;
+    }
+    .accent-rules{
+      position:absolute; inset:0; pointer-events:none; z-index:1; opacity:.52;
+      background-image:
+        linear-gradient(to bottom, rgba(11,18,32,.06) 1px, transparent 1px);
+      background-size: 100% 44px;
+      mask-image: radial-gradient(520px 340px at 50% 18%, #000 40%, transparent 76%);
+    }
+
+    /* Typography */
+    .kicker{
+      font-family: var(--monoFont);
+      font-size: 10px;
+      letter-spacing: .40em;
+      text-transform: uppercase;
+      color: rgba(11,18,32,.58);
+    }
     .h1{
       font-family: var(--brandFont);
       font-weight: 900;
-      font-size: clamp(46px, 8.4vw, 108px);
-      line-height: 0.9;
+      font-style: italic;
+      font-size: clamp(44px, 7.8vw, 92px);
+      line-height: 0.92;
       letter-spacing: -0.05em;
       text-transform: uppercase;
+      color: rgba(11,18,32,.96);
     }
     .h2{
       font-family: var(--brandFont);
       font-weight: 900;
       font-style: italic;
-      font-size: clamp(30px, 4.8vw, 60px);
-      letter-spacing: -0.04em;
+      font-size: clamp(30px, 4.2vw, 56px);
+      letter-spacing: -0.03em;
       text-transform: uppercase;
       line-height: 0.98;
+    }
+
+    /* Shell */
+    .shell{ max-width: 1180px; margin: 0 auto; padding: 0 24px; position:relative; z-index:10; }
+    .section{ padding-top: 124px; padding-bottom: 110px; position:relative; }
+    .section.tight{ padding-top: 96px; padding-bottom: 92px; }
+    @media (max-width: 640px){
+      .section{ padding-top: 110px; padding-bottom: 98px; }
+      #topnav{ padding: 16px 18px; }
+    }
+
+    /* Panels (light) */
+    .panel{
+      border: 1px solid var(--strokeD);
+      background: rgba(244,240,230,.72);
+      backdrop-filter: blur(10px);
+      border-radius: 22px;
+      box-shadow: 0 22px 60px rgba(0,0,0,.10);
+    }
+    .panel.pad{ padding: 28px; }
+    @media (min-width: 768px){
+      .panel.pad{ padding: 44px; }
+    }
+
+    /* Distinct blocks (governance = “clauses”) */
+    .clause{
+      border: 1px solid var(--strokeD);
+      background: rgba(244,240,230,.64);
+      border-radius: 18px;
+      overflow:hidden;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor:pointer;
+      max-height: 92px;
+    }
+    .clause:hover{ border-color: rgba(45,103,255,.55); box-shadow: 0 18px 46px rgba(0,0,0,.10); transform: translateY(-1px); }
+    .clause.expanded{
+      max-height: 720px;
+      border-color: rgba(45,103,255,.70);
+      background: rgba(45,103,255,.06);
+      box-shadow: 0 22px 60px rgba(0,0,0,.14);
+    }
+    .clause .content{
+      opacity:0;
+      transform: translateY(8px);
+      transition: opacity .22s ease, transform .22s ease;
+      pointer-events:none;
+    }
+    .clause.expanded .content{
+      opacity:1;
+      transform: translateY(0);
+      pointer-events:auto;
     }
 
     /* Buttons */
@@ -116,11 +186,13 @@
       letter-spacing:.20em;
       text-transform:uppercase;
       border-radius:999px;
-      padding: 16px 32px;
-      border:1px solid var(--stroke);
+      padding: 14px 24px;
+      border:1px solid rgba(11,18,32,.14);
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
       user-select:none;
       white-space:nowrap;
+      color: rgba(11,18,32,.88);
+      background: rgba(244,240,230,.62);
     }
     .btn.primary{
       background: var(--royal);
@@ -130,112 +202,40 @@
     .btn:hover{
       transform: translateY(-1px);
       box-shadow: 0 0 26px var(--royal-glow);
-      border-color: rgba(45,103,255,.75);
+      border-color: rgba(45,103,255,.60);
     }
-    .btn.ghost:hover{ background: rgba(244,240,230,.05); }
+    .btn.ghost{ background: rgba(244,240,230,.46); }
+    .btn.ghost:hover{ background: rgba(11,18,32,.06); }
 
-    .section-pad{ padding-top: 11rem; padding-bottom: 11rem; }
-    @media (max-width: 640px){
-      .section-pad{ padding-top: 8rem; padding-bottom: 8rem; }
-      #topnav{ padding: 18px 18px; }
-    }
-
-    /* Unique component: “Governance Table Blocks” */
-    .gbox{
-      border: 1px solid rgba(244,240,230,.14);
-      background: rgba(11,18,32,0.52);
-      backdrop-filter: blur(10px);
-      border-radius: 22px;
-      overflow:hidden;
-      box-shadow: 0 22px 70px rgba(0,0,0,.36);
-    }
-    .ghead{
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(244,240,230,.10);
-      font-family: var(--monoFont);
-      font-size: 10px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(244,240,230,.70);
-    }
-    .grow{
-      display:grid;
-      grid-template-columns: 1fr 140px;
-      gap: 16px;
-      padding: 18px 18px;
-      border-top: 1px solid rgba(244,240,230,.08);
-      align-items:start;
-    }
-    .grow:first-of-type{ border-top:none; }
-    .role{
-      font-family: var(--monoFont);
-      font-size: 10px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      padding: 10px 14px;
-      border: 1px solid rgba(45,103,255,.45);
-      border-radius: 999px;
-      color: rgba(244,240,230,.82);
-      background: rgba(11,18,32,.30);
-      width:max-content;
-      white-space:nowrap;
-      box-shadow: 0 0 18px rgba(45,103,255,.14);
-      justify-self:end;
-    }
-    .rtitle{ font-weight: 850; letter-spacing: .02em; }
-    .rdesc{ color: var(--muted); font-size: 15px; line-height: 1.75; margin-top: 6px; }
-
-    /* Expand cards */
-    .card{
-      border: 1px solid rgba(244,240,230,.12);
-      background: rgba(11,18,32,0.40);
-      backdrop-filter: blur(10px);
-      border-radius: 18px;
-      overflow: hidden;
-      cursor:pointer;
-      max-height: 96px;
-      transition: all 0.40s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .card:hover{ border-color: rgba(45,103,255,.55); background: rgba(45,103,255,0.06); }
-    .card.expanded{
-      max-height: 820px;
-      border-color: rgba(45,103,255,.85);
-      background: rgba(45,103,255,0.07);
-      box-shadow: 0 22px 60px rgba(0,0,0,.35);
-    }
-    .card .content{
-      opacity:0;
-      transform: translateY(8px);
-      transition: opacity 0.24s ease, transform 0.24s ease;
-      pointer-events:none;
-    }
-    .card.expanded .content{
-      opacity:1;
-      transform: translateY(0);
-      pointer-events:auto;
-    }
-
+    /* Fine print */
     .fine{
       font-family: var(--monoFont);
       font-size: 10px;
       letter-spacing: .14em;
       text-transform: uppercase;
-      color: rgba(244,240,230,.62);
-    }
-    .rule{
-      height:1px;
-      background: linear-gradient(90deg, rgba(244,240,230,.14), rgba(45,103,255,.22), rgba(244,240,230,.14));
-      opacity:.9;
+      color: rgba(11,18,32,.58);
     }
 
-    /* Bottom bar */
+    /* Nav menu */
+    .routeMenu{
+      display:flex; gap:16px; align-items:center;
+      font-family: var(--monoFont);
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(11,18,32,.60);
+    }
+    .routeMenu a{ opacity:.86; transition: opacity .14s ease, color .14s ease; }
+    .routeMenu a:hover{ opacity:1; color: rgba(11,18,32,.92); }
+    .routeMenu a.active{ opacity:1; color: rgba(11,18,32,.92); }
+
+    /* Bottom bar (light variant) */
     #bottombar{
-      position:fixed; bottom:0; left:0; right:0; z-index:60;
+      position:fixed; bottom:0; left:0; right:0; z-index:70;
       height:56px;
-      background: rgba(6,10,19,.88);
+      background: rgba(244,240,230,.86);
       backdrop-filter: blur(12px);
-      border-top: 1px solid var(--stroke);
+      border-top: 1px solid rgba(11,18,32,.12);
       display:flex;
       font-family: var(--monoFont);
       font-size: 9px;
@@ -244,312 +244,270 @@
     }
     #bottombar a{
       flex:1; display:flex; align-items:center; justify-content:center;
-      border-right: 1px solid var(--stroke);
+      border-right: 1px solid rgba(11,18,32,.10);
       transition: background .16s ease, color .16s ease;
-      color: rgba(244,240,230,.70);
+      color: rgba(11,18,32,.62);
       user-select:none;
     }
     #bottombar a:last-child{ border-right:none; }
-    #bottombar a:hover{ background: rgba(244,240,230,.05); color: rgba(244,240,230,.92); }
+    #bottombar a:hover{ background: rgba(11,18,32,.05); color: rgba(11,18,32,.88); }
     #bottombar a.active{
-      color: rgba(244,240,230,.92);
+      color: rgba(11,18,32,.92);
       box-shadow: inset 0 2px 0 rgba(45,103,255,.95);
+    }
+
+    /* Lists */
+    .bullets{ margin: 10px 0 0 0; padding-left: 18px; }
+    .bullets li{ margin: 6px 0; }
+
+    /* Divider */
+    .rule{
+      height:1px;
+      background: linear-gradient(90deg, rgba(11,18,32,.14), rgba(45,103,255,.22), rgba(11,18,32,.14));
+      opacity:.9;
     }
   </style>
 </head>
 
 <body>
   <div id="stage" aria-hidden="true"><canvas id="gl"></canvas></div>
-  <div id="grid" aria-hidden="true"></div>
   <div id="grain" aria-hidden="true"></div>
   <div id="cursor" aria-hidden="true"></div>
 
-  <nav id="topnav" aria-label="Primary navigation">
+  <nav id="topnav" aria-label="Primary">
     <div class="flex items-baseline gap-4">
-      <a href="index.html" class="font-[var(--brandFont)] font-black text-2xl italic">CEYO</a>
-      <span class="font-mono text-[9px] tracking-[0.30em] opacity-40 uppercase">Governance</span>
+      <a href="index.html" class="font-[var(--brandFont)] font-black text-2xl italic text-[rgba(11,18,32,.92)]">CEYO</a>
+      <span class="font-mono text-[9px] tracking-[0.30em] opacity-60 uppercase text-[rgba(11,18,32,.72)]">Governance Posture</span>
     </div>
 
-    <div class="hidden md:flex gap-8 font-mono text-[10px] tracking-widest uppercase opacity-60">
-      <a href="#hero" class="hover:text-[var(--royal)] transition-colors">Overview</a>
-      <a href="#model" class="hover:text-[var(--royal)] transition-colors">Model</a>
-      <a href="#controls" class="hover:text-[var(--royal)] transition-colors">Controls</a>
-      <a href="#disclosure" class="hover:text-[var(--royal)] transition-colors">Disclosure</a>
-      <a href="contact.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Contact</a>
+    <div class="hidden md:flex routeMenu">
+      <a href="index.html" class="nav-exit">Index</a>
+      <a href="platform.html" class="nav-exit">Platform</a>
+      <a href="trust.html" class="nav-exit">Trust</a>
+      <a href="governance.html" class="active">Governance</a>
+      <a href="contact.html" class="btn primary nav-exit !py-2 !px-4 !text-[10px] !tracking-[.20em]">Request Review</a>
     </div>
   </nav>
 
-  <div class="relative z-10 max-w-7xl mx-auto px-6">
-    <!-- HERO -->
-    <section id="hero" class="min-h-screen flex flex-col justify-center">
-      <div class="max-w-5xl">
-        <div class="font-mono text-[10px] tracking-[0.40em] text-[var(--royal)] mb-6 uppercase">Institution-Led Oversight · Operator-Controlled Scope</div>
-        <h1 class="h1 mb-8">
-          Governance<br/>
-          <span class="italic">By Design</span>
-        </h1>
+  <!-- HERO (distinct: light “policy brief” feel) -->
+  <section class="section">
+    <div class="accent-slope" aria-hidden="true"></div>
+    <div class="accent-rules" aria-hidden="true"></div>
 
-        <p class="text-xl text-[var(--muted)] leading-relaxed max-w-3xl mb-10">
-          CEYO governance defines how capture policy is authored, approved, versioned, and verified—along with how disclosure tiers,
-          key custody, and independent verification roles are controlled without merging evidence infrastructure with decision authority.
-        </p>
-
-        <div class="flex gap-6 flex-wrap">
-          <button onclick="document.getElementById('model').scrollIntoView({behavior:'smooth'})" class="btn primary">View Governance Model</button>
-          <a href="contact.html" class="btn ghost nav-exit">Request Controlled Review</a>
-        </div>
-
-        <div class="mt-10 grid md:grid-cols-3 gap-4">
-          <div class="fine">Policy: explicit + versioned</div>
-          <div class="fine">Keys: non-custodial</div>
-          <div class="fine">Verification: independent</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- GOVERNANCE MODEL -->
-    <section id="model" class="section-pad">
-      <div class="grid lg:grid-cols-2 gap-14 items-start">
+    <div class="shell">
+      <div class="grid lg:grid-cols-2 gap-14 items-end">
         <div>
-          <div class="font-mono text-[10px] tracking-[0.40em] text-[var(--royal)] mb-4 uppercase">Governance Model</div>
-          <h2 class="h2 mb-8">Roles &<br/>Authority</h2>
+          <div class="kicker mb-6">GOVERNANCE POSTURE · STRUCTURAL LIMITS · VERSIONED SCOPE</div>
+          <h1 class="h1 mb-8">
+            Boundaries First.<br/>
+            Determinism Always.
+          </h1>
 
-          <p class="text-[var(--muted)] text-lg leading-loose mb-8">
-            CEYO is structurally decoupled: it produces artifacts, not decisions. Governance assigns authority to operators and institutions,
-            while ensuring verification can be performed without default disclosure of proprietary internals.
+          <p class="text-[18px] leading-[1.9] text-[var(--mutedD)] max-w-xl">
+            Governance here refers to design constraints embedded in CEYO’s integrity layer — not external regulatory authority.
+            The goal is to support accountable review while minimizing unnecessary collection and preserving institutional boundaries.
           </p>
 
-          <div class="rule my-10"></div>
+          <div class="mt-7 text-[18px] leading-[1.9] text-[var(--mutedD)] max-w-xl">
+            <div><strong>Verification is mechanical.</strong></div>
+            <div><strong>Interpretation is institutional.</strong></div>
+            <div class="mt-3 text-[rgba(11,18,32,.92)] font-semibold">CEYO produces records. Institutions make determinations.</div>
+          </div>
 
-          <div class="grid md:grid-cols-2 gap-4">
-            <div class="card p-6" data-open="policy" onclick="toggleCard(this)">
-              <div class="flex justify-between items-center mb-4">
-                <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">Policy</span>
-                <span class="text-xs uppercase font-bold">Scope authority</span>
-              </div>
-              <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-                Capture policy defines inclusion, exclusion, masking, tiering, and suites. Policy is versioned and referenced by identifier in each artifact.
-              </div>
-            </div>
+          <div class="mt-10 flex gap-4 flex-wrap">
+            <a class="btn primary" href="#principles">View Principles</a>
+            <a class="btn ghost" href="#boundaries">Boundaries</a>
+            <a class="btn ghost nav-exit" href="contact.html">Controlled Review</a>
+          </div>
 
-            <div class="card p-6" data-open="custody" onclick="toggleCard(this)">
-              <div class="flex justify-between items-center mb-4">
-                <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">Custody</span>
-                <span class="text-xs uppercase font-bold">Key authority</span>
-              </div>
-              <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-                Signing keys remain in client-controlled HSM/KMS/TEE. CEYO does not possess, transmit, or store private signing keys.
-              </div>
-            </div>
+          <div class="mt-10 space-y-3 font-mono text-[11px] uppercase tracking-wider">
+            <div class="text-[rgba(11,18,32,.60)]">× Not certification</div>
+            <div class="text-[rgba(11,18,32,.60)]">× Not legal advice</div>
+            <div class="text-[rgba(45,103,255,.92)]">→ Deterministic evidence mechanics</div>
           </div>
         </div>
 
-        <div class="gbox">
-          <div class="ghead">
-            <div class="opacity-60">Governance Roles</div>
-            <div>Separation Preserved</div>
-          </div>
-
-          <div class="grow">
-            <div>
-              <div class="rtitle">Operator</div>
-              <div class="rdesc">Defines capture policy scope, implements CEYO attachment, and retains responsibility for decisions and outcomes.</div>
-            </div>
-            <div class="role">OWNER</div>
-          </div>
-
-          <div class="grow">
-            <div>
-              <div class="rtitle">Institution / Oversight Body</div>
-              <div class="rdesc">Specifies review requirements and verification expectations; conducts audits under controlled disclosure tiers.</div>
-            </div>
-            <div class="role">OVERSIGHT</div>
-          </div>
-
-          <div class="grow">
-            <div>
-              <div class="rtitle">Verifier (Independent)</div>
-              <div class="rdesc">Recomputes canonical bytes, hashes, and signatures; confirms integrity/provenance under policy scope—no judgment on correctness.</div>
-            </div>
-            <div class="role">VERIFY</div>
-          </div>
-
-          <div class="grow">
-            <div>
-              <div class="rtitle">Key Custodian</div>
-              <div class="rdesc">Controls signing keys and rotation in HSM/KMS/TEE; governs access to key material and associated attestations.</div>
-            </div>
-            <div class="role">CRYPTO</div>
-          </div>
-
-          <div class="grow">
-            <div>
-              <div class="rtitle">Policy Approver</div>
-              <div class="rdesc">Approves policy versions and tier mappings for production use; maintains change control and review artifacts.</div>
-            </div>
-            <div class="role">CHANGE</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTROLS -->
-    <section id="controls" class="section-pad">
-      <div class="text-center mb-16">
-        <div class="font-mono text-[10px] tracking-[0.40em] text-[var(--royal)] mb-4 uppercase">Controls</div>
-        <h2 class="h2">Policy & Change Control</h2>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="card p-7" data-open="versioning" onclick="toggleCard(this)">
-          <div class="flex justify-between items-center mb-4">
-            <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">01 · Versioning</span>
-            <span class="text-xs uppercase font-bold">Immutable refs</span>
-          </div>
-          <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-            Each artifact records policy identifier/version. Changes produce new versions; older artifacts remain verifiable against their original policy references.
-          </div>
-        </div>
-
-        <div class="card p-7" data-open="approval" onclick="toggleCard(this)">
-          <div class="flex justify-between items-center mb-4">
-            <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">02 · Approval</span>
-            <span class="text-xs uppercase font-bold">Defined authority</span>
-          </div>
-          <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-            Policies require explicit approval before production. Approval artifacts document scope boundaries, tiering, and suite selection as declared governance inputs.
-          </div>
-        </div>
-
-        <div class="card p-7" data-open="rotation" onclick="toggleCard(this)">
-          <div class="flex justify-between items-center mb-4">
-            <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">03 · Key Rotation</span>
-            <span class="text-xs uppercase font-bold">Custodian-led</span>
-          </div>
-          <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-            Rotation events are controlled by the key custodian. Verification uses the corresponding public key material for the artifact’s recorded signing context.
-          </div>
-        </div>
-
-        <div class="card p-7" data-open="failopen" onclick="toggleCard(this)">
-          <div class="flex justify-between items-center mb-4">
-            <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">04 · Fail-Open</span>
-            <span class="text-xs uppercase font-bold">Continuity</span>
-          </div>
-          <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-            Inference continuity remains independent. If sealing fails, inference proceeds; failures are logged and artifacts are marked unsealed for review.
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-14 flex justify-center gap-6 flex-wrap">
-        <a href="platform.html" class="btn ghost nav-exit">View Architecture</a>
-        <a href="trust.html" class="btn ghost nav-exit">Trust & Verification</a>
-        <a href="contact.html" class="btn primary nav-exit">Request Controlled Review</a>
-      </div>
-    </section>
-
-    <!-- DISCLOSURE -->
-    <section id="disclosure" class="section-pad">
-      <div class="grid lg:grid-cols-2 gap-14 items-start">
-        <div>
-          <div class="font-mono text-[10px] tracking-[0.40em] text-[var(--royal)] mb-4 uppercase">Disclosure Governance</div>
-          <h2 class="h2 mb-8">Tiered<br/>Access</h2>
-
-          <p class="text-[var(--muted)] text-lg leading-loose mb-8">
-            Governance defines how artifacts are shared across tiers. Tiering supports integrity verification without default exposure of model weights,
-            proprietary architecture, or confidential internals.
+        <div class="panel pad">
+          <div class="fine mb-5">Governance Summary</div>
+          <p class="text-[16px] leading-[1.9] text-[var(--mutedD)]">
+            CEYO’s governance posture is implemented through: policy-defined capture boundaries, tiered disclosure, deterministic canonicalization,
+            cryptographic sealing, and explicit non-adjudication. These controls aim to make evidence scope reviewable and verification reproducible
+            without forcing disclosure of proprietary internals.
           </p>
 
-          <div class="rule my-10"></div>
+          <div class="mt-10 rule"></div>
 
-          <div class="grid md:grid-cols-2 gap-4">
-            <div class="card p-6" data-open="public" onclick="toggleCard(this)">
-              <div class="flex justify-between items-center mb-4">
-                <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">Public</span>
-                <span class="text-xs uppercase font-bold">Minimal</span>
+          <div class="mt-8 grid sm:grid-cols-2 gap-4">
+            <div class="clause p-6" data-open="minimization" onclick="toggleClause(this)">
+              <div class="flex justify-between items-center mb-3">
+                <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase">01 / Minimization</span>
+                <span class="text-xs uppercase font-bold">Define before capture</span>
               </div>
-              <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-                Public-facing artifacts disclose only what governance allows for non-sensitive contexts; typically redacted and metadata-limited.
-              </div>
-            </div>
-
-            <div class="card p-6" data-open="controlled" onclick="toggleCard(this)">
-              <div class="flex justify-between items-center mb-4">
-                <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">Controlled</span>
-                <span class="text-xs uppercase font-bold">Review</span>
-              </div>
-              <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-                Controlled tiers enable institutional audits with expanded fields under NDA/authority constraints, preserving compartmentalization.
+              <div class="content pt-4 border-t border-[rgba(11,18,32,.10)] text-sm leading-relaxed text-[var(--mutedD)]">
+                Capture scope is explicit and versioned. Only policy-declared fields are recorded. Policy identifiers and versions are embedded in artifacts
+                so boundaries are reviewable by oversight bodies.
               </div>
             </div>
-          </div>
-        </div>
 
-        <div class="gbox">
-          <div class="ghead">
-            <div class="opacity-60">Tier Matrix</div>
-            <div>Governed Disclosure</div>
-          </div>
-
-          <div class="grow">
-            <div>
-              <div class="rtitle">Tier A · Public / Redacted</div>
-              <div class="rdesc">Integrity and provenance proofs with minimal context fields; designed for broad distribution without sensitive exposure.</div>
+            <div class="clause p-6" data-open="nonadj" onclick="toggleClause(this)">
+              <div class="flex justify-between items-center mb-3">
+                <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase">02 / Non-Adjudication</span>
+                <span class="text-xs uppercase font-bold">Infrastructure only</span>
+              </div>
+              <div class="content pt-4 border-t border-[rgba(11,18,32,.10)] text-sm leading-relaxed text-[var(--mutedD)]">
+                CEYO does not determine correctness, fairness, legality, or compliance outcomes. It provides integrity-sealed records.
+                Oversight conclusions remain institutional.
+              </div>
             </div>
-            <div class="role">TIER A</div>
           </div>
 
-          <div class="grow">
-            <div>
-              <div class="rtitle">Tier B · Controlled Review</div>
-              <div class="rdesc">Expanded context under institutional authority; verification remains mechanical while disclosure remains scoped.</div>
+          <div class="mt-10 border-t border-[rgba(11,18,32,.10)] pt-8">
+            <div class="fine mb-3">Design Position</div>
+            <div class="text-[var(--mutedD)] leading-relaxed">
+              Evidence infrastructure must remain separate from decision authority. CEYO supports structured review without replacing governance programs,
+              safety engineering, or compliance determinations.
             </div>
-            <div class="role">TIER B</div>
-          </div>
-
-          <div class="grow">
-            <div>
-              <div class="rtitle">Tier C · Confidential</div>
-              <div class="rdesc">Highly scoped, case-based access; may include additional operational context under strict access control and logging.</div>
-            </div>
-            <div class="role">TIER C</div>
-          </div>
-
-          <div class="grow">
-            <div>
-              <div class="rtitle">Verifier Independence</div>
-              <div class="rdesc">Verification procedures remain consistent across tiers; governance controls what is visible, not how integrity is proven.</div>
-            </div>
-            <div class="role">INDEP</div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- BOUNDARY -->
-    <section id="boundary" class="section-pad opacity-70 hover:opacity-100 transition-opacity">
-      <div class="border-t border-[var(--stroke)] pt-12">
-        <div class="font-mono text-[10px] mb-8 uppercase tracking-widest">Boundary Declaration · V2026.02.19</div>
-        <div class="grid md:grid-cols-2 gap-8 text-[10px] font-mono leading-relaxed uppercase text-[rgba(244,240,230,.70)]">
-          <p>CEYO produces records. It does not validate correctness, fairness, legality, or compliance outcomes. Operators and institutions retain responsibility for determinations.</p>
-          <p>Governance defines scope and disclosure. Verification confirms integrity and provenance under policy scope—not correctness of model output.</p>
-        </div>
+  <!-- PRINCIPLES (distinct: clause grid + “policy brief” tone) -->
+  <section id="principles" class="section tight">
+    <div class="shell">
+      <div class="panel pad">
+        <div class="kicker mb-4">CORE GOVERNANCE PRINCIPLES</div>
+        <h2 class="h2 mb-8">Structural Constraints<br/>Embedded by Design</h2>
 
-        <div class="mt-12 pt-10 border-t border-[var(--stroke)] flex flex-wrap justify-between gap-6 font-mono text-[10px] uppercase tracking-widest opacity-70">
-          <div>© <span id="year">2026</span> CEYO · All Rights Reserved</div>
-          <div class="flex gap-8">
-            <a href="terms.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Terms</a>
-            <a href="privacy.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Privacy</a>
-            <a href="contact.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Contact</a>
+        <div class="grid lg:grid-cols-2 gap-12 text-[18px] leading-[1.9] text-[var(--mutedD)]">
+          <div>
+            <p>
+              CEYO is intentionally narrow. Governance controls are implemented as technical constraints: explicit scope, reproducible verification,
+              and clear boundaries of responsibility.
+            </p>
+            <p class="mt-5">
+              The intent is to make oversight feasible without forcing disclosure of proprietary internals or turning verification tooling into an adjudication engine.
+            </p>
+          </div>
+          <div>
+            <div class="fine mb-3">Oversight Properties</div>
+            <ul class="bullets">
+              <li>Scope is declared before generation</li>
+              <li>Artifacts are canonical in structure</li>
+              <li>Integrity is verifiable independently</li>
+              <li>Disclosure is tiered and policy-defined</li>
+              <li>Determinations remain institutional</li>
+            </ul>
           </div>
         </div>
+
+        <div class="mt-12 grid md:grid-cols-2 gap-6">
+          <div class="clause p-7" data-open="cd" onclick="toggleClause(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">1. Controlled Disclosure</div>
+            <div class="font-semibold text-lg mb-1">Verification without forced exposure</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Artifacts support disclosure tiers (e.g., Public / Redacted / Controlled Review) defined pre-generation by policy.
+              Verification can confirm integrity under declared scope without default exposure of model weights, proprietary architecture, or confidential internals.
+            </div>
+          </div>
+
+          <div class="clause p-7" data-open="daa" onclick="toggleClause(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">2. Deterministic Auditability</div>
+            <div class="font-semibold text-lg mb-1">Reproducible integrity checks</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Determinism is a prerequisite for credible verification. Canonicalization + sealing enable independent recomputation and signature validation
+              across heterogeneous environments without interpretive variance.
+            </div>
+          </div>
+
+          <div class="clause p-7" data-open="ml" onclick="toggleClause(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">3. Minimization & Purpose Limitation</div>
+            <div class="font-semibold text-lg mb-1">Policy-defined capture boundaries</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Policy defines inclusion, exclusion, and masking rules before artifact generation. Only declared fields are recorded.
+              Policy versions are embedded to make boundaries explicit and reviewable.
+            </div>
+          </div>
+
+          <div class="clause p-7" data-open="sep" onclick="toggleClause(this)">
+            <div class="font-mono text-[10px] text-[var(--royal)] tracking-[0.22em] uppercase mb-3">4. Separation of Roles</div>
+            <div class="font-semibold text-lg mb-1">Verification vs determination</div>
+            <div class="content mt-4 pt-4 border-t border-[rgba(11,18,32,.10)] text-[14px] leading-[1.9] text-[var(--mutedD)]">
+              Verification confirms integrity and provenance under policy scope. Determinations about correctness, compliance, lawfulness, and admissibility
+              remain with authorized institutions, deploying operators, and counsel.
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 flex gap-4 flex-wrap">
+          <a class="btn primary nav-exit" href="contact.html">Request Controlled Review</a>
+          <a class="btn ghost nav-exit" href="trust.html">Trust & Verification</a>
+          <a class="btn ghost nav-exit" href="platform.html">Platform</a>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <div style="height:72px"></div>
-  </div>
+  <!-- BOUNDARIES (distinct: “policy notice” cards) -->
+  <section id="boundaries" class="section tight">
+    <div class="shell">
+      <div class="panel pad">
+        <div class="kicker mb-4">BOUNDARIES OF RESPONSIBILITY</div>
+        <h2 class="h2 mb-8">What CEYO Is Not</h2>
 
+        <div class="grid lg:grid-cols-3 gap-6 text-[16px] leading-[1.9] text-[var(--mutedD)]">
+          <div class="panel pad" style="background: rgba(244,240,230,.58);">
+            <div class="fine mb-3">Not Compliance Certification</div>
+            <div>
+              CEYO does not certify compliance with any regulatory framework and does not claim endorsement by any authority.
+              Any mappings are descriptive only.
+            </div>
+          </div>
+
+          <div class="panel pad" style="background: rgba(244,240,230,.58);">
+            <div class="fine mb-3">Not Output Correctness</div>
+            <div>
+              CEYO does not evaluate model outputs, determine correctness, or validate decision logic. It produces integrity-sealed records.
+            </div>
+          </div>
+
+          <div class="panel pad" style="background: rgba(244,240,230,.58);">
+            <div class="fine mb-3">Not Legal Sufficiency</div>
+            <div>
+              CEYO does not provide legal advice and does not guarantee admissibility. Evidentiary posture depends on jurisdiction and institutional process.
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 panel pad" style="background: rgba(45,103,255,.06); border-color: rgba(45,103,255,.24);">
+          <div class="fine mb-4">Boundary Declaration · V2026.02.19</div>
+          <div class="grid md:grid-cols-2 gap-8 text-[10px] font-mono leading-relaxed uppercase text-[rgba(11,18,32,.72)]">
+            <p>Public pages are descriptive only. Technical specifics, operational details, and implementation materials are shared under controlled conditions.</p>
+            <p>Engagement does not imply certification, compliance endorsement, or regulatory authority. Verification confirms integrity and provenance under policy scope — not correctness of output.</p>
+          </div>
+        </div>
+
+        <div class="mt-12 flex gap-4 flex-wrap">
+          <a class="btn primary nav-exit" href="contact.html">Discuss Governance Review</a>
+          <a class="btn ghost nav-exit" href="trust.html">Verification Mechanics</a>
+          <a class="btn ghost nav-exit" href="index.html">Back to Index</a>
+        </div>
+      </div>
+
+      <div class="mt-12 panel pad opacity-85 hover:opacity-100 transition-opacity">
+        <div class="fine mb-4">© <span id="year">2026</span> CEYO · All Rights Reserved · V2026.02.19</div>
+        <div class="grid md:grid-cols-2 gap-8 text-[10px] font-mono leading-relaxed uppercase text-[rgba(11,18,32,.72)]">
+          <p>CEYO produces records. It does not validate correctness, fairness, legality, or compliance outcomes. Authorized institutions and operators retain responsibility for determinations.</p>
+          <p>Verification confirms integrity and provenance under policy scope — not correctness of model output. CEYO does not certify regulatory compliance and does not guarantee admissibility.</p>
+        </div>
+      </div>
+
+      <div style="height:72px"></div>
+    </div>
+  </section>
+
+  <!-- Bottom bar -->
   <nav id="bottombar" aria-label="Site index">
     <a href="index.html" class="nav-exit">INDEX</a>
     <a href="platform.html" class="nav-exit">ARCH</a>
@@ -571,23 +529,23 @@
       document.addEventListener('mousemove', (e) => {
         gsap.to(cursor, {x: e.clientX, y: e.clientY, duration: 0.10, overwrite:true});
       }, {passive:true});
-      document.querySelectorAll('a, button, .card, .gbox, .grow').forEach(el => {
+      document.querySelectorAll('a, button, .clause, .panel').forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('big'), {passive:true});
         el.addEventListener('mouseleave', () => cursor.classList.remove('big'), {passive:true});
       });
     }
 
-    /* Top nav scroll */
+    /* Topnav scroll */
     const topnav = document.getElementById('topnav');
     window.addEventListener('scroll', () => {
-      topnav.classList.toggle('scrolled', window.scrollY > 24);
+      topnav.classList.toggle('scrolled', window.scrollY > 14);
     }, {passive:true});
 
     /* Year */
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    /* Expand cards */
-    function toggleCard(el){
+    /* Expand clauses */
+    function toggleClause(el){
       const key = el.getAttribute('data-open');
       el.classList.toggle('expanded');
       if (key){
@@ -595,11 +553,11 @@
         focusCluster(key, true);
       }
     }
-    window.toggleCard = toggleCard;
+    window.toggleClause = toggleClause;
 
-    /* ===== THREE.JS: “Policy Orbit” (distinct from index/trust) ===== */
+    /* ===== THREE.JS: “Ledger Lattice” (distinct look vs index) ===== */
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 420);
+    const camera = new THREE.PerspectiveCamera(62, window.innerWidth/window.innerHeight, 0.1, 500);
     const renderer = new THREE.WebGLRenderer({
       canvas: document.getElementById('gl'),
       alpha: true,
@@ -609,78 +567,42 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
-    // Points
-    const nodeCount = 240;
-    const bounds = 16;
+    camera.position.z = 22;
+
+    // Lattice nodes: flatter Z for “paper” feel
+    const nodeCount = 220;
+    const boundsX = 18, boundsY = 12, boundsZ = 5;
 
     const positions = new Float32Array(nodeCount * 3);
     const velocities = new Float32Array(nodeCount * 3);
 
     for (let i=0; i<nodeCount; i++){
       const k = i*3;
-      positions[k+0] = (Math.random()-0.5) * bounds*2;
-      positions[k+1] = (Math.random()-0.5) * bounds*2;
-      positions[k+2] = (Math.random()-0.5) * bounds*2;
+      positions[k+0] = (Math.random()-0.5) * boundsX*2;
+      positions[k+1] = (Math.random()-0.5) * boundsY*2;
+      positions[k+2] = (Math.random()-0.5) * boundsZ*2;
 
-      velocities[k+0] = (Math.random()-0.5) * 0.016;
-      velocities[k+1] = (Math.random()-0.5) * 0.016;
-      velocities[k+2] = (Math.random()-0.5) * 0.016;
+      velocities[k+0] = (Math.random()-0.5) * 0.014;
+      velocities[k+1] = (Math.random()-0.5) * 0.014;
+      velocities[k+2] = (Math.random()-0.5) * 0.010;
     }
 
-    const pointsGeo = new THREE.BufferGeometry();
-    pointsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const ptsGeo = new THREE.BufferGeometry();
+    ptsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
-    const pointsMat = new THREE.PointsMaterial({
-      color: 0x2D67FF,
-      size: 0.058,
+    const ptsMat = new THREE.PointsMaterial({
+      color: 0x0B1220,
+      size: 0.055,
       transparent: true,
-      opacity: 0.88,
+      opacity: 0.55,
       depthWrite: false
     });
 
-    const points = new THREE.Points(pointsGeo, pointsMat);
+    const points = new THREE.Points(ptsGeo, ptsMat);
     scene.add(points);
 
-    // Rings: governance “orbit rails”
-    const ringGroup = new THREE.Group();
-    scene.add(ringGroup);
-
-    function makeRing(r, segs, opacity){
-      const geo = new THREE.TorusGeometry(r, 0.010, 8, segs);
-      const mat = new THREE.MeshBasicMaterial({
-        color: 0x2D67FF,
-        transparent: true,
-        opacity,
-        wireframe: true
-      });
-      const mesh = new THREE.Mesh(geo, mat);
-      return mesh;
-    }
-
-    const ringA = makeRing(3.4, 220, 0.12);
-    const ringB = makeRing(5.2, 260, 0.10);
-    const ringC = makeRing(7.2, 300, 0.08);
-    ringB.rotation.x = Math.PI/3.2;
-    ringC.rotation.y = Math.PI/3.6;
-    ringGroup.add(ringA, ringB, ringC);
-
-    camera.position.z = 19.8;
-
-    const state = {
-      converge: 0.0,
-      zoom: 0.0,
-      burst: 0.0,
-      clusterBoost: 0.0,
-      orbitRadius: 6.0
-    };
-
-    const dirs = [];
-    for (let i=0; i<nodeCount; i++){
-      dirs.push(new THREE.Vector3((Math.random()-0.5), (Math.random()-0.5), (Math.random()-0.5)).normalize());
-    }
-
-    // Lines (lighter, fewer than index/trust)
-    const maxConnections = 1400;
+    // Lines
+    const maxConnections = 1500;
     const linePositions = new Float32Array(maxConnections * 2 * 3);
     const lineGeo = new THREE.BufferGeometry();
     lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
@@ -689,18 +611,46 @@
     const lineMat = new THREE.LineBasicMaterial({
       color: 0x2D67FF,
       transparent: true,
-      opacity: 0.12,
+      opacity: 0.16,
       depthWrite: false
     });
 
     const lines = new THREE.LineSegments(lineGeo, lineMat);
     scene.add(lines);
 
-    const maxDist = 2.35;
+    // “Seal ring” (distinct centerpiece vs core ball)
+    const ringGeo = new THREE.TorusGeometry(5.0, 0.12, 10, 84);
+    const ringMat = new THREE.MeshBasicMaterial({
+      color: 0x2D67FF,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.22
+    });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.rotation.x = Math.PI * 0.35;
+    scene.add(ring);
+
+    const state = {
+      tighten: 0.0,      // 0 loose, 1 tight orbit around ring
+      burst: 0.0,
+      zoom: 0.0,
+      orbitRadius: 7.2,
+      clusterBoost: 0.0
+    };
+
+    // Stable orbit directions (bias toward ring plane)
+    const dirs = [];
+    for (let i=0; i<nodeCount; i++){
+      const v = new THREE.Vector3((Math.random()-0.5), (Math.random()-0.5)*0.7, (Math.random()-0.5)*0.35).normalize();
+      dirs.push(v);
+    }
+
+    // Connections
+    const maxDist = 2.45;
     const maxDist2 = maxDist * maxDist;
 
     function updateConnections(){
-      const pos = pointsGeo.attributes.position.array;
+      const pos = ptsGeo.attributes.position.array;
       let segCount = 0;
 
       for (let i=0; i<nodeCount; i++){
@@ -728,66 +678,67 @@
       lineGeo.setDrawRange(0, segCount * 2);
       lineGeo.attributes.position.needsUpdate = true;
 
-      const base = 0.09 + 0.10*state.zoom + 0.10*state.converge;
-      lineMat.opacity = Math.min(0.26, base);
+      const base = 0.10 + 0.10*state.tighten + 0.08*state.zoom;
+      lineMat.opacity = Math.min(0.28, base);
     }
 
-    // Mouse parallax rotate
+    // Mouse parallax (subtle)
     let targetRotX = 0, targetRotY = 0;
     if (window.matchMedia("(pointer: fine)").matches){
       window.addEventListener('mousemove', (e) => {
         const nx = (e.clientX / window.innerWidth) * 2 - 1;
         const ny = (e.clientY / window.innerHeight) * 2 - 1;
-        targetRotY = nx * 0.16;
-        targetRotX = ny * 0.10;
+        targetRotY = nx * 0.10;
+        targetRotX = ny * 0.06;
       }, {passive:true});
     }
 
-    const model = document.getElementById('model');
-    const boundary = document.getElementById('boundary');
+    function explodeOut(duration=0.55){
+      gsap.killTweensOf(state);
+      gsap.to(state, { burst: 1.0, tighten: 0.0, zoom: 0.0, duration, ease: "power2.out" });
+      gsap.to(camera.position, { z: 26.0, duration, ease: "power2.out" });
+      gsap.to(ringMat, { opacity: 0.12, duration, ease: "power2.out" });
+      gsap.to(ptsMat, { opacity: 0.36, duration, ease: "power2.out" });
+    }
+
+    function implodeIn(duration=0.7){
+      gsap.killTweensOf(state);
+      gsap.to(state, { burst: 0.0, tighten: 0.78, zoom: 0.65, duration, ease: "power2.out" });
+      gsap.to(camera.position, { z: 20.0, duration, ease: "power2.out" });
+      gsap.to(ringMat, { opacity: 0.22, duration, ease: "power2.out" });
+      gsap.to(ptsMat, { opacity: 0.55, duration, ease: "power2.out" });
+    }
+
+    // Scroll: tighten into “seal ring” as you read principles, then soften at boundaries
+    const principles = document.getElementById('principles');
+    const boundaries = document.getElementById('boundaries');
 
     gsap.timeline({
-      scrollTrigger:{
-        trigger: model,
-        start: "top 85%",
-        end: "bottom 35%",
-        scrub: 1.2
+      scrollTrigger: {
+        trigger: principles,
+        start: "top 80%",
+        end: "bottom 30%",
+        scrub: 1.1
       }
     })
-    .to(state, { converge: 1.0, zoom: 0.85, duration: 1, ease:"none" })
-    .to(camera.position, { z: 12.8, duration: 1, ease:"none" }, 0)
-    .to(ringGroup.rotation, { y: "+=0.8", x: "+=0.35", duration: 1, ease:"none" }, 0);
+    .to(state, { tighten: 0.85, zoom: 0.70, duration: 1, ease:"none" })
+    .to(camera.position, { z: 19.5, duration: 1, ease:"none" }, 0);
 
     ScrollTrigger.create({
-      trigger: boundary,
-      start: "top 72%",
-      end: "bottom bottom",
+      trigger: boundaries,
+      start: "top 70%",
       onEnter: () => explodeOut(0.85),
-      onLeaveBack: () => implodeIn(0.75)
+      onLeaveBack: () => implodeIn(0.7)
     });
 
-    function explodeOut(duration=0.85){
-      gsap.killTweensOf(state);
-      gsap.to(state, { burst: 1.0, converge: 0.0, zoom: 0.25, duration, ease: "power2.out" });
-      gsap.to(camera.position, { z: 17.2, duration, ease: "power2.out" });
-    }
-
-    function implodeIn(duration=0.75){
-      gsap.killTweensOf(state);
-      gsap.to(state, { burst: 0.0, converge: 1.0, zoom: 0.85, duration, ease: "power2.out" });
-      gsap.to(camera.position, { z: 12.8, duration, ease: "power2.out" });
-    }
-
-    // Focus map
+    // Clause focus
     const clusterMap = {
-      policy:     { camZ: 13.2, boost: 0.18, orbit: 6.3 },
-      custody:    { camZ: 13.0, boost: 0.22, orbit: 6.1 },
-      versioning: { camZ: 12.9, boost: 0.24, orbit: 6.0 },
-      approval:   { camZ: 13.3, boost: 0.16, orbit: 6.4 },
-      rotation:   { camZ: 12.8, boost: 0.26, orbit: 5.9 },
-      failopen:   { camZ: 13.4, boost: 0.15, orbit: 6.5 },
-      public:     { camZ: 13.1, boost: 0.20, orbit: 6.2 },
-      controlled: { camZ: 12.9, boost: 0.24, orbit: 6.0 }
+      minimization: { camZ: 19.0, boost: 0.26, orbit: 6.7 },
+      nonadj:       { camZ: 19.3, boost: 0.22, orbit: 7.0 },
+      cd:           { camZ: 18.8, boost: 0.30, orbit: 6.6 },
+      daa:          { camZ: 18.6, boost: 0.34, orbit: 6.4 },
+      ml:           { camZ: 18.9, boost: 0.28, orbit: 6.7 },
+      sep:          { camZ: 19.1, boost: 0.24, orbit: 6.9 }
     };
 
     function focusCluster(key, fromClick=false){
@@ -795,7 +746,7 @@
       if (!c) return;
       gsap.to(camera.position, { z: c.camZ, duration: fromClick ? 0.8 : 1.0, ease: "power2.out" });
       gsap.to(state, { clusterBoost: c.boost, orbitRadius: c.orbit, duration: fromClick ? 0.8 : 1.0, ease: "power2.out" });
-      gsap.to(state, { clusterBoost: 0.0, duration: 1.4, ease: "power2.out", delay: 0.5 });
+      gsap.to(state, { clusterBoost: 0.0, duration: 1.3, ease: "power2.out", delay: 0.45 });
     }
     window.focusCluster = focusCluster;
 
@@ -812,7 +763,7 @@
     openFromHash();
     window.addEventListener('hashchange', openFromHash);
 
-    // Animate loop
+    // Animation loop
     const tmp = new THREE.Vector3();
     const desired = new THREE.Vector3();
     const out = new THREE.Vector3();
@@ -820,64 +771,59 @@
     function animate(){
       requestAnimationFrame(animate);
 
-      const pos = pointsGeo.attributes.position.array;
+      const pos = ptsGeo.attributes.position.array;
 
-      // rotate scene
+      // subtle scene rotation
       points.rotation.y += (targetRotY - points.rotation.y) * 0.04;
       points.rotation.x += (targetRotX - points.rotation.x) * 0.04;
       lines.rotation.copy(points.rotation);
 
-      // rings subtle motion
-      ringGroup.rotation.z += 0.0009;
-      ringA.rotation.y += 0.0012;
-      ringB.rotation.x += 0.0010;
-      ringC.rotation.y -= 0.0008;
+      ring.rotation.z += 0.0015;
+      ring.rotation.y += 0.0010;
 
-      const conv = Math.min(1.0, (state.converge * 0.78) + (state.clusterBoost * 0.82));
+      const t = performance.now() * 0.001;
+      const tight = Math.min(1.0, (state.tighten * 0.78) + (state.clusterBoost * 0.82));
       const shell = state.orbitRadius;
       const b = state.burst;
-      const t = performance.now() * 0.001;
 
       for (let i=0; i<nodeCount; i++){
         const k = i*3;
 
         // drift
-        pos[k+0] += velocities[k+0] * (1.0 - 0.55*conv);
-        pos[k+1] += velocities[k+1] * (1.0 - 0.55*conv);
-        pos[k+2] += velocities[k+2] * (1.0 - 0.55*conv);
+        pos[k+0] += velocities[k+0] * (1.0 - 0.55*tight);
+        pos[k+1] += velocities[k+1] * (1.0 - 0.55*tight);
+        pos[k+2] += velocities[k+2] * (1.0 - 0.55*tight);
 
-        if (pos[k+0] > bounds || pos[k+0] < -bounds) velocities[k+0] *= -1;
-        if (pos[k+1] > bounds || pos[k+1] < -bounds) velocities[k+1] *= -1;
-        if (pos[k+2] > bounds || pos[k+2] < -bounds) velocities[k+2] *= -1;
+        if (pos[k+0] > boundsX || pos[k+0] < -boundsX) velocities[k+0] *= -1;
+        if (pos[k+1] > boundsY || pos[k+1] < -boundsY) velocities[k+1] *= -1;
+        if (pos[k+2] > boundsZ || pos[k+2] < -boundsZ) velocities[k+2] *= -1;
 
-        // converge into policy orbit with ring bias
-        if (conv > 0.001){
+        // tighten into ring-orbit (flattened)
+        if (tight > 0.001){
           tmp.set(pos[k+0], pos[k+1], pos[k+2]);
           const dir = dirs[i];
           const breathe = 0.30 * Math.sin(t + i*0.14);
 
-          desired.copy(dir).multiplyScalar(shell + breathe);
+          // ring-like orbit: emphasize XZ, damp Y
+          desired.set(dir.x, dir.y*0.35, dir.z).normalize().multiplyScalar(shell + breathe);
 
-          // bias toward ring planes (gives “governance rails” feel)
-          if (i % 3 === 0) desired.y *= 0.55;
-          if (i % 3 === 1) desired.x *= 0.75;
-
-          tmp.lerp(desired, 0.010 + 0.032*conv);
+          tmp.lerp(desired, 0.010 + 0.032*tight);
 
           pos[k+0] = tmp.x; pos[k+1] = tmp.y; pos[k+2] = tmp.z;
         }
 
         // burst
         if (b > 0.001){
-          out.set(pos[k+0], pos[k+1], pos[k+2]).normalize().multiplyScalar(0.058 * b);
+          out.set(pos[k+0], pos[k+1], pos[k+2]).normalize().multiplyScalar(0.055 * b);
           pos[k+0] += out.x * (1.0 + i%7 * 0.05);
           pos[k+1] += out.y * (1.0 + i%5 * 0.05);
           pos[k+2] += out.z * (1.0 + i%3 * 0.05);
         }
       }
 
-      pointsGeo.attributes.position.needsUpdate = true;
+      ptsGeo.attributes.position.needsUpdate = true;
       updateConnections();
+
       renderer.render(scene, camera);
     }
     animate();
@@ -906,5 +852,3 @@
   </script>
 </body>
 </html>
-
-Save this as governance.html.
