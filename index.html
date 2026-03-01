@@ -1,1209 +1,1272 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>CEYO — Evidentiary Infrastructure for Autonomous Systems</title>
-  <meta name="description" content="CEYO is a weight-neutral, policy-scoped integrity layer. Canonical artifacts. Cryptographic sealing. Independent verification under constrained disclosure."/>
-  <meta name="theme-color" content="#071a33"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>CEYO — Evidentiary Infrastructure for Autonomous Systems</title>
+<meta name="description" content="CEYO is a decoupled, policy-scoped integrity layer producing canonical artifacts sealed for independent verification under constrained disclosure."/>
 
-  <!-- Typeface choice: Anthropic uses Styrene (heads) + Tiempos (body). Those are licensed fonts.
-       We emulate the same “institutional editorial” feel using free Google fonts:
-       - Fraunces (italic display) ~ editorial headline energy
-       - Inter (clean body)
-       - IBM Plex Mono (labels)
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Keep your existing font stack for now; you can swap to a licensed 'Anthropic-like' family later without changing layout -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,400;0,700;0,900;1,900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <style>
-    /* ─────────────────────────────────────────────────────────────
-      CEYO — INSTITUTIONAL SUBSTRATE DESIGN SYSTEM (INDEX)
-      Palette: Navy + Ivory + disciplined blue accent
-    ───────────────────────────────────────────────────────────── */
-    :root{
-      --navy:        #071a33;
-      --navy2:       #06162b;
-      --navy3:       #0a2448;
-      --ivory:       #f6f2e8;
-      --paper:       #fbf8f2;
-      --ink:         #071a33;
-      --text:        rgba(246,242,232,.90);
-      --muted:       rgba(246,242,232,.62);
-      --muted2:      rgba(246,242,232,.40);
-      --stroke:      rgba(246,242,232,.14);
-      --stroke2:     rgba(246,242,232,.08);
-      --accent:      #3E7BFF; /* disciplined electric navy-blue */
-      --accent2:     #6aa0ff;
-      --danger:      rgba(220,90,90,.75);
+<style>
+/* ════════════════════════════════════════════════════════
+   CEYO — IMMERSIVE INDEX (Restart)
+   Palette: Navy / Ivory / Royal Blue accents
+   V2026.02.19
+════════════════════════════════════════════════════════ */
 
-      --max: 1160px;
-      --radius: 18px;
-      --shadow: 0 18px 60px rgba(0,0,0,.35);
-    }
+:root{
+  --navy-0:#050A16;
+  --navy-1:#070F22;
+  --navy-2:#0B1631;
+  --navy-3:#0E1D3C;
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: var(--navy);
-      color: var(--text);
-      overflow-x:hidden;
-      min-height:100vh;
-      cursor:none;
-    }
-    a{color:inherit;text-decoration:none}
-    button{font-family:inherit}
-    ::selection{background: rgba(62,123,255,.25);}
+  --ivory:#F5F1E6;
+  --ivory2:#EEE8DA;
 
-    /* Grain overlay (subtle) */
-    #grain{
-      position:fixed; inset:0; z-index:9998; pointer-events:none;
-      opacity:.05;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='420' height='420' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size:240px 240px;
-      mix-blend-mode: overlay;
-    }
+  --ink:#0A1630;            /* dark navy text on ivory pages */
+  --text:rgba(245,241,230,.92);
+  --muted:rgba(245,241,230,.66);
+  --muted2:rgba(245,241,230,.40);
 
-    /* Spotlight follows cursor */
-    #spotlight{
-      position:fixed; inset:0; z-index:1; pointer-events:none;
-      transition: background .04s linear;
-    }
+  --stroke:rgba(245,241,230,.14);
+  --stroke2:rgba(245,241,230,.08);
 
-    /* Custom cursor */
-    #cursor{
-      position:fixed; z-index:9999;
-      width:8px;height:8px;border-radius:50%;
-      background: var(--ivory);
-      mix-blend-mode: exclusion;
-      pointer-events:none;
-      transform: translate(-50%,-50%);
-      transition: width .15s ease, height .15s ease, opacity .15s ease;
-      opacity:1;
-    }
-    #cursor.large{width:42px;height:42px;opacity:.55}
+  --blue:#2D6BFF;           /* primary accent */
+  --blue2:#5AA2FF;          /* glow */
+  --blue3:#123BFF;          /* deeper royal */
+  --danger:rgba(200,70,70,.72);
 
-    /* Top Nav */
-    #topnav{
-      position:fixed; top:0; left:0; right:0; z-index:800;
-      display:flex; align-items:center; justify-content:space-between;
-      height:72px;
-      padding:0 44px;
-      background: linear-gradient(to bottom, rgba(7,26,51,.92) 65%, rgba(7,26,51,0));
-      transition: background .25s, border-color .25s;
-    }
-    #topnav.scrolled{
-      background: rgba(7,26,51,.96);
-      border-bottom:1px solid var(--stroke2);
-      backdrop-filter: blur(10px);
-    }
-    .nav-brand{
-      display:flex; align-items:baseline; gap:18px;
-      min-width: 220px;
-    }
-    .nav-brand .word{
-      font-family: Fraunces, serif;
-      font-weight: 750;
-      font-variation-settings: "SOFT" 30;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-      font-size: 26px;
-      color: var(--ivory);
-      line-height: 1;
-    }
-    .nav-brand .tag{
-      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      font-size: 10px;
-      color: var(--muted2);
-      transform: translateY(-1px);
-      white-space: nowrap;
-    }
+  --max:1200px;
+  --radius:18px;
+}
 
-    .nav-links{
-      display:flex; align-items:center; gap:6px;
-    }
-    .nav-links a{
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: 10px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--muted2);
-      padding: 8px 12px;
-      border-radius: 999px;
-      transition: color .12s, background .12s, border-color .12s;
-      border: 1px solid transparent;
-    }
-    .nav-links a:hover{
-      color: var(--ivory);
-      background: rgba(246,242,232,.04);
-      border-color: rgba(246,242,232,.08);
-    }
-    .nav-links a.active{
-      color: var(--ivory);
-      background: rgba(62,123,255,.10);
-      border-color: rgba(62,123,255,.25);
-    }
-    .nav-cta{
-      margin-left:10px;
-      color: var(--ivory) !important;
-      background: rgba(62,123,255,.14);
-      border-color: rgba(62,123,255,.38) !important;
-    }
-    .nav-cta:hover{
-      background: rgba(62,123,255,.22);
-      border-color: rgba(62,123,255,.55) !important;
-    }
+/* Base */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  background:var(--navy-0);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  overflow-x:hidden;
+  min-height:100vh;
+  cursor:none;
+}
+a{color:inherit;text-decoration:none;}
+button{font:inherit}
 
-    /* Bottom Index Bar */
-    #indexbar{
-      position:fixed; bottom:0; left:0; right:0; z-index:800;
-      height:52px;
-      display:flex;
-      background: rgba(4,10,20,.86);
-      border-top:1px solid rgba(246,242,232,.10);
-      backdrop-filter: blur(10px);
-    }
-    .ib-item{
-      flex:1;
-      display:flex; align-items:center; justify-content:center;
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: 10px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(246,242,232,.55);
-      border-right:1px solid rgba(246,242,232,.06);
-      transition: color .12s, background .12s;
-      position: relative;
-    }
-    .ib-item:last-child{border-right:none}
-    .ib-item:hover{color: var(--ivory); background: rgba(246,242,232,.04)}
-    .ib-item.active{
-      color: var(--ivory);
-    }
-    .ib-item.active::before{
-      content:"";
-      position:absolute; top:0; left:16px; right:16px;
-      height:1px;
-      background: linear-gradient(90deg, transparent, rgba(62,123,255,.95), transparent);
-    }
+/* Grain */
+#grain{
+  position:fixed;inset:0;z-index:9998;
+  pointer-events:none;opacity:.055;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='420' height='420' filter='url(%23f)'/%3E%3C/svg%3E");
+  background-size:220px 220px;
+}
 
-    /* Hero Wrapper */
-    #hero-wrap{position:relative; height: 205vh;}
-    #hero{
-      position:sticky; top:0; height:100vh;
-      padding: 96px 44px 110px;
-      display:flex; flex-direction:column; justify-content:flex-end;
-      overflow:hidden;
-      z-index:2;
-    }
-    /* Background grid + vignette */
-    #hero::before{
-      content:"";
-      position:absolute; inset:0; z-index:0;
-      background-image:
-        linear-gradient(rgba(246,242,232,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(246,242,232,.03) 1px, transparent 1px);
-      background-size: 90px 90px;
-      mask-image: radial-gradient(ellipse 85% 70% at 50% 35%, #000 0%, transparent 75%);
-    }
-    #hero::after{
-      content:"";
-      position:absolute; left:0; right:0; bottom:0;
-      height: 52vh;
-      background: linear-gradient(to bottom, transparent, rgba(7,26,51,.98) 84%);
-      pointer-events:none;
-      z-index:1;
-    }
+/* Spotlight */
+#spotlight{
+  position:fixed;inset:0;z-index:1;
+  pointer-events:none;
+  transition:background .05s linear;
+}
 
-    .hero-inner{position:relative; z-index:2; max-width: var(--max); margin:0 auto;}
-    .hero-kicker{
-      display:flex; align-items:center; gap:14px;
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: 10px;
-      letter-spacing:.24em;
-      text-transform: uppercase;
-      color: rgba(246,242,232,.62);
-      margin-bottom: 22px;
-    }
-    .hero-kicker-line{width:38px;height:1px;background: rgba(62,123,255,.9);}
-    .hero-kicker strong{color: var(--ivory); font-weight:500}
+/* Cursor */
+#cursor{
+  position:fixed;z-index:9999;
+  width:8px;height:8px;border-radius:999px;
+  background:var(--ivory);
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  mix-blend-mode:exclusion;
+  transition:width .15s ease,height .15s ease,opacity .15s ease;
+}
+#cursor.large{width:44px;height:44px;opacity:.55}
 
-    /* HERO H1 */
-    #hero-h1{
-      font-family: Fraunces, serif;
-      font-weight: 850;
-      letter-spacing: -0.05em;
-      line-height: .92;
-      text-transform: uppercase;
-      color: var(--ivory);
-      margin:0;
-      font-size: clamp(48px, 9.5vw, 116px);
-      max-width: 980px;
-      will-change: opacity, filter, transform;
-    }
-    /* Telemetry light sweep (works on mobile too) */
-    .telemetry{
-      position:relative;
-      display:inline-block;
-      color: var(--ivory);
-    }
-    .telemetry::after{
-      content:"";
-      position:absolute; inset:-6px -10px;
-      background: linear-gradient(120deg,
-        transparent 0%,
-        rgba(62,123,255,0) 35%,
-        rgba(62,123,255,.9) 50%,
-        rgba(62,123,255,0) 65%,
-        transparent 100%);
-      filter: blur(10px);
-      transform: translateX(-120%);
-      animation: sweep 2.8s cubic-bezier(.2,.9,.2,1) infinite;
-      mix-blend-mode: screen;
-      pointer-events:none;
-      opacity:.85;
-    }
-    @keyframes sweep{
-      0%{transform: translateX(-140%)}
-      55%{transform: translateX(0%)}
-      100%{transform: translateX(140%)}
-    }
+/* Top Nav (NO text above brand) */
+#topnav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  height:74px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 44px;
+  background:linear-gradient(to bottom, rgba(5,10,22,.88) 65%, transparent);
+  transition:background .25s,border-color .25s;
+}
+#topnav.scrolled{
+  background:rgba(5,10,22,.92);
+  border-bottom:1px solid rgba(245,241,230,.06);
+}
+.nav-brand{
+  display:flex;align-items:baseline;gap:14px;
+}
+.nav-brand .mark{
+  font-family:Outfit,sans-serif;
+  font-weight:900;font-style:italic;
+  letter-spacing:-0.03em;
+  font-size:30px;
+  text-transform:uppercase;
+  color:var(--ivory);
+}
+.nav-brand .sub{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;letter-spacing:.26em;
+  text-transform:uppercase;
+  color:rgba(245,241,230,.58);
+}
+.nav-links{
+  display:flex;align-items:center;gap:4px;
+}
+.nav-links a{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;
+  color:rgba(245,241,230,.44);
+  padding:8px 12px;
+  border-radius:999px;
+  transition:color .12s,background .12s;
+}
+.nav-links a:hover{color:var(--ivory);background:rgba(245,241,230,.06)}
+.nav-links a.active{color:rgba(245,241,230,.84)}
+.nav-cta{
+  margin-left:10px;
+  color:rgba(245,241,230,.92)!important;
+  border:1px solid rgba(45,107,255,.45);
+  background:rgba(45,107,255,.12);
+}
+.nav-cta:hover{background:rgba(45,107,255,.20)}
 
-    /* Hero copy */
-    .hero-below{margin-top: 26px; max-width: 620px; will-change: opacity, transform;}
-    .hero-lead{
-      font-size: 15px;
-      line-height: 1.85;
-      color: rgba(246,242,232,.70);
-      font-weight: 400;
-      margin: 0 0 22px;
-    }
-    .hero-denials{
-      border-top:1px solid rgba(246,242,232,.12);
-      border-bottom:1px solid rgba(246,242,232,.12);
-      padding: 16px 0;
-      display:flex; flex-direction:column; gap:8px;
-      margin-bottom: 22px;
-    }
-    .denial, .affirmation{
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: 11px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: rgba(246,242,232,.50);
-      padding-left: 22px;
-      position:relative;
-    }
-    .denial::before{
-      content:"×";
-      position:absolute; left:0; top:-1px;
-      color: rgba(220,90,90,.55);
-      font-size: 13px;
-    }
-    .affirmation{
-      color: rgba(62,123,255,.95);
-      margin-top: 4px;
-    }
-    .affirmation::before{
-      content:"→";
-      position:absolute; left:0; top:-1px;
-      color: rgba(62,123,255,.95);
-      font-size: 13px;
-    }
+/* Bottom Index Bar */
+#indexbar{
+  position:fixed;bottom:0;left:0;right:0;z-index:900;
+  display:flex;height:54px;
+  background:rgba(3,6,14,.92);
+  border-top:1px solid rgba(245,241,230,.10);
+  backdrop-filter: blur(10px);
+}
+.ib-item{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(245,241,230,.44);
+  border-right:1px solid rgba(245,241,230,.06);
+  transition:color .12s,background .12s,border-top-color .12s;
+}
+.ib-item:last-child{border-right:none}
+.ib-item:hover{color:var(--ivory);background:rgba(245,241,230,.05)}
+.ib-item.active{color:var(--ivory);border-top:1px solid rgba(45,107,255,.9)}
 
-    .cta-row{display:flex; gap:12px; flex-wrap:wrap;}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 13px 22px;
-      border-radius: 999px;
-      border: 1px solid rgba(246,242,232,.16);
-      background: rgba(246,242,232,.02);
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: 10px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: rgba(246,242,232,.70);
-      transition: transform .15s, background .15s, border-color .15s, color .15s;
-      cursor:pointer;
-    }
-    .btn:hover{transform: translateY(-1px); border-color: rgba(246,242,232,.32); color: var(--ivory); background: rgba(246,242,232,.05);}
-    .btn:active{transform: translateY(0px); background: rgba(246,242,232,.12);}
-    .btn-primary{
-      border-color: rgba(62,123,255,.45);
-      background: rgba(62,123,255,.14);
-      color: rgba(246,242,232,.92);
-    }
-    .btn-primary:hover{border-color: rgba(62,123,255,.70); background: rgba(62,123,255,.22);}
+/* HERO WRAP */
+#hero-wrap{position:relative;height:210vh;}
+#hero{
+  position:sticky;top:0;height:100vh;
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  padding:90px 44px 120px;
+}
+#hero::before{
+  content:"";position:absolute;inset:-2px;z-index:0;
+  background:
+    radial-gradient(900px 560px at 50% 36%, rgba(45,107,255,.18), transparent 60%),
+    radial-gradient(900px 560px at 70% 55%, rgba(90,162,255,.10), transparent 62%),
+    linear-gradient(180deg, var(--navy-0) 0%, var(--navy-1) 60%, var(--navy-0) 100%);
+}
+#hero::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:44vh;
+  background:linear-gradient(to bottom, transparent, var(--navy-0) 80%);
+  z-index:3;pointer-events:none;
+}
 
-    .scroll-indicator{
-      position:absolute; right: 44px; bottom: 68px; z-index:2;
-      display:flex; flex-direction:column; align-items:center; gap:8px;
-      opacity:.55;
-    }
-    .scroll-indicator span{
-      font-family:"IBM Plex Mono", ui-monospace, monospace;
-      font-size: 9px; letter-spacing:.22em; text-transform:uppercase;
-      color: rgba(246,242,232,.45);
-      writing-mode: vertical-rl;
-    }
-    .scroll-line{
-      width:1px; height: 48px;
-      background: rgba(246,242,232,.18);
-      animation: scrollGrow 2s ease-in-out infinite;
-    }
-    @keyframes scrollGrow{
-      0%,100%{transform: scaleY(.3); transform-origin: top; opacity:.45}
-      50%{transform: scaleY(1); opacity:1}
-    }
+.hero-inner{position:relative;z-index:4;max-width:var(--max);margin:0 auto;width:100%;}
+.hero-grid{
+  display:grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap:44px;
+  align-items:center;
+}
 
-    /* Main content container */
-    #content{
-      position:relative;
-      z-index: 10;
-      padding-bottom: 80px; /* keep above index bar */
-    }
+/* Left: headline */
+.hero-kicker{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;letter-spacing:.26em;text-transform:uppercase;
+  color:rgba(245,241,230,.62);
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:18px;
+}
+.hero-kicker i{
+  display:inline-block;width:34px;height:1px;background:rgba(45,107,255,.85);
+}
+#hero-h1{
+  font-family:Outfit,sans-serif;
+  font-weight:900;font-style:italic;
+  letter-spacing:-.055em;
+  line-height:.88;
+  text-transform:uppercase;
+  font-size:clamp(54px, 8.8vw, 120px);
+  color:var(--ivory);
+}
+#hero-h1 .telemetry{
+  position:relative;
+  display:inline-block;
+  color:var(--ivory);
+  /* allows animated highlight sweep */
+  -webkit-text-stroke: 0px transparent;
+}
+#hero-h1 .telemetry::after{
+  content:"";
+  position:absolute;inset:-8px -10px;
+  background:linear-gradient(120deg,
+    transparent 0%,
+    rgba(45,107,255,0) 35%,
+    rgba(90,162,255,.85) 48%,
+    rgba(45,107,255,0) 62%,
+    transparent 100%);
+  transform:translateX(-120%);
+  mix-blend-mode:screen;
+  filter:blur(0.4px);
+  pointer-events:none;
+  opacity:.95;
+  mask-image: linear-gradient(#000,#000);
+  -webkit-mask-image: linear-gradient(#000,#000);
+}
+.telemetry.sweep::after{ animation: sweep 1.85s cubic-bezier(.2,1,.2,1) both; }
+@keyframes sweep{
+  0%{transform:translateX(-120%)}
+  100%{transform:translateX(120%)}
+}
 
-    /* Section base */
-    .sect{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 92px 44px;
-      border-top: 1px solid rgba(246,242,232,.10);
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity .7s ease, transform .7s ease;
-    }
-    .sect.vis{opacity:1; transform: translateY(0);}
-    .sect.focus{
-      border-top-color: rgba(62,123,255,.45);
-      background: linear-gradient(180deg, rgba(62,123,255,.06), rgba(62,123,255,0) 55%);
-    }
+/* Right: Seal (centered) + Map */
+.hero-card{
+  position:relative;
+  border:1px solid rgba(245,241,230,.10);
+  background:rgba(255,255,255,.02);
+  border-radius:var(--radius);
+  padding:22px 20px;
+  overflow:hidden;
+}
+.hero-card::before{
+  content:"";
+  position:absolute;inset:-2px;
+  background:radial-gradient(500px 240px at 50% 30%, rgba(45,107,255,.20), transparent 60%);
+  pointer-events:none;
+  opacity:.9;
+}
+.seal-wrap{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+  padding:10px 6px 14px;
+  z-index:2;
+}
+.seal{
+  width:78px;height:78px;border-radius:999px;
+  border:1px solid rgba(245,241,230,.22);
+  position:relative;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 30% 30%, rgba(90,162,255,.18), rgba(255,255,255,.01));
+  box-shadow:
+    0 0 0 1px rgba(45,107,255,.12) inset,
+    0 18px 60px rgba(0,0,0,.35);
+}
+.seal::after{
+  content:"";
+  position:absolute;inset:-22px;
+  background:radial-gradient(circle, rgba(45,107,255,.22), transparent 62%);
+  filter:blur(10px);
+  opacity:.55;
+  pointer-events:none;
+}
+.seal span{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(245,241,230,.84);
+}
+.hero-lead{
+  margin-top:18px;
+  font-size:15px;line-height:1.85;
+  color:rgba(245,241,230,.72);
+  max-width:64ch;
+}
+.hero-denials{
+  margin-top:16px;
+  padding:14px 0;
+  border-top:1px solid rgba(245,241,230,.10);
+  border-bottom:1px solid rgba(245,241,230,.10);
+  display:flex;flex-direction:column;gap:7px;
+}
+.denial,.affirm{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(245,241,230,.55);
+  padding-left:22px;position:relative;
+}
+.denial::before{content:"×";position:absolute;left:0;color:rgba(200,70,70,.55)}
+.affirm{color:rgba(90,162,255,.88);margin-top:6px}
+.affirm::before{content:"→";position:absolute;left:0;color:rgba(90,162,255,.95)}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  padding:13px 18px;border-radius:999px;
+  border:1px solid rgba(245,241,230,.14);
+  color:rgba(245,241,230,.72);
+  background:transparent;
+  transition:transform .12s,background .12s,border-color .12s,color .12s;
+  cursor:pointer;
+}
+.btn:hover{border-color:rgba(245,241,230,.34);color:var(--ivory);background:rgba(245,241,230,.06)}
+.btn:active{transform:translateY(1px)}
+.btn-primary{
+  border-color:rgba(45,107,255,.52);
+  color:rgba(245,241,230,.92);
+  background:rgba(45,107,255,.16);
+}
+.btn-primary:hover{background:rgba(45,107,255,.22);border-color:rgba(90,162,255,.72)}
 
-    .sect-tag{
-      font-family:"IBM Plex Mono", ui-monospace, monospace;
-      font-size: 10px;
-      letter-spacing:.22em;
-      text-transform: uppercase;
-      color: rgba(246,242,232,.55);
-      display:flex; align-items:center; gap:14px;
-      margin-bottom: 18px;
-    }
-    .sect-tag::after{
-      content:"";
-      height:1px; width: 120px;
-      background: linear-gradient(90deg, rgba(62,123,255,.65), transparent);
-    }
-    .sect-h2{
-      font-family: Fraunces, serif;
-      font-weight: 820;
-      letter-spacing: -0.04em;
-      line-height: .98;
-      text-transform: uppercase;
-      margin: 0 0 18px;
-      color: var(--ivory);
-      font-size: clamp(30px, 5.2vw, 58px);
-    }
-    .sect-p{
-      font-size: 15px;
-      line-height: 1.9;
-      color: rgba(246,242,232,.72);
-      max-width: 70ch;
-      margin: 0 0 14px;
-    }
+/* Seal Map SVG */
+.map{
+  position:relative;
+  z-index:2;
+  margin-top:14px;
+  border-top:1px solid rgba(245,241,230,.10);
+  padding-top:16px;
+}
+.map-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin-bottom:10px;
+}
+.map-head .label{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.26em;text-transform:uppercase;
+  color:rgba(245,241,230,.55);
+}
+.map-head .hint{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(90,162,255,.72);
+}
+#sealMap{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:14px;
+  background:
+    radial-gradient(520px 200px at 50% 35%, rgba(45,107,255,.10), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+  border:1px solid rgba(245,241,230,.08);
+}
+.map-tip{
+  position:absolute;
+  left:0;top:0;
+  transform:translate(-9999px,-9999px);
+  pointer-events:none;
+  max-width:260px;
+  border-radius:14px;
+  background:rgba(5,10,22,.92);
+  border:1px solid rgba(245,241,230,.14);
+  box-shadow:0 18px 50px rgba(0,0,0,.45);
+  padding:12px 12px;
+  z-index:5;
+}
+.map-tip .t{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;letter-spacing:.20em;text-transform:uppercase;
+  color:rgba(245,241,230,.88);
+}
+.map-tip .b{
+  margin-top:6px;
+  font-size:12px;line-height:1.6;
+  color:rgba(245,241,230,.70);
+}
+.map-tip .k{
+  margin-top:8px;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(90,162,255,.75);
+}
 
-    /* Paragraph “blue light highlight” (no DOM splitting, no space loss) */
-    .p-ink{
-      position:relative;
-      display:inline;
-      background: linear-gradient(90deg, rgba(62,123,255,.0), rgba(62,123,255,.14), rgba(62,123,255,.0));
-      background-size: 0% 100%;
-      background-repeat:no-repeat;
-      transition: background-size .8s ease;
-      padding: .06em .12em;
-      border-radius: 8px;
-    }
-    .sect.focus .p-ink{background-size: 100% 100%;}
+/* Scroll indicator */
+.scroll-ind{
+  position:absolute;right:44px;bottom:82px;z-index:4;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:.55;
+}
+.scroll-ind span{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.24em;text-transform:uppercase;
+  color:rgba(245,241,230,.55);
+  writing-mode:vertical-rl;
+}
+.scroll-ind .line{
+  width:1px;height:56px;background:rgba(245,241,230,.18);
+  animation:grow 2s ease-in-out infinite;
+}
+@keyframes grow{
+  0%,100%{transform:scaleY(.30);transform-origin:top;opacity:.45}
+  50%{transform:scaleY(1);opacity:1}
+}
 
-    /* Accountability Gap “paper” mode (distinct page feel) */
-    .paper{
-      background: var(--paper);
-      color: var(--ink);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(7,26,51,.10);
-      overflow:hidden;
-    }
-    .paper .sect-tag{color: rgba(7,26,51,.55)}
-    .paper .sect-tag::after{background: linear-gradient(90deg, rgba(7,26,51,.35), transparent)}
-    .paper .sect-h2{color: var(--ink)}
-    .paper .sect-p{color: rgba(7,26,51,.78)}
-    .paper .p-ink{
-      background: linear-gradient(90deg, rgba(62,123,255,.0), rgba(62,123,255,.20), rgba(62,123,255,.0));
-    }
+/* MAIN CONTENT */
+#content{position:relative;z-index:10;background:transparent;}
 
-    /* Structural deficit cards */
-    .deficit-statements{
-      margin: 22px 0;
-      padding: 16px 0;
-      border-top:1px solid rgba(7,26,51,.12);
-      border-bottom:1px solid rgba(7,26,51,.12);
-      display:flex; flex-direction:column; gap:10px;
-    }
-    .d-stmt{
-      font-family:"IBM Plex Mono", ui-monospace, monospace;
-      font-size: 12px;
-      letter-spacing:.06em;
-      color: rgba(7,26,51,.72);
-      padding-left: 18px;
-      position:relative;
-      line-height: 1.55;
-    }
-    .d-stmt::before{
-      content:"—";
-      position:absolute; left:0;
-      color: rgba(7,26,51,.35);
-    }
+/* Page-like sections (distinct) */
+.page{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:92px 44px;
+  border-top:1px solid rgba(245,241,230,.10);
+  opacity:0;transform:translateY(22px);
+  transition:opacity .65s ease,transform .65s ease;
+}
+.page.vis{opacity:1;transform:none}
 
-    .deficit-cells{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 26px;
-    }
-    .dcell{
-      background: #ffffff;
-      border: 1px solid rgba(7,26,51,.10);
-      border-radius: 16px;
-      padding: 18px 18px;
-      position:relative;
-      transition: transform .15s, border-color .15s, box-shadow .15s;
-      box-shadow: 0 10px 30px rgba(7,26,51,.08);
-    }
-    .dcell:hover{
-      transform: translateY(-2px);
-      border-color: rgba(62,123,255,.30);
-      box-shadow: 0 16px 40px rgba(7,26,51,.12);
-    }
-    .dcell-num{
-      font-family:"IBM Plex Mono", ui-monospace, monospace;
-      font-size: 9px;
-      letter-spacing:.22em;
-      text-transform: uppercase;
-      color: rgba(62,123,255,.95);
-      margin-bottom: 10px;
-    }
-    .dcell-title{
-      font-size: 14px;
-      font-weight: 600;
-      color: rgba(7,26,51,.92);
-      margin-bottom: 8px;
-    }
-    .dcell-body{
-      font-size: 13px;
-      line-height: 1.75;
-      color: rgba(7,26,51,.72);
-      margin:0;
-    }
+/* alternating looks */
+.page[data-skin="navy"]{
+  background:linear-gradient(180deg, rgba(7,15,34,.0), rgba(7,15,34,.0));
+  color:var(--text);
+}
+.page[data-skin="ivory"]{
+  max-width:none;
+  background:linear-gradient(180deg, var(--ivory2), var(--ivory));
+  color:var(--ink);
+  border-top:1px solid rgba(10,22,48,.10);
+}
+.page[data-skin="ivory"] .wrap{max-width:var(--max);margin:0 auto;padding:0 44px}
+.page[data-skin="ivory"] .tag{color:rgba(10,22,48,.70)}
+.page[data-skin="ivory"] .h2{color:rgba(10,22,48,.95)}
+.page[data-skin="ivory"] .p{color:rgba(10,22,48,.74)}
+.page[data-skin="ivory"] .card{
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(10,22,48,.10);
+  box-shadow:0 22px 60px rgba(10,22,48,.10);
+}
 
-    .req-panel{
-      margin-top: 18px;
-      border: 1px solid rgba(7,26,51,.10);
-      border-radius: 16px;
-      overflow:hidden;
-      background: rgba(62,123,255,.05);
-    }
-    .req-header{
-      padding: 12px 16px;
-      border-bottom: 1px solid rgba(7,26,51,.10);
-      font-family:"IBM Plex Mono", ui-monospace, monospace;
-      font-size: 9px;
-      letter-spacing:.22em;
-      text-transform: uppercase;
-      color: rgba(7,26,51,.60);
-      background: rgba(255,255,255,.65);
-    }
-    .req-items{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      list-style:none;
-      padding:0;
-      margin:0;
-    }
-    .req-item{
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(7,26,51,.08);
-      display:flex; gap:10px;
-    }
-    .req-item:nth-child(odd){border-right:1px solid rgba(7,26,51,.08)}
-    .req-item:nth-child(3), .req-item:nth-child(4){border-bottom:none}
-    .req-dot{
-      width:6px;height:6px;border-radius:50%;
-      background: rgba(62,123,255,.95);
-      margin-top: 7px;
-      flex-shrink:0;
-      box-shadow: 0 0 0 3px rgba(62,123,255,.12);
-    }
-    .req-item strong{
-      display:block;
-      font-weight: 650;
-      color: rgba(7,26,51,.92);
-      margin-bottom: 3px;
-      font-size: 13px;
-    }
-    .req-item-body{
-      font-size: 12px;
-      line-height: 1.55;
-      color: rgba(7,26,51,.72);
-    }
+/* typography blocks */
+.tag{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(245,241,230,.62);
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:18px;
+}
+.tag::after{
+  content:"";height:1px;flex:1;
+  background:linear-gradient(to right, rgba(45,107,255,.55), transparent);
+  max-width:160px;
+}
+.h2{
+  font-family:Outfit,sans-serif;
+  font-weight:900;font-style:italic;
+  letter-spacing:-.045em;
+  text-transform:uppercase;
+  line-height:.95;
+  font-size:clamp(34px, 5vw, 62px);
+  color:var(--ivory);
+  margin-bottom:18px;
+}
+.p{
+  font-size:15px;
+  line-height:1.92;
+  max-width:70ch;
+  color:rgba(245,241,230,.74);
+  margin-bottom:14px;
+  white-space:normal;              /* prevents the “merged words” issue */
+  word-spacing:normal;
+  letter-spacing:normal;
+  overflow-wrap:anywhere;
+}
 
-    /* Seal Map section */
-    .map-wrap{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 44px 44px;
-    }
-    .map-panel{
-      border:1px solid rgba(246,242,232,.12);
-      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(62,123,255,.12), rgba(7,26,51,0) 60%),
-                  rgba(255,255,255,.02);
-      border-radius: 22px;
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .map-header{
-      padding: 14px 18px;
-      border-bottom:1px solid rgba(246,242,232,.10);
-      display:flex; justify-content:space-between; align-items:center; gap:12px;
-      background: rgba(7,26,51,.55);
-      backdrop-filter: blur(10px);
-    }
-    .map-title{
-      font-family:"IBM Plex Mono", ui-monospace, monospace;
-      font-size: 10px;
-      letter-spacing:.24em;
-      text-transform: uppercase;
-      color: rgba(246,242,232,.70);
-    }
-    .map-note{
-      font-family:"IBM Plex Mono", ui-monospace, monospace;
-      font-size: 10px;
-      letter-spacing:.14em;
-      text-transform: uppercase;
-      color: rgba(246,242,232,.45);
-      white-space: nowrap;
-    }
-    .map-stage{
-      padding: 18px 12px 8px;
-    }
-    svg{max-width:100%; height:auto; display:block;}
+/* Word glow hover (subtle, per-word) */
+.fx-words span{
+  display:inline-block;
+  padding:0 .06em;
+  border-radius:.35em;
+  transition:background .12s,color .12s, box-shadow .12s;
+}
+.fx-words span:hover{
+  background:rgba(45,107,255,.18);
+  box-shadow:0 0 0 1px rgba(90,162,255,.22) inset, 0 10px 30px rgba(45,107,255,.10);
+  color:rgba(245,241,230,.96);
+}
+.page[data-skin="ivory"] .fx-words span:hover{
+  background:rgba(45,107,255,.12);
+  color:rgba(10,22,48,.96);
+}
 
-    .node{
-      fill: rgba(7,26,51,.92);
-      stroke: rgba(246,242,232,.16);
-      stroke-width: 1;
-    }
-    .node.core{
-      fill: rgba(62,123,255,.18);
-      stroke: rgba(62,123,255,.55);
-    }
-    .node-label{
-      font-family:"IBM Plex Mono", ui-monospace, monospace;
-      font-size: 10px;
-      letter-spacing:.16em;
-      text-transform: uppercase;
-      fill: rgba(246,242,232,.78);
-    }
-    .node-label.dim{fill: rgba(246,242,232,.55)}
-    .line{
-      stroke: rgba(62,123,255,.85);
-      stroke-width: 2.2;
-      fill:none;
-      stroke-linecap: round;
-      opacity: .95;
-    }
-    .line.dim{
-      stroke: rgba(246,242,232,.22);
-      stroke-width: 1.4;
-      opacity:.9;
-    }
+/* Cards / grids */
+.grid{
+  margin-top:26px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+.card{
+  border-radius:16px;
+  border:1px solid rgba(245,241,230,.12);
+  background:rgba(255,255,255,.02);
+  padding:18px 18px;
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:"";
+  position:absolute;left:0;right:0;top:0;height:2px;
+  background:linear-gradient(to right, rgba(90,162,255,.95), transparent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .35s cubic-bezier(.2,1,.2,1);
+}
+.card:hover::before{transform:scaleX(1)}
+.card .k{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(90,162,255,.82);
+  margin-bottom:10px;
+}
+.page[data-skin="ivory"] .card .k{color:rgba(45,107,255,.85)}
+.card .t{font-size:14px;font-weight:600;margin-bottom:6px}
+.card .b{font-size:13px;line-height:1.72;color:rgba(245,241,230,.66)}
+.page[data-skin="ivory"] .card .b{color:rgba(10,22,48,.70)}
 
-    /* CTA strip */
-    .cta-strip{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 46px 44px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap: 18px;
-      border-top: 1px solid rgba(246,242,232,.10);
-    }
-    .cta-text strong{
-      display:block;
-      font-family: Fraunces, serif;
-      font-weight: 820;
-      letter-spacing: -0.03em;
-      text-transform: uppercase;
-      color: var(--ivory);
-      font-size: 22px;
-      margin-bottom: 6px;
-    }
-    .cta-text p{
-      margin:0;
-      color: rgba(246,242,232,.68);
-      font-size: 13px;
-      line-height: 1.7;
-      max-width: 60ch;
-    }
+/* Technical properties: tab -> scroll + typed */
+.tech{
+  display:grid;
+  grid-template-columns:240px 1fr;
+  gap:40px;
+  margin-top:26px;
+}
+.techNav{
+  position:sticky;top:92px;
+  display:flex;flex-direction:column;gap:2px;
+}
+.techNav a{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  padding:10px 12px;
+  border-left:1px solid rgba(245,241,230,.14);
+  color:rgba(245,241,230,.52);
+  border-radius:10px;
+  transition:color .12s,background .12s,border-left-color .12s;
+}
+.techNav a:hover{color:rgba(245,241,230,.78);background:rgba(245,241,230,.05)}
+.techNav a.active{color:rgba(245,241,230,.92);border-left-color:rgba(90,162,255,.95)}
+.page[data-skin="ivory"] .techNav a{
+  border-left-color:rgba(10,22,48,.18);
+  color:rgba(10,22,48,.62);
+}
+.page[data-skin="ivory"] .techNav a:hover{background:rgba(10,22,48,.05)}
+.page[data-skin="ivory"] .techNav a.active{color:rgba(10,22,48,.92);border-left-color:rgba(45,107,255,.92)}
 
-    /* Footer boundary + rights */
-    .boundary-wrap{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 44px 24px;
-    }
-    .boundary{
-      border: 1px solid rgba(246,242,232,.12);
-      border-radius: 18px;
-      background: rgba(255,255,255,.02);
-      overflow:hidden;
-    }
-    .boundary-head{
-      padding: 12px 16px;
-      border-bottom: 1px solid rgba(246,242,232,.10);
-      font-family:"IBM Plex Mono", ui-monospace, monospace;
-      font-size: 10px;
-      letter-spacing:.22em;
-      text-transform: uppercase;
-      color: rgba(246,242,232,.62);
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    .boundary-grid{
-      padding: 16px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px 20px;
-    }
-    .bitem{
-      margin:0;
-      font-size: 12px;
-      line-height: 1.7;
-      color: rgba(246,242,232,.65);
-      padding-left: 14px;
-      position:relative;
-    }
-    .bitem::before{
-      content:"·";
-      position:absolute; left:0;
-      color: rgba(246,242,232,.35);
-    }
-    .rights{
-      margin-top: 14px;
-      padding: 14px 2px 0;
-      border-top: 1px solid rgba(246,242,232,.10);
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      font-family:"IBM Plex Mono", ui-monospace, monospace;
-      font-size: 10px;
-      letter-spacing:.18em;
-      text-transform: uppercase;
-      color: rgba(246,242,232,.45);
-    }
+.panel{
+  padding:18px 0;
+  border-bottom:1px solid rgba(245,241,230,.10);
+}
+.page[data-skin="ivory"] .panel{border-bottom-color:rgba(10,22,48,.10)}
+.panel:last-child{border-bottom:none}
+.panel .num{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(90,162,255,.88);
+  margin-bottom:8px;
+}
+.page[data-skin="ivory"] .panel .num{color:rgba(45,107,255,.88)}
+.panel .ph{
+  font-family:Outfit,sans-serif;
+  font-weight:700;
+  font-size:20px;
+  letter-spacing:-.02em;
+  margin-bottom:8px;
+}
+.panel .pb{
+  font-size:14px;line-height:1.9;
+  color:rgba(245,241,230,.72);
+  max-width:62ch;
+}
+.page[data-skin="ivory"] .panel .pb{color:rgba(10,22,48,.75)}
 
-    /* Responsive */
-    @media (max-width: 980px){
-      #topnav{padding:0 18px}
-      #hero{padding: 92px 18px 110px}
-      .sect{padding: 84px 18px}
-      .map-wrap{padding: 0 18px 38px}
-      .cta-strip{padding: 40px 18px}
-      .boundary-wrap{padding: 0 18px 24px}
-      .deficit-cells{grid-template-columns: 1fr}
-      .req-items{grid-template-columns: 1fr}
-      .req-item:nth-child(odd){border-right:none}
-      .req-item:nth-child(3){border-bottom:1px solid rgba(7,26,51,.08)}
-    }
-    @media (max-width: 640px){
-      .nav-links{display:none}
-      .nav-brand .word{font-size: 28px}
-      .nav-brand .tag{display:none}
-      #hero-wrap{height: 190vh}
-      #hero{padding: 88px 18px 120px}
-      #hero-h1{font-size: clamp(44px, 12vw, 78px)}
-      .scroll-indicator{right: 18px; bottom: 66px}
-      .cta-strip{flex-direction:column; align-items:flex-start}
-      .boundary-grid{grid-template-columns: 1fr}
-    }
+/* CTA + Footer boundary */
+.ctaStrip{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:44px;
+  border-top:1px solid rgba(245,241,230,.12);
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+.ctaStrip strong{
+  font-family:Outfit,sans-serif;
+  font-weight:900;
+  letter-spacing:-.03em;
+  text-transform:uppercase;
+  font-size:22px;
+  display:block;
+  margin-bottom:6px;
+}
+.ctaStrip p{font-size:13px;line-height:1.7;color:rgba(245,241,230,.70);max-width:52ch}
+.footer{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 44px 92px;
+}
+.boundary{
+  border:1px solid rgba(245,241,230,.14);
+  background:rgba(255,255,255,.02);
+  border-radius:18px;
+  padding:22px 22px;
+}
+.boundary .bt{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.26em;text-transform:uppercase;
+  color:rgba(245,241,230,.58);
+  margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.boundary .bt::before{content:"";width:22px;height:1px;background:rgba(245,241,230,.36)}
+.boundary .cols{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:10px 32px;
+}
+.boundary .cols p{
+  font-size:12px;line-height:1.72;
+  color:rgba(245,241,230,.68);
+  padding-left:14px;position:relative;
+}
+.boundary .cols p::before{content:"·";position:absolute;left:0;color:rgba(245,241,230,.30)}
+.boundary .close{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid rgba(245,241,230,.10);
+  font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.08em;
+  color:rgba(245,241,230,.62);
+}
+.rights{
+  margin-top:12px;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(245,241,230,.44);
+}
 
-    @media print{
-      body{background:#fff;color:#000;cursor:auto}
-      #grain,#spotlight,#cursor,#topnav,#indexbar,#hero-wrap{display:none}
-      .sect{opacity:1;transform:none}
-    }
-  </style>
+/* Responsive */
+@media (max-width: 980px){
+  #hero{padding:88px 22px 120px;}
+  #topnav{padding:0 22px;}
+  .hero-grid{grid-template-columns:1fr;gap:18px;}
+  .scroll-ind{right:18px}
+  .page{padding:78px 22px}
+  .page[data-skin="ivory"] .wrap{padding:0 22px}
+  .grid{grid-template-columns:1fr}
+  .tech{grid-template-columns:1fr;gap:16px}
+  .techNav{position:static;flex-direction:row;flex-wrap:wrap}
+}
+@media (max-width: 600px){
+  .nav-brand .mark{font-size:28px}
+  .nav-brand .sub{display:none}
+  .nav-links{display:none}
+  #hero-h1{font-size:clamp(46px, 11vw, 84px)}
+  .hero-card{padding:18px 14px}
+  #indexbar{height:52px}
+}
+@media print{
+  body{background:#fff;color:#000;cursor:auto}
+  #grain,#spotlight,#cursor,#topnav,#indexbar,#hero-wrap,.scroll-ind{display:none}
+  .page{opacity:1;transform:none}
+}
+</style>
 </head>
 
 <body>
-  <div id="grain" aria-hidden="true"></div>
-  <div id="spotlight" aria-hidden="true"></div>
-  <div id="cursor" aria-hidden="true"></div>
+<div id="grain" aria-hidden="true"></div>
+<div id="spotlight" aria-hidden="true"></div>
+<div id="cursor" aria-hidden="true"></div>
 
-  <!-- TOP NAV -->
-  <nav id="topnav" aria-label="Primary navigation">
-    <a href="index.html" class="nav-brand" aria-label="CEYO Home">
-      <span class="word">CEYO</span>
-      <span class="tag">Evidentiary Infrastructure</span>
-    </a>
-    <div class="nav-links">
-      <a href="index.html" class="active">Overview</a>
-      <a href="platform.html">Architecture</a>
-      <a href="trust.html">Trust</a>
-      <a href="governance.html">Governance</a>
-      <a href="resources.html">Resources</a>
-      <a href="contact.html" class="nav-cta">Request Review</a>
-    </div>
-  </nav>
+<!-- TOP NAV (no text above brand) -->
+<nav id="topnav" aria-label="Primary navigation">
+  <a class="nav-brand" href="index.html" aria-label="CEYO Home">
+    <span class="mark">CEYO</span>
+    <span class="sub">Evidentiary Infrastructure</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Overview</a>
+    <a href="platform.html">Architecture</a>
+    <a href="trust.html">Trust</a>
+    <a href="governance.html">Governance</a>
+    <a href="resources.html">Resources</a>
+    <a href="contact.html" class="nav-cta">Request Review</a>
+  </div>
+</nav>
 
-  <!-- HERO -->
-  <div id="hero-wrap">
-    <section id="hero" aria-label="Go Beyond Telemetry">
-      <div class="hero-inner">
-        <div class="hero-kicker">
-          <div class="hero-kicker-line"></div>
-          <strong>V2026.02.19</strong> · Policy-scoped evidentiary artifacts
-        </div>
+<!-- HERO (sticky) -->
+<div id="hero-wrap">
+  <section id="hero" aria-label="Go Beyond Telemetry">
+    <div class="hero-inner">
+      <div class="hero-grid">
+        <!-- LEFT -->
+        <div>
+          <div class="hero-kicker">
+            <i></i>
+            <span>V2026.02.19 · Evidentiary Artifacts · Policy Scope</span>
+          </div>
 
-        <!-- DO NOT REMOVE: this must show on mobile -->
-        <h1 id="hero-h1">
-          Go Beyond<br>
-          <span class="telemetry">Telemetry</span>
-        </h1>
+          <!-- MUST show on mobile: no absolute overlays hiding it -->
+          <h1 id="hero-h1">
+            Go Beyond<br>
+            <span class="telemetry" id="telemetryWord">Telemetry</span>
+          </h1>
 
-        <div class="hero-below" id="hero-below">
-          <p class="hero-lead">
-            CEYO is a weight-neutral, policy-scoped integrity layer that attaches beside AI inference systems and produces canonical artifacts representing defined inference-time decision state — cryptographically sealed for institutional verification under constrained disclosure.
+          <p class="hero-lead fx-words" data-fx="words">
+            CEYO is a decoupled, policy-scoped integrity layer that attaches beside AI inference systems and produces canonical artifacts representing defined inference-time decision-state context — cryptographically sealed for institutional verification under constrained disclosure conditions.
           </p>
 
-          <div class="hero-denials" aria-label="Boundary positioning">
+          <div class="hero-denials" aria-label="Boundary position">
             <span class="denial">CEYO does not replace models</span>
             <span class="denial">CEYO does not modify inference outputs</span>
             <span class="denial">CEYO does not evaluate correctness</span>
-            <span class="affirmation">CEYO produces verifiable records</span>
+            <span class="affirm">CEYO produces verifiable records</span>
           </div>
 
           <div class="cta-row">
-            <a href="platform.html" class="btn btn-primary">Enter Framework</a>
-            <a href="contact.html" class="btn">Request Controlled Review</a>
+            <a class="btn btn-primary" href="#deficit">Enter Framework</a>
+            <a class="btn" href="contact.html">Request Controlled Review</a>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="hero-card" aria-label="Seal map">
+          <div class="seal-wrap">
+            <div class="seal" aria-label="CEYO Seal">
+              <span>CEYO</span>
+            </div>
+          </div>
+
+          <div class="map">
+            <div class="map-head">
+              <div class="label">Integrity Map</div>
+              <div class="hint">Tap nodes to jump</div>
+            </div>
+
+            <div style="position:relative">
+              <svg id="sealMap" viewBox="0 0 720 300" role="img" aria-label="CEYO integrity map">
+                <!-- grid -->
+                <defs>
+                  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(245,241,230,.06)" stroke-width="1"/>
+                  </pattern>
+                  <filter id="glow">
+                    <feGaussianBlur stdDeviation="2.6" result="b"/>
+                    <feMerge>
+                      <feMergeNode in="b"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+                <rect x="0" y="0" width="720" height="300" fill="url(#grid)"/>
+
+                <!-- lines (drawn in via stroke-dash) -->
+                <g id="mapLines" stroke="rgba(90,162,255,.65)" stroke-width="2" fill="none" stroke-linecap="round">
+                  <path data-line d="M360 150 L140 88" />
+                  <path data-line d="M360 150 L220 210" />
+                  <path data-line d="M360 150 L300 70" />
+                  <path data-line d="M360 150 L420 70" />
+                  <path data-line d="M360 150 L500 210" />
+                  <path data-line d="M360 150 L580 88" />
+                  <path data-line d="M360 150 L610 150" />
+                  <path data-line d="M360 150 L110 150" />
+                </g>
+
+                <!-- nodes -->
+                <g id="mapNodes" font-family="IBM Plex Mono" font-size="11" letter-spacing="2.2" text-transform="uppercase">
+                  <!-- center -->
+                  <g class="node" data-key="ceyo" data-title="CEYO" data-body="Decoupled evidentiary substrate producing integrity-sealed artifacts under policy scope." data-jump="#deficit" tabindex="0" role="button" aria-label="CEYO node">
+                    <circle cx="360" cy="150" r="28" fill="rgba(45,107,255,.18)" stroke="rgba(245,241,230,.18)" />
+                    <circle cx="360" cy="150" r="28" fill="none" stroke="rgba(90,162,255,.65)" filter="url(#glow)"/>
+                    <text x="360" y="155" text-anchor="middle" fill="rgba(245,241,230,.92)" style="font-size:12px;letter-spacing:3px">CEYO</text>
+                  </g>
+
+                  <!-- ring -->
+                  <g class="node" data-key="capture" data-title="Capture" data-body="Policy-scoped capture. Define inclusion, exclusion, masking before generation." data-jump="#how" tabindex="0" role="button">
+                    <circle cx="140" cy="88" r="12" fill="rgba(245,241,230,.04)" stroke="rgba(245,241,230,.18)"/>
+                    <text x="140" y="120" text-anchor="middle" fill="rgba(245,241,230,.62)" style="font-size:10px">CAPTURE</text>
+                  </g>
+
+                  <g class="node" data-key="structure" data-title="Structure" data-body="Canonical artifact schema. Deterministic normalization across environments." data-jump="#how" tabindex="0" role="button">
+                    <circle cx="110" cy="150" r="12" fill="rgba(245,241,230,.04)" stroke="rgba(245,241,230,.18)"/>
+                    <text x="110" y="182" text-anchor="middle" fill="rgba(245,241,230,.62)" style="font-size:10px">STRUCTURE</text>
+                  </g>
+
+                  <g class="node" data-key="canonical" data-title="Canonical" data-body="RFC 8785 canonicalization for stable byte output. Reproducible hashing." data-jump="#how" tabindex="0" role="button">
+                    <circle cx="300" cy="70" r="12" fill="rgba(245,241,230,.04)" stroke="rgba(245,241,230,.18)"/>
+                    <text x="300" y="42" text-anchor="middle" fill="rgba(245,241,230,.62)" style="font-size:10px">CANONICAL</text>
+                  </g>
+
+                  <g class="node" data-key="sealing" data-title="Sealing" data-body="Hash + signature (reference: SHA-256, ECDSA P-256). Suite configurable." data-jump="#how" tabindex="0" role="button">
+                    <circle cx="420" cy="70" r="12" fill="rgba(245,241,230,.04)" stroke="rgba(245,241,230,.18)"/>
+                    <text x="420" y="42" text-anchor="middle" fill="rgba(245,241,230,.62)" style="font-size:10px">SEALING</text>
+                  </g>
+
+                  <g class="node" data-key="keys" data-title="Keys" data-body="Non-custodial keys. Signing authority remains in client HSM/KMS/TEE." data-jump="#how" tabindex="0" role="button">
+                    <circle cx="610" cy="150" r="12" fill="rgba(245,241,230,.04)" stroke="rgba(245,241,230,.18)"/>
+                    <text x="610" y="182" text-anchor="middle" fill="rgba(245,241,230,.62)" style="font-size:10px">KEYS</text>
+                  </g>
+
+                  <g class="node" data-key="disclosure" data-title="Disclosure" data-body="Tiered disclosure: Public / Redacted / Controlled Review. No forced IP exposure." data-jump="#isnot" tabindex="0" role="button">
+                    <circle cx="500" cy="210" r="12" fill="rgba(245,241,230,.04)" stroke="rgba(245,241,230,.18)"/>
+                    <text x="500" y="244" text-anchor="middle" fill="rgba(245,241,230,.62)" style="font-size:10px">DISCLOSURE</text>
+                  </g>
+
+                  <g class="node" data-key="availability" data-title="Availability" data-body="Fail-open by default. Inference continues; sealing failures logged and reviewable." data-jump="#is" tabindex="0" role="button">
+                    <circle cx="220" cy="210" r="12" fill="rgba(245,241,230,.04)" stroke="rgba(245,241,230,.18)"/>
+                    <text x="220" y="244" text-anchor="middle" fill="rgba(245,241,230,.62)" style="font-size:10px">AVAILABILITY</text>
+                  </g>
+
+                  <g class="node" data-key="verify" data-title="Verify" data-body="Independent verification: canonicalize → hash → validate signature → check policy scope." data-jump="#how" tabindex="0" role="button">
+                    <circle cx="580" cy="88" r="12" fill="rgba(245,241,230,.04)" stroke="rgba(245,241,230,.18)"/>
+                    <text x="580" y="120" text-anchor="middle" fill="rgba(245,241,230,.62)" style="font-size:10px">VERIFY</text>
+                  </g>
+                </g>
+              </svg>
+
+              <div class="map-tip" id="mapTip" aria-hidden="true">
+                <div class="t" id="tipT"></div>
+                <div class="b" id="tipB"></div>
+                <div class="k" id="tipK">Tap to jump</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Keep version UNDER seal (not above brand) -->
+          <div style="margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,241,230,.42);text-align:center;z-index:2;position:relative">
+            V2026.02.19 · Public Overview (Descriptive Only)
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="scroll-indicator" aria-hidden="true">
-        <div class="scroll-line"></div>
-        <span>Scroll</span>
+    <div class="scroll-ind" aria-hidden="true">
+      <div class="line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+</div>
+
+<main id="content">
+
+  <!-- [01] Accountability Gap — IVORY "PAGE" -->
+  <section class="page" id="deficit" data-skin="ivory" aria-labelledby="deficit-h">
+    <div class="wrap">
+      <div class="tag">[01] The Accountability Gap</div>
+      <h2 class="h2" id="deficit-h">The Accountability<br>Gap</h2>
+
+      <!-- FIXED: separate paragraphs, readable spacing, no merged words -->
+      <p class="p fx-words" data-fx="words" data-type="on">
+        Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is frequently secondary.
+      </p>
+      <p class="p fx-words" data-fx="words" data-type="on">
+        When a decision is later questioned—through regulatory inquiry, internal audit, incident review, or litigation—organizations often reconstruct events from partial logs and distributed traces. Reconstruction is interpretive. It is not deterministic.
+      </p>
+      <p class="p fx-words" data-fx="words" data-type="on">
+        Institutions require more than reconstructed context. They require artifacts that are canonical in structure, explicit in capture scope, cryptographically sealed, and independently verifiable.
+      </p>
+      <p class="p fx-words" data-fx="words" data-type="on">
+        Without those properties, oversight depends on operator assertions rather than verifiable integrity. This is an architectural deficit, not an operational oversight.
+      </p>
+
+      <div class="grid" aria-label="Institutional requirements">
+        <div class="card">
+          <div class="k">01 · Canonical</div>
+          <div class="t">Canonical in structure</div>
+          <div class="b">Deterministic schema and stable byte output enable reproducible verification without interpretive variance.</div>
+        </div>
+        <div class="card">
+          <div class="k">02 · Scope</div>
+          <div class="t">Explicit capture scope</div>
+          <div class="b">Policy defines inclusion, exclusion, and masking prior to generation. Scope is versioned and reviewable.</div>
+        </div>
+        <div class="card">
+          <div class="k">03 · Sealed</div>
+          <div class="t">Cryptographically sealed</div>
+          <div class="b">Hash and signature establish tamper-evidence and origin authenticity under a declared suite.</div>
+        </div>
+        <div class="card">
+          <div class="k">04 · Separation</div>
+          <div class="t">Internals remain protected</div>
+          <div class="b">Verification does not require default disclosure of weights, architecture internals, or trade-secret implementation.</div>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
+
+  <!-- [02] What CEYO Is — NAVY "PAGE" -->
+  <section class="page" id="is" data-skin="navy" aria-labelledby="is-h">
+    <div class="tag">[02] What CEYO Is</div>
+    <h2 class="h2" id="is-h">A Decoupled<br>Evidentiary Substrate</h2>
+
+    <p class="p fx-words" data-fx="words">
+      CEYO attaches at the inference boundary—as a sidecar, wrapper, or gateway—and captures only what operator policy explicitly defines.
+      It normalizes captured fields into a stable artifact schema, applies deterministic canonicalization (RFC 8785), and seals cryptographically under a non-custodial key architecture.
+    </p>
+    <p class="p fx-words" data-fx="words">
+      Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of model output.
+    </p>
+  </section>
+
+  <!-- [03] What CEYO Is Not — IVORY "PAGE" -->
+  <section class="page" id="isnot" data-skin="ivory" aria-labelledby="isnot-h">
+    <div class="wrap">
+      <div class="tag">[03] What CEYO Is Not</div>
+      <h2 class="h2" id="isnot-h">Records,<br>Not Judgments</h2>
+
+      <div class="grid">
+        <div class="card">
+          <div class="k">× Not</div>
+          <div class="t">A model evaluation system</div>
+          <div class="b">CEYO does not assess correctness, accuracy, or performance of outputs.</div>
+        </div>
+        <div class="card">
+          <div class="k">× Not</div>
+          <div class="t">A certification authority</div>
+          <div class="b">CEYO does not certify regulatory compliance or provide endorsement.</div>
+        </div>
+        <div class="card">
+          <div class="k">× Not</div>
+          <div class="t">An adjudication engine</div>
+          <div class="b">CEYO does not determine legality, fairness, or admissibility.</div>
+        </div>
+        <div class="card">
+          <div class="k">→ Is</div>
+          <div class="t">Integrity-sealed record infrastructure</div>
+          <div class="b">CEYO produces verifiable artifacts; institutions determine their meaning.</div>
+        </div>
+      </div>
+
+      <p class="p fx-words" data-fx="words" style="margin-top:18px">
+        Evidence infrastructure must remain structurally independent from decision authority. This separation preserves neutrality and avoids conflicts between record generation and policy enforcement.
+      </p>
+    </div>
+  </section>
+
+  <!-- [04] Technical Properties — NAVY "PAGE" -->
+  <section class="page" id="how" data-skin="navy" aria-labelledby="how-h">
+    <div class="tag">[04] How It Works</div>
+    <h2 class="h2" id="how-h">Technical<br>Properties</h2>
+
+    <div class="tech" aria-label="Technical properties navigation and panels">
+      <nav class="techNav" aria-label="Jump to property">
+        <a href="#p1" data-panel="0" class="active">01 · Capture</a>
+        <a href="#p2" data-panel="1">02 · Structure</a>
+        <a href="#p3" data-panel="2">03 · Sealing</a>
+        <a href="#p4" data-panel="3">04 · Keys</a>
+        <a href="#p5" data-panel="4">05 · Disclosure</a>
+        <a href="#p6" data-panel="5">06 · Availability</a>
+      </nav>
+
+      <div>
+        <article class="panel" id="p1">
+          <div class="num">01 · Policy-Scoped Capture</div>
+          <div class="ph" data-type="h">Define Before You Collect</div>
+          <div class="pb fx-words" data-fx="words" data-type="on">
+            Operators define what fields are included, excluded, and masked before artifact generation begins. Capture policy is explicit and versioned. Artifacts reflect declared policy scope; they do not implicitly expand beyond it.
+          </div>
+        </article>
+
+        <article class="panel" id="p2">
+          <div class="num">02 · Canonical Structure</div>
+          <div class="ph" data-type="h">Deterministic Normalization</div>
+          <div class="pb fx-words" data-fx="words" data-type="on">
+            Captured telemetry is normalized into a deterministic JSON artifact schema. Canonicalization is applied in accordance with RFC 8785, producing a stable byte representation independent of serialization order.
+          </div>
+        </article>
+
+        <article class="panel" id="p3">
+          <div class="num">03 · Integrity Sealing</div>
+          <div class="ph" data-type="h">Hash and Signature</div>
+          <div class="pb fx-words" data-fx="words" data-type="on">
+            After canonicalization, hashing and digital signature are applied as reference implementations. Suite selection is configurable. Hashing establishes tamper-evidence; signatures establish origin authenticity.
+          </div>
+        </article>
+
+        <article class="panel" id="p4">
+          <div class="num">04 · Non-Custodial Keys</div>
+          <div class="ph" data-type="h">You Control the Signing</div>
+          <div class="pb fx-words" data-fx="words" data-type="on">
+            Signing keys are generated and retained within the client-controlled environment—HSM, KMS, or TEE. CEYO does not possess, transmit, or store private signing keys.
+          </div>
+        </article>
+
+        <article class="panel" id="p5">
+          <div class="num">05 · Constrained Disclosure</div>
+          <div class="ph" data-type="h">Tiered Verification Access</div>
+          <div class="pb fx-words" data-fx="words" data-type="on">
+            Artifacts may be disclosed under Public / Redacted or Controlled Review tiers. Integrity may be validated without default exposure of weights, proprietary architecture, or trade-secret implementation.
+          </div>
+        </article>
+
+        <article class="panel" id="p6">
+          <div class="num">06 · Fail-Open Architecture</div>
+          <div class="ph" data-type="h">Inference Continuity First</div>
+          <div class="pb fx-words" data-fx="words" data-type="on">
+            Inference continuity remains independent of artifact sealing. If artifact generation fails, inference proceeds uninterrupted. Failure events are logged and reviewable unless the operator configures a stricter posture.
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="ctaStrip">
+    <div>
+      <strong>Controlled Review</strong>
+      <p>Detailed documentation, verification contracts, capture schema specifications, and benchmark methodology are available under controlled disclosure. Access is granted following review request evaluation.</p>
+    </div>
+    <a href="contact.html" class="btn btn-primary">Request Controlled Review</a>
   </div>
 
-  <main id="content">
-    <!-- SEAL MAP (Distinct section, not labeled “seal map” in-body) -->
-    <div class="map-wrap" aria-label="CEYO system map">
-      <div class="map-panel">
-        <div class="map-header">
-          <div class="map-title">CEYO SYSTEM MAP · SEAL FLOW</div>
-          <div class="map-note">Tap nodes → jump to section</div>
-        </div>
-
-        <div class="map-stage">
-          <!-- Map: fully connected + sequential animation -->
-          <svg viewBox="0 0 980 420" role="img" aria-label="CEYO evidentiary flow map">
-            <defs>
-              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="3" result="b"/>
-                <feMerge>
-                  <feMergeNode in="b"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-
-            <!-- Primary chain -->
-            <path id="l1" class="line" d="M180 170 L300 170" />
-            <path id="l2" class="line" d="M300 170 L420 170" />
-            <path id="l3" class="line" d="M420 170 L540 170" />
-            <path id="l4" class="line" d="M540 170 L660 170" />
-            <path id="l5" class="line" d="M660 170 L780 170" />
-
-            <!-- Secondary legs -->
-            <path id="la" class="line dim" d="M490 210 L370 290" />
-            <path id="ld" class="line dim" d="M490 210 L610 290" />
-
-            <!-- Nodes (clickable). Use <a> with href -->
-            <a href="#capture" aria-label="Jump to Capture">
-              <circle class="node" cx="180" cy="170" r="18"/>
-              <text class="node-label" x="180" y="210" text-anchor="middle">Capture</text>
-            </a>
-
-            <a href="#structure" aria-label="Jump to Structure">
-              <circle class="node" cx="300" cy="170" r="18"/>
-              <text class="node-label" x="300" y="210" text-anchor="middle">Structure</text>
-            </a>
-
-            <a href="#canonical" aria-label="Jump to Canonicalization">
-              <circle class="node" cx="420" cy="170" r="18"/>
-              <text class="node-label" x="420" y="210" text-anchor="middle">Canonical</text>
-            </a>
-
-            <a href="#sealing" aria-label="Jump to Sealing">
-              <circle class="node" cx="540" cy="170" r="18"/>
-              <text class="node-label" x="540" y="210" text-anchor="middle">Sealing</text>
-            </a>
-
-            <a href="#keys" aria-label="Jump to Keys">
-              <circle class="node" cx="660" cy="170" r="18"/>
-              <text class="node-label" x="660" y="210" text-anchor="middle">Keys</text>
-            </a>
-
-            <a href="#verify" aria-label="Jump to Verification">
-              <circle class="node" cx="780" cy="170" r="18"/>
-              <text class="node-label" x="780" y="210" text-anchor="middle">Verify</text>
-            </a>
-
-            <!-- Core: CEYO -->
-            <a href="#is" aria-label="Jump to What CEYO Is">
-              <circle class="node core" cx="490" cy="210" r="34" filter="url(#glow)"/>
-              <text class="node-label" x="490" y="216" text-anchor="middle">CEYO</text>
-            </a>
-
-            <a href="#availability" aria-label="Jump to Availability">
-              <circle class="node" cx="370" cy="290" r="18"/>
-              <text class="node-label dim" x="370" y="330" text-anchor="middle">Availability</text>
-            </a>
-
-            <a href="#disclosure" aria-label="Jump to Disclosure">
-              <circle class="node" cx="610" cy="290" r="18"/>
-              <text class="node-label dim" x="610" y="330" text-anchor="middle">Disclosure</text>
-            </a>
-          </svg>
-        </div>
+  <!-- Boundary + All Rights Reserved -->
+  <footer class="footer" aria-label="Boundary declaration and legal">
+    <div class="boundary">
+      <div class="bt">Boundary Declaration · V2026.02.19</div>
+      <div class="cols">
+        <p>CEYO produces records. It does not validate correctness, fairness, legality, or compliance outcomes.</p>
+        <p>CEYO does not certify regulatory compliance.</p>
+        <p>CEYO does not guarantee legal admissibility.</p>
+        <p>CEYO does not guarantee inference reproducibility.</p>
+        <p>Authorized institutions and operators retain responsibility for decisions and determinations.</p>
+        <p>Cryptographic suite references are illustrative; deployments select suites appropriate to their regulatory context.</p>
       </div>
+      <div class="close">Verification confirms integrity and provenance under policy scope — not correctness of model output.</div>
+      <div class="rights">© CEYO. All rights reserved.</div>
     </div>
+  </footer>
 
-    <!-- [01] Accountability Gap (paper mode: distinct “page” feel) -->
-    <section class="sect vis focus paper" id="deficit" aria-labelledby="deficit-h" style="padding: 64px 44px;">
-      <div class="sect-tag">[01] The Accountability Gap</div>
-      <h2 class="sect-h2" id="deficit-h" data-type="on">
-        The Accountability<br>Gap
-      </h2>
+</main>
 
-      <!-- IMPORTANT: paragraphs must never be split into spans (keeps spaces intact) -->
-      <p class="sect-p" data-type="on">
-        <span class="p-ink">Modern AI deployments optimize for throughput, latency, and availability.</span>
-        <span class="p-ink">Accountability infrastructure is frequently secondary.</span>
-      </p>
+<!-- BOTTOM INDEX BAR -->
+<nav id="indexbar" aria-label="Site index">
+  <a class="ib-item active" href="index.html">Index</a>
+  <a class="ib-item" href="platform.html">Arch</a>
+  <a class="ib-item" href="trust.html">Trust</a>
+  <a class="ib-item" href="governance.html">Gov</a>
+  <a class="ib-item" href="contact.html">Contact</a>
+</nav>
 
-      <p class="sect-p" data-type="on">
-        When a decision is later questioned — through regulatory inquiry, internal audit, incident review, or litigation —
-        organizations often reconstruct events from partial logs and distributed traces.
-        <span class="p-ink">Reconstruction is interpretive.</span>
-        <span class="p-ink">It is not deterministic.</span>
-      </p>
+<script>
+/* ─────────────────────────────────────────────────────
+   CEYO — Interaction + Readability Fixes
+───────────────────────────────────────────────────── */
 
-      <p class="sect-p" data-type="on">
-        Institutions require more than reconstructed context. They require artifacts that are canonical in structure,
-        explicit in capture scope, cryptographically sealed, and independently verifiable. Without those properties,
-        oversight depends on operator assertions rather than verifiable integrity.
-      </p>
+/* Spotlight + Cursor */
+const cursor = document.getElementById('cursor');
+const spotlight = document.getElementById('spotlight');
+let mx=0,my=0;
 
-      <p class="sect-p" style="margin-top:10px;">
-        This is an architectural deficit, not an operational oversight.
-      </p>
+document.addEventListener('mousemove', (e)=>{
+  mx=e.clientX; my=e.clientY;
+  cursor.style.left = mx+'px';
+  cursor.style.top  = my+'px';
+  spotlight.style.background =
+    `radial-gradient(circle 340px at ${mx}px ${my}px, rgba(45,107,255,.18) 0%, transparent 72%)`;
+},{passive:true});
 
-      <div class="deficit-cells" role="list" aria-label="Institutional requirements">
-        <a class="dcell" role="listitem" href="#canonical" style="display:block;">
-          <div class="dcell-num">01 · Canonical</div>
-          <div class="dcell-title">Canonical in structure</div>
-          <p class="dcell-body">A stable schema and deterministic bytes, independent of environment, enabling reproducible verification.</p>
-        </a>
+document.addEventListener('mouseleave', ()=>{
+  cursor.style.opacity='0';
+  spotlight.style.background='none';
+});
+document.addEventListener('mouseenter', ()=> cursor.style.opacity='1');
 
-        <a class="dcell" role="listitem" href="#capture" style="display:block;">
-          <div class="dcell-num">02 · Explicit</div>
-          <div class="dcell-title">Explicit capture scope</div>
-          <p class="dcell-body">Policy defines inclusion, exclusion, and masking before generation. Scope is versioned and reviewable.</p>
-        </a>
+document.querySelectorAll('a, button, .card, .node').forEach(el=>{
+  el.addEventListener('mouseenter', ()=> cursor.classList.add('large'));
+  el.addEventListener('mouseleave', ()=> cursor.classList.remove('large'));
+});
 
-        <a class="dcell" role="listitem" href="#sealing" style="display:block;">
-          <div class="dcell-num">03 · Sealed</div>
-          <div class="dcell-title">Cryptographic sealing</div>
-          <p class="dcell-body">Deterministic canonicalization, hashing, and signatures establish tamper-evidence and origin authenticity.</p>
-        </a>
+/* Top nav scroll state */
+const topnav = document.getElementById('topnav');
+window.addEventListener('scroll', ()=>{
+  topnav.classList.toggle('scrolled', window.scrollY>40);
+},{passive:true});
 
-        <a class="dcell" role="listitem" href="#verify" style="display:block;">
-          <div class="dcell-num">04 · Verifiable</div>
-          <div class="dcell-title">Independent verification</div>
-          <p class="dcell-body">Validation with public keys only — without default exposure of proprietary internals beyond policy scope.</p>
-        </a>
-      </div>
+/* Hero telemetry sweep (blue light) */
+const telemetryWord = document.getElementById('telemetryWord');
+function fireSweep(){
+  telemetryWord.classList.remove('sweep');
+  void telemetryWord.offsetWidth;
+  telemetryWord.classList.add('sweep');
+}
+fireSweep();
+setInterval(fireSweep, 5200);
 
-      <div class="req-panel" role="region" aria-label="Boundary of accountability">
-        <div class="req-header">
-          Without these properties, accountability relies on operator trust — not verifiable record integrity
-        </div>
-        <ul class="req-items">
-          <li class="req-item">
-            <div class="req-dot"></div>
-            <div>
-              <strong>Deterministic structure</strong>
-              <div class="req-item-body">Consistent schema producible by any conforming implementation.</div>
-            </div>
-          </li>
-          <li class="req-item">
-            <div class="req-dot"></div>
-            <div>
-              <strong>Integrity sealing</strong>
-              <div class="req-item-body">Hash + signature establishing tamper-evidence and origin.</div>
-            </div>
-          </li>
-          <li class="req-item">
-            <div class="req-dot"></div>
-            <div>
-              <strong>Explicit disclosure scope</strong>
-              <div class="req-item-body">Versioned policy capturing what is and is not included.</div>
-            </div>
-          </li>
-          <li class="req-item">
-            <div class="req-dot"></div>
-            <div>
-              <strong>Separation of internals and oversight</strong>
-              <div class="req-item-body">Verification without requiring exposure of proprietary IP.</div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </section>
+/* Split words for subtle hover glow (keeps spaces intact) */
+function wordify(el){
+  if(el.dataset.wordified) return;
+  el.dataset.wordified='1';
+  const txt = el.textContent;
+  // preserve spaces by splitting with regex including whitespace tokens
+  const parts = txt.split(/(\s+)/);
+  el.innerHTML = parts.map(p=>{
+    if(/\s+/.test(p)) return p;
+    return `<span>${p}</span>`;
+  }).join('');
+}
+document.querySelectorAll('[data-fx="words"]').forEach(wordify);
 
-    <!-- [02] What CEYO Is -->
-    <section class="sect" id="is" aria-labelledby="is-h">
-      <div class="sect-tag">[02] What CEYO Is</div>
-      <h2 class="sect-h2" id="is-h">A Decoupled<br>Evidentiary Substrate</h2>
-      <p class="sect-p">
-        CEYO attaches at the inference boundary — as a sidecar, wrapper, or gateway — and captures only what operator policy explicitly defines.
-        It normalizes captured fields into a stable artifact schema, applies deterministic canonicalization (RFC 8785), and seals cryptographically under a non-custodial key architecture.
-      </p>
-      <p class="sect-p">Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of model output.</p>
-    </section>
+/* Page reveal */
+const pages = document.querySelectorAll('.page');
+const pageObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('vis');
+  });
+},{threshold:0.10});
+pages.forEach(p=>pageObs.observe(p));
 
-    <!-- [03] Technical Properties (anchors for map) -->
-    <section class="sect" id="how" aria-label="Technical properties">
-      <div class="sect-tag">[03] Technical Properties</div>
-      <h2 class="sect-h2" data-type="on">Capture. Structure.<br>Seal. Verify.</h2>
-
-      <div style="display:grid; grid-template-columns: 1fr; gap:16px; max-width: 70ch;">
-        <div id="capture">
-          <p class="sect-p" data-type="on"><span class="p-ink">Capture (policy-scoped):</span> Operators define included, excluded, and masked fields before generation. Scope is explicit and versioned within the artifact.</p>
-        </div>
-        <div id="structure">
-          <p class="sect-p" data-type="on"><span class="p-ink">Structure (canonical schema):</span> Captured context is normalized into a deterministic artifact schema designed for review — not free-form logs.</p>
-        </div>
-        <div id="canonical">
-          <p class="sect-p" data-type="on"><span class="p-ink">Canonicalization (RFC 8785):</span> Logically equivalent artifacts produce identical byte representations across environments — required for reproducible hashing.</p>
-        </div>
-        <div id="sealing">
-          <p class="sect-p" data-type="on"><span class="p-ink">Sealing (hash + signature):</span> Hashing establishes tamper-evidence; signatures establish origin authenticity. Cryptographic suites remain deployment-defined.</p>
-        </div>
-        <div id="keys">
-          <p class="sect-p" data-type="on"><span class="p-ink">Keys (non-custodial):</span> Private signing keys remain under operator control (HSM/KMS/TEE). CEYO does not possess or store private keys.</p>
-        </div>
-        <div id="disclosure">
-          <p class="sect-p" data-type="on"><span class="p-ink">Disclosure (tiered):</span> Policy defines public/redacted vs controlled-review tiers before generation. Integrity can be validated without forced IP exposure.</p>
-        </div>
-        <div id="availability">
-          <p class="sect-p" data-type="on"><span class="p-ink">Availability (fail-open by default):</span> Inference continuity remains independent. Seal failures are logged, artifacts marked unsealed, and conditions become reviewable.</p>
-        </div>
-        <div id="verify">
-          <p class="sect-p" data-type="on"><span class="p-ink">Verification (independent):</span> Canonicalize → recompute hash → validate signature → check policy alignment. Output states: Confirmed / Failed / Policy Mismatch.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <div class="cta-strip">
-      <div class="cta-text">
-        <strong>Controlled Review</strong>
-        <p>Detailed documentation, verification contracts, capture schema specifications, and benchmark methodology are available under controlled disclosure.</p>
-      </div>
-      <a class="btn btn-primary" href="contact.html">Request Controlled Review</a>
-    </div>
-
-    <!-- Boundary + rights -->
-    <div class="boundary-wrap" aria-label="Boundary declaration">
-      <div class="boundary">
-        <div class="boundary-head">
-          <span>Boundary Declaration · V2026.02.19</span>
-          <span>Verification confirms integrity — not correctness</span>
-        </div>
-        <div class="boundary-grid">
-          <p class="bitem">CEYO produces records. It does not validate correctness, fairness, legality, or compliance outcomes.</p>
-          <p class="bitem">CEYO does not certify regulatory compliance.</p>
-          <p class="bitem">CEYO does not guarantee legal admissibility.</p>
-          <p class="bitem">CEYO does not guarantee inference reproducibility.</p>
-          <p class="bitem">Authorized institutions and operators retain responsibility for determinations.</p>
-          <p class="bitem">Cryptographic suites shown are illustrative; deployments select suites appropriate to their context.</p>
-        </div>
-      </div>
-
-      <div class="rights" aria-label="All rights reserved">
-        <span>© 2026 CEYO. All rights reserved.</span>
-        <span><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></span>
-      </div>
-    </div>
-  </main>
-
-  <!-- Bottom index bar -->
-  <nav id="indexbar" aria-label="Site index">
-    <a class="ib-item active" href="index.html">Index</a>
-    <a class="ib-item" href="platform.html">Arch</a>
-    <a class="ib-item" href="trust.html">Trust</a>
-    <a class="ib-item" href="governance.html">Gov</a>
-    <a class="ib-item" href="contact.html">Contact</a>
-  </nav>
-
-  <script>
-    // Cursor + Spotlight (blue-highlight light)
-    const cursor = document.getElementById('cursor');
-    const spotlight = document.getElementById('spotlight');
-    let mx = 0, my = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.left = mx + 'px';
-      cursor.style.top  = my + 'px';
-      spotlight.style.background =
-        `radial-gradient(circle 360px at ${mx}px ${my}px, rgba(62,123,255,.18) 0%, rgba(62,123,255,0) 70%)`;
-    });
-    document.addEventListener('mouseleave', () => {
-      cursor.style.opacity = '0';
-      spotlight.style.background = 'none';
-    });
-    document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
-
-    document.querySelectorAll('a, button, .dcell, .ib-item').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('large'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('large'));
-    });
-
-    // Top nav scrolled state
-    const topnav = document.getElementById('topnav');
-    window.addEventListener('scroll', () => {
-      topnav.classList.toggle('scrolled', window.scrollY > 36);
-    }, { passive: true });
-
-    // Hero parallax fade/blur (kept)
-    const heroWrap = document.getElementById('hero-wrap');
-    const heroH1 = document.getElementById('hero-h1');
-    const heroBelow = document.getElementById('hero-below');
-
-    window.addEventListener('scroll', () => {
-      const pct = Math.min(window.scrollY / (heroWrap.offsetHeight * 0.34), 1);
-      heroH1.style.opacity   = Math.max(0, 1 - pct * 1.25);
-      heroH1.style.filter    = `blur(${pct * 12}px)`;
-      heroH1.style.transform = `translateY(${pct * -24}px)`;
-      heroBelow.style.opacity   = Math.max(0, 1 - pct * 1.7);
-      heroBelow.style.transform = `translateY(${pct * -14}px)`;
-    }, { passive: true });
-
-    // Section observer: reveal + focus highlight (drives blue paragraph highlight)
-    const allSects = document.querySelectorAll('.sect');
-    const sectObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('vis');
-          // keep focus on entry
-          e.target.classList.add('focus');
-        } else {
-          e.target.classList.remove('focus');
-        }
-      });
-    }, { threshold: 0.12 });
-    allSects.forEach(s => sectObs.observe(s));
-
-    // Type-on-scroll (PRESERVES SPACES) for elements marked data-type="on"
-    function typeElement(el, cps = 42) {
-      if (el.dataset.typed === "1") return;
-      el.dataset.typed = "1";
-
-      const full = el.textContent;          // DO NOT normalize whitespace
-      el.textContent = "";                  // clear
-      el.style.visibility = "visible";
-
-      let i = 0;
-      const interval = Math.max(12, Math.floor(1000 / cps));
-      const timer = setInterval(() => {
-        el.textContent += full[i] ?? "";
-        i++;
-        if (i >= full.length) clearInterval(timer);
-      }, interval);
+/* Typewriter for selected blocks (accountability + panels) */
+function typeBlock(el, speed=14){
+  if(el.dataset.typed) return;
+  el.dataset.typed='1';
+  const full = el.textContent.replace(/\s+/g,' ').trim();
+  el.textContent='';
+  let i=0;
+  const iv=setInterval(()=>{
+    el.textContent += full[i] || '';
+    i++;
+    if(i>=full.length){ clearInterval(iv); }
+  }, speed);
+}
+const typeObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const target = e.target;
+      // If we previously wordified, restore plain text typing for that run
+      if(target.dataset.wordified){
+        // rebuild plain text from spans
+        target.textContent = target.textContent; // already plain text in DOM value
+        target.dataset.wordified='';
+      }
+      typeBlock(target, 12);
     }
+  });
+},{threshold:0.55});
+document.querySelectorAll('[data-type="on"]').forEach(p=>typeObs.observe(p));
+document.querySelectorAll('[data-type="h"]').forEach(h=>typeObs.observe(h));
 
-    const typeObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) typeElement(e.target, 45);
-      });
-    }, { threshold: 0.60 });
-
-    document.querySelectorAll('[data-type="on"]').forEach(el => typeObs.observe(el));
-
-    // SVG line-draw animation (sequential)
-    function animatePath(path, delayMs) {
-      const len = path.getTotalLength();
-      path.style.strokeDasharray = len;
-      path.style.strokeDashoffset = len;
-      path.style.transition = `stroke-dashoffset 900ms cubic-bezier(.2,.9,.2,1) ${delayMs}ms, opacity 400ms ease ${delayMs}ms`;
-      requestAnimationFrame(() => { path.style.strokeDashoffset = "0"; });
+/* Tech nav active sync */
+const panels = [...document.querySelectorAll('.panel')];
+const navItems = [...document.querySelectorAll('.techNav a')];
+const panelObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const idx = panels.indexOf(e.target);
+      navItems.forEach((n,i)=>n.classList.toggle('active', i===idx));
     }
+  });
+},{threshold:0.55});
+panels.forEach(p=>panelObs.observe(p));
 
-    const paths = ["l1","l2","l3","l4","l5","la","ld"].map(id => document.getElementById(id)).filter(Boolean);
-    let mapAnimated = false;
+/* Seal map: animate lines + nodes from scratch */
+const lines = [...document.querySelectorAll('[data-line]')];
+lines.forEach(path=>{
+  const len = path.getTotalLength();
+  path.style.strokeDasharray = len;
+  path.style.strokeDashoffset = len;
+});
 
-    const mapPanel = document.querySelector('.map-panel');
-    const mapObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (!e.isIntersecting || mapAnimated) return;
-        mapAnimated = true;
+const nodes = [...document.querySelectorAll('#mapNodes .node')];
+nodes.forEach((n,i)=>{
+  n.style.opacity = '0';
+  n.style.transformOrigin = 'center';
+});
 
-        // primary chain first
-        const primary = ["l1","l2","l3","l4","l5"].map(id => document.getElementById(id));
-        primary.forEach((p, idx) => animatePath(p, idx * 190));
+function animateMap(){
+  // reset
+  lines.forEach(path=>{
+    const len = path.getTotalLength();
+    path.style.transition = 'none';
+    path.style.strokeDashoffset = len;
+  });
+  nodes.forEach(n=>{
+    n.style.transition='none';
+    n.style.opacity='0';
+    n.style.transform='scale(.88)';
+  });
 
-        // secondary legs after
-        setTimeout(() => {
-          animatePath(document.getElementById("la"), 0);
-          animatePath(document.getElementById("ld"), 120);
-        }, 1100);
-      });
-    }, { threshold: 0.35 });
-    mapObs.observe(mapPanel);
-
-    // Touch invert: keep disciplined (no ugly inversion)
-    document.querySelectorAll('.btn, .dcell, .ib-item').forEach(el => {
-      el.addEventListener('touchstart', () => {
-        el.style.transform = 'scale(0.99)';
-      }, { passive:true });
-      el.addEventListener('touchend', () => {
-        setTimeout(() => { el.style.transform = ''; }, 120);
-      }, { passive:true });
+  // play
+  setTimeout(()=>{
+    lines.forEach((path,i)=>{
+      path.style.transition = `stroke-dashoffset 900ms cubic-bezier(.2,1,.2,1) ${i*70}ms`;
+      path.style.strokeDashoffset = '0';
     });
-  </script>
+    nodes.forEach((n,i)=>{
+      n.style.transition = `opacity 520ms ease ${i*85+260}ms, transform 520ms cubic-bezier(.2,1,.2,1) ${i*85+260}ms`;
+      n.style.opacity='1';
+      n.style.transform='scale(1)';
+    });
+  }, 50);
+}
+animateMap();
+
+/* Map interaction: tooltip + click to scroll */
+const mapTip = document.getElementById('mapTip');
+const tipT = document.getElementById('tipT');
+const tipB = document.getElementById('tipB');
+
+function showTip(e, node){
+  const box = document.getElementById('sealMap').getBoundingClientRect();
+  const x = (e.clientX || (box.left + box.width/2));
+  const y = (e.clientY || (box.top + box.height/2));
+  tipT.textContent = node.dataset.title || '';
+  tipB.textContent = node.dataset.body || '';
+  mapTip.style.transform = `translate(${Math.min(x - box.left + 16, box.width - 260)}px, ${Math.max(y - box.top - 12, 10)}px)`;
+  mapTip.style.left = box.left + 'px';
+  mapTip.style.top  = box.top + 'px';
+  mapTip.setAttribute('aria-hidden','false');
+}
+function hideTip(){
+  mapTip.style.transform='translate(-9999px,-9999px)';
+  mapTip.setAttribute('aria-hidden','true');
+}
+
+nodes.forEach(node=>{
+  node.addEventListener('mousemove', (e)=>showTip(e,node));
+  node.addEventListener('mouseenter', (e)=>showTip(e,node));
+  node.addEventListener('mouseleave', hideTip);
+
+  node.addEventListener('click', ()=>{
+    const jump = node.dataset.jump;
+    if(jump && jump.startsWith('#')){
+      const el = document.querySelector(jump);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  });
+
+  node.addEventListener('keydown', (ev)=>{
+    if(ev.key==='Enter' || ev.key===' '){
+      ev.preventDefault();
+      node.click();
+    }
+  });
+});
+
+/* Touch invert (subtle, controlled) */
+document.querySelectorAll('.btn, .card, .ib-item').forEach(el=>{
+  el.addEventListener('touchstart', ()=>{
+    el.style.background = 'var(--ivory)';
+    el.style.color = 'var(--ink)';
+  }, {passive:true});
+  el.addEventListener('touchend', ()=>{
+    setTimeout(()=>{ el.style.background=''; el.style.color=''; }, 160);
+  }, {passive:true});
+});
+
+/* IMPORTANT: never allow the “merged words” bug.
+   If any block ever gets collapsed, enforce normal spacing. */
+document.querySelectorAll('.p, .pb').forEach(el=>{
+  el.style.whiteSpace = 'normal';
+  el.style.wordSpacing = 'normal';
+  el.style.letterSpacing = 'normal';
+});
+</script>
 </body>
 </html>
