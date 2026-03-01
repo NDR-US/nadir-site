@@ -1,614 +1,194 @@
-Yes. This new file is a normal multi-page index.html (not the single-file router). Use it as your homepage.
-
-Now the other pages must follow the same rules:
-	•	Same #stage canvas background + grain + cursor
-	•	Same #topnav and #bottombar
-	•	Same navWithExplosion() for .nav-exit links
-	•	No hash router
-	•	Real files: platform.html, trust.html, governance.html, contact.html
-
-Below is a complete platform.html that matches your new index system and keeps your CEYO language consistent.
-
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>CEYO — Platform Architecture</title>
-  <meta name="description" content="CEYO platform architecture: inference-boundary attachment, policy-scoped capture, canonical artifacts, RFC 8785, cryptographic sealing, non-custodial keys, and independent verification."/>
-  <meta name="theme-color" content="#060A13"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CEYO — Architecture</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&family=Outfit:ital,wght@0,700;0,900;1,900&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <style>
-    :root{
-      --navy:#060A13;
-      --navy2:#0B1220;
-      --ivory:#F4F0E6;
-      --royal:#2D67FF;
-      --royal-glow: rgba(45,103,255,0.40);
-      --text:rgba(244,240,230,.92);
-      --muted:rgba(244,240,230,.56);
-      --stroke:rgba(244,240,230,.10);
-      --brandFont:'Outfit', system-ui, sans-serif;
-      --monoFont:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --bodyFont:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
+<style>
+:root{
+  --navy:#0A0F1C;
+  --ivory:#F4F0E6;
+  --royal:#2D67FF;
+  --graph:#1A2236;
+  --muted:rgba(244,240,230,.6);
+  --stroke:rgba(244,240,230,.12);
+  --mono:'IBM Plex Mono', monospace;
+  --brand:'Outfit', sans-serif;
+}
 
-    html{scroll-behavior:smooth; background:var(--navy);}
-    body{
-      margin:0; background:var(--navy); color:var(--text);
-      font-family:var(--bodyFont); overflow-x:hidden; cursor:none;
-    }
-    @media (pointer: coarse){
-      body{ cursor:auto; }
-      #cursor{ display:none; }
-    }
+html{background:var(--navy);scroll-behavior:smooth;}
+body{margin:0;color:var(--ivory);font-family:'Inter',sans-serif;background:var(--navy);}
 
-    /* Background */
-    #stage{
-      position:fixed; inset:0; z-index:0; pointer-events:none;
-      background:
-        radial-gradient(1100px 650px at 50% 26%, rgba(45,103,255,.10), transparent 60%),
-        radial-gradient(900px 520px at 20% 72%, rgba(45,103,255,.06), transparent 65%),
-        linear-gradient(180deg, var(--navy), var(--navy2));
-    }
-    #gl{ width:100%; height:100%; display:block; }
+#blueprint{
+position:fixed;
+inset:0;
+background:
+linear-gradient(var(--graph) 1px, transparent 1px),
+linear-gradient(90deg,var(--graph) 1px,transparent 1px);
+background-size:40px 40px;
+opacity:.25;
+z-index:0;
+}
 
-    /* Grain */
-    #grain{
-      position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.05;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
+#gl{
+position:fixed;
+right:0;
+top:0;
+width:40vw;
+height:100vh;
+z-index:1;
+}
 
-    /* Cursor */
-    #cursor{
-      position:fixed; z-index:9999; width:10px; height:10px; border-radius:50%;
-      background:var(--ivory); mix-blend-mode:difference; pointer-events:none;
-      transform:translate(-50%,-50%);
-      transition: width .16s ease, height .16s ease, opacity .16s ease;
-    }
-    #cursor.big{ width:42px; height:42px; opacity:.55; background: var(--royal); }
+#rail{
+position:fixed;
+left:0;
+top:0;
+bottom:0;
+width:80px;
+border-right:1px solid var(--stroke);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+font-family:var(--mono);
+font-size:10px;
+letter-spacing:.2em;
+text-transform:uppercase;
+z-index:2;
+}
 
-    /* Nav */
-    #topnav{
-      position:fixed; top:0; left:0; right:0; z-index:50;
-      padding: 22px 32px;
-      display:flex; justify-content:space-between; align-items:center;
-      transition: background .25s ease, border-color .25s ease, backdrop-filter .25s ease;
-      border-bottom:1px solid transparent;
-    }
-    #topnav.scrolled{
-      background: rgba(6,10,19,.70);
-      backdrop-filter: blur(14px);
-      border-bottom-color: rgba(244,240,230,.08);
-    }
+#rail a{
+writing-mode:vertical-rl;
+transform:rotate(180deg);
+margin:40px 0;
+opacity:.6;
+transition:.2s;
+}
+#rail a:hover{opacity:1;color:var(--royal);}
 
-    .h1{
-      font-family: var(--brandFont);
-      font-weight: 900;
-      font-size: clamp(42px, 6.5vw, 84px);
-      line-height: 0.95;
-      letter-spacing: -0.05em;
-      text-transform: uppercase;
-    }
+main{
+margin-left:100px;
+padding:120px 80px;
+max-width:900px;
+position:relative;
+z-index:2;
+}
 
-    .kicker{
-      font-family: var(--monoFont);
-      font-size: 10px;
-      letter-spacing: .40em;
-      text-transform: uppercase;
-      color: rgba(244,240,230,.70);
-    }
+h1{
+font-family:var(--brand);
+font-weight:900;
+font-size:64px;
+letter-spacing:-.04em;
+margin-bottom:30px;
+}
 
-    /* Buttons */
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      font-family:var(--monoFont);
-      font-size:10px;
-      letter-spacing:.20em;
-      text-transform:uppercase;
-      border-radius:999px;
-      padding: 16px 32px;
-      border:1px solid var(--stroke);
-      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
-      user-select:none;
-      white-space:nowrap;
-    }
-    .btn.primary{
-      background: var(--royal);
-      border-color: rgba(45,103,255,.85);
-      color: #fff;
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 0 26px var(--royal-glow);
-      border-color: rgba(45,103,255,.75);
-    }
-    .btn.ghost:hover{ background: rgba(244,240,230,.05); }
+.section{
+margin-bottom:140px;
+}
 
-    /* Blocks */
-    .data-block{
-      border: 1px solid var(--stroke);
-      background: rgba(11,18,32,0.40);
-      backdrop-filter: blur(10px);
-      transition: all 0.40s cubic-bezier(0.16, 1, 0.3, 1);
-      cursor: pointer;
-      overflow: hidden;
-      max-height: 88px;
-      border-radius: 18px;
-    }
-    .data-block:hover{ border-color: rgba(45,103,255,.55); background: rgba(45,103,255,0.05); }
-    .data-block.expanded{
-      max-height: 720px;
-      border-color: rgba(45,103,255,.85);
-      background: rgba(45,103,255,0.06);
-      box-shadow: 0 22px 60px rgba(0,0,0,.35);
-    }
-    .data-block .content{
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.28s ease, transform 0.28s ease;
-      pointer-events: none;
-    }
-    .data-block.expanded .content{
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
+.system-map div{
+cursor:pointer;
+margin:16px 0;
+font-family:var(--mono);
+letter-spacing:.15em;
+}
 
-    /* Bottom bar */
-    #bottombar{
-      position:fixed; bottom:0; left:0; right:0; z-index:50;
-      height:56px;
-      background: rgba(6,10,19,.88);
-      backdrop-filter: blur(12px);
-      border-top: 1px solid var(--stroke);
-      display:flex;
-      font-family: var(--monoFont);
-      font-size: 9px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-    }
-    #bottombar a{
-      flex:1; display:flex; align-items:center; justify-content:center;
-      border-right: 1px solid var(--stroke);
-      transition: background .16s ease, color .16s ease;
-      color: rgba(244,240,230,.70);
-      user-select:none;
-    }
-    #bottombar a:last-child{ border-right:none; }
-    #bottombar a:hover{ background: rgba(244,240,230,.05); color: rgba(244,240,230,.92); }
-    #bottombar a.active{
-      color: rgba(244,240,230,.92);
-      box-shadow: inset 0 2px 0 rgba(45,103,255,.95);
-    }
-
-    .section-pad{ padding-top: 10rem; padding-bottom: 10rem; }
-    @media (max-width: 640px){
-      .section-pad{ padding-top: 7rem; padding-bottom: 7rem; }
-      #topnav{ padding: 18px 18px; }
-    }
-  </style>
+.pipeline{
+display:flex;
+justify-content:space-between;
+margin-top:60px;
+border-top:1px solid var(--stroke);
+padding-top:30px;
+font-family:var(--mono);
+font-size:11px;
+letter-spacing:.15em;
+}
+.pipeline span{
+opacity:.6;
+transition:.3s;
+}
+.pipeline span:hover{
+opacity:1;
+color:var(--royal);
+}
+</style>
 </head>
-
 <body>
-  <div id="stage" aria-hidden="true"><canvas id="gl"></canvas></div>
-  <div id="grain" aria-hidden="true"></div>
-  <div id="cursor" aria-hidden="true"></div>
 
-  <nav id="topnav" aria-label="Primary navigation">
-    <div class="flex items-baseline gap-4">
-      <a href="index.html" class="nav-exit font-[var(--brandFont)] font-black text-2xl italic">CEYO</a>
-      <span class="font-mono text-[9px] tracking-[0.30em] opacity-40 uppercase">Evidentiary Layer</span>
-    </div>
+<div id="blueprint"></div>
+<canvas id="gl"></canvas>
 
-    <div class="hidden md:flex gap-8 font-mono text-[10px] tracking-widest uppercase opacity-60">
-      <a href="index.html#hero" class="nav-exit hover:text-[var(--royal)] transition-colors">Index</a>
-      <a href="#arch" class="hover:text-[var(--royal)] transition-colors">Architecture</a>
-      <a href="#pipeline" class="hover:text-[var(--royal)] transition-colors">Pipeline</a>
-      <a href="#verification" class="hover:text-[var(--royal)] transition-colors">Verification</a>
-      <a href="contact.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Contact</a>
-    </div>
-  </nav>
+<div id="rail">
+<a href="index.html">Index</a>
+<a href="trust.html">Trust</a>
+<a href="governance.html">Gov</a>
+<a href="contact.html">Contact</a>
+</div>
 
-  <main class="relative z-10 max-w-7xl mx-auto px-6">
-    <!-- HERO -->
-    <section class="min-h-screen flex flex-col justify-center" id="arch">
-      <div class="max-w-4xl">
-        <div class="kicker mb-6">PLATFORM ARCHITECTURE · INFERENCE BOUNDARY ATTACHMENT</div>
-        <h1 class="h1 mb-8">Verification Substrate<br/>At the Inference Boundary</h1>
-        <p class="text-xl text-[var(--muted)] leading-relaxed max-w-3xl">
-          CEYO is designed as a weight-neutral integrity layer that attaches beside inference systems. It captures policy-scoped context,
-          normalizes into canonical artifacts, canonicalizes deterministically (RFC 8785), and cryptographically seals records for later independent verification.
-        </p>
+<main>
 
-        <div class="mt-10 flex gap-6 flex-wrap">
-          <a href="#pipeline" class="btn primary">View Pipeline</a>
-          <a href="trust.html" class="btn ghost nav-exit">Trust & Verification</a>
-          <a href="contact.html" class="btn ghost nav-exit">Request Review</a>
-        </div>
+<section class="section">
+<h1>Architecture</h1>
+<p class="text-[var(--muted)] leading-loose max-w-xl">
+CEYO operates as a weight-neutral integrity substrate. Architecture is deterministic, policy-bound, and cryptographically sealed.
+</p>
+</section>
 
-        <div class="mt-10 space-y-3 font-mono text-[11px] uppercase tracking-wider">
-          <div class="text-red-400/70">× No weight mutation</div>
-          <div class="text-red-400/70">× No decision intervention</div>
-          <div class="text-[var(--royal)]">→ Deterministic record generation</div>
-        </div>
-      </div>
-    </section>
+<section class="section system-map">
+<h2 class="text-xl font-bold mb-6 uppercase tracking-widest font-mono text-[var(--royal)]">System Structure</h2>
+<div onclick="focusNode(0)">Capture</div>
+<div onclick="focusNode(1)">Canonicalization</div>
+<div onclick="focusNode(2)">Hash</div>
+<div onclick="focusNode(3)">Signature</div>
+<div onclick="focusNode(4)">Disclosure Tier</div>
+<div onclick="focusNode(5)">Verification</div>
+</section>
 
-    <!-- PIPELINE -->
-    <section class="section-pad" id="pipeline">
-      <div class="grid lg:grid-cols-2 gap-20">
-        <div>
-          <div class="kicker mb-4">CANONICAL ARTIFACT GENERATION</div>
-          <h2 class="font-[var(--brandFont)] italic font-black text-5xl uppercase mb-8">Artifact Pipeline</h2>
+<section class="section">
+<h2 class="text-xl font-bold mb-6 uppercase tracking-widest font-mono text-[var(--royal)]">Execution Flow</h2>
+<div class="pipeline">
+<span>Capture</span>
+<span>Canonicalize</span>
+<span>Hash</span>
+<span>Sign</span>
+<span>Store</span>
+<span>Verify</span>
+</div>
+</section>
 
-          <p class="text-[var(--muted)] leading-loose text-lg mb-8">
-            CEYO operates at the inference boundary as a sidecar, gateway, or API wrapper. It observes defined inference events
-            and records only what policy declares.
-          </p>
+</main>
 
-          <ol class="text-[var(--muted)] leading-loose text-lg list-decimal pl-5 space-y-3">
-            <li><strong class="text-[var(--text)]">Policy-scoped capture</strong> (include/exclude/mask before generation)</li>
-            <li><strong class="text-[var(--text)]">Canonical schema normalization</strong> (deterministic structure)</li>
-            <li><strong class="text-[var(--text)]">RFC 8785 canonicalization</strong> (stable byte output)</li>
-            <li><strong class="text-[var(--text)]">Hash computation</strong> (tamper-evidence)</li>
-            <li><strong class="text-[var(--text)]">Digital signature</strong> (origin authenticity)</li>
-            <li><strong class="text-[var(--text)]">Retention + retrieval posture</strong> (operator governed)</li>
-          </ol>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,0.1,1000);
+const renderer=new THREE.WebGLRenderer({canvas:document.getElementById("gl"),alpha:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
 
-          <div class="mt-10 border-t border-[var(--stroke)] pt-8">
-            <div class="kicker mb-3">Availability</div>
-            <p class="text-[var(--muted)] leading-loose text-lg">
-              In fail-open configuration, inference continues even if sealing fails. Failures are logged and artifacts are marked unsealed.
-              Availability remains an operator decision.
-            </p>
-          </div>
-        </div>
+camera.position.z=8;
 
-        <div class="space-y-4">
-          <div class="data-block p-6" data-open="attach" onclick="toggleBlock(this)">
-            <div class="flex justify-between items-center mb-4">
-              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">01 / Attach</span>
-              <span class="text-xs uppercase font-bold">Sidecar · gateway · wrapper</span>
-            </div>
-            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-              CEYO attaches at the inference boundary to observe defined events without modifying model weights or decision logic.
-              The inference engine remains unchanged.
-            </div>
-          </div>
+const geometry=new THREE.IcosahedronGeometry(2,1);
+const material=new THREE.MeshBasicMaterial({color:0x2D67FF,wireframe:true});
+const mesh=new THREE.Mesh(geometry,material);
+scene.add(mesh);
 
-          <div class="data-block p-6" data-open="policy" onclick="toggleBlock(this)">
-            <div class="flex justify-between items-center mb-4">
-              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">02 / Policy</span>
-              <span class="text-xs uppercase font-bold">Define before collect</span>
-            </div>
-            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-              Capture boundaries are explicit and versioned. Inclusion, exclusion, masking, and disclosure tiers are defined prior to artifact generation.
-              Policy identifiers and versions are recorded within the artifact.
-            </div>
-          </div>
+function animate(){
+requestAnimationFrame(animate);
+mesh.rotation.x+=0.003;
+mesh.rotation.y+=0.005;
+renderer.render(scene,camera);
+}
+animate();
 
-          <div class="data-block p-6" data-open="rfc8785" onclick="toggleBlock(this)">
-            <div class="flex justify-between items-center mb-4">
-              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">03 / RFC 8785</span>
-              <span class="text-xs uppercase font-bold">Deterministic bytes</span>
-            </div>
-            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-              JSON is canonicalized using RFC 8785 (JSON Canonicalization Scheme) so logically equivalent structures produce identical byte representations
-              across environments, enabling independent recomputation.
-            </div>
-          </div>
+function focusNode(i){
+mesh.rotation.y=i;
+}
+</script>
 
-          <div class="data-block p-6" data-open="crypto" onclick="toggleBlock(this)">
-            <div class="flex justify-between items-center mb-4">
-              <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">04 / Crypto</span>
-              <span class="text-xs uppercase font-bold">Hash + signature</span>
-            </div>
-            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
-              After canonicalization, hashing and digital signatures seal artifacts. Reference suite: SHA-256 and ECDSA (P-256),
-              configurable by deployment requirements.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- VERIFICATION -->
-    <section class="section-pad" id="verification">
-      <div class="text-center mb-16">
-        <div class="kicker mb-4">INDEPENDENT VERIFICATION</div>
-        <h2 class="font-[var(--brandFont)] italic font-black text-6xl uppercase">Verification Workflow</h2>
-      </div>
-
-      <div class="max-w-4xl mx-auto">
-        <div class="data-block p-8 expanded" data-open="workflow" onclick="toggleBlock(this)">
-          <div class="flex justify-between items-center mb-4">
-            <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">Mechanical process</span>
-            <span class="text-xs uppercase font-bold">Deterministic validation</span>
-          </div>
-          <div class="content pt-4 border-t border-[var(--stroke)] text-[14px] leading-[1.9] text-[var(--muted)]">
-            <ol class="list-decimal pl-5 space-y-2">
-              <li>Retrieve artifact under authorized access</li>
-              <li>Canonicalize JSON using RFC 8785</li>
-              <li>Recompute hash</li>
-              <li>Validate signature against operator public key</li>
-              <li>Confirm Policy ID + version alignment</li>
-            </ol>
-            <div class="mt-5">
-              Outcomes: <strong>Integrity Confirmed</strong>, <strong>Integrity Failed</strong>, <strong>Policy Scope Mismatch</strong>.
-              Interpretation remains institutional.
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-10 flex justify-center gap-6 flex-wrap">
-          <a href="trust.html" class="btn primary nav-exit">Trust Infrastructure</a>
-          <a href="governance.html" class="btn ghost nav-exit">Governance Boundaries</a>
-          <a href="contact.html" class="btn ghost nav-exit">Request Controlled Review</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOT -->
-    <section class="section-pad opacity-60 hover:opacity-100 transition-opacity" id="boundary">
-      <div class="border-t border-[var(--stroke)] pt-12">
-        <div class="font-mono text-[10px] mb-8 uppercase tracking-widest">Boundary Declaration · V2026.02.19</div>
-        <div class="grid md:grid-cols-2 gap-8 text-[10px] font-mono leading-relaxed uppercase text-[rgba(244,240,230,.70)]">
-          <p>CEYO produces records. It does not validate correctness, fairness, legality, or compliance outcomes. Authorized institutions and operators retain responsibility for decisions and determinations.</p>
-          <p>Verification confirms integrity and provenance under policy scope — not correctness of model output. CEYO does not certify regulatory compliance and does not guarantee legal admissibility.</p>
-        </div>
-
-        <div class="mt-12 pt-10 border-t border-[var(--stroke)] flex flex-wrap justify-between gap-6 font-mono text-[10px] uppercase tracking-widest opacity-70">
-          <div>© <span id="year">2026</span> CEYO · All Rights Reserved</div>
-          <div class="flex gap-8">
-            <a href="terms.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Terms</a>
-            <a href="privacy.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Privacy</a>
-            <a href="contact.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Contact</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div style="height:72px"></div>
-  </main>
-
-  <nav id="bottombar" aria-label="Site index">
-    <a href="index.html" class="nav-exit">INDEX</a>
-    <a href="platform.html" class="active">ARCH</a>
-    <a href="trust.html" class="nav-exit">TRUST</a>
-    <a href="governance.html" class="nav-exit">GOV</a>
-    <a href="contact.html" class="nav-exit">CONTACT</a>
-  </nav>
-
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-
-  <script>
-    gsap.registerPlugin(ScrollTrigger);
-
-    /* Cursor */
-    const cursor = document.getElementById('cursor');
-    if (window.matchMedia("(pointer: fine)").matches){
-      document.addEventListener('mousemove', (e) => {
-        gsap.to(cursor, {x: e.clientX, y: e.clientY, duration: 0.10, overwrite:true});
-      }, {passive:true});
-      document.querySelectorAll('a, button, .data-block').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('big'), {passive:true});
-        el.addEventListener('mouseleave', () => cursor.classList.remove('big'), {passive:true});
-      });
-    }
-
-    /* Top nav scroll */
-    const topnav = document.getElementById('topnav');
-    window.addEventListener('scroll', () => {
-      topnav.classList.toggle('scrolled', window.scrollY > 24);
-    }, {passive:true});
-
-    /* Year */
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    /* Expand blocks */
-    function toggleBlock(el){
-      const key = el.getAttribute('data-open');
-      el.classList.toggle('expanded');
-      if (key){
-        history.replaceState(null, "", "#" + key);
-      }
-    }
-    window.toggleBlock = toggleBlock;
-
-    /* ===== THREE.JS BACKGROUND (same feel as index; no scroll choreography needed here) ===== */
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 400);
-    const renderer = new THREE.WebGLRenderer({
-      canvas: document.getElementById('gl'),
-      alpha: true,
-      antialias: true,
-      powerPreference:"high-performance"
-    });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-
-    const nodeCount = 260;
-    const bounds = 16;
-    const positions = new Float32Array(nodeCount * 3);
-    const velocities = new Float32Array(nodeCount * 3);
-
-    for (let i=0; i<nodeCount; i++){
-      const k = i*3;
-      positions[k+0] = (Math.random()-0.5) * bounds*2;
-      positions[k+1] = (Math.random()-0.5) * bounds*2;
-      positions[k+2] = (Math.random()-0.5) * bounds*2;
-
-      velocities[k+0] = (Math.random()-0.5) * 0.022;
-      velocities[k+1] = (Math.random()-0.5) * 0.022;
-      velocities[k+2] = (Math.random()-0.5) * 0.022;
-    }
-
-    const pointsGeo = new THREE.BufferGeometry();
-    pointsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-    const pointsMat = new THREE.PointsMaterial({
-      color: 0x2D67FF,
-      size: 0.065,
-      transparent: true,
-      opacity: 0.95,
-      depthWrite: false
-    });
-
-    const points = new THREE.Points(pointsGeo, pointsMat);
-    scene.add(points);
-
-    const maxConnections = 1900;
-    const linePositions = new Float32Array(maxConnections * 2 * 3);
-    const lineGeo = new THREE.BufferGeometry();
-    lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-    lineGeo.setDrawRange(0, 0);
-
-    const lineMat = new THREE.LineBasicMaterial({
-      color: 0x2D67FF,
-      transparent: true,
-      opacity: 0.28,
-      depthWrite: false
-    });
-
-    const lines = new THREE.LineSegments(lineGeo, lineMat);
-    scene.add(lines);
-
-    const coreGeometry = new THREE.IcosahedronGeometry(2.5, 2);
-    const coreMaterial = new THREE.MeshBasicMaterial({
-      color: 0x2D67FF,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.30
-    });
-    const coreBall = new THREE.Mesh(coreGeometry, coreMaterial);
-    scene.add(coreBall);
-
-    const glowCanvas = document.createElement('canvas');
-    glowCanvas.width = glowCanvas.height = 128;
-    const gctx = glowCanvas.getContext('2d');
-    const grad = gctx.createRadialGradient(64,64,0,64,64,64);
-    grad.addColorStop(0, 'rgba(45,103,255,0.55)');
-    grad.addColorStop(1, 'rgba(45,103,255,0.0)');
-    gctx.fillStyle = grad; gctx.fillRect(0,0,128,128);
-    const glowTex = new THREE.CanvasTexture(glowCanvas);
-    const glowMat = new THREE.SpriteMaterial({ map: glowTex, transparent:true, opacity:0.18, depthWrite:false });
-    const glow = new THREE.Sprite(glowMat);
-    glow.scale.set(11,11,1);
-    scene.add(glow);
-
-    camera.position.z = 14;
-
-    const maxDist = 2.35;
-    const maxDist2 = maxDist * maxDist;
-
-    function updateConnections(){
-      const pos = pointsGeo.attributes.position.array;
-      let segCount = 0;
-
-      for (let i=0; i<nodeCount; i++){
-        const ix = i*3;
-        const ax = pos[ix], ay = pos[ix+1], az = pos[ix+2];
-
-        for (let j=i+1; j<nodeCount; j++){
-          const jx = j*3;
-          const bx = pos[jx], by = pos[jx+1], bz = pos[jx+2];
-
-          const dx = ax-bx, dy = ay-by, dz = az-bz;
-          const d2 = dx*dx + dy*dy + dz*dz;
-
-          if (d2 < maxDist2){
-            const k = segCount * 6;
-            linePositions[k+0]=ax; linePositions[k+1]=ay; linePositions[k+2]=az;
-            linePositions[k+3]=bx; linePositions[k+4]=by; linePositions[k+5]=bz;
-            segCount++;
-            if (segCount >= maxConnections) break;
-          }
-        }
-        if (segCount >= maxConnections) break;
-      }
-
-      lineGeo.setDrawRange(0, segCount * 2);
-      lineGeo.attributes.position.needsUpdate = true;
-    }
-
-    let targetRotX = 0, targetRotY = 0;
-    if (window.matchMedia("(pointer: fine)").matches){
-      window.addEventListener('mousemove', (e) => {
-        const nx = (e.clientX / window.innerWidth) * 2 - 1;
-        const ny = (e.clientY / window.innerHeight) * 2 - 1;
-        targetRotY = nx * 0.18;
-        targetRotX = ny * 0.10;
-      }, {passive:true});
-    }
-
-    function animate(){
-      requestAnimationFrame(animate);
-
-      const pos = pointsGeo.attributes.position.array;
-
-      points.rotation.y += (targetRotY - points.rotation.y) * 0.04;
-      points.rotation.x += (targetRotX - points.rotation.x) * 0.04;
-      lines.rotation.copy(points.rotation);
-
-      coreBall.rotation.x += 0.002;
-      coreBall.rotation.y += 0.003;
-      glow.position.copy(coreBall.position);
-
-      for (let i=0; i<nodeCount; i++){
-        const k = i*3;
-        pos[k+0] += velocities[k+0];
-        pos[k+1] += velocities[k+1];
-        pos[k+2] += velocities[k+2];
-
-        if (pos[k+0] > bounds || pos[k+0] < -bounds) velocities[k+0] *= -1;
-        if (pos[k+1] > bounds || pos[k+1] < -bounds) velocities[k+1] *= -1;
-        if (pos[k+2] > bounds || pos[k+2] < -bounds) velocities[k+2] *= -1;
-      }
-
-      pointsGeo.attributes.position.needsUpdate = true;
-      updateConnections();
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    }, {passive:true});
-
-    /* Page transition: explode then navigate */
-    function explodeOut(duration=0.55){
-      gsap.to(camera.position, { z: 18.0, duration, ease: "power2.out" });
-      gsap.to(coreMaterial, { opacity: 0.16, duration, ease: "power2.out" });
-      gsap.to(glowMat, { opacity: 0.08, duration, ease: "power2.out" });
-      gsap.to(lineMat, { opacity: 0.16, duration, ease: "power2.out" });
-    }
-
-    function navWithExplosion(url){
-      explodeOut(0.55);
-      setTimeout(() => { window.location.href = url; }, 520);
-    }
-
-    document.querySelectorAll('a.nav-exit').forEach(a => {
-      a.addEventListener('click', (e) => {
-        const href = a.getAttribute('href');
-        if (!href || href.startsWith('#')) return;
-        e.preventDefault();
-        navWithExplosion(href);
-      });
-    });
-  </script>
 </body>
 </html>
-
-Next page after this: trust.html or governance.html.
