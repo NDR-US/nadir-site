@@ -1,4 +1,11 @@
 """
+CEYO: Evidentiary Infrastructure for Autonomous Systems
+Reference Implementation (v1.0)
+
+Copyright (c) 2026 CEYO. All Rights Reserved.
+Design: Policy-scoped, canonical artifacts via RFC 8785 and ECDSA P-256.
+"""
+"""
 CEYO-style sealing + independent verification (reference implementation)
 
 Design goals (matching your stated posture):
