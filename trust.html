@@ -189,4 +189,672 @@
       border: 1px solid rgba(244,240,230,.14);
       border-radius: 999px;
       color: rgba(244,240,230,.78);
-      background: rgba(11,18,32
+      background: rgba(11,18,32,.35);
+    }
+    .tag.good{ border-color: rgba(45,103,255,.45); box-shadow: 0 0 18px rgba(45,103,255,.16); }
+    .tag.warn{ border-color: rgba(244,240,230,.20); }
+
+    /* Distinct blocks: “Proof Steps” */
+    .step{
+      border: 1px solid rgba(244,240,230,.12);
+      background: rgba(11,18,32,0.42);
+      backdrop-filter: blur(10px);
+      border-radius: 18px;
+      overflow: hidden;
+      cursor:pointer;
+      max-height: 92px;
+      transition: all 0.40s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .step:hover{ border-color: rgba(45,103,255,.55); background: rgba(45,103,255,0.06); }
+    .step.expanded{
+      max-height: 760px;
+      border-color: rgba(45,103,255,.85);
+      background: rgba(45,103,255,0.07);
+      box-shadow: 0 22px 60px rgba(0,0,0,.35);
+    }
+    .step .content{
+      opacity:0;
+      transform: translateY(8px);
+      transition: opacity 0.24s ease, transform 0.24s ease;
+      pointer-events:none;
+    }
+    .step.expanded .content{
+      opacity:1;
+      transform: translateY(0);
+      pointer-events:auto;
+    }
+
+    /* Bottom bar */
+    #bottombar{
+      position:fixed; bottom:0; left:0; right:0; z-index:60;
+      height:56px;
+      background: rgba(6,10,19,.88);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--stroke);
+      display:flex;
+      font-family: var(--monoFont);
+      font-size: 9px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+    #bottombar a{
+      flex:1; display:flex; align-items:center; justify-content:center;
+      border-right: 1px solid var(--stroke);
+      transition: background .16s ease, color .16s ease;
+      color: rgba(244,240,230,.70);
+      user-select:none;
+    }
+    #bottombar a:last-child{ border-right:none; }
+    #bottombar a:hover{ background: rgba(244,240,230,.05); color: rgba(244,240,230,.92); }
+    #bottombar a.active{
+      color: rgba(244,240,230,.92);
+      box-shadow: inset 0 2px 0 rgba(45,103,255,.95);
+    }
+
+    .fine{
+      font-family: var(--monoFont);
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(244,240,230,.62);
+    }
+    .rule{
+      height:1px;
+      background: linear-gradient(90deg, rgba(244,240,230,.14), rgba(45,103,255,.22), rgba(244,240,230,.14));
+      opacity:.9;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="stage" aria-hidden="true"><canvas id="gl"></canvas></div>
+  <div id="scanGrid" aria-hidden="true"></div>
+  <div id="grain" aria-hidden="true"></div>
+  <div id="cursor" aria-hidden="true"></div>
+
+  <nav id="topnav" aria-label="Primary navigation">
+    <div class="flex items-baseline gap-4">
+      <a href="index.html" class="font-[var(--brandFont)] font-black text-2xl italic">CEYO</a>
+      <span class="font-mono text-[9px] tracking-[0.30em] opacity-40 uppercase">Trust & Verification</span>
+    </div>
+
+    <div class="hidden md:flex gap-8 font-mono text-[10px] tracking-widest uppercase opacity-60">
+      <a href="#hero" class="hover:text-[var(--royal)] transition-colors">Overview</a>
+      <a href="#console" class="hover:text-[var(--royal)] transition-colors">Console</a>
+      <a href="#steps" class="hover:text-[var(--royal)] transition-colors">Proof</a>
+      <a href="#boundary" class="hover:text-[var(--royal)] transition-colors">Boundary</a>
+      <a href="contact.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Contact</a>
+    </div>
+  </nav>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6">
+    <!-- HERO -->
+    <section id="hero" class="min-h-screen flex flex-col justify-center">
+      <div class="max-w-5xl">
+        <div class="font-mono text-[10px] tracking-[0.40em] text-[var(--royal)] mb-6 uppercase">Verifier Mode / Deterministic Integrity</div>
+        <h1 class="h1 mb-8">
+          Trust Is<br/>
+          <span class="italic">Recomputable</span>
+        </h1>
+
+        <p class="text-xl text-[var(--muted)] leading-relaxed max-w-3xl mb-10">
+          CEYO verification is designed to be mechanical: canonicalize the declared fields, recompute hashes, validate signatures, and confirm
+          provenance under policy scope. The process should be reproducible by independent parties without interpretive variance.
+        </p>
+
+        <div class="flex gap-6 flex-wrap">
+          <button onclick="document.getElementById('steps').scrollIntoView({behavior:'smooth'})" class="btn primary">View Proof Steps</button>
+          <a href="contact.html" class="btn ghost nav-exit">Request Controlled Review</a>
+        </div>
+
+        <div class="mt-10 grid md:grid-cols-2 gap-4">
+          <div class="tag good">Integrity: Deterministic</div>
+          <div class="tag warn">Correctness: Out of Scope</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERIFIER CONSOLE (unique section) -->
+    <section id="console" class="section-pad">
+      <div class="grid lg:grid-cols-2 gap-14 items-start">
+        <div>
+          <div class="font-mono text-[10px] tracking-[0.40em] text-[var(--royal)] mb-4 uppercase">Verification Surface</div>
+          <h2 class="h2 mb-8">A Minimal<br/>Verifier Contract</h2>
+
+          <p class="text-[var(--muted)] text-lg leading-loose mb-8">
+            Verification should not require privileged access. A verifier needs: the artifact, the policy identifier/version,
+            and the public verification material appropriate to the disclosure tier.
+          </p>
+
+          <div class="rule my-10"></div>
+
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="step p-6" data-open="inputs" onclick="toggleStep(this)">
+              <div class="flex justify-between items-center mb-4">
+                <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">Inputs</span>
+                <span class="text-xs uppercase font-bold">What verifiers need</span>
+              </div>
+              <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+                <ul class="list-disc pl-5 space-y-2">
+                  <li>Artifact payload (declared schema)</li>
+                  <li>Policy identifier + version</li>
+                  <li>Canonicalization reference (procedure)</li>
+                  <li>Hash suite + signature suite identifiers</li>
+                  <li>Public key / certificate chain (tier-dependent)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="step p-6" data-open="outputs" onclick="toggleStep(this)">
+              <div class="flex justify-between items-center mb-4">
+                <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">Outputs</span>
+                <span class="text-xs uppercase font-bold">What verifiers assert</span>
+              </div>
+              <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+                <ul class="list-disc pl-5 space-y-2">
+                  <li>Canonical bytes match policy + procedure</li>
+                  <li>Recomputed hash matches recorded hash</li>
+                  <li>Signature validates against public material</li>
+                  <li>Artifact integrity status (sealed/unsealed)</li>
+                  <li>Policy scope provenance (versioned)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="console">
+          <div class="consoleHeader">
+            <div class="lights">
+              <span class="dot"></span><span class="dot"></span><span class="dot blue"></span>
+            </div>
+            <div>Verifier Console</div>
+            <div class="opacity-60">READ-ONLY</div>
+          </div>
+          <div class="consoleBody">
+            <div class="kv">
+              <div class="row">
+                <div class="k">POLICY</div>
+                <div class="v">V2026.02.19 / SCOPE-ID</div>
+              </div>
+              <div class="row">
+                <div class="k">CANONICALIZATION</div>
+                <div class="v">DETERMINISTIC</div>
+              </div>
+              <div class="row">
+                <div class="k">HASH</div>
+                <div class="v">SHA-256</div>
+              </div>
+              <div class="row">
+                <div class="k">SIGNATURE</div>
+                <div class="v">ECDSA P-256</div>
+              </div>
+              <div class="row">
+                <div class="k">KEY CUSTODY</div>
+                <div class="v">CLIENT-CONTROLLED</div>
+              </div>
+              <div class="row">
+                <div class="k">STATUS</div>
+                <div class="v text-[var(--royal)]">SEALED</div>
+              </div>
+            </div>
+
+            <div class="mt-6 flex flex-wrap gap-3">
+              <div class="tag good">Hash: Verified</div>
+              <div class="tag good">Signature: Valid</div>
+              <div class="tag warn">Outcome: Not Evaluated</div>
+            </div>
+
+            <div class="mt-8 border-t border-[rgba(244,240,230,.10)] pt-6">
+              <div class="fine mb-2">Disclosure</div>
+              <div class="text-sm text-[var(--muted)] leading-relaxed">
+                Verification confirms integrity and provenance under policy scope. It does not require default exposure of proprietary internals.
+                Tiered disclosure determines what is visible to which verifier class.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROOF STEPS -->
+    <section id="steps" class="section-pad">
+      <div class="text-center mb-16">
+        <div class="font-mono text-[10px] tracking-[0.40em] text-[var(--royal)] mb-4 uppercase">Mechanical Verification</div>
+        <h2 class="h2">Proof Steps</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="step p-7" data-open="step1" onclick="toggleStep(this)">
+          <div class="flex justify-between items-center mb-4">
+            <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">01 · Parse</span>
+            <span class="text-xs uppercase font-bold">Schema & policy</span>
+          </div>
+          <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+            Confirm artifact schema version and embedded policy identifiers. Ensure the verifier uses the correct policy version and tier rules for the artifact under review.
+          </div>
+        </div>
+
+        <div class="step p-7" data-open="step2" onclick="toggleStep(this)">
+          <div class="flex justify-between items-center mb-4">
+            <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">02 · Canonicalize</span>
+            <span class="text-xs uppercase font-bold">Deterministic bytes</span>
+          </div>
+          <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+            Apply the canonicalization procedure to produce stable byte output. Determinism eliminates interpretive variance across platforms and implementations.
+          </div>
+        </div>
+
+        <div class="step p-7" data-open="step3" onclick="toggleStep(this)">
+          <div class="flex justify-between items-center mb-4">
+            <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">03 · Hash</span>
+            <span class="text-xs uppercase font-bold">Recompute</span>
+          </div>
+          <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+            Recompute the digest over canonical bytes using the declared hash suite. Compare to the recorded digest to confirm tamper-evidence.
+          </div>
+        </div>
+
+        <div class="step p-7" data-open="step4" onclick="toggleStep(this)">
+          <div class="flex justify-between items-center mb-4">
+            <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">04 · Verify</span>
+            <span class="text-xs uppercase font-bold">Signature validation</span>
+          </div>
+          <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+            Validate the signature against public verification material appropriate to the disclosure tier. This confirms origin authenticity and integrity.
+          </div>
+        </div>
+
+        <div class="step p-7" data-open="step5" onclick="toggleStep(this)">
+          <div class="flex justify-between items-center mb-4">
+            <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">05 · Assert</span>
+            <span class="text-xs uppercase font-bold">Integrity status</span>
+          </div>
+          <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+            Produce a verification statement: sealed/unsealed, policy version, suites used, and validation result. No claims about correctness or compliance outcomes.
+          </div>
+        </div>
+
+        <div class="step p-7" data-open="failopen" onclick="toggleStep(this)">
+          <div class="flex justify-between items-center mb-4">
+            <span class="font-mono text-[10px] text-[var(--royal)] tracking-[0.20em] uppercase">06 · Fail-Open</span>
+            <span class="text-xs uppercase font-bold">Continuity preserved</span>
+          </div>
+          <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+            If sealing fails, inference proceeds uninterrupted. Failure is logged and the artifact is marked unsealed, enabling review without blocking operations.
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-14 flex justify-center gap-6 flex-wrap">
+        <a href="platform.html" class="btn ghost nav-exit">View Architecture</a>
+        <a href="governance.html" class="btn ghost nav-exit">Governance</a>
+        <a href="contact.html" class="btn primary nav-exit">Request Controlled Review</a>
+      </div>
+    </section>
+
+    <!-- BOUNDARY -->
+    <section id="boundary" class="section-pad opacity-70 hover:opacity-100 transition-opacity">
+      <div class="border-t border-[var(--stroke)] pt-12">
+        <div class="font-mono text-[10px] mb-8 uppercase tracking-widest">Boundary Declaration · V2026.02.19</div>
+        <div class="grid md:grid-cols-2 gap-8 text-[10px] font-mono leading-relaxed uppercase text-[rgba(244,240,230,.70)]">
+          <p>Public pages are descriptive only. Technical specifics and operational materials are shared under controlled conditions.</p>
+          <p>Verification confirms integrity and provenance under policy scope — not correctness of model output. CEYO does not certify regulatory compliance and does not guarantee legal admissibility.</p>
+        </div>
+
+        <div class="mt-12 pt-10 border-t border-[var(--stroke)] flex flex-wrap justify-between gap-6 font-mono text-[10px] uppercase tracking-widest opacity-70">
+          <div>© <span id="year">2026</span> CEYO · All Rights Reserved</div>
+          <div class="flex gap-8">
+            <a href="terms.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Terms</a>
+            <a href="privacy.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Privacy</a>
+            <a href="contact.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div style="height:72px"></div>
+  </div>
+
+  <nav id="bottombar" aria-label="Site index">
+    <a href="index.html" class="nav-exit">INDEX</a>
+    <a href="platform.html" class="nav-exit">ARCH</a>
+    <a href="trust.html" class="active">TRUST</a>
+    <a href="governance.html" class="nav-exit">GOV</a>
+    <a href="contact.html" class="nav-exit">CONTACT</a>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* Cursor */
+    const cursor = document.getElementById('cursor');
+    if (window.matchMedia("(pointer: fine)").matches){
+      document.addEventListener('mousemove', (e) => {
+        gsap.to(cursor, {x: e.clientX, y: e.clientY, duration: 0.10, overwrite:true});
+      }, {passive:true});
+      document.querySelectorAll('a, button, .step, .console').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('big'), {passive:true});
+        el.addEventListener('mouseleave', () => cursor.classList.remove('big'), {passive:true});
+      });
+    }
+
+    /* Top nav scroll */
+    const topnav = document.getElementById('topnav');
+    window.addEventListener('scroll', () => {
+      topnav.classList.toggle('scrolled', window.scrollY > 24);
+    }, {passive:true});
+
+    /* Year */
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    /* Expand steps + focus */
+    function toggleStep(el){
+      const key = el.getAttribute('data-open');
+      el.classList.toggle('expanded');
+      if (key){
+        history.replaceState(null, "", "#" + key);
+        focusCluster(key, true);
+      }
+    }
+    window.toggleStep = toggleStep;
+
+    /* ===== THREE.JS: “Verifier Beam” (unique vs index + gov) ===== */
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 420);
+    const renderer = new THREE.WebGLRenderer({
+      canvas: document.getElementById('gl'),
+      alpha: true,
+      antialias: true,
+      powerPreference:"high-performance"
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+    // Point cloud stretched vertically to feel like “scan”
+    const nodeCount = 280;
+    const bounds = { x: 14, y: 22, z: 14 };
+
+    const positions = new Float32Array(nodeCount * 3);
+    const velocities = new Float32Array(nodeCount * 3);
+
+    for (let i=0; i<nodeCount; i++){
+      const k = i*3;
+      positions[k+0] = (Math.random()-0.5) * bounds.x*2;
+      positions[k+1] = (Math.random()-0.5) * bounds.y*2;
+      positions[k+2] = (Math.random()-0.5) * bounds.z*2;
+
+      velocities[k+0] = (Math.random()-0.5) * 0.020;
+      velocities[k+1] = (Math.random()-0.5) * 0.014;
+      velocities[k+2] = (Math.random()-0.5) * 0.020;
+    }
+
+    const ptsGeo = new THREE.BufferGeometry();
+    ptsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const ptsMat = new THREE.PointsMaterial({
+      color: 0x2D67FF,
+      size: 0.060,
+      transparent: true,
+      opacity: 0.90,
+      depthWrite: false
+    });
+
+    const points = new THREE.Points(ptsGeo, ptsMat);
+    scene.add(points);
+
+    // Lines
+    const maxConnections = 1700;
+    const linePositions = new Float32Array(maxConnections * 2 * 3);
+    const lineGeo = new THREE.BufferGeometry();
+    lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+    lineGeo.setDrawRange(0, 0);
+
+    const lineMat = new THREE.LineBasicMaterial({
+      color: 0x2D67FF,
+      transparent: true,
+      opacity: 0.18,
+      depthWrite: false
+    });
+
+    const lines = new THREE.LineSegments(lineGeo, lineMat);
+    scene.add(lines);
+
+    // “Verifier pillar” (distinct centerpiece)
+    const pillarGeo = new THREE.CylinderGeometry(0.20, 0.26, 9.2, 16, 1, true);
+    const pillarMat = new THREE.MeshBasicMaterial({
+      color: 0x2D67FF,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.16
+    });
+    const pillar = new THREE.Mesh(pillarGeo, pillarMat);
+    scene.add(pillar);
+
+    camera.position.z = 20;
+
+    const state = {
+      focus: 0.0,         // 0 roam, 1 align around pillar
+      burst: 0.0,
+      zoom: 0.0,
+      clusterBoost: 0.0,
+      orbitRadius: 6.2
+    };
+
+    const dirs = [];
+    for (let i=0; i<nodeCount; i++){
+      dirs.push(new THREE.Vector3((Math.random()-0.5), (Math.random()-0.5), (Math.random()-0.5)).normalize());
+    }
+
+    const maxDist = 2.25;
+    const maxDist2 = maxDist * maxDist;
+
+    function updateConnections(){
+      const pos = ptsGeo.attributes.position.array;
+      let segCount = 0;
+
+      for (let i=0; i<nodeCount; i++){
+        const ix = i*3;
+        const ax = pos[ix], ay = pos[ix+1], az = pos[ix+2];
+
+        for (let j=i+1; j<nodeCount; j++){
+          const jx = j*3;
+          const bx = pos[jx], by = pos[jx+1], bz = pos[jx+2];
+
+          const dx = ax-bx, dy = ay-by, dz = az-bz;
+          const d2 = dx*dx + dy*dy + dz*dz;
+
+          if (d2 < maxDist2){
+            const k = segCount * 6;
+            linePositions[k+0]=ax; linePositions[k+1]=ay; linePositions[k+2]=az;
+            linePositions[k+3]=bx; linePositions[k+4]=by; linePositions[k+5]=bz;
+            segCount++;
+            if (segCount >= maxConnections) break;
+          }
+        }
+        if (segCount >= maxConnections) break;
+      }
+
+      lineGeo.setDrawRange(0, segCount * 2);
+      lineGeo.attributes.position.needsUpdate = true;
+
+      const base = 0.12 + 0.10*state.zoom + 0.10*state.focus;
+      lineMat.opacity = Math.min(0.36, base);
+    }
+
+    // Mouse parallax rotate
+    let targetRotX = 0, targetRotY = 0;
+    if (window.matchMedia("(pointer: fine)").matches){
+      window.addEventListener('mousemove', (e) => {
+        const nx = (e.clientX / window.innerWidth) * 2 - 1;
+        const ny = (e.clientY / window.innerHeight) * 2 - 1;
+        targetRotY = nx * 0.16;
+        targetRotX = ny * 0.10;
+      }, {passive:true});
+    }
+
+    // Scroll focus timeline
+    const steps = document.getElementById('steps');
+    const boundary = document.getElementById('boundary');
+
+    gsap.timeline({
+      scrollTrigger:{
+        trigger: steps,
+        start: "top 85%",
+        end: "bottom 35%",
+        scrub: 1.2
+      }
+    })
+    .to(state, { focus: 1.0, zoom: 0.85, duration: 1, ease:"none" })
+    .to(camera.position, { z: 12.2, duration: 1, ease:"none" }, 0)
+    .to(pillarMat, { opacity: 0.30, duration: 1, ease:"none" }, 0);
+
+    ScrollTrigger.create({
+      trigger: boundary,
+      start: "top 70%",
+      end: "bottom bottom",
+      onEnter: () => explodeOut(0.85),
+      onLeaveBack: () => implodeIn(0.75)
+    });
+
+    function explodeOut(duration=0.85){
+      gsap.killTweensOf(state);
+      gsap.to(state, { burst: 1.0, focus: 0.0, zoom: 0.25, duration, ease: "power2.out" });
+      gsap.to(camera.position, { z: 17.2, duration, ease: "power2.out" });
+      gsap.to(pillarMat, { opacity: 0.14, duration, ease: "power2.out" });
+    }
+
+    function implodeIn(duration=0.75){
+      gsap.killTweensOf(state);
+      gsap.to(state, { burst: 0.0, focus: 1.0, zoom: 0.85, duration, ease: "power2.out" });
+      gsap.to(camera.position, { z: 12.2, duration, ease: "power2.out" });
+      gsap.to(pillarMat, { opacity: 0.30, duration, ease: "power2.out" });
+    }
+
+    // Cluster focus on click
+    const clusterMap = {
+      inputs:   { camZ: 12.6, boost: 0.26, orbit: 6.4 },
+      outputs:  { camZ: 12.8, boost: 0.22, orbit: 6.6 },
+      step1:    { camZ: 12.4, boost: 0.30, orbit: 6.2 },
+      step2:    { camZ: 12.1, boost: 0.38, orbit: 6.0 },
+      step3:    { camZ: 12.0, boost: 0.42, orbit: 5.9 },
+      step4:    { camZ: 12.2, boost: 0.36, orbit: 6.0 },
+      step5:    { camZ: 12.5, boost: 0.28, orbit: 6.2 },
+      failopen: { camZ: 12.9, boost: 0.22, orbit: 6.6 }
+    };
+
+    function focusCluster(key, fromClick=false){
+      const c = clusterMap[key];
+      if (!c) return;
+      gsap.to(camera.position, { z: c.camZ, duration: fromClick ? 0.8 : 1.0, ease: "power2.out" });
+      gsap.to(state, { clusterBoost: c.boost, orbitRadius: c.orbit, duration: fromClick ? 0.8 : 1.0, ease: "power2.out" });
+      gsap.to(state, { clusterBoost: 0.0, duration: 1.4, ease: "power2.out", delay: 0.5 });
+    }
+    window.focusCluster = focusCluster;
+
+    // Deep-link open
+    function openFromHash(){
+      const key = (location.hash || "").replace("#","").trim();
+      if (!key) return;
+      const el = document.querySelector(`[data-open="${key}"]`);
+      if (el){
+        el.classList.add('expanded');
+        focusCluster(key, false);
+      }
+    }
+    openFromHash();
+    window.addEventListener('hashchange', openFromHash);
+
+    // Animate loop
+    const tmp = new THREE.Vector3();
+    const desired = new THREE.Vector3();
+    const out = new THREE.Vector3();
+
+    function animate(){
+      requestAnimationFrame(animate);
+
+      const pos = ptsGeo.attributes.position.array;
+
+      // Smooth rotate
+      points.rotation.y += (targetRotY - points.rotation.y) * 0.04;
+      points.rotation.x += (targetRotX - points.rotation.x) * 0.04;
+      lines.rotation.copy(points.rotation);
+
+      pillar.rotation.y += 0.002;
+      pillar.rotation.x += 0.001;
+
+      const f = Math.min(1.0, (state.focus * 0.78) + (state.clusterBoost * 0.82));
+      const shell = state.orbitRadius;
+      const b = state.burst;
+      const t = performance.now() * 0.001;
+
+      for (let i=0; i<nodeCount; i++){
+        const k = i*3;
+
+        // baseline drift
+        pos[k+0] += velocities[k+0] * (1.0 - 0.55*f);
+        pos[k+1] += velocities[k+1] * (1.0 - 0.55*f);
+        pos[k+2] += velocities[k+2] * (1.0 - 0.55*f);
+
+        if (pos[k+0] > bounds.x || pos[k+0] < -bounds.x) velocities[k+0] *= -1;
+        if (pos[k+1] > bounds.y || pos[k+1] < -bounds.y) velocities[k+1] *= -1;
+        if (pos[k+2] > bounds.z || pos[k+2] < -bounds.z) velocities[k+2] *= -1;
+
+        // focus around pillar (slightly vertical alignment)
+        if (f > 0.001){
+          tmp.set(pos[k+0], pos[k+1], pos[k+2]);
+          const dir = dirs[i];
+          const breathe = 0.32 * Math.sin(t + i*0.16);
+
+          desired.copy(dir).multiplyScalar(shell + breathe);
+          desired.y *= 1.18; // emphasize vertical “beam”
+
+          tmp.lerp(desired, 0.010 + 0.034*f);
+
+          pos[k+0] = tmp.x; pos[k+1] = tmp.y; pos[k+2] = tmp.z;
+        }
+
+        // burst
+        if (b > 0.001){
+          out.set(pos[k+0], pos[k+1], pos[k+2]).normalize().multiplyScalar(0.060 * b);
+          pos[k+0] += out.x * (1.0 + i%7 * 0.05);
+          pos[k+1] += out.y * (1.0 + i%5 * 0.05);
+          pos[k+2] += out.z * (1.0 + i%3 * 0.05);
+        }
+      }
+
+      ptsGeo.attributes.position.needsUpdate = true;
+
+      updateConnections();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    }, {passive:true});
+
+    /* Page transition: explode then navigate */
+    function navWithExplosion(url){
+      explodeOut(0.55);
+      setTimeout(() => { window.location.href = url; }, 520);
+    }
+    document.querySelectorAll('a.nav-exit').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const href = a.getAttribute('href');
+        if (!href || href.startsWith('#')) return;
+        e.preventDefault();
+        navWithExplosion(href);
+      });
+    });
+  </script>
+</body>
+</html>
