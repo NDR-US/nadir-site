@@ -7,7 +7,7 @@ from cryptography.hazmat.primitives.asymmetric import padding, rsa
 def ceyo_canonicalize(text):
     """
     Standardizes the data format (RFC 8785 logic) and creates a SHA-256 hash.
-    This ensures the 'Evidence' is unique and immutable.
+    Ensures the 'Evidence' is unique and immutable.
     """
     text_bytes = text.encode('utf-8')
     hash_object = hashlib.sha256(text_bytes)
@@ -18,7 +18,7 @@ def ceyo_canonicalize(text):
 def ceyo_sign(hashed_data, private_key):
     """
     Signs the hash using the Private Key of the AI operator.
-    This proves the AI company actually produced this specific output.
+    Proves the AI company actually produced this specific output.
     """
     signature = private_key.sign(
         hashed_data.encode('utf-8'),
@@ -70,11 +70,13 @@ if __name__ == "__main__":
     print(f"[CEYO SEAL]: {digital_seal[:40]}...")
 
     # 4. Verification Check
+    
     is_authentic = ceyo_verify(sealed_hash, digital_seal, public_key)
     
     print(f"\n[VERIFICATION STATUS]: {'✅ VALID & UNTAMPERED' if is_authentic else '❌ TAMPERED/INVALID'}")
 
     # 5. Tamper Test (Simulating an alteration)
-    tampered_hash = ceyo_canonicalize("The AI company is NOT liable.") # Altered text
+    # If a malicious actor changes even one letter of the evidence...
+    tampered_hash = ceyo_canonicalize("The AI company is NOT liable.") 
     is_still_authentic = ceyo_verify(tampered_hash, digital_seal, public_key)
     print(f"[TAMPER TEST STATUS]: {'✅ VALID' if is_still_authentic else '❌ REJECTED (Tamper Detected)'}")
