@@ -3,10 +3,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>CEYO — Evidentiary Infrastructure for Autonomous Systems</title>
-  <meta name="description" content="CEYO is a weight-neutral, policy-scoped evidentiary layer. Canonical artifacts. Cryptographic sealing. Independent verification under constrained disclosure."/>
-  <meta name="theme-color" content="#0B1220"/>
-
+  <title>CEYO — Evidentiary Infrastructure</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&family=Outfit:ital,wght@0,700;0,900;1,900&display=swap" rel="stylesheet">
@@ -14,77 +12,32 @@
 
   <style>
     :root{
-      --navy:#0B1220;
-      --navy2:#0E1930;
+      --navy:#060A13;
+      --navy-bright:#0B1220;
       --ivory:#F4F0E6;
       --royal:#2D67FF;
-      --royal-glow: rgba(45,103,255,0.30);
+      --royal-glow: rgba(45,103,255,0.4);
       --text:rgba(244,240,230,.92);
-      --muted:rgba(244,240,230,.68);
-      --stroke:rgba(244,240,230,.12);
-
-      --brandFont:'Outfit', system-ui, sans-serif;
-      --monoFont:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --bodyFont:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --muted:rgba(244,240,230,.5);
+      --stroke:rgba(244,240,230,.1);
+      --brandFont:'Outfit', sans-serif;
+      --monoFont:'IBM Plex Mono', monospace;
     }
 
     html{scroll-behavior:smooth; background:var(--navy);}
-    body{
-      margin:0; background:var(--navy); color:var(--text);
-      font-family:var(--bodyFont); overflow-x:hidden; cursor:none;
-    }
-    @media (pointer: coarse){
-      body{ cursor:auto; }
-      #cursor{ display:none; }
-    }
-    @media (prefers-reduced-motion: reduce){
-      html{ scroll-behavior:auto; }
-      #cursor,#spotlight{ display:none; }
-      .telemetry, .twCaret{ animation:none !important; }
-    }
+    body{ margin:0; background:var(--navy); color:var(--text); font-family:'Inter', sans-serif; overflow-x:hidden; cursor:none; }
 
-    /* Background & WebGL */
-    #stage{
-      position:fixed; inset:0; z-index:0;
-      background:
-        radial-gradient(1200px 700px at 50% 28%, rgba(45,103,255,.10), transparent 60%),
-        linear-gradient(180deg, var(--navy), var(--navy2));
-    }
-    #gl{position:absolute; inset:0; width:100%; height:100%; display:block;}
+    /* Scene Canvas */
+    #stage{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+    #gl{ width:100%; height:100%; display:block; }
 
-    /* Royal spotlight that follows cursor */
-    #spotlight{
-      position:fixed; inset:0; z-index:4; pointer-events:none;
-      background: radial-gradient(360px 360px at 50% 30%, rgba(45,103,255,.18), rgba(45,103,255,.06) 35%, transparent 70%);
-      transition: background .05s linear;
-      mix-blend-mode: screen;
-    }
-
-    #grain{
-      position:fixed; inset:0; z-index:5; pointer-events:none; opacity:.05;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
-
-    /* Cursor */
+    /* Custom Cursor */
     #cursor{
-      position:fixed; z-index:9999; width:8px; height:8px; border-radius:50%;
+      position:fixed; z-index:9999; width:10px; height:10px; border-radius:50%;
       background:var(--ivory); mix-blend-mode:difference; pointer-events:none;
-      transform:translate(-50%,-50%); transition: width .16s ease, height .16s ease, opacity .16s ease;
-      opacity:1;
+      transform:translate(-50%,-50%); transition: width 0.2s, height 0.2s;
     }
-    #cursor.big{width:44px; height:44px; opacity:.55; background: var(--royal);}
-
-    /* Header Nav */
-    #topnav{
-      position:fixed; top:0; left:0; right:0; z-index:50; height:68px;
-      display:flex; align-items:center; justify-content:space-between; padding:0 22px;
-      transition: background .3s, border-color .3s;
-      border-bottom: 1px solid transparent;
-    }
-    #topnav.scrolled{
-      background: rgba(11,18,32,.90); backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--stroke);
-    }
+    #cursor.big { width: 40px; height: 40px; background: var(--royal); opacity: 0.5; }
 
     /* Telemetry shimmer (T -> Y) */
     .telemetry {
@@ -98,575 +51,175 @@
     }
     @keyframes shimmer { 0%{background-position:0% center;} 60%{background-position:100% center;} 100%{background-position:100% center;} }
 
-    /* Typography */
-    .h1{
-      font-family:var(--brandFont); font-weight:900; font-style:italic;
-      text-transform:uppercase; letter-spacing:-.055em; line-height:.9;
-      font-size: clamp(52px, 8.8vw, 112px);
+    /* Data Block Layouts */
+    .data-block {
+      border: 1px solid var(--stroke);
+      background: rgba(11,18,32,0.6);
+      backdrop-filter: blur(12px);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      overflow: hidden;
+      max-height: 80px; 
     }
-    .kicker{
-      font-family:var(--monoFont); font-size:10px; letter-spacing:.24em;
-      text-transform:uppercase; color:var(--muted); display:flex; align-items:center; gap:14px;
+    .data-block.expanded {
+      max-height: 1000px;
+      border-color: var(--royal);
+      background: rgba(11,18,32,0.9);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
+    .data-block .content-area { opacity: 0; transform: translateY(10px); transition: all 0.4s 0.1s; }
+    .data-block.expanded .content-area { opacity: 1; transform: translateY(0); }
+
+    .h1 { font-family: var(--brandFont); font-weight: 900; font-size: clamp(50px, 9vw, 120px); line-height: 0.9; letter-spacing: -0.05em; text-transform: uppercase; font-style: italic; }
+    .kicker{ font-family:var(--monoFont); font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:var(--muted); display:flex; align-items:center; gap:14px; }
     .kicker .line{ width:38px; height:1px; background: linear-gradient(to right, var(--royal), transparent); }
 
-    .panel{
-      border:1px solid var(--stroke); border-radius:22px;
-      background: rgba(11,18,32,.60); backdrop-filter: blur(12px);
-      transition: border-color .25s ease, transform .25s ease;
-    }
-    .panel:hover { border-color: rgba(45,103,255,0.40); }
-
-    .card{
-      border:1px solid var(--stroke); border-radius:16px;
-      background: rgba(244,240,230,.03); padding:22px; transition: all .25s ease;
-    }
-    .card:hover{ transform: translateY(-4px); border-color:rgba(45,103,255,.75); background: rgba(45,103,255,0.06); }
-
-    /* Buttons */
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      font-family:var(--monoFont); font-size:10px; letter-spacing:.18em;
-      text-transform:uppercase; padding:14px 24px; border-radius:999px;
-      border:1px solid var(--stroke); transition: all .18s ease;
-      color: var(--ivory);
-    }
-    .btn.primary{ background: var(--royal); color: white; border-color: var(--royal); }
-    .btn:hover{ transform: translateY(-1px); box-shadow: 0 0 24px var(--royal-glow); border-color: rgba(45,103,255,.65); }
-
-    /* Typed caret */
     .twCaret{
       display:inline-block; width:8px; height:1em; border-left:2px solid var(--royal);
       margin-left:6px; animation: caretBlink 1s steps(1) infinite;
-      transform: translateY(2px);
     }
     @keyframes caretBlink{ 50%{opacity:0;} }
-
-    /* Reveal */
-    .reveal{ opacity:0; transform: translateY(10px); transition: opacity .7s ease, transform .7s ease; }
-    .reveal.on{ opacity:1; transform: translateY(0); }
-
-    /* Tech Nav */
-    .techNav a{
-      display:flex; gap:12px; align-items:center; padding:14px;
-      border-bottom:1px solid var(--stroke);
-      font-family:var(--monoFont);
-      font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);
-      transition: background .15s ease, color .15s ease, border-color .15s ease;
-    }
-    .techNav a:hover{ color: var(--ivory); background: rgba(244,240,230,.03); }
-    .techNav a.active{ background: rgba(45,103,255,0.15); color:var(--ivory); border-bottom-color: rgba(45,103,255,.35); }
-
-    /* Bottom Index Bar */
-    #indexbar{
-      position:fixed; left:0; right:0; bottom:0; z-index:60; height:50px;
-      display:flex; background: rgba(11,18,32,.88); border-top:1px solid var(--stroke);
-      backdrop-filter: blur(10px);
-    }
-    .ib{
-      flex:1; display:flex; align-items:center; justify-content:center;
-      font-family:var(--monoFont); font-size:10px; letter-spacing:.22em;
-      text-transform:uppercase; color:var(--muted); border-right:1px solid var(--stroke);
-      transition: color .15s ease, background .15s ease;
-    }
-    .ib:hover{ color: var(--ivory); background: rgba(244,240,230,.03); }
-    .ib.active{ color:var(--ivory); border-top:2px solid var(--royal); }
-
-    /* Map block */
-    .mapWrap{ border:1px solid var(--stroke); border-radius:22px; overflow:hidden; background: rgba(11,18,32,.55); }
-    .mapHead{ border-bottom:1px solid var(--stroke); padding:14px 16px; display:flex; justify-content:space-between; align-items:center; gap:14px; }
-    .mapChip{
-      display:inline-flex; align-items:center; gap:10px;
-      border:1px solid rgba(45,103,255,.35);
-      background: rgba(45,103,255,.10);
-      padding:8px 10px; border-radius:999px;
-      font-family: var(--monoFont); font-size:10px; letter-spacing:.20em; text-transform:uppercase; color:var(--ivory);
-    }
-    .mapChip .dot{ width:6px; height:6px; border-radius:50%; background: var(--royal); box-shadow:0 0 0 6px rgba(45,103,255,.14); }
-    .mapMeta{ font-family: var(--monoFont); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color: var(--muted); }
-    #systemMap{ width:100%; height:auto; display:block; }
-
-    .link{
-      stroke: rgba(45,103,255,.45);
-      stroke-width:1.2;
-      fill:none;
-      stroke-linecap:round;
-      opacity:.95;
-      stroke-dasharray: 520;
-      stroke-dashoffset: 520;
-      animation: draw 1.1s ease forwards;
-    }
-    .link.dim{ stroke: rgba(244,240,230,.18); opacity:.65; }
-    @keyframes draw{ to{ stroke-dashoffset:0; } }
-
-    .node{ cursor:pointer; }
-    .node circle{
-      fill: rgba(11,18,32,.86);
-      stroke: rgba(244,240,230,.22);
-      stroke-width:1.2;
-      transition: stroke .15s ease, fill .15s ease, transform .15s ease;
-      filter: drop-shadow(0 16px 30px rgba(0,0,0,.35));
-    }
-    .node:hover circle{ stroke: rgba(45,103,255,.85); fill: rgba(45,103,255,.10); }
-    .node text{
-      font-family: var(--monoFont);
-      font-size:10px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      fill: rgba(244,240,230,.86);
-      user-select:none;
-    }
-    .node .sub{
-      font-family: var(--bodyFont);
-      font-size:11px;
-      letter-spacing:0;
-      text-transform:none;
-      fill: rgba(244,240,230,.62);
-    }
-
-    .tooltip{
-      position:absolute; z-index:30;
-      min-width:280px; max-width:360px;
-      pointer-events:none;
-      opacity:0; transform: translateY(8px);
-      transition: opacity .12s ease, transform .12s ease;
-      border:1px solid rgba(244,240,230,.16);
-      border-radius:16px;
-      background: rgba(11,18,32,.92);
-      backdrop-filter: blur(12px);
-      padding: 12px 12px;
-      box-shadow: 0 22px 60px rgba(0,0,0,.45);
-    }
-    .tooltip.show{ opacity:1; transform: translateY(0); }
-    .ttTitle{
-      display:flex; justify-content:space-between; align-items:center; gap:12px;
-      font-family: var(--monoFont); font-size:10px; letter-spacing:.20em; text-transform:uppercase;
-      color: rgba(244,240,230,.92);
-      margin-bottom:8px;
-    }
-    .ttPill{
-      font-family: var(--monoFont); font-size:9px; letter-spacing:.18em; text-transform:uppercase;
-      color: rgba(244,240,230,.78);
-      border:1px solid rgba(45,103,255,.35);
-      background: rgba(45,103,255,.10);
-      padding:5px 8px;
-      border-radius:999px;
-      white-space:nowrap;
-    }
-    .tooltip p{ margin:0; font-size:13px; line-height:1.75; color: rgba(244,240,230,.74); }
-    .ttHint{ margin-top:10px; font-family: var(--monoFont); font-size:9px; letter-spacing:.18em; text-transform:uppercase; color: rgba(244,240,230,.55); }
-
-    /* Typed block (Accountability Gap) */
-    .typeBlock{
-      border:1px solid var(--stroke);
-      border-radius:16px;
-      background: rgba(244,240,230,.03);
-      padding: 18px 18px;
-      overflow:hidden;
-    }
-    .typeLine{
-      opacity:0;
-      transform: translateY(6px);
-      transition: opacity .45s ease, transform .45s ease;
-      font-size:14px;
-      line-height:1.9;
-      color: var(--muted);
-      margin: 0 0 8px 0;
-    }
-    .typeLine:last-child{ margin-bottom:0; }
-
-    /* “Section feels like a page” invert blocks */
-    .invertPage{
-      background: rgba(244,240,230,.92);
-      color: rgba(11,18,32,.95);
-    }
-    .invertPage .panel{
-      background: rgba(255,255,255,.78);
-      border-color: rgba(11,18,32,.12);
-    }
-    .invertPage .kicker,
-    .invertPage .mapMeta{ color: rgba(11,18,32,.68); }
-    .invertPage .card{
-      background: rgba(11,18,32,.02);
-      border-color: rgba(11,18,32,.12);
-    }
-    .invertPage .card:hover{
-      background: rgba(45,103,255,.05);
-      border-color: rgba(45,103,255,.65);
-    }
-    .invertPage .typeBlock{ background: rgba(11,18,32,.02); border-color: rgba(11,18,32,.12); }
-    .invertPage .typeLine{ color: rgba(11,18,32,.74); }
-
-    /* Scroll anchor offset for fixed nav */
-    .scroll-mt-32{ scroll-margin-top: 120px; }
   </style>
 </head>
-
 <body>
-  <div id="stage" aria-hidden="true"><canvas id="gl"></canvas></div>
-  <div id="spotlight" aria-hidden="true"></div>
-  <div id="grain" aria-hidden="true"></div>
-  <div id="cursor" aria-hidden="true"></div>
 
-  <!-- TOP NAV (links go to pages; anchors are for single-page fallback) -->
-  <nav id="topnav" aria-label="Primary navigation">
-    <div class="flex items-baseline gap-3">
-      <a href="index.html" class="font-[var(--brandFont)] font-black italic text-2xl uppercase">CEYO</a>
-      <span class="font-mono text-[9px] uppercase tracking-widest text-[var(--muted)]">Evidentiary Infrastructure</span>
+  <div id="stage"><canvas id="gl"></canvas></div>
+  <div id="cursor"></div>
+
+  <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center transition-all" id="topnav">
+    <div class="flex items-baseline gap-4">
+      <span class="font-[var(--brandFont)] font-black text-2xl italic uppercase">CEYO</span>
+      <span class="font-mono text-[9px] tracking-[0.3em] opacity-40 uppercase">Evidentiary Infrastructure</span>
     </div>
-    <div class="hidden md:flex gap-2 items-center">
-      <a href="index.html" class="font-mono text-[10px] p-2 text-[var(--ivory)]">Overview</a>
-      <a href="platform.html" class="font-mono text-[10px] p-2 text-[var(--muted)] hover:text-[var(--ivory)]">Architecture</a>
-      <a href="trust.html" class="font-mono text-[10px] p-2 text-[var(--muted)] hover:text-[var(--ivory)]">Trust</a>
-      <a href="governance.html" class="font-mono text-[10px] p-2 text-[var(--muted)] hover:text-[var(--ivory)]">Governance</a>
-      <a href="contact.html" class="btn primary ml-4 !py-2 !px-4">Request Review</a>
+    <div class="hidden md:flex gap-8 font-mono text-[10px] tracking-widest uppercase opacity-60">
+      <a href="#hero" class="hover:text-[var(--royal)]">Overview</a>
+      <a href="#gap" class="hover:text-[var(--royal)]">Architecture</a>
+      <a href="#tech" class="hover:text-[var(--royal)]">Trust</a>
     </div>
   </nav>
 
-  <div class="relative z-20">
-    <main class="max-w-[1200px] mx-auto px-6">
+  <main class="relative z-10 max-w-7xl mx-auto px-6">
+    
+    <section id="hero" class="min-h-screen flex flex-col justify-end pb-32">
+      <div class="max-w-4xl">
+        <div class="kicker mb-6"><div class="line"></div>CEYO · EVIDENTIARY INFRASTRUCTURE</div>
+        <h1 class="h1 mb-8">
+          Go Beyond<br/>
+          <span class="telemetry">Telemetry</span><span class="twCaret"></span>
+        </h1>
+        <p class="text-xl text-[var(--muted)] leading-relaxed max-w-2xl mb-12">
+          CEYO is a weight-neutral, policy-scoped evidentiary layer that attaches beside AI inference systems to produce cryptographically sealed canonical artifacts.
+        </p>
+        <div class="flex gap-4">
+          <button onclick="document.getElementById('gap').scrollIntoView()" class="px-8 py-4 bg-[var(--royal)] font-mono text-[10px] uppercase tracking-widest rounded-full hover:scale-105 transition-all">Enter Framework</button>
+        </div>
+      </div>
+    </section>
 
-      <!-- HERO -->
-      <section id="hero" class="min-h-screen flex items-end pb-28 pt-36">
-        <div class="grid lg:grid-cols-2 gap-12 w-full items-end">
-          <div>
-            <div class="kicker"><div class="line"></div>CEYO · EVIDENTIARY INFRASTRUCTURE</div>
-            <h1 class="h1 mt-4">
-              Go Beyond<br/>
-              <span class="telemetry">Telemetry</span><span class="twCaret" aria-hidden="true"></span>
-            </h1>
+    <section id="gap" class="py-40">
+      <div class="font-mono text-[10px] text-[var(--royal)] mb-8 tracking-[.30em]">[01] THE ACCOUNTABILITY GAP</div>
+      <h2 class="h1 italic text-5xl mb-12">Systemic Deficit</h2>
+      
+      <div class="grid lg:grid-cols-2 gap-12 mb-12 text-lg text-[var(--muted)] leading-relaxed">
+        <p>Modern AI deployments optimize for throughput and latency. Accountability infrastructure is frequently secondary. When a decision is questioned, organizations reconstruct events from partial logs—which is <strong>interpretive</strong>, not deterministic proof.</p>
+        <p>Institutions require artifacts that are <strong>canonical</strong>, <strong>explicit in scope</strong>, and <strong>independently verifiable</strong>. This is an architectural deficit, not an operational oversight.</p>
+      </div>
 
-            <div class="mt-7 flex flex-wrap items-center gap-3">
-              <span class="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)] border border-[var(--stroke)] rounded-full px-3 py-2 bg-white/5">
-                V2026.02.19
-              </span>
-              <span class="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">
-                Policy-scoped artifacts · Cryptographic sealing · Independent verification
-              </span>
-            </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="data-block p-8 rounded-2xl" onclick="this.classList.toggle('expanded')">
+          <div class="flex justify-between items-center font-mono text-[10px] uppercase tracking-widest">
+            <span>01 / Deterministic</span>
+            <span class="text-[var(--royal)]">+ Expand Detail</span>
           </div>
-
-          <div class="max-w-xl">
-            <p class="text-[16px] leading-[1.85] text-[var(--muted)] mb-8 reveal">
-              CEYO is a weight-neutral, policy-scoped evidentiary layer that attaches beside AI inference systems and produces canonical artifacts representing defined inference-time decision-state context — cryptographically sealed for institutional verification under constrained disclosure conditions.
-            </p>
-
-            <div class="space-y-3 font-mono text-[11px] mb-8 uppercase tracking-wider reveal">
-              <div class="text-red-400/70">× CEYO does not replace models</div>
-              <div class="text-red-400/70">× CEYO does not modify inference outputs</div>
-              <div class="text-red-400/70">× CEYO does not evaluate correctness</div>
-              <div class="text-[var(--royal)]">→ CEYO produces verifiable records</div>
-            </div>
-
-            <div class="flex gap-4 flex-wrap reveal">
-              <a href="platform.html" class="btn primary">Enter Framework</a>
-              <a href="contact.html" class="btn">Controlled Review</a>
-            </div>
+          <h3 class="text-xl font-bold mt-4 uppercase italic">Canonical Artifacts</h3>
+          <div class="content-area mt-6 pt-6 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+            Consistent schema and stable byte representation across environments. Canonicalization (RFC 8785) ensures independent recomputation of hashes without interpretive variance.
           </div>
         </div>
-      </section>
 
-      <!-- SYSTEM MAP (interactive, connected, no "seal map" label; map is CEYO-centered) -->
-      <section class="pb-24">
-        <div class="mapWrap relative reveal" id="mapWrap">
-          <div class="mapHead">
-            <div class="flex items-center gap-10">
-              <div class="mapChip"><span class="dot" aria-hidden="true"></span> System Map</div>
-              <div class="mapMeta">Tap a node to navigate</div>
-            </div>
-            <div class="mapMeta hidden sm:block">interactive · policy-scoped</div>
+        <div class="data-block p-8 rounded-2xl" onclick="this.classList.toggle('expanded')">
+          <div class="flex justify-between items-center font-mono text-[10px] uppercase tracking-widest">
+            <span>02 / Cryptographic</span>
+            <span class="text-[var(--royal)]">+ Expand Detail</span>
           </div>
-
-          <div class="relative p-4 md:p-5" id="mapCanvas">
-            <div class="tooltip" id="mapTip" role="dialog" aria-live="polite" aria-label="Map info">
-              <div class="ttTitle">
-                <span id="tipTitle">CAPTURE</span>
-                <span class="ttPill" id="tipPill">Jump</span>
-              </div>
-              <p id="tipBody">Define what fields are captured before artifacts are generated. Scope is explicit and versioned.</p>
-              <div class="ttHint">Tap / click to navigate</div>
-            </div>
-
-            <svg id="systemMap" viewBox="0 0 980 360" aria-label="CEYO system map">
-              <!-- Links: draw in sequence -->
-              <path class="link" style="animation-delay:.10s" d="M490 165 C420 135, 340 115, 250 96"></path>
-              <path class="link" style="animation-delay:.22s" d="M490 165 C560 135, 640 115, 730 96"></path>
-              <path class="link" style="animation-delay:.34s" d="M490 165 C410 195, 330 230, 250 264"></path>
-              <path class="link" style="animation-delay:.46s" d="M490 165 C570 195, 650 230, 730 264"></path>
-              <path class="link dim" style="animation-delay:.58s" d="M490 165 C468 230, 458 270, 445 300"></path>
-              <path class="link dim" style="animation-delay:.70s" d="M490 165 C512 230, 522 270, 535 300"></path>
-
-              <!-- Center -->
-              <g class="node" data-target="#cluster-is" data-title="CEYO" data-pill="Jump"
-                 data-body="A decoupled evidentiary substrate. Records, not judgments." transform="translate(490,165)">
-                <circle r="28"></circle>
-                <text text-anchor="middle" y="5" style="font-size:12px;letter-spacing:.20em;">CEYO</text>
-                <text class="sub" text-anchor="middle" y="22">artifact core</text>
-              </g>
-
-              <!-- Properties -->
-              <g class="node" data-target="#tp-capture" data-title="CAPTURE" data-pill="Jump"
-                 data-body="Operator-defined field selection, exclusion, and masking before generation. Policy version is recorded."
-                 transform="translate(250,96)">
-                <circle r="22"></circle>
-                <text text-anchor="middle" y="4">CAPTURE</text>
-                <text class="sub" text-anchor="middle" y="20">policy-scoped</text>
-              </g>
-
-              <g class="node" data-target="#tp-structure" data-title="STRUCTURE" data-pill="Jump"
-                 data-body="Normalize captured context into a stable artifact schema designed for review. Deterministic bytes for recomputation."
-                 transform="translate(730,96)">
-                <circle r="22"></circle>
-                <text text-anchor="middle" y="4">STRUCTURE</text>
-                <text class="sub" text-anchor="middle" y="20">canonical</text>
-              </g>
-
-              <g class="node" data-target="#tp-sealing" data-title="SEALING" data-pill="Jump"
-                 data-body="Canonicalization + hashing + signature produce tamper-evident artifacts with attributable provenance."
-                 transform="translate(250,264)">
-                <circle r="22"></circle>
-                <text text-anchor="middle" y="4">SEALING</text>
-                <text class="sub" text-anchor="middle" y="20">tamper-evident</text>
-              </g>
-
-              <g class="node" data-target="#tp-keys" data-title="KEYS" data-pill="Jump"
-                 data-body="Non-custodial keys: signing authority remains with the deploying institution (HSM/KMS/TEE)."
-                 transform="translate(730,264)">
-                <circle r="22"></circle>
-                <text text-anchor="middle" y="4">KEYS</text>
-                <text class="sub" text-anchor="middle" y="20">non-custodial</text>
-              </g>
-
-              <g class="node" data-target="#tp-disclosure" data-title="DISCLOSURE" data-pill="Jump"
-                 data-body="Tiered disclosure enables independent verification without default exposure of proprietary internals."
-                 transform="translate(445,300)">
-                <circle r="20"></circle>
-                <text text-anchor="middle" y="4">DISCLOSURE</text>
-                <text class="sub" text-anchor="middle" y="20">tiered</text>
-              </g>
-
-              <g class="node" data-target="#tp-availability" data-title="AVAILABILITY" data-pill="Jump"
-                 data-body="Fail-open posture preserves inference continuity; seal failures are logged and reviewable."
-                 transform="translate(535,300)">
-                <circle r="20"></circle>
-                <text text-anchor="middle" y="4">AVAILABILITY</text>
-                <text class="sub" text-anchor="middle" y="20">fail-open</text>
-              </g>
-            </svg>
+          <h3 class="text-xl font-bold mt-4 uppercase italic">Integrity Sealing</h3>
+          <div class="content-area mt-6 pt-6 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+            SHA-256 hashing and ECDSA digital signatures establish tamper-evidence and origin authenticity. Once sealed, the decision-state context is frozen for audit.
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- [01] THE ACCOUNTABILITY GAP (invert page feel) -->
-      <section id="cluster-gap" class="py-24 invertPage rounded-[28px] px-0 -mx-6 md:-mx-8 mb-0">
-        <div class="max-w-[1200px] mx-auto px-6 md:px-8">
-          <div class="panel p-8 md:p-16 reveal">
-            <div class="font-mono text-[10px] text-[rgba(11,18,32,.70)] mb-8 tracking-[.30em]">[01] THE ACCOUNTABILITY GAP</div>
-            <h2 class="font-[var(--brandFont)] font-black italic uppercase text-5xl mb-10 tracking-tight">The Accountability Gap</h2>
-
-            <div class="grid lg:grid-cols-2 gap-12 mb-10">
-              <div class="space-y-6 text-[rgba(11,18,32,.78)] text-lg leading-relaxed">
-                <p class="reveal">Modern AI deployments optimize for throughput, latency, and availability. Accountability infrastructure is frequently secondary.</p>
-                <p class="reveal">When a decision is later questioned — through regulatory inquiry, internal audit, incident review, or litigation — organizations often reconstruct events from partial logs and distributed traces. Reconstruction is interpretive. It is not deterministic proof.</p>
-              </div>
-              <div class="space-y-6 text-[rgba(11,18,32,.78)] text-lg leading-relaxed">
-                <p class="reveal">Institutions require artifacts that are <strong>canonical</strong> in structure, <strong>explicit</strong> in capture scope, <strong>cryptographically sealed</strong>, and <strong>independently verifiable</strong>.</p>
-                <p class="reveal">Without those properties, oversight depends on operator assertions rather than verifiable integrity. This is an architectural deficit, not an operational oversight.</p>
-              </div>
-            </div>
-
-            <div class="typeBlock mb-10" id="accType" aria-label="Accountability typed block">
-              <p class="typeLine">Telemetry describes activity.</p>
-              <p class="typeLine">It does not preserve proof.</p>
-              <p class="typeLine">This is an architectural deficit — not an operational oversight correctable by “better logging.”</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div class="card">
-                <div class="font-mono text-[9px] text-[var(--royal)] mb-4 tracking-[.22em]">01 · CANONICAL</div>
-                <div class="font-bold mb-2">Deterministic structure</div>
-                <div class="text-xs leading-relaxed">Consistent schema and stable byte representation across environments.</div>
-              </div>
-              <div class="card">
-                <div class="font-mono text-[9px] text-[var(--royal)] mb-4 tracking-[.22em]">02 · INTEGRITY</div>
-                <div class="font-bold mb-2">Cryptographic sealing</div>
-                <div class="text-xs leading-relaxed">Hash and signature establish tamper-evidence and origin authenticity.</div>
-              </div>
-              <div class="card">
-                <div class="font-mono text-[9px] text-[var(--royal)] mb-4 tracking-[.22em]">03 · SCOPE</div>
-                <div class="font-bold mb-2">Explicit disclosure boundary</div>
-                <div class="text-xs leading-relaxed">Versioned policy defines inclusion, exclusion, masking, and tiered disclosure.</div>
-              </div>
-              <div class="card">
-                <div class="font-mono text-[9px] text-[var(--royal)] mb-4 tracking-[.22em]">04 · SEPARATION</div>
-                <div class="font-bold mb-2">Oversight without exposure</div>
-                <div class="text-xs leading-relaxed">Verification without default disclosure of proprietary internals.</div>
-              </div>
-            </div>
+    <section id="tech" class="py-40">
+      <div class="font-mono text-[10px] text-[var(--royal)] mb-8 tracking-[.30em]">[02] TECHNICAL PROPERTIES</div>
+      <h2 class="h1 italic text-5xl mb-12">A Decoupled Substrate</h2>
+      
+      <div class="space-y-4 max-w-4xl">
+        <div class="data-block p-6 rounded-xl" onclick="this.classList.toggle('expanded')">
+          <div class="flex justify-between items-center font-mono text-[10px]">
+            <span>PROPERTY 01</span>
+            <span class="uppercase tracking-widest">Policy-Scoped Capture</span>
+          </div>
+          <div class="content-area mt-6 text-[var(--muted)] leading-relaxed">
+            Operators define what fields are included, excluded, and masked before artifact generation begins. Capture policy is explicit and versioned. Artifacts reflect declared policy scope; they do not implicitly expand beyond it. The policy version is recorded within the artifact, making the capture boundary independently reviewable.
           </div>
         </div>
-      </section>
 
-      <!-- [02] SYSTEM ARCHITECTURE -->
-      <section id="cluster-is" class="py-24">
-        <div class="panel p-8 md:p-16 reveal">
-          <div class="font-mono text-[10px] text-[var(--royal)] mb-8 tracking-[.30em]">[02] SYSTEM ARCHITECTURE</div>
-          <h2 class="font-[var(--brandFont)] font-black italic uppercase text-5xl mb-10 tracking-tight">A Decoupled Evidentiary Substrate</h2>
-
-          <div class="max-w-4xl space-y-8 text-[var(--muted)] text-lg leading-relaxed">
-            <p class="reveal">
-              CEYO attaches at the inference boundary — as a sidecar, wrapper, or gateway — and captures only what operator policy explicitly defines.
-              It normalizes captured fields into a stable artifact schema, applies deterministic canonicalization, and seals cryptographically under a non-custodial key architecture.
-            </p>
-            <p class="reveal">
-              Verification confirms integrity and provenance under declared policy scope. It does not confirm correctness of model output.
-            </p>
+        <div class="data-block p-6 rounded-xl" onclick="this.classList.toggle('expanded')">
+          <div class="flex justify-between items-center font-mono text-[10px]">
+            <span>PROPERTY 02</span>
+            <span class="uppercase tracking-widest">Non-Custodial Keys</span>
           </div>
-
-          <div class="grid md:grid-cols-2 gap-4 mt-12">
-            <div class="card reveal">
-              <div class="font-mono text-[9px] text-red-400/80 mb-4 tracking-[.22em]">NOT</div>
-              <div class="font-bold text-[var(--ivory)] mb-2">Records are not judgments</div>
-              <div class="text-xs text-[var(--muted)] leading-relaxed">CEYO does not determine whether a decision was lawful, ethical, or fair.</div>
-            </div>
-            <div class="card reveal">
-              <div class="font-mono text-[9px] text-[var(--royal)] mb-4 tracking-[.22em]">PRINCIPLE</div>
-              <div class="font-bold text-[var(--ivory)] mb-2">Structural independence</div>
-              <div class="text-xs text-[var(--muted)] leading-relaxed">Evidence infrastructure must remain separate from decision authority.</div>
-            </div>
-          </div>
-
-          <div class="mt-10 pt-10 border-t border-[var(--stroke)] reveal">
-            <div class="font-mono text-[10px] tracking-[.26em] uppercase text-[var(--muted)] mb-3">Core Principle</div>
-            <div class="text-[18px] md:text-[22px] font-semibold text-[var(--ivory)] leading-snug">
-              Evidence infrastructure must remain separate from decision authority.
-            </div>
-            <div class="mt-3 text-[var(--muted)]">CEYO provides the artifact. Institutions provide the oversight.</div>
+          <div class="content-area mt-6 text-[var(--muted)] leading-relaxed">
+            Signing keys are generated and retained within the client-controlled environment — HSM, KMS, or TEE. CEYO does not possess, transmit, or store private signing keys. This preserves a clear separation between infrastructure provider and cryptographic authority.
           </div>
         </div>
-      </section>
 
-      <!-- [03] HOW IT WORKS -->
-      <section id="cluster-tech" class="py-24">
-        <div class="panel p-8 md:p-16 reveal">
-          <div class="font-mono text-[10px] text-[var(--royal)] mb-8 tracking-[.30em]">[03] HOW IT WORKS</div>
-          <h2 class="font-[var(--brandFont)] font-black italic uppercase text-5xl mb-10 tracking-tight">Technical Properties</h2>
-
-          <div class="grid lg:grid-cols-4 gap-12 mt-8">
-            <nav class="techNav sticky top-24 h-fit panel overflow-hidden">
-              <a href="#tp-capture" class="active">01 · Capture</a>
-              <a href="#tp-structure">02 · Structure</a>
-              <a href="#tp-sealing">03 · Sealing</a>
-              <a href="#tp-keys">04 · Keys</a>
-              <a href="#tp-disclosure">05 · Disclosure</a>
-              <a href="#tp-availability">06 · Availability</a>
-            </nav>
-
-            <div class="lg:col-span-3 space-y-24">
-              <div id="tp-capture" class="scroll-mt-32">
-                <div class="font-mono text-[11px] text-[var(--royal)] mb-4 tracking-[.18em]">01 · POLICY-SCOPED CAPTURE</div>
-                <h3 class="text-2xl font-bold mb-4 text-[var(--ivory)] tw" data-full="Define Before You Collect">Define Before You Collect</h3>
-                <p class="text-[var(--muted)] leading-relaxed reveal">
-                  Operators define what fields are included, excluded, and masked before artifact generation begins. Capture policy is explicit and versioned.
-                  Artifacts reflect declared policy scope; they do not implicitly expand beyond it. The policy version is recorded within the artifact, making the capture boundary independently reviewable.
-                </p>
-              </div>
-
-              <div id="tp-structure" class="scroll-mt-32">
-                <div class="font-mono text-[11px] text-[var(--royal)] mb-4 tracking-[.18em]">02 · CANONICAL STRUCTURE</div>
-                <h3 class="text-2xl font-bold mb-4 text-[var(--ivory)] tw" data-full="Deterministic Normalization">Deterministic Normalization</h3>
-                <p class="text-[var(--muted)] leading-relaxed reveal">
-                  Captured context is normalized into a deterministic JSON artifact schema. Canonicalization may be applied in accordance with RFC 8785 (JSON Canonicalization Scheme),
-                  producing a stable byte representation independent of serialization order. This deterministic structure enables independent recomputation of integrity hashes without interpretive variance.
-                </p>
-              </div>
-
-              <div id="tp-sealing" class="scroll-mt-32">
-                <div class="font-mono text-[11px] text-[var(--royal)] mb-4 tracking-[.18em]">03 · INTEGRITY SEALING</div>
-                <h3 class="text-2xl font-bold mb-4 text-[var(--ivory)] tw" data-full="Hash and Signature">Hash and Signature</h3>
-                <p class="text-[var(--muted)] leading-relaxed reveal">
-                  After canonicalization, hashing and digital signature are applied as reference implementations. Suite selection is configurable based on regulatory and operational requirements.
-                  Hashing establishes tamper-evidence; digital signatures establish origin authenticity.
-                </p>
-              </div>
-
-              <div id="tp-keys" class="scroll-mt-32">
-                <div class="font-mono text-[11px] text-[var(--royal)] mb-4 tracking-[.18em]">04 · NON-CUSTODIAL KEYS</div>
-                <h3 class="text-2xl font-bold mb-4 text-[var(--ivory)] tw" data-full="You Control the Signing">You Control the Signing</h3>
-                <p class="text-[var(--muted)] leading-relaxed reveal">
-                  Signing keys are generated and retained within the client-controlled environment — HSM, KMS, or TEE. CEYO does not possess, transmit, or store private signing keys.
-                  This preserves a clear separation between infrastructure provider and cryptographic authority.
-                </p>
-              </div>
-
-              <div id="tp-disclosure" class="scroll-mt-32">
-                <div class="font-mono text-[11px] text-[var(--royal)] mb-4 tracking-[.18em]">05 · CONSTRAINED DISCLOSURE</div>
-                <h3 class="text-2xl font-bold mb-4 text-[var(--ivory)] tw" data-full="Tiered Verification Access">Tiered Verification Access</h3>
-                <p class="text-[var(--muted)] leading-relaxed reveal">
-                  Artifacts may be disclosed under Public / Redacted or Controlled Review tiers. Disclosure tiering allows verification of integrity without default exposure of model weights,
-                  proprietary architecture, or confidential system internals. Disclosure boundaries are defined pre-generation.
-                </p>
-              </div>
-
-              <div id="tp-availability" class="scroll-mt-32">
-                <div class="font-mono text-[11px] text-[var(--royal)] mb-4 tracking-[.18em]">06 · FAIL-OPEN ARCHITECTURE</div>
-                <h3 class="text-2xl font-bold mb-4 text-[var(--ivory)] tw" data-full="Inference Continuity First">Inference Continuity First</h3>
-                <p class="text-[var(--muted)] leading-relaxed reveal">
-                  Inference continuity remains independent of artifact sealing. If artifact generation fails, inference proceeds uninterrupted.
-                  Failure events are logged and flagged; the artifact is marked as unsealed and the condition becomes reviewable.
-                </p>
-              </div>
-
-              <div class="pt-6 border-t border-[var(--stroke)] reveal">
-                <div class="font-mono text-[10px] text-[var(--muted)] tracking-[.24em] uppercase mb-3">Controlled Review</div>
-                <p class="text-[var(--muted)] leading-relaxed">
-                  Detailed documentation, verification contracts, capture schema specifications, and benchmark methodology are available under controlled disclosure.
-                  Access is granted following review request evaluation.
-                </p>
-                <div class="mt-5 flex flex-wrap gap-3">
-                  <a class="btn primary" href="contact.html">Request Controlled Review</a>
-                  <a class="btn" href="platform.html">View Architecture</a>
-                </div>
-              </div>
-
-            </div>
+        <div class="data-block p-6 rounded-xl" onclick="this.classList.toggle('expanded')">
+          <div class="flex justify-between items-center font-mono text-[10px]">
+            <span>PROPERTY 03</span>
+            <span class="uppercase tracking-widest">Constrained Disclosure</span>
+          </div>
+          <div class="content-area mt-6 text-[var(--muted)] leading-relaxed">
+            Artifacts may be disclosed under Public / Redacted or Controlled Review tiers. Disclosure tiering allows verification of integrity without default exposure of model weights, proprietary architecture, or confidential system internals.
           </div>
         </div>
-      </section>
 
-      <!-- BOUNDARY / FOOTER -->
-      <section id="cluster-boundary" class="py-24 mb-20">
-        <div class="panel p-8 md:p-12 reveal">
-          <div class="font-mono text-[10px] text-[var(--muted)] mb-8 tracking-[.30em]">BOUNDARY DECLARATION · V2026.02.19</div>
-
-          <div class="space-y-4 text-[var(--muted)] font-mono text-xs uppercase leading-relaxed">
-            <p>CEYO produces records. It does not validate correctness, fairness, legality, or compliance outcomes.</p>
-            <p>CEYO does not certify regulatory compliance. CEYO does not guarantee legal admissibility. CEYO does not guarantee inference reproducibility.</p>
-            <p>Authorized institutions and operators retain responsibility for decisions and determinations.</p>
-            <p>Verification confirms integrity and provenance under policy scope — not correctness of model output.</p>
+        <div class="data-block p-6 rounded-xl" onclick="this.classList.toggle('expanded')">
+          <div class="flex justify-between items-center font-mono text-[10px]">
+            <span>PROPERTY 04</span>
+            <span class="uppercase tracking-widest">Fail-Open Architecture</span>
           </div>
-
-          <footer class="mt-12 pt-8 border-t border-[var(--stroke)] flex flex-wrap justify-between gap-6 font-mono text-[10px] uppercase tracking-widest opacity-60">
-            <div>© <span id="year">2026</span> CEYO · ALL RIGHTS RESERVED</div>
-            <div class="flex gap-8">
-              <a href="terms.html" class="hover:text-[var(--ivory)]">Terms</a>
-              <a href="privacy.html" class="hover:text-[var(--ivory)]">Privacy</a>
-              <a href="contact.html" class="hover:text-[var(--ivory)]">Contact</a>
-            </div>
-          </footer>
+          <div class="content-area mt-6 text-[var(--muted)] leading-relaxed">
+            Inference continuity remains independent of artifact sealing. If artifact generation fails, inference proceeds uninterrupted. Failure events are logged and flagged; the artifact is marked as unsealed and the condition becomes reviewable.
+          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-    </main>
-  </div>
+    <section id="boundary" class="py-40">
+      <div class="panel p-12 rounded-[28px]">
+        <div class="font-mono text-[10px] text-[var(--muted)] mb-8 tracking-[.30em]">BOUNDARY DECLARATION · V2026.02.19</div>
+        <div class="grid md:grid-cols-2 gap-8 font-mono text-[11px] leading-relaxed uppercase text-[var(--muted)]">
+          <p>CEYO produces records. It does not validate correctness, fairness, legality, or compliance outcomes. CEYO does not certify regulatory compliance or guarantee legal admissibility.</p>
+          <p>Authorized institutions and operators retain responsibility for decisions. Verification confirms integrity and provenance under policy scope — not correctness of model output.</p>
+        </div>
+        <footer class="mt-12 pt-8 border-t border-[var(--stroke)] flex justify-between font-mono text-[10px] opacity-40">
+          <div>© 2026 CEYO · ALL RIGHTS RESERVED</div>
+          <div class="flex gap-6">
+            <a href="#">TERMS</a>
+            <a href="#">PRIVACY</a>
+          </div>
+        </footer>
+      </div>
+    </section>
 
-  <!-- Bottom Index Bar (pages) -->
-  <nav id="indexbar" aria-label="Site index">
-    <a class="ib active" href="index.html">INDEX</a>
-    <a class="ib" href="platform.html">ARCH</a>
-    <a class="ib" href="trust.html">TRUST</a>
-    <a class="ib" href="governance.html">GOV</a>
-    <a class="ib" href="contact.html">CONTACT</a>
+  </main>
+
+  <nav class="fixed bottom-0 w-full h-14 bg-[var(--navy)] border-t border-[var(--stroke)] z-50 flex font-mono text-[9px] tracking-widest">
+    <a href="#hero" class="flex-1 flex items-center justify-center border-r border-[var(--stroke)] hover:bg-white/5">INDEX</a>
+    <a href="#gap" class="flex-1 flex items-center justify-center border-r border-[var(--stroke)] hover:bg-white/5">ARCH</a>
+    <a href="#tech" class="flex-1 flex items-center justify-center hover:bg-white/5">TRUST</a>
   </nav>
 
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
@@ -676,355 +229,89 @@
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
-    /* ───────────────── Cursor + spotlight ───────────────── */
+    // Cursor Movement
     const cursor = document.getElementById('cursor');
-    const spotlight = document.getElementById('spotlight');
-
-    function setSpotlight(x, y){
-      spotlight.style.background =
-        `radial-gradient(420px 420px at ${x}px ${y}px, rgba(45,103,255,.22), rgba(45,103,255,.08) 35%, transparent 70%)`;
-    }
-
-    if (window.matchMedia("(pointer: fine)").matches){
-      document.addEventListener('mousemove', (e) => {
-        gsap.to(cursor, {x: e.clientX, y: e.clientY, duration: 0.10, overwrite: true});
-        setSpotlight(e.clientX, e.clientY);
-      }, {passive:true});
-
-      document.querySelectorAll('a, button, .card, .node, .techNav a, .ib').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('big'), {passive:true});
-        el.addEventListener('mouseleave', () => cursor.classList.remove('big'), {passive:true});
-      });
-
-      // initial spotlight position
-      setSpotlight(window.innerWidth * 0.5, window.innerHeight * 0.30);
-    }
-
-    /* ───────────────── Top nav scroll state ─────────────── */
-    const topnav = document.getElementById('topnav');
-    window.addEventListener('scroll', () => {
-      topnav.classList.toggle('scrolled', window.scrollY > 50);
-    }, {passive:true});
-
-    /* ───────────────── Reveals ──────────────────────────── */
-    const revealEls = document.querySelectorAll('.reveal');
-    const revObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
-    }, {threshold: 0.12});
-    revealEls.forEach(el => revObs.observe(el));
-
-    /* ───────────────── Accountability typed block ───────── */
-    const accType = document.getElementById('accType');
-    if (accType){
-      const lines = Array.from(accType.querySelectorAll('.typeLine'));
-      const accObs = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (!e.isIntersecting) return;
-          lines.forEach((ln, i) => {
-            setTimeout(() => {
-              ln.style.opacity = '1';
-              ln.style.transform = 'translateY(0)';
-            }, 150 * i);
-          });
-          accObs.disconnect();
-        });
-      }, {threshold: 0.35});
-      accObs.observe(accType);
-    }
-
-    /* ───────────────── Tech heading self-type ───────────── */
-    function typeHeading(el, speed = 16){
-      if (el.dataset.typed) return;
-      el.dataset.typed = '1';
-      const full = el.getAttribute('data-full') || el.textContent.trim();
-      el.textContent = '';
-      let i = 0;
-      const iv = setInterval(() => {
-        el.textContent += full[i] || '';
-        i++;
-        if (i >= full.length){
-          clearInterval(iv);
-          el.textContent = full;
-        }
-      }, speed);
-    }
-    const twObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) typeHeading(e.target); });
-    }, {threshold: 0.65});
-    document.querySelectorAll('.tw').forEach(h => twObs.observe(h));
-
-    /* ───────────────── Tech nav active section ──────────── */
-    const techLinks = Array.from(document.querySelectorAll('.techNav a'));
-    const techTargets = techLinks
-      .map(a => document.querySelector(a.getAttribute('href')))
-      .filter(Boolean);
-
-    const techActiveObs = new IntersectionObserver((entries) => {
-      const vis = entries.filter(e => e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
-      if (!vis) return;
-      const id = '#' + vis.target.id;
-      techLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
-    }, {threshold: [0.35, 0.55, 0.75]});
-    techTargets.forEach(t => techActiveObs.observe(t));
-
-    /* ───────────────── Map tooltip + navigate ───────────── */
-    const mapCanvas = document.getElementById('mapCanvas');
-    const tip = document.getElementById('mapTip');
-    const tipTitle = document.getElementById('tipTitle');
-    const tipPill = document.getElementById('tipPill');
-    const tipBody = document.getElementById('tipBody');
-
-    function setTip(title, body, pill){
-      tipTitle.textContent = title || 'CEYO';
-      tipBody.textContent = body || '';
-      tipPill.textContent = pill || 'Jump';
-    }
-    function showTipAt(clientX, clientY){
-      const rect = mapCanvas.getBoundingClientRect();
-      const pad = 12;
-      const w = 360;
-      const h = 140;
-
-      let left = clientX - rect.left + 14;
-      let top  = clientY - rect.top  + 14;
-
-      if (left + w > rect.width - pad) left = rect.width - w - pad;
-      if (top + h > rect.height - pad) top = rect.height - h - pad;
-
-      tip.style.left = left + 'px';
-      tip.style.top = top + 'px';
-      tip.classList.add('show');
-    }
-    function hideTip(){ tip.classList.remove('show'); }
-
-    function jumpTo(sel){
-      const el = document.querySelector(sel);
-      if (!el) return;
-      const y = el.getBoundingClientRect().top + window.scrollY - 96;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-
-    document.querySelectorAll('.node').forEach(node => {
-      const title = node.getAttribute('data-title');
-      const body  = node.getAttribute('data-body');
-      const pill  = node.getAttribute('data-pill');
-      const target= node.getAttribute('data-target');
-
-      node.addEventListener('mousemove', (e) => {
-        setTip(title, body, pill);
-        showTipAt(e.clientX, e.clientY);
-      }, {passive:true});
-      node.addEventListener('mouseleave', hideTip, {passive:true});
-      node.addEventListener('click', () => {
-        hideTip();
-        jumpTo(target);
-      });
-
-      // touch: show tip then jump on second tap
-      let touched = false;
-      node.addEventListener('touchstart', (e) => {
-        if (!mapCanvas) return;
-        const t = e.touches[0];
-        if (!touched){
-          touched = true;
-          setTip(title, body, pill);
-          showTipAt(t.clientX, t.clientY);
-          setTimeout(() => { touched = false; hideTip(); }, 1300);
-          e.preventDefault();
-        } else {
-          hideTip();
-          jumpTo(target);
-        }
-      }, {passive:false});
+    document.addEventListener('mousemove', (e) => {
+      gsap.to(cursor, {x: e.clientX, y: e.clientY, duration: 0.1});
+    });
+    document.querySelectorAll('a, button, .data-block').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
     });
 
-    /* ───────────────── Year ─────────────────────────────── */
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    /* ───────────────── Three.js neuron network ─────────────
-       - BufferGeometry points
-       - LineSegments connections updated each frame
-       - GSAP ScrollTrigger moves camera through clusters
-    ───────────────────────────────────────────────────────── */
-    const canvas = document.getElementById('gl');
+    // Three.js Background
     const scene = new THREE.Scene();
-
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
-    camera.position.set(0, 0, 16);
-
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({canvas: document.getElementById('gl'), alpha: true, antialias: true});
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // Lights are subtle because we use Basic/Points
-    const group = new THREE.Group();
-    scene.add(group);
+    // Create the "Dots" (Data fragments)
+    const count = 300;
+    const geometry = new THREE.SphereGeometry(0.04, 8, 8);
+    const material = new THREE.MeshBasicMaterial({color: 0x2D67FF});
+    const dots = [];
 
-    const nodeCount = 160;
-    const bounds = 12;
-    const positions = new Float32Array(nodeCount * 3);
-    const velocities = new Float32Array(nodeCount * 3);
-
-    for (let i = 0; i < nodeCount; i++){
-      const ix = i * 3;
-      positions[ix + 0] = (Math.random() - 0.5) * bounds * 2;
-      positions[ix + 1] = (Math.random() - 0.5) * bounds * 2;
-      positions[ix + 2] = (Math.random() - 0.5) * bounds * 2;
-
-      velocities[ix + 0] = (Math.random() - 0.5) * 0.020;
-      velocities[ix + 1] = (Math.random() - 0.5) * 0.020;
-      velocities[ix + 2] = (Math.random() - 0.5) * 0.020;
+    for(let i=0; i<count; i++){
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.position.set((Math.random()-0.5)*30, (Math.random()-0.5)*30, (Math.random()-0.5)*30);
+      scene.add(mesh);
+      dots.push({
+        mesh: mesh,
+        originalPos: mesh.position.clone(),
+        velocity: new THREE.Vector3((Math.random()-0.5)*0.01, (Math.random()-0.5)*0.01, (Math.random()-0.5)*0.01)
+      });
     }
 
-    // Nodes (Points)
-    const pointsGeo = new THREE.BufferGeometry();
-    pointsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    // The Neuron Core (Hidden at start)
+    const coreGeo = new THREE.IcosahedronGeometry(2, 4);
+    const coreMat = new THREE.MeshBasicMaterial({color: 0x2D67FF, wireframe: true, transparent: true, opacity: 0});
+    const core = new THREE.Mesh(coreGeo, coreMat);
+    scene.add(core);
 
-    const pointsMat = new THREE.PointsMaterial({
-      color: 0x2D67FF,
-      size: 0.06,
-      transparent: true,
-      opacity: 0.95,
-      depthWrite: false
-    });
+    camera.position.z = 15;
 
-    const points = new THREE.Points(pointsGeo, pointsMat);
-    group.add(points);
-
-    // Connections (LineSegments)
-    const maxConnections = 1200; // cap
-    const linePositions = new Float32Array(maxConnections * 2 * 3);
-    const lineGeo = new THREE.BufferGeometry();
-    lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-    lineGeo.setDrawRange(0, 0);
-
-    const lineMat = new THREE.LineBasicMaterial({
-      color: 0x2D67FF,
-      transparent: true,
-      opacity: 0.25,
-      depthWrite: false
-    });
-
-    const lines = new THREE.LineSegments(lineGeo, lineMat);
-    group.add(lines);
-
-    const maxDist = 2.0; // connection radius
-    const maxDist2 = maxDist * maxDist;
-
-    function updateConnections(){
-      const pos = pointsGeo.attributes.position.array;
-      let segCount = 0;
-
-      for (let i = 0; i < nodeCount; i++){
-        const ix = i * 3;
-        const ax = pos[ix], ay = pos[ix+1], az = pos[ix+2];
-
-        for (let j = i + 1; j < nodeCount; j++){
-          const jx = j * 3;
-          const bx = pos[jx], by = pos[jx+1], bz = pos[jx+2];
-          const dx = ax - bx, dy = ay - by, dz = az - bz;
-          const d2 = dx*dx + dy*dy + dz*dz;
-
-          if (d2 < maxDist2){
-            const k = segCount * 6;
-            linePositions[k+0] = ax; linePositions[k+1] = ay; linePositions[k+2] = az;
-            linePositions[k+3] = bx; linePositions[k+4] = by; linePositions[k+5] = bz;
-            segCount++;
-            if (segCount >= maxConnections) break;
-          }
-        }
-        if (segCount >= maxConnections) break;
+    // Scroll Logic: Dots converge into Ball
+    const scrollTL = gsap.timeline({
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1.5
       }
+    });
 
-      lineGeo.setDrawRange(0, segCount * 2);
-      lineGeo.attributes.position.needsUpdate = true;
-    }
+    // Animate convergence and core appearance
+    dots.forEach(d => {
+      scrollTL.to(d.mesh.position, {x: 0, y: 0, z: 0, ease: "power2.inOut"}, 0);
+      scrollTL.to(d.mesh.scale, {x: 0, y: 0, z: 0}, 0.5);
+    });
+    scrollTL.to(coreMat, {opacity: 0.6}, 0.2);
+    scrollTL.to(core.scale, {x: 4, y: 4, z: 4}, 0.4);
 
-    // Parallax mouse influence
-    let targetRotX = 0, targetRotY = 0;
-    if (window.matchMedia("(pointer: fine)").matches){
-      window.addEventListener('mousemove', (e) => {
-        const nx = (e.clientX / window.innerWidth) * 2 - 1;
-        const ny = (e.clientY / window.innerHeight) * 2 - 1;
-        targetRotY = nx * 0.18;
-        targetRotX = ny * 0.10;
-      }, {passive:true});
-    }
-
-    // Animation loop
-    let t = 0;
-    function animate(){
+    function animate() {
       requestAnimationFrame(animate);
-      t += 0.01;
-
-      const pos = pointsGeo.attributes.position.array;
-
-      for (let i = 0; i < nodeCount; i++){
-        const ix = i * 3;
-
-        pos[ix+0] += velocities[ix+0];
-        pos[ix+1] += velocities[ix+1];
-        pos[ix+2] += velocities[ix+2];
-
-        // bounce
-        if (pos[ix+0] > bounds || pos[ix+0] < -bounds) velocities[ix+0] *= -1;
-        if (pos[ix+1] > bounds || pos[ix+1] < -bounds) velocities[ix+1] *= -1;
-        if (pos[ix+2] > bounds || pos[ix+2] < -bounds) velocities[ix+2] *= -1;
+      
+      const time = Date.now() * 0.001;
+      
+      // Floating motion for dots before they converge
+      if (scrollTL.progress() < 0.1) {
+        dots.forEach(d => {
+          d.mesh.position.add(d.velocity);
+          if(Math.abs(d.mesh.position.x) > 15) d.velocity.x *= -1;
+        });
       }
 
-      pointsGeo.attributes.position.needsUpdate = true;
-      updateConnections();
-
-      // subtle group drift + mouse parallax
-      group.rotation.y += (targetRotY - group.rotation.y) * 0.04;
-      group.rotation.x += (targetRotX - group.rotation.x) * 0.04;
-      group.position.z = Math.sin(t * 0.5) * 0.4;
-
+      core.rotation.y += 0.002;
+      core.rotation.x += 0.001;
       renderer.render(scene, camera);
     }
     animate();
 
-    function resize(){
+    window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    }
-    window.addEventListener('resize', resize, {passive:true});
-
-    /* ───────────────── ScrollTrigger camera flight ─────────
-       camera moves to “clusters” as you scroll (subtle, serious)
-    ───────────────────────────────────────────────────────── */
-    const clusters = [
-      { id: "#hero",          pos: {x: 0,   y: 0,   z: 16}, rot: {x: 0.00, y: 0.00} },
-      { id: "#mapWrap",       pos: {x: 1.2, y: 0.6, z: 14}, rot: {x: 0.02, y: 0.05} },
-      { id: "#cluster-gap",   pos: {x:-1.6, y:-0.8,z: 13}, rot: {x:-0.03,y:-0.06} },
-      { id: "#cluster-is",    pos: {x: 1.4, y:-0.4,z: 14}, rot: {x: 0.01, y: 0.07} },
-      { id: "#cluster-tech",  pos: {x: 0.0, y: 1.0, z: 12}, rot: {x: 0.03, y: 0.00} },
-      { id: "#cluster-boundary",pos:{x: 0.8, y: 0.2, z: 14}, rot: {x: 0.00, y: 0.04} }
-    ];
-
-    clusters.forEach((c) => {
-      const el = document.querySelector(c.id);
-      if (!el) return;
-
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 70%",
-        end: "bottom 20%",
-        onEnter: () => flyTo(c),
-        onEnterBack: () => flyTo(c)
-      });
     });
-
-    let flyTween = null;
-    function flyTo(cfg){
-      if (flyTween) flyTween.kill();
-
-      flyTween = gsap.timeline({ defaults: { ease: "power2.out", duration: 1.25 } })
-        .to(camera.position, { x: cfg.pos.x, y: cfg.pos.y, z: cfg.pos.z }, 0)
-        .to(group.rotation, { x: cfg.rot.x, y: cfg.rot.y }, 0);
-    }
   </script>
 </body>
 </html>
