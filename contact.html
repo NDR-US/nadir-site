@@ -1,420 +1,397 @@
-<!-- ===========================
- CEYO — contact.html
- Controlled Review / Deployment Inquiry
- V2026.02.19
-=========================== -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>CEYO — Contact / Controlled Review</title>
-  <meta name="description" content="Request controlled review access, deployment discussion, or institutional partnership inquiry."/>
-  <meta name="theme-color" content="#071227"/>
-
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>CEYO — Contact</title>
+  <meta name="description" content="Controlled review requests, deployment inquiries, institutional partnerships, and licensing discussions."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,500;0,700;0,900;1,900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --navy:#071227; --navy2:#0A1731; --navy3:#0E2040;
-      --wash:#F6F4EE; --ink:#0A1430;
+:root{--bg:#0D0E0B;--ivory:#FFFFF0;--green:#4A5D3B;--green2:#5E7A4A;--text:rgba(255,255,240,.88);--muted:rgba(255,255,240,.52);--muted2:rgba(255,255,240,.30);--stroke:rgba(255,255,240,.12);--stroke2:rgba(255,255,240,.06);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;overflow-x:hidden;min-height:100vh;cursor:none;}
+body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.04;}
+a{color:inherit;text-decoration:none;}
+#cursor{position:fixed;top:0;left:0;z-index:9999;width:8px;height:8px;background:var(--ivory);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:transform .08s ease,width .12s ease,height .12s ease;mix-blend-mode:exclusion;}
+#cursor.hover{width:36px;height:36px;opacity:.5;}
+#spotlight{position:fixed;inset:0;z-index:1;pointer-events:none;}
+.topnav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;background:linear-gradient(to bottom,rgba(13,14,11,.95) 0%,transparent 100%);}
+.brand{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:22px;letter-spacing:-.03em;color:var(--ivory);text-transform:uppercase;}
+.brand span{color:var(--green2);}
+.topnav-right{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted2);display:flex;gap:28px;}
+.topnav-right a{color:var(--muted2);transition:color .12s;}
+.topnav-right a:hover{color:var(--ivory);}
+.index-bar{position:fixed;bottom:0;left:0;right:0;z-index:500;display:flex;align-items:stretch;height:44px;background:#000;border-top:1px solid var(--stroke);}
+.index-item{flex:1;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted2);border-right:1px solid var(--stroke);transition:color .12s,background .12s;}
+.index-item:last-child{border-right:none;}
+.index-item:hover,.index-item.active{color:var(--ivory);background:rgba(255,255,240,.04);}
 
-      --ivory:rgba(246,244,238,.94);
-      --muted:rgba(246,244,238,.70);
-      --muted2:rgba(246,244,238,.46);
-      --stroke:rgba(246,244,238,.14);
-      --stroke2:rgba(246,244,238,.075);
+.hero-sticky-wrap{position:relative;height:140vh;}
+.hero-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 40px 80px;overflow:hidden;z-index:2;}
+.hero-sticky::after{content:'';position:absolute;left:0;right:0;bottom:0;height:55%;background:linear-gradient(to bottom,transparent,var(--bg) 90%);pointer-events:none;}
+.hero-version{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.hero-version::before{content:'';display:inline-block;width:28px;height:1px;background:var(--green);}
+.hero-h1{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:clamp(44px,7.8vw,92px);letter-spacing:-.05em;line-height:.92;text-transform:uppercase;color:var(--ivory);max-width:900px;will-change:transform,opacity,filter;}
+.hero-h1 .accent{color:var(--green2);}
+.hero-lead-wrap{margin-top:28px;max-width:620px;}
+.hero-lead{font-size:15px;line-height:1.75;color:var(--muted);font-weight:300;}
+.hero-cta-row{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:12px 24px;border:1px solid var(--stroke);color:var(--muted);background:transparent;cursor:pointer;display:inline-block;transition:all .15s;}
+.btn:hover,.btn:active{background:var(--ivory);color:var(--bg);border-color:var(--ivory);}
+.btn.primary{border-color:var(--green);color:var(--green2);background:rgba(74,93,59,.1);}
+.btn.primary:hover{background:var(--green);color:var(--ivory);}
+.scroll-hint{position:absolute;bottom:80px;left:40px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted2);display:flex;align-items:center;gap:10px;animation:blink 2.4s ease-in-out infinite;}
+.scroll-hint::before{content:'';display:block;width:1px;height:32px;background:var(--muted2);animation:grow-line 2.4s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:.3}50%{opacity:.9}}
+@keyframes grow-line{0%,100%{transform:scaleY(.3);transform-origin:top}50%{transform:scaleY(1)}}
 
-      --blue:rgba(74,132,255,.85);
-      --blue2:rgba(74,132,255,.18);
+.content-scroll{position:relative;z-index:10;background:var(--bg);padding-bottom:64px;}
+.section{padding:80px 40px;border-top:1px solid var(--stroke2);max-width:1160px;margin:0 auto;opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease,border-top-color .4s ease,background .4s ease;}
+.section.visible{opacity:1;transform:translateY(0);}
+.section.focus{border-top-color:var(--ivory);background:rgba(255,255,240,.012);}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--green),transparent);max-width:120px;}
+.section-h2{font-family:'Outfit',sans-serif;font-weight:900;font-style:italic;font-size:clamp(26px,4.2vw,54px);letter-spacing:-.04em;line-height:1.0;text-transform:uppercase;color:var(--ivory);margin-bottom:22px;}
+.section-body{font-size:15px;line-height:1.8;color:var(--muted);max-width:68ch;margin-bottom:14px;}
 
-      --max:1180px;
-      --radius:14px; --radius2:18px;
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:26px;background:var(--stroke);border:1px solid var(--stroke);}
+.card{background:var(--bg);padding:26px 22px;transition:background .2s;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--ivory);transform:scaleX(0);transform-origin:left;transition:transform .3s ease;}
+.card:hover::before{transform:scaleX(1);}
+.card:hover{background:rgba(255,255,240,.025);}
+.card-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin-bottom:10px;}
+.card-text{font-size:13px;color:var(--muted);line-height:1.7;}
 
-      --fontDisplay:"Styrene A","Outfit",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      --fontText:"Tiempos","Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      --fontMono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-    }
+.mono{font-family:'IBM Plex Mono',monospace;}
+.list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.list li{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--muted2);padding-left:18px;position:relative;line-height:1.55;}
+.list li::before{content:'·';position:absolute;left:0;color:var(--green2);font-size:16px;line-height:1.3;}
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      background:var(--navy);
-      color:var(--ivory);
-      font-family:var(--fontText);
-      overflow-x:hidden;
-      min-height:100vh;
-      cursor:none;
-    }
-    a{color:inherit;text-decoration:none}
-    button,input,select,textarea{font:inherit}
-    ::selection{background:rgba(74,132,255,.25)}
+.form{margin-top:18px;border:1px solid var(--stroke);background:rgba(255,255,240,.01);}
+.form-head{padding:12px 20px;border-bottom:1px solid var(--stroke2);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted2);}
+.form-body{padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.fg{display:flex;flex-direction:column;gap:8px;}
+.fg.full{grid-column:1 / -1;}
+label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted2);}
+input,select,textarea{
+  background:rgba(0,0,0,.35);
+  border:1px solid var(--stroke2);
+  color:var(--ivory);
+  padding:12px 12px;
+  outline:none;
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:13px;
+}
+textarea{min-height:120px;resize:vertical;}
+input:focus,select:focus,textarea:focus{border-color:rgba(94,122,74,.65);box-shadow:0 0 0 3px rgba(94,122,74,.10);}
+.form-actions{padding:0 20px 20px;display:flex;gap:12px;flex-wrap:wrap;}
+.helper{margin-top:10px;font-size:12px;color:var(--muted2);line-height:1.7;}
 
-    #grain{
-      position:fixed;inset:0;z-index:9998;pointer-events:none;
-      opacity:.04;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E");
-      background-size:220px 220px;mix-blend-mode:soft-light;
-    }
-    #spotlight{position:fixed;inset:0;z-index:1;pointer-events:none;transition:background .05s linear}
-    #cursor{
-      position:fixed;z-index:9999;width:8px;height:8px;border-radius:999px;
-      background:rgba(246,244,238,.95);pointer-events:none;
-      transform:translate(-50%,-50%);mix-blend-mode:exclusion;
-      transition:width .15s,height .15s,opacity .15s;
-    }
-    #cursor.large{width:40px;height:40px;opacity:.45}
+.boundary-wrap{border:1px solid var(--stroke);padding:28px 32px;background:rgba(255,255,240,.015);margin-top:26px;}
+.boundary-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted2);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.boundary-lbl::before{content:'';width:20px;height:1px;background:var(--muted2);}
+.boundary-items{display:grid;grid-template-columns:1fr 1fr;gap:10px 40px;}
+.bi{font-size:12px;color:var(--muted2);line-height:1.65;}
+.boundary-close{margin-top:16px;padding-top:16px;border-top:1px solid var(--stroke2);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--muted2);}
 
-    #topnav{
-      position:fixed;top:0;left:0;right:0;z-index:800;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:0 44px;height:68px;
-      background:rgba(7,18,39,.86);
-      border-bottom:1px solid rgba(246,244,238,.08);
-      backdrop-filter:blur(10px);
-    }
-    .nav-brand{
-      font-family:var(--fontDisplay);
-      font-weight:900;font-style:italic;
-      font-size:28px;letter-spacing:-0.03em;text-transform:uppercase;
-      color:rgba(246,244,238,.96);
-    }
-    .nav-links{display:flex;align-items:center;gap:6px}
-    .nav-links a{
-      font-family:var(--fontMono);
-      font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-      color:rgba(246,244,238,.52);
-      padding:8px 12px;border-radius:999px;
-      transition:color .12s,background .12s;
-    }
-    .nav-links a:hover{color:rgba(246,244,238,.92);background:rgba(246,244,238,.05)}
-    .nav-links a.active{color:rgba(246,244,238,.92)}
-    .nav-cta{
-      margin-left:10px;
-      border:1px solid rgba(74,132,255,.35);
-      background:rgba(74,132,255,.08);
-      color:rgba(246,244,238,.92)!important;
-    }
+@keyframes cursor-blink{0%,100%{opacity:1}50%{opacity:0}}
+.typewrite-cursor::after{content:'|';animation:cursor-blink .7s ease-in-out infinite;color:var(--green);}
 
-    #indexbar{
-      position:fixed;bottom:0;left:0;right:0;z-index:800;
-      display:flex;height:50px;
-      background:rgba(5,12,26,.92);
-      border-top:1px solid rgba(246,244,238,.10);
-      backdrop-filter:blur(10px);
-    }
-    .ib-item{
-      flex:1;display:flex;align-items:center;justify-content:center;
-      font-family:var(--fontMono);
-      font-size:10px;letter-spacing:.20em;text-transform:uppercase;
-      color:rgba(246,244,238,.50);
-      border-right:1px solid rgba(246,244,238,.07);
-      transition:color .12s,background .12s,border-top-color .12s;
-    }
-    .ib-item:last-child{border-right:none}
-    .ib-item:hover{color:rgba(246,244,238,.92);background:rgba(246,244,238,.05)}
-    .ib-item.active{color:rgba(246,244,238,.92);border-top:1px solid rgba(246,244,238,.92)}
-
-    main{position:relative;z-index:5;padding:96px 44px 104px;max-width:var(--max);margin:0 auto}
-    .hero{
-      padding:28px 0 18px;
-      border-bottom:1px solid rgba(246,244,238,.10);
-      margin-bottom:28px;
-    }
-    .kicker{
-      font-family:var(--fontMono);
-      font-size:10px;letter-spacing:.24em;text-transform:uppercase;
-      color:rgba(74,132,255,.82);
-      display:flex;align-items:center;gap:14px;margin-bottom:14px;
-    }
-    .kicker::before{content:"";width:38px;height:1px;background:rgba(74,132,255,.78)}
-    h1{
-      font-family:var(--fontDisplay);
-      font-weight:900;font-style:italic;
-      font-size:clamp(34px,5.8vw,58px);
-      letter-spacing:-0.05em;
-      text-transform:uppercase;
-      line-height:1.05;
-      margin-bottom:10px;
-    }
-    .lead{max-width:78ch;color:rgba(246,244,238,.72);line-height:1.85;font-size:15px}
-
-    .layout{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:34px;
-      align-items:start;
-      margin-top:22px;
-    }
-    .panel{
-      border:1px solid rgba(246,244,238,.14);
-      border-radius:var(--radius2);
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-      overflow:hidden;
-    }
-    .panelHead{
-      padding:14px 18px;
-      border-bottom:1px solid rgba(246,244,238,.10);
-      font-family:var(--fontMono);
-      font-size:9px;letter-spacing:.24em;text-transform:uppercase;
-      color:rgba(246,244,238,.55);
-    }
-    form{padding:18px}
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-    .field{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
-    label{
-      font-family:var(--fontMono);
-      font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-      color:rgba(246,244,238,.55);
-    }
-    input,select,textarea{
-      width:100%;
-      border-radius:12px;
-      border:1px solid rgba(246,244,238,.14);
-      background:rgba(7,18,39,.40);
-      color:rgba(246,244,238,.92);
-      padding:12px 12px;
-      outline:none;
-      transition:border-color .15s, background .15s;
-    }
-    textarea{min-height:150px;resize:vertical;line-height:1.7}
-    input:focus,select:focus,textarea:focus{
-      border-color:rgba(74,132,255,.48);
-      background:rgba(7,18,39,.54);
-    }
-    .hint{
-      font-size:12px;color:rgba(246,244,238,.52);line-height:1.6;margin-top:-4px
-    }
-    .row{
-      display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px
-    }
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      font-family:var(--fontMono);
-      font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-      padding:13px 18px;border-radius:999px;
-      border:1px solid rgba(246,244,238,.14);
-      color:rgba(246,244,238,.70);
-      background:transparent;
-      cursor:pointer;
-      transition:background .15s,border-color .15s,color .15s,transform .15s;
-    }
-    .btn:hover{border-color:rgba(246,244,238,.38);color:rgba(246,244,238,.92);background:rgba(246,244,238,.06);transform:translateY(-1px)}
-    .btn-primary{
-      border-color:rgba(74,132,255,.40);
-      background:rgba(74,132,255,.12);
-      color:rgba(246,244,238,.92);
-    }
-    .btn-primary:hover{border-color:rgba(74,132,255,.62);background:rgba(74,132,255,.18)}
-    .check{
-      display:flex;gap:10px;align-items:flex-start;
-      padding:10px 12px;border-radius:12px;
-      border:1px solid rgba(246,244,238,.10);
-      background:rgba(255,255,255,.02);
-      margin-top:6px;
-    }
-    .check input{width:16px;height:16px;margin-top:2px}
-    .check p{font-size:12px;line-height:1.6;color:rgba(246,244,238,.62)}
-    .side{padding:18px}
-    .sideBlock{padding:16px 0;border-bottom:1px solid rgba(246,244,238,.10)}
-    .sideBlock:last-child{border-bottom:none}
-    .sideTitle{
-      font-family:var(--fontMono);
-      font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-      color:rgba(246,244,238,.55);
-      margin-bottom:8px;
-    }
-    .sideText{font-size:13px;line-height:1.72;color:rgba(246,244,238,.70);max-width:52ch}
-    .pill{
-      display:inline-flex;align-items:center;gap:10px;
-      font-family:var(--fontMono);
-      font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-      padding:10px 12px;border-radius:999px;
-      border:1px solid rgba(246,244,238,.14);
-      background:rgba(255,255,255,.02);
-      color:rgba(246,244,238,.70);
-      margin-top:10px;
-    }
-    .pill::before{content:"";width:8px;height:8px;border-radius:999px;background:rgba(74,132,255,.72);box-shadow:0 0 0 3px rgba(74,132,255,.12)}
-    .fine{
-      margin-top:18px;
-      font-family:var(--fontMono);
-      font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-      color:rgba(246,244,238,.38);
-    }
-
-    @media (max-width:980px){
-      #topnav{padding:0 22px}
-      main{padding:92px 22px 104px}
-      .layout{grid-template-columns:1fr}
-    }
-    @media (max-width:600px){
-      .nav-links{display:none}
-      main{padding:86px 20px 104px}
-      .grid{grid-template-columns:1fr}
-      .nav-brand{font-size:30px}
-    }
+@media(max-width:880px){
+  .grid-2{grid-template-columns:1fr;}
+  .form-body{grid-template-columns:1fr;}
+  .boundary-items{grid-template-columns:1fr;}
+  .topnav,.section{padding-left:20px;padding-right:20px;}
+  .hero-sticky{padding:90px 20px 70px;}
+  .scroll-hint{left:20px;}
+}
+@media(max-width:500px){.topnav-right{display:none;}.hero-cta-row{flex-direction:column;}}
+@media print{
+  body{background:#fff;color:#000;cursor:auto;}
+  #cursor,#spotlight,.topnav,.index-bar,.hero-sticky-wrap,.scroll-hint,body::before{display:none;}
+  .section{opacity:1;transform:none;}
+}
   </style>
 </head>
-
 <body>
-  <div id="grain" aria-hidden="true"></div>
-  <div id="spotlight" aria-hidden="true"></div>
-  <div id="cursor" aria-hidden="true"></div>
 
-  <nav id="topnav" aria-label="Primary navigation">
-    <a href="index.html" class="nav-brand" aria-label="CEYO Home">CEYO</a>
-    <div class="nav-links">
-      <a href="index.html">Overview</a>
-      <a href="platform.html">Architecture</a>
-      <a href="trust.html">Trust</a>
-      <a href="governance.html">Governance</a>
-      <a href="resources.html">Resources</a>
-      <a href="contact.html" class="nav-cta active">Request Review</a>
-    </div>
-  </nav>
+<div id="cursor" aria-hidden="true"></div>
+<div id="spotlight" aria-hidden="true"></div>
 
-  <main>
-    <header class="hero" aria-label="Controlled review request">
-      <div class="kicker">Controlled Review</div>
-      <h1>Request Access / Submit Inquiry</h1>
-      <p class="lead">
+<nav class="topnav" aria-label="Primary navigation">
+  <a href="index.html" class="brand">CE<span>YO</span></a>
+  <div class="topnav-right">
+    <a href="platform.html">Architecture</a>
+    <a href="trust.html">Trust</a>
+    <a href="governance.html">Governance</a>
+    <a href="contact.html" aria-current="page">Contact</a>
+  </div>
+</nav>
+
+<div class="hero-sticky-wrap" aria-label="Hero">
+  <div class="hero-sticky" id="hero-sticky">
+    <div class="hero-version" id="hw1">V2026.02.19 &nbsp;·&nbsp; Engagement</div>
+    <h1 class="hero-h1" id="hero-h1">Controlled<br><span class="accent">Contact</span></h1>
+    <div class="hero-lead-wrap">
+      <p class="hero-lead" id="hw2">
+        CEYO engages with regulated operators, institutional oversight bodies, and organizations conducting structured review of AI inference systems.
         Public materials remain intentionally high-level. Operational specifics, technical documentation, and deployment discussions occur under controlled review.
       </p>
-    </header>
-
-    <div class="layout">
-      <section class="panel" aria-label="Inquiry form">
-        <div class="panelHead">Submission</div>
-
-        <!-- NOTE: action is placeholder; wire to your backend later -->
-        <form action="#" method="post">
-          <div class="grid">
-            <div class="field">
-              <label for="name">Name</label>
-              <input id="name" name="name" autocomplete="name" required>
-            </div>
-            <div class="field">
-              <label for="org">Institution / Organization</label>
-              <input id="org" name="org" autocomplete="organization" required>
-            </div>
-          </div>
-
-          <div class="grid">
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" required>
-            </div>
-            <div class="field">
-              <label for="type">Inquiry Type</label>
-              <select id="type" name="type" required>
-                <option value="" selected disabled>Select</option>
-                <option>Controlled Review Request</option>
-                <option>Deployment Inquiry</option>
-                <option>Institutional Partnership</option>
-                <option>Licensing Discussion</option>
-                <option>Security / Vulnerability Report</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="msg">Message</label>
-            <textarea id="msg" name="msg" required></textarea>
-            <div class="hint">Include scope, intended environment, and any disclosure constraints (public/redacted/controlled review).</div>
-          </div>
-
-          <div class="check">
-            <input id="nda" type="checkbox" name="nda">
-            <p>
-              NDA requested prior to exchange of controlled technical materials.
-              (Where appropriate, formal agreements may be executed upon mutual agreement.)
-            </p>
-          </div>
-
-          <div class="row">
-            <button class="btn btn-primary" type="submit">Submit Request</button>
-            <a class="btn" href="resources.html">View Resources</a>
-          </div>
-
-          <div class="fine">Submissions do not constitute license or deployment authorization.</div>
-        </form>
-      </section>
-
-      <aside class="panel" aria-label="Contact details">
-        <div class="panelHead">Channel</div>
-        <div class="side">
-          <div class="sideBlock">
-            <div class="sideTitle">Primary Contact</div>
-            <div class="sideText">Email: contact@nadir-ai.com</div>
-            <div class="pill">Controlled Review</div>
-          </div>
-
-          <div class="sideBlock">
-            <div class="sideTitle">Subject Line Guidance</div>
-            <div class="sideText">
-              Controlled Review Request<br>
-              Deployment Inquiry<br>
-              Institutional Partnership<br>
-              Licensing Discussion<br>
-              Security / Vulnerability Report
-            </div>
-          </div>
-
-          <div class="sideBlock">
-            <div class="sideTitle">Boundary</div>
-            <div class="sideText">
-              CEYO provides integrity-sealed records. It does not certify compliance, guarantee admissibility, or adjudicate outcomes. Authorized institutions retain responsibility for determinations.
-            </div>
-          </div>
-
-          <div class="fine">© <span id="year"></span> CEYO. All rights reserved.</div>
-        </div>
-      </aside>
+      <div class="hero-cta-row" id="hw4">
+        <a class="btn primary" href="#controlled-review">Controlled Review</a>
+        <a class="btn" href="#primary-contact">Primary Contact</a>
+      </div>
     </div>
-  </main>
+    <div class="scroll-hint" aria-hidden="true">Scroll to continue</div>
+  </div>
+</div>
 
-  <nav id="indexbar" aria-label="Site index">
-    <a class="ib-item" href="index.html">Index</a>
-    <a class="ib-item" href="platform.html">Arch</a>
-    <a class="ib-item" href="trust.html">Trust</a>
-    <a class="ib-item" href="governance.html">Gov</a>
-    <a class="ib-item active" href="contact.html">Contact</a>
-  </nav>
+<main class="content-scroll">
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+  <section class="section" id="controlled-review" aria-labelledby="cr-h">
+    <div class="section-label">[Controlled review requests]</div>
+    <h2 class="section-h2" id="cr-h">Controlled Review Requests</h2>
+    <p class="section-body">
+      Institutions seeking technical evaluation may request controlled review access. Controlled review may include:
+    </p>
 
-    const cursor = document.getElementById('cursor');
-    const spotlight = document.getElementById('spotlight');
+    <div class="grid-2" role="list" aria-label="Controlled review scope">
+      <div class="card" role="listitem">
+        <div class="card-label">Documentation</div>
+        <div class="card-text">
+          Technical Requirements access, capture policy schema review, and verification contract review under executed agreement.
+        </div>
+      </div>
+      <div class="card" role="listitem">
+        <div class="card-label">Evaluation</div>
+        <div class="card-text">
+          Reference benchmark discussion and architecture Q&amp;A aligned to institutional due diligence.
+        </div>
+      </div>
+    </div>
 
-    function setSpotlight(x,y){
-      spotlight.style.background =
-        `radial-gradient(circle 360px at ${x}px ${y}px, rgba(74,132,255,.16) 0%, rgba(74,132,255,.06) 34%, transparent 70%)`;
+    <p class="section-body helper">
+      Controlled review does not constitute license or deployment authorization.
+    </p>
+  </section>
+
+  <section class="section" id="deployment" aria-labelledby="dep-h">
+    <div class="section-label">[Deployment inquiries]</div>
+    <h2 class="section-h2" id="dep-h">Deployment Inquiries</h2>
+    <p class="section-body">
+      Organizations exploring pilot integration or phased deployment may submit deployment inquiries. Initial discussions typically address:
+    </p>
+    <ul class="list" aria-label="Initial discussion topics">
+      <li>Deployment architecture posture</li>
+      <li>Capture policy configuration</li>
+      <li>Infrastructure compatibility</li>
+      <li>Key custody integration</li>
+      <li>Disclosure tier requirements</li>
+    </ul>
+    <p class="section-body">
+      Deployment terms are defined through written agreement.
+    </p>
+  </section>
+
+  <section class="section" id="partnerships" aria-labelledby="ip-h">
+    <div class="section-label">[Institutional partnerships]</div>
+    <h2 class="section-h2" id="ip-h">Institutional Partnerships</h2>
+    <p class="section-body">
+      CEYO may engage with:
+    </p>
+    <ul class="list" aria-label="Potential partners">
+      <li>Regulatory bodies</li>
+      <li>Standards organizations</li>
+      <li>Research institutions</li>
+      <li>Infrastructure providers</li>
+    </ul>
+    <p class="section-body">
+      Partnership discussions are evaluated on alignment with CEYO’s integrity and non-adjudication posture.
+    </p>
+  </section>
+
+  <section class="section" id="licensing" aria-labelledby="lic-h">
+    <div class="section-label">[Intellectual property &amp; licensing]</div>
+    <h2 class="section-h2" id="lic-h">Intellectual Property &amp; Licensing</h2>
+    <p class="section-body">
+      Inquiries regarding licensing, intellectual property, or commercial terms should be submitted directly through the contact channel.
+      Public documentation does not grant usage rights.
+    </p>
+  </section>
+
+  <section class="section" id="confidentiality" aria-labelledby="conf-h">
+    <div class="section-label">[Confidentiality]</div>
+    <h2 class="section-h2" id="conf-h">Confidentiality</h2>
+    <p class="section-body">
+      CEYO intends to treat inquiries as confidential. Formal nondisclosure agreements (NDAs) may be executed upon mutual agreement
+      prior to exchange of technical materials.
+    </p>
+  </section>
+
+  <section class="section" id="primary-contact" aria-labelledby="pc-h">
+    <div class="section-label">[Primary contact]</div>
+    <h2 class="section-h2" id="pc-h">Primary Contact</h2>
+
+    <div class="grid-2" role="list" aria-label="Contact channels">
+      <div class="card" role="listitem">
+        <div class="card-label">Email</div>
+        <div class="card-text">
+          <span class="mono" style="letter-spacing:.14em;color:var(--ivory);">contact@nadir-ai.com</span>
+        </div>
+      </div>
+      <div class="card" role="listitem">
+        <div class="card-label">Subject line guidance</div>
+        <div class="card-text">
+          <div class="mono" style="font-size:11px;letter-spacing:.10em;color:var(--muted2);line-height:1.65;">
+            Controlled Review Request<br>
+            Deployment Inquiry<br>
+            Institutional Partnership<br>
+            Licensing Discussion<br>
+            Security / Vulnerability Report
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form" role="region" aria-label="Contact form">
+      <div class="form-head">Inquiry routing (optional)</div>
+      <div class="form-body">
+        <div class="fg">
+          <label for="name">Name</label>
+          <input id="name" name="name" autocomplete="name" placeholder="">
+        </div>
+        <div class="fg">
+          <label for="email">Email</label>
+          <input id="email" name="email" autocomplete="email" placeholder="">
+        </div>
+        <div class="fg">
+          <label for="org">Institution</label>
+          <input id="org" name="org" autocomplete="organization" placeholder="">
+        </div>
+        <div class="fg">
+          <label for="type">Inquiry type</label>
+          <select id="type" name="type">
+            <option>Controlled Review Request</option>
+            <option>Deployment Inquiry</option>
+            <option>Institutional Partnership</option>
+            <option>Licensing Discussion</option>
+            <option>Security / Vulnerability Report</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fg full">
+          <label for="msg">Message</label>
+          <textarea id="msg" name="msg" placeholder=""></textarea>
+          <div class="helper">
+            Submission does not grant access to controlled materials. Technical specifics are shared under executed agreement and authorized disclosure scope.
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <a class="btn primary" href="mailto:contact@nadir-ai.com?subject=Controlled%20Review%20Request">Email Contact</a>
+        <a class="btn" href="#controlled-review">Review Scope</a>
+      </div>
+    </div>
+
+    <div class="boundary-wrap" role="region" aria-label="Boundary position">
+      <div class="boundary-lbl">Boundary Position</div>
+
+      <p class="bi">
+        Public pages are descriptive only. Technical specifics and operational materials are shared under controlled conditions.
+      </p>
+      <p class="bi">
+        Engagement does not imply certification, compliance endorsement, or regulatory authority.
+      </p>
+
+      <div class="boundary-close">Public materials remain descriptive. Operational specifics are shared under controlled review.</div>
+    </div>
+
+  </section>
+
+</main>
+
+<nav class="index-bar" aria-label="Site index">
+  <a class="index-item" href="index.html">Index</a>
+  <a class="index-item" href="platform.html">Arch</a>
+  <a class="index-item" href="trust.html">Trust</a>
+  <a class="index-item" href="governance.html">Gov</a>
+  <a class="index-item active" href="contact.html">Contact</a>
+</nav>
+
+<script>
+const cursor=document.getElementById('cursor');
+const spotlight=document.getElementById('spotlight');
+document.addEventListener('mousemove',e=>{
+  cursor.style.left=e.clientX+'px';
+  cursor.style.top=e.clientY+'px';
+  spotlight.style.background=`radial-gradient(circle 300px at ${e.clientX}px ${e.clientY}px,rgba(255,255,240,.065) 0%,transparent 70%)`;
+});
+document.addEventListener('mouseleave',()=>{cursor.style.opacity='0';spotlight.style.background='none';});
+document.addEventListener('mouseenter',()=>{cursor.style.opacity='1';});
+document.querySelectorAll('a,button,.card,.btn,.index-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cursor.classList.add('hover'));
+  el.addEventListener('mouseleave',()=>cursor.classList.remove('hover'));
+});
+
+const heroH1=document.getElementById('hero-h1');
+const heroWrap=document.querySelector('.hero-sticky-wrap');
+function onScroll(){
+  const pct=Math.min(window.scrollY/(heroWrap.offsetHeight*0.45),1);
+  heroH1.style.opacity=Math.max(0,1-pct*1.15);
+  heroH1.style.filter=`blur(${pct*10}px)`;
+  heroH1.style.transform=`translateY(${pct*-18}px)`;
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+
+const sections=document.querySelectorAll('.section');
+const focusObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible','focus');}
+    else{e.target.classList.remove('focus');}
+  });
+},{threshold:0.10});
+sections.forEach(s=>focusObs.observe(s));
+
+@keyframes cursor-blink{0%,100%{opacity:1}50%{opacity:0}}
+function typewrite(el,text,speed){
+  const original=text||el.textContent;
+  el.textContent='';
+  el.classList.add('typewrite-cursor');
+  let i=0;
+  const iv=setInterval(()=>{
+    el.textContent+=original[i];i++;
+    if(i>=original.length){clearInterval(iv);el.classList.remove('typewrite-cursor');}
+  },speed||18);
+}
+
+const typeObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting&&!e.target.dataset.typed){
+      e.target.dataset.typed='1';
+      typewrite(e.target,e.target.textContent,12);
     }
+  });
+},{threshold:0.7});
+document.querySelectorAll('.hero-version').forEach(t=>typeObs.observe(t));
 
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top  = e.clientY + 'px';
-      setSpotlight(e.clientX, e.clientY);
-    }, { passive:true });
+const h2obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting&&!e.target.dataset.typed){
+      e.target.dataset.typed='1';
+      typewrite(e.target,e.target.textContent,22);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.section-h2').forEach(h=>h2obs.observe(h));
 
-    document.addEventListener('mouseleave', () => {
-      cursor.style.opacity = '0';
-      spotlight.style.background = 'none';
-    });
-    document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
+document.querySelectorAll('.btn,.card,.index-item').forEach(el=>{
+  el.addEventListener('touchstart',()=>{el.style.background='var(--ivory)';el.style.color='var(--bg)';},{passive:true});
+  el.addEventListener('touchend',()=>{setTimeout(()=>{el.style.background='';el.style.color='';},180);},{passive:true});
+});
+</script>
 
-    document.querySelectorAll('a, button, input, textarea, select').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('large'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('large'));
-    });
-  </script>
 </body>
 </html>
