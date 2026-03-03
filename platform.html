@@ -1,9 +1,3 @@
-<!-- =========================
-FILE: platform.html  (3) PLATFORM
-Card-catalog + interface tiles (distinctive middle module).
-Same shell, same tokens, same accent system as index/how.
-Single-file (no external CSS/JS).
-========================= -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,7 +14,6 @@ Single-file (no external CSS/JS).
   <style>
     :root{
       --ink:#0B0F14;
-      --paper:#F5F2EA;
       --textOnInk:#C9D1D9;
       --lineOnInk:rgba(255,255,255,.10);
 
@@ -30,13 +23,12 @@ Single-file (no external CSS/JS).
       --maxW:1160px;
       --readW:740px;
 
-      --r-sm:10px;
-      --r-md:14px;
       --r-lg:18px;
 
       --s1:8px;  --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px;
 
       --lh:1.65;
+
       --shadow:0 10px 30px rgba(0,0,0,.25);
       --shadow2:0 18px 60px rgba(0,0,0,.35);
 
@@ -59,19 +51,29 @@ Single-file (no external CSS/JS).
     a{color:inherit;text-decoration:none}
     button{font:inherit}
 
+    /* Background: same palette, different “mode” (blueprint grid) */
     .bg{
       position:fixed; inset:0; pointer-events:none; z-index:0;
       background:
-        radial-gradient(900px 520px at 40% 10%, rgba(58,50,12,.22), transparent 62%),
-        radial-gradient(820px 520px at 82% 34%, rgba(201,164,74,.10), transparent 64%),
+        radial-gradient(900px 520px at 40% 10%, rgba(58,50,12,.18), transparent 62%),
+        radial-gradient(820px 520px at 82% 34%, rgba(201,164,74,.08), transparent 64%),
         linear-gradient(180deg, #0B0F14 0%, #0A0D12 40%, #0B0F14 100%);
+    }
+    .gridOverlay{
+      position:fixed; inset:0; z-index:0; pointer-events:none;
+      opacity:.20;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(700px 420px at 50% 20%, black 55%, transparent 100%);
     }
     canvas#neurons{
       position:fixed; inset:0;
       width:100%; height:100%;
       z-index:0;
       pointer-events:none;
-      opacity:.88;
+      opacity:.55; /* intentionally reduced on Platform */
     }
 
     .wrap{ position:relative; z-index:1; max-width:var(--maxW); margin:0 auto; padding:0 var(--s4); }
@@ -223,45 +225,103 @@ Single-file (no external CSS/JS).
       h3{ font-size: 19px; }
     }
 
-    /* Dominant module: component catalog cards (this page's “middle”) */
-    .catalog{
+    /* Platform-specific layout (not same as other pages) */
+    .heroSplit{
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1.05fr 0.95fr;
       gap: 14px;
+      align-items:start;
       margin-top: 18px;
     }
-    @media (max-width: 980px){ .catalog{ grid-template-columns: 1fr; } }
-    .comp{
+    @media (max-width: 980px){ .heroSplit{ grid-template-columns: 1fr; } }
+
+    .panel{
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
       border-radius: var(--r-lg);
       padding: 18px 18px;
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
-      cursor:pointer;
     }
-    .comp:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); background: rgba(255,255,255,.03); }
-    .tag{
+
+    /* “Component map” diagram card */
+    .map{
+      border:1px solid rgba(201,164,74,.22);
+      background: rgba(11,15,20,.60);
+      border-radius: var(--r-lg);
+      padding: 18px 18px;
+      overflow:hidden;
+    }
+    .map .k{
       font-family: var(--mono);
       font-size: 12px;
-      letter-spacing: .16em;
+      letter-spacing:.18em;
       text-transform: uppercase;
       color: rgba(201,164,74,.90);
       margin-bottom: 10px;
     }
-    .desc{ color: rgba(201,209,217,.82); font-size: 15px; line-height: 1.6; margin:0; }
-    .mini{
-      margin-top: 12px;
-      border-top:1px solid rgba(255,255,255,.08);
-      padding-top: 12px;
+    .svg{ width:100%; height:auto; display:block; }
+    .node{ fill: rgba(11,15,20,.85); stroke: rgba(255,255,255,.14); stroke-width:1.2; }
+    .lbl{ fill: rgba(201,209,217,.86); font-family: var(--mono); font-size: 12px; letter-spacing:.10em; text-transform: uppercase; }
+    .line{ stroke: rgba(201,164,74,.42); stroke-width:2; fill:none; stroke-linecap:round; }
+
+    /* Catalog with right-side detail panel */
+    .catalogGrid{
+      display:grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 14px;
+      margin-top: 18px;
+      align-items:start;
+    }
+    @media (max-width: 980px){ .catalogGrid{ grid-template-columns: 1fr; } }
+
+    .list{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--r-lg);
+      overflow:hidden;
+    }
+    .item{
+      display:flex;
+      gap:12px;
+      padding: 14px 14px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      cursor:pointer;
+      transition: background .18s ease, border-color .18s ease;
+    }
+    .item:last-child{ border-bottom:none; }
+    .item:hover{ background: rgba(255,255,255,.03); }
+    .item.active{ background: rgba(201,164,74,.06); }
+    .badge{
+      min-width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border:1px solid rgba(201,164,74,.28);
+      background: rgba(201,164,74,.08);
+      display:flex; align-items:center; justify-content:center;
       font-family: var(--mono);
       font-size: 12px;
-      line-height: 1.6;
-      color: rgba(201,209,217,.74);
-      display:none;
+      color: rgba(245,242,234,.92);
     }
-    .comp.open .mini{ display:block; }
+    .itxt b{ display:block; color: rgba(245,242,234,.92); font-weight:600; margin-bottom:4px; }
+    .itxt span{ display:block; color: rgba(201,209,217,.78); font-size:14px; line-height:1.5; }
 
-    /* Interface tiles (no long code blocks) */
+    .detail{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--r-lg);
+      padding: 18px 18px;
+    }
+    .detail .k{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform: uppercase;
+      color: rgba(201,164,74,.90);
+      margin-bottom: 10px;
+    }
+    .detail ul{ margin: 12px 0 0 0; padding: 0 0 0 18px; }
+    .detail li{ margin: 8px 0; color: rgba(201,209,217,.84); line-height: 1.55; }
+
+    /* Interface tiles (clean) */
     .tiles{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -304,38 +364,6 @@ Single-file (no external CSS/JS).
       overflow:auto;
       white-space: pre;
     }
-
-    /* Schema “I/O” diagram (simple, readable) */
-    .io{
-      margin-top: 18px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.02);
-      border-radius: var(--r-lg);
-      padding: 18px 18px;
-    }
-    .ioGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 10px;
-    }
-    @media (max-width: 980px){ .ioGrid{ grid-template-columns: 1fr; } }
-    .ioBox{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(11,15,20,.55);
-      border-radius: var(--r-lg);
-      padding: 14px 14px;
-    }
-    .ioBox .k{
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing:.16em;
-      text-transform: uppercase;
-      color: rgba(201,164,74,.90);
-      margin-bottom: 8px;
-    }
-    .ioBox ul{ margin: 0; padding: 0 0 0 18px; }
-    .ioBox li{ margin: 8px 0; color: rgba(201,209,217,.82); line-height: 1.55; }
 
     /* Footer */
     footer{ border-top:1px solid rgba(255,255,255,.06); padding: var(--s7) 0 var(--s6); }
@@ -388,13 +416,14 @@ Single-file (no external CSS/JS).
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto;}
       .reveal{ opacity:1; transform:none; transition:none; }
-      nav.center a, .btn, .comp, .drawerLinks a{ transition:none; }
+      nav.center a, .btn, .drawerLinks a, .item{ transition:none; }
     }
   </style>
 </head>
 
 <body>
   <div class="bg" aria-hidden="true"></div>
+  <div class="gridOverlay" aria-hidden="true"></div>
   <canvas id="neurons" aria-hidden="true"></canvas>
 
   <header class="site">
@@ -449,82 +478,128 @@ Single-file (no external CSS/JS).
     <section style="padding-top: var(--s6);">
       <div class="read reveal">
         <div class="eyebrow">Platform · Components · Interfaces</div>
-        <h1>Deploy a layer, not a rewrite.</h1>
+        <h1>Component architecture, not a monolith.</h1>
         <p class="muted">
-          CEYO is organized as a small set of deterministic components: policy scope, canonicalization, sealing, disclosure tiers, and verification.
-          Integration surfaces are designed to fit existing inference and governance stacks.
+          CEYO is a boundary-layer evidentiary system: policy scope defines what is recorded, canonicalization makes it deterministic,
+          sealing makes tampering detectable, and verification makes integrity independently provable.
         </p>
-        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn primary" href="#catalog">View components<span class="arr">→</span></a>
-          <a class="btn" href="#interfaces">Interface tiles<span class="arr">→</span></a>
+      </div>
+
+      <div class="heroSplit">
+        <div class="panel reveal">
+          <h3>Design posture</h3>
+          <p class="muted">Built for institutional review: deterministic outputs, explicit scope, non-custodial keys, and constrained disclosure.</p>
+          <ul style="margin:12px 0 0 0; padding:0 0 0 18px;">
+            <li style="margin:8px 0; line-height:1.55; color:rgba(201,209,217,.84);">Attach beside inference (sidecar / gateway / wrapper)</li>
+            <li style="margin:8px 0; line-height:1.55; color:rgba(201,209,217,.84);">Record only policy-scoped context</li>
+            <li style="margin:8px 0; line-height:1.55; color:rgba(201,209,217,.84);">Canonicalize deterministically (RFC 8785)</li>
+            <li style="margin:8px 0; line-height:1.55; color:rgba(201,209,217,.84);">Seal with hash + signature under operator custody</li>
+          </ul>
+          <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn primary" href="#components">Browse components<span class="arr">→</span></a>
+            <a class="btn" href="#interfaces">Integration surfaces<span class="arr">→</span></a>
+          </div>
+        </div>
+
+        <div class="map reveal" aria-label="Component map">
+          <div class="k">Component map</div>
+          <svg class="svg" viewBox="0 0 820 320" role="img" aria-label="Policy to verification component flow">
+            <path class="line" d="M120 160 C200 160, 200 160, 280 160 S 360 160, 440 160 S 520 160, 600 160 S 680 160, 740 160"/>
+            <circle class="node" cx="120" cy="160" r="22"></circle>
+            <circle class="node" cx="300" cy="160" r="22"></circle>
+            <circle class="node" cx="460" cy="160" r="22"></circle>
+            <circle class="node" cx="620" cy="160" r="22"></circle>
+            <circle class="node" cx="740" cy="160" r="22"></circle>
+
+            <text class="lbl" x="120" y="110" text-anchor="middle">ATTACH</text>
+            <text class="lbl" x="300" y="110" text-anchor="middle">CAPTURE</text>
+            <text class="lbl" x="460" y="110" text-anchor="middle">CANON</text>
+            <text class="lbl" x="620" y="110" text-anchor="middle">SEAL</text>
+            <text class="lbl" x="740" y="110" text-anchor="middle">ART</text>
+
+            <text class="lbl" x="410" y="260" text-anchor="middle" style="fill: rgba(201,164,74,.88);">VERIFY</text>
+            <text class="lbl" x="410" y="284" text-anchor="middle" style="fill: rgba(201,209,217,.66); letter-spacing:.06em; text-transform:none; font-size:12px;">
+              canonicalize · hash · signature · policy alignment
+            </text>
+          </svg>
+          <p class="muted" style="margin:10px 0 0 0;">Verification confirms integrity and provenance under declared policy scope.</p>
         </div>
       </div>
     </section>
 
-    <!-- COMPONENT CATALOG (dominant module) -->
-    <section id="catalog">
+    <!-- COMPONENTS -->
+    <section id="components">
       <div class="read reveal">
         <h2>Core components</h2>
-        <p class="muted">Click any component for a compact “what it does” and “what it does not do.”</p>
+        <p class="muted">Select a component to view purpose, boundaries, and outputs.</p>
 
-        <div class="catalog" aria-label="Component catalog">
-          <div class="comp reveal" data-comp="policy" role="button" tabindex="0" aria-label="Policy scope engine">
-            <div class="tag">Policy scope</div>
-            <h3>Capture policy engine</h3>
-            <p class="desc">Defines inclusion, exclusion, masking, and disclosure tiers before artifact generation.</p>
-            <div class="mini">
-              What it does: makes scope explicit and versioned.<br>
-              What it does not do: decide compliance outcomes.
+        <div class="catalogGrid">
+          <div class="list reveal" aria-label="Component list">
+            <div class="item active" data-key="policy" role="button" tabindex="0">
+              <div class="badge">01</div>
+              <div class="itxt">
+                <b>Capture policy</b>
+                <span>Defines inclusion, exclusion, masking, and tier configuration.</span>
+              </div>
+            </div>
+            <div class="item" data-key="canon" role="button" tabindex="0">
+              <div class="badge">02</div>
+              <div class="itxt">
+                <b>Canonicalizer</b>
+                <span>Deterministic normalization (RFC 8785) for reproducible hashing.</span>
+              </div>
+            </div>
+            <div class="item" data-key="seal" role="button" tabindex="0">
+              <div class="badge">03</div>
+              <div class="itxt">
+                <b>Sealing module</b>
+                <span>Hash + signature to make tampering detectable and provenance verifiable.</span>
+              </div>
+            </div>
+            <div class="item" data-key="tiers" role="button" tabindex="0">
+              <div class="badge">04</div>
+              <div class="itxt">
+                <b>Disclosure tiers</b>
+                <span>Redacted and controlled-review views defined pre-generation.</span>
+              </div>
+            </div>
+            <div class="item" data-key="verify" role="button" tabindex="0">
+              <div class="badge">05</div>
+              <div class="itxt">
+                <b>Verifier toolkit</b>
+                <span>Independent verification producing PASS / FAIL / POLICY_MISMATCH.</span>
+              </div>
+            </div>
+            <div class="item" data-key="retain" role="button" tabindex="0">
+              <div class="badge">06</div>
+              <div class="itxt">
+                <b>Retention posture</b>
+                <span>Storage and chain-of-custody support for institutional workflows.</span>
+              </div>
             </div>
           </div>
 
-          <div class="comp reveal" data-comp="canon" role="button" tabindex="0" aria-label="Canonicalizer">
-            <div class="tag">Canonicalization</div>
-            <h3>Deterministic canonicalizer</h3>
-            <p class="desc">Normalizes captured fields into a stable schema and produces deterministic bytes (RFC 8785).</p>
-            <div class="mini">
-              What it does: enables reproducible hashing across environments.<br>
-              What it does not do: guarantee inference reproducibility.
-            </div>
-          </div>
+          <div class="detail reveal" aria-label="Selected component details">
+            <div class="k" id="d_k">Selected</div>
+            <h3 id="d_title">Capture policy</h3>
+            <p class="muted" id="d_desc">Defines explicit capture scope and disclosure tiers before artifact generation begins.</p>
 
-          <div class="comp reveal" data-comp="seal" role="button" tabindex="0" aria-label="Sealing module">
-            <div class="tag">Integrity sealing</div>
-            <h3>Hash + signature module</h3>
-            <p class="desc">Cryptographically seals canonical artifacts to make tampering detectable and provenance verifiable.</p>
-            <div class="mini">
-              What it does: tamper evidence + origin authenticity under declared custody.<br>
-              What it does not do: adjudicate decision correctness.
-            </div>
-          </div>
+            <ul id="d_bullets">
+              <li>Records policy identifier and version within each artifact.</li>
+              <li>Applies masking and exclusion before canonicalization and hashing.</li>
+              <li>Prevents implicit expansion beyond declared scope.</li>
+            </ul>
 
-          <div class="comp reveal" data-comp="tiers" role="button" tabindex="0" aria-label="Disclosure tiers">
-            <div class="tag">Disclosure</div>
-            <h3>Tiered disclosure controls</h3>
-            <p class="desc">Supports redacted and controlled-review views without post hoc improvisation.</p>
-            <div class="mini">
-              What it does: preserves trade-secret boundaries while enabling verification.<br>
-              What it does not do: expand scope beyond policy.
+            <div style="margin-top:14px; border:1px solid rgba(201,164,74,.22); background: rgba(11,15,20,.62); border-radius: var(--r-lg); padding: 12px 12px; font-family: var(--mono); font-size: 12px; line-height: 1.65; color: rgba(201,209,217,.86); white-space: pre; overflow:auto;" id="d_snip">
+policy_id: "POL-001"
+policy_version: "V1"
+masking: ["pii.redact","secrets.hash"]
+tier: "controlled_review"
             </div>
-          </div>
 
-          <div class="comp reveal" data-comp="verify" role="button" tabindex="0" aria-label="Verifier toolkit">
-            <div class="tag">Verification</div>
-            <h3>Verifier toolkit</h3>
-            <p class="desc">Independent verification flow: canonicalize → hash → signature → policy alignment.</p>
-            <div class="mini">
-              What it does: produces PASS / FAIL / POLICY_MISMATCH states.<br>
-              What it does not do: determine legal sufficiency.
-            </div>
-          </div>
-
-          <div class="comp reveal" data-comp="store" role="button" tabindex="0" aria-label="Artifact storage">
-            <div class="tag">Retention</div>
-            <h3>Artifact retention posture (optional)</h3>
-            <p class="desc">Storage and chain-of-custody handling are operator-defined; CEYO supports audit-ready structure.</p>
-            <div class="mini">
-              What it does: supports retrieval logging and review workflows.<br>
-              What it does not do: enforce institutional custody procedures.
+            <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn primary" href="how.html#steps">See the mechanics chain<span class="arr">→</span></a>
+              <a class="btn" href="trust.html">Trust model<span class="arr">→</span></a>
             </div>
           </div>
         </div>
@@ -534,86 +609,48 @@ Single-file (no external CSS/JS).
     <!-- INTERFACES -->
     <section id="interfaces">
       <div class="read reveal">
-        <h2>Interface tiles</h2>
-        <p class="muted">Small, readable surfaces. No long blocks.</p>
+        <h2>Integration surfaces</h2>
+        <p class="muted">CEYO is designed to fit existing inference and governance stacks without rewriting core systems.</p>
 
-        <div class="tiles" aria-label="Interface tiles">
+        <div class="tiles" aria-label="Integration surfaces tiles">
           <div class="tile reveal">
-            <div class="hdr">
-              <b>Sidecar / proxy attachment</b>
-              <span>Deployment</span>
-            </div>
-            <p class="muted">Mirror policy-scoped fields at the inference boundary without mutating request/response.</p>
-            <div class="snippet">mode: "sidecar"
+            <div class="hdr"><b>Boundary attachment</b><span>Deploy</span></div>
+            <p class="muted">Sidecar, gateway, or wrapper at the inference boundary. Fail-open supported.</p>
+            <div class="snippet">mode: "gateway"
 fail_open: true
 capture_policy: "POL-001@V1"</div>
           </div>
 
           <div class="tile reveal">
-            <div class="hdr">
-              <b>Artifact output</b>
-              <span>Record</span>
-            </div>
+            <div class="hdr"><b>Artifact output</b><span>Record</span></div>
             <p class="muted">Canonical payload + integrity fields + policy identifiers.</p>
             <div class="snippet">artifact_id: "ART-…"
-policy_id: "POL-001"
 canonicalization: "RFC8785"
 digest: "…"
 signature: "…"</div>
           </div>
 
           <div class="tile reveal">
-            <div class="hdr">
-              <b>Verifier invocation</b>
-              <span>Verify</span>
-            </div>
-            <p class="muted">Independent validation produces deterministic outcomes.</p>
-            <div class="snippet">verify(artifact):
-  canonicalize()
-  recompute_hash()
-  validate_signature()
-  check_policy()</div>
+            <div class="hdr"><b>Verification harness</b><span>Verify</span></div>
+            <p class="muted">Independent verification steps produce deterministic outcomes.</p>
+            <div class="snippet">canonicalize()
+recompute_hash()
+validate_signature()
+check_policy_alignment()</div>
           </div>
 
           <div class="tile reveal">
-            <div class="hdr">
-              <b>Disclosure tiers</b>
-              <span>Scope</span>
-            </div>
-            <p class="muted">Views are determined at generation time, not after-the-fact redaction.</p>
+            <div class="hdr"><b>Disclosure tiering</b><span>Scope</span></div>
+            <p class="muted">Pre-defined redacted and controlled-review views aligned to authorization.</p>
             <div class="snippet">tier: "public_redacted"
 tier: "controlled_review"
 masking_rules: ["…"]</div>
           </div>
         </div>
 
-        <div class="io reveal" aria-label="Inputs and outputs">
-          <h3>Inputs and outputs</h3>
-          <p class="muted">A simple mental model for what CEYO sees and what it produces.</p>
-
-          <div class="ioGrid">
-            <div class="ioBox">
-              <div class="k">Inputs</div>
-              <ul>
-                <li>Inference request/response context (policy-scoped fields only)</li>
-                <li>Policy ID, version, and masking rules</li>
-                <li>Operator key custody environment (KMS/HSM/TEE reference)</li>
-              </ul>
-            </div>
-            <div class="ioBox">
-              <div class="k">Outputs</div>
-              <ul>
-                <li>Canonical artifact payload (deterministic representation)</li>
-                <li>Hash digest + signature for integrity and provenance</li>
-                <li>Verification states: PASS / FAIL / POLICY_MISMATCH</li>
-              </ul>
-            </div>
-          </div>
-
-          <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="btn primary" href="trust.html">Trust & verification model<span class="arr">→</span></a>
-            <a class="btn" href="integrations.html">Integration patterns<span class="arr">→</span></a>
-          </div>
+        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn primary" href="integrations.html">Integration patterns<span class="arr">→</span></a>
+          <a class="btn" href="compliance.html">Compliance mapping<span class="arr">→</span></a>
         </div>
       </div>
     </section>
@@ -659,7 +696,6 @@ masking_rules: ["…"]</div>
   </main>
 
   <script>
-    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Mobile menu
@@ -685,14 +721,128 @@ masking_rules: ["…"]</div>
       revealEls.forEach(el=>el.classList.add('on'));
     }
 
-    // Component open/close
-    document.querySelectorAll('.comp').forEach(el=>{
-      function toggle(){ el.classList.toggle('open'); }
-      el.addEventListener('click', toggle);
-      el.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggle(); }});
+    // Component details (right panel)
+    const content = {
+      policy: {
+        k:"Selected · Policy scope",
+        t:"Capture policy",
+        d:"Defines explicit capture scope and disclosure tiers before artifact generation begins.",
+        bullets:[
+          "Records policy identifier and version within each artifact.",
+          "Applies masking and exclusion before canonicalization and hashing.",
+          "Prevents implicit expansion beyond declared scope."
+        ],
+        snip:`policy_id: "POL-001"
+policy_version: "V1"
+masking: ["pii.redact","secrets.hash"]
+tier: "controlled_review"`
+      },
+      canon: {
+        k:"Selected · Canonicalization",
+        t:"Canonicalizer (RFC 8785)",
+        d:"Normalizes captured fields into deterministic bytes for reproducible hashing and independent verification.",
+        bullets:[
+          "Canonical ordering and numeric normalization are deterministic.",
+          "Enables cross-environment recomputation of the digest.",
+          "Records canonicalization scheme/version for future verification."
+        ],
+        snip:`canonicalization: "RFC8785"
+schema_version: "A1"
+canonical_bytes: "…"`
+      },
+      seal: {
+        k:"Selected · Integrity",
+        t:"Sealing module",
+        d:"Applies cryptographic hashing and digital signatures to make tampering detectable and provenance verifiable.",
+        bullets:[
+          "Hash establishes tamper-evidence from seal time forward.",
+          "Signature anchors origin authenticity under declared key custody.",
+          "Suite selection remains configurable by operator policy."
+        ],
+        snip:`hash_algorithm: "SHA-256"
+signature_algorithm: "ECDSA-P256"
+digest: "…"
+signature: "…"`
+      },
+      tiers: {
+        k:"Selected · Disclosure",
+        t:"Disclosure tiers",
+        d:"Pre-defined redacted and controlled-review views enable verification without default disclosure of proprietary internals.",
+        bullets:[
+          "Tier is set at generation time, not after-the-fact redaction.",
+          "Scope boundaries remain explicit and auditable.",
+          "Supports institutional review workflows under authorization."
+        ],
+        snip:`tier: "public_redacted"
+tier: "controlled_review"
+masking_rules: ["…"]`
+      },
+      verify: {
+        k:"Selected · Verification",
+        t:"Verifier toolkit",
+        d:"Independent verification recomputes canonicalization and hash, validates signature, and checks policy alignment.",
+        bullets:[
+          "Produces PASS / FAIL / POLICY_MISMATCH outcomes.",
+          "Does not evaluate correctness or compliance conclusions.",
+          "Supports third-party verification under constrained disclosure."
+        ],
+        snip:`verify():
+  canonicalize()
+  recompute_hash()
+  validate_signature()
+  check_policy_alignment()`
+      },
+      retain: {
+        k:"Selected · Retention",
+        t:"Retention posture (optional)",
+        d:"Artifact storage, retrieval logging, and chain-of-custody handling are operator-defined; CEYO provides audit-ready structure.",
+        bullets:[
+          "Artifacts are designed for retrieval and re-verification.",
+          "Retention periods are determined by legal and institutional policy.",
+          "CEYO does not monitor operator repositories in real time."
+        ],
+        snip:`storage: "operator_defined"
+retention: "institution_policy"
+retrieval_logging: true`
+      }
+    };
+
+    const d_k = document.getElementById('d_k');
+    const d_title = document.getElementById('d_title');
+    const d_desc = document.getElementById('d_desc');
+    const d_bullets = document.getElementById('d_bullets');
+    const d_snip = document.getElementById('d_snip');
+
+    function setActive(key){
+      const c = content[key];
+      if(!c) return;
+      d_k.textContent = c.k;
+      d_title.textContent = c.t;
+      d_desc.textContent = c.d;
+
+      d_bullets.innerHTML = "";
+      c.bullets.forEach(x=>{
+        const li = document.createElement('li');
+        li.textContent = x;
+        d_bullets.appendChild(li);
+      });
+
+      d_snip.textContent = c.snip;
+
+      document.querySelectorAll('.item').forEach(el=>{
+        el.classList.toggle('active', el.dataset.key === key);
+      });
+    }
+
+    document.querySelectorAll('.item').forEach(el=>{
+      const key = el.dataset.key;
+      el.addEventListener('click', ()=> setActive(key));
+      el.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); setActive(key);} });
     });
 
-    /* Neuron/atom background (steady, no burst here) */
+    setActive('policy');
+
+    /* Platform background: faint neurons, no explode; slower drift */
     (function(){
       const c = document.getElementById('neurons');
       const ctx = c.getContext('2d', {alpha:true});
@@ -710,79 +860,29 @@ masking_rules: ["…"]</div>
       resize();
       window.addEventListener('resize', resize, {passive:true});
 
-      const N = 170;
+      const N = 120;   // reduced density on platform
       const pad = 40;
       const nodes = [];
-      const dirs = [];
       const rnd = (a,b)=> a + Math.random()*(b-a);
 
       for(let i=0;i<N;i++){
-        nodes.push({ x:rnd(-pad,w+pad), y:rnd(-pad,h+pad), vx:rnd(-0.15,0.15), vy:rnd(-0.11,0.11), s:rnd(1.0,2.0) });
-        dirs.push({ ang: Math.random()*Math.PI*2, rad: Math.sqrt(Math.random()) });
+        nodes.push({ x:rnd(-pad,w+pad), y:rnd(-pad,h+pad), vx:rnd(-0.10,0.10), vy:rnd(-0.08,0.08), s:rnd(1.0,1.9) });
       }
 
-      let mx=0.5,my=0.5;
-      if(window.matchMedia("(pointer:fine)").matches){
-        window.addEventListener('mousemove', (e)=>{ mx=e.clientX/Math.max(1,w); my=e.clientY/Math.max(1,h); }, {passive:true});
-      }
-
-      function convergeAmount(){
-        const docH = Math.max(1, document.body.scrollHeight - window.innerHeight);
-        const p = Math.max(0, Math.min(1, window.scrollY / docH));
-        return Math.min(1, 0.25 + p*0.55);
-      }
+      const maxDist = 150;
+      const maxD2 = maxDist*maxDist;
 
       function draw(){
         ctx.clearRect(0,0,w,h);
 
-        const vg = ctx.createRadialGradient(w*0.55, h*0.28, 40, w*0.5, h*0.5, Math.max(w,h)*0.9);
-        vg.addColorStop(0,'rgba(0,0,0,0.00)');
-        vg.addColorStop(1,'rgba(0,0,0,0.28)');
-        ctx.fillStyle = vg;
-        ctx.fillRect(0,0,w,h);
-
-        const px = (mx-0.5)*16, py = (my-0.5)*10;
-        const cx = w*0.54 + px*0.35, cy = h*0.30 + py*0.35;
-
-        const conv = prefersReduce ? 0.35 : convergeAmount();
-        const baseR = Math.min(w,h)*0.18;
-        const orbitR = baseR*(0.92 - conv*0.08);
-
-        ctx.save();
-        ctx.globalAlpha = Math.min(0.42, 0.14 + conv*0.34);
-        ctx.strokeStyle = 'rgba(201,164,74,0.45)';
-        ctx.lineWidth = 1.2;
-        ctx.beginPath(); ctx.arc(cx, cy, orbitR*0.38, 0, Math.PI*2); ctx.stroke();
-        ctx.globalAlpha *= 0.72;
-        ctx.strokeStyle = 'rgba(201,164,74,0.18)';
-        ctx.beginPath(); ctx.arc(cx, cy, orbitR*0.78, 0, Math.PI*2); ctx.stroke();
-        ctx.restore();
-
         for(let i=0;i<N;i++){
           const p = nodes[i];
-          p.x += p.vx*(1 - 0.6*conv);
-          p.y += p.vy*(1 - 0.6*conv);
+          p.x += p.vx; p.y += p.vy;
           if(p.x < -pad) p.x = w+pad;
           if(p.x > w+pad) p.x = -pad;
           if(p.y < -pad) p.y = h+pad;
           if(p.y > h+pad) p.y = -pad;
-
-          if(conv > 0.001){
-            const d = dirs[i];
-            const ringR = orbitR*(0.62 + d.rad*0.48);
-            const t = performance.now()*0.00030;
-            const ang = d.ang + t*(0.18 + (i%7)*0.03);
-            const tx = cx + Math.cos(ang)*ringR;
-            const ty = cy + Math.sin(ang)*ringR;
-            p.x += (tx - p.x)*(0.010 + 0.032*conv);
-            p.y += (ty - p.y)*(0.010 + 0.032*conv);
-          }
         }
-
-        const maxDist = 155;
-        const maxD2 = maxDist*maxDist;
-        const lineAlphaBase = 0.05 + conv*0.08;
-        const pointAlpha = 0.38 + conv*0.25;
 
         for(let i=0;i<N;i++){
           const a = nodes[i];
@@ -792,7 +892,7 @@ masking_rules: ["…"]</div>
             const d2=dx*dx+dy*dy;
             if(d2 < maxD2){
               const t = 1 - (d2/maxD2);
-              const alpha = Math.min(0.18, lineAlphaBase*t);
+              const alpha = Math.min(0.12, 0.04 * t);
               ctx.strokeStyle = `rgba(201,164,74,${alpha})`;
               ctx.lineWidth = 1;
               ctx.beginPath();
@@ -805,7 +905,7 @@ masking_rules: ["…"]</div>
 
         for(let i=0;i<N;i++){
           const p = nodes[i];
-          ctx.fillStyle = `rgba(201,164,74,${pointAlpha})`;
+          ctx.fillStyle = `rgba(201,164,74,0.20)`;
           ctx.beginPath();
           ctx.arc(p.x,p.y,p.s,0,Math.PI*2);
           ctx.fill();
@@ -813,7 +913,8 @@ masking_rules: ["…"]</div>
 
         if(!prefersReduce) requestAnimationFrame(draw);
       }
-      draw();
+
+      if(!prefersReduce) draw();
     })();
   </script>
 </body>
