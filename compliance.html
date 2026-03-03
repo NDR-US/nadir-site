@@ -1,8 +1,3 @@
-<!-- =========================
-FILE: compliance.html  (5) COMPLIANCE
-Table-led page. No neurons. Maximum readability.
-Same shell (header/footer/buttons/tokens).
-========================= -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -42,7 +37,11 @@ Same shell (header/footer/buttons/tokens).
     }
 
     *{box-sizing:border-box}
-    html{background:var(--ink);scroll-behavior:smooth}
+    html{
+      background:var(--ink);
+      scroll-behavior:smooth;
+      scroll-padding-top: calc(var(--navH) + 24px);
+    }
     body{
       margin:0;
       font-family:var(--ui);
@@ -53,6 +52,7 @@ Same shell (header/footer/buttons/tokens).
     }
     a{color:inherit;text-decoration:none}
     button{font:inherit}
+    [id]{ scroll-margin-top: calc(var(--navH) + 24px); }
 
     /* Background: cohesive but calm (no neurons) */
     .bg{
@@ -78,7 +78,7 @@ Same shell (header/footer/buttons/tokens).
       display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
     }
 
-    .logo{ display:flex; align-items:center; gap:10px; min-width:180px; font-weight:600; letter-spacing:-.01em; }
+    .logo{ display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:-.01em; flex:0 0 auto; }
     .logo .mark{
       display:inline-flex; align-items:center; gap:10px;
       padding:10px 12px; border-radius:999px;
@@ -91,25 +91,9 @@ Same shell (header/footer/buttons/tokens).
       box-shadow: 0 0 0 4px rgba(201,164,74,.12);
     }
 
-    nav.center{
-      display:flex; gap:18px; align-items:center; justify-content:center;
-      flex:1; font-size:14px; color: rgba(201,209,217,.92);
-    }
-    nav.center a{
-      padding:10px 10px; border-radius:999px; border:1px solid transparent;
-      transition: background .18s ease, border-color .18s ease, transform .18s ease;
-    }
-    nav.center a:hover{
-      background: rgba(255,255,255,.03);
-      border-color: rgba(255,255,255,.08);
-      transform: translateY(-1px);
-    }
-    nav.center a.active{
-      border-color: rgba(201,164,74,.28);
-      background: rgba(201,164,74,.06);
-    }
+    /* Actions + always-safe Menu (prevents nav overlap issues) */
+    .actions{ display:flex; align-items:center; gap:10px; justify-content:flex-end; flex:0 0 auto; }
 
-    .actions{ display:flex; align-items:center; gap:10px; min-width:220px; justify-content:flex-end; }
     .btn{
       height:48px; padding:0 18px; border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
@@ -130,21 +114,34 @@ Same shell (header/footer/buttons/tokens).
     .btn .arr{ display:inline-block; margin-left:10px; transition: transform .16s ease; }
     .btn:hover .arr{ transform: translateX(3px); }
 
-    .hamburger{
-      display:none;
-      height:48px; width:48px;
+    .menuBtn{
+      height:48px;
+      padding:0 16px;
       border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
       color: rgba(201,209,217,.95);
-      align-items:center; justify-content:center;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      cursor:pointer;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      white-space:nowrap;
     }
-    @media (max-width: 980px){
-      nav.center{ display:none; }
-      .actions .btn.secondary{ display:none; }
-      .hamburger{ display:inline-flex; }
+    .menuBtn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.35); background: rgba(255,255,255,.04); }
+    .menuBtn .m{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
     }
 
+    @media (max-width: 980px){
+      .actions .btn.secondary{ display:none; }
+    }
+
+    /* Mobile drawer */
     .drawer{
       position:fixed; inset:0; z-index:80;
       display:none;
@@ -176,6 +173,7 @@ Same shell (header/footer/buttons/tokens).
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
       color: rgba(201,209,217,.92);
+      cursor:pointer;
     }
     .drawerLinks{ display:grid; grid-template-columns: 1fr; padding: 10px; gap: 8px; }
     .drawerLinks a{
@@ -186,14 +184,23 @@ Same shell (header/footer/buttons/tokens).
       transition: transform .18s ease, border-color .18s ease;
     }
     .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); }
+    .drawerLinks a.active{
+      border-color: rgba(201,164,74,.35);
+      background: rgba(201,164,74,.10);
+    }
 
+    /* Typography */
     .read{ max-width: var(--readW); }
     p{ margin: 0 0 14px 0; line-height: var(--lh); }
     .muted{ color: rgba(201,209,217,.78); }
 
-    main{ padding: var(--s6) 0 var(--s7); }
+    /* Ensure content never hides under sticky header */
+    main{
+      padding-top: calc(var(--navH) + var(--s4));
+      padding-bottom: var(--s7);
+    }
     section{ padding: var(--s7) 0; border-top:1px solid rgba(255,255,255,.06); }
-    section:first-of-type{ border-top:none; padding-top: var(--s6); }
+    section:first-of-type{ border-top:none; padding-top: 0; }
 
     .eyebrow{
       font-family: var(--mono);
@@ -211,7 +218,7 @@ Same shell (header/footer/buttons/tokens).
       h3{ font-size: 19px; }
     }
 
-    /* Table-led modules */
+    /* Summary callout (no “Plain-language summary” title) */
     .callout{
       border:1px solid rgba(201,164,74,.22);
       background: rgba(11,15,20,.60);
@@ -219,17 +226,26 @@ Same shell (header/footer/buttons/tokens).
       padding: 16px 16px;
       margin-top: 16px;
     }
-    .callout .k{
+    .calloutTop{
+      display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      margin-bottom: 8px;
+    }
+    .labelChip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(201,164,74,.38);
+      background: rgba(201,164,74,.10);
+      color: rgba(245,242,234,.92);
       font-family: var(--mono);
       font-size: 11px;
-      letter-spacing:.14em;
+      letter-spacing: .12em;
       text-transform: uppercase;
-      color: rgba(201,164,74,.86);
-      margin-bottom: 10px;
     }
     .callout ul{ margin: 0; padding: 0 0 0 18px; }
     .callout li{ margin: 8px 0; color: rgba(201,209,217,.84); line-height: 1.55; }
 
+    /* Table-led modules */
     .tableWrap{
       margin-top: 18px;
       border:1px solid rgba(255,255,255,.10);
@@ -320,6 +336,7 @@ Same shell (header/footer/buttons/tokens).
       }
     }
 
+    /* Footer */
     footer{ border-top:1px solid rgba(255,255,255,.06); padding: var(--s7) 0 var(--s6); }
     .footGrid{
       display:grid;
@@ -363,13 +380,14 @@ Same shell (header/footer/buttons/tokens).
       border-top:1px solid rgba(255,255,255,.06);
     }
 
+    /* Motion */
     .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
     .reveal.on{ opacity:1; transform: translateY(0); }
 
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto;}
       .reveal{ opacity:1; transform:none; transition:none; }
-      nav.center a, .btn, .drawerLinks a{ transition:none; }
+      .btn, .drawerLinks a, .menuBtn{ transition:none; }
     }
   </style>
 </head>
@@ -383,20 +401,12 @@ Same shell (header/footer/buttons/tokens).
         <span class="mark"><span class="dot" aria-hidden="true"></span><span>CEYO</span></span>
       </a>
 
-      <nav class="center" aria-label="Primary navigation">
-        <a href="index.html">Overview</a>
-        <a href="how.html">How It Works</a>
-        <a href="platform.html">Platform</a>
-        <a href="trust.html">Trust</a>
-        <a class="active" href="compliance.html">Compliance</a>
-        <a href="integrations.html">Integrations</a>
-        <a href="resources.html">Resources</a>
-      </nav>
-
       <div class="actions" aria-label="Actions">
         <a class="btn secondary" href="resources.html#sample-artifact">View sample artifact<span class="arr">→</span></a>
         <a class="btn primary" href="contact.html">Request walkthrough<span class="arr">→</span></a>
-        <button class="hamburger" id="openMenu" aria-label="Open menu" type="button">☰</button>
+        <button class="menuBtn" id="openMenu" aria-label="Open menu" type="button">
+          <span aria-hidden="true">☰</span><span class="m">Menu</span>
+        </button>
       </div>
     </div>
   </header>
@@ -412,7 +422,7 @@ Same shell (header/footer/buttons/tokens).
         <a href="how.html">How It Works</a>
         <a href="platform.html">Platform</a>
         <a href="trust.html">Trust & Verification</a>
-        <a href="compliance.html">Compliance</a>
+        <a class="active" href="compliance.html">Compliance</a>
         <a href="integrations.html">Integrations</a>
         <a href="use-cases.html">Use Cases</a>
         <a href="security.html">Security</a>
@@ -424,17 +434,24 @@ Same shell (header/footer/buttons/tokens).
   </div>
 
   <main class="wrap">
-    <section style="padding-top: var(--s6);">
+    <section>
       <div class="read reveal">
         <div class="eyebrow">Compliance · Evidence outputs · Control alignment</div>
         <h1>Evidence outputs mapped to controls.</h1>
         <p class="muted">
           CEYO provides deterministic, integrity-sealed artifacts that support verification and audit workflows under explicit policy scope.
-          This page is descriptive. It does not constitute certification or legal advice.
+        </p>
+        <p class="muted" style="margin-top:-2px;">
+          This page describes functional correspondence only. It does not certify compliance or provide legal advice.
         </p>
 
-        <div class="callout reveal" aria-label="Plain-language summary">
-          <div class="k">Plain-language summary</div>
+        <div class="callout reveal">
+          <div class="calloutTop">
+            <span class="labelChip">Summary</span>
+            <span class="muted" style="font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;">
+              Scope · Integrity · Verification
+            </span>
+          </div>
           <ul>
             <li>Operators define capture scope and disclosure tiers before artifacts are generated.</li>
             <li>Artifacts are canonicalized and sealed to make tampering detectable and provenance verifiable.</li>
@@ -443,7 +460,7 @@ Same shell (header/footer/buttons/tokens).
         </div>
 
         <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn primary" href="#matrix">Compliance matrix<span class="arr">→</span></a>
+          <a class="btn primary" href="#matrix">View mapping table<span class="arr">→</span></a>
           <a class="btn" href="trust.html#verification-spec">Verification steps<span class="arr">→</span></a>
         </div>
       </div>
@@ -451,10 +468,10 @@ Same shell (header/footer/buttons/tokens).
 
     <section id="matrix">
       <div class="read reveal">
-        <h2>Compliance matrix (descriptive)</h2>
+        <h2>Control mapping</h2>
         <p class="muted">
-          The mappings below describe functional correspondence between CEYO artifacts and common integrity-oriented control expectations.
-          Suitability and sufficiency are determined by the deploying institution and relevant authority.
+          The mappings below describe how CEYO artifacts can support common integrity-oriented control expectations.
+          Sufficiency is determined by the deploying institution and relevant authority.
         </p>
 
         <div class="tableWrap reveal" role="region" aria-label="Compliance mapping table">
@@ -472,35 +489,35 @@ Same shell (header/footer/buttons/tokens).
                 <td data-label="Control expectation"><span class="pill">Record-keeping</span></td>
                 <td data-label="CEYO output">Canonical artifact with policy ID/version and timestamp.</td>
                 <td data-label="Verification method">Recompute canonical bytes and hash; validate signature.</td>
-                <td data-label="Notes / boundary">Describes integrity of the record, not correctness of the decision.</td>
+                <td data-label="Notes / boundary">Integrity of record, not correctness of decision.</td>
               </tr>
 
               <tr>
                 <td data-label="Control expectation"><span class="pill">Integrity</span></td>
                 <td data-label="CEYO output">Digest + signature over canonical payload.</td>
                 <td data-label="Verification method">PASS / FAIL outcome from deterministic procedure.</td>
-                <td data-label="Notes / boundary">Tamper-evidence applies from seal time forward.</td>
+                <td data-label="Notes / boundary">Tamper-evidence from seal time forward.</td>
               </tr>
 
               <tr>
                 <td data-label="Control expectation"><span class="pill">Provenance</span></td>
                 <td data-label="CEYO output">Public key reference / KMS key ID and signature metadata.</td>
                 <td data-label="Verification method">Signature validation using referenced public key chain.</td>
-                <td data-label="Notes / boundary">Key custody is operator responsibility (non-custodial model).</td>
+                <td data-label="Notes / boundary">Key custody is operator responsibility (non-custodial).</td>
               </tr>
 
               <tr>
                 <td data-label="Control expectation"><span class="pill">Scope discipline</span></td>
                 <td data-label="CEYO output">Policy identifier and version embedded in artifact (policy hash where used).</td>
                 <td data-label="Verification method">Policy alignment check: expected ID/version/hash vs artifact.</td>
-                <td data-label="Notes / boundary">Scope is defined before generation; no implied expansion.</td>
+                <td data-label="Notes / boundary">Scope is set before generation; no implied expansion.</td>
               </tr>
 
               <tr>
                 <td data-label="Control expectation"><span class="pill">Constrained disclosure</span></td>
                 <td data-label="CEYO output">Disclosure tier designation (public/redacted, controlled review).</td>
-                <td data-label="Verification method">Verify within tier boundaries; no need for proprietary internals.</td>
-                <td data-label="Notes / boundary">Tier sufficiency for proceedings is authority-determined.</td>
+                <td data-label="Verification method">Verify within tier boundaries; no proprietary internals required.</td>
+                <td data-label="Notes / boundary">Tier sufficiency is proceeding-specific.</td>
               </tr>
 
               <tr>
@@ -520,8 +537,8 @@ Same shell (header/footer/buttons/tokens).
           </table>
         </div>
 
-        <div class="noteBox reveal" aria-label="Boundary declaration">
-          <div class="k">Boundary declaration</div>
+        <div class="noteBox reveal">
+          <div class="k">Boundary</div>
           <p class="muted">
             CEYO produces integrity-sealed records. It does not certify compliance, legality, or decision correctness.
             Verification confirms integrity and provenance under policy scope — not correctness of model output.
@@ -577,14 +594,14 @@ Same shell (header/footer/buttons/tokens).
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Mobile menu
+    // Menu
     const drawer = document.getElementById('drawer');
     const openMenu = document.getElementById('openMenu');
     const closeMenu = document.getElementById('closeMenu');
     function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
     function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-    if(openMenu) openMenu.addEventListener('click', openDrawer);
-    if(closeMenu) closeMenu.addEventListener('click', closeDrawer);
+    openMenu.addEventListener('click', openDrawer);
+    closeMenu.addEventListener('click', closeDrawer);
     drawer.addEventListener('click', (e)=>{ if(e.target===drawer) closeDrawer(); });
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
 
