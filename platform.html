@@ -1,959 +1,820 @@
+<!-- =========================
+FILE: platform.html  (3) PLATFORM
+Card-catalog + interface tiles (distinctive middle module).
+Same shell, same tokens, same accent system as index/how.
+Single-file (no external CSS/JS).
+========================= -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>CEYO — Platform & Architecture</title>
-  <meta name="description" content="CEYO platform mechanics: attach, policy-scoped capture, deterministic canonicalization (RFC 8785), cryptographic sealing, tiered disclosure, and independent verification."/>
-  <meta name="theme-color" content="#060A13"/>
+  <title>CEYO — Platform</title>
+  <meta name="description" content="CEYO components: policy scope, canonicalization, sealing, disclosure tiers, verifier tooling, and integration interfaces."/>
+  <meta name="theme-color" content="#0B0F14"/>
 
-  <!-- Fonts (same system as Index) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --navy:#060A13;
-      --navy2:#0B1220;
-      --panel: rgba(11,18,32,.44);
-      --ivory:#F4F0E6;
-      --text:rgba(244,240,230,.92);
-      --muted:rgba(244,240,230,.62);
-      --muted2:rgba(244,240,230,.42);
-      --stroke:rgba(244,240,230,.11);
-      --stroke2:rgba(244,240,230,.07);
+      --ink:#0B0F14;
+      --paper:#F5F2EA;
+      --textOnInk:#C9D1D9;
+      --lineOnInk:rgba(255,255,255,.10);
 
-      --royal:#2D67FF;
-      --royal2:#1C4FE0;
-      --royalGlow: rgba(45,103,255,.40);
+      --accent:#3A320C;
+      --accent2:#C9A44A;
 
-      --display: "Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      --body: "IBM Plex Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --maxW:1160px;
+      --readW:740px;
 
-      --radius: 18px;
-      --radius2: 22px;
+      --r-sm:10px;
+      --r-md:14px;
+      --r-lg:18px;
 
-      --max: 1140px;
+      --s1:8px;  --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px;
 
-      --bodySize: 18px;
-      --bodyLH: 1.72;
-      --measure: 66ch;
+      --lh:1.65;
+      --shadow:0 10px 30px rgba(0,0,0,.25);
+      --shadow2:0 18px 60px rgba(0,0,0,.35);
+
+      --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --ui:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+
+      --navH:72px;
     }
 
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth; background:var(--navy);}
+    html{background:var(--ink);scroll-behavior:smooth}
     body{
       margin:0;
-      background:linear-gradient(180deg,var(--navy),var(--navy2));
-      color:var(--text);
-      font-family:var(--body);
-      overflow-x:hidden;
+      font-family:var(--ui);
+      color:var(--textOnInk);
+      background:var(--ink);
       -webkit-text-size-adjust:100%;
+      overflow-x:hidden;
     }
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
 
-    /* Background layers (slightly different “architecture” emphasis) */
-    #stage{
-      position:fixed; inset:0; z-index:0; pointer-events:none;
+    .bg{
+      position:fixed; inset:0; pointer-events:none; z-index:0;
       background:
-        radial-gradient(1050px 620px at 52% 18%, rgba(45,103,255,.12), transparent 60%),
-        radial-gradient(820px 520px at 78% 56%, rgba(45,103,255,.06), transparent 65%),
-        linear-gradient(180deg, var(--navy), var(--navy2));
+        radial-gradient(900px 520px at 40% 10%, rgba(58,50,12,.22), transparent 62%),
+        radial-gradient(820px 520px at 82% 34%, rgba(201,164,74,.10), transparent 64%),
+        linear-gradient(180deg, #0B0F14 0%, #0A0D12 40%, #0B0F14 100%);
     }
-    #net{
-      position:fixed; inset:0; z-index:1; pointer-events:none;
+    canvas#neurons{
+      position:fixed; inset:0;
       width:100%; height:100%;
-    }
-    #grain{
-      position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.055;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
-
-    /* Cursor (desktop only) */
-    #cursor{
-      position:fixed; z-index:9999; width:10px; height:10px; border-radius:50%;
-      background:var(--ivory); mix-blend-mode:difference; pointer-events:none;
-      transform:translate(-50%,-50%);
-      transition: width .16s ease, height .16s ease, opacity .16s ease, background .16s ease;
-    }
-    #cursor.big{ width:42px; height:42px; opacity:.55; background:var(--royal); }
-    @media (pointer: coarse){
-      #cursor{display:none;}
+      z-index:0;
+      pointer-events:none;
+      opacity:.88;
     }
 
-    /* Layout container */
-    .wrap{
-      position:relative; z-index:3;
-      max-width:var(--max);
-      margin:0 auto;
-      padding: 0 24px;
-    }
+    .wrap{ position:relative; z-index:1; max-width:var(--maxW); margin:0 auto; padding:0 var(--s4); }
+    @media (max-width: 640px){ .wrap{ padding:0 18px; } }
 
-    /* Top nav */
-    #topnav{
-      position:fixed; top:0; left:0; right:0; z-index:50;
-      padding: 18px 24px;
-      border-bottom: 1px solid transparent;
-      transition: background .22s ease, border-color .22s ease, backdrop-filter .22s ease;
-    }
-    #topnav.scrolled{
-      background: rgba(6,10,19,.68);
-      backdrop-filter: blur(14px);
-      border-bottom-color: rgba(244,240,230,.08);
-    }
-    .nav-inner{
-      max-width:var(--max);
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:0 24px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-family:var(--display);
-      font-weight:700;
-      letter-spacing:-.02em;
-      text-transform:uppercase;
-      color:var(--ivory);
-      font-size:22px;
-      line-height:1;
-      text-decoration:none;
-    }
-    .brand .dot{
-      width:8px; height:8px; border-radius:50%;
-      background:var(--royal);
-      box-shadow: 0 0 14px rgba(45,103,255,.55);
-      display:inline-block;
-      transform: translateY(1px);
-    }
-    .nav-right{
-      display:flex; align-items:center; gap:10px;
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:rgba(244,240,230,.70);
-    }
-    .nav-link{
-      color:rgba(244,240,230,.70);
-      text-decoration:none;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid transparent;
-      transition: background .16s ease, color .16s ease, border-color .16s ease;
-    }
-    .nav-link:hover{
-      color:var(--ivory);
-      background: rgba(244,240,230,.04);
-      border-color: rgba(244,240,230,.10);
-    }
-    .menu-btn{
-      cursor:pointer;
-      background: rgba(244,240,230,.03);
-      border:1px solid rgba(244,240,230,.10);
-    }
-    .menu-btn:hover{
-      border-color: rgba(45,103,255,.55);
-      box-shadow: 0 0 18px rgba(45,103,255,.22);
-    }
-
-    /* Page header */
-    .page{
-      padding-top: 120px;
-      padding-bottom: 70px;
-    }
-    .kicker{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing: clamp(.18em, 0.6vw, .34em);
-      text-transform:uppercase;
-      color: rgba(45,103,255,.92);
-      margin-bottom: 14px;
-      line-height: 1.5;
-      word-break: keep-all;
-    }
-    .h1{
-      font-family: var(--display);
-      font-weight:700;
-      font-size: clamp(40px, 7.8vw, 92px);
-      line-height: 0.98;
-      letter-spacing: -0.04em;
-      text-transform:uppercase;
-      margin:0 0 14px 0;
-      overflow: visible;
-    }
-    .lead{
-      max-width: var(--measure);
-      color: var(--muted);
-      font-size: var(--bodySize);
-      line-height: var(--bodyLH);
-      margin: 0 0 18px 0;
-    }
-    .brand-inline{ font-weight:600; color:var(--ivory); }
-
-    .cta-row{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top: 18px;
-    }
-    .btn{
-      appearance:none; border:none;
-      cursor:pointer;
-      text-decoration:none;
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 15px 26px;
-      border-radius:999px;
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.20em;
-      text-transform:uppercase;
-      user-select:none;
-      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
-      border: 1px solid var(--stroke);
-      color: rgba(244,240,230,.80);
-      background: rgba(244,240,230,.03);
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(45,103,255,.55);
-      box-shadow: 0 0 26px var(--royalGlow);
-    }
-    .btn.primary{
-      background: var(--royal);
-      border-color: rgba(45,103,255,.85);
-      color: #fff;
-    }
-    .btn.primary:hover{
-      background: var(--royal2);
-      border-color: rgba(45,103,255,.95);
-    }
-
-    /* Architecture layout: sticky index + timeline (distinct from Index accordions) */
-    .arch{
-      display:grid;
-      grid-template-columns: 260px 1fr;
-      gap: 26px;
-      align-items:start;
-      padding: 26px 0 60px;
-      border-top: 1px solid var(--stroke2);
-    }
-    .side{
-      position:sticky;
-      top: 92px;
-      border:1px solid rgba(244,240,230,.08);
-      border-radius: var(--radius2);
-      background: rgba(244,240,230,.02);
-      overflow:hidden;
-    }
-    .side-head{
-      padding: 16px 16px;
-      border-bottom:1px solid rgba(244,240,230,.08);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap: 10px;
-    }
-    .side-head .t{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color: rgba(244,240,230,.58);
-    }
-    .side-head .v{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color: rgba(45,103,255,.86);
-    }
-    .side a{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      padding: 14px 16px;
-      text-decoration:none;
-      color: rgba(244,240,230,.78);
-      border-top:1px solid rgba(244,240,230,.06);
-      transition: background .16s ease, color .16s ease;
-      font-family: var(--mono);
-      font-size:10px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-    }
-    .side a:hover{
-      background: rgba(45,103,255,.05);
-      color: rgba(244,240,230,.92);
-    }
-    .side a.active{
-      background: rgba(45,103,255,.08);
-      box-shadow: inset 2px 0 0 rgba(45,103,255,.95);
-      color: rgba(244,240,230,.92);
-    }
-    .side .num{
-      color: rgba(45,103,255,.90);
-    }
-
-    /* Timeline cards */
-    .track{
-      position:relative;
-      padding-left: 18px;
-    }
-    .track::before{
-      content:"";
-      position:absolute;
-      left: 6px;
-      top: 8px;
-      bottom: 8px;
-      width: 1px;
-      background: linear-gradient(to bottom, rgba(45,103,255,.65), rgba(45,103,255,0));
-      opacity:.55;
-    }
-
-    .step{
-      position:relative;
-      padding: 18px 18px 18px 18px;
-      border: 1px solid var(--stroke);
-      background: var(--panel);
+    header.site{
+      position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
-      border-radius: var(--radius2);
-      margin-bottom: 14px;
+      background: rgba(11,15,20,.72);
+      border-bottom:1px solid rgba(255,255,255,.06);
     }
-    .step::before{
-      content:"";
-      position:absolute;
-      left: -17px;
-      top: 18px;
-      width: 10px;
-      height: 10px;
-      border-radius:50%;
-      background: rgba(45,103,255,.95);
-      box-shadow: 0 0 18px rgba(45,103,255,.40);
+    .nav{
+      height: calc(var(--navH) + env(safe-area-inset-top));
+      padding-top: env(safe-area-inset-top);
+      display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
     }
-    .step-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap: 12px;
-      margin-bottom: 10px;
+
+    .logo{ display:flex; align-items:center; gap:10px; min-width:180px; font-weight:600; letter-spacing:-.01em; }
+    .logo .mark{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.02);
     }
-    .step-k{
-      font-family: var(--mono);
-      font-size:10px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color: rgba(45,103,255,.92);
+    .logo .dot{
+      width:8px; height:8px; border-radius:50%;
+      background: var(--accent2);
+      box-shadow: 0 0 0 4px rgba(201,164,74,.12);
+    }
+
+    nav.center{
+      display:flex; gap:18px; align-items:center; justify-content:center;
+      flex:1; font-size:14px; color: rgba(201,209,217,.92);
+    }
+    nav.center a{
+      padding:10px 10px; border-radius:999px; border:1px solid transparent;
+      transition: background .18s ease, border-color .18s ease, transform .18s ease;
+    }
+    nav.center a:hover{
+      background: rgba(255,255,255,.03);
+      border-color: rgba(255,255,255,.08);
+      transform: translateY(-1px);
+    }
+    nav.center a.active{
+      border-color: rgba(201,164,74,.28);
+      background: rgba(201,164,74,.06);
+    }
+
+    .actions{ display:flex; align-items:center; gap:10px; min-width:220px; justify-content:flex-end; }
+    .btn{
+      height:48px; padding:0 18px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      color: rgba(201,209,217,.98);
+      display:inline-flex; align-items:center; justify-content:center;
+      font-size:14px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
       white-space:nowrap;
     }
-    .step-h{
-      font-family: var(--display);
-      font-weight:700;
-      font-size: 18px;
-      letter-spacing: -.01em;
-      text-transform:uppercase;
-      color: rgba(244,240,230,.92);
-      margin:0;
-      line-height:1.2;
-      flex:1;
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.35); background: rgba(255,255,255,.04); }
+    .btn.primary{
+      border-color: rgba(201,164,74,.50);
+      background: rgba(201,164,74,.10);
+      color: rgba(245,242,234,.96);
     }
-    .step p{
-      margin:0;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.72;
-      max-width: 70ch;
-    }
+    .btn.primary:hover{ background: rgba(201,164,74,.16); }
+    .btn .arr{ display:inline-block; margin-left:10px; transition: transform .16s ease; }
+    .btn:hover .arr{ transform: translateX(3px); }
 
-    /* “Constraints bar” (distinct module vs cards/accordions) */
-    .constraints{
-      margin-top: 22px;
-      border: 1px solid rgba(244,240,230,.10);
-      border-radius: 22px;
-      overflow:hidden;
-      background: rgba(244,240,230,.02);
-    }
-    .constraints .hd{
-      padding: 14px 16px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      border-bottom: 1px solid rgba(244,240,230,.08);
-    }
-    .constraints .hd .l{
-      font-family: var(--mono);
-      font-size:10px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color: rgba(244,240,230,.58);
-    }
-    .constraints .hd .r{
-      font-family: var(--mono);
-      font-size:10px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color: rgba(45,103,255,.86);
-    }
-    .constraints .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: rgba(244,240,230,.08);
-    }
-    .constraints .cell{
-      background: rgba(11,18,32,.44);
-      padding: 14px 16px;
-    }
-    .constraints .cell .t{
-      font-family: var(--mono);
-      font-size:10px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color: rgba(244,240,230,.76);
-      margin-bottom: 6px;
-    }
-    .constraints .cell .d{
-      color: rgba(244,240,230,.56);
-      font-size: 14px;
-      line-height: 1.62;
-      margin:0;
-    }
-
-    /* Footer */
-    .footer{
-      padding: 42px 0 90px;
-      border-top: 1px solid var(--stroke2);
-      color: rgba(244,240,230,.60);
-    }
-    .footer-top{
-      display:flex;
-      justify-content:space-between;
-      gap:16px;
-      flex-wrap:wrap;
-      align-items:center;
-      padding-top: 18px;
-    }
-    .footer small{
-      font-family: var(--mono);
-      font-size:10px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-    }
-    .footer-links{
-      display:flex;
-      gap:18px;
-      flex-wrap:wrap;
-    }
-    .footer-links a{
-      color: rgba(244,240,230,.62);
-      text-decoration:none;
-      font-family: var(--mono);
-      font-size:10px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid transparent;
-      transition: color .16s ease, background .16s ease, border-color .16s ease;
-    }
-    .footer-links a:hover{
-      color: rgba(244,240,230,.92);
-      background: rgba(244,240,230,.04);
-      border-color: rgba(244,240,230,.10);
-    }
-    .footer-boundary{
-      margin-top: 16px;
-      max-width: 92ch;
-      font-size: 14px;
-      line-height: 1.65;
-      color: rgba(244,240,230,.52);
-    }
-
-    /* Bottom bar */
-    #bottombar{
-      position:fixed; bottom:0; left:0; right:0; z-index:50;
-      height:56px;
-      background: rgba(6,10,19,.88);
-      backdrop-filter: blur(12px);
-      border-top: 1px solid var(--stroke);
-      display:flex;
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-    }
-    #bottombar a{
-      flex:1; display:flex; align-items:center; justify-content:center;
-      border-right: 1px solid var(--stroke);
-      transition: background .16s ease, color .16s ease;
-      color: rgba(244,240,230,.70);
-      text-decoration:none;
-    }
-    #bottombar a:last-child{ border-right:none; }
-    #bottombar a:hover{ background: rgba(244,240,230,.05); color: rgba(244,240,230,.92); }
-    #bottombar a.active{
-      color: rgba(244,240,230,.92);
-      box-shadow: inset 0 2px 0 rgba(45,103,255,.95);
-    }
-
-    /* Site Directory Modal (same as index) */
-    .modal{
-      position:fixed; inset:0; z-index:200;
+    .hamburger{
       display:none;
-      background: rgba(6,10,19,.62);
-      backdrop-filter: blur(14px);
-      padding: 92px 18px 80px;
+      height:48px; width:48px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      color: rgba(201,209,217,.95);
+      align-items:center; justify-content:center;
     }
-    .modal.open{ display:block; }
-    .modal-card{
-      max-width: 860px;
-      margin: 0 auto;
-      border: 1px solid rgba(45,103,255,.40);
-      border-radius: 22px;
-      background: rgba(11,18,32,.55);
-      box-shadow: 0 30px 80px rgba(0,0,0,.45);
+    @media (max-width: 980px){
+      nav.center{ display:none; }
+      .actions .btn.secondary{ display:none; }
+      .hamburger{ display:inline-flex; }
+    }
+
+    .drawer{
+      position:fixed; inset:0; z-index:80;
+      display:none;
+      background: rgba(11,15,20,.72);
+      backdrop-filter: blur(10px);
+      padding: calc(env(safe-area-inset-top) + 12px) 18px 18px;
+    }
+    .drawer.open{ display:block; }
+    .drawerCard{
+      max-width: 680px; margin: 0 auto;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow2);
       overflow:hidden;
     }
-    .modal-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding: 18px 18px;
-      border-bottom: 1px solid rgba(244,240,230,.08);
-    }
-    .modal-head .title{
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(45,103,255,.90);
-    }
-    .modal-close{
-      cursor:pointer;
-      border-radius:999px;
-      padding: 10px 14px;
-      border:1px solid rgba(244,240,230,.10);
-      background: rgba(244,240,230,.03);
-      color: rgba(244,240,230,.82);
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
-    .modal-close:hover{
-      border-color: rgba(45,103,255,.55);
-      box-shadow: 0 0 20px rgba(45,103,255,.22);
-    }
-    .modal-body{
-      padding: 16px 18px 18px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-    .dir{
-      border: 1px solid rgba(244,240,230,.08);
-      border-radius: 18px;
+    .drawerHead{
+      display:flex; align-items:center; justify-content:space-between;
       padding: 14px 14px;
-      background: rgba(244,240,230,.02);
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
-    .dir .hdr{
+    .drawerHead .t{
       font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: .22em;
+      font-size:12px; letter-spacing:.18em;
+      text-transform:uppercase; color: rgba(201,209,217,.82);
+    }
+    .close{
+      height:44px; padding:0 14px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      color: rgba(201,209,217,.92);
+    }
+    .drawerLinks{ display:grid; grid-template-columns: 1fr; padding: 10px; gap: 8px; }
+    .drawerLinks a{
+      padding: 14px 14px; border-radius: 14px;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.02);
+      font-size: 15px;
+      transition: transform .18s ease, border-color .18s ease;
+    }
+    .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); }
+
+    /* Typography */
+    .read{ max-width: var(--readW); }
+    p{ margin: 0 0 14px 0; line-height: var(--lh); }
+    .muted{ color: rgba(201,209,217,.78); }
+
+    main{ padding: var(--s6) 0 var(--s7); }
+    section{ padding: var(--s7) 0; border-top:1px solid rgba(255,255,255,.06); }
+    section:first-of-type{ border-top:none; padding-top: var(--s6); }
+
+    .eyebrow{
+      font-family: var(--mono);
+      font-size: 12px; letter-spacing: .18em;
       text-transform: uppercase;
-      color: rgba(244,240,230,.52);
+      color: rgba(201,164,74,.92);
+      margin-bottom: 12px;
+    }
+    h1{ font-size: 46px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 14px 0; font-weight: 600; }
+    h2{ font-size: 30px; line-height: 1.20; letter-spacing: -0.01em; margin: 0 0 12px 0; font-weight: 600; }
+    h3{ font-size: 20px; line-height: 1.25; margin: 0 0 10px 0; font-weight: 600; }
+    @media (max-width: 640px){
+      h1{ font-size: 32px; }
+      h2{ font-size: 24px; }
+      h3{ font-size: 19px; }
+    }
+
+    /* Dominant module: component catalog cards (this page's “middle”) */
+    .catalog{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+    @media (max-width: 980px){ .catalog{ grid-template-columns: 1fr; } }
+    .comp{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--r-lg);
+      padding: 18px 18px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      cursor:pointer;
+    }
+    .comp:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); background: rgba(255,255,255,.03); }
+    .tag{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(201,164,74,.90);
       margin-bottom: 10px;
     }
-    .dir a{
-      display:block;
-      padding: 12px 12px;
-      border-radius: 14px;
-      text-decoration:none;
-      color: rgba(244,240,230,.82);
+    .desc{ color: rgba(201,209,217,.82); font-size: 15px; line-height: 1.6; margin:0; }
+    .mini{
+      margin-top: 12px;
+      border-top:1px solid rgba(255,255,255,.08);
+      padding-top: 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.6;
+      color: rgba(201,209,217,.74);
+      display:none;
+    }
+    .comp.open .mini{ display:block; }
+
+    /* Interface tiles (no long code blocks) */
+    .tiles{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    @media (max-width: 980px){ .tiles{ grid-template-columns: 1fr; } }
+    .tile{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--r-lg);
+      padding: 18px 18px;
+    }
+    .tile .hdr{
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      gap:12px;
+      margin-bottom: 10px;
+    }
+    .tile .hdr b{ color: rgba(245,242,234,.92); font-weight:600; }
+    .tile .hdr span{
       font-family: var(--mono);
       font-size: 11px;
-      letter-spacing: .18em;
+      letter-spacing:.14em;
       text-transform: uppercase;
-      border: 1px solid transparent;
-      transition: background .16s ease, border-color .16s ease, color .16s ease;
+      color: rgba(201,164,74,.86);
+      white-space:nowrap;
     }
-    .dir a:hover{
-      background: rgba(45,103,255,.06);
-      border-color: rgba(45,103,255,.35);
-      color: rgba(244,240,230,.92);
+    .snippet{
+      margin-top: 10px;
+      border:1px solid rgba(201,164,74,.22);
+      background: rgba(11,15,20,.62);
+      border-radius: var(--r-lg);
+      padding: 12px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.65;
+      color: rgba(201,209,217,.86);
+      overflow:auto;
+      white-space: pre;
     }
 
-    /* Responsive */
-    @media (max-width: 980px){
-      .arch{ grid-template-columns: 1fr; }
-      .side{ position:relative; top:auto; }
-      .track{ padding-left: 0; }
-      .track::before{ display:none; }
-      .step::before{ display:none; }
+    /* Schema “I/O” diagram (simple, readable) */
+    .io{
+      margin-top: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--r-lg);
+      padding: 18px 18px;
     }
-    @media (max-width: 640px){
-      :root{ --bodySize: 17px; --measure: 44ch; }
-      .nav-inner{ padding:0 18px; }
-      .wrap{ padding: 0 18px; }
-      .btn{ width:100%; }
-      .cta-row{ flex-direction:column; }
-      .constraints .grid{ grid-template-columns: 1fr; }
+    .ioGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 10px;
+    }
+    @media (max-width: 980px){ .ioGrid{ grid-template-columns: 1fr; } }
+    .ioBox{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(11,15,20,.55);
+      border-radius: var(--r-lg);
+      padding: 14px 14px;
+    }
+    .ioBox .k{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing:.16em;
+      text-transform: uppercase;
+      color: rgba(201,164,74,.90);
+      margin-bottom: 8px;
+    }
+    .ioBox ul{ margin: 0; padding: 0 0 0 18px; }
+    .ioBox li{ margin: 8px 0; color: rgba(201,209,217,.82); line-height: 1.55; }
+
+    /* Footer */
+    footer{ border-top:1px solid rgba(255,255,255,.06); padding: var(--s7) 0 var(--s6); }
+    .footGrid{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    @media (max-width: 980px){ .footGrid{ grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px){ .footGrid{ grid-template-columns: 1fr; } }
+    .footCol{
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--r-lg);
+      padding: 18px 18px;
+    }
+    .footCol .t{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(201,164,74,.86);
+      margin-bottom: 10px;
+    }
+    .footCol a{
+      display:block;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border:1px solid transparent;
+      color: rgba(201,209,217,.84);
+      transition: background .18s ease, border-color .18s ease;
+    }
+    .footCol a:hover{ background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.06); }
+    .footBottom{
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(201,209,217,.62);
+      padding-top: 18px;
+      border-top:1px solid rgba(255,255,255,.06);
+    }
+
+    /* Motion: Fade-up reveal only */
+    .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.on{ opacity:1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto;}
+      .reveal{ opacity:1; transform:none; transition:none; }
+      nav.center a, .btn, .comp, .drawerLinks a{ transition:none; }
     }
   </style>
 </head>
 
 <body>
-  <div id="stage" aria-hidden="true"></div>
-  <canvas id="net" aria-hidden="true"></canvas>
-  <div id="grain" aria-hidden="true"></div>
-  <div id="cursor" aria-hidden="true"></div>
+  <div class="bg" aria-hidden="true"></div>
+  <canvas id="neurons" aria-hidden="true"></canvas>
 
-  <!-- TOP NAV -->
-  <nav id="topnav" aria-label="Primary navigation">
-    <div class="nav-inner">
-      <a href="index.html" class="brand" aria-label="CEYO Home">
-        CEYO <span class="dot" aria-hidden="true"></span>
+  <header class="site">
+    <div class="wrap nav">
+      <a class="logo" href="index.html" aria-label="CEYO Home">
+        <span class="mark"><span class="dot" aria-hidden="true"></span><span>CEYO</span></span>
       </a>
 
-      <div class="nav-right">
-        <a class="nav-link" href="index.html">INDEX</a>
-        <a class="nav-link" href="integration.html">INTEGRATION</a>
-        <a class="nav-link" href="trust.html">TRUST</a>
-        <a class="nav-link" href="governance.html">GOV</a>
-        <a class="nav-link menu-btn" href="#menu" id="openMenu">MENU</a>
+      <nav class="center" aria-label="Primary navigation">
+        <a href="index.html">Overview</a>
+        <a href="how.html">How It Works</a>
+        <a class="active" href="platform.html">Platform</a>
+        <a href="trust.html">Trust</a>
+        <a href="compliance.html">Compliance</a>
+        <a href="integrations.html">Integrations</a>
+        <a href="resources.html">Resources</a>
+      </nav>
+
+      <div class="actions" aria-label="Actions">
+        <a class="btn secondary" href="resources.html#sample-artifact">View sample artifact<span class="arr">→</span></a>
+        <a class="btn primary" href="contact.html">Request walkthrough<span class="arr">→</span></a>
+        <button class="hamburger" id="openMenu" aria-label="Open menu" type="button">☰</button>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <main class="wrap">
-    <section class="page" aria-label="Platform and architecture">
-      <div class="kicker">PLATFORM & ARCHITECTURE</div>
-      <h1 class="h1">Decoupled verification<br/>architecture.</h1>
-      <p class="lead">
-        <span class="brand-inline">CEYO</span> operates beside inference systems as an evidentiary substrate.
-        It does not modify model weights or decision logic. It generates deterministic, policy-scoped artifacts — canonicalized and sealed for later institutional verification under constrained disclosure.
-      </p>
-
-      <div class="cta-row" role="group" aria-label="Page actions">
-        <a class="btn primary" href="#mechanics">VIEW MECHANICS CHAIN</a>
-        <a class="btn" href="contact.html">REQUEST CONTROLLED REVIEW</a>
+  <!-- Mobile drawer -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawerCard" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="drawerHead">
+        <div class="t">Menu</div>
+        <button class="close" id="closeMenu" type="button">Close</button>
       </div>
-    </section>
-
-    <section id="mechanics" class="arch" aria-label="Mechanics chain">
-      <!-- Sticky side index -->
-      <aside class="side" aria-label="Mechanics chain index">
-        <div class="side-head">
-          <div class="t">MECHANICS CHAIN</div>
-          <div class="v">V2026.02.19</div>
-        </div>
-        <a href="#m1" class="active"><span><span class="num">01</span> · ATTACH</span><span>→</span></a>
-        <a href="#m2"><span><span class="num">02</span> · CAPTURE</span><span>→</span></a>
-        <a href="#m3"><span><span class="num">03</span> · CANONICALIZE</span><span>→</span></a>
-        <a href="#m4"><span><span class="num">04</span> · SEAL</span><span>→</span></a>
-        <a href="#m5"><span><span class="num">05</span> · DISCLOSE</span><span>→</span></a>
-        <a href="#m6"><span><span class="num">06</span> · VERIFY</span><span>→</span></a>
-      </aside>
-
-      <!-- Timeline content -->
-      <div class="track" aria-label="Mechanics chain details">
-        <article class="step" id="m1">
-          <div class="step-top">
-            <div class="step-k">01 / ATTACH</div>
-            <h3 class="step-h">Inference boundary attachment</h3>
-          </div>
-          <p>
-            Deploy as a sidecar, gateway, or wrapper at the inference boundary.
-            The inference engine remains unchanged. The evidentiary layer operates externally to preserve architectural neutrality.
-          </p>
-        </article>
-
-        <article class="step" id="m2">
-          <div class="step-top">
-            <div class="step-k">02 / CAPTURE</div>
-            <h3 class="step-h">Policy-scoped fields only</h3>
-          </div>
-          <p>
-            Capture is explicitly defined before operation.
-            Policy determines inclusion, exclusion, and masking rules. Fields not declared in scope are dropped prior to artifact generation.
-          </p>
-        </article>
-
-        <article class="step" id="m3">
-          <div class="step-top">
-            <div class="step-k">03 / CANONICALIZE</div>
-            <h3 class="step-h">Deterministic canonicalization</h3>
-          </div>
-          <p>
-            Normalize captured context into a stable artifact schema. Apply RFC 8785 JSON Canonicalization (JCS) to produce stable bytes across environments.
-            Canonicalization occurs after policy-defined masking and exclusion.
-          </p>
-        </article>
-
-        <article class="step" id="m4">
-          <div class="step-top">
-            <div class="step-k">04 / SEAL</div>
-            <h3 class="step-h">Hash + signature</h3>
-          </div>
-          <p>
-            Compute a cryptographic digest over canonical bytes, then apply a digital signature.
-            Reference suite: SHA-256 + ECDSA P-256, with suite selection configurable to institutional requirements.
-            Private keys remain operator-controlled (HSM/KMS/TEE).
-          </p>
-        </article>
-
-        <article class="step" id="m5">
-          <div class="step-top">
-            <div class="step-k">05 / DISCLOSE</div>
-            <h3 class="step-h">Tiered disclosure model</h3>
-          </div>
-          <p>
-            Public / Redacted and Controlled Review tiers are defined before artifact generation to avoid post hoc ambiguity.
-            Verification can confirm integrity under declared scope without default exposure of proprietary model internals.
-          </p>
-        </article>
-
-        <article class="step" id="m6">
-          <div class="step-top">
-            <div class="step-k">06 / VERIFY</div>
-            <h3 class="step-h">Independent verification workflow</h3>
-          </div>
-          <p>
-            Recompute canonicalization and hash deterministically, validate the signature against the public key reference, and confirm policy identifier/version alignment.
-            Verification confirms integrity and provenance under declared policy scope — not correctness of model output.
-          </p>
-        </article>
-
-        <!-- Constraints bar (distinct module, not “three blocks”) -->
-        <section class="constraints" aria-label="Operational constraints">
-          <div class="hd">
-            <div class="l">OPERATIONAL CONSTRAINTS</div>
-            <div class="r">FAIL-OPEN BY DEFAULT</div>
-          </div>
-          <div class="grid">
-            <div class="cell">
-              <div class="t">FAIL-OPEN CONTINUITY</div>
-              <p class="d">Inference must proceed if sealing fails. Exceptions are logged and become reviewable integrity events.</p>
-            </div>
-            <div class="cell">
-              <div class="t">DETERMINISM PRESERVED</div>
-              <p class="d">Same input + same policy version yields identical canonical bytes and digest across instances and environments.</p>
-            </div>
-            <div class="cell">
-              <div class="t">NON-CUSTODIAL KEYS</div>
-              <p class="d">Private signing keys remain under operator control. CEYO does not store or transmit private signing material.</p>
-            </div>
-            <div class="cell">
-              <div class="t">SCOPE IS DECLARED</div>
-              <p class="d">Artifacts embed policy identifiers/versions to make capture boundaries explicit and reviewable.</p>
-            </div>
-          </div>
-        </section>
-
-        <div class="cta-row" style="margin-top:18px;">
-          <a class="btn" href="trust.html">TRUST & VERIFICATION</a>
-          <a class="btn" href="integration.html">OPERATIONAL INTEGRATION</a>
-          <a class="btn primary" href="contact.html">REQUEST CONTROLLED REVIEW</a>
-        </div>
-      </div>
-    </section>
-
-    <footer class="footer" aria-label="Footer">
-      <div class="footer-top">
-        <small>© <span id="year">2026</span> CEYO · ALL RIGHTS RESERVED</small>
-        <div class="footer-links" aria-label="Footer links">
-          <a href="terms.html">TERMS</a>
-          <a href="privacy.html">PRIVACY</a>
-          <a href="sitemap.html">SITEMAP</a>
-          <a href="contact.html">CONTACT</a>
-        </div>
-      </div>
-      <div class="footer-boundary">
-        Boundary: <span class="brand-inline">CEYO</span> produces records. It does not validate correctness, fairness, legality, or compliance outcomes. Verification confirms integrity and provenance under policy scope — not correctness of model output.
-      </div>
-    </footer>
-
-    <div style="height:72px" aria-hidden="true"></div>
-  </main>
-
-  <!-- Bottom bar -->
-  <nav id="bottombar" aria-label="Site index">
-    <a href="index.html">INDEX</a>
-    <a href="platform.html" class="active">ARCH</a>
-    <a href="integration.html">INTEGRATION</a>
-    <a href="trust.html">TRUST</a>
-    <a href="governance.html">GOV</a>
-    <a href="contact.html">CONTACT</a>
-  </nav>
-
-  <!-- Site Directory Modal -->
-  <div class="modal" id="menuModal" aria-hidden="true" aria-label="Site directory">
-    <div class="modal-card" role="dialog" aria-modal="true">
-      <div class="modal-head">
-        <div class="title">SITE DIRECTORY</div>
-        <button class="modal-close" id="closeMenu" type="button">CLOSE</button>
-      </div>
-
-      <div class="modal-body">
-        <div class="dir">
-          <div class="hdr">PRIMARY</div>
-          <a href="index.html">INDEX</a>
-          <a href="platform.html">PLATFORM & ARCHITECTURE</a>
-          <a href="integration.html">OPERATIONAL INTEGRATION</a>
-          <a href="trust.html">TRUST INFRASTRUCTURE</a>
-          <a href="governance.html">GOVERNANCE POSTURE</a>
-          <a href="compliance.html">COMPLIANCE CENTER</a>
-          <a href="documents.html">DOCUMENT SUITE</a>
-          <a href="roadmap.html">ROADMAP</a>
-          <a href="oversight.html">OVERSIGHT PORTAL</a>
-          <a href="resources.html">RESOURCES</a>
-          <a href="contact.html">CONTACT</a>
-          <a href="sitemap.html">SITEMAP</a>
-        </div>
-
-        <div class="dir">
-          <div class="hdr">POLICY & LEGAL</div>
-          <a href="founder.html">FOUNDER’S STATEMENT</a>
-          <a href="privacy.html">PRIVACY STATEMENT</a>
-          <a href="terms.html">TERMS OF USE</a>
-          <a href="ethical.html">ETHICAL USE POLICY</a>
-          <a href="pcl.html">PRIVACY & CIVIL LIBERTIES</a>
-          <a href="keys.html">KEY CUSTODY DECLARATION</a>
-          <a href="admissibility.html">LEGAL ADMISSIBILITY PRIMER</a>
-        </div>
-
-        <div class="dir">
-          <div class="hdr">SECURITY & TRANSPARENCY</div>
-          <a href="sbom.html">SBOM</a>
-          <a href="vdp.html">VULNERABILITY DISCLOSURE</a>
-          <a href="sustainability.html">SUSTAINABILITY</a>
-          <a href="accessibility.html">ACCESSIBILITY</a>
-          <a href="modern-slavery.html">MODERN SLAVERY STATEMENT</a>
-          <a href="incident-72h.html">72-HOUR INCIDENT PLAYBOOK</a>
-        </div>
+      <div class="drawerLinks">
+        <a href="index.html">Overview</a>
+        <a href="how.html">How It Works</a>
+        <a href="platform.html">Platform</a>
+        <a href="trust.html">Trust & Verification</a>
+        <a href="compliance.html">Compliance</a>
+        <a href="integrations.html">Integrations</a>
+        <a href="use-cases.html">Use Cases</a>
+        <a href="security.html">Security</a>
+        <a href="resources.html">Resources</a>
+        <a href="company.html">Company</a>
+        <a href="contact.html">Contact</a>
       </div>
     </div>
   </div>
 
+  <main class="wrap">
+    <!-- HERO -->
+    <section style="padding-top: var(--s6);">
+      <div class="read reveal">
+        <div class="eyebrow">Platform · Components · Interfaces</div>
+        <h1>Deploy a layer, not a rewrite.</h1>
+        <p class="muted">
+          CEYO is organized as a small set of deterministic components: policy scope, canonicalization, sealing, disclosure tiers, and verification.
+          Integration surfaces are designed to fit existing inference and governance stacks.
+        </p>
+        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn primary" href="#catalog">View components<span class="arr">→</span></a>
+          <a class="btn" href="#interfaces">Interface tiles<span class="arr">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPONENT CATALOG (dominant module) -->
+    <section id="catalog">
+      <div class="read reveal">
+        <h2>Core components</h2>
+        <p class="muted">Click any component for a compact “what it does” and “what it does not do.”</p>
+
+        <div class="catalog" aria-label="Component catalog">
+          <div class="comp reveal" data-comp="policy" role="button" tabindex="0" aria-label="Policy scope engine">
+            <div class="tag">Policy scope</div>
+            <h3>Capture policy engine</h3>
+            <p class="desc">Defines inclusion, exclusion, masking, and disclosure tiers before artifact generation.</p>
+            <div class="mini">
+              What it does: makes scope explicit and versioned.<br>
+              What it does not do: decide compliance outcomes.
+            </div>
+          </div>
+
+          <div class="comp reveal" data-comp="canon" role="button" tabindex="0" aria-label="Canonicalizer">
+            <div class="tag">Canonicalization</div>
+            <h3>Deterministic canonicalizer</h3>
+            <p class="desc">Normalizes captured fields into a stable schema and produces deterministic bytes (RFC 8785).</p>
+            <div class="mini">
+              What it does: enables reproducible hashing across environments.<br>
+              What it does not do: guarantee inference reproducibility.
+            </div>
+          </div>
+
+          <div class="comp reveal" data-comp="seal" role="button" tabindex="0" aria-label="Sealing module">
+            <div class="tag">Integrity sealing</div>
+            <h3>Hash + signature module</h3>
+            <p class="desc">Cryptographically seals canonical artifacts to make tampering detectable and provenance verifiable.</p>
+            <div class="mini">
+              What it does: tamper evidence + origin authenticity under declared custody.<br>
+              What it does not do: adjudicate decision correctness.
+            </div>
+          </div>
+
+          <div class="comp reveal" data-comp="tiers" role="button" tabindex="0" aria-label="Disclosure tiers">
+            <div class="tag">Disclosure</div>
+            <h3>Tiered disclosure controls</h3>
+            <p class="desc">Supports redacted and controlled-review views without post hoc improvisation.</p>
+            <div class="mini">
+              What it does: preserves trade-secret boundaries while enabling verification.<br>
+              What it does not do: expand scope beyond policy.
+            </div>
+          </div>
+
+          <div class="comp reveal" data-comp="verify" role="button" tabindex="0" aria-label="Verifier toolkit">
+            <div class="tag">Verification</div>
+            <h3>Verifier toolkit</h3>
+            <p class="desc">Independent verification flow: canonicalize → hash → signature → policy alignment.</p>
+            <div class="mini">
+              What it does: produces PASS / FAIL / POLICY_MISMATCH states.<br>
+              What it does not do: determine legal sufficiency.
+            </div>
+          </div>
+
+          <div class="comp reveal" data-comp="store" role="button" tabindex="0" aria-label="Artifact storage">
+            <div class="tag">Retention</div>
+            <h3>Artifact retention posture (optional)</h3>
+            <p class="desc">Storage and chain-of-custody handling are operator-defined; CEYO supports audit-ready structure.</p>
+            <div class="mini">
+              What it does: supports retrieval logging and review workflows.<br>
+              What it does not do: enforce institutional custody procedures.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERFACES -->
+    <section id="interfaces">
+      <div class="read reveal">
+        <h2>Interface tiles</h2>
+        <p class="muted">Small, readable surfaces. No long blocks.</p>
+
+        <div class="tiles" aria-label="Interface tiles">
+          <div class="tile reveal">
+            <div class="hdr">
+              <b>Sidecar / proxy attachment</b>
+              <span>Deployment</span>
+            </div>
+            <p class="muted">Mirror policy-scoped fields at the inference boundary without mutating request/response.</p>
+            <div class="snippet">mode: "sidecar"
+fail_open: true
+capture_policy: "POL-001@V1"</div>
+          </div>
+
+          <div class="tile reveal">
+            <div class="hdr">
+              <b>Artifact output</b>
+              <span>Record</span>
+            </div>
+            <p class="muted">Canonical payload + integrity fields + policy identifiers.</p>
+            <div class="snippet">artifact_id: "ART-…"
+policy_id: "POL-001"
+canonicalization: "RFC8785"
+digest: "…"
+signature: "…"</div>
+          </div>
+
+          <div class="tile reveal">
+            <div class="hdr">
+              <b>Verifier invocation</b>
+              <span>Verify</span>
+            </div>
+            <p class="muted">Independent validation produces deterministic outcomes.</p>
+            <div class="snippet">verify(artifact):
+  canonicalize()
+  recompute_hash()
+  validate_signature()
+  check_policy()</div>
+          </div>
+
+          <div class="tile reveal">
+            <div class="hdr">
+              <b>Disclosure tiers</b>
+              <span>Scope</span>
+            </div>
+            <p class="muted">Views are determined at generation time, not after-the-fact redaction.</p>
+            <div class="snippet">tier: "public_redacted"
+tier: "controlled_review"
+masking_rules: ["…"]</div>
+          </div>
+        </div>
+
+        <div class="io reveal" aria-label="Inputs and outputs">
+          <h3>Inputs and outputs</h3>
+          <p class="muted">A simple mental model for what CEYO sees and what it produces.</p>
+
+          <div class="ioGrid">
+            <div class="ioBox">
+              <div class="k">Inputs</div>
+              <ul>
+                <li>Inference request/response context (policy-scoped fields only)</li>
+                <li>Policy ID, version, and masking rules</li>
+                <li>Operator key custody environment (KMS/HSM/TEE reference)</li>
+              </ul>
+            </div>
+            <div class="ioBox">
+              <div class="k">Outputs</div>
+              <ul>
+                <li>Canonical artifact payload (deterministic representation)</li>
+                <li>Hash digest + signature for integrity and provenance</li>
+                <li>Verification states: PASS / FAIL / POLICY_MISMATCH</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn primary" href="trust.html">Trust & verification model<span class="arr">→</span></a>
+            <a class="btn" href="integrations.html">Integration patterns<span class="arr">→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+      <div class="footGrid reveal">
+        <div class="footCol">
+          <div class="t">Product</div>
+          <a href="index.html">Overview</a>
+          <a href="how.html">How It Works</a>
+          <a href="platform.html">Platform</a>
+          <a href="integrations.html">Integrations</a>
+        </div>
+        <div class="footCol">
+          <div class="t">Trust</div>
+          <a href="trust.html">Trust Model</a>
+          <a href="security.html">Security</a>
+          <a href="trust.html#verification-spec">Verification Spec</a>
+          <a href="resources.html#trust-center">Trust Center</a>
+        </div>
+        <div class="footCol">
+          <div class="t">Resources</div>
+          <a href="resources.html">Library</a>
+          <a href="resources.html#sample-artifact">Sample Artifacts</a>
+          <a href="resources.html#glossary">Glossary</a>
+          <a href="resources.html#faq">FAQs</a>
+        </div>
+        <div class="footCol">
+          <div class="t">Legal</div>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="vdp.html">Security Disclosure</a>
+          <a href="ethical.html">Responsible Use</a>
+        </div>
+      </div>
+
+      <div class="footBottom reveal">
+        <div>© <span id="year"></span> CEYO. All rights reserved.</div>
+        <div><a href="vdp.html">Vulnerability Disclosure</a></div>
+      </div>
+    </footer>
+  </main>
+
   <script>
-    /* Year */
-    document.getElementById("year").textContent = new Date().getFullYear();
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    /* Top nav scroll */
-    const topnav = document.getElementById('topnav');
-    window.addEventListener('scroll', () => {
-      topnav.classList.toggle('scrolled', window.scrollY > 18);
-    }, {passive:true});
-
-    /* Cursor (desktop only) */
-    const cursor = document.getElementById('cursor');
-    if (window.matchMedia("(pointer: fine)").matches){
-      document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + "px";
-        cursor.style.top  = e.clientY + "px";
-      }, {passive:true});
-      document.querySelectorAll('a,button,.step,.side a,.btn').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('big'), {passive:true});
-        el.addEventListener('mouseleave', () => cursor.classList.remove('big'), {passive:true});
-      });
-    }
-
-    /* Menu modal */
-    const menuModal = document.getElementById('menuModal');
-    const openMenu  = document.getElementById('openMenu');
+    // Mobile menu
+    const drawer = document.getElementById('drawer');
+    const openMenu = document.getElementById('openMenu');
     const closeMenu = document.getElementById('closeMenu');
-    function openModal(){ menuModal.classList.add('open'); menuModal.setAttribute('aria-hidden','false'); }
-    function closeModal(){ menuModal.classList.remove('open'); menuModal.setAttribute('aria-hidden','true'); }
-    openMenu.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
-    closeMenu.addEventListener('click', closeModal);
-    menuModal.addEventListener('click', (e) => { if (e.target === menuModal) closeModal(); });
-    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuModal.classList.contains('open')) closeModal(); });
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+    if(openMenu) openMenu.addEventListener('click', openDrawer);
+    if(closeMenu) closeMenu.addEventListener('click', closeDrawer);
+    drawer.addEventListener('click', (e)=>{ if(e.target===drawer) closeDrawer(); });
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
 
-    /* Sticky index active state */
-    const sideLinks = Array.from(document.querySelectorAll('.side a'));
-    const sections = sideLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting){
-          const id = "#" + entry.target.id;
-          sideLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
-        }
-      });
-    }, { rootMargin: "-35% 0px -55% 0px", threshold: 0.01 });
-
-    sections.forEach(s => io.observe(s));
-
-    /* Lightweight network background (2D canvas) — slightly calmer for reading */
-    const canvas = document.getElementById('net');
-    const ctx = canvas.getContext('2d', { alpha:true });
-
-    let DPR=1;
-    function resize(){
-      DPR = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width  = Math.floor(window.innerWidth * DPR);
-      canvas.height = Math.floor(window.innerHeight * DPR);
-      canvas.style.width  = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
-      ctx.setTransform(DPR,0,0,DPR,0,0);
+    // Reveal
+    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealEls = Array.from(document.querySelectorAll('.reveal'));
+    if(!prefersReduce){
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('on'); });
+      }, {threshold: 0.12});
+      revealEls.forEach(el=>io.observe(el));
+    } else {
+      revealEls.forEach(el=>el.classList.add('on'));
     }
-    window.addEventListener('resize', resize, {passive:true});
-    resize();
 
-    const NODE_COUNT = 70;
-    const MAX_DIST = 150;
-    const nodes = Array.from({length:NODE_COUNT}, () => ({
-      x: Math.random()*window.innerWidth,
-      y: Math.random()*window.innerHeight,
-      vx: (Math.random()-0.5)*0.28,
-      vy: (Math.random()-0.5)*0.28
-    }));
+    // Component open/close
+    document.querySelectorAll('.comp').forEach(el=>{
+      function toggle(){ el.classList.toggle('open'); }
+      el.addEventListener('click', toggle);
+      el.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggle(); }});
+    });
 
-    function step(){
-      ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+    /* Neuron/atom background (steady, no burst here) */
+    (function(){
+      const c = document.getElementById('neurons');
+      const ctx = c.getContext('2d', {alpha:true});
+      let w=0,h=0,dpr=1;
 
-      const vg = ctx.createRadialGradient(
-        window.innerWidth*0.55, window.innerHeight*0.30, 40,
-        window.innerWidth*0.5, window.innerHeight*0.5, Math.max(window.innerWidth,window.innerHeight)*0.78
-      );
-      vg.addColorStop(0,'rgba(0,0,0,0.00)');
-      vg.addColorStop(1,'rgba(0,0,0,0.22)');
-      ctx.fillStyle = vg;
-      ctx.fillRect(0,0,window.innerWidth,window.innerHeight);
+      function resize(){
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth; h = window.innerHeight;
+        c.width = Math.floor(w*dpr);
+        c.height = Math.floor(h*dpr);
+        c.style.width = w+'px';
+        c.style.height = h+'px';
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+      }
+      resize();
+      window.addEventListener('resize', resize, {passive:true});
 
-      for (const n of nodes){
-        n.x += n.vx; n.y += n.vy;
-        if (n.x < -20 || n.x > window.innerWidth+20) n.vx *= -1;
-        if (n.y < -20 || n.y > window.innerHeight+20) n.vy *= -1;
+      const N = 170;
+      const pad = 40;
+      const nodes = [];
+      const dirs = [];
+      const rnd = (a,b)=> a + Math.random()*(b-a);
+
+      for(let i=0;i<N;i++){
+        nodes.push({ x:rnd(-pad,w+pad), y:rnd(-pad,h+pad), vx:rnd(-0.15,0.15), vy:rnd(-0.11,0.11), s:rnd(1.0,2.0) });
+        dirs.push({ ang: Math.random()*Math.PI*2, rad: Math.sqrt(Math.random()) });
       }
 
-      for (let i=0;i<nodes.length;i++){
-        for (let j=i+1;j<nodes.length;j++){
-          const a = nodes[i], b = nodes[j];
-          const dx = a.x-b.x, dy = a.y-b.y;
-          const d = Math.sqrt(dx*dx+dy*dy);
-          if (d < MAX_DIST){
-            const alpha = (1 - d/MAX_DIST) * 0.18;
-            ctx.strokeStyle = `rgba(45,103,255,${alpha})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+      let mx=0.5,my=0.5;
+      if(window.matchMedia("(pointer:fine)").matches){
+        window.addEventListener('mousemove', (e)=>{ mx=e.clientX/Math.max(1,w); my=e.clientY/Math.max(1,h); }, {passive:true});
+      }
+
+      function convergeAmount(){
+        const docH = Math.max(1, document.body.scrollHeight - window.innerHeight);
+        const p = Math.max(0, Math.min(1, window.scrollY / docH));
+        return Math.min(1, 0.25 + p*0.55);
+      }
+
+      function draw(){
+        ctx.clearRect(0,0,w,h);
+
+        const vg = ctx.createRadialGradient(w*0.55, h*0.28, 40, w*0.5, h*0.5, Math.max(w,h)*0.9);
+        vg.addColorStop(0,'rgba(0,0,0,0.00)');
+        vg.addColorStop(1,'rgba(0,0,0,0.28)');
+        ctx.fillStyle = vg;
+        ctx.fillRect(0,0,w,h);
+
+        const px = (mx-0.5)*16, py = (my-0.5)*10;
+        const cx = w*0.54 + px*0.35, cy = h*0.30 + py*0.35;
+
+        const conv = prefersReduce ? 0.35 : convergeAmount();
+        const baseR = Math.min(w,h)*0.18;
+        const orbitR = baseR*(0.92 - conv*0.08);
+
+        ctx.save();
+        ctx.globalAlpha = Math.min(0.42, 0.14 + conv*0.34);
+        ctx.strokeStyle = 'rgba(201,164,74,0.45)';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.arc(cx, cy, orbitR*0.38, 0, Math.PI*2); ctx.stroke();
+        ctx.globalAlpha *= 0.72;
+        ctx.strokeStyle = 'rgba(201,164,74,0.18)';
+        ctx.beginPath(); ctx.arc(cx, cy, orbitR*0.78, 0, Math.PI*2); ctx.stroke();
+        ctx.restore();
+
+        for(let i=0;i<N;i++){
+          const p = nodes[i];
+          p.x += p.vx*(1 - 0.6*conv);
+          p.y += p.vy*(1 - 0.6*conv);
+          if(p.x < -pad) p.x = w+pad;
+          if(p.x > w+pad) p.x = -pad;
+          if(p.y < -pad) p.y = h+pad;
+          if(p.y > h+pad) p.y = -pad;
+
+          if(conv > 0.001){
+            const d = dirs[i];
+            const ringR = orbitR*(0.62 + d.rad*0.48);
+            const t = performance.now()*0.00030;
+            const ang = d.ang + t*(0.18 + (i%7)*0.03);
+            const tx = cx + Math.cos(ang)*ringR;
+            const ty = cy + Math.sin(ang)*ringR;
+            p.x += (tx - p.x)*(0.010 + 0.032*conv);
+            p.y += (ty - p.y)*(0.010 + 0.032*conv);
           }
         }
-      }
 
-      for (const n of nodes){
-        ctx.fillStyle = 'rgba(45,103,255,0.68)';
-        ctx.fillRect(n.x, n.y, 2, 2);
-      }
+        const maxDist = 155;
+        const maxD2 = maxDist*maxDist;
+        const lineAlphaBase = 0.05 + conv*0.08;
+        const pointAlpha = 0.38 + conv*0.25;
 
-      requestAnimationFrame(step);
-    }
-    step();
+        for(let i=0;i<N;i++){
+          const a = nodes[i];
+          for(let j=i+1;j<N;j++){
+            const b = nodes[j];
+            const dx=a.x-b.x, dy=a.y-b.y;
+            const d2=dx*dx+dy*dy;
+            if(d2 < maxD2){
+              const t = 1 - (d2/maxD2);
+              const alpha = Math.min(0.18, lineAlphaBase*t);
+              ctx.strokeStyle = `rgba(201,164,74,${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(a.x,a.y);
+              ctx.lineTo(b.x,b.y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        for(let i=0;i<N;i++){
+          const p = nodes[i];
+          ctx.fillStyle = `rgba(201,164,74,${pointAlpha})`;
+          ctx.beginPath();
+          ctx.arc(p.x,p.y,p.s,0,Math.PI*2);
+          ctx.fill();
+        }
+
+        if(!prefersReduce) requestAnimationFrame(draw);
+      }
+      draw();
+    })();
   </script>
 </body>
 </html>
