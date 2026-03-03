@@ -16,7 +16,6 @@
       --ink:#0B0F14;
       --paper:#F5F2EA;
       --textOnInk:#C9D1D9;
-      --lineOnInk:rgba(255,255,255,.10);
 
       --accent:#3A320C;
       --accent2:#C9A44A;
@@ -40,7 +39,12 @@
     }
 
     *{box-sizing:border-box}
-    html{background:var(--ink);scroll-behavior:smooth}
+    html{
+      background:var(--ink);
+      scroll-behavior:smooth;
+      /* Ensures anchor jumps never land behind the header */
+      scroll-padding-top: calc(var(--navH) + 24px);
+    }
     body{
       margin:0;
       font-family:var(--ui);
@@ -97,35 +101,9 @@
       box-shadow: 0 0 0 4px rgba(201,164,74,.12);
     }
 
-    nav.center{
-      display:flex; gap:18px; align-items:center; justify-content:center;
-      flex:1;
-      font-size:14px;
-      color: rgba(201,209,217,.92);
-      min-width:0;
-      flex-wrap:nowrap;
-      overflow:hidden;
-      white-space:nowrap;
-    }
-    nav.center a{
-      padding:10px 10px;
-      border-radius:999px;
-      border:1px solid transparent;
-      transition: background .18s ease, border-color .18s ease, transform .18s ease;
-      white-space:nowrap;
-      flex:0 0 auto;
-    }
-    nav.center a:hover{
-      background: rgba(255,255,255,.03);
-      border-color: rgba(255,255,255,.08);
-      transform: translateY(-1px);
-    }
-    nav.center a.active{
-      border-color: rgba(201,164,74,.28);
-      background: rgba(201,164,74,.06);
-    }
-
+    /* Replace link-heavy top nav with a single Menu button (prevents overlap forever) */
     .actions{ display:flex; align-items:center; gap:10px; justify-content:flex-end; flex:0 0 auto; }
+
     .btn{
       height:48px; padding:0 18px; border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
@@ -146,21 +124,28 @@
     .btn .arr{ display:inline-block; margin-left:10px; transition: transform .16s ease; }
     .btn:hover .arr{ transform: translateX(3px); }
 
-    .hamburger{
-      display:none;
-      height:48px; width:48px;
+    /* Always-available menu button */
+    .menuBtn{
+      height:48px;
+      padding:0 16px;
       border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
       color: rgba(201,209,217,.95);
-      align-items:center; justify-content:center;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      cursor:pointer;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      white-space:nowrap;
     }
-
-    /* Earlier cutoff prevents any overlap on laptops */
-    @media (max-width: 1250px){
-      nav.center{ display:none; }
-      .actions .btn.secondary{ display:none; }
-      .hamburger{ display:inline-flex; }
+    .menuBtn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.35); background: rgba(255,255,255,.04); }
+    .menuBtn .m{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
     }
 
     .drawer{
@@ -198,6 +183,7 @@
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
       color: rgba(201,209,217,.92);
+      cursor:pointer;
     }
     .drawerLinks{
       display:grid;
@@ -214,14 +200,22 @@
       transition: transform .18s ease, border-color .18s ease;
     }
     .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); }
+    .drawerLinks a.active{
+      border-color: rgba(201,164,74,.35);
+      background: rgba(201,164,74,.10);
+    }
 
     .read{ max-width: var(--readW); }
     p{ margin: 0 0 14px 0; line-height: var(--lh); }
     .muted{ color: rgba(201,209,217,.78); }
 
-    main{ padding: var(--s6) 0 var(--s7); }
+    /* CRITICAL: prevents first content from hiding under sticky header */
+    main{
+      padding-top: calc(var(--navH) + var(--s4));
+      padding-bottom: var(--s7);
+    }
     section{ padding: var(--s7) 0; border-top:1px solid rgba(255,255,255,.06); }
-    section:first-of-type{ border-top:none; padding-top: var(--s6); }
+    section:first-of-type{ border-top:none; padding-top: 0; }
 
     .eyebrow{
       font-family: var(--mono);
@@ -255,7 +249,6 @@
     .chip b{ font-weight:600; color: rgba(245,242,234,.94); }
     .chip .k{ font-family:var(--mono); font-size: 11px; letter-spacing:.12em; text-transform:uppercase; margin-right:8px; color: rgba(201,164,74,.88); }
 
-    /* Summary strip (no heading) */
     .strip{
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
@@ -410,7 +403,7 @@
       html{scroll-behavior:auto;}
       .reveal{ opacity:1; transform:none; transition:none; }
       .draw .line{ animation:none; stroke-dashoffset:0; }
-      nav.center a, .btn, .card, .drawerLinks a{ transition:none; }
+      .btn, .card, .drawerLinks a, .menuBtn{ transition:none; }
       canvas#neurons{ display:none; }
     }
   </style>
@@ -426,19 +419,12 @@
         <span class="mark"><span class="dot" aria-hidden="true"></span><span>CEYO</span></span>
       </a>
 
-      <nav class="center" aria-label="Primary navigation">
-        <a class="active" href="index.html">Overview</a>
-        <a href="how.html">How It Works</a>
-        <a href="trust.html">Trust</a>
-        <a href="compliance.html">Compliance</a>
-        <a href="integrations.html">Integrations</a>
-        <a href="resources.html">Resources</a>
-      </nav>
-
       <div class="actions" aria-label="Actions">
         <a class="btn secondary" href="resources.html#sample-artifact">View sample artifact<span class="arr">→</span></a>
         <a class="btn primary" href="contact.html">Request walkthrough<span class="arr">→</span></a>
-        <button class="hamburger" id="openMenu" aria-label="Open menu" type="button">☰</button>
+        <button class="menuBtn" id="openMenu" type="button" aria-label="Open menu">
+          <span aria-hidden="true">☰</span><span class="m">Menu</span>
+        </button>
       </div>
     </div>
   </header>
@@ -450,7 +436,7 @@
         <button class="close" id="closeMenu" type="button">Close</button>
       </div>
       <div class="drawerLinks">
-        <a href="index.html">Overview</a>
+        <a class="active" href="index.html">Overview</a>
         <a href="how.html">How It Works</a>
         <a href="platform.html">Platform</a>
         <a href="trust.html">Trust & Verification</a>
@@ -466,7 +452,7 @@
   </div>
 
   <main class="wrap">
-    <section style="padding-top: var(--s6);">
+    <section>
       <div class="read reveal">
         <div class="eyebrow">Neutral audit layer · Evidentiary records · Independent verification</div>
         <h1>Neutral audit records for AI decisions.</h1>
@@ -487,7 +473,6 @@
       </div>
     </section>
 
-    <!-- Summary strip (no “Plain-language summary” heading) -->
     <section id="plain">
       <div class="read reveal">
         <div class="strip">
@@ -527,11 +512,10 @@
       </div>
     </section>
 
-    <!-- Reworded “Who it’s for” -->
     <section id="audience">
       <div class="read reveal">
-        <h2>Primary stakeholders</h2>
-        <p class="muted">Designed for formal review workflows: executive clarity first, with technical credibility preserved.</p>
+        <h2>Who CEYO serves</h2>
+        <p class="muted">Built for environments where decisions require reviewable records and independent integrity verification.</p>
 
         <div class="grid4" aria-label="Stakeholders">
           <div class="role">
@@ -551,7 +535,7 @@
           </div>
           <div class="role">
             <div class="icon">R</div>
-            <h3>Institutional reviewers</h3>
+            <h3>Institutions & reviewers</h3>
             <p class="muted">Independent verification under constrained disclosure, without default IP exposure.</p>
           </div>
         </div>
@@ -635,14 +619,14 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Mobile menu
+    // Menu
     const drawer = document.getElementById('drawer');
     const openMenu = document.getElementById('openMenu');
     const closeMenu = document.getElementById('closeMenu');
     function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
     function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-    if(openMenu) openMenu.addEventListener('click', openDrawer);
-    if(closeMenu) closeMenu.addEventListener('click', closeDrawer);
+    openMenu.addEventListener('click', openDrawer);
+    closeMenu.addEventListener('click', closeDrawer);
     drawer.addEventListener('click', (e)=>{ if(e.target===drawer) closeDrawer(); });
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
 
@@ -665,7 +649,7 @@
       document.getElementById('diagramBox').classList.add('draw');
     }
 
-    // Neuron field + atom core (kept as in your updated index; unchanged)
+    // Neuron field + atom core (unchanged)
     (function(){
       if (prefersReduce) return;
 
