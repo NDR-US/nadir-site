@@ -1,0 +1,1063 @@
+<!-- =========================
+FILE: how.html  (2) HOW IT WORKS
+Diagram-led narrative + Verify in 60 seconds
+Same shell, same tokens, same accents as index.html.
+Single-file (no external CSS/JS) for reliability.
+========================= -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>CEYO — How It Works</title>
+  <meta name="description" content="CEYO attaches beside inference systems to record policy-scoped context, canonicalize deterministically, and cryptographically seal artifacts for independent verification."/>
+  <meta name="theme-color" content="#0B0F14"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --ink:#0B0F14;
+      --paper:#F5F2EA;
+      --textOnInk:#C9D1D9;
+      --textOnPaper:#12161D;
+      --lineOnInk:rgba(255,255,255,.10);
+      --lineOnPaper:rgba(0,0,0,.10);
+
+      --accent:#3A320C;
+      --accent2:#C9A44A;
+
+      --maxW:1160px;
+      --readW:740px;
+
+      --r-sm:10px;
+      --r-md:14px;
+      --r-lg:18px;
+
+      --s1:8px;  --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px;
+
+      --body:18px;
+      --bodyMobile:16.5px;
+      --lh:1.65;
+
+      --shadow:0 10px 30px rgba(0,0,0,.25);
+      --shadow2:0 18px 60px rgba(0,0,0,.35);
+
+      --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --ui:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+
+      --navH:72px;
+    }
+
+    *{box-sizing:border-box}
+    html{background:var(--ink);scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:var(--ui);
+      color:var(--textOnInk);
+      background:var(--ink);
+      -webkit-text-size-adjust:100%;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+
+    /* Background (same family as index) */
+    .bg{
+      position:fixed; inset:0; pointer-events:none; z-index:0;
+      background:
+        radial-gradient(900px 520px at 40% 10%, rgba(58,50,12,.22), transparent 62%),
+        radial-gradient(820px 520px at 82% 34%, rgba(201,164,74,.10), transparent 64%),
+        linear-gradient(180deg, #0B0F14 0%, #0A0D12 40%, #0B0F14 100%);
+    }
+    canvas#neurons{
+      position:fixed; inset:0;
+      width:100%; height:100%;
+      z-index:0;
+      pointer-events:none;
+      opacity:.92;
+    }
+
+    .wrap{ position:relative; z-index:1; max-width:var(--maxW); margin:0 auto; padding:0 var(--s4); }
+    @media (max-width: 640px){ .wrap{ padding:0 18px; } }
+
+    header.site{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(11,15,20,.72);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav{
+      height: calc(var(--navH) + env(safe-area-inset-top));
+      padding-top: env(safe-area-inset-top);
+      display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
+    }
+
+    .logo{ display:flex; align-items:center; gap:10px; min-width:180px; font-weight:600; letter-spacing:-.01em; }
+    .logo .mark{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.02);
+    }
+    .logo .dot{
+      width:8px; height:8px; border-radius:50%;
+      background: var(--accent2);
+      box-shadow: 0 0 0 4px rgba(201,164,74,.12);
+    }
+
+    nav.center{
+      display:flex; gap:18px; align-items:center; justify-content:center;
+      flex:1; font-size:14px; color: rgba(201,209,217,.92);
+    }
+    nav.center a{
+      padding:10px 10px; border-radius:999px; border:1px solid transparent;
+      transition: background .18s ease, border-color .18s ease, transform .18s ease;
+    }
+    nav.center a:hover{
+      background: rgba(255,255,255,.03);
+      border-color: rgba(255,255,255,.08);
+      transform: translateY(-1px);
+    }
+    nav.center a.active{
+      border-color: rgba(201,164,74,.28);
+      background: rgba(201,164,74,.06);
+    }
+
+    .actions{ display:flex; align-items:center; gap:10px; min-width:220px; justify-content:flex-end; }
+    .btn{
+      height:48px; padding:0 18px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      color: rgba(201,209,217,.98);
+      display:inline-flex; align-items:center; justify-content:center;
+      font-size:14px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.35); background: rgba(255,255,255,.04); }
+    .btn.primary{
+      border-color: rgba(201,164,74,.50);
+      background: rgba(201,164,74,.10);
+      color: rgba(245,242,234,.96);
+    }
+    .btn.primary:hover{ background: rgba(201,164,74,.16); }
+    .btn .arr{ display:inline-block; margin-left:10px; transition: transform .16s ease; }
+    .btn:hover .arr{ transform: translateX(3px); }
+
+    .hamburger{
+      display:none;
+      height:48px; width:48px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      color: rgba(201,209,217,.95);
+      align-items:center; justify-content:center;
+    }
+    @media (max-width: 980px){
+      nav.center{ display:none; }
+      .actions .btn.secondary{ display:none; }
+      .hamburger{ display:inline-flex; }
+    }
+
+    .drawer{
+      position:fixed; inset:0; z-index:80;
+      display:none;
+      background: rgba(11,15,20,.72);
+      backdrop-filter: blur(10px);
+      padding: calc(env(safe-area-inset-top) + 12px) 18px 18px;
+    }
+    .drawer.open{ display:block; }
+    .drawerCard{
+      max-width: 680px; margin: 0 auto;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+    .drawerHead{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 14px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .drawerHead .t{
+      font-family: var(--mono);
+      font-size:12px; letter-spacing:.18em;
+      text-transform:uppercase; color: rgba(201,209,217,.82);
+    }
+    .close{
+      height:44px; padding:0 14px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      color: rgba(201,209,217,.92);
+    }
+    .drawerLinks{ display:grid; grid-template-columns: 1fr; padding: 10px; gap: 8px; }
+    .drawerLinks a{
+      padding: 14px 14px; border-radius: 14px;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.02);
+      font-size: 15px;
+      transition: transform .18s ease, border-color .18s ease;
+    }
+    .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); }
+
+    /* Typography */
+    .read{ max-width: var(--readW); }
+    p{ margin: 0 0 14px 0; line-height: var(--lh); }
+    .muted{ color: rgba(201,209,217,.78); }
+
+    main{ padding: var(--s6) 0 var(--s7); }
+    section{ padding: var(--s7) 0; border-top:1px solid rgba(255,255,255,.06); }
+    section:first-of-type{ border-top:none; padding-top: var(--s6); }
+
+    .eyebrow{
+      font-family: var(--mono);
+      font-size: 12px; letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(201,164,74,.92);
+      margin-bottom: 12px;
+    }
+    h1{ font-size: 46px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 14px 0; font-weight: 600; }
+    h2{ font-size: 30px; line-height: 1.20; letter-spacing: -0.01em; margin: 0 0 12px 0; font-weight: 600; }
+    h3{ font-size: 20px; line-height: 1.25; margin: 0 0 10px 0; font-weight: 600; }
+    @media (max-width: 640px){
+      body{ font-size: var(--bodyMobile); }
+      h1{ font-size: 32px; }
+      h2{ font-size: 24px; }
+      h3{ font-size: 19px; }
+    }
+
+    /* Step-flow dominant module (unique to this page) */
+    .stepStrip{
+      margin-top: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--r-lg);
+      padding: 18px 18px;
+      overflow:hidden;
+    }
+    .steps{
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){ .steps{ grid-template-columns: 1fr; } }
+
+    .step{
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(11,15,20,.55);
+      border-radius: var(--r-lg);
+      padding: 14px 14px;
+      position:relative;
+      cursor:pointer;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .step:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); background: rgba(255,255,255,.03); }
+
+    .stepNum{
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(201,164,74,.90);
+      margin-bottom: 8px;
+    }
+    .stepTitle{ font-weight:600; margin-bottom:6px; }
+    .stepShort{ margin:0; color: rgba(201,209,217,.78); font-size: 14px; line-height: 1.55; }
+
+    /* Connector line (thin) */
+    .connector{
+      margin: 14px 0 0 0;
+      height: 2px;
+      border-radius: 999px;
+      background: rgba(201,164,74,.16);
+      position:relative;
+      overflow:hidden;
+    }
+    .connector::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(90deg, rgba(201,164,74,0.0), rgba(201,164,74,.65), rgba(201,164,74,0.0));
+      transform: translateX(-80%);
+      opacity:.60;
+    }
+    .drawLine .connector::after{ animation: sweep 1.1s ease-out forwards; }
+    @keyframes sweep{ to{ transform: translateX(80%);} }
+
+    /* Detail blocks below strip */
+    .detailGrid{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 14px;
+      align-items:start;
+    }
+    @media (max-width: 980px){ .detailGrid{ grid-template-columns: 1fr; } }
+
+    .panel{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--r-lg);
+      padding: 18px 18px;
+    }
+
+    /* Accordion (technical detail) */
+    .acc{
+      margin-top: 10px;
+      border-top:1px solid rgba(255,255,255,.08);
+      padding-top: 12px;
+    }
+    .accBtn{
+      width:100%;
+      text-align:left;
+      padding: 10px 0;
+      background: transparent;
+      border:0;
+      color: rgba(201,209,217,.92);
+      cursor:pointer;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 12px;
+      font-weight:600;
+    }
+    .accBtn span.meta{
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(201,164,74,.86);
+      font-weight:500;
+    }
+    .accBody{
+      display:none;
+      padding: 10px 0 0 0;
+      color: rgba(201,209,217,.78);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .acc.open .accBody{ display:block; }
+    .chev{ transition: transform .16s ease; opacity:.75; }
+    .acc.open .chev{ transform: rotate(180deg); }
+
+    /* Output sample block (short, not long code) */
+    .sample{
+      border:1px solid rgba(201,164,74,.22);
+      background: rgba(11,15,20,.60);
+      border-radius: var(--r-lg);
+      padding: 14px 14px;
+      margin-top: 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.65;
+      color: rgba(201,209,217,.85);
+      overflow:auto;
+    }
+    .sample .k{ color: rgba(201,164,74,.92); text-transform: uppercase; letter-spacing:.12em; font-size: 11px; }
+    .sample code{ white-space: pre; }
+
+    /* Verify in 60 seconds (dominant module, interactive) */
+    .verify{
+      border:1px solid rgba(201,164,74,.28);
+      background: rgba(201,164,74,.06);
+      border-radius: var(--r-lg);
+      padding: 18px 18px;
+      margin-top: 18px;
+    }
+    .verify .hdr{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom: 10px;
+    }
+    .verify .tag{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform: uppercase;
+      color: rgba(201,164,74,.92);
+    }
+    .verify .status{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing:.14em;
+      text-transform: uppercase;
+      color: rgba(201,209,217,.70);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+    }
+    .verify .status.pass{ border-color: rgba(120,210,160,.30); color: rgba(160,240,200,.88); background: rgba(120,210,160,.06); }
+    .verify .status.fail{ border-color: rgba(255,120,120,.28); color: rgba(255,180,180,.86); background: rgba(255,120,120,.05); }
+
+    textarea{
+      width:100%;
+      min-height: 180px;
+      resize: vertical;
+      border-radius: var(--r-lg);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(11,15,20,.62);
+      color: rgba(201,209,217,.92);
+      padding: 12px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.6;
+      outline:none;
+    }
+    textarea:focus{ border-color: rgba(201,164,74,.35); }
+
+    .verifyRow{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top: 10px;
+      align-items:center;
+    }
+    .miniBtn{
+      height:44px;
+      padding:0 16px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      color: rgba(201,209,217,.92);
+      cursor:pointer;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+      font-size: 14px;
+    }
+    .miniBtn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.35); background: rgba(255,255,255,.04); }
+    .miniBtn.primary{
+      border-color: rgba(201,164,74,.45);
+      background: rgba(201,164,74,.10);
+      color: rgba(245,242,234,.96);
+    }
+    .miniBtn.primary:hover{ background: rgba(201,164,74,.16); }
+
+    .verifySteps{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 980px){ .verifySteps{ grid-template-columns: 1fr; } }
+    .vstep{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--r-lg);
+      padding: 12px 12px;
+      color: rgba(201,209,217,.82);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .vstep b{ color: rgba(245,242,234,.92); font-weight:600; }
+    .vstep .m{
+      display:block;
+      margin-top:6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing:.12em;
+      text-transform: uppercase;
+      color: rgba(201,164,74,.86);
+    }
+
+    /* Footer */
+    footer{ border-top:1px solid rgba(255,255,255,.06); padding: var(--s7) 0 var(--s6); }
+    .footGrid{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    @media (max-width: 980px){ .footGrid{ grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px){ .footGrid{ grid-template-columns: 1fr; } }
+    .footCol{
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--r-lg);
+      padding: 18px 18px;
+    }
+    .footCol .t{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(201,164,74,.86);
+      margin-bottom: 10px;
+    }
+    .footCol a{
+      display:block;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border:1px solid transparent;
+      color: rgba(201,209,217,.84);
+      transition: background .18s ease, border-color .18s ease;
+    }
+    .footCol a:hover{ background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.06); }
+    .footBottom{
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(201,209,217,.62);
+      padding-top: 18px;
+      border-top:1px solid rgba(255,255,255,.06);
+    }
+
+    /* Motion: Fade-up reveal only (site rule) */
+    .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.on{ opacity:1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto;}
+      .reveal{ opacity:1; transform:none; transition:none; }
+      nav.center a, .btn, .step, .drawerLinks a, .miniBtn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg" aria-hidden="true"></div>
+  <canvas id="neurons" aria-hidden="true"></canvas>
+
+  <header class="site">
+    <div class="wrap nav">
+      <a class="logo" href="index.html" aria-label="CEYO Home">
+        <span class="mark"><span class="dot" aria-hidden="true"></span><span>CEYO</span></span>
+      </a>
+
+      <nav class="center" aria-label="Primary navigation">
+        <a href="index.html">Overview</a>
+        <a class="active" href="how.html">How It Works</a>
+        <a href="trust.html">Trust</a>
+        <a href="compliance.html">Compliance</a>
+        <a href="integrations.html">Integrations</a>
+        <a href="resources.html">Resources</a>
+      </nav>
+
+      <div class="actions" aria-label="Actions">
+        <a class="btn secondary" href="resources.html#sample-artifact">View sample artifact<span class="arr">→</span></a>
+        <a class="btn primary" href="contact.html">Request walkthrough<span class="arr">→</span></a>
+        <button class="hamburger" id="openMenu" aria-label="Open menu" type="button">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawerCard" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="drawerHead">
+        <div class="t">Menu</div>
+        <button class="close" id="closeMenu" type="button">Close</button>
+      </div>
+      <div class="drawerLinks">
+        <a href="index.html">Overview</a>
+        <a href="how.html">How It Works</a>
+        <a href="platform.html">Platform</a>
+        <a href="trust.html">Trust & Verification</a>
+        <a href="compliance.html">Compliance</a>
+        <a href="integrations.html">Integrations</a>
+        <a href="use-cases.html">Use Cases</a>
+        <a href="security.html">Security</a>
+        <a href="resources.html">Resources</a>
+        <a href="company.html">Company</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <!-- HERO -->
+    <section style="padding-top: var(--s6);">
+      <div class="read reveal">
+        <div class="eyebrow">How it works · Deterministic mechanics · Independent verification</div>
+        <h1>Evidence generation is a mechanical chain.</h1>
+        <p class="muted">
+          CEYO attaches beside inference systems and produces an audit artifact through a fixed sequence:
+          <b style="color:rgba(245,242,234,.92)">capture → canonicalize → seal → disclose → verify</b>.
+          Verification confirms integrity and provenance under policy scope — not correctness of the model output.
+        </p>
+
+        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn primary" href="#steps">View the steps<span class="arr">→</span></a>
+          <a class="btn" href="#verify60">Verify in 60 seconds<span class="arr">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP FLOW STRIP (dominant) -->
+    <section id="steps">
+      <div class="read reveal">
+        <h2>Five steps</h2>
+        <p class="muted">Each step is simple in plain language. Technical detail is available on demand.</p>
+
+        <div class="stepStrip reveal" id="stepStrip">
+          <div class="steps" aria-label="Step flow">
+            <div class="step" data-step="1" role="button" tabindex="0" aria-label="Select step 1">
+              <div class="stepNum">01 · Attach</div>
+              <div class="stepTitle">Deploy as a layer</div>
+              <p class="stepShort">Sidecar, gateway, or wrapper at the inference boundary.</p>
+            </div>
+            <div class="step" data-step="2" role="button" tabindex="0" aria-label="Select step 2">
+              <div class="stepNum">02 · Capture</div>
+              <div class="stepTitle">Define scope first</div>
+              <p class="stepShort">Policy-scoped fields only. Exclusions and masking recorded.</p>
+            </div>
+            <div class="step" data-step="3" role="button" tabindex="0" aria-label="Select step 3">
+              <div class="stepNum">03 · Canonicalize</div>
+              <div class="stepTitle">Normalize deterministically</div>
+              <p class="stepShort">Stable schema + RFC 8785 JSON canonicalization.</p>
+            </div>
+            <div class="step" data-step="4" role="button" tabindex="0" aria-label="Select step 4">
+              <div class="stepNum">04 · Seal</div>
+              <div class="stepTitle">Make tampering detectable</div>
+              <p class="stepShort">Hash + digital signature under operator key custody.</p>
+            </div>
+            <div class="step" data-step="5" role="button" tabindex="0" aria-label="Select step 5">
+              <div class="stepNum">05 · Verify</div>
+              <div class="stepTitle">Independent validation</div>
+              <p class="stepShort">Recompute canonicalization + validate signature + policy alignment.</p>
+            </div>
+          </div>
+
+          <div class="connector" aria-hidden="true"></div>
+
+          <div class="detailGrid" aria-label="Selected step details">
+            <div class="panel" id="plainPanel" aria-label="Plain-language explanation">
+              <h3 id="plainTitle">01 · Attach</h3>
+              <p class="muted" id="plainText">
+                CEYO runs beside an inference endpoint. It records evidence without changing model weights or decision logic.
+              </p>
+
+              <div class="acc" id="accWrap">
+                <div class="acc open" data-acc="tech">
+                  <button class="accBtn" type="button" aria-expanded="true">
+                    <div>
+                      <div style="font-weight:600">Technical detail</div>
+                      <span class="meta">On-demand</span>
+                    </div>
+                    <span class="chev">▾</span>
+                  </button>
+                  <div class="accBody" id="techText">
+                    Attachment is deployed as a boundary-layer pattern (sidecar, gateway proxy, or wrapper). The inference call can pass through unchanged. Fail-open configuration avoids introducing a default operational dependency.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel" aria-label="Output sample">
+              <h3>Output</h3>
+              <p class="muted">A short example of what the step produces or influences.</p>
+              <div class="sample" id="sampleBox">
+                <div class="k">Example</div>
+                <code id="sampleText">deployment_mode: "sidecar"
+capture_policy_id: "POL-001"
+policy_version: "V1"</code>
+              </div>
+              <p class="muted" style="margin-top:12px">
+                Output is governed by policy. Scope boundaries remain explicit and versioned.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERIFY IN 60 SECONDS -->
+    <section id="verify60">
+      <div class="read reveal">
+        <h2>Verify in 60 seconds</h2>
+        <p class="muted">This is a demonstrator UI. It validates format discipline and shows the verification steps. Cryptographic verification is performed in the verifier toolkit.</p>
+
+        <div class="verify reveal">
+          <div class="hdr">
+            <div class="tag">Verification walkthrough</div>
+            <div class="status" id="statusPill">Status · waiting</div>
+          </div>
+
+          <textarea id="artifactInput" spellcheck="false" aria-label="Paste artifact JSON here">
+{
+  "artifact_id": "ART-EXAMPLE-001",
+  "policy_id": "POL-001",
+  "policy_version": "V1",
+  "canonicalization": "RFC8785",
+  "hash_algorithm": "SHA-256",
+  "signature_algorithm": "ECDSA-P256",
+  "digest": "…",
+  "signature": "…",
+  "public_key_reference": "KMS:key/…",
+  "timestamp_utc": "2026-02-19T00:00:00Z"
+}</textarea>
+
+          <div class="verifyRow">
+            <button class="miniBtn primary" id="runVerify" type="button">Run checks</button>
+            <button class="miniBtn" id="loadExample" type="button">Load sample</button>
+            <button class="miniBtn" id="clearBox" type="button">Clear</button>
+          </div>
+
+          <div class="verifySteps" aria-label="Verification steps">
+            <div class="vstep">
+              <b>1) Canonicalize</b> under the recorded scheme
+              <span class="m">RFC 8785 JSON canonicalization</span>
+            </div>
+            <div class="vstep">
+              <b>2) Recompute hash</b> over canonical bytes
+              <span class="m">SHA-256 digest recomputation</span>
+            </div>
+            <div class="vstep">
+              <b>3) Validate signature</b> against public key reference
+              <span class="m">Origin authenticity + tamper evidence</span>
+            </div>
+            <div class="vstep">
+              <b>4) Confirm policy alignment</b> (ID/version/hash)
+              <span class="m">Scope boundary confirmation</span>
+            </div>
+          </div>
+
+          <p class="muted" style="margin-top:12px">
+            Successful verification confirms integrity and provenance under policy scope. It does not confirm output correctness, legality, or compliance conclusions.
+          </p>
+        </div>
+
+        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn primary" href="trust.html">Trust & verification model<span class="arr">→</span></a>
+          <a class="btn" href="compliance.html">Compliance mapping<span class="arr">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+      <div class="footGrid reveal">
+        <div class="footCol">
+          <div class="t">Product</div>
+          <a href="index.html">Overview</a>
+          <a href="how.html">How It Works</a>
+          <a href="platform.html">Platform</a>
+          <a href="integrations.html">Integrations</a>
+        </div>
+        <div class="footCol">
+          <div class="t">Trust</div>
+          <a href="trust.html">Trust Model</a>
+          <a href="security.html">Security</a>
+          <a href="trust.html#verification-spec">Verification Spec</a>
+          <a href="resources.html#trust-center">Trust Center</a>
+        </div>
+        <div class="footCol">
+          <div class="t">Resources</div>
+          <a href="resources.html">Library</a>
+          <a href="resources.html#sample-artifact">Sample Artifacts</a>
+          <a href="resources.html#glossary">Glossary</a>
+          <a href="resources.html#faq">FAQs</a>
+        </div>
+        <div class="footCol">
+          <div class="t">Legal</div>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="vdp.html">Security Disclosure</a>
+          <a href="ethical.html">Responsible Use</a>
+        </div>
+      </div>
+
+      <div class="footBottom reveal">
+        <div>© <span id="year"></span> CEYO. All rights reserved.</div>
+        <div><a href="vdp.html">Vulnerability Disclosure</a></div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const drawer = document.getElementById('drawer');
+    const openMenu = document.getElementById('openMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+    if(openMenu) openMenu.addEventListener('click', openDrawer);
+    if(closeMenu) closeMenu.addEventListener('click', closeDrawer);
+    drawer.addEventListener('click', (e)=>{ if(e.target===drawer) closeDrawer(); });
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+
+    // Reveal
+    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealEls = Array.from(document.querySelectorAll('.reveal'));
+    if(!prefersReduce){
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('on'); });
+      }, {threshold: 0.12});
+      revealEls.forEach(el=>io.observe(el));
+      // connector sweep once
+      const strip = document.getElementById('stepStrip');
+      const sio = new IntersectionObserver((entries)=>{
+        entries.forEach(en=>{ if(en.isIntersecting) strip.classList.add('drawLine'); });
+      }, {threshold: 0.20});
+      sio.observe(strip);
+    } else {
+      revealEls.forEach(el=>el.classList.add('on'));
+    }
+
+    // Step content model
+    const steps = {
+      1: {
+        t: "01 · Attach",
+        p: "CEYO runs beside an inference endpoint. It records evidence without changing model weights or decision logic.",
+        tech: "Attachment is deployed as a boundary-layer pattern (sidecar, gateway proxy, or wrapper). The inference call can pass through unchanged. Fail-open configuration avoids introducing a default operational dependency.",
+        sample: `deployment_mode: "sidecar"\nattachment_point: "inference boundary"\nfail_open: true`
+      },
+      2: {
+        t: "02 · Capture",
+        p: "Operators define scope before anything is recorded. Only policy-scoped fields are captured. Masking is applied before sealing.",
+        tech: "Capture policy specifies included fields, excluded fields, and masked fields. Policy ID, version, and policy hash are recorded within each artifact so the capture boundary is reviewable.",
+        sample: `policy_id: "POL-001"\npolicy_version: "V1"\nmasking: ["pii.redact", "secrets.hash"]`
+      },
+      3: {
+        t: "03 · Canonicalize",
+        p: "Captured context is normalized into a stable artifact schema. Canonicalization produces deterministic bytes across environments.",
+        tech: "RFC 8785 (JSON Canonicalization Scheme) ensures field ordering, numeric formatting, and encoding rules produce a reproducible byte stream for hashing and verification.",
+        sample: `canonicalization: "RFC8785"\nschema_version: "A1"\ncanonical_bytes: "…"`
+      },
+      4: {
+        t: "04 · Seal",
+        p: "The canonical artifact is cryptographically sealed. Tampering becomes detectable from the moment of sealing forward.",
+        tech: "Hashing establishes tamper-evidence. Digital signatures establish origin authenticity under operator-controlled key custody (HSM/KMS/TEE). CEYO does not hold private keys.",
+        sample: `hash_algorithm: "SHA-256"\nsignature_algorithm: "ECDSA-P256"\ndigest: "…"\nsignature: "…"`
+      },
+      5: {
+        t: "05 · Verify",
+        p: "Independent reviewers can validate integrity and provenance under declared policy scope.",
+        tech: "Verification recomputes canonicalization and hash, validates signature against a public key reference, and confirms the policy ID/version/hash matches the expected policy document.",
+        sample: `verify: ["canonicalize","hash","signature","policy_alignment"]\nresult: "PASS | FAIL | POLICY_MISMATCH"`
+      }
+    };
+
+    const plainTitle = document.getElementById('plainTitle');
+    const plainText  = document.getElementById('plainText');
+    const techText   = document.getElementById('techText');
+    const sampleText = document.getElementById('sampleText');
+
+    function setStep(n){
+      const s = steps[n];
+      if(!s) return;
+      plainTitle.textContent = s.t;
+      plainText.textContent  = s.p;
+      techText.textContent   = s.tech;
+      sampleText.textContent = s.sample;
+      document.querySelectorAll('.step').forEach(el=>{
+        el.style.borderColor = (el.dataset.step == n) ? 'rgba(201,164,74,.35)' : 'rgba(255,255,255,.08)';
+      });
+    }
+
+    document.querySelectorAll('.step').forEach(el=>{
+      el.addEventListener('click', ()=> setStep(Number(el.dataset.step)));
+      el.addEventListener('keydown', (e)=>{
+        if(e.key==='Enter' || e.key===' '){ e.preventDefault(); setStep(Number(el.dataset.step)); }
+      });
+    });
+    setStep(1);
+
+    // Accordion
+    document.querySelectorAll('.accBtn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const acc = btn.closest('.acc');
+        const open = acc.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+
+    // Verify demo logic (format + required fields)
+    const statusPill = document.getElementById('statusPill');
+    const artifactInput = document.getElementById('artifactInput');
+    const runVerify = document.getElementById('runVerify');
+    const loadExample = document.getElementById('loadExample');
+    const clearBox = document.getElementById('clearBox');
+
+    const required = [
+      "artifact_id","policy_id","policy_version","canonicalization",
+      "hash_algorithm","signature_algorithm","digest","signature","public_key_reference"
+    ];
+
+    function setStatus(kind, text){
+      statusPill.classList.remove('pass','fail');
+      if(kind) statusPill.classList.add(kind);
+      statusPill.textContent = text;
+    }
+
+    runVerify.addEventListener('click', ()=>{
+      try{
+        const obj = JSON.parse(artifactInput.value);
+        const missing = required.filter(k => !(k in obj));
+        if(missing.length){
+          setStatus('fail', 'Status · missing fields');
+          return;
+        }
+        if(String(obj.canonicalization || '').toUpperCase().indexOf('RFC') === -1){
+          setStatus('fail', 'Status · canonicalization mismatch');
+          return;
+        }
+        setStatus('pass', 'Status · format OK');
+      } catch(e){
+        setStatus('fail', 'Status · invalid JSON');
+      }
+    });
+
+    loadExample.addEventListener('click', ()=>{
+      artifactInput.value = JSON.stringify({
+        artifact_id: "ART-EXAMPLE-001",
+        policy_id: "POL-001",
+        policy_version: "V1",
+        policy_hash: "…",
+        canonicalization: "RFC8785",
+        hash_algorithm: "SHA-256",
+        signature_algorithm: "ECDSA-P256",
+        digest: "…",
+        signature: "…",
+        public_key_reference: "KMS:key/…",
+        timestamp_utc: "2026-02-19T00:00:00Z"
+      }, null, 2);
+      setStatus('', 'Status · waiting');
+    });
+
+    clearBox.addEventListener('click', ()=>{
+      artifactInput.value = "";
+      setStatus('', 'Status · waiting');
+    });
+
+    /* Neuron/atom background (lighter than index; no explosion here) */
+    (function(){
+      const c = document.getElementById('neurons');
+      const ctx = c.getContext('2d', {alpha:true});
+      let w=0,h=0,dpr=1;
+
+      function resize(){
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth; h = window.innerHeight;
+        c.width = Math.floor(w*dpr);
+        c.height = Math.floor(h*dpr);
+        c.style.width = w+'px';
+        c.style.height = h+'px';
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+      }
+      resize();
+      window.addEventListener('resize', resize, {passive:true});
+
+      const N = 190;
+      const pad = 40;
+      const nodes = [];
+      const dirs = [];
+      const rnd = (a,b)=> a + Math.random()*(b-a);
+
+      for(let i=0;i<N;i++){
+        nodes.push({ x:rnd(-pad,w+pad), y:rnd(-pad,h+pad), vx:rnd(-0.16,0.16), vy:rnd(-0.12,0.12), s:rnd(1.0,2.0) });
+        dirs.push({ ang: Math.random()*Math.PI*2, rad: Math.sqrt(Math.random()) });
+      }
+
+      let mx=0.5,my=0.5;
+      if(window.matchMedia("(pointer:fine)").matches){
+        window.addEventListener('mousemove', (e)=>{ mx=e.clientX/Math.max(1,w); my=e.clientY/Math.max(1,h); }, {passive:true});
+      }
+
+      function convergeAmount(){
+        // Slight convergence through the page to keep the “institutional motion” alive
+        const docH = Math.max(1, document.body.scrollHeight - window.innerHeight);
+        const p = Math.max(0, Math.min(1, window.scrollY / docH));
+        return Math.min(1, 0.25 + p*0.55);
+      }
+
+      function draw(){
+        ctx.clearRect(0,0,w,h);
+
+        const vg = ctx.createRadialGradient(w*0.55, h*0.28, 40, w*0.5, h*0.5, Math.max(w,h)*0.9);
+        vg.addColorStop(0,'rgba(0,0,0,0.00)');
+        vg.addColorStop(1,'rgba(0,0,0,0.28)');
+        ctx.fillStyle = vg;
+        ctx.fillRect(0,0,w,h);
+
+        const px = (mx-0.5)*18, py = (my-0.5)*12;
+        const cx = w*0.52 + px*0.35, cy = h*0.30 + py*0.35;
+
+        const conv = prefersReduce ? 0.35 : convergeAmount();
+        const baseR = Math.min(w,h)*0.18;
+        const orbitR = baseR*(0.92 - conv*0.08);
+
+        // Core
+        ctx.save();
+        ctx.globalAlpha = Math.min(0.45, 0.16 + conv*0.35);
+        ctx.strokeStyle = 'rgba(201,164,74,0.45)';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.arc(cx, cy, orbitR*0.38, 0, Math.PI*2); ctx.stroke();
+        ctx.globalAlpha *= 0.75;
+        ctx.strokeStyle = 'rgba(201,164,74,0.18)';
+        ctx.beginPath(); ctx.arc(cx, cy, orbitR*0.78, 0, Math.PI*2); ctx.stroke();
+        ctx.restore();
+
+        // Move nodes
+        for(let i=0;i<N;i++){
+          const p = nodes[i];
+
+          p.x += p.vx*(1 - 0.6*conv);
+          p.y += p.vy*(1 - 0.6*conv);
+
+          if(p.x < -pad) p.x = w+pad;
+          if(p.x > w+pad) p.x = -pad;
+          if(p.y < -pad) p.y = h+pad;
+          if(p.y > h+pad) p.y = -pad;
+
+          if(conv > 0.001){
+            const d = dirs[i];
+            const ringR = orbitR*(0.62 + d.rad*0.48);
+            const t = performance.now()*0.00032;
+            const ang = d.ang + t*(0.18 + (i%7)*0.03);
+            const tx = cx + Math.cos(ang)*ringR;
+            const ty = cy + Math.sin(ang)*ringR;
+            p.x += (tx - p.x)*(0.010 + 0.034*conv);
+            p.y += (ty - p.y)*(0.010 + 0.034*conv);
+          }
+        }
+
+        const maxDist = 160;
+        const maxD2 = maxDist*maxDist;
+        const lineAlphaBase = 0.05 + conv*0.08;
+        const pointAlpha = 0.40 + conv*0.25;
+
+        // Lines
+        for(let i=0;i<N;i++){
+          const a = nodes[i];
+          for(let j=i+1;j<N;j++){
+            const b = nodes[j];
+            const dx=a.x-b.x, dy=a.y-b.y;
+            const d2=dx*dx+dy*dy;
+            if(d2 < maxD2){
+              const t = 1 - (d2/maxD2);
+              const alpha = Math.min(0.20, lineAlphaBase*t);
+              ctx.strokeStyle = `rgba(201,164,74,${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(a.x,a.y);
+              ctx.lineTo(b.x,b.y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Points
+        for(let i=0;i<N;i++){
+          const p = nodes[i];
+          ctx.fillStyle = `rgba(201,164,74,${pointAlpha})`;
+          ctx.beginPath();
+          ctx.arc(p.x,p.y,p.s,0,Math.PI*2);
+          ctx.fill();
+        }
+
+        if(!prefersReduce) requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+  </script>
+</body>
+</html>
