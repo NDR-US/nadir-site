@@ -1,9 +1,18 @@
-<!-- =========================
-FILE: trust.html  (4) TRUST & VERIFICATION
-Threat-model module + “Guarantees vs Non-Guarantees” (distinctive middle).
-Same shell/tokens/accents as prior pages.
-Single-file (no external CSS/JS).
-========================= -->
+Keep Overview and How It Works exactly as-is.
+
+For Trust, the best move is:
+	•	Keep the same layout + content modules (Guarantees vs Non-guarantees + Threat model + Verification steps).
+	•	Remove the neurons canvas entirely (Trust should feel like a “quiet proof room”).
+	•	Keep the same gradient atmosphere so it stays cohesive.
+This will immediately reduce repetition without changing the structure you already like.
+
+Below is the full copy/paste trust.html with:
+	•	Same layout as the original trust page I made
+	•	Neurons removed
+	•	Everything else preserved (nav, mobile menu, modules, footer, reveal)
+
+Save as: trust.html
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -55,19 +64,13 @@ Single-file (no external CSS/JS).
     a{color:inherit;text-decoration:none}
     button{font:inherit}
 
+    /* Background: cohesive with site, but NO neurons on Trust */
     .bg{
       position:fixed; inset:0; pointer-events:none; z-index:0;
       background:
         radial-gradient(900px 520px at 40% 10%, rgba(58,50,12,.22), transparent 62%),
         radial-gradient(820px 520px at 82% 34%, rgba(201,164,74,.10), transparent 64%),
         linear-gradient(180deg, #0B0F14 0%, #0A0D12 40%, #0B0F14 100%);
-    }
-    canvas#neurons{
-      position:fixed; inset:0;
-      width:100%; height:100%;
-      z-index:0;
-      pointer-events:none;
-      opacity:.86;
     }
 
     .wrap{ position:relative; z-index:1; max-width:var(--maxW); margin:0 auto; padding:0 var(--s4); }
@@ -218,7 +221,6 @@ Single-file (no external CSS/JS).
       h3{ font-size: 19px; }
     }
 
-    /* Dominant modules for this page */
     .twoCol{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -245,7 +247,6 @@ Single-file (no external CSS/JS).
     .box ul{ margin: 10px 0 0 0; padding: 0 0 0 18px; }
     .box li{ margin: 8px 0; color: rgba(201,209,217,.84); line-height: 1.55; }
 
-    /* Threat model cards */
     .threatGrid{
       display:grid;
       grid-template-columns: repeat(2, 1fr);
@@ -313,7 +314,6 @@ Single-file (no external CSS/JS).
     .chev{ transition: transform .16s ease; opacity:.75; }
     .threat.open .chev{ transform: rotate(180deg); }
 
-    /* Verification spec preview */
     .spec{
       margin-top: 18px;
       border:1px solid rgba(201,164,74,.22);
@@ -387,7 +387,6 @@ Single-file (no external CSS/JS).
       border-top:1px solid rgba(255,255,255,.06);
     }
 
-    /* Motion: Fade-up reveal only */
     .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
     .reveal.on{ opacity:1; transform: translateY(0); }
 
@@ -402,7 +401,6 @@ Single-file (no external CSS/JS).
 
 <body>
   <div class="bg" aria-hidden="true"></div>
-  <canvas id="neurons" aria-hidden="true"></canvas>
 
   <header class="site">
     <div class="wrap nav">
@@ -428,7 +426,6 @@ Single-file (no external CSS/JS).
     </div>
   </header>
 
-  <!-- Mobile drawer -->
   <div class="drawer" id="drawer" aria-hidden="true">
     <div class="drawerCard" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="drawerHead">
@@ -452,7 +449,6 @@ Single-file (no external CSS/JS).
   </div>
 
   <main class="wrap">
-    <!-- HERO -->
     <section style="padding-top: var(--s6);">
       <div class="read reveal">
         <div class="eyebrow">Trust · Threat model · Independent verification</div>
@@ -469,7 +465,6 @@ Single-file (no external CSS/JS).
       </div>
     </section>
 
-    <!-- Guarantees vs Non-Guarantees (dominant) -->
     <section id="guarantees">
       <div class="read reveal">
         <h2>Guarantees vs. non-guarantees</h2>
@@ -521,7 +516,6 @@ Single-file (no external CSS/JS).
       </div>
     </section>
 
-    <!-- Threat model cards (distinctive module) -->
     <section id="threats">
       <div class="read reveal">
         <h2>Threat model (simple)</h2>
@@ -608,7 +602,6 @@ Single-file (no external CSS/JS).
       </div>
     </section>
 
-    <!-- FOOTER -->
     <footer id="footer">
       <div class="footGrid reveal">
         <div class="footCol">
@@ -649,7 +642,6 @@ Single-file (no external CSS/JS).
   </main>
 
   <script>
-    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Mobile menu
@@ -691,130 +683,6 @@ Single-file (no external CSS/JS).
         }
       });
     });
-
-    /* Neuron/atom background (steady; subtle converge) */
-    (function(){
-      const c = document.getElementById('neurons');
-      const ctx = c.getContext('2d', {alpha:true});
-      let w=0,h=0,dpr=1;
-
-      function resize(){
-        dpr = Math.min(window.devicePixelRatio || 1, 2);
-        w = window.innerWidth; h = window.innerHeight;
-        c.width = Math.floor(w*dpr);
-        c.height = Math.floor(h*dpr);
-        c.style.width = w+'px';
-        c.style.height = h+'px';
-        ctx.setTransform(dpr,0,0,dpr,0,0);
-      }
-      resize();
-      window.addEventListener('resize', resize, {passive:true});
-
-      const N = 165;
-      const pad = 40;
-      const nodes = [];
-      const dirs = [];
-      const rnd = (a,b)=> a + Math.random()*(b-a);
-
-      for(let i=0;i<N;i++){
-        nodes.push({ x:rnd(-pad,w+pad), y:rnd(-pad,h+pad), vx:rnd(-0.14,0.14), vy:rnd(-0.10,0.10), s:rnd(1.0,2.0) });
-        dirs.push({ ang: Math.random()*Math.PI*2, rad: Math.sqrt(Math.random()) });
-      }
-
-      let mx=0.5,my=0.5;
-      if(window.matchMedia("(pointer:fine)").matches){
-        window.addEventListener('mousemove', (e)=>{ mx=e.clientX/Math.max(1,w); my=e.clientY/Math.max(1,h); }, {passive:true});
-      }
-
-      function convergeAmount(){
-        const docH = Math.max(1, document.body.scrollHeight - window.innerHeight);
-        const p = Math.max(0, Math.min(1, window.scrollY / docH));
-        return Math.min(1, 0.28 + p*0.55);
-      }
-
-      function draw(){
-        ctx.clearRect(0,0,w,h);
-
-        const vg = ctx.createRadialGradient(w*0.55, h*0.28, 40, w*0.5, h*0.5, Math.max(w,h)*0.9);
-        vg.addColorStop(0,'rgba(0,0,0,0.00)');
-        vg.addColorStop(1,'rgba(0,0,0,0.28)');
-        ctx.fillStyle = vg;
-        ctx.fillRect(0,0,w,h);
-
-        const px = (mx-0.5)*16, py = (my-0.5)*10;
-        const cx = w*0.54 + px*0.35, cy = h*0.30 + py*0.35;
-
-        const conv = prefersReduce ? 0.35 : convergeAmount();
-        const baseR = Math.min(w,h)*0.18;
-        const orbitR = baseR*(0.92 - conv*0.08);
-
-        ctx.save();
-        ctx.globalAlpha = Math.min(0.42, 0.14 + conv*0.34);
-        ctx.strokeStyle = 'rgba(201,164,74,0.45)';
-        ctx.lineWidth = 1.2;
-        ctx.beginPath(); ctx.arc(cx, cy, orbitR*0.38, 0, Math.PI*2); ctx.stroke();
-        ctx.globalAlpha *= 0.72;
-        ctx.strokeStyle = 'rgba(201,164,74,0.18)';
-        ctx.beginPath(); ctx.arc(cx, cy, orbitR*0.78, 0, Math.PI*2); ctx.stroke();
-        ctx.restore();
-
-        for(let i=0;i<N;i++){
-          const p = nodes[i];
-          p.x += p.vx*(1 - 0.6*conv);
-          p.y += p.vy*(1 - 0.6*conv);
-          if(p.x < -pad) p.x = w+pad;
-          if(p.x > w+pad) p.x = -pad;
-          if(p.y < -pad) p.y = h+pad;
-          if(p.y > h+pad) p.y = -pad;
-
-          if(conv > 0.001){
-            const d = dirs[i];
-            const ringR = orbitR*(0.62 + d.rad*0.48);
-            const t = performance.now()*0.00030;
-            const ang = d.ang + t*(0.18 + (i%7)*0.03);
-            const tx = cx + Math.cos(ang)*ringR;
-            const ty = cy + Math.sin(ang)*ringR;
-            p.x += (tx - p.x)*(0.010 + 0.030*conv);
-            p.y += (ty - p.y)*(0.010 + 0.030*conv);
-          }
-        }
-
-        const maxDist = 150;
-        const maxD2 = maxDist*maxDist;
-        const lineAlphaBase = 0.05 + conv*0.08;
-        const pointAlpha = 0.36 + conv*0.25;
-
-        for(let i=0;i<N;i++){
-          const a = nodes[i];
-          for(let j=i+1;j<N;j++){
-            const b = nodes[j];
-            const dx=a.x-b.x, dy=a.y-b.y;
-            const d2=dx*dx+dy*dy;
-            if(d2 < maxD2){
-              const t = 1 - (d2/maxD2);
-              const alpha = Math.min(0.18, lineAlphaBase*t);
-              ctx.strokeStyle = `rgba(201,164,74,${alpha})`;
-              ctx.lineWidth = 1;
-              ctx.beginPath();
-              ctx.moveTo(a.x,a.y);
-              ctx.lineTo(b.x,b.y);
-              ctx.stroke();
-            }
-          }
-        }
-
-        for(let i=0;i<N;i++){
-          const p = nodes[i];
-          ctx.fillStyle = `rgba(201,164,74,${pointAlpha})`;
-          ctx.beginPath();
-          ctx.arc(p.x,p.y,p.s,0,Math.PI*2);
-          ctx.fill();
-        }
-
-        if(!prefersReduce) requestAnimationFrame(draw);
-      }
-      draw();
-    })();
   </script>
 </body>
 </html>
