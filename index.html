@@ -16,9 +16,7 @@
       --ink:#0B0F14;
       --paper:#F5F2EA;
       --textOnInk:#C9D1D9;
-      --textOnPaper:#12161D;
       --lineOnInk:rgba(255,255,255,.10);
-      --lineOnPaper:rgba(0,0,0,.10);
 
       --accent:#3A320C;
       --accent2:#C9A44A;
@@ -26,14 +24,10 @@
       --maxW:1160px;
       --readW:740px;
 
-      --r-sm:10px;
-      --r-md:14px;
       --r-lg:18px;
 
       --s1:8px;  --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px;
 
-      --body:18px;
-      --bodyMobile:16.5px;
       --lh:1.65;
 
       --shadow:0 10px 30px rgba(0,0,0,.25);
@@ -58,10 +52,8 @@
     a{color:inherit;text-decoration:none}
     button{font:inherit}
 
-    /* Fix anchor jumps under sticky header sitewide */
     [id]{ scroll-margin-top: calc(var(--navH) + 24px); }
 
-    /* Background: subtle depth + neuron field canvas */
     .bg{
       position:fixed; inset:0; pointer-events:none; z-index:0;
       background:
@@ -92,15 +84,10 @@
       display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
     }
 
-    .logo{
-      display:flex; align-items:center; gap:10px;
-      font-weight:600; letter-spacing:-.01em;
-      flex:0 0 auto;
-    }
+    .logo{ display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:-.01em; flex:0 0 auto; }
     .logo .mark{
       display:inline-flex; align-items:center; gap:10px;
-      padding:10px 12px;
-      border-radius:999px;
+      padding:10px 12px; border-radius:999px;
       border:1px solid rgba(255,255,255,.08);
       background: rgba(255,255,255,.02);
     }
@@ -115,7 +102,10 @@
       flex:1;
       font-size:14px;
       color: rgba(201,209,217,.92);
-      min-width: 0;
+      min-width:0;
+      flex-wrap:nowrap;
+      overflow:hidden;
+      white-space:nowrap;
     }
     nav.center a{
       padding:10px 10px;
@@ -123,6 +113,7 @@
       border:1px solid transparent;
       transition: background .18s ease, border-color .18s ease, transform .18s ease;
       white-space:nowrap;
+      flex:0 0 auto;
     }
     nav.center a:hover{
       background: rgba(255,255,255,.03);
@@ -134,15 +125,9 @@
       background: rgba(201,164,74,.06);
     }
 
-    .actions{
-      display:flex; align-items:center; gap:10px;
-      justify-content:flex-end;
-      flex:0 0 auto;
-    }
+    .actions{ display:flex; align-items:center; gap:10px; justify-content:flex-end; flex:0 0 auto; }
     .btn{
-      height:48px;
-      padding:0 18px;
-      border-radius:999px;
+      height:48px; padding:0 18px; border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
       color: rgba(201,209,217,.98);
@@ -170,10 +155,9 @@
       color: rgba(201,209,217,.95);
       align-items:center; justify-content:center;
     }
-    .hamburger:active{ transform: translateY(1px); }
 
-    /* Fix: switch to hamburger earlier to prevent desktop overlap */
-    @media (max-width: 1180px){
+    /* Earlier cutoff prevents any overlap on laptops */
+    @media (max-width: 1250px){
       nav.center{ display:none; }
       .actions .btn.secondary{ display:none; }
       .hamburger{ display:inline-flex; }
@@ -248,28 +232,10 @@
       margin-bottom: 12px;
     }
 
-    h1{
-      font-size: 52px;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      margin: 0 0 14px 0;
-      font-weight: 600;
-    }
-    h2{
-      font-size: 30px;
-      line-height: 1.20;
-      letter-spacing: -0.01em;
-      margin: 0 0 12px 0;
-      font-weight: 600;
-    }
-    h3{
-      font-size: 20px;
-      line-height: 1.25;
-      margin: 0 0 10px 0;
-      font-weight: 600;
-    }
+    h1{ font-size: 52px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 14px 0; font-weight: 600; }
+    h2{ font-size: 30px; line-height: 1.20; letter-spacing: -0.01em; margin: 0 0 12px 0; font-weight: 600; }
+    h3{ font-size: 20px; line-height: 1.25; margin: 0 0 10px 0; font-weight: 600; }
     @media (max-width: 640px){
-      body{ font-size: var(--bodyMobile); }
       h1{ font-size: 34px; }
       h2{ font-size: 24px; }
       h3{ font-size: 19px; }
@@ -289,11 +255,28 @@
     .chip b{ font-weight:600; color: rgba(245,242,234,.94); }
     .chip .k{ font-family:var(--mono); font-size: 11px; letter-spacing:.12em; text-transform:uppercase; margin-right:8px; color: rgba(201,164,74,.88); }
 
+    /* Summary strip (no heading) */
     .strip{
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
       border-radius: var(--r-lg);
       padding: 20px 22px;
+    }
+    .stripTop{
+      display:flex; align-items:baseline; justify-content:space-between; gap: 12px; flex-wrap:wrap;
+      margin-bottom: 6px;
+    }
+    .labelChip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(201,164,74,.38);
+      background: rgba(201,164,74,.10);
+      color: rgba(245,242,234,.92);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
     }
     .strip ul{ margin: 12px 0 0 0; padding: 0 0 0 18px; }
     .strip li{ margin: 8px 0; line-height:1.5; color: rgba(201,209,217,.86); }
@@ -360,12 +343,7 @@
       padding: 18px 18px;
       overflow:hidden;
     }
-    .diagram{
-      width:100%;
-      max-width: 980px;
-      height:auto;
-      display:block;
-    }
+    .diagram{ width:100%; max-width: 980px; height:auto; display:block; }
     .node{ fill: rgba(11,15,20,.85); stroke: rgba(255,255,255,.14); stroke-width:1.2; }
     .lbl{ fill: rgba(201,209,217,.88); font-family: var(--mono); font-size: 12px; letter-spacing:.10em; text-transform: uppercase; }
     .line{
@@ -509,10 +487,16 @@
       </div>
     </section>
 
+    <!-- Summary strip (no “Plain-language summary” heading) -->
     <section id="plain">
       <div class="read reveal">
-        <h2>Plain-language summary</h2>
         <div class="strip">
+          <div class="stripTop">
+            <span class="labelChip">Summary</span>
+            <span class="muted" style="font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;">
+              Policy-scoped · Canonicalized · Sealed
+            </span>
+          </div>
           <p><b>CEYO creates audit-ready evidence at the moment an AI system produces a decision output.</b></p>
           <ul>
             <li>Operators define exactly what is recorded (policy-scoped capture).</li>
@@ -543,31 +527,32 @@
       </div>
     </section>
 
+    <!-- Reworded “Who it’s for” -->
     <section id="audience">
       <div class="read reveal">
-        <h2>Who it’s for</h2>
-        <p class="muted">Built to satisfy non-technical oversight needs in under a minute, while remaining credible to technical and security reviewers.</p>
+        <h2>Primary stakeholders</h2>
+        <p class="muted">Designed for formal review workflows: executive clarity first, with technical credibility preserved.</p>
 
         <div class="grid4" aria-label="Stakeholders">
           <div class="role">
             <div class="icon">C</div>
-            <h3>Compliance teams</h3>
-            <p class="muted">Audit-ready artifacts with explicit scope and versioning discipline.</p>
+            <h3>Compliance & audit</h3>
+            <p class="muted">Review-ready artifacts with explicit scope, versioning, and verification outcomes.</p>
           </div>
           <div class="role">
             <div class="icon">S</div>
-            <h3>Security engineering</h3>
-            <p class="muted">Non-custodial key posture and verifiable tamper evidence.</p>
+            <h3>Security & risk</h3>
+            <p class="muted">Non-custodial keys and tamper-evidence for governance and incident review.</p>
           </div>
           <div class="role">
             <div class="icon">AI</div>
-            <h3>AI & platform teams</h3>
-            <p class="muted">Integrate as a layer — no rewrite of model pipelines or weights.</p>
+            <h3>AI & platform</h3>
+            <p class="muted">Attach as a boundary layer—no changes to model weights or inference logic.</p>
           </div>
           <div class="role">
             <div class="icon">R</div>
-            <h3>Regulators & reviewers</h3>
-            <p class="muted">Independent verification without default exposure of proprietary internals.</p>
+            <h3>Institutional reviewers</h3>
+            <p class="muted">Independent verification under constrained disclosure, without default IP exposure.</p>
           </div>
         </div>
       </div>
@@ -663,7 +648,6 @@
 
     // Reveal + diagram draw
     const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
     const revealEls = Array.from(document.querySelectorAll('.reveal'));
     if(!prefersReduce){
       const io = new IntersectionObserver((entries)=>{
@@ -681,7 +665,7 @@
       document.getElementById('diagramBox').classList.add('draw');
     }
 
-    /* Neuron field + atom core (2D canvas), respects reduced motion */
+    // Neuron field + atom core (kept as in your updated index; unchanged)
     (function(){
       if (prefersReduce) return;
 
@@ -705,7 +689,6 @@
       const boundsPad = 40;
       const nodes = [];
       const dirs = [];
-
       const rnd = (a,b)=> a + Math.random()*(b-a);
 
       for(let i=0;i<N;i++){
