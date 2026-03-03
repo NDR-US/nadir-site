@@ -1,34 +1,34 @@
-<!-- =========================
-  trust.html (TRUST)
-  Dark, quieter, “documentation portal” feel.
-  Distinct from Index (less cinematic) and Platform (less schematic).
-========================= -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <title>CEYO — Trust & Verification</title>
-  <meta name="description" content="Trust & verification mechanics for CEYO: canonicalization, cryptographic sealing, independent verification, disclosure tiers, key custody, and operational availability."/>
+  <meta name="description" content="CEYO trust posture: deterministic canonicalization, cryptographic sealing, non-custodial key custody, tiered disclosure, independent verification outcomes."/>
   <meta name="theme-color" content="#060A13"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&family=Outfit:ital,wght@0,700;0,900;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     :root{
       --navy:#060A13;
-      --slate:#0A1326;
+      --navy2:#0B1220;
       --ivory:#F4F0E6;
       --royal:#2D67FF;
+      --royal-glow: rgba(45,103,255,0.40);
       --text:rgba(244,240,230,.92);
-      --muted:rgba(244,240,230,.60);
-      --stroke:rgba(244,240,230,.12);
-      --brandFont:'Outfit', system-ui, sans-serif;
+      --muted:rgba(244,240,230,.56);
+      --stroke:rgba(244,240,230,.10);
+      --stroke2:rgba(244,240,230,.06);
+
+      --brandFont:'Space Grotesk', system-ui, sans-serif;
       --monoFont:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --bodyFont:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --bodyFont:'IBM Plex Sans', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+      --navH: 84px;
     }
 
     html{scroll-behavior:smooth; background:var(--navy);}
@@ -36,21 +36,22 @@
       margin:0; background:var(--navy); color:var(--text);
       font-family:var(--bodyFont); overflow-x:hidden; cursor:none;
     }
-    @media (pointer: coarse){ body{ cursor:auto; } #cursor{ display:none; } }
+    @media (pointer: coarse){
+      body{ cursor:auto; }
+      #cursor{ display:none; }
+    }
 
-    /* Background: calm “docs” field */
+    /* Background */
     #stage{
       position:fixed; inset:0; z-index:0; pointer-events:none;
       background:
-        radial-gradient(1100px 680px at 50% 10%, rgba(45,103,255,.08), transparent 60%),
-        linear-gradient(180deg, var(--navy), var(--slate));
+        radial-gradient(1100px 650px at 50% 26%, rgba(45,103,255,.10), transparent 60%),
+        radial-gradient(900px 520px at 20% 72%, rgba(45,103,255,.06), transparent 65%),
+        linear-gradient(180deg, var(--navy), var(--navy2));
     }
-    #dots{
-      position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.30;
-      background-image: radial-gradient(rgba(244,240,230,.12) 1px, transparent 1px);
-      background-size: 20px 20px;
-      mask-image: radial-gradient(520px 360px at 50% 18%, #000 42%, transparent 78%);
-    }
+    #gl{ width:100%; height:100%; display:block; }
+
+    /* Grain */
     #grain{
       position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.05;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -68,116 +69,210 @@
     /* Nav */
     #topnav{
       position:fixed; top:0; left:0; right:0; z-index:50;
-      padding: 20px 30px;
+      padding: 22px 32px;
       display:flex; justify-content:space-between; align-items:center;
       transition: background .25s ease, border-color .25s ease, backdrop-filter .25s ease;
       border-bottom:1px solid transparent;
     }
     #topnav.scrolled{
-      background: rgba(6,10,19,.72);
+      background: rgba(6,10,19,.70);
       backdrop-filter: blur(14px);
-      border-bottom-color: rgba(244,240,230,.10);
+      border-bottom-color: rgba(244,240,230,.08);
     }
 
-    .shell{ max-width: 1180px; margin:0 auto; padding: 0 24px; position:relative; z-index:10; }
-    .section{ padding-top: 120px; padding-bottom: 110px; }
-    @media (max-width: 640px){ .section{ padding-top: 110px; padding-bottom: 96px; } #topnav{ padding: 18px 18px; } }
+    .brandLockup{ display:flex; align-items:baseline; gap:14px; }
+    .brand{
+      font-family: var(--brandFont);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--ivory);
+      line-height: 1;
+    }
+    .brandMark{ display:inline-flex; align-items:center; gap:10px; }
+    .brandDot{
+      width:7px; height:7px; border-radius:999px;
+      background: rgba(45,103,255,.95);
+      box-shadow: 0 0 22px var(--royal-glow);
+      transform: translateY(-2px);
+    }
+    .brandTag{
+      font-family: var(--monoFont);
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(244,240,230,.50);
+      white-space: nowrap;
+    }
 
     .kicker{
       font-family: var(--monoFont);
-      font-size: 10px;
-      letter-spacing: .40em;
+      font-size: 11px;
+      letter-spacing: .22em;
       text-transform: uppercase;
-      color: rgba(244,240,230,.62);
+      line-height: 1.35;
+      color: rgba(244,240,230,.58);
     }
+
     .h1{
       font-family: var(--brandFont);
-      font-weight: 900;
-      font-size: clamp(42px, 7vw, 84px);
-      line-height: 0.95;
+      font-weight: 700;
+      font-size: clamp(44px, 7.6vw, 96px);
+      line-height: 0.96;
       letter-spacing: -0.05em;
       text-transform: uppercase;
+      padding-bottom: 0.06em;
     }
     .h2{
       font-family: var(--brandFont);
-      font-weight: 900;
-      font-style: italic;
-      font-size: clamp(28px, 4vw, 54px);
-      letter-spacing: -0.03em;
+      font-weight: 700;
       text-transform: uppercase;
-      line-height: 0.98;
+      letter-spacing: -0.03em;
     }
 
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       font-family:var(--monoFont);
-      font-size:10px; letter-spacing:.20em; text-transform:uppercase;
-      border-radius:999px; padding: 14px 24px;
+      font-size:10px;
+      letter-spacing:.20em;
+      text-transform:uppercase;
+      border-radius:999px;
+      padding: 14px 28px;
       border:1px solid var(--stroke);
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
-      user-select:none; white-space:nowrap;
+      user-select:none;
     }
-    .btn.primary{ background: var(--royal); border-color: rgba(45,103,255,.85); color:#fff; }
-    .btn.ghost{ background: rgba(244,240,230,.05); }
-    .btn:hover{ transform: translateY(-1px); box-shadow: 0 0 26px rgba(45,103,255,0.32); border-color: rgba(45,103,255,.70); }
+    .btn.primary{
+      background: var(--royal);
+      border-color: rgba(45,103,255,.85);
+      color: #fff;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 0 26px var(--royal-glow);
+      border-color: rgba(45,103,255,.75);
+    }
+    .btn.ghost:hover{ background: rgba(244,240,230,.05); }
 
-    .panel{
-      border:1px solid var(--stroke);
+    .data-block{
+      border: 1px solid var(--stroke);
       background: rgba(11,18,32,0.40);
       backdrop-filter: blur(10px);
-      border-radius: 22px;
-      box-shadow: 0 22px 60px rgba(0,0,0,.20);
-    }
-    .panel.pad{ padding: 28px; }
-    @media (min-width:768px){ .panel.pad{ padding: 44px; } }
-
-    /* Accordion (distinct) */
-    .acc{
-      border: 1px solid rgba(244,240,230,.12);
-      background: rgba(6,10,19,.38);
+      transition: all 0.40s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      overflow: hidden;
+      max-height: 84px;
       border-radius: 18px;
-      overflow:hidden;
-      cursor:pointer;
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
     }
-    .acc:hover{ transform: translateY(-1px); border-color: rgba(45,103,255,.55); background: rgba(45,103,255,.04); }
-    .acc .row{
-      padding: 18px 18px;
-      display:flex; justify-content:space-between; align-items:center; gap:14px;
+    .data-block:hover{ border-color: rgba(45,103,255,.55); background: rgba(45,103,255,0.05); }
+    .data-block.expanded{
+      max-height: 720px;
+      border-color: rgba(45,103,255,.85);
+      background: rgba(45,103,255,0.06);
+      box-shadow: 0 22px 60px rgba(0,0,0,.35);
     }
-    .acc .body{
-      padding: 0 18px 18px 18px;
-      border-top: 1px solid rgba(244,240,230,.10);
-      display:none;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.9;
+    .data-block .content{
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+      pointer-events: none;
     }
-    .acc.open .body{ display:block; }
-    .tag{
+    .data-block.expanded .content{
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Verification table (distinctive for Trust page) */
+    .verify{
+      margin-top: 18px;
+      border: 1px solid var(--stroke);
+      background: rgba(11,18,32,0.30);
+      backdrop-filter: blur(10px);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .verify-head{
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--stroke2);
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .verify-head .label{
       font-family: var(--monoFont);
       font-size: 10px;
       letter-spacing: .20em;
       text-transform: uppercase;
-      color: rgba(45,103,255,.95);
-      white-space:nowrap;
+      color: rgba(244,240,230,.70);
     }
-    .fine{
+    .verify-head .badge{
       font-family: var(--monoFont);
-      font-size: 10px;
-      letter-spacing: .16em;
+      font-size: 9px;
+      letter-spacing: .22em;
       text-transform: uppercase;
-      color: rgba(244,240,230,.58);
+      color: rgba(45,103,255,.95);
     }
-    .rule{
-      height:1px;
-      background: linear-gradient(90deg, rgba(244,240,230,.12), rgba(45,103,255,.22), rgba(244,240,230,.12));
-      opacity:.9;
+    .verify-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:1px;
+      background: var(--stroke2);
+    }
+    .vc{
+      background: rgba(6,10,19,.55);
+      padding: 14px 14px;
+      min-height: 116px;
+    }
+    .vc .k{
+      font-family: var(--monoFont);
+      font-size: 9px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(45,103,255,.90);
+      margin-bottom: 10px;
+    }
+    .vc .t{
+      font-family: var(--brandFont);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: var(--ivory);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .vc .p{
+      color: rgba(244,240,230,.58);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    @media (max-width: 980px){
+      .verify-grid{ grid-template-columns: 1fr; }
     }
 
-    /* Bottom bar */
+    /* Boundary block (full, only on Trust) */
+    .boundary{
+      margin-top: 16px;
+      border: 1px solid rgba(248,113,113,.30);
+      background: rgba(248,113,113,.06);
+      border-radius: 18px;
+      padding: 16px 16px;
+    }
+    .boundary .btitle{
+      font-family: var(--monoFont);
+      font-size: 10px;
+      letter-spacing: .20em;
+      text-transform: uppercase;
+      color: rgba(248,113,113,.85);
+      margin-bottom: 10px;
+    }
+    .boundary .btext{
+      font-size: 14px;
+      color: rgba(244,240,230,.70);
+      line-height: 1.75;
+    }
+    .boundary .btext b{ color: rgba(244,240,230,.92); font-weight: 600; }
+
     #bottombar{
-      position:fixed; bottom:0; left:0; right:0; z-index:60;
+      position:fixed; bottom:0; left:0; right:0; z-index:50;
       height:56px;
       background: rgba(6,10,19,.88);
       backdrop-filter: blur(12px);
@@ -193,281 +288,657 @@
       border-right: 1px solid var(--stroke);
       transition: background .16s ease, color .16s ease;
       color: rgba(244,240,230,.70);
-      user-select:none;
     }
     #bottombar a:last-child{ border-right:none; }
     #bottombar a:hover{ background: rgba(244,240,230,.05); color: rgba(244,240,230,.92); }
-    #bottombar a.active{ color: rgba(244,240,230,.92); box-shadow: inset 0 2px 0 rgba(45,103,255,.95); }
+    #bottombar a.active{
+      color: rgba(244,240,230,.92);
+      box-shadow: inset 0 2px 0 rgba(45,103,255,.95);
+    }
+
+    #menuOverlay{
+      position:fixed; inset:0; z-index:80;
+      background: rgba(6,10,19,.92);
+      backdrop-filter: blur(14px);
+      border-top:1px solid rgba(244,240,230,.08);
+      display:none;
+    }
+    #menuOverlay.open{ display:block; }
+    .menu-panel{ max-width: 1100px; margin: 92px auto 0; padding: 0 24px 90px; }
+    .menu-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .menu-card{
+      border:1px solid var(--stroke);
+      background: rgba(11,18,32,0.40);
+      border-radius: 16px;
+      padding: 14px 14px;
+      transition: border-color .18s ease, background .18s ease;
+    }
+    .menu-card:hover{ border-color: rgba(45,103,255,.60); background: rgba(45,103,255,.05); }
+    .menu-k{
+      font-family: var(--monoFont);
+      font-size: 9px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(244,240,230,.55);
+      margin-bottom: 8px;
+    }
+    .menu-link{
+      display:block;
+      font-family: var(--monoFont);
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(244,240,230,.86);
+      padding: 8px 6px;
+      border-radius: 10px;
+      transition: background .15s ease, color .15s ease;
+    }
+    .menu-link:hover{ background: rgba(244,240,230,.05); color: var(--ivory); }
+    @media (max-width: 980px){ .menu-grid{ grid-template-columns: 1fr; } }
+
+    .pagePad{ padding-top: calc(var(--navH) + 34px); }
+    .section-pad{ padding-top: 9rem; padding-bottom: 9rem; }
+    @media (max-width: 640px){
+      .section-pad{ padding-top: 7rem; padding-bottom: 7rem; }
+      #topnav{ padding: 18px 18px; }
+    }
+
+    a:focus-visible, button:focus-visible{
+      outline: 2px solid rgba(45,103,255,.95);
+      outline-offset: 4px;
+      border-radius: 12px;
+    }
   </style>
 </head>
 
 <body>
-  <div id="stage" aria-hidden="true"></div>
-  <div id="dots" aria-hidden="true"></div>
+  <div id="stage" aria-hidden="true"><canvas id="gl"></canvas></div>
   <div id="grain" aria-hidden="true"></div>
   <div id="cursor" aria-hidden="true"></div>
 
   <nav id="topnav" aria-label="Primary navigation">
-    <div class="flex items-baseline gap-4">
-      <a href="index.html" class="font-[var(--brandFont)] font-black text-2xl italic">CEYO</a>
-      <span class="font-mono text-[9px] tracking-[0.30em] opacity-40 uppercase">Trust & Verification</span>
+    <div class="brandLockup">
+      <a href="index.html" class="brandMark nav-exit" aria-label="CEYO home">
+        <span class="brand text-2xl">CEYO</span>
+        <span class="brandDot" aria-hidden="true"></span>
+      </a>
+      <span class="hidden sm:inline brandTag">Trust &amp; Verification</span>
     </div>
 
-    <div class="hidden md:flex gap-8 font-mono text-[10px] tracking-widest uppercase opacity-60">
-      <a href="#trust" class="hover:text-[var(--royal)] transition-colors">Trust</a>
-      <a href="#mechanics" class="hover:text-[var(--royal)] transition-colors">Mechanics</a>
+    <div class="hidden md:flex gap-8 font-mono text-[10px] tracking-widest uppercase opacity-70">
+      <a href="#overview" class="hover:text-[var(--royal)] transition-colors">Overview</a>
+      <a href="#controls" class="hover:text-[var(--royal)] transition-colors">Controls</a>
+      <a href="#workflow" class="hover:text-[var(--royal)] transition-colors">Verify</a>
       <a href="#disclosure" class="hover:text-[var(--royal)] transition-colors">Disclosure</a>
-      <a href="#availability" class="hover:text-[var(--royal)] transition-colors">Availability</a>
-      <a href="contact.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Contact</a>
+      <a href="#limits" class="hover:text-[var(--royal)] transition-colors">Limits</a>
+      <button id="menuBtn" class="hover:text-[var(--royal)] transition-colors" type="button">Menu</button>
+    </div>
+
+    <div class="md:hidden">
+      <button id="menuBtnMobile" class="font-mono text-[10px] tracking-widest uppercase opacity-80 hover:text-[var(--royal)] transition-colors" type="button">Menu</button>
     </div>
   </nav>
 
-  <main class="shell">
-    <section id="trust" class="section">
-      <div class="grid lg:grid-cols-2 gap-14 items-end">
-        <div>
-          <div class="kicker mb-6">TRUST CENTER · VERIFICATION IS MECHANICAL</div>
-          <h1 class="h1 mb-8">Integrity You Can<br/>Recompute Independently</h1>
+  <!-- MENU OVERLAY -->
+  <div id="menuOverlay" aria-hidden="true">
+    <div class="menu-panel">
+      <div class="flex items-center justify-between mb-6">
+        <div class="kicker text-[var(--royal)]">Site Directory</div>
+        <button id="menuClose" class="btn ghost" type="button">Close</button>
+      </div>
 
-          <p class="text-[18px] leading-[1.9] text-[var(--muted)] max-w-xl">
-            Trust in CEYO is not a claim. It is a procedure: deterministic canonicalization, cryptographic sealing,
-            and independent verification under policy scope. The mechanism is designed to hold up under scrutiny.
+      <div class="menu-grid">
+        <div class="menu-card">
+          <div class="menu-k">Primary</div>
+          <a class="menu-link nav-exit" href="index.html">Index</a>
+          <a class="menu-link nav-exit" href="platform.html">Platform & Architecture</a>
+          <a class="menu-link nav-exit" href="integration.html">Operational Integration</a>
+          <a class="menu-link nav-exit" href="trust.html">Trust Infrastructure</a>
+          <a class="menu-link nav-exit" href="governance.html">Governance Posture</a>
+          <a class="menu-link nav-exit" href="compliance.html">Compliance Center</a>
+          <a class="menu-link nav-exit" href="document-suite.html">Document Suite</a>
+          <a class="menu-link nav-exit" href="roadmap.html">Roadmap</a>
+          <a class="menu-link nav-exit" href="oversight-portal.html">Oversight Portal</a>
+          <a class="menu-link nav-exit" href="resources.html">Resources</a>
+          <a class="menu-link nav-exit" href="contact.html">Contact</a>
+          <a class="menu-link nav-exit" href="sitemap.html">Sitemap</a>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-k">Policy & Legal</div>
+          <a class="menu-link nav-exit" href="founder.html">Founder’s Statement</a>
+          <a class="menu-link nav-exit" href="privacy.html">Privacy Statement</a>
+          <a class="menu-link nav-exit" href="terms.html">Terms of Use</a>
+          <a class="menu-link nav-exit" href="ethical-use.html">Ethical Use Policy</a>
+          <a class="menu-link nav-exit" href="pcl.html">Privacy & Civil Liberties Engineering</a>
+          <a class="menu-link nav-exit" href="key-custody.html">Key Custody Declaration</a>
+          <a class="menu-link nav-exit" href="legal-primer.html">Legal Admissibility Primer</a>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-k">Security & Transparency</div>
+          <a class="menu-link nav-exit" href="sbom.html">SBOM</a>
+          <a class="menu-link nav-exit" href="vdp.html">Vulnerability Disclosure Program</a>
+          <a class="menu-link nav-exit" href="sustainability.html">Sustainability Disclosure</a>
+          <a class="menu-link nav-exit" href="accessibility.html">Accessibility Statement</a>
+          <a class="menu-link nav-exit" href="modern-slavery.html">Modern Slavery Statement</a>
+          <a class="menu-link nav-exit" href="incident-72h.html">72-Hour Incident Playbook</a>
+        </div>
+      </div>
+
+      <div class="mt-8 border-t border-[rgba(244,240,230,.10)] pt-6 flex flex-wrap justify-between gap-6 font-mono text-[10px] uppercase tracking-widest opacity-70">
+        <div>© <span id="yearMenu">2026</span> CEYO · All Rights Reserved</div>
+        <div class="opacity-70">Public materials are descriptive. Controlled review required for operational specifics.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6">
+
+    <!-- HERO -->
+    <section id="overview" class="min-h-screen flex flex-col justify-center pagePad">
+      <div class="max-w-5xl">
+        <div class="kicker text-[var(--royal)] mb-6">Trust &amp; Verification</div>
+        <h1 class="h1 mb-8">Integrity You<br/>Can Recompute</h1>
+
+        <p class="text-xl text-[var(--muted)] leading-relaxed max-w-3xl mb-10">
+          <span class="font-semibold text-[var(--text)]" style="text-shadow:0 0 18px rgba(45,103,255,.18);">CEYO</span>
+          trust posture is procedural: deterministic canonicalization, cryptographic sealing, and non-custodial key custody under declared policy scope. Verification is reproducible and independent.
+        </p>
+
+        <div class="flex gap-4 flex-wrap">
+          <a href="#workflow" class="btn primary">View Verification Workflow</a>
+          <a href="platform.html" class="btn ghost nav-exit">Platform &amp; Architecture</a>
+          <a href="contact.html" class="btn ghost nav-exit">Request Controlled Review</a>
+        </div>
+
+        <div class="boundary" role="region" aria-label="Limits of verification">
+          <div class="btitle">Boundary: verification is mechanical</div>
+          <div class="btext">
+            Verification confirms <b>integrity</b> and <b>provenance</b> under declared policy scope.
+            It does <b>not</b> confirm correctness, legality, fairness, compliance outcomes, or inference reproducibility.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTROLS -->
+    <section id="controls" class="section-pad">
+      <div class="grid lg:grid-cols-2 gap-20">
+        <div>
+          <div class="kicker text-[var(--royal)] mb-4">Integrity Controls</div>
+          <h2 class="h2 text-5xl italic mb-8">Trust Is Architecture</h2>
+          <p class="text-[var(--muted)] leading-loose text-lg mb-8">
+            Trust is not a statement. It is a repeatable procedure that independent parties can execute using deterministic steps and authorized public-key material.
+          </p>
+          <p class="text-[var(--muted)] leading-loose text-lg">
+            CEYO controls are designed to verify integrity without forcing exposure of proprietary internals beyond declared policy scope.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <div class="data-block p-6" data-open="determinism" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="kicker text-[var(--royal)]">01 / Determinism</span>
+              <span class="text-xs uppercase font-semibold tracking-wide">Same bytes</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              Under the same policy version, logically equivalent artifacts produce identical canonical bytes and identical digests across environments.
+            </div>
+          </div>
+
+          <div class="data-block p-6" data-open="canonicalization" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="kicker text-[var(--royal)]">02 / Canonicalization</span>
+              <span class="text-xs uppercase font-semibold tracking-wide">RFC 8785</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              RFC 8785 defines deterministic JSON canonicalization rules (ordering, numeric normalization, encoding) to make hashing reproducible.
+            </div>
+          </div>
+
+          <div class="data-block p-6" data-open="sealing" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="kicker text-[var(--royal)]">03 / Sealing</span>
+              <span class="text-xs uppercase font-semibold tracking-wide">Hash + signature</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              Hashing establishes tamper-evidence. Digital signatures establish origin authenticity under declared public key material.
+            </div>
+          </div>
+
+          <div class="data-block p-6" data-open="keys" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="kicker text-[var(--royal)]">04 / Key custody</span>
+              <span class="text-xs uppercase font-semibold tracking-wide">Non-custodial</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              Private signing keys remain within operator-controlled environments (HSM/KMS/TEE). CEYO does not store, transmit, or possess private keys.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERIFICATION WORKFLOW -->
+    <section id="workflow" class="section-pad">
+      <div class="grid lg:grid-cols-2 gap-20">
+        <div>
+          <div class="kicker text-[var(--royal)] mb-4">Independent Verification</div>
+          <h2 class="h2 text-5xl italic mb-8">A Deterministic Workflow</h2>
+          <p class="text-[var(--muted)] leading-loose text-lg mb-8">
+            Verification is designed to be executed by independent parties using deterministic procedures. It requires no access to model weights or proprietary internals by default.
+          </p>
+          <p class="text-[var(--muted)] leading-loose text-lg">
+            Verification confirms integrity and provenance under policy scope, and produces formal outcomes suitable for review workflows.
           </p>
 
-          <div class="mt-10 flex gap-4 flex-wrap">
-            <a class="btn primary" href="#mechanics">Read Mechanics</a>
-            <a class="btn ghost nav-exit" href="platform.html">Platform</a>
-            <a class="btn ghost nav-exit" href="governance.html">Governance</a>
-          </div>
-
-          <div class="mt-10 panel pad" style="background: rgba(244,240,230,.04); border-color: rgba(244,240,230,.10);">
-            <div class="fine mb-3">Boundary</div>
-            <div class="text-[14px] leading-[1.9] text-[var(--muted)]">
-              Verification confirms integrity and provenance under policy scope — not correctness of outputs, fairness, legality, or compliance outcomes.
-              Determinations remain institutional.
+          <div class="verify" role="region" aria-label="Verification outcomes">
+            <div class="verify-head">
+              <div class="label">Verification outcomes</div>
+              <div class="badge">PASS / FAIL / POLICY MISMATCH</div>
             </div>
-          </div>
-        </div>
-
-        <div class="panel pad">
-          <div class="fine mb-5">Trust Summary</div>
-          <div class="text-[16px] leading-[1.9] text-[var(--muted)]">
-            CEYO’s trust posture is implemented through: (1) explicit capture scope, (2) deterministic canonicalization,
-            (3) cryptographic sealing, (4) non-custodial key boundaries, and (5) tiered disclosure.
-          </div>
-          <div class="mt-10 rule"></div>
-
-          <div class="mt-8 grid gap-4">
-            <div class="acc open">
-              <div class="row">
-                <div class="flex items-center gap-3">
-                  <span class="tag">01 / Determinism</span>
-                  <span class="text-xs uppercase font-bold opacity-90">Stable bytes</span>
-                </div>
-                <span class="fine">Open</span>
+            <div class="verify-grid">
+              <div class="vc">
+                <div class="k">Outcome</div>
+                <div class="t">Integrity Confirmed</div>
+                <div class="p">Digest matches and signature validates under authorized public key material.</div>
               </div>
-              <div class="body">
-                Canonicalization produces a stable byte representation independent of field order and runtime differences.
-                Independent parties can recompute the same hash from the same declared inputs.
+              <div class="vc">
+                <div class="k">Outcome</div>
+                <div class="t">Integrity Failed</div>
+                <div class="p">Hash mismatch or signature failure indicates alteration or invalid origin attribution.</div>
               </div>
-            </div>
-
-            <div class="acc">
-              <div class="row">
-                <div class="flex items-center gap-3">
-                  <span class="tag">02 / Sealing</span>
-                  <span class="text-xs uppercase font-bold opacity-90">Hash + signature</span>
-                </div>
-                <span class="fine">Toggle</span>
-              </div>
-              <div class="body">
-                Hashing establishes tamper-evidence. Signatures establish origin authenticity. Algorithm suites can be selected
-                to match institutional requirements. The verification procedure is explicit.
-              </div>
-            </div>
-
-            <div class="acc">
-              <div class="row">
-                <div class="flex items-center gap-3">
-                  <span class="tag">03 / Key Custody</span>
-                  <span class="text-xs uppercase font-bold opacity-90">Non-custodial</span>
-                </div>
-                <span class="fine">Toggle</span>
-              </div>
-              <div class="body">
-                Private signing keys remain in the operator-controlled environment (HSM/KMS/TEE). CEYO does not possess,
-                transmit, or store private keys. Authority remains with institutions and operators.
+              <div class="vc">
+                <div class="k">Outcome</div>
+                <div class="t">Policy Scope Mismatch</div>
+                <div class="p">Artifact policy identifier/version does not match expected configuration for the review context.</div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <section id="mechanics" class="section">
-      <div class="panel pad">
-        <div class="kicker mb-4">VERIFICATION MECHANICS</div>
-        <h2 class="h2 mb-8">What An Auditor Verifies<br/>In Practice</h2>
-
-        <div class="grid lg:grid-cols-2 gap-10 text-[18px] leading-[1.9] text-[var(--muted)]">
-          <div>
-            <p>
-              A verifier does not need model weights to verify an artifact’s integrity. They need: the artifact, the declared policy scope,
-              the canonicalization procedure, and the signing public key material (as authorized).
-            </p>
-            <p class="mt-5">
-              Verification is reproducible: canonicalize → hash → verify signature → confirm policy identifiers and disclosure tier.
-            </p>
-          </div>
-          <div class="panel pad" style="background: rgba(244,240,230,.04); border-color: rgba(244,240,230,.10);">
-            <div class="fine mb-3">Verification Checklist</div>
-            <ul class="ml-5 list-disc space-y-2 text-[16px] text-[var(--muted)]">
-              <li>Policy ID + version embedded and matches declared scope</li>
-              <li>Canonicalization algorithm is specified (e.g., RFC8785)</li>
-              <li>Hash recomputation matches recorded digest</li>
-              <li>Signature validates under authorized public key</li>
-              <li>Disclosure tier is explicit (Public / Redacted / Controlled)</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="disclosure" class="section">
-      <div class="panel pad">
-        <div class="kicker mb-4">DISCLOSURE TIERS</div>
-        <h2 class="h2 mb-8">Constrained Disclosure<br/>By Design</h2>
-
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="acc open">
-            <div class="row">
-              <div class="flex items-center gap-3">
-                <span class="tag">Public</span>
-                <span class="text-xs uppercase font-bold opacity-90">Descriptive</span>
-              </div>
-              <span class="fine">Open</span>
+        <div class="space-y-4">
+          <div class="data-block p-6" data-open="step1" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="kicker text-[var(--royal)]">Step 01</span>
+              <span class="text-xs uppercase font-semibold tracking-wide">Canonicalize</span>
             </div>
-            <div class="body">
-              Public material describes architecture and boundaries. It does not include sensitive operational details or private key material.
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              Deterministically canonicalize the artifact using the documented canonicalization procedure (RFC 8785). Canonicalization must match the recorded version.
             </div>
           </div>
 
-          <div class="acc">
-            <div class="row">
-              <div class="flex items-center gap-3">
-                <span class="tag">Redacted</span>
-                <span class="text-xs uppercase font-bold opacity-90">Minimized</span>
-              </div>
-              <span class="fine">Toggle</span>
+          <div class="data-block p-6" data-open="step2" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="kicker text-[var(--royal)]">Step 02</span>
+              <span class="text-xs uppercase font-semibold tracking-wide">Recompute hash</span>
             </div>
-            <div class="body">
-              Redacted artifacts exclude or mask fields per policy. Integrity remains verifiable for the disclosed structure under declared scope.
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              Recompute the digest over the canonical bytes using the documented algorithm suite and compare to the recorded digest.
             </div>
           </div>
 
-          <div class="acc">
-            <div class="row">
-              <div class="flex items-center gap-3">
-                <span class="tag">Controlled Review</span>
-                <span class="text-xs uppercase font-bold opacity-90">Authorized</span>
-              </div>
-              <span class="fine">Toggle</span>
+          <div class="data-block p-6" data-open="step3" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="kicker text-[var(--royal)]">Step 03</span>
+              <span class="text-xs uppercase font-semibold tracking-wide">Validate signature</span>
             </div>
-            <div class="body">
-              Controlled review is a process. Technical specifics, schemas, and verification materials are shared under authorization and terms.
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              Validate the digital signature against authorized public key material (or key reference) under the declared key custody posture.
+            </div>
+          </div>
+
+          <div class="data-block p-6" data-open="step4" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="kicker text-[var(--royal)]">Step 04</span>
+              <span class="text-xs uppercase font-semibold tracking-wide">Confirm policy</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              Confirm policy ID and policy version alignment. Where configured, validate policy hash against the referenced policy document under independent custody.
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="availability" class="section opacity-90 hover:opacity-100 transition-opacity">
-      <div class="panel pad">
-        <div class="kicker mb-4">OPERATIONAL POSTURE</div>
-        <h2 class="h2 mb-8">Fail-Open Availability<br/>Inference Continues</h2>
+    <!-- DISCLOSURE -->
+    <section id="disclosure" class="section-pad">
+      <div class="grid lg:grid-cols-2 gap-20">
+        <div>
+          <div class="kicker text-[var(--royal)] mb-4">Constrained Disclosure</div>
+          <h2 class="h2 text-5xl italic mb-8">Verification Without Forced Exposure</h2>
+          <p class="text-[var(--muted)] leading-loose text-lg mb-8">
+            Oversight may require validation without exposure of proprietary architecture, confidential internals, or trade-secret implementation.
+          </p>
+          <p class="text-[var(--muted)] leading-loose text-lg">
+            CEYO artifacts support tiered disclosure so integrity can be validated within declared scope boundaries.
+          </p>
+        </div>
 
-        <div class="grid lg:grid-cols-2 gap-10 text-[18px] leading-[1.9] text-[var(--muted)]">
-          <div>
-            <p>
-              Evidence generation must not become a single point of failure for inference. If sealing fails, inference proceeds.
-              Failure events are logged; artifacts are marked accordingly.
-            </p>
-            <p class="mt-5">
-              This preserves operational continuity while still making integrity posture reviewable.
-            </p>
+        <div class="space-y-4">
+          <div class="data-block p-6" data-open="public" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="kicker text-[var(--royal)]">Tier 01</span>
+              <span class="text-xs uppercase font-semibold tracking-wide">Public / Redacted</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              Limited metadata and integrity fields suitable for transparency reporting. Proprietary operational detail remains excluded by design.
+            </div>
           </div>
-          <div class="panel pad" style="background: rgba(45,103,255,.06); border-color: rgba(45,103,255,.22);">
-            <div class="fine mb-3">Boundary Declaration · V2026.02.19</div>
-            <div class="grid md:grid-cols-2 gap-6 text-[10px] font-mono leading-relaxed uppercase text-[rgba(244,240,230,.72)]">
-              <p>CEYO produces records. It does not validate correctness, fairness, legality, or compliance outcomes.</p>
-              <p>Verification confirms integrity and provenance under policy scope — not correctness of model output.</p>
+
+          <div class="data-block p-6" data-open="controlled" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="kicker text-[var(--royal)]">Tier 02</span>
+              <span class="text-xs uppercase font-semibold tracking-wide">Controlled Review</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              Expanded fields for authorized reviewers under agreement, aligned to oversight requirements while preserving trade-secret boundaries.
+            </div>
+          </div>
+
+          <div class="data-block p-6" data-open="full" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="kicker text-[var(--royal)]">Tier 03</span>
+              <span class="text-xs uppercase font-semibold tracking-wide">Full Disclosure</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              Available only under specific legal or institutional order and subject to applicable agreements. Scope is defined per engagement.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIMITS -->
+    <section id="limits" class="section-pad">
+      <div class="grid lg:grid-cols-2 gap-20">
+        <div>
+          <div class="kicker text-[var(--royal)] mb-4">Trust Boundaries</div>
+          <h2 class="h2 text-5xl italic mb-8">What CEYO Does Not Claim</h2>
+          <p class="text-[var(--muted)] leading-loose text-lg mb-8">
+            Trust posture is defined by verifiable mechanics and explicit limitations. CEYO does not expand those boundaries through implication.
+          </p>
+          <p class="text-[var(--muted)] leading-loose text-lg">
+            The sufficiency of any artifact for legal or regulatory proceedings is determined by the relevant authority, not by CEYO.
+          </p>
+
+          <div class="boundary" role="region" aria-label="Non-claims">
+            <div class="btitle">Non-claims</div>
+            <div class="btext">
+              CEYO does <b>not</b> certify compliance, admissibility, fairness, legality, or correctness.
+              It does <b>not</b> guarantee inference reproducibility.
+              It provides integrity-sealed records under declared scope.
             </div>
           </div>
         </div>
 
-        <div class="mt-12 flex gap-4 flex-wrap">
-          <a class="btn primary nav-exit" href="contact.html">Request Controlled Review</a>
-          <a class="btn ghost nav-exit" href="platform.html">Platform</a>
-          <a class="btn ghost nav-exit" href="governance.html">Governance</a>
-        </div>
+        <div class="space-y-4">
+          <div class="data-block p-6" data-open="sbom" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="kicker text-[var(--royal)]">Transparency</span>
+              <span class="text-xs uppercase font-semibold tracking-wide">SBOM posture</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              Reference builds maintain SBOM materials (SPDX/CycloneDX) shared under controlled review to support institutional supply chain governance.
+            </div>
+          </div>
 
-        <div class="mt-10 fine">© <span id="year">2026</span> CEYO · Trust Center · V2026.02.19</div>
+          <div class="data-block p-6" data-open="vdp" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="kicker text-[var(--royal)]">Security</span>
+              <span class="text-xs uppercase font-semibold tracking-wide">Disclosure channel</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              A structured Vulnerability Disclosure Program supports good-faith reporting. Production deployments may be governed by separate agreements.
+            </div>
+          </div>
+
+          <div class="data-block p-6" data-open="privacy" onclick="toggleBlock(this)">
+            <div class="flex justify-between items-center mb-4">
+              <span class="kicker text-[var(--royal)]">Civil liberties</span>
+              <span class="text-xs uppercase font-semibold tracking-wide">Minimization</span>
+            </div>
+            <div class="content pt-4 border-t border-[var(--stroke)] text-sm leading-relaxed text-[var(--muted)]">
+              Policy-scoped capture enforces minimization and purpose limitation structurally. Fields outside policy scope are not captured by default configuration.
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div style="height:72px"></div>
+      <div class="mt-14 flex justify-center gap-6 flex-wrap">
+        <a href="governance.html" class="btn ghost nav-exit">Governance</a>
+        <a href="compliance.html" class="btn ghost nav-exit">Compliance Center</a>
+        <a href="contact.html" class="btn primary nav-exit">Request Controlled Review</a>
+      </div>
     </section>
-  </main>
+
+    <!-- FOOTER -->
+    <section class="pb-24">
+      <div class="border-t border-[var(--stroke)] pt-12 opacity-85">
+        <div class="flex flex-wrap justify-between gap-6 font-mono text-[10px] uppercase tracking-widest">
+          <div>© <span id="year">2026</span> CEYO · All Rights Reserved</div>
+          <div class="flex gap-8">
+            <a href="terms.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Terms</a>
+            <a href="privacy.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Privacy</a>
+            <a href="sitemap.html" class="nav-exit hover:text-[var(--royal)] transition-colors">Sitemap</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div style="height:72px"></div>
+  </div>
 
   <nav id="bottombar" aria-label="Site index">
     <a href="index.html" class="nav-exit">INDEX</a>
     <a href="platform.html" class="nav-exit">ARCH</a>
+    <a href="integration.html" class="nav-exit">INTEGRATION</a>
     <a href="trust.html" class="active">TRUST</a>
     <a href="governance.html" class="nav-exit">GOV</a>
     <a href="contact.html" class="nav-exit">CONTACT</a>
   </nav>
 
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
   <script>
+    gsap.registerPlugin(ScrollTrigger);
+
     /* Cursor */
     const cursor = document.getElementById('cursor');
     if (window.matchMedia("(pointer: fine)").matches){
       document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + "px";
-        cursor.style.top = e.clientY + "px";
+        gsap.to(cursor, {x: e.clientX, y: e.clientY, duration: 0.10, overwrite:true});
       }, {passive:true});
-      document.querySelectorAll('a, button, .acc, .panel').forEach(el => {
+      document.querySelectorAll('a, button, .data-block').forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('big'), {passive:true});
         el.addEventListener('mouseleave', () => cursor.classList.remove('big'), {passive:true});
       });
     }
 
-    /* Topnav scroll */
+    /* Top nav scroll */
     const topnav = document.getElementById('topnav');
     window.addEventListener('scroll', () => {
-      topnav.classList.toggle('scrolled', window.scrollY > 18);
+      topnav.classList.toggle('scrolled', window.scrollY > 24);
     }, {passive:true});
 
     /* Year */
-    document.getElementById("year").textContent = new Date().getFullYear();
+    const y = new Date().getFullYear();
+    document.getElementById("year").textContent = y;
+    document.getElementById("yearMenu").textContent = y;
 
-    /* Accordions */
-    document.querySelectorAll('.acc').forEach(acc => {
-      acc.addEventListener('click', () => {
-        acc.classList.toggle('open');
-      }, {passive:true});
+    /* Menu */
+    const menu = document.getElementById('menuOverlay');
+    const openMenu = () => { menu.classList.add('open'); menu.setAttribute('aria-hidden','false'); };
+    const closeMenu = () => { menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); };
+    document.getElementById('menuBtn')?.addEventListener('click', openMenu);
+    document.getElementById('menuBtnMobile')?.addEventListener('click', openMenu);
+    document.getElementById('menuClose')?.addEventListener('click', closeMenu);
+    menu.addEventListener('click', (e)=>{ if(e.target === menu) closeMenu(); });
+
+    /* Expand blocks */
+    function toggleBlock(el){
+      const key = el.getAttribute('data-open');
+      el.classList.toggle('expanded');
+      if (key) history.replaceState(null, "", "#" + key);
+    }
+    window.toggleBlock = toggleBlock;
+
+    /* THREE.JS background (lightweight drift) */
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 400);
+    const renderer = new THREE.WebGLRenderer({
+      canvas: document.getElementById('gl'),
+      alpha: true,
+      antialias: true,
+      powerPreference:"high-performance"
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+    const nodeCount = 240;
+    const bounds = 16;
+    const positions = new Float32Array(nodeCount * 3);
+    const velocities = new Float32Array(nodeCount * 3);
+
+    for (let i=0; i<nodeCount; i++){
+      const k = i*3;
+      positions[k+0] = (Math.random()-0.5) * bounds*2;
+      positions[k+1] = (Math.random()-0.5) * bounds*2;
+      positions[k+2] = (Math.random()-0.5) * bounds*2;
+
+      velocities[k+0] = (Math.random()-0.5) * 0.020;
+      velocities[k+1] = (Math.random()-0.5) * 0.020;
+      velocities[k+2] = (Math.random()-0.5) * 0.020;
+    }
+
+    const pointsGeo = new THREE.BufferGeometry();
+    pointsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const pointsMat = new THREE.PointsMaterial({
+      color: 0x2D67FF,
+      size: 0.060,
+      transparent: true,
+      opacity: 0.90,
+      depthWrite: false
     });
 
-    /* Page transition (same blink as Platform for consistency) */
-    function navWithBlink(url){
-      document.body.animate([{opacity:1},{opacity:0.0}], {duration:200, fill:"forwards"});
-      setTimeout(() => { window.location.href = url; }, 210);
+    const points = new THREE.Points(pointsGeo, pointsMat);
+    scene.add(points);
+
+    const maxConnections = 1600;
+    const linePositions = new Float32Array(maxConnections * 2 * 3);
+    const lineGeo = new THREE.BufferGeometry();
+    lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+    lineGeo.setDrawRange(0, 0);
+
+    const lineMat = new THREE.LineBasicMaterial({
+      color: 0x2D67FF,
+      transparent: true,
+      opacity: 0.20,
+      depthWrite: false
+    });
+
+    const lines = new THREE.LineSegments(lineGeo, lineMat);
+    scene.add(lines);
+
+    camera.position.z = 20;
+
+    const maxDist = 2.35;
+    const maxDist2 = maxDist * maxDist;
+
+    function updateConnections(){
+      const pos = pointsGeo.attributes.position.array;
+      let segCount = 0;
+
+      for (let i=0; i<nodeCount; i++){
+        const ix = i*3;
+        const ax = pos[ix], ay = pos[ix+1], az = pos[ix+2];
+
+        for (let j=i+1; j<nodeCount; j++){
+          const jx = j*3;
+          const bx = pos[jx], by = pos[jx+1], bz = pos[jx+2];
+
+          const dx = ax-bx, dy = ay-by, dz = az-bz;
+          const d2 = dx*dx + dy*dy + dz*dz;
+
+          if (d2 < maxDist2){
+            const k = segCount * 6;
+            linePositions[k+0]=ax; linePositions[k+1]=ay; linePositions[k+2]=az;
+            linePositions[k+3]=bx; linePositions[k+4]=by; linePositions[k+5]=bz;
+            segCount++;
+            if (segCount >= maxConnections) break;
+          }
+        }
+        if (segCount >= maxConnections) break;
+      }
+
+      lineGeo.setDrawRange(0, segCount * 2);
+      lineGeo.attributes.position.needsUpdate = true;
+    }
+
+    let targetRotX = 0, targetRotY = 0;
+    if (window.matchMedia("(pointer: fine)").matches){
+      window.addEventListener('mousemove', (e) => {
+        const nx = (e.clientX / window.innerWidth) * 2 - 1;
+        const ny = (e.clientY / window.innerHeight) * 2 - 1;
+        targetRotY = nx * 0.18;
+        targetRotX = ny * 0.10;
+      }, {passive:true});
+    }
+
+    function animate(){
+      requestAnimationFrame(animate);
+
+      const pos = pointsGeo.attributes.position.array;
+      points.rotation.y += (targetRotY - points.rotation.y) * 0.04;
+      points.rotation.x += (targetRotX - points.rotation.x) * 0.04;
+      lines.rotation.copy(points.rotation);
+
+      for (let i=0; i<nodeCount; i++){
+        const k = i*3;
+        pos[k+0] += velocities[k+0];
+        pos[k+1] += velocities[k+1];
+        pos[k+2] += velocities[k+2];
+
+        if (pos[k+0] > bounds || pos[k+0] < -bounds) velocities[k+0] *= -1;
+        if (pos[k+1] > bounds || pos[k+1] < -bounds) velocities[k+1] *= -1;
+        if (pos[k+2] > bounds || pos[k+2] < -bounds) velocities[k+2] *= -1;
+      }
+
+      pointsGeo.attributes.position.needsUpdate = true;
+      updateConnections();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    }, {passive:true});
+
+    /* Page transition */
+    function navWithFade(url){
+      document.body.style.transition = "opacity .25s ease";
+      document.body.style.opacity = "0";
+      setTimeout(()=>window.location.href=url, 220);
     }
     document.querySelectorAll('a.nav-exit').forEach(a => {
       a.addEventListener('click', (e) => {
         const href = a.getAttribute('href');
         if (!href || href.startsWith('#')) return;
         e.preventDefault();
-        navWithBlink(href);
+        closeMenu();
+        navWithFade(href);
       });
+    });
+
+    document.querySelectorAll('#menuOverlay a').forEach(a=>{
+      a.addEventListener('click', ()=>{ closeMenu(); });
     });
   </script>
 </body>
