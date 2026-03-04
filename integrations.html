@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <title>CEYO — Integrations</title>
-  <meta name="description" content="Integration patterns for attaching CEYO at the inference boundary and exporting artifacts into governance, security, and storage systems."/>
+  <meta name="description" content="Integration patterns for attaching CEYO at the inference boundary and exporting audit artifacts to existing security, governance, and storage systems."/>
   <meta name="theme-color" content="#0B0F14"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,18 +15,19 @@
     :root{
       --ink:#0B0F14;
       --textOnInk:#C9D1D9;
+      --lineOnInk:rgba(255,255,255,.10);
 
       --accent:#3A320C;
       --accent2:#C9A44A;
 
       --maxW:1160px;
-      --readW:740px;
+      --readW:760px;
 
       --r-lg:18px;
 
       --s1:8px;  --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px;
-
       --lh:1.65;
+
       --shadow:0 10px 30px rgba(0,0,0,.25);
       --shadow2:0 18px 60px rgba(0,0,0,.35);
 
@@ -48,20 +49,20 @@
     }
     a{color:inherit;text-decoration:none}
     button{font:inherit}
+    [id]{ scroll-margin-top: calc(var(--navH) + 24px); }
 
-    /* Background: cohesive but calm, no neurons */
     .bg{
       position:fixed; inset:0; pointer-events:none; z-index:0;
       background:
-        radial-gradient(900px 520px at 35% 10%, rgba(58,50,12,.20), transparent 62%),
-        radial-gradient(820px 520px at 82% 34%, rgba(201,164,74,.08), transparent 64%),
+        radial-gradient(900px 520px at 40% 10%, rgba(58,50,12,.18), transparent 62%),
+        radial-gradient(820px 520px at 82% 34%, rgba(201,164,74,.07), transparent 64%),
         linear-gradient(180deg, #0B0F14 0%, #0A0D12 40%, #0B0F14 100%);
     }
 
     .wrap{ position:relative; z-index:1; max-width:var(--maxW); margin:0 auto; padding:0 var(--s4); }
     @media (max-width: 640px){ .wrap{ padding:0 18px; } }
 
-    /* Sticky header */
+    /* ===== MENU-ONLY HEADER (brand + MENU + CTAs) ===== */
     header.site{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
@@ -71,49 +72,65 @@
     .nav{
       height: calc(var(--navH) + env(safe-area-inset-top));
       padding-top: env(safe-area-inset-top);
-      display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
+      display:flex; align-items:center; justify-content:space-between; gap:var(--s2);
+      min-width:0;
     }
 
-    /* Brand */
-    .logo{ display:flex; align-items:center; gap:10px; min-width:180px; font-weight:600; letter-spacing:-.01em; }
+    .logo{ display:flex; align-items:center; gap:10px; min-width:0; font-weight:600; letter-spacing:-.01em; }
     .logo .mark{
       display:inline-flex; align-items:center; gap:10px;
       padding:10px 12px; border-radius:999px;
       border:1px solid rgba(255,255,255,.08);
       background: rgba(255,255,255,.02);
+      white-space:nowrap;
     }
     .logo .dot{
       width:8px; height:8px; border-radius:50%;
       background: var(--accent2);
       box-shadow: 0 0 0 4px rgba(201,164,74,.12);
+      flex:0 0 auto;
     }
 
-    /* MENU ONLY */
-    .actions{ display:flex; align-items:center; justify-content:flex-end; gap:10px; min-width:120px; }
+    .actions{ display:flex; align-items:center; gap:10px; justify-content:flex-end; min-width:0; }
+    .btn{
+      height:48px; padding:0 18px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      color: rgba(201,209,217,.98);
+      display:inline-flex; align-items:center; justify-content:center;
+      font-size:14px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.35); background: rgba(255,255,255,.04); }
+    .btn.primary{
+      border-color: rgba(201,164,74,.50);
+      background: rgba(201,164,74,.10);
+      color: rgba(245,242,234,.96);
+    }
+    .btn.primary:hover{ background: rgba(201,164,74,.16); }
+    .btn .arr{ display:inline-block; margin-left:10px; transition: transform .16s ease; }
+    .btn:hover .arr{ transform: translateX(3px); }
+
     .menuBtn{
-      height:48px; padding:0 16px; border-radius:999px;
+      height:48px; width:48px;
+      border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
       color: rgba(201,209,217,.95);
       display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
       cursor:pointer;
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
-      white-space:nowrap;
+      flex:0 0 auto;
     }
-    .menuBtn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.35); background: rgba(255,255,255,.04); }
-    .menuBtn .lab{
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing:.18em;
-      text-transform: uppercase;
-    }
-    .menuBtn .icon{
-      width:18px; height:18px; display:inline-block;
-      opacity:.90;
+    .menuBtn:active{ transform: translateY(1px); }
+
+    @media (max-width: 760px){
+      .actions .btn.secondary{ display:none; }
+      .btn{ padding:0 14px; height:46px; }
+      .menuBtn{ height:46px; width:46px; }
+      .logo .mark{ padding:9px 11px; }
     }
 
-    /* Drawer */
     .drawer{
       position:fixed; inset:0; z-index:80;
       display:none;
@@ -123,7 +140,7 @@
     }
     .drawer.open{ display:block; }
     .drawerCard{
-      max-width: 680px; margin: 0 auto;
+      max-width: 720px; margin: 0 auto;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
       border-radius: var(--r-lg);
@@ -156,10 +173,6 @@
       transition: transform .18s ease, border-color .18s ease;
     }
     .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); }
-    .drawerLinks a.active{
-      border-color: rgba(201,164,74,.35);
-      background: rgba(201,164,74,.08);
-    }
 
     /* Typography */
     .read{ max-width: var(--readW); }
@@ -186,14 +199,15 @@
       h3{ font-size: 19px; }
     }
 
-    /* Distinctive layout */
-    .tiles{
+    /* Tiles (distinctive module) */
+    .tileGrid{
       margin-top: 18px;
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
     }
-    @media (max-width: 980px){ .tiles{ grid-template-columns: 1fr; } }
+    @media (max-width: 980px){ .tileGrid{ grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px){ .tileGrid{ grid-template-columns: 1fr; } }
 
     .tile{
       border:1px solid rgba(255,255,255,.10);
@@ -201,26 +215,14 @@
       border-radius: var(--r-lg);
       padding: 18px 18px;
       transition: transform .18s ease, border-color .18s ease, background .18s ease;
-      min-height: 180px;
+      min-height: 160px;
       display:flex;
       flex-direction:column;
       justify-content:space-between;
-      gap: 12px;
+      gap: 10px;
     }
-    .tile:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); background: rgba(255,255,255,.03); }
+    .tile:hover{ transform: translateY(-2px); border-color: rgba(201,164,74,.28); background: rgba(255,255,255,.03); }
 
-    .tileTop{
-      display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap;
-      margin-bottom: 6px;
-    }
-    .tag{
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing:.14em;
-      text-transform: uppercase;
-      color: rgba(201,164,74,.90);
-      white-space:nowrap;
-    }
     .pill{
       display:inline-flex; align-items:center; gap:8px;
       padding: 8px 10px;
@@ -234,9 +236,10 @@
       color: rgba(245,242,234,.92);
       white-space:nowrap;
     }
-    .tile p{ margin:0; color: rgba(201,209,217,.82); }
+    .tile b{ color: rgba(245,242,234,.92); font-weight:600; }
 
     .snippet{
+      margin-top: 10px;
       border:1px solid rgba(201,164,74,.22);
       background: rgba(11,15,20,.62);
       border-radius: var(--r-lg);
@@ -247,9 +250,9 @@
       color: rgba(201,209,217,.86);
       overflow:auto;
       white-space: pre;
-      margin-top: 10px;
     }
 
+    /* Deployment cards */
     .deployGrid{
       margin-top: 18px;
       display:grid;
@@ -276,39 +279,7 @@
     .card ul{ margin: 10px 0 0 0; padding: 0 0 0 18px; }
     .card li{ margin: 8px 0; color: rgba(201,209,217,.84); line-height: 1.55; }
 
-    /* Footer */
     footer{ border-top:1px solid rgba(255,255,255,.06); padding: var(--s7) 0 var(--s6); }
-    .footGrid{
-      display:grid;
-      grid-template-columns: 1.2fr 1fr 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 22px;
-    }
-    @media (max-width: 980px){ .footGrid{ grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 640px){ .footGrid{ grid-template-columns: 1fr; } }
-    .footCol{
-      border:1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.02);
-      border-radius: var(--r-lg);
-      padding: 18px 18px;
-    }
-    .footCol .t{
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: rgba(201,164,74,.86);
-      margin-bottom: 10px;
-    }
-    .footCol a{
-      display:block;
-      padding: 10px 10px;
-      border-radius: 12px;
-      border:1px solid transparent;
-      color: rgba(201,209,217,.84);
-      transition: background .18s ease, border-color .18s ease;
-    }
-    .footCol a:hover{ background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.06); }
     .footBottom{
       display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
       font-family: var(--mono);
@@ -320,13 +291,13 @@
       border-top:1px solid rgba(255,255,255,.06);
     }
 
-    /* Motion */
     .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
     .reveal.on{ opacity:1; transform: translateY(0); }
+
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto;}
       .reveal{ opacity:1; transform:none; transition:none; }
-      .menuBtn, .drawerLinks a, .tile{ transition:none; }
+      .btn, .drawerLinks a, .tile{ transition:none; }
     }
   </style>
 </head>
@@ -340,16 +311,14 @@
         <span class="mark"><span class="dot" aria-hidden="true"></span><span>CEYO</span></span>
       </a>
 
-      <div class="actions" aria-label="Menu">
-        <button class="menuBtn" id="openMenu" type="button" aria-label="Open menu">
-          <span class="lab">Menu</span>
-          <span class="icon" aria-hidden="true">☰</span>
-        </button>
+      <div class="actions" aria-label="Actions">
+        <a class="btn secondary" href="resources.html#sample-artifact">Sample artifact<span class="arr">→</span></a>
+        <a class="btn primary" href="contact.html">Request walkthrough<span class="arr">→</span></a>
+        <button class="menuBtn" id="openMenu" aria-label="Open menu" type="button">☰</button>
       </div>
     </div>
   </header>
 
-  <!-- Drawer -->
   <div class="drawer" id="drawer" aria-hidden="true">
     <div class="drawerCard" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="drawerHead">
@@ -360,12 +329,12 @@
         <a href="index.html">Overview</a>
         <a href="how.html">How It Works</a>
         <a href="platform.html">Platform</a>
-        <a href="trust.html">Trust</a>
+        <a href="trust.html">Trust & Verification</a>
         <a href="compliance.html">Compliance</a>
-        <a class="active" href="integrations.html">Integrations</a>
-        <a href="resources.html">Resources</a>
-        <a href="security.html">Security</a>
+        <a href="integrations.html">Integrations</a>
         <a href="use-cases.html">Use Cases</a>
+        <a href="security.html">Security</a>
+        <a href="resources.html">Resources</a>
         <a href="company.html">Company</a>
         <a href="contact.html">Contact</a>
       </div>
@@ -373,178 +342,130 @@
   </div>
 
   <main class="wrap">
-    <!-- HERO -->
     <section style="padding-top: var(--s6);">
       <div class="read reveal">
-        <div class="eyebrow">Integrations · Attachment patterns · Exports</div>
-        <h1>Fits your stack — as a layer.</h1>
+        <div class="eyebrow">Integrations · Deployment patterns · Exports</div>
+        <h1>Fits your stack.</h1>
         <p class="muted">
-          CEYO is designed to attach at the inference boundary and emit artifacts into storage, security, and governance systems.
-          Integration preserves existing inference infrastructure and avoids default exposure of model internals.
+          CEYO is designed to attach at the inference boundary and emit audit artifacts to systems you already operate.
+          Integration does not require modifying model weights or rewriting the inference service.
         </p>
+        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn primary" href="#patterns">Integration patterns<span class="arr">→</span></a>
+          <a class="btn" href="#deploy">Deployment modes<span class="arr">→</span></a>
+        </div>
       </div>
     </section>
 
-    <!-- TILES -->
-    <section id="tiles">
+    <section id="patterns">
       <div class="read reveal">
         <h2>Integration patterns</h2>
-        <p class="muted">Common ways operators attach CEYO and route artifacts.</p>
+        <p class="muted">Common attachment points and export surfaces.</p>
 
-        <div class="tiles" aria-label="Integration tiles">
+        <div class="tileGrid" aria-label="Integration tiles">
           <div class="tile reveal">
             <div>
-              <div class="tileTop">
-                <span class="tag">Boundary</span>
-                <span class="pill">Gateway</span>
-              </div>
-              <h3>Model gateway / proxy</h3>
-              <p>Place CEYO between callers and the inference endpoint. Capture and seal artifacts while requests pass through unchanged (fail-open supported).</p>
-              <div class="snippet">mode: "gateway"
+              <span class="pill">Attach</span>
+              <div style="margin-top:10px"><b>Gateway / proxy</b></div>
+              <p class="muted">Intercept inference requests at the boundary. Fail-open supported.</p>
+            </div>
+            <div class="snippet">mode: "gateway"
 fail_open: true
-capture_policy: "POL-001@V1"</div>
-            </div>
+policy: "POL-001@V1"</div>
           </div>
 
           <div class="tile reveal">
             <div>
-              <div class="tileTop">
-                <span class="tag">Boundary</span>
-                <span class="pill">Sidecar</span>
-              </div>
-              <h3>Sidecar (co-located)</h3>
-              <p>Deploy alongside the inference service in containerized environments. Minimal pipeline disruption; designed for low overhead.</p>
-              <div class="snippet">mode: "sidecar"
-intercept: "localhost"
-kms_signing: true</div>
+              <span class="pill">Attach</span>
+              <div style="margin-top:10px"><b>Sidecar</b></div>
+              <p class="muted">Co-located process beside the inference service in containers.</p>
             </div>
+            <div class="snippet">mode: "sidecar"
+network: "localhost"
+latency_budget_ms: 5</div>
           </div>
 
           <div class="tile reveal">
             <div>
-              <div class="tileTop">
-                <span class="tag">Boundary</span>
-                <span class="pill">Wrapper</span>
-              </div>
-              <h3>Service wrapper</h3>
-              <p>Expose a compatible interface that calls inference internally and emits artifacts in parallel. Suitable when interface control is required.</p>
-              <div class="snippet">mode: "wrapper"
-upstream: "inference"
-emit_artifact: "async"</div>
+              <span class="pill">Export</span>
+              <div style="margin-top:10px"><b>Secure storage</b></div>
+              <p class="muted">Artifacts stored in access-controlled, tamper-evident repositories.</p>
             </div>
+            <div class="snippet">store: "operator_defined"
+immutability: "WORM|append-only"
+access: "RBAC"</div>
           </div>
 
           <div class="tile reveal">
             <div>
-              <div class="tileTop">
-                <span class="tag">Export</span>
-                <span class="pill">Storage</span>
-              </div>
-              <h3>Secure artifact storage</h3>
-              <p>Write artifacts to an access-controlled repository with retrieval logging for chain-of-custody compatible workflows.</p>
-              <div class="snippet">store: "object_storage"
-retention: "institution_policy"
-access_log: true</div>
+              <span class="pill">Export</span>
+              <div style="margin-top:10px"><b>SIEM / SOAR</b></div>
+              <p class="muted">Forward integrity events and verification outcomes.</p>
             </div>
+            <div class="snippet">event: "SEAL_FAIL|VERIFY_FAIL"
+sink: "SIEM"
+severity: "policy_defined"</div>
           </div>
 
           <div class="tile reveal">
             <div>
-              <div class="tileTop">
-                <span class="tag">Export</span>
-                <span class="pill">SIEM</span>
-              </div>
-              <h3>Security tooling (SIEM/SOAR)</h3>
-              <p>Emit artifact metadata and verification outcomes to security systems for monitoring, alerting, and incident workflows.</p>
-              <div class="snippet">export: "siem"
-events: ["sealed","verify_fail","policy_mismatch"]
-severity_map: "operator_defined"</div>
+              <span class="pill">Export</span>
+              <div style="margin-top:10px"><b>GRC evidence</b></div>
+              <p class="muted">Expose artifacts as evidence objects under explicit scope.</p>
             </div>
-          </div>
-
-          <div class="tile reveal">
-            <div>
-              <div class="tileTop">
-                <span class="tag">Export</span>
-                <span class="pill">GRC</span>
-              </div>
-              <h3>Governance & audit</h3>
-              <p>Export evidence references for audit programs: policy versions, signatures, verification outcomes, and retrieval trails.</p>
-              <div class="snippet">export: "grc"
-fields: ["policy_id","policy_version","digest","signature","result"]
+            <div class="snippet">evidence_object: "artifact"
+controls: ["integrity","provenance","scope"]
 tier: "controlled_review"</div>
+          </div>
+
+          <div class="tile reveal">
+            <div>
+              <span class="pill">Export</span>
+              <div style="margin-top:10px"><b>Verifier harness</b></div>
+              <p class="muted">Independent verification: PASS / FAIL / POLICY_MISMATCH.</p>
             </div>
+            <div class="snippet">canonicalize()
+recompute_hash()
+validate_signature()
+check_policy_alignment()</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- DEPLOYMENT MODES -->
-    <section id="modes">
+    <section id="deploy">
       <div class="read reveal">
         <h2>Deployment modes</h2>
-        <p class="muted">Common operating environments. Operators define custody, retention, and disclosure boundaries.</p>
+        <p class="muted">Operational postures commonly requested in institutional environments.</p>
 
-        <div class="deployGrid" aria-label="Deployment mode cards">
+        <div class="deployGrid" aria-label="Deployment cards">
           <div class="card reveal">
-            <div class="k">Cloud</div>
+            <div class="k">Cloud · On-prem · Hybrid</div>
             <ul>
-              <li>Integrate with managed KMS/HSM for signing operations.</li>
-              <li>Artifacts stored in access-controlled object storage with audit logs.</li>
-              <li>Scale horizontally; determinism enforced by canonicalization rules.</li>
+              <li>Deploy beside inference endpoints without changing core pipelines.</li>
+              <li>Operate with operator-controlled key custody (HSM/KMS/TEE).</li>
+              <li>Store artifacts in operator repositories under existing access control.</li>
             </ul>
           </div>
 
           <div class="card reveal">
-            <div class="k">On-prem / air-gapped</div>
+            <div class="k">Air-gapped / restricted</div>
             <ul>
-              <li>Sign with on-prem HSM/Vault; no external dependencies required.</li>
-              <li>Artifacts retained in institutional repositories and exported by policy.</li>
-              <li>Disclosure tiers aligned to internal handling requirements.</li>
+              <li>Artifact generation and verification can be isolated to constrained networks.</li>
+              <li>Disclosure tiers define what leaves the enclave, if anything.</li>
+              <li>Fail-open posture remains an operator decision under policy.</li>
             </ul>
           </div>
         </div>
 
         <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="menuBtn" style="text-decoration:none" href="platform.html">Platform components<span class="icon" aria-hidden="true">→</span></a>
-          <a class="menuBtn" style="text-decoration:none" href="contact.html">Request walkthrough<span class="icon" aria-hidden="true">→</span></a>
+          <a class="btn primary" href="platform.html">Platform components<span class="arr">→</span></a>
+          <a class="btn" href="compliance.html">Compliance mapping<span class="arr">→</span></a>
         </div>
       </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer id="footer">
-      <div class="footGrid reveal">
-        <div class="footCol">
-          <div class="t">Product</div>
-          <a href="index.html">Overview</a>
-          <a href="how.html">How It Works</a>
-          <a href="platform.html">Platform</a>
-          <a href="integrations.html">Integrations</a>
-        </div>
-        <div class="footCol">
-          <div class="t">Trust</div>
-          <a href="trust.html">Trust Model</a>
-          <a href="security.html">Security</a>
-          <a href="trust.html#verification-spec">Verification Spec</a>
-          <a href="resources.html#library">Resources</a>
-        </div>
-        <div class="footCol">
-          <div class="t">Resources</div>
-          <a href="resources.html">Library</a>
-          <a href="resources.html#sample-artifact">Sample Artifacts</a>
-          <a href="resources.html#glossary">Glossary</a>
-          <a href="resources.html#faq">FAQs</a>
-        </div>
-        <div class="footCol">
-          <div class="t">Legal</div>
-          <a href="privacy.html">Privacy</a>
-          <a href="terms.html">Terms</a>
-          <a href="vdp.html">Security Disclosure</a>
-          <a href="ethical.html">Responsible Use</a>
-        </div>
-      </div>
-
+    <footer>
       <div class="footBottom reveal">
         <div>© <span id="year"></span> CEYO. All rights reserved.</div>
         <div><a href="vdp.html">Vulnerability Disclosure</a></div>
@@ -555,22 +476,12 @@ tier: "controlled_review"</div>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Menu drawer
+    // Drawer
     const drawer = document.getElementById('drawer');
     const openMenu = document.getElementById('openMenu');
     const closeMenu = document.getElementById('closeMenu');
-
-    function openDrawer(){
-      drawer.classList.add('open');
-      drawer.setAttribute('aria-hidden','false');
-      document.body.style.overflow='hidden';
-    }
-    function closeDrawer(){
-      drawer.classList.remove('open');
-      drawer.setAttribute('aria-hidden','true');
-      document.body.style.overflow='';
-    }
-
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
     openMenu.addEventListener('click', openDrawer);
     closeMenu.addEventListener('click', closeDrawer);
     drawer.addEventListener('click', (e)=>{ if(e.target===drawer) closeDrawer(); });
