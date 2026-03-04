@@ -1,11 +1,10 @@
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <title>CEYO — Contact</title>
-  <meta name="description" content="Request a verification walkthrough. CEYO produces deterministic, integrity-sealed audit artifacts for independent verification under explicit policy scope."/>
+  <meta name="description" content="Request a verification walkthrough. Scope, deployment posture, and controlled review."/>
   <meta name="theme-color" content="#F5F2EA"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,13 +22,13 @@
       --accent2:#C9A44A;
 
       --maxW:1160px;
-      --readW:740px;
+      --readW:760px;
 
       --r-lg:18px;
 
       --s1:8px;  --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px;
-
       --lh:1.65;
+
       --shadow:0 12px 30px rgba(0,0,0,.10);
       --shadow2:0 22px 60px rgba(0,0,0,.14);
 
@@ -50,13 +49,14 @@
       overflow-x:hidden;
     }
     a{color:inherit;text-decoration:none}
-    button,input,textarea,select{font:inherit}
+    button,input,textarea{font:inherit}
     [id]{ scroll-margin-top: calc(var(--navH) + 24px); }
 
+    /* Light background atmosphere (distinct) */
     .bg{
       position:fixed; inset:0; pointer-events:none; z-index:0;
       background:
-        radial-gradient(900px 520px at 35% 0%, rgba(201,164,74,.10), transparent 60%),
+        radial-gradient(900px 520px at 35% 0%, rgba(201,164,74,.12), transparent 60%),
         radial-gradient(820px 520px at 82% 18%, rgba(58,50,12,.06), transparent 64%),
         linear-gradient(180deg, #F5F2EA 0%, #F3EEDD 100%);
     }
@@ -70,70 +70,91 @@
     .wrap{ position:relative; z-index:2; max-width:var(--maxW); margin:0 auto; padding:0 var(--s4); }
     @media (max-width: 640px){ .wrap{ padding:0 18px; } }
 
+    /* ===== MENU-ONLY HEADER ===== */
     header.site{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
-      background: rgba(245,242,234,.78);
+      background: rgba(245,242,234,.82);
       border-bottom:1px solid var(--lineOnPaper);
     }
     .nav{
       height: calc(var(--navH) + env(safe-area-inset-top));
       padding-top: env(safe-area-inset-top);
-      display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
+      display:flex; align-items:center; justify-content:space-between; gap:var(--s2);
+      min-width:0;
     }
 
-    .logo{ display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:-.01em; }
+    .logo{ display:flex; align-items:center; gap:10px; min-width:0; font-weight:600; letter-spacing:-.01em; }
     .logo .mark{
       display:inline-flex; align-items:center; gap:10px;
       padding:10px 12px; border-radius:999px;
       border:1px solid var(--lineOnPaper);
-      background: rgba(255,255,255,.55);
+      background: rgba(255,255,255,.65);
+      white-space:nowrap;
     }
     .logo .dot{
       width:8px; height:8px; border-radius:50%;
       background: var(--accent2);
       box-shadow: 0 0 0 4px rgba(201,164,74,.18);
+      flex:0 0 auto;
     }
 
-    /* MENU ONLY */
-    .actions{ display:flex; align-items:center; justify-content:flex-end; gap:10px; }
-    .menuBtn{
-      height:48px; padding:0 16px; border-radius:999px;
+    .actions{ display:flex; align-items:center; gap:10px; justify-content:flex-end; min-width:0; }
+    .btn{
+      height:48px; padding:0 18px; border-radius:999px;
       border:1px solid var(--lineOnPaper);
-      background: rgba(255,255,255,.55);
-      color: rgba(18,22,29,.86);
+      background: rgba(255,255,255,.65);
+      color: rgba(18,22,29,.92);
       display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      cursor:pointer;
+      font-size:14px;
       transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
       white-space:nowrap;
     }
-    .menuBtn:hover{
+    .btn:hover{
       transform: translateY(-1px);
       border-color: rgba(201,164,74,.55);
-      background: rgba(255,255,255,.78);
       box-shadow: var(--shadow);
+      background: rgba(255,255,255,.82);
     }
-    .menuBtn .lab{
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing:.18em;
-      text-transform: uppercase;
+    .btn.primary{
+      border-color: rgba(201,164,74,.70);
+      background: rgba(201,164,74,.22);
     }
-    .menuBtn .icon{ width:18px; height:18px; display:inline-block; opacity:.90; }
+    .btn.primary:hover{ background: rgba(201,164,74,.28); }
+    .btn .arr{ display:inline-block; margin-left:10px; transition: transform .16s ease; }
+    .btn:hover .arr{ transform: translateX(3px); }
+
+    .menuBtn{
+      height:48px; width:48px;
+      border-radius:999px;
+      border:1px solid var(--lineOnPaper);
+      background: rgba(255,255,255,.65);
+      color: rgba(18,22,29,.86);
+      display:inline-flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      flex:0 0 auto;
+    }
+    .menuBtn:active{ transform: translateY(1px); }
+
+    @media (max-width: 760px){
+      .actions .btn.secondary{ display:none; }
+      .btn{ padding:0 14px; height:46px; }
+      .menuBtn{ height:46px; width:46px; }
+      .logo .mark{ padding:9px 11px; }
+    }
 
     .drawer{
       position:fixed; inset:0; z-index:80;
       display:none;
-      background: rgba(245,242,234,.78);
+      background: rgba(245,242,234,.82);
       backdrop-filter: blur(10px);
       padding: calc(env(safe-area-inset-top) + 12px) 18px 18px;
     }
     .drawer.open{ display:block; }
     .drawerCard{
-      max-width: 680px; margin: 0 auto;
+      max-width: 720px; margin: 0 auto;
       border:1px solid var(--lineOnPaper);
-      background: rgba(255,255,255,.78);
+      background: rgba(255,255,255,.82);
       border-radius: var(--r-lg);
       box-shadow: var(--shadow2);
       overflow:hidden;
@@ -151,7 +172,7 @@
     .close{
       height:44px; padding:0 14px; border-radius:999px;
       border:1px solid var(--lineOnPaper);
-      background: rgba(255,255,255,.55);
+      background: rgba(255,255,255,.65);
       color: rgba(18,22,29,.86);
       cursor:pointer;
     }
@@ -159,17 +180,13 @@
     .drawerLinks a{
       padding: 14px 14px; border-radius: 14px;
       border:1px solid rgba(0,0,0,.08);
-      background: rgba(255,255,255,.55);
+      background: rgba(255,255,255,.65);
       font-size: 15px;
       transition: transform .18s ease, border-color .18s ease;
     }
     .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.55); }
-    .drawerLinks a.active{
-      border-color: rgba(201,164,74,.70);
-      background: rgba(201,164,74,.20);
-      color: rgba(18,22,29,.92);
-    }
 
+    /* Typography */
     .read{ max-width: var(--readW); }
     p{ margin: 0 0 14px 0; line-height: var(--lh); }
     .muted{ color: var(--mutedOnPaper); }
@@ -194,89 +211,79 @@
       h3{ font-size: 19px; }
     }
 
-    /* Distinctive Contact layout: split form + "what happens next" + security note */
-    .grid{
+    /* Contact layout */
+    .grid2{
       margin-top: 18px;
       display:grid;
       grid-template-columns: 1.05fr 0.95fr;
       gap: 14px;
       align-items:start;
     }
-    @media (max-width: 980px){ .grid{ grid-template-columns: 1fr; } }
+    @media (max-width: 980px){ .grid2{ grid-template-columns: 1fr; } }
 
-    .panel{
+    .card{
       border:1px solid var(--lineOnPaper);
-      background: rgba(255,255,255,.70);
+      background: rgba(255,255,255,.72);
       border-radius: var(--r-lg);
       padding: 18px 18px;
-      box-shadow: none;
+      box-shadow: var(--shadow);
     }
 
     label{
       display:block;
       font-family: var(--mono);
       font-size: 11px;
-      letter-spacing:.12em;
+      letter-spacing:.14em;
       text-transform: uppercase;
-      color: rgba(18,22,29,.68);
-      margin: 0 0 8px 0;
+      color: rgba(18,22,29,.70);
+      margin: 14px 0 8px;
     }
-    .field{
-      margin-bottom: 14px;
-    }
-    input[type="text"], input[type="email"], textarea, select{
+    input, textarea, select{
       width:100%;
       border-radius: 14px;
-      border:1px solid rgba(0,0,0,.12);
-      background: rgba(255,255,255,.85);
+      border:1px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.86);
       padding: 12px 12px;
       font-size: 15px;
       color: rgba(18,22,29,.92);
       outline:none;
     }
-    textarea{ min-height: 140px; resize: vertical; line-height: 1.55; }
-    input:focus, textarea:focus, select:focus{
-      border-color: rgba(201,164,74,.75);
-      box-shadow: 0 0 0 4px rgba(201,164,74,.18);
-    }
+    textarea{ min-height: 140px; resize: vertical; line-height: 1.5; }
+    input:focus, textarea:focus, select:focus{ border-color: rgba(201,164,74,.65); }
 
-    .row2{
+    .formRow{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
     }
-    @media (max-width: 640px){ .row2{ grid-template-columns: 1fr; } }
+    @media (max-width: 640px){ .formRow{ grid-template-columns: 1fr; } }
 
-    .btn{
-      height:48px; padding:0 18px; border-radius:999px;
-      border:1px solid var(--lineOnPaper);
-      background: rgba(255,255,255,.70);
-      color: rgba(18,22,29,.92);
-      display:inline-flex; align-items:center; justify-content:center;
-      font-size:14px;
-      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
-      white-space:nowrap;
-      cursor:pointer;
+    .submitRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top: 14px;
     }
-    .btn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.55); box-shadow: var(--shadow); background: rgba(255,255,255,.85); }
-    .btn.primary{
-      border-color: rgba(201,164,74,.70);
-      background: rgba(201,164,74,.22);
+
+    .mini{
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing:.12em;
+      text-transform: uppercase;
+      color: rgba(18,22,29,.58);
     }
-    .btn.primary:hover{ background: rgba(201,164,74,.28); }
-    .btn .arr{ display:inline-block; margin-left:10px; transition: transform .16s ease; }
-    .btn:hover .arr{ transform: translateX(3px); }
 
     .steps{
       display:grid;
       grid-template-columns: 1fr;
-      gap: 12px;
+      gap: 10px;
       margin-top: 10px;
     }
     .step{
       border:1px solid rgba(0,0,0,.10);
-      background: rgba(255,255,255,.65);
-      border-radius: var(--r-lg);
+      background: rgba(255,255,255,.72);
+      border-radius: 16px;
       padding: 14px 14px;
     }
     .step .k{
@@ -287,49 +294,17 @@
       color: rgba(58,50,12,.82);
       margin-bottom: 8px;
     }
+    .step p{ margin:0; color: var(--mutedOnPaper); }
 
     .note{
       margin-top: 12px;
-      border:1px solid rgba(201,164,74,.35);
-      background: rgba(201,164,74,.12);
-      border-radius: var(--r-lg);
-      padding: 14px 14px;
-      color: rgba(18,22,29,.76);
+      border-top:1px solid rgba(0,0,0,.08);
+      padding-top: 12px;
+      color: var(--mutedOnPaper);
+      font-size: 15px;
     }
-    .note b{ color: rgba(18,22,29,.90); font-weight:600; }
 
     footer{ border-top:1px solid var(--lineOnPaper); padding: var(--s7) 0 var(--s6); }
-    .footGrid{
-      display:grid;
-      grid-template-columns: 1.2fr 1fr 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 22px;
-    }
-    @media (max-width: 980px){ .footGrid{ grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 640px){ .footGrid{ grid-template-columns: 1fr; } }
-    .footCol{
-      border:1px solid var(--lineOnPaper);
-      background: rgba(255,255,255,.70);
-      border-radius: var(--r-lg);
-      padding: 18px 18px;
-    }
-    .footCol .t{
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: rgba(58,50,12,.82);
-      margin-bottom: 10px;
-    }
-    .footCol a{
-      display:block;
-      padding: 10px 10px;
-      border-radius: 12px;
-      border:1px solid transparent;
-      color: rgba(18,22,29,.78);
-      transition: background .18s ease, border-color .18s ease;
-    }
-    .footCol a:hover{ background: rgba(201,164,74,.14); border-color: rgba(201,164,74,.25); }
     .footBottom{
       display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
       font-family: var(--mono);
@@ -347,7 +322,7 @@
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto;}
       .reveal{ opacity:1; transform:none; transition:none; }
-      .menuBtn, .btn, .drawerLinks a{ transition:none; }
+      .btn, .drawerLinks a{ transition:none; }
     }
   </style>
 </head>
@@ -362,15 +337,15 @@
         <span class="mark"><span class="dot" aria-hidden="true"></span><span>CEYO</span></span>
       </a>
 
-      <div class="actions" aria-label="Menu">
-        <button class="menuBtn" id="openMenu" type="button" aria-label="Open menu">
-          <span class="lab">Menu</span>
-          <span class="icon" aria-hidden="true">☰</span>
-        </button>
+      <div class="actions" aria-label="Actions">
+        <a class="btn secondary" href="resources.html#sample-artifact">Sample artifact<span class="arr">→</span></a>
+        <a class="btn primary" href="#form">Request walkthrough<span class="arr">→</span></a>
+        <button class="menuBtn" id="openMenu" aria-label="Open menu" type="button">☰</button>
       </div>
     </div>
   </header>
 
+  <!-- Drawer -->
   <div class="drawer" id="drawer" aria-hidden="true">
     <div class="drawerCard" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="drawerHead">
@@ -381,159 +356,119 @@
         <a href="index.html">Overview</a>
         <a href="how.html">How It Works</a>
         <a href="platform.html">Platform</a>
-        <a href="trust.html">Trust</a>
+        <a href="trust.html">Trust & Verification</a>
         <a href="compliance.html">Compliance</a>
         <a href="integrations.html">Integrations</a>
-        <a href="resources.html">Resources</a>
-        <a href="security.html">Security</a>
         <a href="use-cases.html">Use Cases</a>
+        <a href="security.html">Security</a>
+        <a href="resources.html">Resources</a>
         <a href="company.html">Company</a>
-        <a class="active" href="contact.html">Contact</a>
+        <a href="contact.html">Contact</a>
       </div>
     </div>
   </div>
 
   <main class="wrap">
-    <section style="padding-top: var(--s6);">
+    <section style="padding-top: var(--s6);" id="form">
       <div class="read reveal">
-        <div class="eyebrow">Contact · Verification walkthrough</div>
+        <div class="eyebrow">Contact · Controlled review · Walkthrough</div>
         <h1>Request a verification walkthrough.</h1>
         <p class="muted">
-          Tell CEYO what you need to evaluate: deployment pattern, capture scope, disclosure tier, and verification requirements.
+          Share your deployment context at a high level. CEYO supports evaluation without requesting model weights or proprietary internals by default.
         </p>
       </div>
 
-      <div class="grid">
+      <div class="grid2">
         <!-- Form -->
-        <div class="panel reveal" aria-label="Contact form">
-          <h2 style="margin-top:0">Contact</h2>
+        <div class="card reveal" aria-label="Contact form">
+          <h2 style="margin-top:0">Request form</h2>
+          <p class="muted">No sensitive data. Use high-level descriptions only.</p>
 
           <form action="#" method="post">
-            <div class="row2">
-              <div class="field">
+            <div class="formRow">
+              <div>
                 <label for="name">Name</label>
-                <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name"/>
+                <input id="name" name="name" autocomplete="name" placeholder="Your name"/>
               </div>
-              <div class="field">
-                <label for="org">Organization</label>
-                <input id="org" name="org" type="text" autocomplete="organization" placeholder="Company / agency"/>
+              <div>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="you@domain.com" required/>
               </div>
             </div>
 
-            <div class="row2">
-              <div class="field">
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" autocomplete="email" placeholder="you@domain.com"/>
+            <div class="formRow">
+              <div>
+                <label for="org">Organization</label>
+                <input id="org" name="org" autocomplete="organization" placeholder="Organization"/>
               </div>
-              <div class="field">
+              <div>
                 <label for="role">Role</label>
                 <select id="role" name="role">
-                  <option value="">Select…</option>
-                  <option>Compliance / Risk</option>
-                  <option>Security Engineering</option>
-                  <option>AI / Platform Engineering</option>
-                  <option>Institutional Reviewer</option>
-                  <option>Other</option>
+                  <option value="security">Security</option>
+                  <option value="compliance">Compliance</option>
+                  <option value="platform">Platform / Engineering</option>
+                  <option value="legal">Legal</option>
+                  <option value="review">Institutional reviewer</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
             </div>
 
-            <div class="field">
-              <label for="topic">What do you want to review?</label>
-              <select id="topic" name="topic">
-                <option value="">Select…</option>
-                <option>Verification walkthrough</option>
-                <option>Capture policy + masking schema</option>
-                <option>Deployment patterns (sidecar/gateway/wrapper)</option>
-                <option>Compliance mapping</option>
-                <option>Security posture + key custody</option>
-                <option>Other</option>
-              </select>
-            </div>
+            <label for="context">What are you evaluating?</label>
+            <textarea id="context" name="context" placeholder="Example: AI decision support system; internal audit readiness; need independent verification under constrained disclosure."></textarea>
 
-            <div class="field">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" placeholder="Context: system type, constraints (latency, disclosure), and what you need verified."></textarea>
-            </div>
+            <label for="timeline">Timeline</label>
+            <select id="timeline" name="timeline">
+              <option value="now">Now</option>
+              <option value="30">Within 30 days</option>
+              <option value="60">Within 60 days</option>
+              <option value="later">Later / exploratory</option>
+            </select>
 
-            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-              <button class="btn primary" type="submit">Submit request<span class="arr">→</span></button>
-              <a class="btn" href="resources.html">View resources<span class="arr">→</span></a>
-            </div>
-
-            <div class="note" style="margin-top:14px">
-              <b>Security note:</b> do not include secrets, credentials, or sensitive payloads in this form. Use controlled channels after scope is confirmed.
+            <div class="submitRow">
+              <button class="btn primary" type="submit">Send request<span class="arr">→</span></button>
+              <div class="mini">Or email: contact@ceyo.ai</div>
             </div>
           </form>
+
+          <div class="note">
+            <b>Security note:</b> do not submit secrets, keys, personal data, or proprietary model internals via this form.
+          </div>
         </div>
 
         <!-- What happens next -->
-        <div class="panel reveal" aria-label="What happens next">
+        <div class="card reveal" aria-label="What happens next">
           <h2 style="margin-top:0">What happens next</h2>
-          <p class="muted">A typical evaluation follows this sequence.</p>
+          <p class="muted">A short, structured process designed for institutional review.</p>
 
-          <div class="steps" aria-label="Process steps">
+          <div class="steps">
             <div class="step">
-              <div class="k">Step 1</div>
-              <h3 style="margin:0 0 6px 0">Confirm scope</h3>
-              <p class="muted" style="margin:0">Deployment posture, capture policy boundaries, and disclosure tier expectations.</p>
+              <div class="k">Step 1 · Respond</div>
+              <p>We confirm the evaluation scope and the appropriate disclosure tier for your context.</p>
             </div>
             <div class="step">
-              <div class="k">Step 2</div>
-              <h3 style="margin:0 0 6px 0">Walkthrough</h3>
-              <p class="muted" style="margin:0">Verification steps: canonicalize → hash → signature → policy alignment. PASS/FAIL interpretation.</p>
+              <div class="k">Step 2 · Scope</div>
+              <p>We align on capture policy boundaries, key custody posture, and verification expectations.</p>
             </div>
             <div class="step">
-              <div class="k">Step 3</div>
-              <h3 style="margin:0 0 6px 0">Controlled materials</h3>
-              <p class="muted" style="margin:0">Share specs and schema documents under appropriate terms if required for procurement or review.</p>
+              <div class="k">Step 3 · Walkthrough</div>
+              <p>We provide a verification walkthrough using sample artifacts and the deterministic verification procedure.</p>
             </div>
           </div>
 
           <div class="note">
-            <b>Boundary:</b> CEYO provides integrity-sealed records. It does not certify compliance, legality, or decision correctness.
+            <b>Controlled review:</b> technical briefs, specs, and additional materials are available under appropriate confidentiality terms.
           </div>
 
           <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="btn primary" href="how.html#verify60">See verification steps<span class="arr">→</span></a>
-            <a class="btn" href="trust.html#verification-spec">Trust model<span class="arr">→</span></a>
+            <a class="btn" href="resources.html">View resources<span class="arr">→</span></a>
+            <a class="btn" href="trust.html#verification-spec">Verification steps<span class="arr">→</span></a>
           </div>
         </div>
       </div>
     </section>
 
-    <footer id="footer">
-      <div class="footGrid reveal">
-        <div class="footCol">
-          <div class="t">Product</div>
-          <a href="index.html">Overview</a>
-          <a href="how.html">How It Works</a>
-          <a href="platform.html">Platform</a>
-          <a href="integrations.html">Integrations</a>
-        </div>
-        <div class="footCol">
-          <div class="t">Trust</div>
-          <a href="trust.html">Trust Model</a>
-          <a href="security.html">Security</a>
-          <a href="trust.html#verification-spec">Verification Spec</a>
-          <a href="resources.html#library">Resources</a>
-        </div>
-        <div class="footCol">
-          <div class="t">Resources</div>
-          <a href="resources.html">Library</a>
-          <a href="resources.html#sample-artifact">Sample Artifacts</a>
-          <a href="resources.html#glossary">Glossary</a>
-          <a href="resources.html#faq">FAQs</a>
-        </div>
-        <div class="footCol">
-          <div class="t">Legal</div>
-          <a href="privacy.html">Privacy</a>
-          <a href="terms.html">Terms</a>
-          <a href="vdp.html">Security Disclosure</a>
-          <a href="ethical.html">Responsible Use</a>
-        </div>
-      </div>
-
+    <footer>
       <div class="footBottom reveal">
         <div>© <span id="year"></span> CEYO. All rights reserved.</div>
         <div><a href="vdp.html">Vulnerability Disclosure</a></div>
@@ -544,7 +479,7 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Menu drawer
+    // Drawer
     const drawer = document.getElementById('drawer');
     const openMenu = document.getElementById('openMenu');
     const closeMenu = document.getElementById('closeMenu');
