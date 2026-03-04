@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <title>CEYO — Security Disclosure</title>
-  <meta name="description" content="Vulnerability disclosure policy. How to report security issues and coordinated disclosure expectations."/>
+  <meta name="description" content="Vulnerability Disclosure Program (VDP) for CEYO."/>
   <meta name="theme-color" content="#F5F2EA"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,115 +13,148 @@
 
   <style>
     :root{
-      --paper:#F5F2EA; --paper2:#F3EEDD;
-      --text:#12161D; --muted:rgba(18,22,29,.68); --line:rgba(0,0,0,.10);
+      --paper:#F5F2EA; --text:#12161D; --muted:rgba(18,22,29,.68); --line:rgba(0,0,0,.10);
       --accent:#3A320C; --accent2:#C9A44A;
-      --maxW:1160px; --readW:760px;
-      --r-lg:18px;
+      --maxW:1160px; --readW:760px; --r-lg:18px;
       --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px;
-      --lh:1.65;
+      --lh:1.70;
       --shadow:0 12px 30px rgba(0,0,0,.10); --shadow2:0 22px 60px rgba(0,0,0,.14);
-      --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --ui:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       --navH:72px;
     }
     *{box-sizing:border-box}
     html{background:var(--paper);scroll-behavior:smooth}
-    body{margin:0;font-family:var(--ui);color:var(--text);background:var(--paper);-webkit-text-size-adjust:100%;overflow-x:hidden;}
-    a{color:inherit;text-decoration:none} button{font:inherit}
+    body{margin:0;font-family:var(--ui);color:var(--text);background:var(--paper);-webkit-text-size-adjust:100%;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
     [id]{ scroll-margin-top: calc(var(--navH) + 24px); }
 
-    .bg{position:fixed;inset:0;pointer-events:none;z-index:0;background:
-      radial-gradient(900px 520px at 35% 0%, rgba(201,164,74,.10), transparent 60%),
-      radial-gradient(820px 520px at 82% 18%, rgba(58,50,12,.06), transparent 64%),
-      linear-gradient(180deg, var(--paper) 0%, var(--paper2) 100%);}
-    .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:multiply;}
+    .bg{
+      position:fixed; inset:0; pointer-events:none; z-index:0;
+      background:
+        radial-gradient(900px 520px at 35% 0%, rgba(201,164,74,.10), transparent 60%),
+        radial-gradient(820px 520px at 82% 18%, rgba(58,50,12,.06), transparent 64%),
+        linear-gradient(180deg, #F5F2EA 0%, #F3EEDD 100%);
+    }
+    .grain{
+      position:fixed; inset:0; z-index:1; pointer-events:none;
+      opacity:.06;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
+      mix-blend-mode:multiply;
+    }
+    .wrap{ position:relative; z-index:2; max-width:var(--maxW); margin:0 auto; padding:0 var(--s4); }
+    @media (max-width: 640px){ .wrap{ padding:0 18px; } }
 
-    .wrap{position:relative;z-index:2;max-width:var(--maxW);margin:0 auto;padding:0 var(--s4);}
-    @media (max-width:640px){.wrap{padding:0 18px;}}
+    header.site{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(245,242,234,.78);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      height: calc(var(--navH) + env(safe-area-inset-top));
+      padding-top: env(safe-area-inset-top);
+      display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
+    }
+    .logo{ display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:-.01em; min-width:170px; }
+    .logo .mark{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.55);
+    }
+    .logo .dot{ width:8px; height:8px; border-radius:50%; background:var(--accent2); box-shadow:0 0 0 4px rgba(201,164,74,.18); }
 
-    header.site{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:rgba(245,242,234,.78);border-bottom:1px solid var(--line);}
-    .nav{height:calc(var(--navH) + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);display:flex;align-items:center;justify-content:space-between;gap:var(--s3);}
+    .actions{ display:flex; align-items:center; gap:10px; justify-content:flex-end; }
+    .btn{
+      height:48px; padding:0 18px; border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.55);
+      color: rgba(18,22,29,.92);
+      display:inline-flex; align-items:center; justify-content:center;
+      font-size:14px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.55); box-shadow:var(--shadow); background: rgba(255,255,255,.78); }
+    .btn.primary{ border-color: rgba(201,164,74,.70); background: rgba(201,164,74,.22); }
+    .btn.primary:hover{ background: rgba(201,164,74,.28); }
 
-    .logo{display:flex;align-items:center;gap:10px;min-width:180px;font-weight:600;letter-spacing:-.01em;}
-    .logo .mark{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.55);}
-    .logo .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);box-shadow:0 0 0 4px rgba(201,164,74,.18);}
+    .hamburger{
+      height:48px; width:48px; border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.55);
+      color: rgba(18,22,29,.86);
+      display:inline-flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+    .hamburger:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.55); background: rgba(255,255,255,.78); }
 
-    .actions{display:flex;align-items:center;gap:10px;justify-content:flex-end;min-width:240px;}
-    .btn{height:48px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.55);color:rgba(18,22,29,.92);display:inline-flex;align-items:center;justify-content:center;font-size:14px;transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease;white-space:nowrap;}
-    .btn:hover{transform:translateY(-1px);border-color:rgba(201,164,74,.55);box-shadow:var(--shadow);background:rgba(255,255,255,.78);}
-    .btn.primary{border-color:rgba(201,164,74,.70);background:rgba(201,164,74,.22);}
-    .btn.primary:hover{background:rgba(201,164,74,.28);}
-    .btn .arr{display:inline-block;margin-left:10px;transition:transform .16s ease;}
-    .btn:hover .arr{transform:translateX(3px);}
-
-    .menuBtn{height:48px;width:48px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.55);color:rgba(18,22,29,.86);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .16s ease,border-color .16s ease,background .16s ease;}
-    .menuBtn:hover{transform:translateY(-1px);border-color:rgba(201,164,74,.55);background:rgba(255,255,255,.78);}
-
-    @media (max-width:860px){.actions .btn.secondary{display:none;}.logo{min-width:150px;}}
-    @media (max-width:520px){.actions .btn{padding:0 14px;height:46px;}.menuBtn{height:46px;width:46px;}.logo .mark{padding:9px 10px;}}
-
-    .drawer{position:fixed;inset:0;z-index:80;display:none;background:rgba(245,242,234,.78);backdrop-filter:blur(10px);padding:calc(env(safe-area-inset-top) + 12px) 18px 18px;}
-    .drawer.open{display:block;}
-    .drawerCard{max-width:720px;margin:0 auto;border:1px solid var(--line);background:rgba(255,255,255,.78);border-radius:var(--r-lg);box-shadow:var(--shadow2);overflow:hidden;}
-    .drawerHead{display:flex;align-items:center;justify-content:space-between;padding:14px 14px;border-bottom:1px solid var(--line);}
-    .drawerHead .t{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(18,22,29,.72);}
-    .close{height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.55);color:rgba(18,22,29,.86);cursor:pointer;}
-    .drawerGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px;}
-    @media (max-width:720px){.drawerGrid{grid-template-columns:1fr;}}
-    .drawerGrid a{padding:14px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.55);font-size:15px;transition:transform .18s ease,border-color .18s ease;}
-    .drawerGrid a:hover{transform:translateY(-1px);border-color:rgba(201,164,74,.55);}
-
-    main{padding:var(--s6) 0 var(--s7);}
-    section{padding:var(--s7) 0;border-top:1px solid var(--line);}
-    section:first-of-type{border-top:none;padding-top:var(--s6);}
-
-    .read{max-width:var(--readW);}
-    p{margin:0 0 14px 0;line-height:var(--lh);color:var(--muted);}
-    .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(58,50,12,.85);margin-bottom:12px;}
-    h1{font-size:44px;line-height:1.15;letter-spacing:-0.02em;margin:0 0 14px 0;font-weight:600;color:var(--text);}
-    h2{font-size:28px;line-height:1.20;letter-spacing:-0.01em;margin:0 0 10px 0;font-weight:600;color:var(--text);}
-    @media (max-width:640px){h1{font-size:30px;}h2{font-size:22px;}}
-
-    .panel{border:1px solid var(--line);background:rgba(255,255,255,.70);border-radius:var(--r-lg);padding:18px 18px;box-shadow:var(--shadow);margin-top:14px;}
-    .panel .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(58,50,12,.82);margin-bottom:10px;}
-    .list{margin:0;padding:0 0 0 18px;}
-    .list li{margin:8px 0;color:var(--muted);line-height:1.55;}
-
-    .callout{margin-top:14px;border:1px solid rgba(201,164,74,.35);background:rgba(201,164,74,.14);border-radius:var(--r-lg);padding:16px 16px;}
-    .callout b{color:rgba(18,22,29,.92);}
-
-    .contactBox{
-      margin-top:14px;
-      border:1px solid rgba(58,50,12,.18);
+    .drawer{
+      position:fixed; inset:0; z-index:80;
+      display:none;
+      background: rgba(245,242,234,.78);
+      backdrop-filter: blur(10px);
+      padding: calc(env(safe-area-inset-top) + 12px) 18px 18px;
+    }
+    .drawer.open{ display:block; }
+    .drawerCard{
+      max-width: 720px; margin: 0 auto;
+      border:1px solid var(--line);
       background: rgba(255,255,255,.78);
       border-radius: var(--r-lg);
-      padding: 16px 16px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap: 12px;
-      flex-wrap:wrap;
+      box-shadow: var(--shadow2);
+      overflow:hidden;
     }
-    .contactBox .t{
+    .drawerHead{ display:flex; align-items:center; justify-content:space-between; padding:14px; border-bottom:1px solid var(--line); }
+    .drawerHead .t{ font-family:var(--mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:rgba(18,22,29,.72); }
+    .close{ height:44px; padding:0 14px; border-radius:999px; border:1px solid var(--line); background: rgba(255,255,255,.55); color:rgba(18,22,29,.86); cursor:pointer; }
+    .drawerLinks{ display:grid; grid-template-columns:1fr; padding:10px; gap:8px; }
+    .drawerLinks a{ padding:14px; border-radius:14px; border:1px solid rgba(0,0,0,.08); background: rgba(255,255,255,.55); font-size:15px; transition: transform .18s ease, border-color .18s ease; }
+    .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.55); }
+
+    main{ padding: var(--s6) 0 var(--s7); }
+    .read{ max-width: var(--readW); }
+    p{ margin:0 0 14px 0; line-height:var(--lh); color:var(--muted); }
+    ul{ margin: 0 0 14px 0; padding: 0 0 0 18px; color: var(--muted); line-height: var(--lh); }
+    li{ margin: 8px 0; }
+    h1{ font-size:44px; line-height:1.15; letter-spacing:-0.02em; margin:0 0 12px 0; font-weight:600; color:var(--text); }
+    h2{ font-size:26px; line-height:1.25; margin:28px 0 10px 0; font-weight:600; color:var(--text); }
+    .eyebrow{ font-family:var(--mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:rgba(58,50,12,.85); margin-bottom:12px; }
+    @media (max-width:640px){ h1{font-size:32px;} h2{font-size:22px;} }
+
+    .doc{
+      margin-top:18px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.70);
+      border-radius: var(--r-lg);
+      padding: 22px 22px;
+      box-shadow: var(--shadow);
+    }
+    .meta{
+      display:flex; gap:12px; flex-wrap:wrap; align-items:baseline;
       font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing:.14em;
+      font-size: 11px; letter-spacing:.12em;
       text-transform: uppercase;
-      color: rgba(58,50,12,.82);
+      color: rgba(18,22,29,.62);
+      margin-top: 10px;
+      padding-top: 14px;
+      border-top:1px solid rgba(0,0,0,.08);
     }
 
-    footer{border-top:1px solid var(--line);padding:var(--s7) 0 var(--s6);}
-    .footBottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(18,22,29,.55);padding-top:18px;border-top:1px solid var(--line);margin-top:18px;}
-
-    .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease,transform .55s ease;}
-    .reveal.on{opacity:1;transform:translateY(0);}
-
-    @media (prefers-reduced-motion: reduce){
-      html{scroll-behavior:auto;}
-      .reveal{opacity:1;transform:none;transition:none;}
-      .btn,.menuBtn,.drawerGrid a{transition:none;}
+    footer{
+      border-top:1px solid var(--line);
+      padding: var(--s6) 0;
+      margin-top: var(--s7);
+      color: rgba(18,22,29,.55);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
     }
+    .foot{ display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
   </style>
 </head>
 
@@ -136,9 +169,8 @@
       </a>
 
       <div class="actions" aria-label="Actions">
-        <a class="btn secondary" href="contact.html">Report issue<span class="arr">→</span></a>
-        <a class="btn primary" href="contact.html">Contact<span class="arr">→</span></a>
-        <button class="menuBtn" id="openMenu" aria-label="Open menu" type="button">☰</button>
+        <a class="btn primary" href="contact.html">Request walkthrough</a>
+        <button class="hamburger" id="openMenu" aria-label="Open menu" type="button">☰</button>
       </div>
     </div>
   </header>
@@ -149,15 +181,13 @@
         <div class="t">Menu</div>
         <button class="close" id="closeMenu" type="button">Close</button>
       </div>
-      <div class="drawerGrid">
+      <div class="drawerLinks">
         <a href="index.html">Overview</a>
         <a href="how.html">How It Works</a>
         <a href="platform.html">Platform</a>
-        <a href="trust.html">Trust & Verification</a>
+        <a href="trust.html">Trust</a>
         <a href="compliance.html">Compliance</a>
         <a href="integrations.html">Integrations</a>
-        <a href="use-cases.html">Use Cases</a>
-        <a href="security.html">Security</a>
         <a href="resources.html">Resources</a>
         <a href="company.html">Company</a>
         <a href="contact.html">Contact</a>
@@ -170,100 +200,62 @@
   </div>
 
   <main class="wrap">
-    <section style="padding-top: var(--s6);">
-      <div class="read reveal">
-        <div class="eyebrow">Security disclosure</div>
-        <h1>Vulnerability disclosure policy</h1>
-        <p>
-          CEYO welcomes good-faith security research. This policy describes how to report vulnerabilities and what to expect during coordinated disclosure.
-        </p>
+    <section class="read">
+      <div class="eyebrow">Legal · Public</div>
+      <h1>Vulnerability Disclosure Program</h1>
 
-        <div class="callout reveal">
-          <b>Do not:</b> access or modify data you do not own or have explicit permission to test. Do not disrupt services.
-        </div>
+      <div class="doc">
+        <h2>1. Purpose</h2>
+        <p>CEYO encourages responsible reporting of security vulnerabilities.</p>
 
-        <div class="contactBox reveal">
-          <div>
-            <div class="t">Reporting channel</div>
-            <div style="margin-top:6px; color:rgba(18,22,29,.86); font-weight:600;">Use the contact page to initiate disclosure.</div>
-          </div>
-          <a class="btn primary" href="contact.html">Contact<span class="arr">→</span></a>
-        </div>
-      </div>
-    </section>
+        <h2>2. Reporting</h2>
+        <p>Send reports to: <b style="color:rgba(18,22,29,.86)">contact@ceyo.ai</b></p>
+        <p>Include: description, reproduction steps, affected components, and any proof-of-concept.</p>
 
-    <section id="scope">
-      <div class="read reveal">
-        <h2>Scope</h2>
-        <div class="panel">
-          <div class="k">In scope</div>
-          <ul class="list">
-            <li>Public website security issues (e.g., XSS, auth misconfigurations, sensitive exposure).</li>
-            <li>Security issues in CEYO-controlled assets explicitly identified in an engagement.</li>
-          </ul>
-        </div>
+        <h2>3. Safe harbor</h2>
+        <p>CEYO will not pursue legal action for good-faith security research that avoids privacy violations, service disruption, and data exfiltration.</p>
 
-        <div class="panel">
-          <div class="k">Out of scope</div>
-          <ul class="list">
-            <li>Denial of service, traffic flooding, or destructive testing.</li>
-            <li>Social engineering of staff or users.</li>
-            <li>Third-party services not controlled by CEYO.</li>
-          </ul>
+        <h2>4. Scope</h2>
+        <ul>
+          <li>CEYO public website and CEYO-controlled systems only.</li>
+          <li>Do not test third-party systems or services.</li>
+        </ul>
+
+        <h2>5. Coordination</h2>
+        <p>Allow reasonable time to investigate and remediate prior to public disclosure.</p>
+
+        <div class="meta">
+          <div>Version V2026.02.19</div>
+          <div>San Diego, California</div>
+          <div>© <span id="year"></span> CEYO</div>
         </div>
       </div>
     </section>
 
-    <section id="process">
-      <div class="read reveal">
-        <h2>Coordinated disclosure process</h2>
-        <div class="panel">
-          <div class="k">What to include</div>
-          <ul class="list">
-            <li>A clear description of the issue and affected component.</li>
-            <li>Steps to reproduce (or proof-of-concept) with minimal impact.</li>
-            <li>Suggested mitigation if known.</li>
-          </ul>
-        </div>
-
-        <div class="panel">
-          <div class="k">What we do</div>
-          <ul class="list">
-            <li>Acknowledge receipt and begin triage.</li>
-            <li>Work toward remediation and verify the fix.</li>
-            <li>Coordinate timing of any public disclosure.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <footer id="footer">
-      <div class="footBottom reveal">
-        <div>© <span id="year"></span> CEYO. All rights reserved.</div>
-        <div><a href="privacy.html">Privacy</a></div>
+    <footer>
+      <div class="foot">
+        <div>© <span id="year2"></span> CEYO. All rights reserved.</div>
+        <div><a href="ethical.html">Responsible Use</a></div>
       </div>
     </footer>
   </main>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    const y = new Date().getFullYear();
+    document.getElementById('year').textContent = y;
+    document.getElementById('year2').textContent = y;
 
     const drawer = document.getElementById('drawer');
     const openMenu = document.getElementById('openMenu');
     const closeMenu = document.getElementById('closeMenu');
+
     function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
     function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-    if(openMenu) openMenu.addEventListener('click', openDrawer);
-    if(closeMenu) closeMenu.addEventListener('click', closeDrawer);
+
+    openMenu.addEventListener('click', openDrawer);
+    closeMenu.addEventListener('click', closeDrawer);
     drawer.addEventListener('click', (e)=>{ if(e.target===drawer) closeDrawer(); });
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
-
-    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const revealEls = Array.from(document.querySelectorAll('.reveal'));
-    if(!prefersReduce){
-      const io = new IntersectionObserver((entries)=>{ entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('on'); }); }, {threshold:0.12});
-      revealEls.forEach(el=>io.observe(el));
-    } else { revealEls.forEach(el=>el.classList.add('on')); }
   </script>
 </body>
 </html>
