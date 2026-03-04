@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>CEYO — Security Disclosure</title>
-  <meta name="description" content="Vulnerability Disclosure Program (VDP) for CEYO."/>
+  <title>CEYO — Vulnerability Disclosure</title>
+  <meta name="description" content="CEYO Vulnerability Disclosure Program: scope, safe harbor, reporting, coordination, and disclosure expectations."/>
   <meta name="theme-color" content="#F5F2EA"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,23 +13,49 @@
 
   <style>
     :root{
-      --paper:#F5F2EA; --text:#12161D; --muted:rgba(18,22,29,.68); --line:rgba(0,0,0,.10);
-      --accent:#3A320C; --accent2:#C9A44A;
-      --maxW:1160px; --readW:760px; --r-lg:18px;
-      --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px;
-      --lh:1.70;
-      --shadow:0 12px 30px rgba(0,0,0,.10); --shadow2:0 22px 60px rgba(0,0,0,.14);
+      --paper:#F5F2EA;
+      --text:#12161D;
+      --muted:rgba(18,22,29,.68);
+      --line:rgba(0,0,0,.10);
+
+      --accent:#3A320C;   /* olive */
+      --accent2:#C9A44A;  /* muted amber */
+
+      --maxW:1160px;
+      --readW:760px;
+
+      --r-lg:18px;
+
+      --s1:8px;  --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px;
+
+      --lh:1.65;
+
+      --shadow:0 12px 30px rgba(0,0,0,.10);
+      --shadow2:0 22px 60px rgba(0,0,0,.14);
+
       --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --ui:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+
       --navH:72px;
     }
+
     *{box-sizing:border-box}
     html{background:var(--paper);scroll-behavior:smooth}
-    body{margin:0;font-family:var(--ui);color:var(--text);background:var(--paper);-webkit-text-size-adjust:100%;overflow-x:hidden}
+    body{
+      margin:0;
+      font-family:var(--ui);
+      color:var(--text);
+      background:var(--paper);
+      -webkit-text-size-adjust:100%;
+      overflow-x:hidden;
+    }
     a{color:inherit;text-decoration:none}
     button{font:inherit}
+
+    /* Anchor offset for sticky header */
     [id]{ scroll-margin-top: calc(var(--navH) + 24px); }
 
+    /* Light atmosphere */
     .bg{
       position:fixed; inset:0; pointer-events:none; z-index:0;
       background:
@@ -43,9 +69,11 @@
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
       mix-blend-mode:multiply;
     }
+
     .wrap{ position:relative; z-index:2; max-width:var(--maxW); margin:0 auto; padding:0 var(--s4); }
     @media (max-width: 640px){ .wrap{ padding:0 18px; } }
 
+    /* MENU-ONLY HEADER (no visible full nav at any width) */
     header.site{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
@@ -57,14 +85,19 @@
       padding-top: env(safe-area-inset-top);
       display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
     }
-    .logo{ display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:-.01em; min-width:170px; }
+
+    .logo{ display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:-.01em; }
     .logo .mark{
       display:inline-flex; align-items:center; gap:10px;
       padding:10px 12px; border-radius:999px;
       border:1px solid var(--line);
       background: rgba(255,255,255,.55);
     }
-    .logo .dot{ width:8px; height:8px; border-radius:50%; background:var(--accent2); box-shadow:0 0 0 4px rgba(201,164,74,.18); }
+    .logo .dot{
+      width:8px; height:8px; border-radius:50%;
+      background: var(--accent2);
+      box-shadow: 0 0 0 4px rgba(201,164,74,.18);
+    }
 
     .actions{ display:flex; align-items:center; gap:10px; justify-content:flex-end; }
     .btn{
@@ -77,21 +110,43 @@
       transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
       white-space:nowrap;
     }
-    .btn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.55); box-shadow:var(--shadow); background: rgba(255,255,255,.78); }
-    .btn.primary{ border-color: rgba(201,164,74,.70); background: rgba(201,164,74,.22); }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(201,164,74,.55);
+      box-shadow: var(--shadow);
+      background: rgba(255,255,255,.78);
+    }
+    .btn.primary{
+      border-color: rgba(201,164,74,.70);
+      background: rgba(201,164,74,.22);
+    }
     .btn.primary:hover{ background: rgba(201,164,74,.28); }
+    .btn .arr{ display:inline-block; margin-left:10px; transition: transform .16s ease; }
+    .btn:hover .arr{ transform: translateX(3px); }
 
+    /* Always show MENU button (desktop + mobile) */
     .hamburger{
-      height:48px; width:48px; border-radius:999px;
+      height:48px; width:64px;
+      border-radius:999px;
       border:1px solid var(--line);
       background: rgba(255,255,255,.55);
       color: rgba(18,22,29,.86);
       display:inline-flex; align-items:center; justify-content:center;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing:.14em;
+      text-transform: uppercase;
       cursor:pointer;
-      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
     }
-    .hamburger:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.55); background: rgba(255,255,255,.78); }
+    .hamburger:hover{
+      transform: translateY(-1px);
+      border-color: rgba(201,164,74,.55);
+      box-shadow: var(--shadow);
+      background: rgba(255,255,255,.78);
+    }
 
+    /* Drawer */
     .drawer{
       position:fixed; inset:0; z-index:80;
       display:none;
@@ -101,60 +156,164 @@
     }
     .drawer.open{ display:block; }
     .drawerCard{
-      max-width: 720px; margin: 0 auto;
+      max-width: 680px; margin: 0 auto;
       border:1px solid var(--line);
       background: rgba(255,255,255,.78);
       border-radius: var(--r-lg);
       box-shadow: var(--shadow2);
       overflow:hidden;
     }
-    .drawerHead{ display:flex; align-items:center; justify-content:space-between; padding:14px; border-bottom:1px solid var(--line); }
-    .drawerHead .t{ font-family:var(--mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:rgba(18,22,29,.72); }
-    .close{ height:44px; padding:0 14px; border-radius:999px; border:1px solid var(--line); background: rgba(255,255,255,.55); color:rgba(18,22,29,.86); cursor:pointer; }
-    .drawerLinks{ display:grid; grid-template-columns:1fr; padding:10px; gap:8px; }
-    .drawerLinks a{ padding:14px; border-radius:14px; border:1px solid rgba(0,0,0,.08); background: rgba(255,255,255,.55); font-size:15px; transition: transform .18s ease, border-color .18s ease; }
-    .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.55); }
+    .drawerHead{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 14px;
+      border-bottom:1px solid var(--line);
+    }
+    .drawerHead .t{
+      font-family: var(--mono);
+      font-size:12px; letter-spacing:.18em;
+      text-transform:uppercase; color: rgba(18,22,29,.72);
+    }
+    .close{
+      height:44px; padding:0 14px; border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.55);
+      color: rgba(18,22,29,.86);
+      cursor:pointer;
+    }
+    .drawerLinks{ display:grid; grid-template-columns: 1fr; padding: 10px; gap: 8px; }
+    .drawerLinks a{
+      padding: 14px 14px; border-radius: 14px;
+      border:1px solid rgba(0,0,0,.08);
+      background: rgba(255,255,255,.55);
+      font-size: 15px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.55); background: rgba(255,255,255,.80); }
 
+    /* Content */
     main{ padding: var(--s6) 0 var(--s7); }
-    .read{ max-width: var(--readW); }
-    p{ margin:0 0 14px 0; line-height:var(--lh); color:var(--muted); }
-    ul{ margin: 0 0 14px 0; padding: 0 0 0 18px; color: var(--muted); line-height: var(--lh); }
-    li{ margin: 8px 0; }
-    h1{ font-size:44px; line-height:1.15; letter-spacing:-0.02em; margin:0 0 12px 0; font-weight:600; color:var(--text); }
-    h2{ font-size:26px; line-height:1.25; margin:28px 0 10px 0; font-weight:600; color:var(--text); }
-    .eyebrow{ font-family:var(--mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:rgba(58,50,12,.85); margin-bottom:12px; }
-    @media (max-width:640px){ h1{font-size:32px;} h2{font-size:22px;} }
+    section{ padding: var(--s7) 0; border-top:1px solid var(--line); }
+    section:first-of-type{ border-top:none; padding-top: var(--s6); }
 
-    .doc{
-      margin-top:18px;
+    .read{ max-width: var(--readW); }
+    p{ margin: 0 0 14px 0; line-height: var(--lh); }
+    .muted{ color: var(--muted); }
+
+    .eyebrow{
+      font-family: var(--mono);
+      font-size: 12px; letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(58,50,12,.85);
+      margin-bottom: 12px;
+    }
+    h1{ font-size: 46px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 14px 0; font-weight: 600; }
+    h2{ font-size: 30px; line-height: 1.20; letter-spacing: -0.01em; margin: 0 0 12px 0; font-weight: 600; }
+    h3{ font-size: 20px; line-height: 1.25; margin: 0 0 10px 0; font-weight: 600; }
+    @media (max-width: 640px){
+      h1{ font-size: 32px; }
+      h2{ font-size: 24px; }
+      h3{ font-size: 19px; }
+    }
+
+    .panel{
       border:1px solid var(--line);
       background: rgba(255,255,255,.70);
       border-radius: var(--r-lg);
-      padding: 22px 22px;
-      box-shadow: var(--shadow);
-    }
-    .meta{
-      display:flex; gap:12px; flex-wrap:wrap; align-items:baseline;
-      font-family: var(--mono);
-      font-size: 11px; letter-spacing:.12em;
-      text-transform: uppercase;
-      color: rgba(18,22,29,.62);
-      margin-top: 10px;
-      padding-top: 14px;
-      border-top:1px solid rgba(0,0,0,.08);
+      padding: 18px 18px;
+      margin-top: 18px;
+      box-shadow: 0 1px 0 rgba(0,0,0,.02);
     }
 
-    footer{
-      border-top:1px solid var(--line);
-      padding: var(--s6) 0;
-      margin-top: var(--s7);
-      color: rgba(18,22,29,.55);
+    .k{
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing:.14em;
+      text-transform: uppercase;
+      color: rgba(58,50,12,.82);
+      margin-bottom: 10px;
+    }
+
+    ul{ margin: 10px 0 0 0; padding: 0 0 0 18px; }
+    li{ margin: 8px 0; line-height: 1.55; color: rgba(18,22,29,.82); }
+
+    .pillRow{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(201,164,74,.45);
+      background: rgba(201,164,74,.18);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: rgba(18,22,29,.84);
+      white-space:nowrap;
+    }
+
+    .callout{
+      border:1px solid rgba(201,164,74,.45);
+      background: rgba(201,164,74,.12);
+      border-radius: var(--r-lg);
+      padding: 16px 16px;
+      margin-top: 16px;
+    }
+
+    /* Footer */
+    footer{ border-top:1px solid var(--line); padding: var(--s7) 0 var(--s6); }
+    .footGrid{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    @media (max-width: 980px){ .footGrid{ grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px){ .footGrid{ grid-template-columns: 1fr; } }
+    .footCol{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.70);
+      border-radius: var(--r-lg);
+      padding: 18px 18px;
+    }
+    .footCol .t{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(58,50,12,.82);
+      margin-bottom: 10px;
+    }
+    .footCol a{
+      display:block;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border:1px solid transparent;
+      color: rgba(18,22,29,.78);
+      transition: background .18s ease, border-color .18s ease;
+    }
+    .footCol a:hover{ background: rgba(201,164,74,.14); border-color: rgba(201,164,74,.25); }
+    .footBottom{
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
       font-family: var(--mono);
       font-size: 12px;
       letter-spacing: .14em;
       text-transform: uppercase;
+      color: rgba(18,22,29,.55);
+      padding-top: 18px;
+      border-top:1px solid var(--line);
     }
-    .foot{ display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+
+    /* Motion: reveal */
+    .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.on{ opacity:1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto;}
+      .reveal{ opacity:1; transform:none; transition:none; }
+      .btn, .hamburger, .drawerLinks a{ transition:none; }
+    }
   </style>
 </head>
 
@@ -169,12 +328,13 @@
       </a>
 
       <div class="actions" aria-label="Actions">
-        <a class="btn primary" href="contact.html">Request walkthrough</a>
-        <button class="hamburger" id="openMenu" aria-label="Open menu" type="button">☰</button>
+        <a class="btn primary" href="contact.html">Request walkthrough<span class="arr">→</span></a>
+        <button class="hamburger" id="openMenu" aria-label="Open menu" type="button">Menu</button>
       </div>
     </div>
   </header>
 
+  <!-- Drawer -->
   <div class="drawer" id="drawer" aria-hidden="true">
     <div class="drawerCard" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="drawerHead">
@@ -185,7 +345,7 @@
         <a href="index.html">Overview</a>
         <a href="how.html">How It Works</a>
         <a href="platform.html">Platform</a>
-        <a href="trust.html">Trust</a>
+        <a href="trust.html">Trust & Verification</a>
         <a href="compliance.html">Compliance</a>
         <a href="integrations.html">Integrations</a>
         <a href="resources.html">Resources</a>
@@ -200,62 +360,228 @@
   </div>
 
   <main class="wrap">
-    <section class="read">
-      <div class="eyebrow">Legal · Public</div>
-      <h1>Vulnerability Disclosure Program</h1>
+    <section style="padding-top: var(--s6);">
+      <div class="read reveal">
+        <div class="eyebrow">Security disclosure · Safe harbor · Coordination</div>
+        <h1>Vulnerability Disclosure Program.</h1>
+        <p class="muted">
+          CEYO encourages responsible reporting of security vulnerabilities affecting CEYO-controlled systems.
+          This policy describes how to report issues, what is in scope, and how coordination is handled.
+        </p>
 
-      <div class="doc">
+        <div class="pillRow" aria-label="Key points">
+          <div class="pill">Good faith</div>
+          <div class="pill">No disruption</div>
+          <div class="pill">Coordinated disclosure</div>
+        </div>
+      </div>
+
+      <div class="read panel reveal" style="margin-top:18px;">
+        <div class="k">Version</div>
+        <p class="muted" style="margin:0;">V2026.02.19 · San Diego, California</p>
+      </div>
+    </section>
+
+    <section id="purpose">
+      <div class="read reveal">
         <h2>1. Purpose</h2>
-        <p>CEYO encourages responsible reporting of security vulnerabilities.</p>
-
-        <h2>2. Reporting</h2>
-        <p>Send reports to: <b style="color:rgba(18,22,29,.86)">contact@ceyo.ai</b></p>
-        <p>Include: description, reproduction steps, affected components, and any proof-of-concept.</p>
-
-        <h2>3. Safe harbor</h2>
-        <p>CEYO will not pursue legal action for good-faith security research that avoids privacy violations, service disruption, and data exfiltration.</p>
-
-        <h2>4. Scope</h2>
-        <ul>
-          <li>CEYO public website and CEYO-controlled systems only.</li>
-          <li>Do not test third-party systems or services.</li>
-        </ul>
-
-        <h2>5. Coordination</h2>
-        <p>Allow reasonable time to investigate and remediate prior to public disclosure.</p>
-
-        <div class="meta">
-          <div>Version V2026.02.19</div>
-          <div>San Diego, California</div>
-          <div>© <span id="year"></span> CEYO</div>
+        <div class="panel">
+          <p class="muted" style="margin:0;">
+            CEYO encourages responsible reporting of security vulnerabilities. Reports help improve the safety and reliability of CEYO’s public website and CEYO-controlled systems.
+          </p>
         </div>
       </div>
     </section>
 
-    <footer>
-      <div class="foot">
-        <div>© <span id="year2"></span> CEYO. All rights reserved.</div>
-        <div><a href="ethical.html">Responsible Use</a></div>
+    <section id="reporting">
+      <div class="read reveal">
+        <h2>2. Reporting</h2>
+        <div class="panel">
+          <p class="muted"><b>Send reports to:</b> <span style="color:rgba(18,22,29,.92); font-weight:600;">contact@ceyo.ai</span></p>
+          <div class="callout">
+            <div class="k">Include</div>
+            <ul>
+              <li>Description of the issue and expected impact.</li>
+              <li>Reproduction steps and any relevant request/response samples.</li>
+              <li>Affected pages/endpoints/components (if known).</li>
+              <li>Proof-of-concept (only if it does not exfiltrate data or disrupt service).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="safe-harbor">
+      <div class="read reveal">
+        <h2>3. Safe harbor</h2>
+        <div class="panel">
+          <p class="muted">
+            CEYO will not pursue legal action for good-faith security research that avoids privacy violations, service disruption, and data exfiltration, and that complies with this policy.
+          </p>
+
+          <div class="callout">
+            <div class="k">Good-faith boundaries</div>
+            <ul>
+              <li>Test only within scope and only with accounts/data you own.</li>
+              <li>Do not access, modify, delete, or exfiltrate data.</li>
+              <li>Stop once the issue is confirmed. Do not chain exploits or establish persistence.</li>
+              <li>Do not use social engineering, phishing, or physical security testing.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scope">
+      <div class="read reveal">
+        <h2>4. Scope</h2>
+        <div class="panel">
+          <ul>
+            <li>CEYO public website and CEYO-controlled systems only.</li>
+            <li>Do not test third-party systems or services.</li>
+          </ul>
+
+          <div class="callout">
+            <div class="k">Out of scope</div>
+            <ul>
+              <li>Denial of service (DoS), load/stress testing, or traffic flooding.</li>
+              <li>Credential stuffing, brute force, or testing accounts you do not own.</li>
+              <li>Accessing, modifying, deleting, or exfiltrating any data.</li>
+              <li>Testing vendors, hosting providers, or any infrastructure not controlled by CEYO.</li>
+              <li>Physical security, threats, or social engineering (phishing/vishing).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="coordination">
+      <div class="read reveal">
+        <h2>5. Coordination</h2>
+        <div class="panel">
+          <p class="muted">
+            Allow reasonable time to investigate and remediate prior to public disclosure. CEYO will coordinate in good faith and may request clarification or additional reproduction detail.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="timelines">
+      <div class="read reveal">
+        <h2>6. Response timelines</h2>
+        <div class="panel">
+          <ul>
+            <li><b>Acknowledgment:</b> within 3 business days.</li>
+            <li><b>Initial assessment:</b> within 10 business days.</li>
+            <li><b>Status updates:</b> at least every 14 days until closure or resolution.</li>
+          </ul>
+          <p class="muted" style="margin-top:10px;">
+            Timelines may vary based on severity and complexity. If an issue is actively exploited, CEYO may prioritize remediation over public communications.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="disclosure">
+      <div class="read reveal">
+        <h2>7. Disclosure & credit</h2>
+        <div class="panel">
+          <ul>
+            <li>Coordinated disclosure is expected.</li>
+            <li>Public disclosure is welcome after a fix is deployed or an agreed timeline is reached.</li>
+            <li>Researcher credit (name/handle) may be provided upon request; anonymous reporting is accepted.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="legal">
+      <div class="read reveal">
+        <h2>8. Boundary declaration</h2>
+        <div class="panel">
+          <p class="muted">
+            This policy does not authorize unlawful access or activity. If you are unsure whether a test is in scope, contact CEYO before proceeding.
+          </p>
+        </div>
+
+        <div class="read reveal" style="margin-top:18px;">
+          <div class="k">Contact</div>
+          <p class="muted" style="margin:0;">Reports and questions: contact@ceyo.ai</p>
+        </div>
+      </div>
+    </section>
+
+    <footer id="footer">
+      <div class="footGrid reveal">
+        <div class="footCol">
+          <div class="t">Product</div>
+          <a href="index.html">Overview</a>
+          <a href="how.html">How It Works</a>
+          <a href="platform.html">Platform</a>
+          <a href="integrations.html">Integrations</a>
+        </div>
+        <div class="footCol">
+          <div class="t">Trust</div>
+          <a href="trust.html">Trust Model</a>
+          <a href="security.html">Security</a>
+          <a href="resources.html#sample-artifact">Sample Artifacts</a>
+          <a href="resources.html">Resources</a>
+        </div>
+        <div class="footCol">
+          <div class="t">Legal</div>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="vdp.html">Security Disclosure</a>
+          <a href="ethical.html">Responsible Use</a>
+        </div>
+        <div class="footCol">
+          <div class="t">Contact</div>
+          <a href="contact.html">Request walkthrough</a>
+          <a href="mailto:contact@ceyo.ai">contact@ceyo.ai</a>
+        </div>
+      </div>
+
+      <div class="footBottom reveal">
+        <div>© <span id="year"></span> CEYO. All rights reserved.</div>
+        <div>Version V2026.02.19</div>
       </div>
     </footer>
   </main>
 
   <script>
-    const y = new Date().getFullYear();
-    document.getElementById('year').textContent = y;
-    document.getElementById('year2').textContent = y;
+    document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Drawer
     const drawer = document.getElementById('drawer');
     const openMenu = document.getElementById('openMenu');
     const closeMenu = document.getElementById('closeMenu');
 
-    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
-    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-
+    function openDrawer(){
+      drawer.classList.add('open');
+      drawer.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+    }
     openMenu.addEventListener('click', openDrawer);
     closeMenu.addEventListener('click', closeDrawer);
     drawer.addEventListener('click', (e)=>{ if(e.target===drawer) closeDrawer(); });
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+
+    // Reveal
+    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealEls = Array.from(document.querySelectorAll('.reveal'));
+    if(!prefersReduce){
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('on'); });
+      }, {threshold: 0.12});
+      revealEls.forEach(el=>io.observe(el));
+    } else {
+      revealEls.forEach(el=>el.classList.add('on'));
+    }
   </script>
 </body>
 </html>
