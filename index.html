@@ -14,8 +14,8 @@
   <style>
     :root{
       --ink:#0B0F14;
-      --paper:#F5F2EA;
       --textOnInk:#C9D1D9;
+      --lineOnInk:rgba(255,255,255,.10);
 
       --accent:#3A320C;
       --accent2:#C9A44A;
@@ -28,7 +28,6 @@
       --s1:8px;  --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px;
 
       --lh:1.65;
-
       --shadow:0 10px 30px rgba(0,0,0,.25);
       --shadow2:0 18px 60px rgba(0,0,0,.35);
 
@@ -39,12 +38,7 @@
     }
 
     *{box-sizing:border-box}
-    html{
-      background:var(--ink);
-      scroll-behavior:smooth;
-      /* Ensures anchor jumps never land behind the header */
-      scroll-padding-top: calc(var(--navH) + 24px);
-    }
+    html{background:var(--ink);scroll-behavior:smooth}
     body{
       margin:0;
       font-family:var(--ui);
@@ -56,8 +50,10 @@
     a{color:inherit;text-decoration:none}
     button{font:inherit}
 
+    /* Anchor offset for sticky header */
     [id]{ scroll-margin-top: calc(var(--navH) + 24px); }
 
+    /* Background */
     .bg{
       position:fixed; inset:0; pointer-events:none; z-index:0;
       background:
@@ -76,6 +72,7 @@
     .wrap{ position:relative; z-index:1; max-width:var(--maxW); margin:0 auto; padding:0 var(--s4); }
     @media (max-width: 640px){ .wrap{ padding:0 18px; } }
 
+    /* Header: SAME BEHAVIOR EVERY PAGE (Logo + CTAs + Menu only) */
     header.site{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
@@ -86,12 +83,19 @@
       height: calc(var(--navH) + env(safe-area-inset-top));
       padding-top: env(safe-area-inset-top);
       display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
+      min-width:0;
     }
 
-    .logo{ display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:-.01em; flex:0 0 auto; }
+    .logo{
+      display:flex; align-items:center; gap:10px;
+      font-weight:600; letter-spacing:-.01em;
+      min-width: 160px;
+      flex:0 0 auto;
+    }
     .logo .mark{
       display:inline-flex; align-items:center; gap:10px;
-      padding:10px 12px; border-radius:999px;
+      padding:10px 12px;
+      border-radius:999px;
       border:1px solid rgba(255,255,255,.08);
       background: rgba(255,255,255,.02);
     }
@@ -101,9 +105,12 @@
       box-shadow: 0 0 0 4px rgba(201,164,74,.12);
     }
 
-    /* Replace link-heavy top nav with a single Menu button (prevents overlap forever) */
-    .actions{ display:flex; align-items:center; gap:10px; justify-content:flex-end; flex:0 0 auto; }
-
+    .actions{
+      display:flex; align-items:center; gap:10px;
+      justify-content:flex-end;
+      flex:1 1 auto;
+      min-width:0;
+    }
     .btn{
       height:48px; padding:0 18px; border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
@@ -124,30 +131,30 @@
     .btn .arr{ display:inline-block; margin-left:10px; transition: transform .16s ease; }
     .btn:hover .arr{ transform: translateX(3px); }
 
-    /* Always-available menu button */
     .menuBtn{
-      height:48px;
-      padding:0 16px;
+      height:48px; width:92px;
       border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
       color: rgba(201,209,217,.95);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
+      display:inline-flex; align-items:center; justify-content:center;
       gap:10px;
-      cursor:pointer;
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
-      white-space:nowrap;
-    }
-    .menuBtn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.35); background: rgba(255,255,255,.04); }
-    .menuBtn .m{
       font-family: var(--mono);
       font-size: 12px;
-      letter-spacing: .16em;
+      letter-spacing:.14em;
       text-transform: uppercase;
+      cursor:pointer;
+      flex:0 0 auto;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .menuBtn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.35); background: rgba(255,255,255,.04); }
+
+    /* On small screens hide secondary CTA first */
+    @media (max-width: 980px){
+      .btn.secondary{ display:none; }
     }
 
+    /* Drawer (menu) */
     .drawer{
       position:fixed; inset:0; z-index:80;
       display:none;
@@ -157,8 +164,7 @@
     }
     .drawer.open{ display:block; }
     .drawerCard{
-      max-width: 680px;
-      margin: 0 auto;
+      max-width: 720px; margin: 0 auto;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
       border-radius: var(--r-lg);
@@ -172,14 +178,11 @@
     }
     .drawerHead .t{
       font-family: var(--mono);
-      font-size:12px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color: rgba(201,209,217,.82);
+      font-size:12px; letter-spacing:.18em;
+      text-transform:uppercase; color: rgba(201,209,217,.82);
     }
     .close{
-      height:44px; padding:0 14px;
-      border-radius:999px;
+      height:44px; padding:0 14px; border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
       color: rgba(201,209,217,.92);
@@ -200,22 +203,15 @@
       transition: transform .18s ease, border-color .18s ease;
     }
     .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); }
-    .drawerLinks a.active{
-      border-color: rgba(201,164,74,.35);
-      background: rgba(201,164,74,.10);
-    }
 
+    /* Typography */
     .read{ max-width: var(--readW); }
     p{ margin: 0 0 14px 0; line-height: var(--lh); }
     .muted{ color: rgba(201,209,217,.78); }
 
-    /* CRITICAL: prevents first content from hiding under sticky header */
-    main{
-      padding-top: calc(var(--navH) + var(--s4));
-      padding-bottom: var(--s7);
-    }
+    main{ padding: var(--s6) 0 var(--s7); }
     section{ padding: var(--s7) 0; border-top:1px solid rgba(255,255,255,.06); }
-    section:first-of-type{ border-top:none; padding-top: 0; }
+    section:first-of-type{ border-top:none; padding-top: var(--s6); }
 
     .eyebrow{
       font-family: var(--mono);
@@ -225,7 +221,6 @@
       color: rgba(201,164,74,.92);
       margin-bottom: 12px;
     }
-
     h1{ font-size: 52px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 14px 0; font-weight: 600; }
     h2{ font-size: 30px; line-height: 1.20; letter-spacing: -0.01em; margin: 0 0 12px 0; font-weight: 600; }
     h3{ font-size: 20px; line-height: 1.25; margin: 0 0 10px 0; font-weight: 600; }
@@ -235,10 +230,10 @@
       h3{ font-size: 19px; }
     }
 
+    /* Proof chips */
     .chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 16px; }
     .chip{
-      height: 40px;
-      padding: 0 14px;
+      height: 40px; padding: 0 14px;
       border-radius: 999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
@@ -247,33 +242,26 @@
       color: rgba(201,209,217,.92);
     }
     .chip b{ font-weight:600; color: rgba(245,242,234,.94); }
-    .chip .k{ font-family:var(--mono); font-size: 11px; letter-spacing:.12em; text-transform:uppercase; margin-right:8px; color: rgba(201,164,74,.88); }
+    .chip .k{
+      font-family:var(--mono);
+      font-size: 11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-right:8px;
+      color: rgba(201,164,74,.88);
+    }
 
+    /* In brief strip (renamed from “Plain-language summary”) */
     .strip{
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
       border-radius: var(--r-lg);
       padding: 20px 22px;
     }
-    .stripTop{
-      display:flex; align-items:baseline; justify-content:space-between; gap: 12px; flex-wrap:wrap;
-      margin-bottom: 6px;
-    }
-    .labelChip{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(201,164,74,.38);
-      background: rgba(201,164,74,.10);
-      color: rgba(245,242,234,.92);
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
     .strip ul{ margin: 12px 0 0 0; padding: 0 0 0 18px; }
     .strip li{ margin: 8px 0; line-height:1.5; color: rgba(201,209,217,.86); }
 
+    /* 3 pillars */
     .grid3{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -302,6 +290,7 @@
     }
     .card p{ color: rgba(201,209,217,.84); }
 
+    /* Who it’s for (renamed + tightened language) */
     .grid4{
       display:grid;
       grid-template-columns: repeat(4, 1fr);
@@ -328,6 +317,7 @@
       color: rgba(245,242,234,.92);
     }
 
+    /* Evidence flow diagram */
     .diagramWrap{
       margin-top: 18px;
       border:1px solid rgba(255,255,255,.10);
@@ -350,6 +340,157 @@
     .draw .line{ animation: drawLine 1.0s ease-out forwards; }
     @keyframes drawLine{ to{ stroke-dashoffset: 0; } }
 
+    /* Five steps module (overview version) */
+    .stepStrip{
+      margin-top: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--r-lg);
+      padding: 18px 18px;
+      overflow:hidden;
+    }
+    .steps{
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){ .steps{ grid-template-columns: 1fr; } }
+    .step{
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(11,15,20,.55);
+      border-radius: var(--r-lg);
+      padding: 14px 14px;
+    }
+    .stepNum{
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(201,164,74,.90);
+      margin-bottom: 8px;
+    }
+    .stepTitle{ font-weight:600; margin-bottom:6px; }
+    .stepShort{ margin:0; color: rgba(201,209,217,.78); font-size: 14px; line-height: 1.55; }
+
+    .miniSample{
+      margin-top: 12px;
+      border:1px solid rgba(201,164,74,.22);
+      background: rgba(11,15,20,.60);
+      border-radius: var(--r-lg);
+      padding: 14px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.65;
+      color: rgba(201,209,217,.85);
+      overflow:auto;
+    }
+    .miniSample .k{ color: rgba(201,164,74,.92); text-transform: uppercase; letter-spacing:.12em; font-size: 11px; }
+
+    /* Verify module */
+    .verify{
+      border:1px solid rgba(201,164,74,.28);
+      background: rgba(201,164,74,.06);
+      border-radius: var(--r-lg);
+      padding: 18px 18px;
+      margin-top: 18px;
+    }
+    .verify .hdr{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom: 10px;
+    }
+    .verify .tag{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform: uppercase;
+      color: rgba(201,164,74,.92);
+    }
+    .verify .status{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing:.14em;
+      text-transform: uppercase;
+      color: rgba(201,209,217,.70);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+    }
+    .verify .status.pass{ border-color: rgba(120,210,160,.30); color: rgba(160,240,200,.88); background: rgba(120,210,160,.06); }
+    .verify .status.fail{ border-color: rgba(255,120,120,.28); color: rgba(255,180,180,.86); background: rgba(255,120,120,.05); }
+
+    textarea{
+      width:100%;
+      min-height: 180px;
+      resize: vertical;
+      border-radius: var(--r-lg);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(11,15,20,.62);
+      color: rgba(201,209,217,.92);
+      padding: 12px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.6;
+      outline:none;
+    }
+    textarea:focus{ border-color: rgba(201,164,74,.35); }
+
+    .verifyRow{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top: 10px;
+      align-items:center;
+    }
+    .miniBtn{
+      height:44px;
+      padding:0 16px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      color: rgba(201,209,217,.92);
+      cursor:pointer;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+      font-size: 14px;
+    }
+    .miniBtn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.35); background: rgba(255,255,255,.04); }
+    .miniBtn.primary{
+      border-color: rgba(201,164,74,.45);
+      background: rgba(201,164,74,.10);
+      color: rgba(245,242,234,.96);
+    }
+    .miniBtn.primary:hover{ background: rgba(201,164,74,.16); }
+
+    .verifySteps{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 980px){ .verifySteps{ grid-template-columns: 1fr; } }
+    .vstep{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--r-lg);
+      padding: 12px 12px;
+      color: rgba(201,209,217,.82);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .vstep b{ color: rgba(245,242,234,.92); font-weight:600; }
+    .vstep .m{
+      display:block;
+      margin-top:6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing:.12em;
+      text-transform: uppercase;
+      color: rgba(201,164,74,.86);
+    }
+
+    /* Footer */
     footer{
       border-top:1px solid rgba(255,255,255,.06);
       padding: var(--s7) 0 var(--s6);
@@ -396,6 +537,7 @@
       border-top:1px solid rgba(255,255,255,.06);
     }
 
+    /* Motion */
     .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
     .reveal.on{ opacity:1; transform: translateY(0); }
 
@@ -403,8 +545,7 @@
       html{scroll-behavior:auto;}
       .reveal{ opacity:1; transform:none; transition:none; }
       .draw .line{ animation:none; stroke-dashoffset:0; }
-      .btn, .card, .drawerLinks a, .menuBtn{ transition:none; }
-      canvas#neurons{ display:none; }
+      .btn,.menuBtn,.drawerLinks a,.miniBtn{ transition:none; }
     }
   </style>
 </head>
@@ -420,15 +561,14 @@
       </a>
 
       <div class="actions" aria-label="Actions">
-        <a class="btn secondary" href="resources.html#sample-artifact">View sample artifact<span class="arr">→</span></a>
+        <a class="btn secondary" href="resources.html#sample-artifact">Sample artifacts<span class="arr">→</span></a>
         <a class="btn primary" href="contact.html">Request walkthrough<span class="arr">→</span></a>
-        <button class="menuBtn" id="openMenu" type="button" aria-label="Open menu">
-          <span aria-hidden="true">☰</span><span class="m">Menu</span>
-        </button>
+        <button class="menuBtn" id="openMenu" type="button" aria-label="Open menu">Menu <span aria-hidden="true">☰</span></button>
       </div>
     </div>
   </header>
 
+  <!-- Drawer menu (single source of navigation) -->
   <div class="drawer" id="drawer" aria-hidden="true">
     <div class="drawerCard" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="drawerHead">
@@ -436,14 +576,12 @@
         <button class="close" id="closeMenu" type="button">Close</button>
       </div>
       <div class="drawerLinks">
-        <a class="active" href="index.html">Overview</a>
+        <a href="index.html">Overview</a>
         <a href="how.html">How It Works</a>
         <a href="platform.html">Platform</a>
-        <a href="trust.html">Trust & Verification</a>
+        <a href="trust.html">Trust</a>
         <a href="compliance.html">Compliance</a>
         <a href="integrations.html">Integrations</a>
-        <a href="use-cases.html">Use Cases</a>
-        <a href="security.html">Security</a>
         <a href="resources.html">Resources</a>
         <a href="company.html">Company</a>
         <a href="contact.html">Contact</a>
@@ -452,7 +590,8 @@
   </div>
 
   <main class="wrap">
-    <section>
+    <!-- HERO -->
+    <section style="padding-top: var(--s6);">
       <div class="read reveal">
         <div class="eyebrow">Neutral audit layer · Evidentiary records · Independent verification</div>
         <h1>Neutral audit records for AI decisions.</h1>
@@ -467,42 +606,39 @@
         </div>
 
         <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn primary" href="how.html">See how it works<span class="arr">→</span></a>
-          <a class="btn" href="resources.html#sample-artifact">View sample artifact<span class="arr">→</span></a>
+          <a class="btn primary" href="#five">Five steps<span class="arr">→</span></a>
+          <a class="btn" href="#verify60">Verify in 60 seconds<span class="arr">→</span></a>
         </div>
       </div>
     </section>
 
-    <section id="plain">
+    <!-- IN BRIEF -->
+    <section id="brief">
       <div class="read reveal">
+        <h2>In brief</h2>
         <div class="strip">
-          <div class="stripTop">
-            <span class="labelChip">Summary</span>
-            <span class="muted" style="font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;">
-              Policy-scoped · Canonicalized · Sealed
-            </span>
-          </div>
-          <p><b>CEYO creates audit-ready evidence at the moment an AI system produces a decision output.</b></p>
+          <p><b>CEYO creates audit-ready evidence at the moment an AI system produces an output.</b></p>
           <ul>
             <li>Operators define exactly what is recorded (policy-scoped capture).</li>
             <li>Artifacts are canonicalized and sealed so tampering is detectable.</li>
-            <li>Independent reviewers can verify integrity under constrained disclosure.</li>
+            <li>Independent reviewers verify integrity under constrained disclosure.</li>
           </ul>
         </div>
       </div>
     </section>
 
+    <!-- RECORD / SEAL / VERIFY -->
     <section id="pillars">
       <div class="read reveal">
         <h2>Record · Seal · Verify</h2>
         <div class="grid3" aria-label="Three pillars">
           <div class="card">
             <div class="pillHdr">Record</div>
-            <p>Capture is policy-scoped. Only fields declared in scope are collected. Out-of-scope data is excluded by design.</p>
+            <p>Capture is policy-scoped. Only declared fields are collected. Out-of-scope data is excluded by design.</p>
           </div>
           <div class="card">
             <div class="pillHdr">Seal</div>
-            <p>Canonicalize deterministically and cryptographically seal the artifact so post-hoc alteration is detectable.</p>
+            <p>Canonicalize deterministically and seal cryptographically so post-hoc alteration is detectable.</p>
           </div>
           <div class="card">
             <div class="pillHdr">Verify</div>
@@ -512,36 +648,38 @@
       </div>
     </section>
 
-    <section id="audience">
+    <!-- WHO IT SERVES (renamed) -->
+    <section id="serves">
       <div class="read reveal">
-        <h2>Who CEYO serves</h2>
-        <p class="muted">Built for environments where decisions require reviewable records and independent integrity verification.</p>
+        <h2>Who it serves</h2>
+        <p class="muted">Designed for fast executive clarity while remaining credible to technical and security reviewers.</p>
 
         <div class="grid4" aria-label="Stakeholders">
           <div class="role">
             <div class="icon">C</div>
             <h3>Compliance & audit</h3>
-            <p class="muted">Review-ready artifacts with explicit scope, versioning, and verification outcomes.</p>
+            <p class="muted">Audit-ready artifacts with explicit scope, identifiers, and versioning discipline.</p>
           </div>
           <div class="role">
             <div class="icon">S</div>
-            <h3>Security & risk</h3>
-            <p class="muted">Non-custodial keys and tamper-evidence for governance and incident review.</p>
+            <h3>Security</h3>
+            <p class="muted">Non-custodial key posture and deterministic tamper evidence.</p>
           </div>
           <div class="role">
             <div class="icon">AI</div>
             <h3>AI & platform</h3>
-            <p class="muted">Attach as a boundary layer—no changes to model weights or inference logic.</p>
+            <p class="muted">Integrate as a layer — no rewrite of model weights or core pipelines.</p>
           </div>
           <div class="role">
             <div class="icon">R</div>
-            <h3>Institutions & reviewers</h3>
-            <p class="muted">Independent verification under constrained disclosure, without default IP exposure.</p>
+            <h3>Review boards</h3>
+            <p class="muted">Independent verification without default exposure of proprietary internals.</p>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- EVIDENCE FLOW -->
     <section id="flow">
       <div class="read reveal">
         <h2>Evidence flow</h2>
@@ -570,13 +708,131 @@
             Verification confirms integrity and provenance under declared policy scope — not correctness of model output.
           </p>
         </div>
+      </div>
+    </section>
 
-        <div style="margin-top:18px">
-          <a class="btn primary" href="contact.html">Request a verification walkthrough<span class="arr">→</span></a>
+    <!-- FIVE STEPS (overview version) -->
+    <section id="five">
+      <div class="read reveal">
+        <h2>Five steps</h2>
+        <p class="muted">The mechanics chain is fixed. Each step produces a verifiable boundary.</p>
+
+        <div class="stepStrip reveal">
+          <div class="steps" aria-label="Five steps">
+            <div class="step">
+              <div class="stepNum">01 · Attach</div>
+              <div class="stepTitle">Deploy as a layer</div>
+              <p class="stepShort">Sidecar, gateway, or wrapper at the inference boundary.</p>
+            </div>
+            <div class="step">
+              <div class="stepNum">02 · Capture</div>
+              <div class="stepTitle">Define scope first</div>
+              <p class="stepShort">Policy-scoped fields only. Masking applied before sealing.</p>
+            </div>
+            <div class="step">
+              <div class="stepNum">03 · Canonicalize</div>
+              <div class="stepTitle">Normalize deterministically</div>
+              <p class="stepShort">RFC 8785 yields reproducible bytes across environments.</p>
+            </div>
+            <div class="step">
+              <div class="stepNum">04 · Seal</div>
+              <div class="stepTitle">Tamper-evident integrity</div>
+              <p class="stepShort">Hash + signature under operator key custody (non-custodial).</p>
+            </div>
+            <div class="step">
+              <div class="stepNum">05 · Verify</div>
+              <div class="stepTitle">Independent validation</div>
+              <p class="stepShort">Recompute canonicalization + validate signature + policy alignment.</p>
+            </div>
+          </div>
+
+          <div class="miniSample" aria-label="Short example">
+            <div class="k">Example</div>
+            <code>
+policy_id: "POL-001"
+policy_version: "V1"
+canonicalization: "RFC8785"
+hash_algorithm: "SHA-256"
+signature_algorithm: "ECDSA-P256"
+            </code>
+          </div>
+
+          <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn primary" href="how.html">Full walkthrough<span class="arr">→</span></a>
+            <a class="btn" href="trust.html">Trust model<span class="arr">→</span></a>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- VERIFY IN 60 SECONDS (on overview, as requested) -->
+    <section id="verify60">
+      <div class="read reveal">
+        <h2>Verify in 60 seconds</h2>
+        <p class="muted">
+          Paste a sample artifact to see the verification steps and basic format checks.
+          Cryptographic verification is performed in the verifier toolkit.
+        </p>
+
+        <div class="verify reveal">
+          <div class="hdr">
+            <div class="tag">Verification walkthrough</div>
+            <div class="status" id="statusPill">Status · waiting</div>
+          </div>
+
+          <textarea id="artifactInput" spellcheck="false" aria-label="Paste artifact JSON here">
+{
+  "artifact_id": "ART-EXAMPLE-001",
+  "policy_id": "POL-001",
+  "policy_version": "V1",
+  "canonicalization": "RFC8785",
+  "hash_algorithm": "SHA-256",
+  "signature_algorithm": "ECDSA-P256",
+  "digest": "…",
+  "signature": "…",
+  "public_key_reference": "KMS:key/…",
+  "timestamp_utc": "2026-02-19T00:00:00Z"
+}</textarea>
+
+          <div class="verifyRow">
+            <button class="miniBtn primary" id="runVerify" type="button">Run checks</button>
+            <button class="miniBtn" id="loadExample" type="button">Load sample</button>
+            <button class="miniBtn" id="clearBox" type="button">Clear</button>
+          </div>
+
+          <div class="verifySteps" aria-label="Verification steps">
+            <div class="vstep">
+              <b>1) Canonicalize</b> under the recorded scheme
+              <span class="m">RFC 8785 JSON canonicalization</span>
+            </div>
+            <div class="vstep">
+              <b>2) Recompute hash</b> over canonical bytes
+              <span class="m">SHA-256 digest recomputation</span>
+            </div>
+            <div class="vstep">
+              <b>3) Validate signature</b> against public key reference
+              <span class="m">Origin authenticity + tamper evidence</span>
+            </div>
+            <div class="vstep">
+              <b>4) Confirm policy alignment</b> (ID/version/hash)
+              <span class="m">Scope boundary confirmation</span>
+            </div>
+          </div>
+
+          <p class="muted" style="margin-top:12px">
+            Successful verification confirms integrity and provenance under policy scope.
+            It does not confirm output correctness, legality, or compliance conclusions.
+          </p>
+        </div>
+
+        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn primary" href="contact.html">Request a walkthrough<span class="arr">→</span></a>
+          <a class="btn" href="resources.html#sample-artifact">Sample artifacts<span class="arr">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
     <footer id="footer">
       <div class="footGrid reveal">
         <div class="footCol">
@@ -617,22 +873,24 @@
   </main>
 
   <script>
+    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Menu
+    // Drawer menu
     const drawer = document.getElementById('drawer');
     const openMenu = document.getElementById('openMenu');
     const closeMenu = document.getElementById('closeMenu');
     function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
     function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-    openMenu.addEventListener('click', openDrawer);
-    closeMenu.addEventListener('click', closeDrawer);
+    if(openMenu) openMenu.addEventListener('click', openDrawer);
+    if(closeMenu) closeMenu.addEventListener('click', closeDrawer);
     drawer.addEventListener('click', (e)=>{ if(e.target===drawer) closeDrawer(); });
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
 
-    // Reveal + diagram draw
+    // Motion rules: reveal + diagram draw
     const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const revealEls = Array.from(document.querySelectorAll('.reveal'));
+
     if(!prefersReduce){
       const io = new IntersectionObserver((entries)=>{
         entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('on'); });
@@ -649,10 +907,65 @@
       document.getElementById('diagramBox').classList.add('draw');
     }
 
-    // Neuron field + atom core (unchanged)
-    (function(){
-      if (prefersReduce) return;
+    // Verify demo logic (format + required fields)
+    const statusPill = document.getElementById('statusPill');
+    const artifactInput = document.getElementById('artifactInput');
+    const runVerify = document.getElementById('runVerify');
+    const loadExample = document.getElementById('loadExample');
+    const clearBox = document.getElementById('clearBox');
 
+    if(statusPill && artifactInput && runVerify && loadExample && clearBox){
+      const required = [
+        "artifact_id","policy_id","policy_version","canonicalization",
+        "hash_algorithm","signature_algorithm","digest","signature","public_key_reference"
+      ];
+      function setStatus(kind, text){
+        statusPill.classList.remove('pass','fail');
+        if(kind) statusPill.classList.add(kind);
+        statusPill.textContent = text;
+      }
+      runVerify.addEventListener('click', ()=>{
+        try{
+          const obj = JSON.parse(artifactInput.value);
+          const missing = required.filter(k => !(k in obj));
+          if(missing.length){ setStatus('fail', 'Status · missing fields'); return; }
+          if(String(obj.canonicalization || '').toUpperCase().indexOf('RFC') === -1){
+            setStatus('fail', 'Status · canonicalization mismatch'); return;
+          }
+          setStatus('pass', 'Status · format OK');
+        } catch(e){
+          setStatus('fail', 'Status · invalid JSON');
+        }
+      });
+      loadExample.addEventListener('click', ()=>{
+        artifactInput.value = JSON.stringify({
+          artifact_id: "ART-EXAMPLE-001",
+          policy_id: "POL-001",
+          policy_version: "V1",
+          policy_hash: "…",
+          canonicalization: "RFC8785",
+          hash_algorithm: "SHA-256",
+          signature_algorithm: "ECDSA-P256",
+          digest: "…",
+          signature: "…",
+          public_key_reference: "KMS:key/…",
+          timestamp_utc: "2026-02-19T00:00:00Z"
+        }, null, 2);
+        setStatus('', 'Status · waiting');
+      });
+      clearBox.addEventListener('click', ()=>{
+        artifactInput.value = "";
+        setStatus('', 'Status · waiting');
+      });
+    }
+
+    /* Neuron field + atom ring behavior:
+       - Ambient neurons
+       - Converge into ring through content
+       - Burst near flow section
+       - Re-converge by footer
+    */
+    (function(){
       const c = document.getElementById('neurons');
       const ctx = c.getContext('2d', {alpha:true});
       let w=0,h=0,dpr=1;
@@ -670,31 +983,28 @@
       window.addEventListener('resize', resize, {passive:true});
 
       const N = 240;
-      const boundsPad = 40;
+      const pad = 40;
       const nodes = [];
       const dirs = [];
       const rnd = (a,b)=> a + Math.random()*(b-a);
 
       for(let i=0;i<N;i++){
+        nodes.push({ x:rnd(-pad,w+pad), y:rnd(-pad,h+pad), vx:rnd(-0.18,0.18), vy:rnd(-0.14,0.14), s:rnd(1.1,2.1) });
         const ang = Math.random()*Math.PI*2;
         const rad = Math.sqrt(Math.random());
         dirs.push({ang, rad});
       }
 
-      for(let i=0;i<N;i++){
-        nodes.push({
-          x: rnd(-boundsPad, w+boundsPad),
-          y: rnd(-boundsPad, h+boundsPad),
-          vx: rnd(-0.18, 0.18),
-          vy: rnd(-0.14, 0.14),
-          s: rnd(1.1, 2.1)
-        });
+      let mx=0.5, my=0.5;
+      if(window.matchMedia("(pointer:fine)").matches){
+        window.addEventListener('mousemove', (e)=>{
+          mx = e.clientX / Math.max(1,w);
+          my = e.clientY / Math.max(1,h);
+        }, {passive:true});
       }
 
-      const state = { converge:0, burst:0, focus:0, coreAlpha:0 };
-
       const anchors = {
-        plain: document.getElementById('plain'),
+        brief: document.getElementById('brief'),
         pillars: document.getElementById('pillars'),
         flow: document.getElementById('flow'),
         footer: document.getElementById('footer')
@@ -710,16 +1020,10 @@
         return Math.max(0, Math.min(1, t));
       }
 
-      let mx=0.5, my=0.5;
-      if(window.matchMedia("(pointer:fine)").matches){
-        window.addEventListener('mousemove', (e)=>{
-          mx = e.clientX / Math.max(1,w);
-          my = e.clientY / Math.max(1,h);
-        }, {passive:true});
-      }
+      const state = { converge:0, burst:0, focus:0, coreAlpha:0 };
 
       function tickState(){
-        const p1 = inRangeProgress(anchors.plain, 0.80, 1.10);
+        const p1 = inRangeProgress(anchors.brief, 0.80, 1.10);
         const p2 = inRangeProgress(anchors.pillars, 0.70, 1.05);
         const baseConverge = Math.max(p1*0.65, p2);
 
@@ -730,15 +1034,19 @@
         const settle = inRangeProgress(anchors.footer, 0.85, 1.10);
         state.converge = Math.max(baseConverge, settle);
 
-        const focusP = inRangeProgress(anchors.pillars, 0.55, 0.95);
-        state.focus = focusP;
-
+        state.focus = inRangeProgress(anchors.pillars, 0.55, 0.95);
         state.coreAlpha = Math.min(0.55, 0.18 + state.converge * 0.48);
       }
 
       function draw(){
         tickState();
         ctx.clearRect(0,0,w,h);
+
+        const vg = ctx.createRadialGradient(w*0.55, h*0.28, 40, w*0.5, h*0.5, Math.max(w,h)*0.9);
+        vg.addColorStop(0,'rgba(0,0,0,0.00)');
+        vg.addColorStop(1,'rgba(0,0,0,0.28)');
+        ctx.fillStyle = vg;
+        ctx.fillRect(0,0,w,h);
 
         const px = (mx - 0.5) * 22;
         const py = (my - 0.5) * 14;
@@ -754,24 +1062,18 @@
           ctx.globalAlpha = state.coreAlpha;
           ctx.strokeStyle = 'rgba(201,164,74,0.55)';
           ctx.lineWidth = 1.3;
-          ctx.beginPath();
-          ctx.arc(cx, cy, orbitR*0.38, 0, Math.PI*2);
-          ctx.stroke();
+          ctx.beginPath(); ctx.arc(cx, cy, orbitR*0.38, 0, Math.PI*2); ctx.stroke();
 
           ctx.globalAlpha = state.coreAlpha * 0.75;
           ctx.strokeStyle = 'rgba(201,164,74,0.22)';
           ctx.lineWidth = 1.0;
-          ctx.beginPath();
-          ctx.arc(cx, cy, orbitR*0.78, 0, Math.PI*2);
-          ctx.stroke();
+          ctx.beginPath(); ctx.arc(cx, cy, orbitR*0.78, 0, Math.PI*2); ctx.stroke();
 
           const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, orbitR*1.05);
           g.addColorStop(0,'rgba(201,164,74,0.14)');
           g.addColorStop(1,'rgba(201,164,74,0.0)');
           ctx.fillStyle = g;
-          ctx.beginPath();
-          ctx.arc(cx, cy, orbitR*1.05, 0, Math.PI*2);
-          ctx.fill();
+          ctx.beginPath(); ctx.arc(cx, cy, orbitR*1.05, 0, Math.PI*2); ctx.fill();
           ctx.restore();
         }
 
@@ -787,10 +1089,10 @@
           p.x += p.vx * (1 - 0.65*conv);
           p.y += p.vy * (1 - 0.65*conv);
 
-          if(p.x < -boundsPad) p.x = w + boundsPad;
-          if(p.x > w + boundsPad) p.x = -boundsPad;
-          if(p.y < -boundsPad) p.y = h + boundsPad;
-          if(p.y > h + boundsPad) p.y = -boundsPad;
+          if(p.x < -pad) p.x = w+pad;
+          if(p.x > w+pad) p.x = -pad;
+          if(p.y < -pad) p.y = h+pad;
+          if(p.y > h+pad) p.y = -pad;
 
           if(conv > 0.001){
             const d = dirs[i];
@@ -848,7 +1150,7 @@
           ctx.fill();
         }
 
-        requestAnimationFrame(draw);
+        if(!prefersReduce) requestAnimationFrame(draw);
       }
 
       draw();
