@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <title>CEYO — Security</title>
-  <meta name="description" content="Non-custodial key model, sealing integrity posture, disclosure tiers, and fail-open operational behavior."/>
+  <meta name="description" content="Non-custodial keys, HSM/KMS/TEE compatibility, fail-open posture, disclosure tiers, and verification boundaries. CEYO produces integrity-sealed artifacts for oversight workflows."/>
   <meta name="theme-color" content="#0B0F14"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,17 +49,29 @@
     a{color:inherit;text-decoration:none}
     button{font:inherit}
 
+    [id]{ scroll-margin-top: calc(var(--navH) + 24px); }
+
+    /* Background (distinct: subtle “vault grid” + warm focus) */
     .bg{
       position:fixed; inset:0; pointer-events:none; z-index:0;
       background:
-        radial-gradient(900px 520px at 30% 12%, rgba(58,50,12,.20), transparent 62%),
-        radial-gradient(820px 520px at 86% 34%, rgba(201,164,74,.08), transparent 64%),
-        linear-gradient(180deg, #0B0F14 0%, #0A0D12 40%, #0B0F14 100%);
+        radial-gradient(940px 560px at 46% 8%, rgba(58,50,12,.20), transparent 62%),
+        radial-gradient(860px 560px at 86% 34%, rgba(201,164,74,.07), transparent 64%),
+        linear-gradient(180deg, #0B0F14 0%, #090C11 46%, #0B0F14 100%);
+    }
+    .vault{
+      position:fixed; inset:0; pointer-events:none; z-index:0;
+      opacity:.18;
+      background-image:
+        radial-gradient(circle at 1px 1px, rgba(255,255,255,.09) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(760px 520px at 50% 22%, black 55%, transparent 100%);
     }
 
     .wrap{ position:relative; z-index:1; max-width:var(--maxW); margin:0 auto; padding:0 var(--s4); }
     @media (max-width: 640px){ .wrap{ padding:0 18px; } }
 
+    /* Header (MENU-ONLY) */
     header.site{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
@@ -71,8 +83,7 @@
       padding-top: env(safe-area-inset-top);
       display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
     }
-
-    .logo{ display:flex; align-items:center; gap:10px; min-width:180px; font-weight:600; letter-spacing:-.01em; }
+    .logo{ display:flex; align-items:center; gap:10px; min-width: 180px; font-weight:600; letter-spacing:-.01em; }
     .logo .mark{
       display:inline-flex; align-items:center; gap:10px;
       padding:10px 12px; border-radius:999px;
@@ -85,28 +96,54 @@
       box-shadow: 0 0 0 4px rgba(201,164,74,.12);
     }
 
-    /* MENU ONLY */
-    .actions{ display:flex; align-items:center; justify-content:flex-end; gap:10px; min-width:120px; }
+    .actions{
+      display:flex; align-items:center; gap:10px;
+      justify-content:flex-end;
+      min-width: 240px;
+    }
+    .btn{
+      height:48px; padding:0 18px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      color: rgba(201,209,217,.98);
+      display:inline-flex; align-items:center; justify-content:center;
+      font-size:14px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.35); background: rgba(255,255,255,.04); }
+    .btn.primary{
+      border-color: rgba(201,164,74,.50);
+      background: rgba(201,164,74,.10);
+      color: rgba(245,242,234,.96);
+    }
+    .btn.primary:hover{ background: rgba(201,164,74,.16); }
+    .btn .arr{ display:inline-block; margin-left:10px; transition: transform .16s ease; }
+    .btn:hover .arr{ transform: translateX(3px); }
+
     .menuBtn{
-      height:48px; padding:0 16px; border-radius:999px;
+      height:48px; width:48px;
+      border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
       color: rgba(201,209,217,.95);
       display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
       cursor:pointer;
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
-      white-space:nowrap;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
     }
     .menuBtn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.35); background: rgba(255,255,255,.04); }
-    .menuBtn .lab{
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing:.18em;
-      text-transform: uppercase;
-    }
-    .menuBtn .icon{ width:18px; height:18px; display:inline-block; opacity:.90; }
 
+    @media (max-width: 860px){
+      .actions .btn.secondary{ display:none; }
+      .logo{ min-width: 150px; }
+    }
+    @media (max-width: 520px){
+      .actions .btn{ padding:0 14px; height:46px; }
+      .menuBtn{ height:46px; width:46px; }
+      .logo .mark{ padding:9px 10px; }
+    }
+
+    /* Drawer */
     .drawer{
       position:fixed; inset:0; z-index:80;
       display:none;
@@ -116,7 +153,7 @@
     }
     .drawer.open{ display:block; }
     .drawerCard{
-      max-width: 680px; margin: 0 auto;
+      max-width: 720px; margin: 0 auto;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
       border-radius: var(--r-lg);
@@ -140,20 +177,23 @@
       color: rgba(201,209,217,.92);
       cursor:pointer;
     }
-    .drawerLinks{ display:grid; grid-template-columns: 1fr; padding: 10px; gap: 8px; }
-    .drawerLinks a{
+    .drawerGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 10px;
+    }
+    @media (max-width: 720px){ .drawerGrid{ grid-template-columns: 1fr; } }
+    .drawerGrid a{
       padding: 14px 14px; border-radius: 14px;
       border:1px solid rgba(255,255,255,.06);
       background: rgba(255,255,255,.02);
       font-size: 15px;
       transition: transform .18s ease, border-color .18s ease;
     }
-    .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); }
-    .drawerLinks a.active{
-      border-color: rgba(201,164,74,.35);
-      background: rgba(201,164,74,.08);
-    }
+    .drawerGrid a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); }
 
+    /* Typography */
     .read{ max-width: var(--readW); }
     p{ margin: 0 0 14px 0; line-height: var(--lh); }
     .muted{ color: rgba(201,209,217,.78); }
@@ -173,20 +213,39 @@
     h2{ font-size: 30px; line-height: 1.20; letter-spacing: -0.01em; margin: 0 0 12px 0; font-weight: 600; }
     h3{ font-size: 20px; line-height: 1.25; margin: 0 0 10px 0; font-weight: 600; }
     @media (max-width: 640px){
+      body{ font-size: 16.5px; }
       h1{ font-size: 32px; }
       h2{ font-size: 24px; }
       h3{ font-size: 19px; }
     }
 
-    /* Distinctive modules */
-    .grid2{
+    /* Modules */
+    .strip{
+      border:1px solid rgba(201,164,74,.22);
+      background: rgba(11,15,20,.60);
+      border-radius: var(--r-lg);
+      padding: 16px 16px;
+      margin-top: 16px;
+    }
+    .strip .k{
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing:.14em;
+      text-transform: uppercase;
+      color: rgba(201,164,74,.86);
+      margin-bottom: 10px;
+    }
+    .strip ul{ margin: 0; padding: 0 0 0 18px; }
+    .strip li{ margin: 8px 0; color: rgba(201,209,217,.84); line-height: 1.55; }
+
+    .grid{
       margin-top: 18px;
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap: 14px;
       align-items:start;
     }
-    @media (max-width: 980px){ .grid2{ grid-template-columns: 1fr; } }
+    @media (max-width: 980px){ .grid{ grid-template-columns: 1fr; } }
 
     .card{
       border:1px solid rgba(255,255,255,.10);
@@ -196,55 +255,41 @@
     }
     .card .k{
       font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing:.18em;
+      font-size: 11px;
+      letter-spacing:.14em;
       text-transform: uppercase;
-      color: rgba(201,164,74,.90);
+      color: rgba(201,164,74,.86);
       margin-bottom: 10px;
     }
-    .card ul{ margin: 10px 0 0 0; padding: 0 0 0 18px; }
+    .card ul{ margin: 0; padding: 0 0 0 18px; }
     .card li{ margin: 8px 0; color: rgba(201,209,217,.84); line-height: 1.55; }
 
-    .diagram{
+    /* Failure modes (distinct module) */
+    .modes{
       margin-top: 18px;
-      border:1px solid rgba(201,164,74,.22);
-      background: rgba(11,15,20,.60);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
       border-radius: var(--r-lg);
-      padding: 18px 18px;
       overflow:hidden;
     }
-    .diagram .k{
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing:.18em;
-      text-transform: uppercase;
-      color: rgba(201,164,74,.90);
-      margin-bottom: 10px;
+    .modeRow{
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 14px 14px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      cursor:pointer;
     }
-    svg{ width:100%; height:auto; display:block; }
-    .node{ fill: rgba(11,15,20,.88); stroke: rgba(255,255,255,.14); stroke-width:1.2; }
-    .lbl{ fill: rgba(201,209,217,.88); font-family: var(--mono); font-size: 12px; letter-spacing:.10em; text-transform: uppercase; }
-    .line{ stroke: rgba(201,164,74,.48); stroke-width:2; fill:none; stroke-linecap:round; }
-
-    .failGrid{
-      margin-top: 18px;
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    @media (max-width: 980px){ .failGrid{ grid-template-columns: 1fr; } }
-
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(201,164,74,.24);
-      background: rgba(201,164,74,.08);
+    .modeRow:last-child{ border-bottom:none; }
+    .modeRow:hover{ background: rgba(255,255,255,.03); }
+    .modeLeft b{ display:block; color: rgba(245,242,234,.92); font-weight:600; margin-bottom:4px; }
+    .modeLeft span{ display:block; color: rgba(201,209,217,.78); font-size:14px; line-height:1.5; }
+    .modeTag{
       font-family: var(--mono);
       font-size: 11px;
-      letter-spacing:.10em;
+      letter-spacing:.12em;
       text-transform: uppercase;
-      color: rgba(245,242,234,.92);
+      color: rgba(201,164,74,.86);
       white-space:nowrap;
     }
 
@@ -292,19 +337,21 @@
       border-top:1px solid rgba(255,255,255,.06);
     }
 
+    /* Motion */
     .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
     .reveal.on{ opacity:1; transform: translateY(0); }
 
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto;}
       .reveal{ opacity:1; transform:none; transition:none; }
-      .menuBtn, .drawerLinks a{ transition:none; }
+      .btn, .menuBtn, .drawerGrid a{ transition:none; }
     }
   </style>
 </head>
 
 <body>
   <div class="bg" aria-hidden="true"></div>
+  <div class="vault" aria-hidden="true"></div>
 
   <header class="site">
     <div class="wrap nav">
@@ -312,31 +359,31 @@
         <span class="mark"><span class="dot" aria-hidden="true"></span><span>CEYO</span></span>
       </a>
 
-      <div class="actions" aria-label="Menu">
-        <button class="menuBtn" id="openMenu" type="button" aria-label="Open menu">
-          <span class="lab">Menu</span>
-          <span class="icon" aria-hidden="true">☰</span>
-        </button>
+      <div class="actions" aria-label="Actions">
+        <a class="btn secondary" href="trust.html#verification-spec">Verification steps<span class="arr">→</span></a>
+        <a class="btn primary" href="contact.html">Request walkthrough<span class="arr">→</span></a>
+        <button class="menuBtn" id="openMenu" aria-label="Open menu" type="button">☰</button>
       </div>
     </div>
   </header>
 
+  <!-- MENU DRAWER (consistent) -->
   <div class="drawer" id="drawer" aria-hidden="true">
     <div class="drawerCard" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="drawerHead">
         <div class="t">Menu</div>
         <button class="close" id="closeMenu" type="button">Close</button>
       </div>
-      <div class="drawerLinks">
+      <div class="drawerGrid">
         <a href="index.html">Overview</a>
         <a href="how.html">How It Works</a>
         <a href="platform.html">Platform</a>
-        <a href="trust.html">Trust</a>
+        <a href="trust.html">Trust & Verification</a>
         <a href="compliance.html">Compliance</a>
         <a href="integrations.html">Integrations</a>
-        <a href="resources.html">Resources</a>
-        <a class="active" href="security.html">Security</a>
         <a href="use-cases.html">Use Cases</a>
+        <a href="security.html">Security</a>
+        <a href="resources.html">Resources</a>
         <a href="company.html">Company</a>
         <a href="contact.html">Contact</a>
       </div>
@@ -344,93 +391,146 @@
   </div>
 
   <main class="wrap">
+    <!-- HERO -->
     <section style="padding-top: var(--s6);">
       <div class="read reveal">
-        <div class="eyebrow">Security · Key custody · Failure modes</div>
+        <div class="eyebrow">Security · Key custody · Disclosure tiers</div>
         <h1>Your keys remain yours.</h1>
         <p class="muted">
-          CEYO is designed as a non-custodial evidentiary layer: private signing keys remain in the operator environment
-          (HSM/KMS/TEE). CEYO produces sealed artifacts for verification workflows under explicit policy scope.
+          CEYO is designed as a non-custodial evidentiary layer. Artifacts are sealed under operator-controlled keys and verified independently under policy scope.
+          CEYO produces records; institutions and operators retain decision authority and compliance determinations.
         </p>
+
+        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn primary" href="#custody">Key custody model<span class="arr">→</span></a>
+          <a class="btn" href="#modes">Failure modes<span class="arr">→</span></a>
+        </div>
+
+        <div class="strip reveal" aria-label="Security summary">
+          <div class="k">Security summary</div>
+          <ul>
+            <li>Private signing keys remain within operator HSM/KMS/TEE environments (non-custodial model).</li>
+            <li>Artifacts are sealed with hash + signature to support tamper detection and provenance checks.</li>
+            <li>Disclosure tiers enable verification without default exposure of proprietary internals.</li>
+          </ul>
+        </div>
       </div>
     </section>
 
+    <!-- CUSTODY -->
     <section id="custody">
       <div class="read reveal">
         <h2>Key custody model</h2>
-        <p class="muted">Signing authority stays with the operator. CEYO requests sign operations without holding private key material.</p>
+        <p class="muted">CEYO does not require possession, transmission, or storage of operator private keys.</p>
 
-        <div class="grid2" aria-label="Key custody cards">
+        <div class="grid">
           <div class="card reveal">
-            <div class="k">Non-custodial signing</div>
+            <div class="k">Non-custodial posture</div>
             <ul>
-              <li>Private keys never reside in CEYO application memory as durable material.</li>
-              <li>Sign operations are delegated to operator-controlled KMS/HSM/Vault/TEE.</li>
-              <li>Artifacts record the public key reference or key identifier used.</li>
+              <li>Signing keys are generated and stored in operator infrastructure.</li>
+              <li>Signing operations occur in HSM/KMS/TEE environments, per deployment choice.</li>
+              <li>Artifacts embed a public key reference / key ID for later verification.</li>
             </ul>
           </div>
+
           <div class="card reveal">
-            <div class="k">What verification proves</div>
+            <div class="k">Compatible environments</div>
             <ul>
-              <li><span class="pill">Integrity</span> Artifact has not been modified since sealing.</li>
-              <li><span class="pill">Provenance</span> Signature validates under declared key reference.</li>
-              <li><span class="pill">Scope</span> Policy ID/version/hash identify capture boundary.</li>
+              <li>Cloud KMS (provider-managed or customer-managed keys).</li>
+              <li>Dedicated HSM (on-prem or cloud HSM appliances).</li>
+              <li>TEE-backed signing (where supported) for attested environments.</li>
             </ul>
-          </div>
-        </div>
-
-        <div class="diagram reveal" aria-label="Key custody diagram">
-          <div class="k">Signing flow</div>
-          <svg viewBox="0 0 980 210" role="img" aria-label="Artifact digest signed by operator key custody service">
-            <path class="line" d="M120 110 C240 110, 240 110, 360 110 S 480 110, 600 110 S 720 110, 840 110"/>
-            <circle class="node" cx="120" cy="110" r="18"></circle>
-            <circle class="node" cx="360" cy="110" r="18"></circle>
-            <circle class="node" cx="600" cy="110" r="18"></circle>
-            <circle class="node" cx="840" cy="110" r="18"></circle>
-
-            <text class="lbl" x="120" y="60" text-anchor="middle">CANON BYTES</text>
-            <text class="lbl" x="360" y="60" text-anchor="middle">SHA-256</text>
-            <text class="lbl" x="600" y="60" text-anchor="middle">KMS/HSM</text>
-            <text class="lbl" x="840" y="60" text-anchor="middle">SIGNATURE</text>
-
-            <text class="lbl" x="490" y="180" text-anchor="middle" style="fill: rgba(201,164,74,.88);">ARTIFACT SEALED</text>
-          </svg>
-          <p class="muted" style="margin-top:12px">
-            The private key remains within the operator custody boundary. CEYO stores the signature and key reference in the artifact.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="fail">
-      <div class="read reveal">
-        <h2>Failure modes</h2>
-        <p class="muted">Default posture prioritizes inference continuity. Failure events are logged and become reviewable signals.</p>
-
-        <div class="failGrid" aria-label="Failure mode tiles">
-          <div class="card reveal">
-            <div class="k">KMS unavailable</div>
-            <p class="muted">Inference continues (fail-open). Artifact is marked unsealed and a failure event is recorded for review.</p>
-          </div>
-
-          <div class="card reveal">
-            <div class="k">Timeout / overload</div>
-            <p class="muted">Inference continues. CEYO records a seal failure event and preserves policy/version context for auditability.</p>
-          </div>
-
-          <div class="card reveal">
-            <div class="k">Policy mismatch</div>
-            <p class="muted">Verification reports POLICY_MISMATCH when policy ID/version/hash does not align with expected policy document.</p>
           </div>
         </div>
 
         <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="menuBtn" style="text-decoration:none" href="trust.html">Trust & verification<span class="icon" aria-hidden="true">→</span></a>
-          <a class="menuBtn" style="text-decoration:none" href="contact.html">Request walkthrough<span class="icon" aria-hidden="true">→</span></a>
+          <a class="btn primary" href="trust.html#verification-spec">Verification procedure<span class="arr">→</span></a>
+          <a class="btn" href="compliance.html#matrix">Control alignment<span class="arr">→</span></a>
         </div>
       </div>
     </section>
 
+    <!-- DISCLOSURE -->
+    <section id="tiers">
+      <div class="read reveal">
+        <h2>Disclosure tiers</h2>
+        <p class="muted">Artifacts can be disclosed under explicit tiers so reviewers can verify integrity without default exposure of model IP.</p>
+
+        <div class="grid">
+          <div class="card reveal">
+            <div class="k">Public / redacted</div>
+            <ul>
+              <li>High-level metadata + integrity fields.</li>
+              <li>Redacted or masked sensitive fields.</li>
+              <li>Suitable for showing “a sealed record exists” without exposing internals.</li>
+            </ul>
+          </div>
+          <div class="card reveal">
+            <div class="k">Controlled review</div>
+            <ul>
+              <li>Expanded fields for authorized verification.</li>
+              <li>Bounded by agreement and institutional authorization.</li>
+              <li>Designed for audits, oversight boards, and formal review workflows.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAILURE MODES -->
+    <section id="modes">
+      <div class="read reveal">
+        <h2>Failure modes</h2>
+        <p class="muted">CEYO is designed to avoid becoming a default operational dependency. Failures are reportable and reviewable.</p>
+
+        <div class="modes reveal" role="region" aria-label="Failure modes list">
+          <div class="modeRow" tabindex="0" aria-label="Seal failure">
+            <div class="modeLeft">
+              <b>Sealing failure</b>
+              <span>Artifact sealing does not complete (e.g., KMS unavailable).</span>
+            </div>
+            <div class="modeTag">Fail-open</div>
+          </div>
+          <div class="modeRow" tabindex="0" aria-label="Policy mismatch">
+            <div class="modeLeft">
+              <b>Policy mismatch</b>
+              <span>Verification indicates the artifact references a different policy version than expected.</span>
+            </div>
+            <div class="modeTag">Reportable</div>
+          </div>
+          <div class="modeRow" tabindex="0" aria-label="Verification failure">
+            <div class="modeLeft">
+              <b>Verification failure</b>
+              <span>Hash/signature checks fail; integrity posture is compromised.</span>
+            </div>
+            <div class="modeTag">FAIL</div>
+          </div>
+          <div class="modeRow" tabindex="0" aria-label="Key compromise">
+            <div class="modeLeft">
+              <b>Key compromise</b>
+              <span>Key custody incident in operator environment (rotation/revocation required).</span>
+            </div>
+            <div class="modeTag">Operator</div>
+          </div>
+        </div>
+
+        <div class="strip reveal" aria-label="Boundary declaration">
+          <div class="k">Boundary declaration</div>
+          <ul>
+            <li>CEYO does not certify compliance, legality, or decision correctness.</li>
+            <li>Verification confirms integrity and provenance under policy scope, not correctness of model output.</li>
+            <li>Key custody integrity depends on operator governance controls.</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn primary" href="contact.html">Request walkthrough<span class="arr">→</span></a>
+          <a class="btn" href="vdp.html">Vulnerability disclosure<span class="arr">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
     <footer id="footer">
       <div class="footGrid reveal">
         <div class="footCol">
@@ -471,28 +571,21 @@
   </main>
 
   <script>
+    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Menu drawer
     const drawer = document.getElementById('drawer');
     const openMenu = document.getElementById('openMenu');
     const closeMenu = document.getElementById('closeMenu');
-
-    function openDrawer(){
-      drawer.classList.add('open');
-      drawer.setAttribute('aria-hidden','false');
-      document.body.style.overflow='hidden';
-    }
-    function closeDrawer(){
-      drawer.classList.remove('open');
-      drawer.setAttribute('aria-hidden','true');
-      document.body.style.overflow='';
-    }
-
-    openMenu.addEventListener('click', openDrawer);
-    closeMenu.addEventListener('click', closeDrawer);
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+    if(openMenu) openMenu.addEventListener('click', openDrawer);
+    if(closeMenu) closeMenu.addEventListener('click', closeDrawer);
     drawer.addEventListener('click', (e)=>{ if(e.target===drawer) closeDrawer(); });
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
 
+    // Reveal
     const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const revealEls = Array.from(document.querySelectorAll('.reveal'));
     if(!prefersReduce){
