@@ -37,11 +37,7 @@
     }
 
     *{box-sizing:border-box}
-    html{
-      background:var(--ink);
-      scroll-behavior:smooth;
-      scroll-padding-top: calc(var(--navH) + 24px);
-    }
+    html{background:var(--ink);scroll-behavior:smooth}
     body{
       margin:0;
       font-family:var(--ui);
@@ -52,9 +48,7 @@
     }
     a{color:inherit;text-decoration:none}
     button{font:inherit}
-    [id]{ scroll-margin-top: calc(var(--navH) + 24px); }
 
-    /* Background: cohesive but calm (no neurons) */
     .bg{
       position:fixed; inset:0; pointer-events:none; z-index:0;
       background:
@@ -66,6 +60,7 @@
     .wrap{ position:relative; z-index:1; max-width:var(--maxW); margin:0 auto; padding:0 var(--s4); }
     @media (max-width: 640px){ .wrap{ padding:0 18px; } }
 
+    /* Menu-only header */
     header.site{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
@@ -75,15 +70,21 @@
     .nav{
       height: calc(var(--navH) + env(safe-area-inset-top));
       padding-top: env(safe-area-inset-top);
-      display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
+      display:flex; align-items:center; justify-content:space-between; gap:var(--s2);
+      min-width:0;
     }
 
-    .logo{ display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:-.01em; flex:0 0 auto; }
+    .logo{
+      display:flex; align-items:center; gap:10px;
+      font-weight:600; letter-spacing:-.01em;
+      min-width:0;
+    }
     .logo .mark{
       display:inline-flex; align-items:center; gap:10px;
       padding:10px 12px; border-radius:999px;
       border:1px solid rgba(255,255,255,.08);
       background: rgba(255,255,255,.02);
+      white-space:nowrap;
     }
     .logo .dot{
       width:8px; height:8px; border-radius:50%;
@@ -91,9 +92,12 @@
       box-shadow: 0 0 0 4px rgba(201,164,74,.12);
     }
 
-    /* Actions + always-safe Menu (prevents nav overlap issues) */
-    .actions{ display:flex; align-items:center; gap:10px; justify-content:flex-end; flex:0 0 auto; }
-
+    .actions{
+      display:flex; align-items:center; gap:10px;
+      justify-content:flex-end;
+      min-width:0;
+      flex: 0 0 auto;
+    }
     .btn{
       height:48px; padding:0 18px; border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
@@ -115,33 +119,23 @@
     .btn:hover .arr{ transform: translateX(3px); }
 
     .menuBtn{
-      height:48px;
-      padding:0 16px;
+      height:48px; width:48px;
       border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
       color: rgba(201,209,217,.95);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
+      display:inline-flex; align-items:center; justify-content:center;
       cursor:pointer;
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
-      white-space:nowrap;
     }
-    .menuBtn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.35); background: rgba(255,255,255,.04); }
-    .menuBtn .m{
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
+    .menuBtn:active{ transform: translateY(1px); }
 
-    @media (max-width: 980px){
+    @media (max-width: 760px){
       .actions .btn.secondary{ display:none; }
+      .btn{ padding:0 14px; height:46px; }
+      .menuBtn{ height:46px; width:46px; }
+      .logo .mark{ padding:9px 11px; }
     }
 
-    /* Mobile drawer */
     .drawer{
       position:fixed; inset:0; z-index:80;
       display:none;
@@ -151,7 +145,7 @@
     }
     .drawer.open{ display:block; }
     .drawerCard{
-      max-width: 680px; margin: 0 auto;
+      max-width: 720px; margin: 0 auto;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
       border-radius: var(--r-lg);
@@ -184,23 +178,14 @@
       transition: transform .18s ease, border-color .18s ease;
     }
     .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); }
-    .drawerLinks a.active{
-      border-color: rgba(201,164,74,.35);
-      background: rgba(201,164,74,.10);
-    }
 
-    /* Typography */
     .read{ max-width: var(--readW); }
     p{ margin: 0 0 14px 0; line-height: var(--lh); }
     .muted{ color: rgba(201,209,217,.78); }
 
-    /* Ensure content never hides under sticky header */
-    main{
-      padding-top: calc(var(--navH) + var(--s4));
-      padding-bottom: var(--s7);
-    }
+    main{ padding: var(--s6) 0 var(--s7); }
     section{ padding: var(--s7) 0; border-top:1px solid rgba(255,255,255,.06); }
-    section:first-of-type{ border-top:none; padding-top: 0; }
+    section:first-of-type{ border-top:none; padding-top: var(--s6); }
 
     .eyebrow{
       font-family: var(--mono);
@@ -211,14 +196,11 @@
     }
     h1{ font-size: 46px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 14px 0; font-weight: 600; }
     h2{ font-size: 30px; line-height: 1.20; letter-spacing: -0.01em; margin: 0 0 12px 0; font-weight: 600; }
-    h3{ font-size: 20px; line-height: 1.25; margin: 0 0 10px 0; font-weight: 600; }
     @media (max-width: 640px){
       h1{ font-size: 32px; }
       h2{ font-size: 24px; }
-      h3{ font-size: 19px; }
     }
 
-    /* Summary callout (no “Plain-language summary” title) */
     .callout{
       border:1px solid rgba(201,164,74,.22);
       background: rgba(11,15,20,.60);
@@ -226,26 +208,17 @@
       padding: 16px 16px;
       margin-top: 16px;
     }
-    .calloutTop{
-      display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap;
-      margin-bottom: 8px;
-    }
-    .labelChip{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(201,164,74,.38);
-      background: rgba(201,164,74,.10);
-      color: rgba(245,242,234,.92);
+    .callout .k{
       font-family: var(--mono);
       font-size: 11px;
-      letter-spacing: .12em;
+      letter-spacing:.14em;
       text-transform: uppercase;
+      color: rgba(201,164,74,.86);
+      margin-bottom: 10px;
     }
     .callout ul{ margin: 0; padding: 0 0 0 18px; }
     .callout li{ margin: 8px 0; color: rgba(201,209,217,.84); line-height: 1.55; }
 
-    /* Table-led modules */
     .tableWrap{
       margin-top: 18px;
       border:1px solid rgba(255,255,255,.10);
@@ -253,12 +226,7 @@
       border-radius: var(--r-lg);
       overflow:hidden;
     }
-    table{
-      width:100%;
-      border-collapse: collapse;
-      font-size: 14px;
-      line-height: 1.5;
-    }
+    table{ width:100%; border-collapse: collapse; font-size: 14px; line-height: 1.5; }
     thead th{
       text-align:left;
       padding: 14px 14px;
@@ -308,21 +276,13 @@
       color: rgba(201,164,74,.86);
       margin-bottom: 10px;
     }
-    .noteBox p{ margin: 0 0 10px 0; }
-    .noteBox p:last-child{ margin-bottom:0; }
+    .noteBox p{ margin: 0; }
 
-    /* Mobile table -> cards */
     @media (max-width: 760px){
       table, thead, tbody, th, td, tr { display:block; }
       thead{ display:none; }
-      tbody td{
-        border-bottom:none;
-        padding: 10px 14px;
-      }
-      tbody tr{
-        border-bottom:1px solid rgba(255,255,255,.08);
-        padding: 10px 0;
-      }
+      tbody td{ border-bottom:none; padding: 10px 14px; }
+      tbody tr{ border-bottom:1px solid rgba(255,255,255,.08); padding: 10px 0; }
       tbody tr:last-child{ border-bottom:none; }
       tbody td::before{
         content: attr(data-label);
@@ -336,58 +296,14 @@
       }
     }
 
-    /* Footer */
-    footer{ border-top:1px solid rgba(255,255,255,.06); padding: var(--s7) 0 var(--s6); }
-    .footGrid{
-      display:grid;
-      grid-template-columns: 1.2fr 1fr 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 22px;
-    }
-    @media (max-width: 980px){ .footGrid{ grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 640px){ .footGrid{ grid-template-columns: 1fr; } }
-    .footCol{
-      border:1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.02);
-      border-radius: var(--r-lg);
-      padding: 18px 18px;
-    }
-    .footCol .t{
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: rgba(201,164,74,.86);
-      margin-bottom: 10px;
-    }
-    .footCol a{
-      display:block;
-      padding: 10px 10px;
-      border-radius: 12px;
-      border:1px solid transparent;
-      color: rgba(201,209,217,.84);
-      transition: background .18s ease, border-color .18s ease;
-    }
-    .footCol a:hover{ background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.06); }
-    .footBottom{
-      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: rgba(201,209,217,.62);
-      padding-top: 18px;
-      border-top:1px solid rgba(255,255,255,.06);
-    }
-
-    /* Motion */
+    /* Reveal */
     .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
     .reveal.on{ opacity:1; transform: translateY(0); }
 
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto;}
       .reveal{ opacity:1; transform:none; transition:none; }
-      .btn, .drawerLinks a, .menuBtn{ transition:none; }
+      .btn, .drawerLinks a{ transition:none; }
     }
   </style>
 </head>
@@ -402,11 +318,9 @@
       </a>
 
       <div class="actions" aria-label="Actions">
-        <a class="btn secondary" href="resources.html#sample-artifact">View sample artifact<span class="arr">→</span></a>
+        <a class="btn secondary" href="resources.html#sample-artifact">Sample artifact<span class="arr">→</span></a>
         <a class="btn primary" href="contact.html">Request walkthrough<span class="arr">→</span></a>
-        <button class="menuBtn" id="openMenu" aria-label="Open menu" type="button">
-          <span aria-hidden="true">☰</span><span class="m">Menu</span>
-        </button>
+        <button class="menuBtn" id="openMenu" aria-label="Open menu" type="button">☰</button>
       </div>
     </div>
   </header>
@@ -422,7 +336,7 @@
         <a href="how.html">How It Works</a>
         <a href="platform.html">Platform</a>
         <a href="trust.html">Trust & Verification</a>
-        <a class="active" href="compliance.html">Compliance</a>
+        <a href="compliance.html">Compliance</a>
         <a href="integrations.html">Integrations</a>
         <a href="use-cases.html">Use Cases</a>
         <a href="security.html">Security</a>
@@ -434,24 +348,17 @@
   </div>
 
   <main class="wrap">
-    <section>
+    <section style="padding-top: var(--s6);">
       <div class="read reveal">
         <div class="eyebrow">Compliance · Evidence outputs · Control alignment</div>
         <h1>Evidence outputs mapped to controls.</h1>
         <p class="muted">
-          CEYO provides deterministic, integrity-sealed artifacts that support verification and audit workflows under explicit policy scope.
-        </p>
-        <p class="muted" style="margin-top:-2px;">
-          This page describes functional correspondence only. It does not certify compliance or provide legal advice.
+          CEYO produces integrity-sealed artifacts that support verification and audit workflows under explicit policy scope.
+          CEYO does not certify compliance or provide legal advice.
         </p>
 
-        <div class="callout reveal">
-          <div class="calloutTop">
-            <span class="labelChip">Summary</span>
-            <span class="muted" style="font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;">
-              Scope · Integrity · Verification
-            </span>
-          </div>
+        <div class="callout reveal" aria-label="In brief">
+          <div class="k">In brief</div>
           <ul>
             <li>Operators define capture scope and disclosure tiers before artifacts are generated.</li>
             <li>Artifacts are canonicalized and sealed to make tampering detectable and provenance verifiable.</li>
@@ -460,7 +367,7 @@
         </div>
 
         <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn primary" href="#matrix">View mapping table<span class="arr">→</span></a>
+          <a class="btn primary" href="#matrix">View matrix<span class="arr">→</span></a>
           <a class="btn" href="trust.html#verification-spec">Verification steps<span class="arr">→</span></a>
         </div>
       </div>
@@ -468,10 +375,10 @@
 
     <section id="matrix">
       <div class="read reveal">
-        <h2>Control mapping</h2>
+        <h2>Compliance matrix</h2>
         <p class="muted">
-          The mappings below describe how CEYO artifacts can support common integrity-oriented control expectations.
-          Sufficiency is determined by the deploying institution and relevant authority.
+          The mappings below describe functional correspondence between CEYO artifacts and common integrity-oriented control expectations.
+          Suitability and sufficiency are determined by the deploying institution and relevant authority.
         </p>
 
         <div class="tableWrap reveal" role="region" aria-label="Compliance mapping table">
@@ -489,102 +396,70 @@
                 <td data-label="Control expectation"><span class="pill">Record-keeping</span></td>
                 <td data-label="CEYO output">Canonical artifact with policy ID/version and timestamp.</td>
                 <td data-label="Verification method">Recompute canonical bytes and hash; validate signature.</td>
-                <td data-label="Notes / boundary">Integrity of record, not correctness of decision.</td>
+                <td data-label="Notes / boundary">Record integrity, not decision correctness.</td>
               </tr>
 
               <tr>
                 <td data-label="Control expectation"><span class="pill">Integrity</span></td>
                 <td data-label="CEYO output">Digest + signature over canonical payload.</td>
                 <td data-label="Verification method">PASS / FAIL outcome from deterministic procedure.</td>
-                <td data-label="Notes / boundary">Tamper-evidence from seal time forward.</td>
+                <td data-label="Notes / boundary">Tamper-evidence applies from seal time forward.</td>
               </tr>
 
               <tr>
                 <td data-label="Control expectation"><span class="pill">Provenance</span></td>
                 <td data-label="CEYO output">Public key reference / KMS key ID and signature metadata.</td>
                 <td data-label="Verification method">Signature validation using referenced public key chain.</td>
-                <td data-label="Notes / boundary">Key custody is operator responsibility (non-custodial).</td>
+                <td data-label="Notes / boundary">Key custody is operator responsibility (non-custodial model).</td>
               </tr>
 
               <tr>
                 <td data-label="Control expectation"><span class="pill">Scope discipline</span></td>
-                <td data-label="CEYO output">Policy identifier and version embedded in artifact (policy hash where used).</td>
+                <td data-label="CEYO output">Policy identifier/version embedded in artifact (policy hash where used).</td>
                 <td data-label="Verification method">Policy alignment check: expected ID/version/hash vs artifact.</td>
-                <td data-label="Notes / boundary">Scope is set before generation; no implied expansion.</td>
+                <td data-label="Notes / boundary">Scope is defined before generation; no implied expansion.</td>
               </tr>
 
               <tr>
                 <td data-label="Control expectation"><span class="pill">Constrained disclosure</span></td>
                 <td data-label="CEYO output">Disclosure tier designation (public/redacted, controlled review).</td>
-                <td data-label="Verification method">Verify within tier boundaries; no proprietary internals required.</td>
-                <td data-label="Notes / boundary">Tier sufficiency is proceeding-specific.</td>
+                <td data-label="Verification method">Verify within tier boundaries; no need for proprietary internals.</td>
+                <td data-label="Notes / boundary">Tier sufficiency is authority-determined.</td>
               </tr>
 
               <tr>
                 <td data-label="Control expectation"><span class="pill">Auditability</span></td>
-                <td data-label="CEYO output">Stable schema + canonicalization version recorded for repeatable validation.</td>
-                <td data-label="Verification method">Re-run verification across environments with same inputs and policy.</td>
+                <td data-label="CEYO output">Stable schema + canonicalization version for repeatable validation.</td>
+                <td data-label="Verification method">Re-run verification with same inputs and policy.</td>
                 <td data-label="Notes / boundary">Does not guarantee inference reproducibility beyond scope.</td>
               </tr>
 
               <tr>
                 <td data-label="Control expectation"><span class="pill">Availability</span></td>
                 <td data-label="CEYO output">Fail-open posture (seal failures logged/flagged).</td>
-                <td data-label="Verification method">Operational logs + artifact sealing status review.</td>
+                <td data-label="Verification method">Operational logs + seal-status review.</td>
                 <td data-label="Notes / boundary">Availability posture is operator-configured.</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <div class="noteBox reveal">
-          <div class="k">Boundary</div>
+        <div class="noteBox reveal" aria-label="Boundary declaration">
+          <div class="k">Boundary declaration</div>
           <p class="muted">
-            CEYO produces integrity-sealed records. It does not certify compliance, legality, or decision correctness.
-            Verification confirms integrity and provenance under policy scope — not correctness of model output.
+            CEYO produces integrity-sealed records. Verification confirms integrity and provenance under policy scope — not correctness of model output.
           </p>
         </div>
 
         <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn primary" href="contact.html">Request a walkthrough<span class="arr">→</span></a>
-          <a class="btn" href="resources.html">View resources<span class="arr">→</span></a>
+          <a class="btn primary" href="contact.html">Request walkthrough<span class="arr">→</span></a>
+          <a class="btn" href="resources.html">Resources<span class="arr">→</span></a>
         </div>
       </div>
     </section>
 
-    <footer id="footer">
-      <div class="footGrid reveal">
-        <div class="footCol">
-          <div class="t">Product</div>
-          <a href="index.html">Overview</a>
-          <a href="how.html">How It Works</a>
-          <a href="platform.html">Platform</a>
-          <a href="integrations.html">Integrations</a>
-        </div>
-        <div class="footCol">
-          <div class="t">Trust</div>
-          <a href="trust.html">Trust Model</a>
-          <a href="security.html">Security</a>
-          <a href="trust.html#verification-spec">Verification Spec</a>
-          <a href="resources.html#trust-center">Trust Center</a>
-        </div>
-        <div class="footCol">
-          <div class="t">Resources</div>
-          <a href="resources.html">Library</a>
-          <a href="resources.html#sample-artifact">Sample Artifacts</a>
-          <a href="resources.html#glossary">Glossary</a>
-          <a href="resources.html#faq">FAQs</a>
-        </div>
-        <div class="footCol">
-          <div class="t">Legal</div>
-          <a href="privacy.html">Privacy</a>
-          <a href="terms.html">Terms</a>
-          <a href="vdp.html">Security Disclosure</a>
-          <a href="ethical.html">Responsible Use</a>
-        </div>
-      </div>
-
-      <div class="footBottom reveal">
+    <footer style="border-top:1px solid rgba(255,255,255,.06);padding:var(--s7) 0 var(--s6);">
+      <div class="footBottom reveal" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(201,209,217,.62);padding-top:18px;border-top:1px solid rgba(255,255,255,.06);">
         <div>© <span id="year"></span> CEYO. All rights reserved.</div>
         <div><a href="vdp.html">Vulnerability Disclosure</a></div>
       </div>
@@ -594,7 +469,7 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Menu
+    // Menu drawer
     const drawer = document.getElementById('drawer');
     const openMenu = document.getElementById('openMenu');
     const closeMenu = document.getElementById('closeMenu');
