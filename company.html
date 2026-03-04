@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>CEYO — About</title>
-  <meta name="description" content="About CEYO: evidentiary infrastructure for AI inference—deterministic, integrity-sealed artifacts for independent verification under constrained disclosure."/>
+  <title>CEYO — Company</title>
+  <meta name="description" content="CEYO builds evidentiary infrastructure for AI inference systems: deterministic, integrity-sealed records for independent verification under constrained disclosure."/>
   <meta name="theme-color" content="#0B0F14"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,11 +16,12 @@
       --ink:#0B0F14;
       --textOnInk:#C9D1D9;
       --lineOnInk:rgba(255,255,255,.10);
+
       --accent:#3A320C;
       --accent2:#C9A44A;
 
       --maxW:1160px;
-      --readW:760px;
+      --readW:780px;
 
       --r-lg:18px;
 
@@ -48,8 +49,9 @@
     }
     a{color:inherit;text-decoration:none}
     button{font:inherit}
+    [id]{ scroll-margin-top: calc(var(--navH) + 24px); }
 
-    /* Background (same as index) */
+    /* Background (same family as index) */
     .bg{
       position:fixed; inset:0; pointer-events:none; z-index:0;
       background:
@@ -57,11 +59,18 @@
         radial-gradient(820px 520px at 82% 34%, rgba(201,164,74,.10), transparent 64%),
         linear-gradient(180deg, #0B0F14 0%, #0A0D12 40%, #0B0F14 100%);
     }
+    canvas#neurons{
+      position:fixed; inset:0;
+      width:100%; height:100%;
+      z-index:0;
+      pointer-events:none;
+      opacity:.88;
+    }
 
     .wrap{ position:relative; z-index:1; max-width:var(--maxW); margin:0 auto; padding:0 var(--s4); }
     @media (max-width: 640px){ .wrap{ padding:0 18px; } }
 
-    /* MENU-ONLY header (logo + CTA + menu) */
+    /* ===== MENU-ONLY HEADER (matches index behavior) ===== */
     header.site{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
@@ -71,27 +80,26 @@
     .nav{
       height: calc(var(--navH) + env(safe-area-inset-top));
       padding-top: env(safe-area-inset-top);
-      display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
+      display:flex; align-items:center; justify-content:space-between; gap:var(--s2);
+      min-width:0;
     }
 
-    .logo{
-      display:flex; align-items:center; gap:10px;
-      font-weight:600; letter-spacing:-.01em;
-      min-width: 160px;
-    }
+    .logo{ display:flex; align-items:center; gap:10px; min-width:0; font-weight:600; letter-spacing:-.01em; }
     .logo .mark{
       display:inline-flex; align-items:center; gap:10px;
       padding:10px 12px; border-radius:999px;
       border:1px solid rgba(255,255,255,.08);
       background: rgba(255,255,255,.02);
+      white-space:nowrap;
     }
     .logo .dot{
       width:8px; height:8px; border-radius:50%;
       background: var(--accent2);
       box-shadow: 0 0 0 4px rgba(201,164,74,.12);
+      flex:0 0 auto;
     }
 
-    .actions{ display:flex; align-items:center; gap:10px; justify-content:flex-end; }
+    .actions{ display:flex; align-items:center; gap:10px; justify-content:flex-end; min-width:0; }
     .btn{
       height:48px; padding:0 18px; border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
@@ -120,15 +128,17 @@
       color: rgba(201,209,217,.95);
       display:inline-flex; align-items:center; justify-content:center;
       cursor:pointer;
+      flex:0 0 auto;
     }
     .menuBtn:active{ transform: translateY(1px); }
 
-    @media (max-width: 720px){
+    @media (max-width: 760px){
       .actions .btn.secondary{ display:none; }
-      .logo{ min-width: 140px; }
+      .btn{ padding:0 14px; height:46px; }
+      .menuBtn{ height:46px; width:46px; }
+      .logo .mark{ padding:9px 11px; }
     }
 
-    /* Drawer */
     .drawer{
       position:fixed; inset:0; z-index:80;
       display:none;
@@ -138,7 +148,7 @@
     }
     .drawer.open{ display:block; }
     .drawerCard{
-      max-width: 680px; margin: 0 auto;
+      max-width: 720px; margin: 0 auto;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
       border-radius: var(--r-lg);
@@ -172,98 +182,90 @@
     }
     .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); }
 
-    /* Content typography (letter-like) */
-    main{ padding: var(--s6) 0 var(--s7); }
+    /* Typography */
     .read{ max-width: var(--readW); }
+    .muted{ color: rgba(201,209,217,.78); }
+    main{ padding: var(--s6) 0 var(--s7); }
+    section{ padding: var(--s7) 0; border-top:1px solid rgba(255,255,255,.06); }
+    section:first-of-type{ border-top:none; padding-top: var(--s6); }
+
     .eyebrow{
       font-family: var(--mono);
       font-size: 12px; letter-spacing: .18em;
       text-transform: uppercase;
       color: rgba(201,164,74,.92);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
-    h1{
-      font-size: 46px;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      margin: 0 0 12px 0;
-      font-weight: 600;
-    }
+
+    h1{ font-size: 46px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 14px 0; font-weight: 600; }
+    h2{ font-size: 28px; line-height: 1.25; letter-spacing: -0.01em; margin: 28px 0 12px 0; font-weight: 600; }
     @media (max-width: 640px){
       h1{ font-size: 32px; }
+      h2{ font-size: 22px; margin-top: 22px; }
     }
-    p{
-      margin: 0 0 14px 0;
+
+    .prose{
+      margin-top: 16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--r-lg);
+      padding: 26px 22px;
+    }
+    .prose p{
+      margin: 0 0 16px 0;
       line-height: var(--lh);
-      color: rgba(201,209,217,.86);
+      color: rgba(201,209,217,.88);
       font-size: 18px;
     }
     @media (max-width: 640px){
-      p{ font-size: 16.5px; }
+      .prose{ padding: 20px 16px; }
+      .prose p{ font-size: 16.5px; }
     }
-    .muted{ color: rgba(201,209,217,.74); }
+    .prose p:last-child{ margin-bottom:0; }
 
-    /* Subtle section breaks (not blocks) */
-    .rule{
-      margin: 28px 0 22px;
-      height: 1px;
-      background: rgba(255,255,255,.06);
-      border:0;
+    .sig{
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top:1px solid rgba(255,255,255,.08);
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
     }
-
-    /* Small emphasized lines */
-    .leadLine{
+    .sig .name{ color: rgba(245,242,234,.92); font-weight:600; }
+    .sig .meta{
       font-family: var(--mono);
       font-size: 12px;
       letter-spacing:.14em;
       text-transform: uppercase;
-      color: rgba(201,164,74,.86);
-      margin: 18px 0 10px;
+      color: rgba(201,209,217,.60);
     }
 
-    /* Minimal callout (single, optional) */
-    .callout{
-      margin: 24px 0;
-      border-left: 2px solid rgba(201,164,74,.55);
-      padding: 2px 0 2px 14px;
-      color: rgba(245,242,234,.92);
-      font-size: 18px;
-      line-height: 1.65;
-    }
-
-    /* Footer (same as other dark pages) */
-    footer{ border-top:1px solid rgba(255,255,255,.06); padding: var(--s7) 0 var(--s6); margin-top: var(--s7); }
-    .footGrid{
+    .rules{
+      margin-top: 22px;
+      border-top:1px solid rgba(255,255,255,.08);
+      padding-top: 18px;
       display:grid;
-      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 14px;
-      margin-bottom: 22px;
     }
-    @media (max-width: 980px){ .footGrid{ grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 640px){ .footGrid{ grid-template-columns: 1fr; } }
-    .footCol{
-      border:1px solid rgba(255,255,255,.08);
+    @media (max-width: 980px){ .rules{ grid-template-columns: 1fr; } }
+    .rule{
+      border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.02);
       border-radius: var(--r-lg);
-      padding: 18px 18px;
+      padding: 16px 16px;
     }
-    .footCol .t{
+    .rule .k{
       font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .18em;
+      font-size: 11px;
+      letter-spacing:.14em;
       text-transform: uppercase;
       color: rgba(201,164,74,.86);
       margin-bottom: 10px;
     }
-    .footCol a{
-      display:block;
-      padding: 10px 10px;
-      border-radius: 12px;
-      border:1px solid transparent;
-      color: rgba(201,209,217,.84);
-      transition: background .18s ease, border-color .18s ease;
-    }
-    .footCol a:hover{ background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.06); }
+    .rule p{ margin:0; line-height: 1.65; color: rgba(201,209,217,.84); }
+
+    footer{ border-top:1px solid rgba(255,255,255,.06); padding: var(--s7) 0 var(--s6); }
     .footBottom{
       display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
       font-family: var(--mono);
@@ -275,7 +277,6 @@
       border-top:1px solid rgba(255,255,255,.06);
     }
 
-    /* Reveal */
     .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
     .reveal.on{ opacity:1; transform: translateY(0); }
 
@@ -289,6 +290,7 @@
 
 <body>
   <div class="bg" aria-hidden="true"></div>
+  <canvas id="neurons" aria-hidden="true"></canvas>
 
   <header class="site">
     <div class="wrap nav">
@@ -297,7 +299,7 @@
       </a>
 
       <div class="actions" aria-label="Actions">
-        <a class="btn secondary" href="resources.html#sample-artifact">View sample artifact<span class="arr">→</span></a>
+        <a class="btn secondary" href="resources.html#sample-artifact">Sample artifact<span class="arr">→</span></a>
         <a class="btn primary" href="contact.html">Request walkthrough<span class="arr">→</span></a>
         <button class="menuBtn" id="openMenu" aria-label="Open menu" type="button">☰</button>
       </div>
@@ -314,11 +316,13 @@
         <a href="index.html">Overview</a>
         <a href="how.html">How It Works</a>
         <a href="platform.html">Platform</a>
-        <a href="trust.html">Trust</a>
+        <a href="trust.html">Trust & Verification</a>
         <a href="compliance.html">Compliance</a>
         <a href="integrations.html">Integrations</a>
+        <a href="use-cases.html">Use Cases</a>
+        <a href="security.html">Security</a>
         <a href="resources.html">Resources</a>
-        <a href="company.html">About</a>
+        <a href="company.html">Company</a>
         <a href="contact.html">Contact</a>
       </div>
     </div>
@@ -327,101 +331,77 @@
   <main class="wrap">
     <section style="padding-top: var(--s6);">
       <div class="read reveal">
-        <div class="eyebrow">About</div>
-        <h1>CEYO is evidence infrastructure for AI systems.</h1>
-
-        <p>
-          CEYO exists to close a repeatable oversight gap in modern AI deployment: most inference systems retain outputs and operational logs,
-          yet lack canonical, integrity-sealed records designed for independent verification when outcomes are disputed.
-        </p>
-
-        <p>
-          CEYO is not an AI platform and it is not a decision system. It does not evaluate correctness, legality, fairness, or policy compliance.
-          CEYO produces records. Authorized institutions and operators make determinations.
-        </p>
-
-        <div class="callout">
-          Verification confirms integrity and provenance under declared policy scope — not correctness of model output.
-        </div>
-
-        <hr class="rule"/>
-
-        <div class="leadLine">What CEYO builds</div>
-        <p>
-          CEYO attaches at the inference boundary and generates a structured audit artifact through a fixed mechanics chain:
-          capture → canonicalize → seal → disclose → verify.
-          Capture scope is policy-defined. Canonicalization produces deterministic bytes (RFC 8785) for reproducible hashing.
-          Sealing applies cryptographic hashing and digital signatures so tampering is detectable and provenance can be validated.
-          Disclosure tiers support verification without default exposure of proprietary internals.
-        </p>
-
-        <hr class="rule"/>
-
-        <div class="leadLine">Operating posture</div>
-        <p>
-          CEYO is designed for institutional review. It prioritizes determinism, scope discipline, and constrained disclosure.
-          Signing keys remain in operator-controlled environments (HSM/KMS/TEE). CEYO is non-custodial by design: it does not possess, transmit, or store private signing keys.
-        </p>
-
+        <div class="eyebrow">Company · Purpose · Boundaries</div>
+        <h1>CEYO builds evidentiary infrastructure for AI inference.</h1>
         <p class="muted">
-          CEYO does not certify regulatory compliance or legal admissibility. Suitability and sufficiency are determined by the relevant authority.
+          CEYO exists to close an oversight gap: most AI deployments generate telemetry, but not audit-ready evidence that can survive formal review.
         </p>
+      </div>
 
-        <hr class="rule"/>
-
-        <div class="leadLine">How CEYO is evaluated</div>
+      <div class="read prose reveal" aria-label="Company narrative">
         <p>
-          Public materials are intended to show structure and boundaries: sample artifacts, verification outcomes (PASS/FAIL), and a preview of verification steps.
-          Controlled materials (under appropriate terms) include detailed specifications, capture policy schema, and verification harness documentation.
+          CEYO is designed as a neutral audit layer for AI inference systems. It attaches at the inference boundary and produces
+          deterministic, cryptographically sealed artifacts that represent policy-scoped inference-time context. Those artifacts are built to support
+          integrity verification and forensic reconstruction workflows performed by authorized reviewers.
         </p>
 
-        <hr class="rule"/>
-
-        <div class="leadLine">Responsible deployment</div>
         <p>
-          CEYO is built to support accountability, not circumvent it. Deployments must be authorized and lawful, with capture scope proportionate to oversight purpose.
-          CEYO does not replace institutional review, legal review, operational command authority, or human authorization controls in consequential contexts.
+          The core principle is structural: evidence infrastructure must remain separate from decision authority. CEYO does not make decisions,
+          certify outcomes, or determine compliance. It produces records. Institutions and operators retain responsibility for determinations.
         </p>
 
-        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn primary" href="contact.html">Request a verification walkthrough<span class="arr">→</span></a>
-          <a class="btn" href="resources.html">View resources<span class="arr">→</span></a>
+        <h2>What CEYO is</h2>
+        <p>
+          CEYO is record infrastructure. In deployment, operators define an explicit capture policy that governs what is included, excluded, and masked.
+          Captured fields are canonicalized deterministically (RFC 8785) and sealed using cryptographic hashing and digital signatures under a non-custodial key model.
+          Verification is performed by recomputing canonicalization and hashes, validating signatures, and confirming policy alignment.
+        </p>
+
+        <h2>What CEYO is not</h2>
+        <p>
+          CEYO is not an AI platform, a safety certification body, a regulatory authority, or a compliance determination engine.
+          It does not validate correctness, fairness, legality, or policy compliance of an AI system. It does not guarantee inference reproducibility.
+          It does not guarantee that artifacts will satisfy the evidentiary sufficiency standard of any specific proceeding.
+        </p>
+
+        <h2>How CEYO is used</h2>
+        <p>
+          CEYO is designed for environments where the cost of ambiguity is unacceptable: regulated decisions, safety-critical autonomy,
+          incident reconstruction, and institutional accountability workflows. Deployment options include sidecar, gateway, or wrapper patterns,
+          selected by the operator based on architecture and latency tolerance. Fail-open posture is supported so inference continuity remains independent.
+        </p>
+
+        <h2>Commitment to lawful use</h2>
+        <p>
+          CEYO’s intended posture is to strengthen accountability, not circumvent it. Operators remain responsible for lawful deployment, appropriate capture scope,
+          human authorization controls for consequential decisions, and chain-of-custody integrity outside the sealing boundary. Prohibited deployments include
+          attempts to obscure oversight, automate consequential decisions without independent human authorization controls, or target individuals based on protected characteristics without lawful basis.
+        </p>
+
+        <div class="sig" aria-label="Signature">
+          <div class="name">CEYO — Evidentiary Infrastructure</div>
+          <div class="meta">San Diego, California · V2026.02.19</div>
         </div>
+      </div>
+
+      <div class="read rules reveal" aria-label="Company boundaries quick rules">
+        <div class="rule">
+          <div class="k">Boundary</div>
+          <p>CEYO verifies integrity and provenance under policy scope — not correctness of model output.</p>
+        </div>
+        <div class="rule">
+          <div class="k">Custody</div>
+          <p>Signing keys remain in the operator environment (HSM/KMS/TEE). CEYO is non-custodial.</p>
+        </div>
+      </div>
+
+      <div class="read reveal" style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn primary" href="contact.html">Request walkthrough<span class="arr">→</span></a>
+        <a class="btn" href="trust.html#verification-spec">Verification steps<span class="arr">→</span></a>
       </div>
     </section>
 
-    <footer id="footer">
-      <div class="footGrid reveal">
-        <div class="footCol">
-          <div class="t">Product</div>
-          <a href="index.html">Overview</a>
-          <a href="how.html">How It Works</a>
-          <a href="platform.html">Platform</a>
-          <a href="integrations.html">Integrations</a>
-        </div>
-        <div class="footCol">
-          <div class="t">Trust</div>
-          <a href="trust.html">Trust Model</a>
-          <a href="security.html">Security</a>
-          <a href="trust.html#verification-spec">Verification Spec</a>
-          <a href="resources.html#trust-center">Trust Center</a>
-        </div>
-        <div class="footCol">
-          <div class="t">Resources</div>
-          <a href="resources.html">Library</a>
-          <a href="resources.html#sample-artifact">Sample Artifacts</a>
-          <a href="resources.html#glossary">Glossary</a>
-          <a href="resources.html#faq">FAQs</a>
-        </div>
-        <div class="footCol">
-          <div class="t">Legal</div>
-          <a href="privacy.html">Privacy</a>
-          <a href="terms.html">Terms</a>
-          <a href="vdp.html">Security Disclosure</a>
-          <a href="ethical.html">Responsible Use</a>
-        </div>
-      </div>
-
+    <footer>
       <div class="footBottom reveal">
         <div>© <span id="year"></span> CEYO. All rights reserved.</div>
         <div><a href="vdp.html">Vulnerability Disclosure</a></div>
@@ -454,6 +434,147 @@
     } else {
       revealEls.forEach(el=>el.classList.add('on'));
     }
+
+    /* Neuron field + “atom core” (same behavior profile as index) */
+    (function(){
+      const c = document.getElementById('neurons');
+      const ctx = c.getContext('2d', {alpha:true});
+      let w=0,h=0,dpr=1;
+
+      function resize(){
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth; h = window.innerHeight;
+        c.width = Math.floor(w*dpr);
+        c.height = Math.floor(h*dpr);
+        c.style.width = w+'px';
+        c.style.height = h+'px';
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+      }
+      resize();
+      window.addEventListener('resize', resize, {passive:true});
+
+      const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const N = 220;
+      const pad = 40;
+      const nodes = [];
+      const dirs = [];
+      const rnd = (a,b)=> a + Math.random()*(b-a);
+
+      for(let i=0;i<N;i++){
+        nodes.push({
+          x:rnd(-pad,w+pad), y:rnd(-pad,h+pad),
+          vx:rnd(-0.18,0.18), vy:rnd(-0.14,0.14),
+          s:rnd(1.1,2.1)
+        });
+        dirs.push({ ang: Math.random()*Math.PI*2, rad: Math.sqrt(Math.random()) });
+      }
+
+      let mx=0.5,my=0.5;
+      if(window.matchMedia("(pointer:fine)").matches){
+        window.addEventListener('mousemove', (e)=>{
+          mx = e.clientX / Math.max(1,w);
+          my = e.clientY / Math.max(1,h);
+        }, {passive:true});
+      }
+
+      function convergeAmount(){
+        const docH = Math.max(1, document.body.scrollHeight - window.innerHeight);
+        const p = Math.max(0, Math.min(1, window.scrollY / docH));
+        return Math.min(1, 0.35 + p*0.55);
+      }
+
+      function draw(){
+        ctx.clearRect(0,0,w,h);
+
+        // vignette
+        const vg = ctx.createRadialGradient(w*0.55, h*0.28, 40, w*0.5, h*0.5, Math.max(w,h)*0.9);
+        vg.addColorStop(0,'rgba(0,0,0,0.00)');
+        vg.addColorStop(1,'rgba(0,0,0,0.30)');
+        ctx.fillStyle = vg;
+        ctx.fillRect(0,0,w,h);
+
+        const px = (mx - 0.5) * 22;
+        const py = (my - 0.5) * 14;
+
+        const cx = w*0.52 + px*0.35;
+        const cy = h*0.32 + py*0.35;
+
+        const conv = prefersReduce ? 0.45 : convergeAmount();
+        const baseR = Math.min(w,h) * 0.18;
+        const orbitR = baseR * (0.92 - conv*0.08);
+
+        // core rings
+        ctx.save();
+        ctx.globalAlpha = Math.min(0.55, 0.18 + conv*0.48);
+        ctx.strokeStyle = 'rgba(201,164,74,0.50)';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.arc(cx, cy, orbitR*0.38, 0, Math.PI*2); ctx.stroke();
+        ctx.globalAlpha *= 0.75;
+        ctx.strokeStyle = 'rgba(201,164,74,0.18)';
+        ctx.beginPath(); ctx.arc(cx, cy, orbitR*0.78, 0, Math.PI*2); ctx.stroke();
+        ctx.restore();
+
+        // move nodes
+        for(let i=0;i<N;i++){
+          const p = nodes[i];
+          p.x += p.vx*(1 - 0.6*conv);
+          p.y += p.vy*(1 - 0.6*conv);
+
+          if(p.x < -pad) p.x = w+pad;
+          if(p.x > w+pad) p.x = -pad;
+          if(p.y < -pad) p.y = h+pad;
+          if(p.y > h+pad) p.y = -pad;
+
+          const d = dirs[i];
+          const ringR = orbitR*(0.62 + d.rad*0.48);
+          const t = performance.now()*0.00033;
+          const ang = d.ang + t*(0.18 + (i%7)*0.03);
+          const tx = cx + Math.cos(ang)*ringR;
+          const ty = cy + Math.sin(ang)*ringR;
+
+          p.x += (tx - p.x) * (0.010 + 0.036*conv);
+          p.y += (ty - p.y) * (0.010 + 0.036*conv);
+        }
+
+        const maxDist = 165;
+        const maxD2 = maxDist*maxDist;
+        const lineAlphaBase = 0.05 + conv*0.10;
+        const pointAlpha = 0.42 + conv*0.25;
+
+        // lines
+        for(let i=0;i<N;i++){
+          const a = nodes[i];
+          for(let j=i+1;j<N;j++){
+            const b = nodes[j];
+            const dx=a.x-b.x, dy=a.y-b.y;
+            const d2=dx*dx+dy*dy;
+            if(d2 < maxD2){
+              const t = 1 - (d2/maxD2);
+              const alpha = Math.min(0.22, lineAlphaBase*t);
+              ctx.strokeStyle = `rgba(201,164,74,${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(a.x,a.y);
+              ctx.lineTo(b.x,b.y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // points
+        for(let i=0;i<N;i++){
+          const p = nodes[i];
+          ctx.fillStyle = `rgba(201,164,74,${pointAlpha})`;
+          ctx.beginPath();
+          ctx.arc(p.x,p.y,p.s,0,Math.PI*2);
+          ctx.fill();
+        }
+
+        if(!prefersReduce) requestAnimationFrame(draw);
+      }
+      draw();
+    })();
   </script>
 </body>
 </html>
