@@ -4,8 +4,8 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <title>CEYO — Company</title>
-  <meta name="description" content="CEYO builds evidentiary infrastructure: deterministic, integrity-sealed audit records for AI inference decisions under constrained disclosure."/>
-  <meta name="theme-color" content="#0B0F14"/>
+  <meta name="description" content="CEYO is evidentiary infrastructure: integrity-sealed audit artifacts for independent verification under explicit policy scope and constrained disclosure."/>
+  <meta name="theme-color" content="#F2E4B8"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,11 +13,17 @@
 
   <style>
     :root{
-      --ink:#0B0F14;
-      --textOnInk:#C9D1D9;
+      /* Reversed “yellow paper” */
+      --paper:#F2E4B8;             /* warm yellow paper */
+      --paper2:#F7EED0;            /* lighter wash */
+      --text:#12161D;              /* near-black */
+      --muted:rgba(18,22,29,.70);
+      --line:rgba(18,22,29,.12);
 
-      --accent:#3A320C;
-      --accent2:#C9A44A;
+      --accent:#3A320C;            /* olive */
+      --accent2:#C9A44A;           /* amber highlight */
+
+      --white:rgba(255,255,255,.76);
 
       --maxW:1160px;
       --readW:740px;
@@ -25,10 +31,10 @@
       --r-lg:18px;
 
       --s1:8px;  --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px; --s7:96px;
-
       --lh:1.65;
-      --shadow:0 10px 30px rgba(0,0,0,.25);
-      --shadow2:0 18px 60px rgba(0,0,0,.35);
+
+      --shadow:0 12px 30px rgba(0,0,0,.10);
+      --shadow2:0 22px 60px rgba(0,0,0,.14);
 
       --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --ui:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
@@ -37,12 +43,12 @@
     }
 
     *{box-sizing:border-box}
-    html{background:var(--ink);scroll-behavior:smooth}
+    html{background:var(--paper);scroll-behavior:smooth}
     body{
       margin:0;
       font-family:var(--ui);
-      color:var(--textOnInk);
-      background:var(--ink);
+      color:var(--text);
+      background:var(--paper);
       -webkit-text-size-adjust:100%;
       overflow-x:hidden;
     }
@@ -50,56 +56,79 @@
     button,input,textarea,select{font:inherit}
     [id]{ scroll-margin-top: calc(var(--navH) + 24px); }
 
+    /* Background wash (distinct) */
     .bg{
       position:fixed; inset:0; pointer-events:none; z-index:0;
       background:
-        radial-gradient(900px 520px at 40% 10%, rgba(58,50,12,.22), transparent 62%),
-        radial-gradient(820px 520px at 82% 34%, rgba(201,164,74,.10), transparent 64%),
-        linear-gradient(180deg, #0B0F14 0%, #0A0D12 40%, #0B0F14 100%);
+        radial-gradient(900px 520px at 40% 0%, rgba(201,164,74,.18), transparent 60%),
+        radial-gradient(820px 520px at 85% 18%, rgba(58,50,12,.10), transparent 64%),
+        linear-gradient(180deg, var(--paper) 0%, var(--paper2) 100%);
     }
 
-    .wrap{ position:relative; z-index:1; max-width:var(--maxW); margin:0 auto; padding:0 var(--s4); }
+    /* Neuron canvas (light-mode tuning) */
+    canvas#neurons{
+      position:fixed; inset:0;
+      width:100%; height:100%;
+      z-index:1;
+      pointer-events:none;
+      opacity:.92;
+      mix-blend-mode:multiply;
+    }
+
+    /* Subtle grain */
+    .grain{
+      position:fixed; inset:0; z-index:2; pointer-events:none;
+      opacity:.06;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
+      mix-blend-mode:multiply;
+    }
+
+    .wrap{ position:relative; z-index:3; max-width:var(--maxW); margin:0 auto; padding:0 var(--s4); }
     @media (max-width: 640px){ .wrap{ padding:0 18px; } }
 
+    /* Sticky header: brand + MENU only */
     header.site{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
-      background: rgba(11,15,20,.72);
-      border-bottom:1px solid rgba(255,255,255,.06);
+      background: rgba(242,228,184,.78);
+      border-bottom:1px solid var(--line);
     }
     .nav{
       height: calc(var(--navH) + env(safe-area-inset-top));
       padding-top: env(safe-area-inset-top);
       display:flex; align-items:center; justify-content:space-between; gap:var(--s3);
     }
-
-    .logo{ display:flex; align-items:center; gap:10px; min-width:180px; font-weight:600; letter-spacing:-.01em; }
+    .logo{ display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:-.01em; }
     .logo .mark{
       display:inline-flex; align-items:center; gap:10px;
       padding:10px 12px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.02);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.42);
     }
     .logo .dot{
       width:8px; height:8px; border-radius:50%;
       background: var(--accent2);
-      box-shadow: 0 0 0 4px rgba(201,164,74,.12);
+      box-shadow: 0 0 0 4px rgba(201,164,74,.18);
     }
 
-    /* MENU ONLY */
-    .actions{ display:flex; align-items:center; justify-content:flex-end; gap:10px; min-width:120px; }
+    .actions{ display:flex; align-items:center; justify-content:flex-end; gap:10px; }
     .menuBtn{
       height:48px; padding:0 16px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.02);
-      color: rgba(201,209,217,.95);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.42);
+      color: rgba(18,22,29,.86);
       display:inline-flex; align-items:center; justify-content:center;
       gap:10px;
       cursor:pointer;
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
       white-space:nowrap;
     }
-    .menuBtn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.35); background: rgba(255,255,255,.04); }
+    .menuBtn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(201,164,74,.55);
+      background: rgba(255,255,255,.62);
+      box-shadow: var(--shadow);
+    }
     .menuBtn .lab{
       font-family: var(--mono);
       font-size: 12px;
@@ -108,18 +137,19 @@
     }
     .menuBtn .icon{ width:18px; height:18px; display:inline-block; opacity:.90; }
 
+    /* Drawer */
     .drawer{
       position:fixed; inset:0; z-index:80;
       display:none;
-      background: rgba(11,15,20,.72);
+      background: rgba(242,228,184,.78);
       backdrop-filter: blur(10px);
       padding: calc(env(safe-area-inset-top) + 12px) 18px 18px;
     }
     .drawer.open{ display:block; }
     .drawerCard{
       max-width: 680px; margin: 0 auto;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.78);
       border-radius: var(--r-lg);
       box-shadow: var(--shadow2);
       overflow:hidden;
@@ -127,47 +157,49 @@
     .drawerHead{
       display:flex; align-items:center; justify-content:space-between;
       padding: 14px 14px;
-      border-bottom:1px solid rgba(255,255,255,.08);
+      border-bottom:1px solid var(--line);
     }
     .drawerHead .t{
       font-family: var(--mono);
       font-size:12px; letter-spacing:.18em;
-      text-transform:uppercase; color: rgba(201,209,217,.82);
+      text-transform:uppercase; color: rgba(18,22,29,.72);
     }
     .close{
       height:44px; padding:0 14px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.02);
-      color: rgba(201,209,217,.92);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.55);
+      color: rgba(18,22,29,.86);
       cursor:pointer;
     }
     .drawerLinks{ display:grid; grid-template-columns: 1fr; padding: 10px; gap: 8px; }
     .drawerLinks a{
       padding: 14px 14px; border-radius: 14px;
-      border:1px solid rgba(255,255,255,.06);
-      background: rgba(255,255,255,.02);
+      border:1px solid rgba(0,0,0,.08);
+      background: rgba(255,255,255,.55);
       font-size: 15px;
       transition: transform .18s ease, border-color .18s ease;
     }
-    .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); }
+    .drawerLinks a:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.55); }
     .drawerLinks a.active{
-      border-color: rgba(201,164,74,.35);
-      background: rgba(201,164,74,.08);
+      border-color: rgba(201,164,74,.70);
+      background: rgba(201,164,74,.20);
+      color: rgba(18,22,29,.92);
     }
 
+    /* Typography */
     .read{ max-width: var(--readW); }
     p{ margin: 0 0 14px 0; line-height: var(--lh); }
-    .muted{ color: rgba(201,209,217,.78); }
+    .muted{ color: var(--muted); }
 
     main{ padding: var(--s6) 0 var(--s7); }
-    section{ padding: var(--s7) 0; border-top:1px solid rgba(255,255,255,.06); }
+    section{ padding: var(--s7) 0; border-top:1px solid rgba(18,22,29,.10); }
     section:first-of-type{ border-top:none; padding-top: var(--s6); }
 
     .eyebrow{
       font-family: var(--mono);
       font-size: 12px; letter-spacing: .18em;
       text-transform: uppercase;
-      color: rgba(201,164,74,.92);
+      color: rgba(58,50,12,.88);
       margin-bottom: 12px;
     }
     h1{ font-size: 46px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 14px 0; font-weight: 600; }
@@ -179,6 +211,7 @@
       h3{ font-size: 19px; }
     }
 
+    /* Modules: principles + boundaries */
     .heroCards{
       margin-top: 18px;
       display:grid;
@@ -188,114 +221,91 @@
     }
     @media (max-width: 980px){ .heroCards{ grid-template-columns: 1fr; } }
 
-    .panel{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.02);
+    .card{
+      border:1px solid rgba(18,22,29,.12);
+      background: rgba(255,255,255,.62);
       border-radius: var(--r-lg);
       padding: 18px 18px;
-    }
-    .panel .k{
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing:.18em;
-      text-transform: uppercase;
-      color: rgba(201,164,74,.90);
-      margin-bottom: 10px;
-    }
-
-    .principles{
-      margin-top: 18px;
-      display:grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-    @media (max-width: 980px){ .principles{ grid-template-columns: 1fr; } }
-    .principle{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.02);
-      border-radius: var(--r-lg);
-      padding: 18px 18px;
-    }
-    .principle .hdr{
-      display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap;
-      margin-bottom: 8px;
-    }
-    .principle .hdr b{ color: rgba(245,242,234,.92); font-weight:600; }
-    .principle .hdr span{
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing:.14em;
-      text-transform: uppercase;
-      color: rgba(201,164,74,.86);
-      white-space:nowrap;
-    }
-
-    .boundary{
-      border:1px solid rgba(201,164,74,.22);
-      background: rgba(11,15,20,.60);
-      border-radius: var(--r-lg);
-      padding: 16px 16px;
-      margin-top: 18px;
-    }
-    .boundary .k{
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing:.14em;
-      text-transform: uppercase;
-      color: rgba(201,164,74,.86);
-      margin-bottom: 10px;
-    }
-    .boundary ul{ margin: 0; padding: 0 0 0 18px; }
-    .boundary li{ margin: 8px 0; color: rgba(201,209,217,.84); line-height: 1.55; }
-
-    .docs{
-      margin-top: 18px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    @media (max-width: 980px){ .docs{ grid-template-columns: 1fr; } }
-    .doc{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.02);
-      border-radius: var(--r-lg);
-      padding: 18px 18px;
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
-    }
-    .doc:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.28); background: rgba(255,255,255,.03); }
-    .doc .meta{
-      display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap;
-      margin-bottom: 10px;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing:.14em;
-      text-transform: uppercase;
-      color: rgba(201,209,217,.66);
+      box-shadow: none;
     }
     .tag{
       display:inline-flex; align-items:center; gap:8px;
       padding: 8px 10px;
       border-radius: 999px;
-      border:1px solid rgba(201,164,74,.24);
-      background: rgba(201,164,74,.08);
+      border:1px solid rgba(201,164,74,.55);
+      background: rgba(201,164,74,.22);
       font-family: var(--mono);
       font-size: 11px;
-      letter-spacing:.10em;
+      letter-spacing:.12em;
       text-transform: uppercase;
-      color: rgba(245,242,234,.92);
+      color: rgba(18,22,29,.86);
       white-space:nowrap;
+      margin-bottom: 10px;
     }
-    .link{
+
+    .pillars{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 980px){ .pillars{ grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px){ .pillars{ grid-template-columns: 1fr; } }
+
+    .p{
+      border:1px solid rgba(18,22,29,.12);
+      background: rgba(255,255,255,.58);
+      border-radius: var(--r-lg);
+      padding: 16px 16px;
+    }
+    .p .k{
       font-family: var(--mono);
       font-size: 11px;
       letter-spacing:.14em;
       text-transform: uppercase;
-      color: rgba(201,164,74,.90);
-      border-bottom:1px solid rgba(201,164,74,.50);
-      padding-bottom:2px;
+      color: rgba(58,50,12,.88);
+      margin-bottom: 8px;
     }
 
-    footer{ border-top:1px solid rgba(255,255,255,.06); padding: var(--s7) 0 var(--s6); }
+    .quote{
+      margin-top: 18px;
+      border:1px solid rgba(58,50,12,.18);
+      background: rgba(58,50,12,.08);
+      border-radius: var(--r-lg);
+      padding: 18px 18px;
+    }
+    .quote b{ color: rgba(18,22,29,.92); }
+    .quote .m{
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing:.12em;
+      text-transform: uppercase;
+      color: rgba(58,50,12,.80);
+      margin-top: 10px;
+    }
+
+    .btn{
+      height:48px; padding:0 18px; border-radius:999px;
+      border:1px solid rgba(18,22,29,.12);
+      background: rgba(255,255,255,.62);
+      color: rgba(18,22,29,.92);
+      display:inline-flex; align-items:center; justify-content:center;
+      font-size:14px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+      white-space:nowrap;
+      cursor:pointer;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(201,164,74,.55); background: rgba(255,255,255,.78); box-shadow: var(--shadow); }
+    .btn.primary{
+      border-color: rgba(201,164,74,.70);
+      background: rgba(201,164,74,.22);
+    }
+    .btn.primary:hover{ background: rgba(201,164,74,.28); }
+    .btn .arr{ display:inline-block; margin-left:10px; transition: transform .16s ease; }
+    .btn:hover .arr{ transform: translateX(3px); }
+
+    /* Footer */
+    footer{ border-top:1px solid rgba(18,22,29,.10); padding: var(--s7) 0 var(--s6); }
     .footGrid{
       display:grid;
       grid-template-columns: 1.2fr 1fr 1fr 1fr;
@@ -305,8 +315,8 @@
     @media (max-width: 980px){ .footGrid{ grid-template-columns: 1fr 1fr; } }
     @media (max-width: 640px){ .footGrid{ grid-template-columns: 1fr; } }
     .footCol{
-      border:1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.02);
+      border:1px solid rgba(18,22,29,.12);
+      background: rgba(255,255,255,.62);
       border-radius: var(--r-lg);
       padding: 18px 18px;
     }
@@ -315,7 +325,7 @@
       font-size: 12px;
       letter-spacing: .18em;
       text-transform: uppercase;
-      color: rgba(201,164,74,.86);
+      color: rgba(58,50,12,.88);
       margin-bottom: 10px;
     }
     .footCol a{
@@ -323,34 +333,38 @@
       padding: 10px 10px;
       border-radius: 12px;
       border:1px solid transparent;
-      color: rgba(201,209,217,.84);
+      color: rgba(18,22,29,.78);
       transition: background .18s ease, border-color .18s ease;
     }
-    .footCol a:hover{ background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.06); }
+    .footCol a:hover{ background: rgba(201,164,74,.18); border-color: rgba(201,164,74,.28); }
     .footBottom{
       display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
       font-family: var(--mono);
       font-size: 12px;
       letter-spacing: .14em;
       text-transform: uppercase;
-      color: rgba(201,209,217,.62);
+      color: rgba(18,22,29,.55);
       padding-top: 18px;
-      border-top:1px solid rgba(255,255,255,.06);
+      border-top:1px solid rgba(18,22,29,.10);
     }
 
+    /* Motion */
     .reveal{ opacity:0; transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
     .reveal.on{ opacity:1; transform: translateY(0); }
 
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto;}
       .reveal{ opacity:1; transform:none; transition:none; }
-      .menuBtn, .doc, .drawerLinks a{ transition:none; }
+      .menuBtn, .btn, .drawerLinks a{ transition:none; }
+      canvas#neurons{ display:none; }
     }
   </style>
 </head>
 
 <body>
   <div class="bg" aria-hidden="true"></div>
+  <canvas id="neurons" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
 
   <header class="site">
     <div class="wrap nav">
@@ -390,116 +404,110 @@
   </div>
 
   <main class="wrap">
+    <!-- HERO -->
     <section style="padding-top: var(--s6);">
       <div class="read reveal">
-        <div class="eyebrow">Company · Principles · Governance posture</div>
-        <h1>Evidence infrastructure for institutional review.</h1>
+        <div class="eyebrow">Company · Principles · Controlled disclosure</div>
+        <h1>Neutrality, verifiability, minimal disclosure.</h1>
         <p class="muted">
-          CEYO builds a neutral evidentiary layer for AI inference systems: deterministic capture, canonicalization, and cryptographic sealing
-          to support independent verification under constrained disclosure.
+          CEYO is evidentiary infrastructure for AI inference systems. It produces integrity-sealed audit artifacts under explicit policy scope,
+          designed for independent verification without default exposure of proprietary internals.
         </p>
+
+        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn primary" href="#principles">Principles<span class="arr">→</span></a>
+          <a class="btn" href="contact.html">Request walkthrough<span class="arr">→</span></a>
+        </div>
       </div>
 
       <div class="heroCards">
-        <div class="panel reveal">
-          <div class="k">Mission</div>
+        <div class="card reveal">
+          <div class="tag">Mission</div>
+          <h2 style="margin-top:0">Make verification feasible.</h2>
           <p class="muted">
-            Close the oversight gap in AI deployments by producing audit-ready records that can survive formal review without default exposure of proprietary model internals.
+            When outcomes are disputed, institutions need records that survive formal review. CEYO focuses on deterministic structure,
+            cryptographic sealing, and verifiable policy boundaries.
           </p>
         </div>
-        <div class="panel reveal">
-          <div class="k">Position</div>
+
+        <div class="card reveal">
+          <div class="tag">Boundary</div>
+          <h2 style="margin-top:0">Records, not judgments.</h2>
           <p class="muted">
-            CEYO produces records. Institutions and operators make determinations. Verification confirms integrity and provenance under policy scope — not correctness of model output.
+            CEYO does not certify compliance, legality, or decision correctness. Verification confirms integrity and provenance under policy scope.
           </p>
         </div>
       </div>
     </section>
 
+    <!-- PRINCIPLES -->
     <section id="principles">
       <div class="read reveal">
         <h2>Principles</h2>
-        <p class="muted">Design commitments that shape every deployment and every claim.</p>
+        <p class="muted">The company posture is defined by constraints, not marketing claims.</p>
 
-        <div class="principles" aria-label="Principles">
-          <div class="principle reveal">
-            <div class="hdr"><b>Neutrality</b><span>Non-adjudication</span></div>
-            <p class="muted">CEYO does not certify compliance, legality, or decision correctness. It provides verifiable records to support oversight processes.</p>
+        <div class="pillars" aria-label="Principles">
+          <div class="p reveal">
+            <div class="k">Neutrality</div>
+            <p class="muted" style="margin:0">Evidence infrastructure stays separate from decision authority.</p>
           </div>
-          <div class="principle reveal">
-            <div class="hdr"><b>Verifiability</b><span>Determinism</span></div>
-            <p class="muted">Canonicalization and sealing enable independent recomputation and PASS/FAIL outcomes under documented procedures.</p>
+          <div class="p reveal">
+            <div class="k">Verifiability</div>
+            <p class="muted" style="margin:0">Determinism + sealing enable independent recomputation and PASS/FAIL outcomes.</p>
           </div>
-          <div class="principle reveal">
-            <div class="hdr"><b>Minimal disclosure</b><span>Tiered</span></div>
-            <p class="muted">Disclosure is controlled by policy tiers. Verification is designed to be possible without default exposure of proprietary internals.</p>
+          <div class="p reveal">
+            <div class="k">Minimal disclosure</div>
+            <p class="muted" style="margin:0">Tiered disclosure supports review without default exposure of weights or internals.</p>
           </div>
-          <div class="principle reveal">
-            <div class="hdr"><b>Operator control</b><span>Non-custodial</span></div>
-            <p class="muted">Keys remain in operator HSM/KMS/TEE environments. CEYO is designed to operate without possessing private signing keys.</p>
+          <div class="p reveal">
+            <div class="k">Operator control</div>
+            <p class="muted" style="margin:0">Non-custodial key posture: signing keys remain with the operator (HSM/KMS/TEE).</p>
           </div>
         </div>
 
-        <div class="boundary reveal" aria-label="Boundary declaration">
-          <div class="k">Boundary declaration</div>
-          <ul>
-            <li>CEYO does not certify compliance, legality, or decision correctness.</li>
-            <li>CEYO does not guarantee inference reproducibility.</li>
-            <li>CEYO does not guarantee admissibility in any specific proceeding.</li>
-            <li>Verification confirms integrity and provenance under policy scope.</li>
-          </ul>
+        <div class="quote reveal" aria-label="Core statement">
+          <p style="margin:0">
+            <b>Evidence infrastructure must remain separate from decision authority.</b>
+            This preserves neutrality and prevents the record layer from becoming an adjudicator of its own output.
+          </p>
+          <div class="m">CEYO provides the artifact · Institutions provide the oversight</div>
         </div>
       </div>
     </section>
 
-    <section id="docs">
+    <!-- CONTROLLED DISCLOSURE -->
+    <section id="disclosure">
       <div class="read reveal">
-        <h2>Document set</h2>
-        <p class="muted">Public-facing materials remain high-level. Technical and operational detail is available under controlled review.</p>
+        <h2>Disclosure model</h2>
+        <p class="muted">
+          Public pages remain high-level. Technical and operational detail is available under controlled review to qualified evaluators.
+        </p>
 
-        <div class="docs" aria-label="Documents">
-          <a class="doc reveal" href="resources.html#library" aria-label="Resources library">
-            <div class="meta">
-              <span class="tag">Resources</span>
-              <span>Public</span>
+        <div class="heroCards">
+          <div class="card reveal">
+            <div class="tag">Public</div>
+            <h3>High-level posture</h3>
+            <p class="muted">Concept, boundaries, and sample structures that do not expose sensitive details.</p>
+            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn" href="resources.html#sample-artifact">Sample artifacts<span class="arr">→</span></a>
+              <a class="btn" href="ethical.html">Responsible use<span class="arr">→</span></a>
             </div>
-            <h3>Library</h3>
-            <p class="muted">Specs, sample artifacts, glossary, and FAQs for evaluation and verification.</p>
-            <div style="margin-top:12px"><span class="link">Open library</span></div>
-          </a>
+          </div>
 
-          <a class="doc reveal" href="contact.html" aria-label="Request controlled review">
-            <div class="meta">
-              <span class="tag">Controlled</span>
-              <span>By request</span>
+          <div class="card reveal">
+            <div class="tag">Controlled</div>
+            <h3>Review materials</h3>
+            <p class="muted">Specs, capture schema, verification procedures, and integration notes shared under appropriate terms.</p>
+            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn primary" href="contact.html">Request access<span class="arr">→</span></a>
+              <a class="btn" href="trust.html#verification-spec">Verification steps<span class="arr">→</span></a>
             </div>
-            <h3>Controlled review materials</h3>
-            <p class="muted">Verification specification, capture policy schema, and deployment posture documents shared under appropriate terms.</p>
-            <div style="margin-top:12px"><span class="link">Request access</span></div>
-          </a>
-        </div>
-
-        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="doc reveal" href="ethical.html" aria-label="Responsible use policy" style="display:block;">
-            <div class="meta">
-              <span class="tag">Policy</span><span>Public</span>
-            </div>
-            <h3>Responsible use</h3>
-            <p class="muted">Human rights and lawful-use boundaries governing deployment of evidentiary infrastructure.</p>
-            <div style="margin-top:12px"><span class="link">Open policy</span></div>
-          </a>
-          <a class="doc reveal" href="vdp.html" aria-label="Vulnerability disclosure" style="display:block;">
-            <div class="meta">
-              <span class="tag">Security</span><span>Public</span>
-            </div>
-            <h3>Vulnerability disclosure</h3>
-            <p class="muted">Reporting channel and coordinated disclosure expectations.</p>
-            <div style="margin-top:12px"><span class="link">Open program</span></div>
-          </a>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- FOOTER -->
     <footer id="footer">
       <div class="footGrid reveal">
         <div class="footCol">
@@ -564,6 +572,226 @@
     } else {
       revealEls.forEach(el=>el.classList.add('on'));
     }
+
+    /* =========================
+       Neuron field + atom core behavior (light-mode version)
+       Same behavior as index:
+       - drift → converge to atom
+       - explode around a mid section
+       - reconverge near footer
+       Tuned colors for yellow paper.
+       ========================= */
+    (function(){
+      const c = document.getElementById('neurons');
+      if (!c || prefersReduce) return;
+
+      const ctx = c.getContext('2d', {alpha:true});
+      let w=0,h=0,dpr=1;
+
+      function resize(){
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth; h = window.innerHeight;
+        c.width = Math.floor(w*dpr);
+        c.height = Math.floor(h*dpr);
+        c.style.width = w+'px';
+        c.style.height = h+'px';
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+      }
+      resize();
+      window.addEventListener('resize', resize, {passive:true});
+
+      const N = 240;
+      const pad = 40;
+      const rnd = (a,b)=> a + Math.random()*(b-a);
+      const nodes = [];
+      const dirs = [];
+
+      for(let i=0;i<N;i++){
+        nodes.push({
+          x:rnd(-pad,w+pad),
+          y:rnd(-pad,h+pad),
+          vx:rnd(-0.18,0.18),
+          vy:rnd(-0.14,0.14),
+          s:rnd(1.1,2.1)
+        });
+        // ring distribution
+        dirs.push({ ang: Math.random()*Math.PI*2, rad: Math.sqrt(Math.random()) });
+      }
+
+      // scroll anchors (use sections present here)
+      const anchors = {
+        hero: document.querySelector('section'),
+        principles: document.getElementById('principles'),
+        disclosure: document.getElementById('disclosure'),
+        footer: document.getElementById('footer')
+      };
+
+      function inRangeProgress(el, startPct, endPct){
+        if(!el) return 0;
+        const r = el.getBoundingClientRect();
+        const vh = window.innerHeight || 1;
+        const start = vh * startPct;
+        const end = vh * endPct;
+        const t = (end - r.top) / Math.max(1, (end - start));
+        return Math.max(0, Math.min(1, t));
+      }
+
+      const state = { converge:0, burst:0, focus:0, coreAlpha:0 };
+
+      // mouse parallax
+      let mx=0.5,my=0.5;
+      if(window.matchMedia("(pointer:fine)").matches){
+        window.addEventListener('mousemove', (e)=>{
+          mx = e.clientX / Math.max(1,w);
+          my = e.clientY / Math.max(1,h);
+        }, {passive:true});
+      }
+
+      function tickState(){
+        // converge as we enter principles
+        const p1 = inRangeProgress(anchors.principles, 0.80, 1.10);
+        // focus in disclosure
+        const p2 = inRangeProgress(anchors.disclosure, 0.72, 1.05);
+        state.converge = Math.max(p1*0.85, p2*0.55);
+
+        // explode around disclosure section (distinct moment)
+        const burstP = inRangeProgress(anchors.disclosure, 0.55, 0.95);
+        state.burst = Math.sin(burstP * Math.PI) * 0.95;
+
+        // settle by footer
+        const settle = inRangeProgress(anchors.footer, 0.85, 1.10);
+        state.converge = Math.max(state.converge, settle);
+
+        // focus tightness
+        state.focus = p2;
+
+        // core alpha
+        state.coreAlpha = Math.min(0.55, 0.16 + state.converge * 0.48);
+      }
+
+      function draw(){
+        tickState();
+        ctx.clearRect(0,0,w,h);
+
+        // vignette for readability on paper
+        const vg = ctx.createRadialGradient(w*0.55, h*0.26, 40, w*0.5, h*0.55, Math.max(w,h)*0.95);
+        vg.addColorStop(0,'rgba(255,255,255,0.00)');
+        vg.addColorStop(1,'rgba(0,0,0,0.12)');
+        ctx.fillStyle = vg;
+        ctx.fillRect(0,0,w,h);
+
+        const px = (mx - 0.5) * 22;
+        const py = (my - 0.5) * 14;
+
+        // core position
+        const cx = w*0.52 + px*0.35;
+        const cy = h*0.30 + py*0.35;
+
+        const baseR = Math.min(w,h) * 0.18;
+        const orbitR = baseR * (0.92 - state.focus*0.10) * (0.92 - state.converge*0.08);
+
+        // atom rings
+        if(state.coreAlpha > 0.01){
+          ctx.save();
+          ctx.globalAlpha = state.coreAlpha;
+          ctx.strokeStyle = 'rgba(58,50,12,0.42)';
+          ctx.lineWidth = 1.3;
+          ctx.beginPath(); ctx.arc(cx, cy, orbitR*0.38, 0, Math.PI*2); ctx.stroke();
+
+          ctx.globalAlpha = state.coreAlpha * 0.70;
+          ctx.strokeStyle = 'rgba(58,50,12,0.18)';
+          ctx.lineWidth = 1.0;
+          ctx.beginPath(); ctx.arc(cx, cy, orbitR*0.78, 0, Math.PI*2); ctx.stroke();
+
+          const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, orbitR*1.05);
+          g.addColorStop(0,'rgba(201,164,74,0.18)');
+          g.addColorStop(1,'rgba(201,164,74,0.0)');
+          ctx.fillStyle = g;
+          ctx.beginPath(); ctx.arc(cx, cy, orbitR*1.05, 0, Math.PI*2); ctx.fill();
+          ctx.restore();
+        }
+
+        const maxDist = 165;
+        const maxD2 = maxDist*maxDist;
+        const conv = state.converge;
+        const burst = Math.max(0, state.burst);
+
+        // move nodes
+        for(let i=0;i<N;i++){
+          const p = nodes[i];
+
+          // drift
+          p.x += p.vx * (1 - 0.65*conv);
+          p.y += p.vy * (1 - 0.65*conv);
+
+          // wrap
+          if(p.x < -pad) p.x = w + pad;
+          if(p.x > w + pad) p.x = -pad;
+          if(p.y < -pad) p.y = h + pad;
+          if(p.y > h + pad) p.y = -pad;
+
+          // converge to ring
+          if(conv > 0.001){
+            const d = dirs[i];
+            const ringR = orbitR * (0.62 + d.rad*0.48);
+            const t = performance.now()*0.00035;
+            const ang = d.ang + t * (0.20 + (i%7)*0.03);
+            const tx = cx + Math.cos(ang) * ringR;
+            const ty = cy + Math.sin(ang) * ringR;
+            p.x += (tx - p.x) * (0.010 + 0.042*conv);
+            p.y += (ty - p.y) * (0.010 + 0.042*conv);
+          }
+
+          // burst outward
+          if(burst > 0.001){
+            const dx = (p.x - cx);
+            const dy = (p.y - cy);
+            const len = Math.max(1, Math.sqrt(dx*dx + dy*dy));
+            const ux = dx / len;
+            const uy = dy / len;
+            const push = (0.85 + (i%9)*0.05) * 2.25 * burst;
+            p.x += ux * push;
+            p.y += uy * push;
+          }
+        }
+
+        // lines + points (ink tone)
+        const lineAlphaBase = 0.05 + conv*0.10;
+        const pointAlpha = 0.30 + conv*0.28;
+
+        for(let i=0;i<N;i++){
+          const a = nodes[i];
+          for(let j=i+1;j<N;j++){
+            const b = nodes[j];
+            const dx = a.x - b.x;
+            const dy = a.y - b.y;
+            const d2 = dx*dx + dy*dy;
+            if(d2 < maxD2){
+              const t = 1 - (d2 / maxD2);
+              const alpha = Math.min(0.18, lineAlphaBase * t);
+              ctx.strokeStyle = `rgba(58,50,12,${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        for(let i=0;i<N;i++){
+          const p = nodes[i];
+          ctx.fillStyle = `rgba(58,50,12,${pointAlpha})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.s, 0, Math.PI*2);
+          ctx.fill();
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+    })();
   </script>
 </body>
 </html>
