@@ -1,0 +1,11 @@
+{
+  "system": "example-ai-model",
+  "timestamp": "2026-03-05T10:00:00Z",
+  "input_hash": "7b502c3a1f48c8609ae212cdfb639dee39673f5e",
+  "policy_scope": [
+    "timestamp",
+    "input_hash",
+    "system"
+  ],
+  "decision": "approve"
+}
