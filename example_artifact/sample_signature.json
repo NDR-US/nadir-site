@@ -1,0 +1,7 @@
+{
+  "hash_algorithm": "SHA-256",
+  "signature_algorithm": "ECDSA-P256",
+  "public_key": "example_public_key_placeholder",
+  "artifact_hash": "placeholder_hash",
+  "signature": "placeholder_signature"
+}
