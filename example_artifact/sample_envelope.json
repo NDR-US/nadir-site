@@ -1,0 +1,39 @@
+{
+  "_note": "Format example only — not cryptographically valid. Run tools/make_example_artifact.py to generate a real signed artifact.",
+  "product": "CEYO",
+  "body": {
+    "env_fingerprint": "env:sha256:7b2c9f1a3de4b8c02f5a6d7e8f9a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a",
+    "event": {
+      "model_ref": "opaque-ref-v1",
+      "request_id": "req-0001",
+      "type": "inference"
+    },
+    "input_ref_hash": "sha256:1a9f3b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a",
+    "output_ref_hash": "sha256:2b8e4c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c",
+    "policy": {
+      "id": "POL-001",
+      "version": "1.0"
+    },
+    "schema_version": "1.0",
+    "tier": "controlled",
+    "ts": "2026-03-05T00:00:00Z"
+  },
+  "canonicalization": {
+    "scheme": "RFC8785",
+    "scope": "body",
+    "version": "1.0"
+  },
+  "integrity": {
+    "hash": {
+      "alg": "SHA-256",
+      "covers": "canonical(body)",
+      "value_b64u": "<sha256-of-canonical-body-base64url>"
+    },
+    "sig": {
+      "alg": "ECDSA-P256-SHA256",
+      "covers": "canonical(body)",
+      "format": "DER",
+      "value_b64u": "<ecdsa-p256-der-signature-base64url>"
+    }
+  }
+}

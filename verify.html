@@ -846,9 +846,9 @@ Leave blank to check hash integrity only."></textarea>
 
       // Validate envelope structure
       if (!envelope || typeof envelope !== 'object') { showError('Envelope must be a JSON object.'); return; }
-      if (!envelope.body) { showError('Envelope is missing "body".'); return; }
-      if (!envelope.integrity) { showError('Envelope is missing "integrity".'); return; }
-      if (!envelope.canonicalization) { showError('Envelope is missing "canonicalization" metadata.'); return; }
+      if (!envelope.body) { showError('Envelope is missing "body". Make sure you paste the full sealed envelope — not just the artifact body itself. The envelope should have "body", "integrity", and "canonicalization" at the top level. Use "Generate & load example" to see the expected format.'); return; }
+      if (!envelope.integrity) { showError('Envelope is missing "integrity". Make sure you paste the full sealed envelope — not just the artifact body. Use "Generate & load example" to see the expected format.'); return; }
+      if (!envelope.canonicalization) { showError('Envelope is missing "canonicalization" metadata. Use "Generate & load example" to see the expected format.'); return; }
 
       const canon = envelope.canonicalization;
       if (canon.scheme !== 'RFC8785' || canon.scope !== 'body') {
