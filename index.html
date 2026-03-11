@@ -1,241 +1,198 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CEYO — Evidentiary Infrastructure</title>
-  <meta
-    name="description"
-    content="CEYO overview page — independent evidentiary infrastructure for AI systems."
-  />
-  <meta name="theme-color" content="#07111f" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Cormorant+Garamond:wght@500;600;700&display=swap"
-    rel="stylesheet"
-  />
+  <meta name="description" content="CEYO overview — independent evidentiary infrastructure for AI systems." />
+  <meta name="theme-color" content="#07111d" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #06101c;
-      --bg-2: #081525;
-      --bg-3: #0b1d31;
-      --panel: rgba(255,255,255,0.055);
-      --panel-2: rgba(255,255,255,0.075);
-      --border: rgba(255,255,255,0.12);
-      --border-strong: rgba(255,255,255,0.18);
-      --text: #eef2f7;
-      --muted: rgba(238,242,247,0.72);
-      --soft: rgba(238,242,247,0.52);
-      --ivory: #efe8db;
-      --ivory-2: #e8decb;
-      --shadow: 0 20px 80px rgba(0,0,0,0.35);
+      --bg: #06111d;
+      --bg-soft: #0b1828;
+      --bg-deep: #040b14;
+      --text: #edf2f8;
+      --muted: rgba(237, 242, 248, 0.74);
+      --soft: rgba(237, 242, 248, 0.5);
+      --line: rgba(237, 242, 248, 0.1);
+      --line-strong: rgba(237, 242, 248, 0.16);
+      --glass: rgba(255,255,255,0.06);
+      --ivory: #eee4d4;
+      --ivory-deep: #d7cab4;
+      --ink: #132033;
+      --max: 1340px;
+      --reading: 760px;
       --radius-xl: 34px;
       --radius-lg: 24px;
       --radius-md: 18px;
-      --radius-sm: 14px;
-      --max: 1320px;
-      --nav-h: 90px;
+      --shadow: 0 30px 90px rgba(0,0,0,0.28);
       --ease: cubic-bezier(.22,1,.36,1);
     }
 
     * { box-sizing: border-box; }
-
-    html {
-      scroll-behavior: smooth;
-      background: var(--bg);
-    }
-
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       color: var(--text);
+      font-family: Inter, system-ui, sans-serif;
       background:
-        radial-gradient(circle at 15% 20%, rgba(41, 87, 150, 0.18), transparent 34%),
-        radial-gradient(circle at 80% 18%, rgba(34, 68, 120, 0.2), transparent 30%),
-        radial-gradient(circle at 50% 120%, rgba(17, 49, 91, 0.22), transparent 42%),
-        linear-gradient(180deg, #05101d 0%, #071424 28%, #06101c 100%);
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        radial-gradient(circle at 12% 10%, rgba(69, 112, 181, 0.18), transparent 28%),
+        radial-gradient(circle at 85% 18%, rgba(51, 89, 150, 0.15), transparent 24%),
+        radial-gradient(circle at 50% 120%, rgba(31, 62, 110, 0.16), transparent 34%),
+        linear-gradient(180deg, #04101c 0%, #07111d 34%, #05101a 100%);
       overflow-x: hidden;
       min-height: 100vh;
       position: relative;
     }
 
-    body::before,
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 90px 90px;
+      mask-image: radial-gradient(circle at center, black 30%, transparent 88%);
+      opacity: 0.5;
+      z-index: -2;
+    }
+
     body::after {
       content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: -2;
-    }
-
-    body::before {
-      background:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 88px 88px;
-      mask-image: radial-gradient(circle at center, black 32%, transparent 92%);
-      opacity: 0.5;
-    }
-
-    body::after {
       background-image:
-        radial-gradient(rgba(255,255,255,0.05) 0.6px, transparent 0.6px),
-        radial-gradient(rgba(255,255,255,0.03) 0.7px, transparent 0.7px);
-      background-position: 0 0, 17px 19px;
+        radial-gradient(rgba(255,255,255,0.05) 0.7px, transparent 0.7px),
+        radial-gradient(rgba(255,255,255,0.03) 0.8px, transparent 0.8px);
+      background-position: 0 0, 14px 18px;
       background-size: 19px 19px, 23px 23px;
       mix-blend-mode: soft-light;
-      opacity: 0.15;
+      opacity: 0.14;
       z-index: -1;
     }
 
-    img, svg, canvas { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    img, canvas { display: block; max-width: 100%; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    .shell {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
     }
 
-    button {
-      font: inherit;
-      border: 0;
-      background: none;
-      color: inherit;
-      cursor: pointer;
+    .reading-shell {
+      width: min(calc(100% - 40px), var(--reading));
+      margin: 0 auto;
+    }
+
+    .mono, .section-label, .eyebrow {
+      font-family: "IBM Plex Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.72rem;
+      color: rgba(237, 242, 248, 0.62);
     }
 
     .page-wipe {
       position: fixed;
       inset: 0;
-      background:
-        linear-gradient(180deg, rgba(6,16,28,0.98), rgba(8,20,36,0.99));
+      background: linear-gradient(180deg, rgba(4,11,20,0.98), rgba(6,16,29,0.99));
       transform: translateY(100%);
-      z-index: 120;
-      pointer-events: none;
       transition: transform 900ms var(--ease);
+      z-index: 150;
+      pointer-events: none;
     }
 
-    .page-wipe.active {
-      transform: translateY(0%);
-      pointer-events: auto;
-    }
+    .page-wipe.active { transform: translateY(0); }
 
-    .shell {
-      width: min(calc(100% - 32px), var(--max));
-      margin: 0 auto;
-    }
-
-    .sticky-header {
+    header {
       position: sticky;
       top: 0;
-      z-index: 60;
+      z-index: 80;
       padding: 16px 0 0;
-      transition: transform 450ms var(--ease), padding 450ms var(--ease);
-    }
-
-    .sticky-header.scrolled {
-      padding-top: 10px;
     }
 
     .header-row {
       display: flex;
-      gap: 14px;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
+      gap: 14px;
     }
 
     .glass-pill {
-      backdrop-filter: blur(18px) saturate(140%);
-      -webkit-backdrop-filter: blur(18px) saturate(140%);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.05));
-      border: 1px solid rgba(255,255,255,0.13);
+      backdrop-filter: blur(18px) saturate(135%);
+      -webkit-backdrop-filter: blur(18px) saturate(135%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255,255,255,0.12);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), var(--shadow);
     }
 
     .brand-pill,
     .menu-pill {
-      min-height: 74px;
+      min-height: 72px;
       border-radius: 999px;
+      position: relative;
+      overflow: hidden;
     }
 
     .brand-pill {
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 12px 24px 12px 16px;
+      padding: 10px 22px 10px 14px;
       flex: 1 1 auto;
-      max-width: 420px;
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .brand-pill::before,
-    .menu-pill::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.12) 48%, transparent 74%);
-      transform: translateX(-120%);
-      animation: sheen 8s linear infinite;
-      opacity: 0.8;
-      z-index: -1;
-    }
-
-    @keyframes sheen {
-      to { transform: translateX(120%); }
+      max-width: 440px;
     }
 
     .brand-mark {
-      width: 58px;
-      height: 58px;
-      border-radius: 999px;
-      position: relative;
-      flex: 0 0 58px;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
       border: 1px solid rgba(255,255,255,0.12);
       background:
-        radial-gradient(circle at center, rgba(255,255,255,0.13) 0 2px, transparent 2px 100%),
+        radial-gradient(circle at center, rgba(255,255,255,0.16) 0 2px, transparent 2px 100%),
         radial-gradient(circle at center, transparent 0 10px, rgba(255,255,255,0.08) 10px 11px, transparent 11px 100%),
-        radial-gradient(circle at center, transparent 0 19px, rgba(255,255,255,0.08) 19px 20px, transparent 20px 100%),
-        radial-gradient(circle at center, transparent 0 28px, rgba(255,255,255,0.08) 28px 29px, transparent 29px 100%);
-      box-shadow: inset 0 0 30px rgba(255,255,255,0.03);
+        radial-gradient(circle at center, transparent 0 19px, rgba(255,255,255,0.08) 19px 20px, transparent 20px 100%);
+      flex: 0 0 54px;
     }
 
     .brand-copy {
       display: grid;
-      gap: 2px;
+      gap: 3px;
       line-height: 1;
     }
 
     .brand-copy strong {
       font-weight: 800;
+      font-size: 1rem;
       letter-spacing: -0.03em;
-      font-size: 1.05rem;
     }
 
     .brand-copy span {
-      font-size: 0.68rem;
-      letter-spacing: 0.15em;
+      font-size: 0.65rem;
+      color: rgba(237,242,248,0.72);
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(238,242,247,0.78);
-      font-weight: 700;
+      font-weight: 600;
     }
 
     .menu-pill {
       display: inline-flex;
       align-items: center;
-      justify-content: space-between;
       gap: 18px;
-      min-width: 220px;
       padding: 0 24px 0 28px;
-      position: relative;
-      overflow: hidden;
+      min-width: 220px;
+      justify-content: space-between;
     }
 
-    .menu-pill-label {
-      font-size: clamp(1rem, 1.6vw, 1.15rem);
+    .menu-label {
+      font-size: 1.04rem;
       font-weight: 500;
       letter-spacing: -0.02em;
     }
@@ -244,8 +201,6 @@
       width: 34px;
       height: 24px;
       position: relative;
-      display: inline-block;
-      flex: 0 0 34px;
     }
 
     .hamburger span {
@@ -253,40 +208,30 @@
       left: 0;
       right: 0;
       height: 2px;
-      background: rgba(238,242,247,0.96);
       border-radius: 999px;
-      transform-origin: center;
-      transition: transform 360ms var(--ease), opacity 280ms ease, top 360ms var(--ease);
+      background: rgba(237,242,248,0.96);
+      transition: transform 320ms var(--ease), top 320ms var(--ease), opacity 220ms ease;
     }
 
     .hamburger span:nth-child(1) { top: 2px; }
     .hamburger span:nth-child(2) { top: 11px; }
     .hamburger span:nth-child(3) { top: 20px; }
 
-    .menu-open .hamburger span:nth-child(1) {
-      top: 11px;
-      transform: rotate(45deg);
-    }
-    .menu-open .hamburger span:nth-child(2) { opacity: 0; }
-    .menu-open .hamburger span:nth-child(3) {
-      top: 11px;
-      transform: rotate(-45deg);
-    }
+    body.menu-open .hamburger span:nth-child(1) { top: 11px; transform: rotate(45deg); }
+    body.menu-open .hamburger span:nth-child(2) { opacity: 0; }
+    body.menu-open .hamburger span:nth-child(3) { top: 11px; transform: rotate(-45deg); }
 
     .nav-overlay {
       position: fixed;
       inset: 0;
-      z-index: 80;
-      display: grid;
-      place-items: start center;
-      padding: max(18px, env(safe-area-inset-top)) 16px 20px;
-      background:
-        linear-gradient(180deg, rgba(4,11,19,0.88), rgba(4,11,19,0.95));
+      z-index: 120;
+      background: linear-gradient(180deg, rgba(4,11,19,0.9), rgba(4,11,19,0.97));
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       opacity: 0;
       visibility: hidden;
-      transition: opacity 420ms ease, visibility 420ms ease;
+      transition: opacity 360ms ease, visibility 360ms ease;
+      padding: 18px;
     }
 
     .nav-overlay.open {
@@ -296,175 +241,130 @@
 
     .nav-sheet {
       width: min(100%, 1320px);
-      transform: translateY(-24px);
-      opacity: 0;
-      transition: transform 520ms var(--ease), opacity 520ms ease;
+      min-height: calc(100vh - 36px);
+      margin: 0 auto;
       border-radius: 34px;
-      padding: 30px;
-      min-height: min(720px, calc(100vh - 42px));
-      background:
-        linear-gradient(180deg, rgba(10,23,40,0.96), rgba(7,18,31,0.98));
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 40px 120px rgba(0,0,0,0.45);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .nav-overlay.open .nav-sheet {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .nav-sheet::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 15% 15%, rgba(80,132,220,0.18), transparent 30%),
-        radial-gradient(circle at 80% 20%, rgba(110,150,210,0.14), transparent 28%);
-      pointer-events: none;
-    }
-
-    .nav-grid {
+      border: 1px solid rgba(255,255,255,0.1);
+      background: linear-gradient(180deg, rgba(8,20,34,0.96), rgba(6,15,26,0.98));
+      padding: 34px 30px;
       display: grid;
-      grid-template-columns: 1fr minmax(260px, 360px);
-      gap: 36px;
-      position: relative;
-      z-index: 1;
-      height: 100%;
+      grid-template-columns: 1fr 320px;
+      gap: 40px;
+      transform: translateY(-24px);
+      transition: transform 480ms var(--ease);
     }
+
+    .nav-overlay.open .nav-sheet { transform: translateY(0); }
 
     .nav-links {
       display: grid;
       align-content: start;
-      gap: 8px;
-      padding-top: 8px;
-    }
-
-    .nav-kicker,
-    .section-label,
-    .mono {
-      font-family: "IBM Plex Mono", monospace;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 0.72rem;
-      color: rgba(238,242,247,0.62);
+      gap: 6px;
     }
 
     .nav-link {
       display: block;
-      padding: 18px 0;
+      padding: 16px 0;
       border-bottom: 1px solid rgba(255,255,255,0.08);
       font-family: "Cormorant Garamond", serif;
-      font-size: clamp(2.1rem, 5vw, 4.6rem);
-      line-height: 0.98;
-      letter-spacing: -0.04em;
-      color: rgba(239,232,219,0.96);
-      transition: transform 320ms var(--ease), color 220ms ease, opacity 220ms ease;
+      font-size: clamp(2rem, 5vw, 4.6rem);
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+      color: var(--ivory);
+      transition: transform 280ms var(--ease), color 200ms ease;
     }
 
-    .nav-link:hover,
-    .nav-link:focus-visible {
-      transform: translateX(10px);
-      color: #fff7ea;
-      outline: none;
-    }
+    .nav-link:hover { transform: translateX(8px); color: #fff7eb; }
 
     .nav-side {
       align-self: end;
-      padding: 26px;
-      border-radius: 28px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
+      border-left: 1px solid rgba(255,255,255,0.08);
+      padding-left: 22px;
     }
 
     .nav-side p {
-      margin: 12px 0 0;
-      font-size: 0.98rem;
-      line-height: 1.7;
-      color: rgba(238,242,247,0.72);
-      max-width: 28ch;
+      margin: 14px 0 0;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 26ch;
     }
 
     .hero {
-      position: relative;
       min-height: min(980px, 100svh);
+      position: relative;
       display: grid;
       align-items: center;
-      padding: 36px 0 34px;
+      padding: 34px 0 22px;
       overflow: clip;
     }
 
     .hero-bg {
       position: absolute;
       inset: 0;
-      overflow: hidden;
       z-index: 0;
     }
 
     #heroCanvas {
-      position: absolute;
-      inset: 0;
       width: 100%;
       height: 100%;
-      opacity: 0.5;
-      filter: saturate(110%) blur(0.15px);
+      position: absolute;
+      inset: 0;
+      opacity: 0.55;
     }
 
     .hero-vignette {
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 50% 45%, transparent 0%, rgba(6,16,28,0.06) 42%, rgba(6,16,28,0.28) 68%, rgba(6,16,28,0.66) 100%),
-        linear-gradient(180deg, rgba(5,12,21,0.08) 0%, rgba(5,12,21,0.42) 58%, rgba(5,12,21,0.82) 100%);
+        radial-gradient(circle at 50% 42%, transparent 0%, rgba(6,17,29,0.07) 42%, rgba(6,17,29,0.36) 72%, rgba(6,17,29,0.74) 100%),
+        linear-gradient(180deg, rgba(4,11,20,0.06) 0%, rgba(4,11,20,0.4) 54%, rgba(4,11,20,0.86) 100%);
     }
 
     .hero-inner {
       position: relative;
       z-index: 1;
-      padding-top: clamp(38px, 8vh, 78px);
+      padding-top: clamp(44px, 7vh, 76px);
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.68fr);
-      gap: 48px;
+      grid-template-columns: minmax(0, 1.05fr) minmax(220px, 0.5fr);
+      gap: 44px;
       align-items: end;
     }
 
-    .hero-left {
-      max-width: 860px;
-    }
+    .hero-left { max-width: 900px; }
 
-    .eyebrow-wrap {
-      display: flex;
+    .hero .eyebrow {
+      display: inline-flex;
+      gap: 14px;
       align-items: center;
-      gap: 22px;
       margin-bottom: 24px;
     }
 
-    .eyebrow-line {
-      width: clamp(46px, 9vw, 82px);
+    .hero .eyebrow::before {
+      content: "";
+      width: 72px;
       height: 1px;
-      background: rgba(239,232,219,0.42);
-      flex: 0 0 auto;
+      background: rgba(238,228,212,0.34);
+      display: inline-block;
     }
 
-    .hero-headline {
-      margin: 0 0 24px;
+    .hero h1 {
+      margin: 0;
       font-family: "Cormorant Garamond", serif;
       font-weight: 600;
-      font-size: clamp(3.4rem, 10vw, 8.6rem);
+      font-size: clamp(3.8rem, 9.6vw, 8.8rem);
       line-height: 0.9;
       letter-spacing: -0.055em;
       color: var(--ivory);
-      max-width: 10.2ch;
+      max-width: 8.8ch;
       text-wrap: balance;
     }
 
     .hero-copy {
-      margin: 0;
-      max-width: 20ch;
-      font-size: clamp(1.15rem, 2.2vw, 1.68rem);
-      line-height: 1.58;
-      color: rgba(238,242,247,0.88);
+      margin: 26px 0 0;
+      font-size: clamp(1.14rem, 2vw, 1.56rem);
+      line-height: 1.65;
+      color: rgba(237,242,248,0.86);
+      max-width: 22ch;
       letter-spacing: -0.02em;
     }
 
@@ -476,84 +376,47 @@
     }
 
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
       min-height: 58px;
       padding: 0 24px;
       border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       font-weight: 650;
       letter-spacing: -0.02em;
-      transition:
-        transform 260ms var(--ease),
-        background 240ms ease,
-        border-color 240ms ease,
-        box-shadow 240ms ease,
-        color 240ms ease;
+      transition: transform 260ms var(--ease), background 220ms ease, border-color 220ms ease;
     }
 
-    .btn:hover,
-    .btn:focus-visible {
-      transform: translateY(-2px);
-      outline: none;
-    }
+    .btn:hover { transform: translateY(-2px); }
 
     .btn-primary {
       background: var(--ivory);
-      color: #152235;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.18);
-    }
-
-    .btn-primary:hover,
-    .btn-primary:focus-visible {
-      background: #f6f0e6;
+      color: #132235;
+      box-shadow: 0 18px 44px rgba(0,0,0,0.16);
     }
 
     .btn-secondary {
       border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.045);
-      color: var(--text);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: rgba(255,255,255,0.04);
     }
 
-    .hero-right {
+    .hero-utility {
       justify-self: end;
-      width: min(100%, 380px);
+      width: min(100%, 320px);
+      align-self: end;
     }
 
-    .hero-side-card {
-      border-radius: 28px;
-      padding: 22px;
-      background: rgba(255,255,255,0.045);
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: var(--shadow);
-    }
-
-    .type-line {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      font-family: "IBM Plex Mono", monospace;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      font-size: 0.72rem;
-      color: rgba(239,232,219,0.8);
-      margin-bottom: 18px;
-    }
-
-    .type-line-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: rgba(239,232,219,0.88);
-      box-shadow: 0 0 16px rgba(239,232,219,0.52);
+    .utility-line {
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 18px;
+      display: grid;
+      gap: 10px;
     }
 
     .typewriter {
+      font-size: 1rem;
+      color: rgba(238,228,212,0.92);
       min-height: 1.4em;
-      font-size: clamp(1.05rem, 1.5vw, 1.2rem);
-      color: var(--ivory);
       font-weight: 600;
       letter-spacing: -0.02em;
     }
@@ -561,29 +424,22 @@
     .typewriter .cursor {
       display: inline-block;
       width: 1ch;
-      color: rgba(239,232,219,0.9);
       animation: blink 0.9s step-end infinite;
     }
 
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
+    @keyframes blink { 50% { opacity: 0; } }
 
-    main {
-      position: relative;
-      z-index: 2;
-      padding-bottom: 80px;
-    }
+    main { position: relative; z-index: 2; }
 
     .section {
-      padding: 120px 0;
       position: relative;
+      padding: 120px 0;
     }
 
     .section.reveal {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 850ms ease, transform 850ms var(--ease);
+      transform: translateY(26px);
+      transition: opacity 780ms ease, transform 780ms var(--ease);
     }
 
     .section.reveal.is-visible {
@@ -591,435 +447,350 @@
       transform: translateY(0);
     }
 
-    .section-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.12fr) minmax(260px, 0.75fr);
-      gap: 34px;
-      align-items: start;
+    .section-label { margin-bottom: 18px; display: inline-block; }
+
+    .editorial-line {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.16), rgba(255,255,255,0));
+      margin-bottom: 28px;
     }
 
-    .section-top {
-      margin-bottom: 22px;
-      display: grid;
-      gap: 16px;
-    }
-
-    .section-heading {
+    .section h2 {
       margin: 0;
       font-family: "Cormorant Garamond", serif;
       font-weight: 600;
-      letter-spacing: -0.04em;
       line-height: 0.95;
-      font-size: clamp(2.6rem, 5vw, 5.3rem);
+      letter-spacing: -0.045em;
+      font-size: clamp(2.7rem, 5.3vw, 5.6rem);
       color: var(--ivory);
-      max-width: 11ch;
+      text-wrap: balance;
     }
 
-    .section-copy {
-      margin: 0;
-      max-width: 64ch;
-      font-size: clamp(1rem, 1.35vw, 1.14rem);
-      line-height: 1.82;
+    .reading-copy,
+    .section p {
+      font-size: clamp(1rem, 1.3vw, 1.12rem);
+      line-height: 1.86;
       color: var(--muted);
+      margin: 0;
     }
 
-    .stack-copy > * + * {
-      margin-top: 20px;
-    }
+    .section p + p { margin-top: 20px; }
 
-    .panel {
-      border-radius: 28px;
-      padding: clamp(20px, 3vw, 30px);
-      border: 1px solid var(--border);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.035));
-      box-shadow: var(--shadow);
-    }
-
-    .note-panel {
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
-    }
-
-    .note-grid {
+    .problem-wrap {
       display: grid;
       gap: 18px;
     }
 
+    .what-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.62fr);
+      gap: 44px;
+      align-items: start;
+    }
+
+    .note-stack {
+      position: relative;
+      padding-top: 10px;
+    }
+
+    .note-stack::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.03));
+    }
+
     .note-item {
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0 0 22px 22px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
     }
 
     .note-item:last-child {
-      border-bottom: 0;
+      margin-bottom: 0;
       padding-bottom: 0;
+      border-bottom: 0;
     }
 
     .note-item h3 {
-      margin: 0 0 8px;
-      font-size: 0.76rem;
-      line-height: 1.2;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+      margin: 0 0 10px;
       font-family: "IBM Plex Mono", monospace;
-      color: rgba(239,232,219,0.76);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.72rem;
+      color: rgba(238,228,212,0.72);
     }
 
     .note-item p {
-      margin: 0;
-      color: rgba(238,242,247,0.84);
-      line-height: 1.65;
+      color: rgba(237,242,248,0.82);
       font-size: 0.98rem;
+      line-height: 1.72;
     }
 
     .ivory-break {
       background:
-        radial-gradient(circle at 8% 10%, rgba(255,255,255,0.28), transparent 28%),
-        linear-gradient(180deg, #f0e7d8 0%, #e7dac4 100%);
-      color: #172437;
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,0.26), transparent 28%),
+        linear-gradient(180deg, #f1e8d9 0%, #e8dbc5 100%);
+      color: var(--ink);
     }
 
     .ivory-break .section-label,
-    .ivory-break .mono,
-    .ivory-break .section-copy,
-    .ivory-break .mechanism-intro {
-      color: rgba(23,36,55,0.78);
+    .ivory-break p {
+      color: rgba(19,32,51,0.78);
     }
 
-    .ivory-break .section-heading,
-    .ivory-break .pill,
-    .ivory-break .mechanism-title,
-    .ivory-break .mechanism-card p,
-    .ivory-break .mechanism-card strong {
-      color: #172437;
+    .ivory-break h2,
+    .ivory-break .tag {
+      color: var(--ink);
     }
 
-    .ivory-break .panel {
-      background: rgba(255,255,255,0.42);
-      border-color: rgba(23,36,55,0.12);
-      box-shadow: 0 24px 60px rgba(60,48,33,0.12);
+    .centered-block {
+      max-width: 980px;
+      margin: 0 auto;
+      text-align: center;
     }
 
-    .properties {
+    .tag-row {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 12px;
-      margin: 26px 0 18px;
+      margin: 28px 0 18px;
     }
 
-    .pill {
+    .tag {
       display: inline-flex;
       align-items: center;
-      min-height: 42px;
+      min-height: 40px;
       padding: 0 16px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
-      color: var(--ivory);
+      border: 1px solid rgba(19,32,51,0.12);
+      background: rgba(19,32,51,0.04);
+      font-size: 0.95rem;
       letter-spacing: -0.02em;
-      font-size: 0.97rem;
       font-weight: 600;
     }
 
-    .ivory-break .pill {
-      background: rgba(23,36,55,0.05);
-      border-color: rgba(23,36,55,0.1);
+    .boundary-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 0.6fr);
+      gap: 44px;
+      align-items: center;
     }
 
-    .mechanism-intro {
-      margin: 0 0 26px;
-      line-height: 1.8;
+    .boundary-aside {
+      position: relative;
+      min-height: 220px;
+    }
+
+    .boundary-frame {
+      position: absolute;
+      right: 0;
+      top: 14px;
+      width: min(100%, 340px);
+      height: 190px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    }
+
+    .boundary-frame::before,
+    .boundary-frame::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .boundary-frame::before {
+      inset: 22px 28px auto 28px;
+      height: 1px;
+      border: 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+    }
+
+    .boundary-frame::after {
+      width: 88px;
+      height: 88px;
+      right: 28px;
+      bottom: 26px;
     }
 
     .mechanism-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
+      gap: 0;
+      margin-top: 34px;
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line);
     }
 
-    .mechanism-card {
-      min-height: 260px;
-      display: grid;
-      align-content: start;
-      gap: 14px;
-      border-radius: 24px;
-      padding: 22px;
-      border: 1px solid rgba(23,36,55,0.12);
-      background: rgba(255,255,255,0.4);
-    }
-
-    .mechanism-kicker {
-      font-family: "IBM Plex Mono", monospace;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 0.72rem;
-      color: rgba(23,36,55,0.66);
-    }
-
-    .mechanism-title {
-      margin: 0;
-      font-size: 1.4rem;
-      letter-spacing: -0.03em;
-      font-weight: 700;
-    }
-
-    .mechanism-card p {
-      margin: 0;
-      line-height: 1.75;
-      font-size: 0.99rem;
-    }
-
-    .dark-stack {
-      display: grid;
-      gap: 18px;
-    }
-
-    .next-grid {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 28px;
-    }
-
-    .next-card {
+    .mechanism-col {
+      padding: 34px 30px 40px;
+      min-height: 320px;
       position: relative;
-      border-radius: 24px;
-      padding: 22px 18px 18px;
-      border: 1px solid rgba(255,255,255,0.11);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.03));
-      min-height: 220px;
-      display: grid;
-      align-content: end;
-      gap: 12px;
-      overflow: hidden;
-      transition:
-        transform 320ms var(--ease),
-        border-color 240ms ease,
-        background 240ms ease,
-        box-shadow 240ms ease;
     }
 
-    .next-card::before {
-      content: "";
-      position: absolute;
-      inset: auto -20% -40% auto;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(91,123,175,0.18), transparent 65%);
-      pointer-events: none;
+    .mechanism-col + .mechanism-col {
+      border-left: 1px solid var(--line);
     }
 
-    .next-card:hover,
-    .next-card:focus-visible {
-      transform: translateY(-6px);
-      border-color: rgba(255,255,255,0.18);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.065), rgba(255,255,255,0.035));
-      box-shadow: var(--shadow);
-      outline: none;
+    .step-no {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.84rem;
+      letter-spacing: 0.16em;
+      color: rgba(19,32,51,0.62);
+      text-transform: uppercase;
+      margin-bottom: 30px;
     }
 
-    .next-card h3 {
-      margin: 0;
-      font-size: 1.15rem;
+    .mechanism-col h3 {
+      margin: 0 0 14px;
+      font-size: 1.55rem;
       letter-spacing: -0.03em;
+      color: var(--ink);
+    }
+
+    .mechanism-col p {
+      color: rgba(19,32,51,0.76);
+      line-height: 1.82;
+      max-width: 28ch;
+    }
+
+    .non-claims .tags-wrap,
+    .next-list {
+      margin-top: 30px;
+    }
+
+    .tags-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .tags-wrap .tag {
+      color: var(--ivory);
+      border-color: rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .next-list {
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .next-item {
+      display: grid;
+      grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+      transition: transform 260ms var(--ease), color 220ms ease;
+    }
+
+    .next-item:hover { transform: translateX(6px); }
+
+    .next-item h3 {
+      margin: 0;
+      font-size: 1.2rem;
       font-weight: 700;
+      letter-spacing: -0.03em;
       color: var(--ivory);
     }
 
-    .next-card p {
+    .next-item p {
       margin: 0;
-      line-height: 1.72;
-      color: var(--muted);
-      font-size: 0.95rem;
+      max-width: 54ch;
     }
 
     footer {
-      padding: 0 0 34px;
+      padding: 8px 0 34px;
     }
 
     .footer-line {
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 24px;
-      color: rgba(238,242,247,0.6);
+      border-top: 1px solid var(--line);
+      padding-top: 22px;
+      color: rgba(237,242,248,0.56);
       font-size: 0.88rem;
       letter-spacing: 0.02em;
     }
 
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      border: 0;
-      white-space: nowrap;
-    }
-
-    @media (max-width: 1180px) {
+    @media (max-width: 1100px) {
       .hero-inner,
-      .section-grid,
-      .nav-grid {
+      .what-grid,
+      .boundary-wrap,
+      .nav-sheet {
         grid-template-columns: 1fr;
       }
 
-      .hero-right {
+      .hero-utility {
         justify-self: start;
         width: 100%;
-        max-width: 480px;
+        max-width: 420px;
       }
 
-      .section-heading {
-        max-width: none;
+      .nav-side {
+        border-left: 0;
+        padding-left: 0;
+        padding-top: 10px;
       }
 
-      .next-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .mechanism-grid { grid-template-columns: 1fr; }
+      .mechanism-col + .mechanism-col { border-left: 0; border-top: 1px solid rgba(19,32,51,0.12); }
     }
 
-    @media (max-width: 860px) {
-      :root { --nav-h: 84px; }
-
-      .shell {
-        width: min(calc(100% - 22px), var(--max));
+    @media (max-width: 760px) {
+      .shell,
+      .reading-shell {
+        width: min(calc(100% - 24px), var(--max));
       }
 
-      .brand-pill {
-        min-width: 0;
-        max-width: none;
-        padding-right: 18px;
-      }
-
-      .menu-pill {
-        min-width: 138px;
-        padding: 0 18px 0 20px;
-      }
-
-      .menu-pill-label {
-        font-size: 1rem;
-      }
-
-      .nav-sheet {
-        padding: 20px;
-        border-radius: 28px;
-      }
-
-      .nav-link {
-        font-size: clamp(2rem, 9vw, 3.4rem);
-      }
-
-      .hero {
-        min-height: auto;
-        padding-bottom: 22px;
-      }
-
-      .hero-inner {
-        padding-top: 26px;
-        gap: 28px;
-      }
-
-      .hero-headline {
-        max-width: 7.5ch;
-      }
-
-      .hero-copy {
-        max-width: 100%;
-      }
-
-      .section {
-        padding: 86px 0;
-      }
-
-      .mechanism-grid,
-      .next-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .mechanism-card,
-      .next-card {
-        min-height: 0;
-      }
-
-      .section-copy {
-        max-width: none;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .header-row {
-        gap: 10px;
-      }
+      header { padding-top: 12px; }
 
       .brand-pill,
       .menu-pill {
         min-height: 66px;
       }
 
-      .brand-pill {
-        padding: 10px 14px 10px 12px;
+      .brand-pill { padding: 10px 14px 10px 12px; }
+      .brand-mark { width: 48px; height: 48px; flex-basis: 48px; }
+      .menu-pill { min-width: 126px; padding: 0 18px; }
+      .menu-label { display: none; }
+
+      .hero {
+        min-height: auto;
+        padding-bottom: 12px;
       }
 
-      .brand-mark {
-        width: 48px;
-        height: 48px;
-        flex-basis: 48px;
+      .hero-inner {
+        gap: 26px;
+        padding-top: 30px;
       }
 
-      .brand-copy strong {
-        font-size: 0.95rem;
-      }
-
-      .brand-copy span {
-        font-size: 0.58rem;
-      }
-
-      .menu-pill {
-        min-width: 122px;
-        padding: 0 16px 0 18px;
-      }
-
-      .menu-pill-label {
-        display: none;
-      }
-
-      .eyebrow-wrap {
-        gap: 14px;
-        margin-bottom: 18px;
-      }
+      .hero h1 { max-width: 7.6ch; }
+      .hero-copy { max-width: 100%; }
 
       .hero-actions {
         flex-direction: column;
         align-items: stretch;
       }
 
-      .btn {
-        width: 100%;
-      }
-
-      .panel,
-      .next-card,
-      .mechanism-card {
-        border-radius: 22px;
-      }
+      .btn { width: 100%; }
+      .section { padding: 84px 0; }
+      .next-item { grid-template-columns: 1fr; gap: 10px; }
+      .boundary-frame { position: relative; width: 100%; max-width: none; right: auto; top: auto; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
-      }
-      .page-wipe {
-        display: none;
       }
     }
   </style>
@@ -1029,48 +800,40 @@
 
   <div class="nav-overlay" id="navOverlay" aria-hidden="true">
     <div class="nav-sheet">
-      <div class="nav-grid">
-        <div class="nav-links">
-          <div class="nav-kicker">Overview Navigation</div>
-          <a class="nav-link nav-destination" href="#hero">Overview</a>
-          <a class="nav-link nav-destination" href="#what-ceyo-is">What CEYO Is</a>
-          <a class="nav-link nav-destination" href="#core-properties">Core Properties</a>
-          <a class="nav-link nav-destination" href="#boundary">Boundary</a>
-          <a class="nav-link nav-destination" href="#mechanism">Mechanism</a>
-          <a class="nav-link nav-destination" href="#non-claims">What CEYO Does Not Claim</a>
-          <a class="nav-link nav-destination" href="#next">Next</a>
-        </div>
-        <aside class="nav-side">
-          <div class="nav-kicker">CEYO</div>
-          <p>
-            Overview page for independent evidentiary infrastructure, designed for institutional clarity,
-            constrained disclosure, and independent review.
-          </p>
-        </aside>
+      <div class="nav-links">
+        <div class="mono">Overview Navigation</div>
+        <a class="nav-link nav-destination" href="#hero">Overview</a>
+        <a class="nav-link nav-destination" href="#why">Why This Layer Exists</a>
+        <a class="nav-link nav-destination" href="#what">What CEYO Is</a>
+        <a class="nav-link nav-destination" href="#properties">Core Properties</a>
+        <a class="nav-link nav-destination" href="#boundary">Boundary</a>
+        <a class="nav-link nav-destination" href="#mechanism">Mechanism</a>
+        <a class="nav-link nav-destination" href="#nonclaims">What CEYO Does Not Claim</a>
+        <a class="nav-link nav-destination" href="#next">Next</a>
       </div>
+      <aside class="nav-side">
+        <div class="mono">CEYO</div>
+        <p>
+          Overview page for independent evidentiary infrastructure, designed to establish the system,
+          its boundary, its mechanism, and its review posture without clutter or repetition.
+        </p>
+      </aside>
     </div>
   </div>
 
-  <header class="sticky-header" id="siteHeader">
+  <header>
     <div class="shell">
       <div class="header-row">
         <a href="#hero" class="brand-pill glass-pill nav-destination" aria-label="CEYO home">
-          <div class="brand-mark" aria-hidden="true"></div>
-          <div class="brand-copy">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-copy">
             <strong>CEYO</strong>
-            <span>Evidentiary Infrastructure</span>
-          </div>
+            <span>Independent Evidentiary Infrastructure</span>
+          </span>
         </a>
 
-        <button
-          class="menu-pill glass-pill"
-          id="menuToggle"
-          type="button"
-          aria-expanded="false"
-          aria-controls="navOverlay"
-          aria-label="Open navigation"
-        >
-          <span class="menu-pill-label">Menu</span>
+        <button class="menu-pill glass-pill" id="menuToggle" type="button" aria-expanded="false" aria-controls="navOverlay" aria-label="Open navigation">
+          <span class="menu-label">Menu</span>
           <span class="hamburger" aria-hidden="true">
             <span></span><span></span><span></span>
           </span>
@@ -1079,7 +842,7 @@
     </div>
   </header>
 
-  <section class="hero" id="hero" aria-label="CEYO overview hero">
+  <section class="hero" id="hero">
     <div class="hero-bg" aria-hidden="true">
       <canvas id="heroCanvas"></canvas>
       <div class="hero-vignette"></div>
@@ -1087,221 +850,185 @@
 
     <div class="shell hero-inner">
       <div class="hero-left">
-        <div class="eyebrow-wrap">
-          <div class="eyebrow-line"></div>
-          <div class="mono">Independent Evidentiary Infrastructure</div>
-        </div>
-
-        <h1 class="hero-headline">Evidentiary Infrastructure for AI Systems</h1>
-
+        <div class="eyebrow">Independent Evidentiary Infrastructure</div>
+        <h1>Evidentiary Infrastructure for AI Systems</h1>
         <p class="hero-copy">
-          CEYO is an independent evidentiary layer that generates policy-scoped, cryptographically sealed records from AI-supported operations, enabling later institutional verification without modifying the originating system.
+          CEYO is an independent evidentiary layer that generates policy-scoped, cryptographically sealed artifacts from AI-supported operations, enabling later institutional verification without modifying the originating system.
         </p>
-
         <div class="hero-actions">
-          <a class="btn btn-primary nav-destination" href="#what-ceyo-is">Enter overview</a>
-          <a class="btn btn-secondary nav-destination" href="#mechanism">Explore platform</a>
+          <a class="btn btn-primary nav-destination" href="#why">Enter Overview</a>
+          <a class="btn btn-secondary nav-destination" href="#mechanism">Explore Platform</a>
         </div>
       </div>
 
-      <div class="hero-right">
-        <div class="hero-side-card">
-          <div class="type-line">
-            <span class="type-line-dot"></span>
-            <span>Type line</span>
-          </div>
-          <div class="typewriter" aria-live="polite">
-            <span id="typewriterText"></span><span class="cursor">|</span>
-          </div>
-          <div class="sr-only">Record. Seal. Verify.</div>
+      <aside class="hero-utility">
+        <div class="utility-line">
+          <div class="mono">Type Line</div>
+          <div class="typewriter"><span id="typeText"></span><span class="cursor">|</span></div>
         </div>
-      </div>
+      </aside>
     </div>
   </section>
 
   <main>
-    <section class="section reveal" id="what-ceyo-is">
-      <div class="shell section-grid">
-        <div>
-          <div class="section-top">
-            <div class="section-label">What CEYO Is</div>
-            <h2 class="section-heading">A verification layer for consequential AI operations.</h2>
-          </div>
+    <section class="section reveal" id="why">
+      <div class="reading-shell problem-wrap">
+        <div class="editorial-line"></div>
+        <div class="section-label">Why This Layer Exists</div>
+        <h2>AI-supported operations increasingly require evidence that can be reviewed later.</h2>
+        <p>
+          AI systems increasingly participate in consequential workflows across institutional environments.
+        </p>
+        <p>
+          Yet in many deployments, outputs are produced without independent evidentiary records describing what was captured, what was sealed, and what remains available for later review.
+        </p>
+        <p>
+          Without structured evidence artifacts, institutions cannot reliably evaluate integrity, provenance, or chain-of-custody after the event.
+        </p>
+      </div>
+    </section>
 
-          <div class="stack-copy">
-            <p class="section-copy">
+    <section class="section reveal" id="what">
+      <div class="shell what-grid">
+        <div>
+          <div class="section-label">What CEYO Is</div>
+          <h2>A verification layer for consequential AI operations.</h2>
+          <div style="margin-top:28px; max-width: 760px;">
+            <p>
               CEYO produces deterministic evidentiary artifacts from policy-scoped inference events.
             </p>
-            <p class="section-copy">
+            <p>
               Those artifacts are designed to support later institutional review, chain-of-custody integrity, and independent verification without default disclosure of model internals, proprietary weights, or full system logic.
             </p>
-            <p class="section-copy">
+            <p>
               It is built for environments where AI-supported actions may require trusted review after the fact.
             </p>
           </div>
         </div>
 
-        <aside class="panel note-panel">
-          <div class="note-grid">
-            <div class="note-item">
-              <h3>Objective</h3>
-              <p>CEYO introduces an independent evidentiary layer for AI-supported systems.</p>
-            </div>
-            <div class="note-item">
-              <h3>Output</h3>
-              <p>Policy-scoped, cryptographically sealed records of AI-supported operations.</p>
-            </div>
-            <div class="note-item">
-              <h3>Review posture</h3>
-              <p>Later institutional verification without modifying the originating system.</p>
-            </div>
+        <aside class="note-stack">
+          <div class="note-item">
+            <h3>Objective</h3>
+            <p>CEYO introduces an independent evidentiary layer for AI-supported systems.</p>
+          </div>
+          <div class="note-item">
+            <h3>Output</h3>
+            <p>Policy-scoped, cryptographically sealed artifacts from AI-supported operations.</p>
+          </div>
+          <div class="note-item">
+            <h3>Review posture</h3>
+            <p>Later institutional verification without modifying the originating system.</p>
           </div>
         </aside>
       </div>
     </section>
 
-    <section class="section reveal ivory-break" id="core-properties">
-      <div class="shell">
-        <div class="section-top">
-          <div class="section-label">Core Properties</div>
-          <h2 class="section-heading">What remains fixed.</h2>
+    <section class="section reveal ivory-break" id="properties">
+      <div class="shell centered-block">
+        <div class="section-label">Core Properties</div>
+        <h2>What remains fixed.</h2>
+        <div class="tag-row">
+          <span class="tag">Policy-Scoped</span>
+          <span class="tag">Deterministic</span>
+          <span class="tag">Cryptographically Sealed</span>
+          <span class="tag">Independently Verifiable</span>
         </div>
-
-        <div class="properties" aria-label="Property pills">
-          <div class="pill">Policy-Scoped</div>
-          <div class="pill">Deterministic</div>
-          <div class="pill">Cryptographically Sealed</div>
-          <div class="pill">Independently Verifiable</div>
-        </div>
-
-        <p class="section-copy">
-          Each artifact is generated within a declared capture boundary and sealed for later verification.
-        </p>
+        <p>Each artifact is generated within a declared capture boundary and sealed for later verification.</p>
       </div>
     </section>
 
     <section class="section reveal" id="boundary">
-      <div class="shell section-grid">
+      <div class="shell boundary-wrap">
         <div>
-          <div class="section-top">
-            <div class="section-label">Boundary</div>
-            <h2 class="section-heading">CEYO operates outside the model.</h2>
-          </div>
-
-          <div class="stack-copy">
-            <p class="section-copy">
-              It does not modify, instrument, or interfere with AI inference.
-            </p>
-            <p class="section-copy">
-              It records only what a governing capture policy explicitly permits.
-            </p>
+          <div class="section-label">Boundary</div>
+          <h2>CEYO operates outside the model.</h2>
+          <div style="margin-top:28px; max-width: 640px;">
+            <p>It does not modify, instrument, or interfere with AI inference.</p>
+            <p>It records only what a governing capture policy explicitly permits.</p>
           </div>
         </div>
-
-        <aside class="panel">
-          <div class="mono">Boundary posture</div>
-          <p class="section-copy" style="margin-top:12px;">
-            Independent evidentiary operation is maintained through declared capture scope, restrained collection, and later verification under policy-defined conditions.
-          </p>
+        <aside class="boundary-aside" aria-hidden="true">
+          <div class="boundary-frame"></div>
         </aside>
       </div>
     </section>
 
     <section class="section reveal ivory-break" id="mechanism">
       <div class="shell">
-        <div class="section-top">
-          <div class="section-label">Mechanism</div>
-          <h2 class="section-heading">Record. Seal. Verify.</h2>
-        </div>
+        <div class="section-label">Mechanism</div>
+        <h2>Record. Seal. Verify.</h2>
+        <p style="margin-top:22px; max-width: 640px;">CEYO follows a fixed evidentiary sequence.</p>
 
-        <p class="section-copy mechanism-intro">CEYO follows a fixed evidentiary sequence.</p>
-
-        <div class="mechanism-grid" aria-label="Mechanism cards">
-          <article class="mechanism-card">
-            <div class="mechanism-kicker">01 · Record</div>
-            <h3 class="mechanism-title">Record</h3>
+        <div class="mechanism-grid">
+          <article class="mechanism-col">
+            <div class="step-no">01 · Record</div>
+            <h3>Record</h3>
             <p>Capture only declared fields within policy scope.</p>
           </article>
-
-          <article class="mechanism-card">
-            <div class="mechanism-kicker">02 · Seal</div>
-            <h3 class="mechanism-title">Seal</h3>
+          <article class="mechanism-col">
+            <div class="step-no">02 · Seal</div>
+            <h3>Seal</h3>
             <p>Canonicalize deterministically, hash the record, and apply cryptographic signature controls.</p>
           </article>
-
-          <article class="mechanism-card">
-            <div class="mechanism-kicker">03 · Verify</div>
-            <h3 class="mechanism-title">Verify</h3>
+          <article class="mechanism-col">
+            <div class="step-no">03 · Verify</div>
+            <h3>Verify</h3>
             <p>Allow an independent party to recompute integrity checks and validate provenance under declared policy scope.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section reveal" id="non-claims">
-      <div class="shell">
-        <div class="section-top">
-          <div class="section-label">What CEYO Does Not Claim</div>
-          <h2 class="section-heading">Institutional discipline matters.</h2>
-        </div>
-
-        <div class="dark-stack">
-          <p class="section-copy">
+    <section class="section reveal non-claims" id="nonclaims">
+      <div class="reading-shell">
+        <div class="section-label">What CEYO Does Not Claim</div>
+        <h2>Institutional discipline matters.</h2>
+        <div style="margin-top:28px;">
+          <p>
             CEYO is an evidentiary infrastructure. It is not a truth engine, a fairness engine, a compliance certification, a model auditor, or a replacement for institutional judgment.
           </p>
-          <p class="section-copy">
+          <p>
             Verification confirms integrity and provenance under declared policy scope. It does not prove decision correctness, legal sufficiency, or regulatory compliance outcomes.
           </p>
+        </div>
 
-          <div class="properties" aria-label="Non-claim pills">
-            <div class="pill">A Truth Engine</div>
-            <div class="pill">A Fairness Engine</div>
-            <div class="pill">A Compliance Certification</div>
-            <div class="pill">A Model Auditor</div>
-            <div class="pill">A Replacement for Institutional Judgment</div>
-          </div>
+        <div class="tags-wrap">
+          <span class="tag">A Truth Engine</span>
+          <span class="tag">A Fairness Engine</span>
+          <span class="tag">A Compliance Certification</span>
+          <span class="tag">A Model Auditor</span>
+          <span class="tag">A Replacement for Institutional Judgment</span>
         </div>
       </div>
     </section>
 
     <section class="section reveal" id="next">
-      <div class="shell">
-        <div class="section-top">
-          <div class="section-label">Next</div>
-          <h2 class="section-heading">Review the system at the level you need.</h2>
-        </div>
+      <div class="reading-shell">
+        <div class="section-label">Next</div>
+        <h2>Review the system at the level you need.</h2>
+        <p style="margin-top:26px; max-width: 44ch;">Built for institutional clarity, constrained disclosure, and independent review.</p>
 
-        <div class="dark-stack">
-          <p class="section-copy">
-            Built for institutional clarity, constrained disclosure, and independent review.
-          </p>
-
-          <div class="next-grid">
-            <a class="next-card nav-destination" href="#mechanism">
-              <h3>How It Works</h3>
-              <p>Sequence, boundaries, and verification flow.</p>
-            </a>
-
-            <a class="next-card nav-destination" href="#boundary">
-              <h3>Platform</h3>
-              <p>System placement, operational architecture, and evidentiary posture.</p>
-            </a>
-
-            <a class="next-card nav-destination" href="#non-claims">
-              <h3>Trust</h3>
-              <p>Verification model, non-custodial controls, and review confidence.</p>
-            </a>
-
-            <a class="next-card nav-destination" href="#what-ceyo-is">
-              <h3>Resources</h3>
-              <p>Sample artifacts, glossary, documentation, and supporting material.</p>
-            </a>
-
-            <a class="next-card nav-destination" href="#hero">
-              <h3>Contact</h3>
-              <p>Request a walkthrough or continue the discussion directly.</p>
-            </a>
-          </div>
+        <div class="next-list">
+          <a class="next-item nav-destination" href="#mechanism">
+            <h3>How It Works</h3>
+            <p>Sequence, boundaries, and verification flow.</p>
+          </a>
+          <a class="next-item nav-destination" href="#boundary">
+            <h3>Platform</h3>
+            <p>System placement, operational architecture, and evidentiary posture.</p>
+          </a>
+          <a class="next-item nav-destination" href="#nonclaims">
+            <h3>Trust</h3>
+            <p>Verification model, non-custodial controls, and review confidence.</p>
+          </a>
+          <a class="next-item nav-destination" href="#what">
+            <h3>Resources</h3>
+            <p>Sample artifacts, glossary, documentation, and supporting material.</p>
+          </a>
+          <a class="next-item nav-destination" href="#hero">
+            <h3>Contact</h3>
+            <p>Request a walkthrough or continue the discussion directly.</p>
+          </a>
         </div>
       </div>
     </section>
@@ -1314,171 +1041,153 @@
   </footer>
 
   <script>
-    document.documentElement.classList.remove("no-js");
-
     const body = document.body;
-    const header = document.getElementById("siteHeader");
-    const menuToggle = document.getElementById("menuToggle");
-    const navOverlay = document.getElementById("navOverlay");
-    const pageWipe = document.getElementById("pageWipe");
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const menuToggle = document.getElementById('menuToggle');
+    const navOverlay = document.getElementById('navOverlay');
+    const pageWipe = document.getElementById('pageWipe');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function openMenu() {
-      body.classList.add("menu-open");
-      navOverlay.classList.add("open");
-      navOverlay.setAttribute("aria-hidden", "false");
-      menuToggle.setAttribute("aria-expanded", "true");
-      menuToggle.setAttribute("aria-label", "Close navigation");
+      body.classList.add('menu-open');
+      navOverlay.classList.add('open');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      navOverlay.setAttribute('aria-hidden', 'false');
     }
 
     function closeMenu() {
-      body.classList.remove("menu-open");
-      navOverlay.classList.remove("open");
-      navOverlay.setAttribute("aria-hidden", "true");
-      menuToggle.setAttribute("aria-expanded", "false");
-      menuToggle.setAttribute("aria-label", "Open navigation");
+      body.classList.remove('menu-open');
+      navOverlay.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      navOverlay.setAttribute('aria-hidden', 'true');
     }
 
-    menuToggle.addEventListener("click", () => {
-      if (navOverlay.classList.contains("open")) closeMenu();
+    menuToggle.addEventListener('click', () => {
+      if (navOverlay.classList.contains('open')) closeMenu();
       else openMenu();
     });
 
-    navOverlay.addEventListener("click", (e) => {
+    navOverlay.addEventListener('click', (e) => {
       if (e.target === navOverlay) closeMenu();
     });
 
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && navOverlay.classList.contains("open")) closeMenu();
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navOverlay.classList.contains('open')) closeMenu();
     });
 
-    let lastScroll = 0;
-    window.addEventListener("scroll", () => {
-      const y = window.scrollY || 0;
-      header.classList.toggle("scrolled", y > 18);
-      lastScroll = y;
-    }, { passive: true });
-
-    const internalLinks = document.querySelectorAll(".nav-destination");
-    internalLinks.forEach((link) => {
-      link.addEventListener("click", (e) => {
-        const href = link.getAttribute("href");
-        if (!href || !href.startsWith("#")) return;
+    document.querySelectorAll('.nav-destination').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (!href || !href.startsWith('#')) return;
         const target = document.querySelector(href);
         if (!target) return;
-
         e.preventDefault();
         closeMenu();
-
-        if (prefersReduced) {
-          target.scrollIntoView({ behavior: "auto", block: "start" });
-          history.replaceState(null, "", href);
+        if (reduceMotion) {
+          target.scrollIntoView({ behavior: 'auto', block: 'start' });
+          history.replaceState(null, '', href);
           return;
         }
-
-        pageWipe.classList.add("active");
-
+        pageWipe.classList.add('active');
         setTimeout(() => {
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
-          history.replaceState(null, "", href);
-        }, 360);
-
-        setTimeout(() => {
-          pageWipe.classList.remove("active");
-        }, 980);
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.replaceState(null, '', href);
+        }, 320);
+        setTimeout(() => pageWipe.classList.remove('active'), 900);
       });
     });
 
-    const revealItems = document.querySelectorAll(".reveal");
-    const revealObserver = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          revealObserver.unobserve(entry.target);
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
+    }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
 
-    revealItems.forEach((el) => revealObserver.observe(el));
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
-    // Typewriter
-    const typeTarget = document.getElementById("typewriterText");
-    const typeText = "Record. Seal. Verify.";
-    let tIndex = 0;
-
-    function typeStep() {
-      if (!typeTarget) return;
-      if (tIndex <= typeText.length) {
-        typeTarget.textContent = typeText.slice(0, tIndex);
-        tIndex += 1;
-        setTimeout(typeStep, tIndex < typeText.length ? 92 : 140);
+    const typeText = 'Record. Seal. Verify.';
+    const typeTarget = document.getElementById('typeText');
+    if (typeTarget) {
+      if (reduceMotion) {
+        typeTarget.textContent = typeText;
+      } else {
+        let i = 0;
+        const step = () => {
+          if (i <= typeText.length) {
+            typeTarget.textContent = typeText.slice(0, i);
+            i += 1;
+            setTimeout(step, i < typeText.length ? 88 : 140);
+          }
+        };
+        setTimeout(step, 500);
       }
     }
 
-    if (!prefersReduced) {
-      setTimeout(typeStep, 520);
-    } else if (typeTarget) {
-      typeTarget.textContent = typeText;
-    }
+    const canvas = document.getElementById('heroCanvas');
+    const ctx = canvas ? canvas.getContext('2d') : null;
 
-    // Hero canvas effect
-    const canvas = document.getElementById("heroCanvas");
-    const ctx = canvas ? canvas.getContext("2d") : null;
-
-    if (canvas && ctx && !prefersReduced) {
-      let width = 0;
-      let height = 0;
+    if (canvas && ctx && !reduceMotion) {
+      let w = 0;
+      let h = 0;
       let dpr = Math.min(window.devicePixelRatio || 1, 2);
-      let nodes = [];
+      let points = [];
       let rafId = null;
       let pointer = { x: null, y: null };
 
-      function resizeCanvas() {
+      function resize() {
         const rect = canvas.getBoundingClientRect();
-        width = rect.width;
-        height = rect.height;
+        w = rect.width;
+        h = rect.height;
         dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = Math.floor(width * dpr);
-        canvas.height = Math.floor(height * dpr);
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-        const count = width < 700 ? 28 : width < 1100 ? 42 : 58;
-        nodes = Array.from({ length: count }, () => ({
-          x: Math.random() * width,
-          y: Math.random() * height,
+        const count = w < 720 ? 26 : w < 1100 ? 38 : 52;
+        points = Array.from({ length: count }, () => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
           vx: (Math.random() - 0.5) * 0.22,
           vy: (Math.random() - 0.5) * 0.22,
-          r: Math.random() * 1.8 + 1.2
+          r: Math.random() * 1.6 + 1.2
         }));
       }
 
       function draw() {
-        ctx.clearRect(0, 0, width, height);
+        ctx.clearRect(0, 0, w, h);
+        const g = ctx.createRadialGradient(w * 0.48, h * 0.38, 0, w * 0.48, h * 0.38, Math.max(w, h) * 0.8);
+        g.addColorStop(0, 'rgba(92,133,198,0.12)');
+        g.addColorStop(1, 'rgba(6,17,29,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, w, h);
 
-        const gradient = ctx.createRadialGradient(width * 0.5, height * 0.42, 0, width * 0.5, height * 0.42, Math.max(width, height) * 0.8);
-        gradient.addColorStop(0, "rgba(71, 113, 175, 0.10)");
-        gradient.addColorStop(1, "rgba(7, 16, 28, 0)");
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, width, height);
-
-        for (let i = 0; i < nodes.length; i++) {
-          const a = nodes[i];
+        for (let i = 0; i < points.length; i++) {
+          const a = points[i];
           a.x += a.vx;
           a.y += a.vy;
+          if (a.x < -20 || a.x > w + 20) a.vx *= -1;
+          if (a.y < -20 || a.y > h + 20) a.vy *= -1;
 
-          if (a.x < -20 || a.x > width + 20) a.vx *= -1;
-          if (a.y < -20 || a.y > height + 20) a.vy *= -1;
+          if (pointer.x !== null) {
+            const dxp = a.x - pointer.x;
+            const dyp = a.y - pointer.y;
+            const pd = Math.sqrt(dxp * dxp + dyp * dyp);
+            if (pd < 170 && pd > 0.1) {
+              a.x += dxp / pd * 0.08;
+              a.y += dyp / pd * 0.08;
+            }
+          }
 
-          for (let j = i + 1; j < nodes.length; j++) {
-            const b = nodes[j];
+          for (let j = i + 1; j < points.length; j++) {
+            const b = points[j];
             const dx = a.x - b.x;
             const dy = a.y - b.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            const maxDist = width < 700 ? 130 : 170;
-
-            if (dist < maxDist) {
-              const alpha = (1 - dist / maxDist) * 0.18;
-              ctx.strokeStyle = `rgba(214, 227, 255, ${alpha})`;
+            const max = w < 720 ? 120 : 164;
+            if (dist < max) {
+              const alpha = (1 - dist / max) * 0.18;
+              ctx.strokeStyle = `rgba(219,231,247,${alpha})`;
               ctx.lineWidth = 1;
               ctx.beginPath();
               ctx.moveTo(a.x, a.y);
@@ -1487,54 +1196,35 @@
             }
           }
 
-          if (pointer.x !== null && pointer.y !== null) {
-            const pdx = a.x - pointer.x;
-            const pdy = a.y - pointer.y;
-            const pdist = Math.sqrt(pdx * pdx + pdy * pdy);
-            if (pdist < 170) {
-              a.x += pdx / pdist * 0.08;
-              a.y += pdy / pdist * 0.08;
-            }
-          }
-
-          ctx.fillStyle = "rgba(244, 247, 252, 0.7)";
+          ctx.fillStyle = 'rgba(244,247,252,0.72)';
           ctx.beginPath();
           ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
           ctx.fill();
 
-          ctx.fillStyle = "rgba(175, 201, 240, 0.12)";
+          ctx.fillStyle = 'rgba(174,199,240,0.10)';
           ctx.beginPath();
-          ctx.arc(a.x, a.y, a.r * 3.1, 0, Math.PI * 2);
+          ctx.arc(a.x, a.y, a.r * 3, 0, Math.PI * 2);
           ctx.fill();
         }
-
         rafId = requestAnimationFrame(draw);
       }
 
-      resizeCanvas();
+      resize();
       draw();
-
-      window.addEventListener("resize", resizeCanvas);
-      canvas.addEventListener("mousemove", (e) => {
+      window.addEventListener('resize', resize);
+      canvas.addEventListener('mousemove', (e) => {
         const rect = canvas.getBoundingClientRect();
         pointer.x = e.clientX - rect.left;
         pointer.y = e.clientY - rect.top;
       });
-      canvas.addEventListener("mouseleave", () => {
+      canvas.addEventListener('mouseleave', () => {
         pointer.x = null;
         pointer.y = null;
       });
-
-      document.addEventListener("visibilitychange", () => {
+      document.addEventListener('visibilitychange', () => {
         if (document.hidden && rafId) cancelAnimationFrame(rafId);
         if (!document.hidden) draw();
       });
-    } else if (canvas && ctx) {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-      ctx.fillStyle = "rgba(255,255,255,0)";
-      ctx.fillRect(0, 0, rect.width, rect.height);
     }
   </script>
 </body>
