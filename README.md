@@ -2,7 +2,8 @@
 
 Public website for CEYO — evidentiary infrastructure for AI-supported systems.
 
-**Project site:** https://ndr-us.github.io/ceyo-site/index.html#next
+**Project site:**
+https://ndr-us.github.io/ceyo-site/index.html#next
 
 ---
 
