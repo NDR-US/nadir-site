@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>CEYO — Platform</title>
-  <meta name="description" content="CEYO platform architecture — system placement, policy capture, artifact generation, signing authority, verification, and storage." />
+  <meta name="description" content="CEYO platform architecture — system placement, policy capture, artifact generation, signing authority, governance continuity, verification, and storage." />
   <meta name="theme-color" content="#07111b" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,6 +29,7 @@
       --ease:cubic-bezier(.22,1,.36,1);
       --shadow:0 24px 80px rgba(0,0,0,.28);
       --radius-xl:34px;
+      --radius-lg:22px;
     }
 
     *{box-sizing:border-box}
@@ -137,7 +138,7 @@
       -webkit-backdrop-filter:blur(16px) saturate(135%);
       background:linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.045));
       border:1px solid rgba(231,237,245,.12);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.06), var(--shadow);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 24px 80px rgba(0,0,0,.28);
       position:relative;
       overflow:hidden;
     }
@@ -276,7 +277,7 @@
       gap:40px;
       transform:translateY(-22px);
       transition:transform 480ms var(--ease);
-      box-shadow:var(--shadow);
+      box-shadow:0 24px 80px rgba(0,0,0,.28);
     }
 
     .nav-overlay.open .nav-sheet{transform:translateY(0)}
@@ -321,7 +322,7 @@
 
     .page-hero{
       position:relative;
-      padding:96px 0 42px;
+      padding:96px 0 36px;
       overflow:clip;
     }
 
@@ -359,13 +360,13 @@
       line-height:.94;
       letter-spacing:-.05em;
       color:var(--off);
-      max-width:11ch;
+      max-width:10.5ch;
       text-wrap:balance;
     }
 
     .page-hero p{
       margin:22px 0 0;
-      max-width:52ch;
+      max-width:54ch;
       font-size:clamp(1.04rem, 1.45vw, 1.2rem);
       line-height:1.82;
       color:var(--muted);
@@ -467,81 +468,83 @@
 
     .placement-grid{
       display:grid;
-      grid-template-columns:minmax(0, 1fr) 430px;
+      grid-template-columns:minmax(0, 1fr) 420px;
       gap:48px;
       align-items:center;
     }
 
-    .placement-diagram{
-      position:relative;
-      min-height:360px;
+    .placement-graphic{
       border:1px solid var(--line);
+      min-height:370px;
       background:
         linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.01));
+      position:relative;
       overflow:hidden;
     }
 
-    .placement-diagram::before{
+    .placement-graphic::before{
       content:"";
       position:absolute;
       inset:0;
       background:
         linear-gradient(rgba(231,237,245,.045) 1px, transparent 1px),
         linear-gradient(90deg, rgba(231,237,245,.045) 1px, transparent 1px);
-      background-size:42px 42px;
-      opacity:.42;
+      background-size:40px 40px;
+      opacity:.4;
     }
 
     .placement-stack{
       position:absolute;
-      inset:32px 28px 32px 28px;
+      inset:30px 26px;
       display:grid;
       gap:12px;
       align-content:start;
     }
 
-    .placement-layer{
-      min-height:48px;
-      padding:12px 14px;
+    .placement-row{
+      min-height:52px;
       border:1px solid rgba(231,237,245,.12);
+      background:rgba(255,255,255,.02);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:18px;
-      background:rgba(255,255,255,.02);
+      gap:16px;
+      padding:0 14px;
     }
 
-    .placement-layer strong{
+    .placement-row strong{
+      color:var(--off);
       font-size:.94rem;
       font-weight:600;
       letter-spacing:-.02em;
-      color:var(--off);
     }
 
-    .placement-layer span{
+    .placement-row span{
       font-family:"IBM Plex Mono", monospace;
       text-transform:uppercase;
       letter-spacing:.13em;
       font-size:.64rem;
-      color:rgba(231,237,245,.58);
+      color:var(--soft);
       text-align:right;
     }
 
-    .architecture-rail{
+    .architecture-matrix{
       margin-top:34px;
       border-top:1px solid var(--line-strong);
+      display:grid;
+      gap:0;
     }
 
-    .arch-row{
+    .architecture-band{
       display:grid;
-      grid-template-columns:80px 260px 1fr;
+      grid-template-columns:100px 240px 1fr;
       gap:24px;
+      align-items:start;
       padding:24px 0;
       border-bottom:1px solid var(--line);
-      align-items:start;
     }
 
-    .arch-row .arch-no{
+    .architecture-band .a-no{
       font-family:"IBM Plex Mono", monospace;
       text-transform:uppercase;
       letter-spacing:.14em;
@@ -550,7 +553,7 @@
       padding-top:4px;
     }
 
-    .arch-row h3{
+    .architecture-band h3{
       margin:0;
       font-size:1.12rem;
       font-weight:700;
@@ -598,7 +601,7 @@
       line-height:1.72;
     }
 
-    .process-map{
+    .process-grid{
       margin-top:34px;
       border-top:1px solid var(--line-strong);
       border-bottom:1px solid var(--line);
@@ -628,20 +631,70 @@
 
     .process-step h3{
       margin:0 0 12px;
-      font-size:1.2rem;
+      font-size:1.18rem;
       font-weight:700;
       color:var(--off);
       letter-spacing:-.03em;
     }
 
-    .key-grid{
+    .video-band{
+      background:
+        linear-gradient(180deg, #e8e4db 0%, #ddd7ca 100%);
+      color:var(--ink);
+      border-top:1px solid rgba(20,33,49,.10);
+      border-bottom:1px solid rgba(20,33,49,.10);
+    }
+
+    .video-band .section-label,
+    .video-band p{
+      color:rgba(20,33,49,.74);
+    }
+
+    .video-band h2{color:var(--ink)}
+
+    .video-module{
       display:grid;
-      grid-template-columns:minmax(0, 1fr) 320px;
+      grid-template-columns:minmax(0, 1fr) minmax(320px, 540px);
+      gap:32px;
+      align-items:center;
+      margin-top:34px;
+    }
+
+    .video-copy{
+      max-width:640px;
+    }
+
+    .video-copy h3{
+      margin:0 0 14px;
+      font-size:clamp(1.6rem,2.2vw,2.2rem);
+      line-height:1.04;
+      letter-spacing:-.03em;
+      color:var(--ink);
+    }
+
+    .video-frame{
+      position:relative;
+      width:100%;
+      overflow:hidden;
+      border:1px solid rgba(20,33,49,.12);
+      background:rgba(20,33,49,.03);
+    }
+
+    .video-el{
+      display:block;
+      width:100%;
+      height:auto;
+      object-fit:cover;
+    }
+
+    .key-layout{
+      display:grid;
+      grid-template-columns:minmax(0, 1fr) 300px;
       gap:48px;
       align-items:start;
     }
 
-    .key-list{
+    .key-stack{
       display:grid;
       gap:12px;
       margin-top:26px;
@@ -665,21 +718,21 @@
       padding-left:22px;
     }
 
-    .verification-grid{
+    .verification-storage{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:34px;
       margin-top:34px;
     }
 
-    .verification-block{
+    .vs-block{
       border-top:1px solid var(--line-strong);
       padding-top:20px;
       display:grid;
       gap:14px;
     }
 
-    .verification-block h3{
+    .vs-block h3{
       margin:0;
       font-size:1.16rem;
       font-weight:700;
@@ -687,7 +740,7 @@
       letter-spacing:-.03em;
     }
 
-    .constraints-list{
+    .constraint-list{
       display:flex;
       flex-wrap:wrap;
       gap:12px;
@@ -782,7 +835,8 @@
       .hero-inner,
       .placement-grid,
       .split,
-      .key-grid,
+      .video-module,
+      .key-layout,
       .nav-sheet{
         grid-template-columns:1fr;
       }
@@ -795,7 +849,7 @@
         padding-left:0;
       }
 
-      .process-map{
+      .process-grid{
         grid-template-columns:1fr;
       }
 
@@ -804,13 +858,13 @@
         border-top:1px solid var(--line);
       }
 
-      .verification-grid{
+      .verification-storage{
         grid-template-columns:1fr;
       }
     }
 
     @media (max-width:840px){
-      .arch-row{
+      .architecture-band{
         grid-template-columns:1fr;
         gap:12px;
       }
@@ -890,16 +944,14 @@
   <div class="nav-overlay" id="navOverlay" aria-hidden="true">
     <div class="nav-sheet">
       <nav class="nav-links" aria-label="Primary">
-        <div class="mono">Platform Navigation</div>
-        <a class="nav-link nav-destination" href="#hero">Platform</a>
-        <a class="nav-link nav-destination" href="#placement">System Placement</a>
-        <a class="nav-link nav-destination" href="#architecture">Architecture</a>
-        <a class="nav-link nav-destination" href="#policy">Capture Policy</a>
-        <a class="nav-link nav-destination" href="#generation">Artifact Generation</a>
-        <a class="nav-link nav-destination" href="#keys">Key Control</a>
-        <a class="nav-link nav-destination" href="#verification">Verification and Storage</a>
-        <a class="nav-link nav-destination" href="#constraints">Constraints</a>
-        <a class="nav-link nav-destination" href="#next">Next</a>
+        <div class="mono">Navigation</div>
+        <a class="nav-link page-link" href="index.html">Overview</a>
+        <a class="nav-link page-link" href="platform.html">Platform</a>
+        <a class="nav-link page-link" href="protocol.html">Protocol</a>
+        <a class="nav-link page-link" href="verify.html">Verification</a>
+        <a class="nav-link page-link" href="trust.html">Trust</a>
+        <a class="nav-link page-link" href="resources.html">Resources</a>
+        <a class="nav-link page-link" href="contact.html">Contact</a>
       </nav>
 
       <aside class="nav-side">
@@ -912,7 +964,7 @@
   <header id="siteHeader">
     <div class="shell">
       <div class="header-row">
-        <a href="index.html" class="brand-pill glass-pill" aria-label="CEYO home">
+        <a href="index.html" class="brand-pill glass-pill page-link" aria-label="CEYO home">
           <span class="brand-mark" aria-hidden="true"></span>
           <span class="brand-copy">
             <strong>CEYO</strong>
@@ -937,18 +989,18 @@
         <div class="eyebrow">Platform</div>
         <h1>System Placement and Evidentiary Architecture</h1>
         <p>
-          CEYO operates as an independent evidentiary layer positioned alongside AI-supported systems. The platform architecture defines how policy-scoped event data is captured, transformed into artifacts, sealed, and made available for later verification.
+          CEYO operates as an independent evidentiary layer positioned alongside AI-supported systems. The platform architecture defines how policy-scoped event data is captured, transformed into artifacts, sealed, and made available for later verification without interfering with the model itself.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary nav-destination" href="#generation">Review the sequence</a>
-          <a class="btn btn-secondary nav-destination" href="#verification">View verification model</a>
+          <a class="btn btn-primary anchor-link" href="#placement">Review system placement</a>
+          <a class="btn btn-secondary page-link" href="verify.html">View verification</a>
         </div>
       </div>
 
       <aside class="hero-side">
         <div class="mono">Platform posture</div>
         <p>
-          External placement, declared capture scope, deterministic transformation, controlled signing authority, and later independent verification.
+          External placement, declared capture scope, deterministic transformation, controlled sealing, governance continuity, and later independent review.
         </p>
       </aside>
     </div>
@@ -968,25 +1020,25 @@
           </div>
         </div>
 
-        <aside class="placement-diagram" aria-hidden="true">
+        <aside class="placement-graphic" aria-hidden="true">
           <div class="placement-stack">
-            <div class="placement-layer">
+            <div class="placement-row">
               <strong>Originating AI System</strong>
               <span>Operational output</span>
             </div>
-            <div class="placement-layer">
+            <div class="placement-row">
               <strong>Policy Capture Boundary</strong>
               <span>Declared scope</span>
             </div>
-            <div class="placement-layer">
+            <div class="placement-row">
               <strong>CEYO Artifact Layer</strong>
               <span>Canonicalize / seal</span>
             </div>
-            <div class="placement-layer">
+            <div class="placement-row">
               <strong>Verification Layer</strong>
               <span>Integrity / provenance</span>
             </div>
-            <div class="placement-layer">
+            <div class="placement-row">
               <strong>Storage / Audit Layer</strong>
               <span>Retention / traceability</span>
             </div>
@@ -1000,35 +1052,35 @@
         <div class="section-label">Architecture</div>
         <h2>Five operational layers.</h2>
 
-        <div class="architecture-rail">
-          <div class="arch-row">
-            <div class="arch-no">01</div>
+        <div class="architecture-matrix">
+          <div class="architecture-band">
+            <div class="a-no">01</div>
             <h3>Originating System Layer</h3>
             <p>The AI-supported system produces an operational output during normal execution.</p>
           </div>
 
-          <div class="arch-row">
-            <div class="arch-no">02</div>
+          <div class="architecture-band">
+            <div class="a-no">02</div>
             <h3>Policy Capture Layer</h3>
             <p>Only fields permitted by the governing capture policy are collected for evidentiary processing.</p>
           </div>
 
-          <div class="arch-row">
-            <div class="arch-no">03</div>
+          <div class="architecture-band">
+            <div class="a-no">03</div>
             <h3>Artifact Generation Layer</h3>
-            <p>Captured fields are canonicalized, hashed, and prepared for cryptographic sealing.</p>
+            <p>Captured fields are canonicalized, fingerprinted, and prepared for cryptographic sealing.</p>
           </div>
 
-          <div class="arch-row">
-            <div class="arch-no">04</div>
+          <div class="architecture-band">
+            <div class="a-no">04</div>
             <h3>Verification Layer</h3>
-            <p>Independent tools can later validate structure, integrity, and signature provenance.</p>
+            <p>Independent tools can later validate structure, integrity, and signature provenance without reopening model execution.</p>
           </div>
 
-          <div class="arch-row">
-            <div class="arch-no">05</div>
+          <div class="architecture-band">
+            <div class="a-no">05</div>
             <h3>Storage and Audit Layer</h3>
-            <p>Artifacts may be retained in append-only storage for traceability, audit, or later institutional review.</p>
+            <p>Artifacts may be retained in append-only storage for traceability, export, or later institutional review.</p>
           </div>
         </div>
       </div>
@@ -1061,7 +1113,7 @@
           </div>
           <div class="note">
             <h3>Review implications</h3>
-            <p>Later verification must be interpreted within the declared capture context.</p>
+            <p>Later evaluation must be interpreted within the declared capture context.</p>
           </div>
         </aside>
       </div>
@@ -1073,7 +1125,7 @@
         <h2>From event context to sealed artifact.</h2>
         <p style="margin-top:22px;max-width:620px;">Artifact generation follows a fixed transformation path.</p>
 
-        <div class="process-map">
+        <div class="process-grid">
           <article class="process-step">
             <div class="process-index">Step 1</div>
             <h3>Capture</h3>
@@ -1089,13 +1141,13 @@
           <article class="process-step">
             <div class="process-index">Step 3</div>
             <h3>Fingerprint</h3>
-            <p>Generate a cryptographic hash from the canonical form.</p>
+            <p>Generate a cryptographic digest from the canonical form.</p>
           </article>
 
           <article class="process-step">
             <div class="process-index">Step 4</div>
             <h3>Seal</h3>
-            <p>Apply signature controls using the active key material.</p>
+            <p>Apply signature controls using the active key context.</p>
           </article>
 
           <article class="process-step">
@@ -1107,8 +1159,41 @@
       </div>
     </section>
 
+    <section class="video-band reveal" id="governance-loop">
+      <div class="shell">
+        <div class="section-label">Lifecycle Governance</div>
+        <h2>Governance becomes durable when every step leaves evidence.</h2>
+        <p style="margin-top:24px;max-width:720px;">
+          Across discovery, registration, assessment, deployment, and monitoring, CEYO captures policy-permitted artifacts without modifying the originating model or system logic. Each sealing event creates a deterministic, reviewable record that can support later audit, traceability, and institutional verification throughout the lifecycle.
+        </p>
+
+        <div class="video-module">
+          <div class="video-copy">
+            <h3>Continuous Governance Loop</h3>
+            <p>
+              CEYO operates as an independent layer across the governance lifecycle, preserving artifacts without interfering with the model itself. That turns governance from a procedural intention into a deterministic record that remains audit-ready across time.
+            </p>
+          </div>
+
+          <div class="video-frame">
+            <video
+              class="video-el"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="auto"
+              aria-label="Continuous governance loop visualization"
+            >
+              <source src="assets/video/continuous-governance-loop.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="reveal" id="keys">
-      <div class="shell key-grid">
+      <div class="shell key-layout">
         <div>
           <div class="section-label">Key Control</div>
           <h2>Sealing depends on declared signing authority.</h2>
@@ -1118,7 +1203,7 @@
             <p>What matters is that each artifact can later be evaluated against the declared key context associated with its sealing event.</p>
           </div>
 
-          <div class="key-list" aria-label="Possible key contexts">
+          <div class="key-stack" aria-label="Possible key contexts">
             <div class="key-item">Local signing</div>
             <div class="key-item">Environment-bound signing</div>
             <div class="key-item">Managed signing infrastructure</div>
@@ -1129,13 +1214,13 @@
         <aside class="key-aside">
           <div class="mono">Signing context</div>
           <p style="margin-top:12px;">
-            Later review depends on being able to relate the artifact to the key context declared at the time of sealing.
+            Later review depends on being able to relate the artifact to the key context declared at the moment of sealing.
           </p>
         </aside>
       </div>
     </section>
 
-    <section class="reveal" id="verification">
+    <section class="reveal" id="verification-storage">
       <div class="shell">
         <div class="section-label">Verification and Storage</div>
         <h2>Generation is only the first half of the system.</h2>
@@ -1143,14 +1228,14 @@
           Once emitted, artifacts may be independently verified, retained within append-only storage, or exported for later institutional review.
         </p>
 
-        <div class="verification-grid">
-          <div class="verification-block">
+        <div class="verification-storage">
+          <div class="vs-block">
             <h3>Verification</h3>
             <p>Verification confirms structural validity, deterministic integrity, and signature provenance within declared policy scope.</p>
             <p>Independent review does not require access to the originating system to evaluate the artifact itself.</p>
           </div>
 
-          <div class="verification-block">
+          <div class="vs-block">
             <h3>Storage</h3>
             <p>Storage preserves evidentiary continuity across time and supports later traceability.</p>
             <p>Where implemented, append-only retention provides a stable record for later audit, export, or institutional review.</p>
@@ -1169,7 +1254,7 @@
           <p>Its function is narrower and more disciplined: preserve integrity, constrain capture scope, and support later institutional verification.</p>
         </div>
 
-        <div class="constraints-list" aria-label="Platform constraints">
+        <div class="constraint-list" aria-label="Platform constraints">
           <span class="constraint">does not determine truth</span>
           <span class="constraint">does not certify compliance</span>
           <span class="constraint">does not replace audit judgment</span>
@@ -1181,26 +1266,26 @@
     <section class="reveal" id="next">
       <div class="reading">
         <div class="section-label">Next</div>
-        <h2>Continue deeper into the system.</h2>
+        <h2>Continue deeper into structure and evaluation.</h2>
 
         <div class="next-index">
-          <a class="next-link" href="protocol.html">
+          <a class="next-link page-link" href="protocol.html">
             <strong>Protocol</strong>
             <span>Artifact structure, canonicalization rules, and sealing model.</span>
           </a>
-          <a class="next-link" href="verify.html">
+          <a class="next-link page-link" href="verify.html">
             <strong>Verification</strong>
             <span>How integrity is checked independently after generation.</span>
           </a>
-          <a class="next-link" href="trust.html">
+          <a class="next-link page-link" href="trust.html">
             <strong>Trust</strong>
             <span>Review posture, institutional confidence, and evidentiary framing.</span>
           </a>
-          <a class="next-link" href="resources.html">
+          <a class="next-link page-link" href="resources.html">
             <strong>Resources</strong>
             <span>Supporting materials, glossary, and technical references.</span>
           </a>
-          <a class="next-link" href="contact.html">
+          <a class="next-link page-link" href="contact.html">
             <strong>Contact</strong>
             <span>Continue the discussion or request a walkthrough.</span>
           </a>
@@ -1260,7 +1345,7 @@
       header.classList.toggle("scrolled", (window.scrollY || 0) > 16);
     }, { passive: true });
 
-    document.querySelectorAll(".nav-destination").forEach((link) => {
+    document.querySelectorAll(".anchor-link").forEach((link) => {
       link.addEventListener("click", (e) => {
         const href = link.getAttribute("href");
         if (!href || !href.startsWith("#")) return;
@@ -1268,7 +1353,6 @@
         if (!target) return;
 
         e.preventDefault();
-        closeMenu();
 
         if (reduceMotion) {
           target.scrollIntoView({ behavior: "auto", block: "start" });
@@ -1276,15 +1360,28 @@
           return;
         }
 
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", href);
+      });
+    });
+
+    document.querySelectorAll(".page-link").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        if (!href || href.startsWith("#")) return;
+
+        e.preventDefault();
+        closeMenu();
+
+        if (reduceMotion) {
+          window.location.href = href;
+          return;
+        }
+
         pageWipe.classList.add("active");
         setTimeout(() => {
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
-          history.replaceState(null, "", href);
-        }, 320);
-
-        setTimeout(() => {
-          pageWipe.classList.remove("active");
-        }, 920);
+          window.location.href = href;
+        }, 420);
       });
     });
 
