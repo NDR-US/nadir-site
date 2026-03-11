@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>CEYO — Platform</title>
-  <meta name="description" content="CEYO platform architecture — system placement, policy capture, artifact generation, signing authority, verification, and storage." />
+  <title>CEYO — Verification</title>
+  <meta name="description" content="CEYO verification — independent integrity checks, provenance validation, declared verification context, and review posture." />
   <meta name="theme-color" content="#07111b" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -359,7 +359,7 @@
       line-height:.94;
       letter-spacing:-.05em;
       color:var(--off);
-      max-width:11ch;
+      max-width:10.5ch;
       text-wrap:balance;
     }
 
@@ -465,74 +465,79 @@
 
     p + p{margin-top:18px}
 
-    .placement-grid{
+    .verification-grid{
       display:grid;
-      grid-template-columns:minmax(0, 1fr) 430px;
+      grid-template-columns:minmax(0, 1fr) 360px;
       gap:48px;
-      align-items:center;
+      align-items:start;
     }
 
-    .placement-diagram{
-      position:relative;
-      min-height:360px;
+    .verification-panel{
       border:1px solid var(--line);
       background:
         linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.01));
       overflow:hidden;
     }
 
-    .placement-diagram::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(rgba(231,237,245,.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(231,237,245,.045) 1px, transparent 1px);
-      background-size:42px 42px;
-      opacity:.42;
-    }
-
-    .placement-stack{
-      position:absolute;
-      inset:32px 28px 32px 28px;
+    .verification-head{
       display:grid;
-      gap:12px;
-      align-content:start;
-    }
-
-    .placement-layer{
-      min-height:48px;
-      padding:12px 14px;
-      border:1px solid rgba(231,237,245,.12);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+      grid-template-columns:1fr auto;
       gap:18px;
+      padding:16px 18px;
+      border-bottom:1px solid var(--line);
       background:rgba(255,255,255,.02);
     }
 
-    .placement-layer strong{
-      font-size:.94rem;
+    .verification-head strong{
+      font-size:.92rem;
       font-weight:600;
-      letter-spacing:-.02em;
       color:var(--off);
+      letter-spacing:-.02em;
     }
 
-    .placement-layer span{
+    .verification-head span{
       font-family:"IBM Plex Mono", monospace;
+      font-size:.66rem;
+      letter-spacing:.14em;
       text-transform:uppercase;
-      letter-spacing:.13em;
-      font-size:.64rem;
-      color:rgba(231,237,245,.58);
-      text-align:right;
+      color:var(--soft);
     }
 
-    .architecture-rail{
+    .verification-body{
+      display:grid;
+    }
+
+    .verification-row{
+      display:grid;
+      grid-template-columns:160px 1fr;
+      gap:18px;
+      padding:14px 18px;
+      border-bottom:1px solid rgba(231,237,245,.08);
+    }
+
+    .verification-row:last-child{border-bottom:0}
+
+    .verification-row .k{
+      font-family:"IBM Plex Mono", monospace;
+      font-size:.7rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:rgba(232,228,219,.68);
+      padding-top:2px;
+    }
+
+    .verification-row .v{
+      color:rgba(231,237,245,.82);
+      line-height:1.72;
+      font-size:.95rem;
+    }
+
+    .check-rail{
       margin-top:34px;
       border-top:1px solid var(--line-strong);
     }
 
-    .arch-row{
+    .check-row{
       display:grid;
       grid-template-columns:80px 260px 1fr;
       gap:24px;
@@ -541,7 +546,7 @@
       align-items:start;
     }
 
-    .arch-row .arch-no{
+    .check-row .c-no{
       font-family:"IBM Plex Mono", monospace;
       text-transform:uppercase;
       letter-spacing:.14em;
@@ -550,7 +555,7 @@
       padding-top:4px;
     }
 
-    .arch-row h3{
+    .check-row h3{
       margin:0;
       font-size:1.12rem;
       font-weight:700;
@@ -598,88 +603,76 @@
       line-height:1.72;
     }
 
-    .process-map{
-      margin-top:34px;
-      border-top:1px solid var(--line-strong);
-      border-bottom:1px solid var(--line);
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
+    .evidence-band{
+      background:
+        linear-gradient(180deg, #e8e4db 0%, #ddd7ca 100%);
+      color:var(--ink);
+      border-top:1px solid rgba(20,33,49,.10);
+      border-bottom:1px solid rgba(20,33,49,.10);
     }
 
-    .process-step{
+    .evidence-band .section-label,
+    .evidence-band p{
+      color:rgba(20,33,49,.74);
+    }
+
+    .evidence-band h2{color:var(--ink)}
+
+    .flow-grid{
+      margin-top:34px;
+      border-top:1px solid rgba(20,33,49,.14);
+      border-bottom:1px solid rgba(20,33,49,.12);
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+    }
+
+    .flow-step{
       min-height:280px;
       padding:28px 22px 34px;
       position:relative;
-      background:rgba(255,255,255,.015);
+      background:rgba(20,33,49,.02);
     }
 
-    .process-step + .process-step{
-      border-left:1px solid var(--line);
+    .flow-step + .flow-step{
+      border-left:1px solid rgba(20,33,49,.12);
     }
 
-    .process-index{
+    .flow-index{
       font-family:"IBM Plex Mono", monospace;
       text-transform:uppercase;
       letter-spacing:.14em;
       font-size:.72rem;
-      color:var(--soft);
+      color:rgba(20,33,49,.58);
       margin-bottom:20px;
     }
 
-    .process-step h3{
+    .flow-step h3{
       margin:0 0 12px;
-      font-size:1.2rem;
+      font-size:1.18rem;
       font-weight:700;
-      color:var(--off);
+      color:var(--ink);
       letter-spacing:-.03em;
     }
 
-    .key-grid{
-      display:grid;
-      grid-template-columns:minmax(0, 1fr) 320px;
-      gap:48px;
-      align-items:start;
+    .flow-step p{
+      color:rgba(20,33,49,.78);
     }
 
-    .key-list{
-      display:grid;
-      gap:12px;
-      margin-top:26px;
-    }
-
-    .key-item{
-      min-height:46px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.02);
-      display:flex;
-      align-items:center;
-      padding:0 14px;
-      color:var(--off);
-      font-size:.95rem;
-      font-weight:500;
-      letter-spacing:-.02em;
-    }
-
-    .key-aside{
-      border-left:1px solid var(--line);
-      padding-left:22px;
-    }
-
-    .verification-grid{
+    .columns{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:34px;
       margin-top:34px;
     }
 
-    .verification-block{
+    .column-block{
       border-top:1px solid var(--line-strong);
       padding-top:20px;
       display:grid;
       gap:14px;
     }
 
-    .verification-block h3{
+    .column-block h3{
       margin:0;
       font-size:1.16rem;
       font-weight:700;
@@ -687,7 +680,7 @@
       letter-spacing:-.03em;
     }
 
-    .constraints-list{
+    .constraint-list{
       display:flex;
       flex-wrap:wrap;
       gap:12px;
@@ -780,39 +773,42 @@
 
     @media (max-width:1080px){
       .hero-inner,
-      .placement-grid,
+      .verification-grid,
       .split,
-      .key-grid,
       .nav-sheet{
         grid-template-columns:1fr;
       }
 
       .hero-side,
       .notes,
-      .key-aside,
       .nav-side{
         border-left:0;
         padding-left:0;
       }
 
-      .process-map{
+      .flow-grid{
         grid-template-columns:1fr;
       }
 
-      .process-step + .process-step{
+      .flow-step + .flow-step{
         border-left:0;
-        border-top:1px solid var(--line);
+        border-top:1px solid rgba(20,33,49,.12);
       }
 
-      .verification-grid{
+      .columns{
         grid-template-columns:1fr;
       }
     }
 
     @media (max-width:840px){
-      .arch-row{
+      .check-row{
         grid-template-columns:1fr;
         gap:12px;
+      }
+
+      .verification-row{
+        grid-template-columns:1fr;
+        gap:10px;
       }
 
       .next-link{
@@ -890,16 +886,14 @@
   <div class="nav-overlay" id="navOverlay" aria-hidden="true">
     <div class="nav-sheet">
       <nav class="nav-links" aria-label="Primary">
-        <div class="mono">Platform Navigation</div>
-        <a class="nav-link nav-destination" href="#hero">Platform</a>
-        <a class="nav-link nav-destination" href="#placement">System Placement</a>
-        <a class="nav-link nav-destination" href="#architecture">Architecture</a>
-        <a class="nav-link nav-destination" href="#policy">Capture Policy</a>
-        <a class="nav-link nav-destination" href="#generation">Artifact Generation</a>
-        <a class="nav-link nav-destination" href="#keys">Key Control</a>
-        <a class="nav-link nav-destination" href="#verification">Verification and Storage</a>
-        <a class="nav-link nav-destination" href="#constraints">Constraints</a>
-        <a class="nav-link nav-destination" href="#next">Next</a>
+        <div class="mono">Navigation</div>
+        <a class="nav-link page-link" href="index.html">Overview</a>
+        <a class="nav-link page-link" href="platform.html">Platform</a>
+        <a class="nav-link page-link" href="protocol.html">Protocol</a>
+        <a class="nav-link page-link" href="verify.html">Verification</a>
+        <a class="nav-link page-link" href="trust.html">Trust</a>
+        <a class="nav-link page-link" href="resources.html">Resources</a>
+        <a class="nav-link page-link" href="contact.html">Contact</a>
       </nav>
 
       <aside class="nav-side">
@@ -912,7 +906,7 @@
   <header id="siteHeader">
     <div class="shell">
       <div class="header-row">
-        <a href="index.html" class="brand-pill glass-pill" aria-label="CEYO home">
+        <a href="index.html" class="brand-pill glass-pill page-link" aria-label="CEYO home">
           <span class="brand-mark" aria-hidden="true"></span>
           <span class="brand-copy">
             <strong>CEYO</strong>
@@ -934,246 +928,211 @@
     <div class="shell hero-inner">
       <div>
         <div class="hero-rule"></div>
-        <div class="eyebrow">Platform</div>
-        <h1>System Placement and Evidentiary Architecture</h1>
+        <div class="eyebrow">Verification</div>
+        <h1>Independent Integrity Checks and Declared Review Context</h1>
         <p>
-          CEYO operates as an independent evidentiary layer positioned alongside AI-supported systems. The platform architecture defines how policy-scoped event data is captured, transformed into artifacts, sealed, and made available for later verification.
+          CEYO verification evaluates whether an artifact remains structurally valid, deterministically intact, and attributable to the declared sealing context. This page concerns later review of the artifact itself, not model intervention, adjudication, or system retraining.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary nav-destination" href="#generation">Review the sequence</a>
-          <a class="btn btn-secondary nav-destination" href="#verification">View verification model</a>
+          <a class="btn btn-primary anchor-link" href="#model">Review verification model</a>
+          <a class="btn btn-secondary page-link" href="trust.html">Continue to trust</a>
         </div>
       </div>
 
       <aside class="hero-side">
-        <div class="mono">Platform posture</div>
+        <div class="mono">Verification focus</div>
         <p>
-          External placement, declared capture scope, deterministic transformation, controlled signing authority, and later independent verification.
+          Structure, integrity recomputation, signature provenance, and evaluation within declared policy and key context.
         </p>
       </aside>
     </div>
   </section>
 
   <main>
-    <section class="reveal" id="placement">
-      <div class="shell placement-grid">
+    <section class="reveal" id="model">
+      <div class="shell verification-grid">
         <div>
           <div class="section-line"></div>
-          <div class="section-label">System Placement</div>
-          <h2>CEYO sits beside the system, not inside it.</h2>
+          <div class="section-label">Verification Model</div>
+          <h2>Verification asks whether the artifact still means what it claimed to mean at sealing time.</h2>
           <div style="margin-top:28px;max-width:720px;">
-            <p>CEYO does not retrain, modify, or interfere with model execution.</p>
-            <p>Instead, it operates as an external evidentiary layer that receives policy-permitted event context from AI-supported workflows and transforms that context into deterministic, cryptographically sealed artifacts.</p>
-            <p>This placement allows evidentiary generation without requiring modification of model weights, inference logic, or internal system behavior.</p>
+            <p>Verification is not a re-run of the originating system. It is an independent evaluation of the artifact against the deterministic rules, integrity state, and provenance context declared when the artifact was sealed.</p>
+            <p>That means the core verification question is narrow and disciplined: does the artifact remain structurally valid, internally consistent, and attributable to the declared sealing authority?</p>
           </div>
         </div>
 
-        <aside class="placement-diagram" aria-hidden="true">
-          <div class="placement-stack">
-            <div class="placement-layer">
-              <strong>Originating AI System</strong>
-              <span>Operational output</span>
+        <aside class="verification-panel" aria-label="Verification summary">
+          <div class="verification-head">
+            <strong>Verification Inputs</strong>
+            <span>Review context</span>
+          </div>
+          <div class="verification-body">
+            <div class="verification-row">
+              <div class="k">Artifact</div>
+              <div class="v">The structured evidentiary object under review.</div>
             </div>
-            <div class="placement-layer">
-              <strong>Policy Capture Boundary</strong>
-              <span>Declared scope</span>
+            <div class="verification-row">
+              <div class="k">Rules</div>
+              <div class="v">The deterministic representation and protocol interpretation requirements.</div>
             </div>
-            <div class="placement-layer">
-              <strong>CEYO Artifact Layer</strong>
-              <span>Canonicalize / seal</span>
+            <div class="verification-row">
+              <div class="k">Integrity state</div>
+              <div class="v">The expected fingerprint relationship between payload and declared digest.</div>
             </div>
-            <div class="placement-layer">
-              <strong>Verification Layer</strong>
-              <span>Integrity / provenance</span>
-            </div>
-            <div class="placement-layer">
-              <strong>Storage / Audit Layer</strong>
-              <span>Retention / traceability</span>
+            <div class="verification-row">
+              <div class="k">Provenance context</div>
+              <div class="v">The declared signature and key reference used to evaluate sealing authority.</div>
             </div>
           </div>
         </aside>
       </div>
     </section>
 
-    <section class="reveal" id="architecture">
+    <section class="reveal" id="checks">
       <div class="shell">
-        <div class="section-label">Architecture</div>
-        <h2>Five operational layers.</h2>
+        <div class="section-label">Verification Sequence</div>
+        <h2>Four checks determine whether the artifact still holds.</h2>
 
-        <div class="architecture-rail">
-          <div class="arch-row">
-            <div class="arch-no">01</div>
-            <h3>Originating System Layer</h3>
-            <p>The AI-supported system produces an operational output during normal execution.</p>
+        <div class="check-rail">
+          <div class="check-row">
+            <div class="c-no">01</div>
+            <h3>Structure check</h3>
+            <p>The artifact must satisfy the expected protocol form so that later interpretation is stable and not ambiguous.</p>
           </div>
 
-          <div class="arch-row">
-            <div class="arch-no">02</div>
-            <h3>Policy Capture Layer</h3>
-            <p>Only fields permitted by the governing capture policy are collected for evidentiary processing.</p>
+          <div class="check-row">
+            <div class="c-no">02</div>
+            <h3>Canonical form check</h3>
+            <p>The declared payload must still resolve to the deterministic representation required by the protocol.</p>
           </div>
 
-          <div class="arch-row">
-            <div class="arch-no">03</div>
-            <h3>Artifact Generation Layer</h3>
-            <p>Captured fields are canonicalized, hashed, and prepared for cryptographic sealing.</p>
+          <div class="check-row">
+            <div class="c-no">03</div>
+            <h3>Integrity check</h3>
+            <p>The fingerprint recomputed from the deterministic form must match the fingerprint preserved by the artifact.</p>
           </div>
 
-          <div class="arch-row">
-            <div class="arch-no">04</div>
-            <h3>Verification Layer</h3>
-            <p>Independent tools can later validate structure, integrity, and signature provenance.</p>
-          </div>
-
-          <div class="arch-row">
-            <div class="arch-no">05</div>
-            <h3>Storage and Audit Layer</h3>
-            <p>Artifacts may be retained in append-only storage for traceability, audit, or later institutional review.</p>
+          <div class="check-row">
+            <div class="c-no">04</div>
+            <h3>Provenance check</h3>
+            <p>The signature context must remain consistent with the declared sealing authority and key reference used at issuance.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="reveal" id="policy">
+    <section class="reveal" id="independence">
       <div class="shell split">
         <div>
-          <div class="section-label">Capture Policy</div>
-          <h2>The boundary is declared before the artifact exists.</h2>
+          <div class="section-label">Independent Review</div>
+          <h2>Verification does not require the artifact reviewer to live inside the originating system.</h2>
           <div style="margin-top:28px;max-width:720px;">
-            <p>CEYO artifacts are generated only from fields explicitly permitted within a governing capture policy.</p>
-            <p>That policy defines what may be recorded, what remains excluded, and what evidentiary scope the resulting artifact represents.</p>
-            <p>This allows institutions to constrain collection before artifact generation rather than relying on disclosure decisions after the fact.</p>
+            <p>Verification is designed to occur outside the model and outside the original runtime environment.</p>
+            <p>That separation matters. It allows an institution, counterparty, or downstream reviewer to evaluate the integrity and provenance of the artifact without requiring direct access to the full internal mechanics of the originating system.</p>
+            <p>This is why CEYO operates as an independent evidentiary layer rather than as a model-internal monitoring function.</p>
           </div>
         </div>
 
         <aside class="notes">
           <div class="note">
-            <h3>Declared scope</h3>
-            <p>Capture boundaries are defined before generation begins.</p>
+            <h3>External posture</h3>
+            <p>The reviewer evaluates the artifact from outside the originating system boundary.</p>
           </div>
           <div class="note">
-            <h3>Excluded fields</h3>
-            <p>Data outside the declared policy boundary remains outside the artifact.</p>
+            <h3>No model interference</h3>
+            <p>Verification does not require changing model weights or reopening runtime execution.</p>
           </div>
           <div class="note">
-            <h3>Artifact boundary</h3>
-            <p>The resulting artifact represents only the permitted evidentiary scope.</p>
-          </div>
-          <div class="note">
-            <h3>Review implications</h3>
-            <p>Later verification must be interpreted within the declared capture context.</p>
+            <h3>Portable review</h3>
+            <p>The artifact remains evaluable when paired with the declared verification context.</p>
           </div>
         </aside>
       </div>
     </section>
 
-    <section class="reveal" id="generation">
+    <section class="evidence-band reveal" id="flow">
       <div class="shell">
-        <div class="section-label">Artifact Generation</div>
-        <h2>From event context to sealed artifact.</h2>
-        <p style="margin-top:22px;max-width:620px;">Artifact generation follows a fixed transformation path.</p>
-
-        <div class="process-map">
-          <article class="process-step">
-            <div class="process-index">Step 1</div>
-            <h3>Capture</h3>
-            <p>Receive policy-permitted event data.</p>
-          </article>
-
-          <article class="process-step">
-            <div class="process-index">Step 2</div>
-            <h3>Canonicalize</h3>
-            <p>Normalize the payload into deterministic form.</p>
-          </article>
-
-          <article class="process-step">
-            <div class="process-index">Step 3</div>
-            <h3>Fingerprint</h3>
-            <p>Generate a cryptographic hash from the canonical form.</p>
-          </article>
-
-          <article class="process-step">
-            <div class="process-index">Step 4</div>
-            <h3>Seal</h3>
-            <p>Apply signature controls using the active key material.</p>
-          </article>
-
-          <article class="process-step">
-            <div class="process-index">Step 5</div>
-            <h3>Emit</h3>
-            <p>Produce an evidentiary artifact for verification and storage.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="reveal" id="keys">
-      <div class="shell key-grid">
-        <div>
-          <div class="section-label">Key Control</div>
-          <h2>Sealing depends on declared signing authority.</h2>
-          <div style="margin-top:28px;max-width:700px;">
-            <p>Artifact integrity depends not only on deterministic transformation, but also on controlled signing authority.</p>
-            <p>The platform may support local keys, managed environments, or external key infrastructure depending on operational requirements.</p>
-            <p>What matters is that each artifact can later be evaluated against the declared key context associated with its sealing event.</p>
-          </div>
-
-          <div class="key-list" aria-label="Possible key contexts">
-            <div class="key-item">Local signing</div>
-            <div class="key-item">Environment-bound signing</div>
-            <div class="key-item">Managed signing infrastructure</div>
-            <div class="key-item">External key management systems</div>
-          </div>
-        </div>
-
-        <aside class="key-aside">
-          <div class="mono">Signing context</div>
-          <p style="margin-top:12px;">
-            Later review depends on being able to relate the artifact to the key context declared at the time of sealing.
-          </p>
-        </aside>
-      </div>
-    </section>
-
-    <section class="reveal" id="verification">
-      <div class="shell">
-        <div class="section-label">Verification and Storage</div>
-        <h2>Generation is only the first half of the system.</h2>
-        <p style="margin-top:24px;max-width:700px;">
-          Once emitted, artifacts may be independently verified, retained within append-only storage, or exported for later institutional review.
+        <div class="section-label">Verification Flow</div>
+        <h2>Review proceeds from form to provenance.</h2>
+        <p style="margin-top:24px;max-width:720px;">
+          The order of operations matters. A signature check without deterministic representation is not enough, and a digest comparison without declared provenance is incomplete.
         </p>
 
-        <div class="verification-grid">
-          <div class="verification-block">
-            <h3>Verification</h3>
-            <p>Verification confirms structural validity, deterministic integrity, and signature provenance within declared policy scope.</p>
-            <p>Independent review does not require access to the originating system to evaluate the artifact itself.</p>
+        <div class="flow-grid">
+          <article class="flow-step">
+            <div class="flow-index">Stage 1</div>
+            <h3>Interpret</h3>
+            <p>Read the artifact according to the protocol structure it claims to follow.</p>
+          </article>
+
+          <article class="flow-step">
+            <div class="flow-index">Stage 2</div>
+            <h3>Recompute</h3>
+            <p>Apply deterministic representation rules and derive the expected integrity state again.</p>
+          </article>
+
+          <article class="flow-step">
+            <div class="flow-index">Stage 3</div>
+            <h3>Compare</h3>
+            <p>Compare the recomputed state to the sealed state preserved by the artifact.</p>
+          </article>
+
+          <article class="flow-step">
+            <div class="flow-index">Stage 4</div>
+            <h3>Attribute</h3>
+            <p>Evaluate provenance against the declared key and signature context.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal" id="outcomes">
+      <div class="shell">
+        <div class="section-label">Verification Outcomes</div>
+        <h2>Verification can confirm artifact integrity, but it does not resolve every institutional question.</h2>
+
+        <div class="columns">
+          <div class="column-block">
+            <h3>What verification can confirm</h3>
+            <p>That the artifact structure is valid, that deterministic integrity holds, and that the provenance claim remains consistent with the declared sealing context.</p>
+            <p>In other words, verification can confirm that the preserved artifact is still consistent with the evidentiary claim it makes.</p>
           </div>
 
-          <div class="verification-block">
-            <h3>Storage</h3>
-            <p>Storage preserves evidentiary continuity across time and supports later traceability.</p>
-            <p>Where implemented, append-only retention provides a stable record for later audit, export, or institutional review.</p>
+          <div class="column-block">
+            <h3>What verification cannot confirm</h3>
+            <p>That the underlying decision was substantively correct, legally sufficient, fair, or normatively justified.</p>
+            <p>Those questions remain institutional questions beyond the narrow scope of artifact verification itself.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="reveal" id="constraints">
+    <section class="reveal" id="failure">
       <div class="reading">
-        <div class="section-label">Constraints</div>
-        <h2>The platform is intentionally narrow.</h2>
+        <div class="section-label">Failure Conditions</div>
+        <h2>Failure in any critical check breaks the evidentiary claim.</h2>
         <div style="margin-top:28px;">
-          <p>The CEYO platform is designed to generate and preserve evidentiary artifacts.</p>
-          <p>It is not designed to replace adjudication, determine correctness, evaluate fairness, or resolve regulatory sufficiency.</p>
-          <p>Its function is narrower and more disciplined: preserve integrity, constrain capture scope, and support later institutional verification.</p>
+          <p>If structure, deterministic representation, integrity state, or provenance context fails verification, the artifact can no longer be treated as holding the exact evidentiary claim it originally asserted.</p>
+          <p>That does not automatically answer every downstream question, but it does mean the artifact fails as a stable integrity-preserving object under protocol review.</p>
         </div>
 
-        <div class="constraints-list" aria-label="Platform constraints">
-          <span class="constraint">does not determine truth</span>
-          <span class="constraint">does not certify compliance</span>
-          <span class="constraint">does not replace audit judgment</span>
-          <span class="constraint">does not expose full internal system logic by default</span>
+        <div class="constraint-list" aria-label="Failure conditions">
+          <span class="constraint">structure mismatch</span>
+          <span class="constraint">canonical form mismatch</span>
+          <span class="constraint">fingerprint mismatch</span>
+          <span class="constraint">signature mismatch</span>
+          <span class="constraint">invalid provenance context</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal" id="limits">
+      <div class="reading">
+        <div class="section-label">Verification Limits</div>
+        <h2>Verification is narrower than adjudication.</h2>
+        <div style="margin-top:28px;">
+          <p>Verification does not decide whether the artifact should have existed, whether the capture policy was normatively appropriate, or whether the originating institution acted wisely.</p>
+          <p>Its function is narrower and more reliable: determine whether the sealed artifact remains structurally sound, deterministically intact, and attributable to the declared sealing context.</p>
         </div>
       </div>
     </section>
@@ -1181,26 +1140,18 @@
     <section class="reveal" id="next">
       <div class="reading">
         <div class="section-label">Next</div>
-        <h2>Continue deeper into the system.</h2>
+        <h2>Continue into trust, review posture, and institutional confidence.</h2>
 
         <div class="next-index">
-          <a class="next-link" href="protocol.html">
-            <strong>Protocol</strong>
-            <span>Artifact structure, canonicalization rules, and sealing model.</span>
-          </a>
-          <a class="next-link" href="verify.html">
-            <strong>Verification</strong>
-            <span>How integrity is checked independently after generation.</span>
-          </a>
-          <a class="next-link" href="trust.html">
+          <a class="next-link page-link" href="trust.html">
             <strong>Trust</strong>
             <span>Review posture, institutional confidence, and evidentiary framing.</span>
           </a>
-          <a class="next-link" href="resources.html">
+          <a class="next-link page-link" href="resources.html">
             <strong>Resources</strong>
             <span>Supporting materials, glossary, and technical references.</span>
           </a>
-          <a class="next-link" href="contact.html">
+          <a class="next-link page-link" href="contact.html">
             <strong>Contact</strong>
             <span>Continue the discussion or request a walkthrough.</span>
           </a>
@@ -1260,7 +1211,7 @@
       header.classList.toggle("scrolled", (window.scrollY || 0) > 16);
     }, { passive: true });
 
-    document.querySelectorAll(".nav-destination").forEach((link) => {
+    document.querySelectorAll(".anchor-link").forEach((link) => {
       link.addEventListener("click", (e) => {
         const href = link.getAttribute("href");
         if (!href || !href.startsWith("#")) return;
@@ -1268,7 +1219,6 @@
         if (!target) return;
 
         e.preventDefault();
-        closeMenu();
 
         if (reduceMotion) {
           target.scrollIntoView({ behavior: "auto", block: "start" });
@@ -1276,15 +1226,28 @@
           return;
         }
 
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", href);
+      });
+    });
+
+    document.querySelectorAll(".page-link").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        if (!href || href.startsWith("#")) return;
+
+        e.preventDefault();
+        closeMenu();
+
+        if (reduceMotion) {
+          window.location.href = href;
+          return;
+        }
+
         pageWipe.classList.add("active");
         setTimeout(() => {
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
-          history.replaceState(null, "", href);
-        }, 320);
-
-        setTimeout(() => {
-          pageWipe.classList.remove("active");
-        }, 920);
+          window.location.href = href;
+        }, 420);
       });
     });
 
