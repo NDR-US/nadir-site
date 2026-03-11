@@ -2,7 +2,7 @@
 
 Public website for CEYO — evidentiary infrastructure for AI-supported systems.
 
-**Project site:** https://ceyo.ai
+**Project site:** 
 
 ---
 
