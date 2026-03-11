@@ -22,18 +22,13 @@
       --soft:rgba(231,237,245,.5);
       --line:rgba(231,237,245,.11);
       --line-strong:rgba(231,237,245,.18);
-      --glass:rgba(255,255,255,.05);
-      --glass-2:rgba(255,255,255,.07);
       --off:#e8e4db;
-      --off-2:#d8d1c3;
       --ink:#152235;
       --max:1320px;
       --read:760px;
       --ease:cubic-bezier(.22,1,.36,1);
       --shadow:0 24px 80px rgba(0,0,0,.28);
       --radius-xl:34px;
-      --radius-lg:26px;
-      --radius-md:18px;
     }
 
     *{box-sizing:border-box}
@@ -277,7 +272,7 @@
       background:linear-gradient(180deg, rgba(10,20,32,.97), rgba(8,16,27,.99));
       padding:30px;
       display:grid;
-      grid-template-columns:1fr 320px;
+      grid-template-columns:1fr 220px;
       gap:40px;
       transform:translateY(-22px);
       transition:transform 480ms var(--ease);
@@ -310,13 +305,18 @@
       align-self:end;
       border-left:1px solid var(--line);
       padding-left:22px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      min-height:120px;
     }
 
-    .nav-side p{
-      margin:12px 0 0;
-      color:var(--muted);
-      line-height:1.78;
-      max-width:28ch;
+    .nav-side-rule{
+      width:100%;
+      max-width:120px;
+      height:1px;
+      margin-top:14px;
+      background:linear-gradient(90deg, rgba(231,237,245,.22), rgba(231,237,245,0));
     }
 
     .hero{
@@ -357,7 +357,11 @@
       align-items:end;
     }
 
-    .hero-left{max-width:920px}
+    .hero-left{max-width:980px}
+
+    .hero-main{
+      max-width:920px;
+    }
 
     .hero-rule{
       width:86px;
@@ -378,11 +382,19 @@
       text-wrap:balance;
     }
 
+    .hero-support{
+      width:100%;
+      display:flex;
+      justify-content:center;
+      margin-top:28px;
+    }
+
     .hero-copy{
-      margin:26px 0 0;
-      max-width:22ch;
-      font-size:clamp(1.12rem, 2vw, 1.58rem);
-      line-height:1.62;
+      margin:0;
+      max-width:760px;
+      text-align:center;
+      font-size:clamp(1.08rem, 1.55vw, 1.34rem);
+      line-height:1.75;
       color:rgba(231,237,245,.84);
       letter-spacing:-.02em;
     }
@@ -392,6 +404,7 @@
       flex-wrap:wrap;
       gap:14px;
       margin-top:30px;
+      justify-content:center;
     }
 
     .btn{
@@ -425,8 +438,9 @@
       width:min(100%, 330px);
       border-left:1px solid var(--line);
       padding-left:18px;
-      display:grid;
-      gap:10px;
+      display:flex;
+      align-items:flex-end;
+      min-height:48px;
     }
 
     .typewriter{
@@ -579,47 +593,77 @@
 
     .boundary-grid{
       display:grid;
-      grid-template-columns:minmax(0, 1fr) 320px;
+      grid-template-columns:minmax(0, 1fr) 340px;
       gap:48px;
       align-items:center;
     }
 
     .boundary-figure{
       position:relative;
-      min-height:220px;
+      min-height:260px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
-    .boundary-frame{
-      position:absolute;
-      right:0;
-      top:0;
+    .boundary-visual{
+      position:relative;
       width:100%;
-      max-width:320px;
-      height:208px;
+      max-width:340px;
+      height:240px;
       border:1px solid var(--line);
-      border-radius:4px;
-      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.01));
+      overflow:hidden;
     }
 
-    .boundary-frame::before{
-      content:"";
+    .boundary-grid-lines{
       position:absolute;
-      left:24px;
-      right:24px;
-      top:28px;
-      height:1px;
-      background:linear-gradient(90deg, var(--line-strong), rgba(231,237,245,0));
+      inset:0;
+      background:
+        linear-gradient(rgba(231,237,245,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(231,237,245,.05) 1px, transparent 1px);
+      background-size:36px 36px;
+      opacity:.45;
     }
 
-    .boundary-frame::after{
-      content:"";
+    .boundary-zone{
       position:absolute;
-      width:94px;
-      height:94px;
-      right:26px;
-      bottom:24px;
-      border:1px solid var(--line);
+      border:1px solid rgba(231,237,245,.16);
+    }
+
+    .boundary-zone-outer{
+      inset:28px 26px 46px 26px;
+    }
+
+    .boundary-zone-inner{
+      inset:68px 82px 88px 82px;
+      border-color:rgba(232,228,219,.34);
+      box-shadow:0 0 0 1px rgba(232,228,219,.06) inset;
+    }
+
+    .boundary-node{
+      position:absolute;
+      width:10px;
+      height:10px;
       border-radius:50%;
+      background:rgba(232,228,219,.82);
+      box-shadow:0 0 18px rgba(232,228,219,.22);
+    }
+
+    .boundary-node-a{top:62px;left:72px}
+    .boundary-node-b{top:124px;right:96px}
+    .boundary-node-c{bottom:62px;left:148px}
+
+    .boundary-caption{
+      position:absolute;
+      left:20px;
+      bottom:16px;
+      font-family:"IBM Plex Mono", monospace;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:.66rem;
+      color:rgba(231,237,245,.56);
     }
 
     .mechanism-strip{
@@ -717,12 +761,40 @@
       padding:8px 0 32px;
     }
 
+    .footer-shell{
+      padding-bottom:6px;
+    }
+
     .footer-line{
       border-top:1px solid var(--line);
       padding-top:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
       color:rgba(231,237,245,.56);
       font-size:.88rem;
       letter-spacing:.02em;
+    }
+
+    .footer-left{
+      white-space:nowrap;
+    }
+
+    .footer-right{
+      display:flex;
+      flex-wrap:wrap;
+      gap:18px;
+    }
+
+    .footer-right a{
+      color:rgba(231,237,245,.56);
+      transition:color 200ms ease;
+    }
+
+    .footer-right a:hover{
+      color:rgba(231,237,245,.88);
     }
 
     @media (max-width:1080px){
@@ -738,6 +810,18 @@
       .nav-side{
         border-left:0;
         padding-left:0;
+      }
+
+      .hero-support{
+        justify-content:flex-start;
+      }
+
+      .hero-copy{
+        text-align:left;
+      }
+
+      .hero-actions{
+        justify-content:flex-start;
       }
 
       .mechanism-strip{
@@ -791,11 +875,23 @@
       }
 
       .hero h1{max-width:7.6ch}
-      .hero-copy{max-width:100%}
+
+      .hero-support{
+        display:block;
+        margin-top:24px;
+      }
+
+      .hero-copy{
+        max-width:100%;
+        text-align:left;
+      }
+
       .hero-actions{
         flex-direction:column;
         align-items:stretch;
+        justify-content:flex-start;
       }
+
       .btn{width:100%}
 
       section{padding:84px 0}
@@ -803,6 +899,15 @@
       .next-link{
         grid-template-columns:1fr;
         gap:10px;
+      }
+
+      .footer-line{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .footer-right{
+        gap:14px;
       }
     }
 
@@ -835,9 +940,7 @@
 
       <aside class="nav-side">
         <div class="mono">CEYO</div>
-        <p>
-          Overview page for independent evidentiary infrastructure, built as an institutional briefing rather than a generic product landing page.
-        </p>
+        <div class="nav-side-rule"></div>
       </aside>
     </div>
   </div>
@@ -869,12 +972,17 @@
 
     <div class="shell hero-inner">
       <div class="hero-left">
-        <div class="hero-rule"></div>
-        <div class="eyebrow">Independent Evidentiary Infrastructure</div>
-        <h1>Evidentiary Infrastructure for AI Systems</h1>
-        <p class="hero-copy">
-          CEYO is an independent evidentiary layer that generates policy-scoped, cryptographically sealed artifacts from AI-supported operations, enabling later institutional verification without modifying the originating system.
-        </p>
+        <div class="hero-main">
+          <div class="hero-rule"></div>
+          <div class="eyebrow">Independent Evidentiary Infrastructure</div>
+          <h1>Evidentiary Infrastructure for AI Systems</h1>
+        </div>
+
+        <div class="hero-support">
+          <p class="hero-copy">
+            CEYO is an independent evidentiary layer that generates policy-scoped, cryptographically sealed artifacts from AI-supported operations, enabling later institutional verification without modifying the originating system.
+          </p>
+        </div>
 
         <div class="hero-actions">
           <a class="btn btn-primary nav-destination" href="#why">Enter Overview</a>
@@ -883,7 +991,6 @@
       </div>
 
       <aside class="hero-utility">
-        <div class="mono">Type Line</div>
         <div class="typewriter"><span id="typeTarget"></span><span class="cursor">|</span></div>
       </aside>
     </div>
@@ -960,7 +1067,15 @@
         </div>
 
         <aside class="boundary-figure" aria-hidden="true">
-          <div class="boundary-frame"></div>
+          <div class="boundary-visual">
+            <div class="boundary-grid-lines"></div>
+            <div class="boundary-zone boundary-zone-outer"></div>
+            <div class="boundary-zone boundary-zone-inner"></div>
+            <div class="boundary-node boundary-node-a"></div>
+            <div class="boundary-node boundary-node-b"></div>
+            <div class="boundary-node boundary-node-c"></div>
+            <div class="boundary-caption">Declared Capture Boundary</div>
+          </div>
         </aside>
       </div>
     </section>
@@ -1045,8 +1160,15 @@
   </main>
 
   <footer>
-    <div class="shell">
-      <div class="footer-line">CEYO. All rights reserved.</div>
+    <div class="shell footer-shell">
+      <div class="footer-line">
+        <div class="footer-left">CEYO. All rights reserved 2026.</div>
+        <div class="footer-right">
+          <a href="terms.html">Terms of Use</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="civil-liberties.html">Privacy and Civil Liberties</a>
+        </div>
+      </div>
     </div>
   </footer>
 
