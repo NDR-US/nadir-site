@@ -9,7 +9,7 @@ https://ndr-us.github.io/ceyo-site/index.html
 
 ## What CEYO Is
 
-CEYO is a conceptual evidentiary infrastructure for AI-supported decision systems.
+CEYO is an evidentiary infrastructure layer for AI-supported decision systems.
 
 It produces policy-scoped, deterministic, cryptographically sealed records of AI inference events. These records can be independently verified by any party who holds the sealed artifact and the corresponding public key — without access to model weights, proprietary internals, or the contents of the underlying decision.
 
