@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <title>CEYO — Neutral audit records for AI decisions</title>
   <meta name="description" content="CEYO produces deterministic, cryptographically sealed audit artifacts for independent verification under constrained disclosure."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="CEYO"/>
+  <meta property="og:title" content="CEYO — Neutral audit records for AI decisions"/>
+  <meta property="og:description" content="CEYO produces deterministic, cryptographically sealed audit artifacts for independent verification under constrained disclosure."/>
+  <meta property="og:url" content="https://ceyo.ai/"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="CEYO — Neutral audit records for AI decisions"/>
+  <meta name="twitter:description" content="CEYO produces deterministic, cryptographically sealed audit artifacts for independent verification under constrained disclosure."/>
   <meta name="theme-color" content="#0B0F14"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -531,6 +539,17 @@
       .btn,.menuBtn,.drawerLinks a,.miniBtn{ transition:none; }
     }
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "CEYO",
+    "url": "https://ceyo.ai",
+    "description": "CEYO builds evidentiary infrastructure for AI inference systems: deterministic, cryptographically sealed audit records for independent verification under constrained disclosure.",
+    "contactPoint": { "@type": "ContactPoint", "email": "contact@ceyo.ai" }
+  }
+  </script>
 </head>
 
 <body>
@@ -1089,10 +1108,14 @@ signature_algorithm: "ECDSA-P256"
           ctx.fill();
         }
 
-        if(!prefersReduce) requestAnimationFrame(draw);
+        if(!prefersReduce && !document.hidden) requestAnimationFrame(draw);
       }
 
       draw();
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && !prefersReduce) draw();
+      });
     })();
   </script>
 </body>

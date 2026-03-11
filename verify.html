@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <title>CEYO — Artifact Verifier</title>
   <meta name="description" content="Verify a CEYO integrity-sealed artifact in your browser. Paste a sealed envelope and public key to confirm hash integrity and ECDSA P-256 signature — no server required."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="CEYO"/>
+  <meta property="og:title" content="CEYO — Artifact Verifier"/>
+  <meta property="og:description" content="Verify a CEYO integrity-sealed artifact in your browser. Paste a sealed envelope and public key to confirm hash integrity and ECDSA P-256 signature — no server required."/>
+  <meta property="og:url" content="https://ceyo.ai/verify.html"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="CEYO — Artifact Verifier"/>
+  <meta name="twitter:description" content="Verify a CEYO integrity-sealed artifact in your browser. Paste a sealed envelope and public key to confirm hash integrity and ECDSA P-256 signature — no server required."/>
   <meta name="theme-color" content="#0B0F14"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -391,6 +399,17 @@
     }
     .errorBanner.visible{ display:block; }
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "CEYO",
+    "url": "https://ceyo.ai",
+    "description": "CEYO builds evidentiary infrastructure for AI inference systems: deterministic, cryptographically sealed audit records for independent verification under constrained disclosure.",
+    "contactPoint": { "@type": "ContactPoint", "email": "contact@ceyo.ai" }
+  }
+  </script>
 </head>
 
 <body>
@@ -953,11 +972,17 @@ Leave blank to check hash integrity only."></textarea>
         };
         for (const [label, val] of Object.entries(fields)) {
           if (val == null) continue;
-          policyGrid.innerHTML += `
-            <div class="policyItem">
-              <div class="piLabel">${label}</div>
-              <div class="piVal">${val}</div>
-            </div>`;
+          const item = document.createElement('div');
+          item.className = 'policyItem';
+          const piLabel = document.createElement('div');
+          piLabel.className = 'piLabel';
+          piLabel.textContent = label;
+          const piVal = document.createElement('div');
+          piVal.className = 'piVal';
+          piVal.textContent = String(val);
+          item.appendChild(piLabel);
+          item.appendChild(piVal);
+          policyGrid.appendChild(item);
         }
         policySection.style.display = 'block';
       } else {
