@@ -81,6 +81,11 @@ This repository is the **presentation layer** for CEYO. It contains the public-f
 
 ## License
 
-Copyright © 2026 Brian Covarrubias. All rights reserved.
+Copyright © 2026 Brian Covarrubias.  
+All rights reserved.
 
-This repository contains research materials, experimental code, and architectural concepts that are not licensed for reuse, modification, or commercial deployment without explicit written permission from the author.
+The contents of this repository are provided for informational and review purposes only.  
+No license is granted to use, reproduce, modify, distribute, or commercially exploit
+any portion of this repository without prior explicit written permission from the author.
+
+See the LICENSE file for full terms.
