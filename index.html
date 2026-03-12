@@ -706,30 +706,6 @@
       max-width:30ch;
     }
 
-    .overview-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:18px;
-      margin-top:34px;
-    }
-
-    .overview-card{
-      min-height:210px;
-      border-top:1px solid var(--line-strong);
-      padding-top:18px;
-      display:grid;
-      align-content:start;
-      gap:12px;
-    }
-
-    .overview-card h3{
-      margin:0;
-      font-size:1.08rem;
-      font-weight:700;
-      color:var(--off);
-      letter-spacing:-.03em;
-    }
-
     .nonclaims-list{
       display:flex;
       flex-wrap:wrap;
@@ -848,8 +824,7 @@
         justify-content:flex-start;
       }
 
-      .mechanism-strip,
-      .overview-grid{
+      .mechanism-strip{
         grid-template-columns:1fr;
       }
 
@@ -1127,30 +1102,6 @@
             <div class="step-index">03 · Verify</div>
             <h3>Verify</h3>
             <p>Allow an independent party to recompute integrity checks and validate provenance under declared policy scope.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="reveal" id="overview-forward">
-      <div class="shell">
-        <div class="section-label">Site Overview</div>
-        <h2>Each page addresses a different layer of the system.</h2>
-
-        <div class="overview-grid">
-          <article class="overview-card">
-            <h3>Platform</h3>
-            <p>System placement, policy capture, artifact generation, governance continuity, and storage posture.</p>
-          </article>
-
-          <article class="overview-card">
-            <h3>Protocol</h3>
-            <p>Artifact structure, deterministic representation, fingerprint derivation, and sealing rules.</p>
-          </article>
-
-          <article class="overview-card">
-            <h3>Verification and Trust</h3>
-            <p>Independent integrity checks, provenance validation, review posture, and institutional confidence.</p>
           </article>
         </div>
       </div>
